@@ -1,0 +1,113 @@
+"DOTAHeroes"
+{
+	//"npc_dota_hero_ancient_apparition_barebones"
+	//{
+	//	"AbilityLayout" 		"6"
+	//	"override_hero"			"npc_dota_hero_ancient_apparition"
+	//	"SoundSet"				"0"	
+	//	"Ability1"				"example_ability" 
+	//	"Ability2"				"reflex_empty2" 
+	//	"Ability3"				"reflex_empty3" 
+	//	"Ability4"				"reflex_empty4"
+	//	"Ability5"				"reflex_empty5"
+	//	"Ability6"				"reflex_empty6"
+	//	"Ability7"				""
+	//	"Ability8"				""
+	//	"Ability9"				""
+	//	"Ability10"				""
+	//	"Ability11"				""
+	//	"Ability12"				""
+	//	"Ability13"				""
+	//	"Ability14"				""
+	//	"Ability15"				""
+	//	"Ability16"				""
+
+	//	"ArmorPhysical"				"0"									// Physical protection.
+	//	"MagicalResistance"			"0"									// Magical protection (percentage).
+
+	//	"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+	//	"AttackDamageMin"			"1"										// Damage range min.
+	//	"AttackDamageMax"			"1"										// Damage range max.
+
+	//	"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+	//	"AttributeBaseStrength"		"0"										// Base strength
+	//	"AttributeStrengthGain"		"0"										// Strength bonus per level.
+	//	"AttributeBaseIntelligence"	"0"										// Base intelligence
+	//	"AttributeIntelligenceGain"	"0"										// Intelligence bonus per level.
+	//	"AttributeBaseAgility"		"0"										// Base agility
+	//	"AttributeAgilityGain"		"0"										// Agility bonus per level.
+
+	//	"BountyXP"					"0"										// Experience earn.
+	//	"BountyGoldMin"				"0"										// Gold earned min.
+	//	"BountyGoldMax"				"0"										// Gold earned max.
+
+	//	"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+	//	"RingRadius"				"70"
+
+	//	"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+	//	"MovementSpeed"				"360"									// Speed.
+	//	"MovementTurnRate"			"1.0"									// Turning rate.
+
+	//	"StatusHealth"				"981"									// Base health.
+	//	"StatusHealthRegen"			"0.0"									// Health regeneration rate.
+	//	"StatusMana"				"387"									// Base mana.
+	//	"StatusManaRegen"			"99.96"									// Mana regeneration rate.
+
+	//	"VisionNighttimeRange"		"1800"									// Range of vision at night time.
+	//}
+
+	//=================================================================================================================
+	// HERO: Antimage
+	//=================================================================================================================
+	"npc_imba_hero_antimage"
+	{
+		"override_hero"				"npc_dota_hero_antimage"
+
+		"Ability1"					"imba_antimage_mana_break"
+		"Ability3"					"imba_antimage_spell_shield"
+		"Ability4"					"imba_antimage_mana_void"
+		"Ability5"					"attribute_bonus_agi"
+
+		"AttackRate"				"1.2"
+
+		"AttributeBaseAgility"		"28"
+
+		"MovementSpeed"				"325"																		
+	}
+
+	//=================================================================================================================
+	// HERO: Axe
+	//=================================================================================================================
+	"npc_imba_hero_axe"
+	{
+		"override_hero"				"npc_dota_hero_axe"
+
+		"ModelScale"				"1.08"
+
+		"Ability1"					"imba_axe_berserkers_call"
+		"Ability2"					"imba_axe_battle_hunger"
+		"Ability4"					"imba_axe_culling_blade"
+		"Ability5"					"attribute_bonus_str"
+
+		"AttributeBaseStrength"		"28"
+		"AttributeStrengthGain"		"2.8"
+		"AttributeAgilityGain"		"2.6"
+
+		"ArmorPhysical"				"0"									
+	}
+
+	//=================================================================================================================
+	// HERO: Bane
+	//=================================================================================================================
+	"npc_imba_hero_bane"
+	{
+		"override_hero"				"npc_dota_hero_bane"
+
+		"Ability1"					"imba_bane_enfeeble"							
+		"Ability2"					"imba_bane_brain_sap"
+		"Ability3"					"imba_bane_nightmare"												
+		"Ability4"					"imba_bane_fiends_grip"						
+		"Ability5"					"attribute_bonus_int"
+		"Ability6"					"imba_bane_nightmare_end"								
+	}
+}

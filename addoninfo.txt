@@ -1,0 +1,13 @@
+"AddonInfo"
+{
+	"addonSteamAppID"				"816"
+	"addontitle"					"Dota IMBA"
+	"addonversion"					"6.84.6.alpha"
+	"addontagline"					"IMBA"
+	"addonauthor"					"fcalife"
+	"addonSteamGroupName"			""
+	"addonauthorSteamID"			"fcalife"
+	"addonContent_Campaign"			"0"
+	"addonURL0"						"http://www.breakingdota.wordpress.com/"
+	"addonDescription"				"A modified version of Dota, where everything is insanely powerful."
+}
