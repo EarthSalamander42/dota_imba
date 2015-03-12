@@ -232,8 +232,8 @@ end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
-	print ( '[BAREBONES] OnItemPurchased' )
-	PrintTable(keys)
+--	print ( '[BAREBONES] OnItemPurchased' )
+--	PrintTable(keys)
 
 	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
 	local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
@@ -279,7 +279,7 @@ function GameMode:OnNonPlayerUsedAbility(keys)
 	print('[BAREBONES] OnNonPlayerUsedAbility')
 	PrintTable(keys)
 
-	local abilityname=  keys.abilityname
+	local abilityname = keys.abilityname
 end
 
 -- A player changed their name
@@ -392,8 +392,8 @@ end
 
 -- An entity died
 function GameMode:OnEntityKilled( keys )
-	print( '[BAREBONES] OnEntityKilled Called' )
-	PrintTable( keys )
+	--print( '[BAREBONES] OnEntityKilled Called' )
+	--PrintTable( keys )
 
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript( keys.entindex_killed )

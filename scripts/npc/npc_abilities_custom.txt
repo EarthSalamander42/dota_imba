@@ -1671,12 +1671,12 @@
 			"12"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_nightmare_radius"				"600"
+				"fiends_grip_scepter_radius"				"750"
 			}
 			"13"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_nightmare_vision_cone"			"45"
+				"fiends_grip_scepter_vision_cone"			"45"
 			}
 		}	
 
@@ -1686,7 +1686,11 @@
 			"FireSound"
 			{
 				"EffectName"	"Hero_Bane.FiendsGrip.Cast"
-				"Target"		"TARGET"	
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}	
 			}	
 
 			"Damage"
@@ -1699,13 +1703,21 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_imba_bane_fiends_grip"
-				"Target"		"TARGET"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 			}
 
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
-				"Target"		"CASTER"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 			}
 		}	
 
@@ -1714,14 +1726,22 @@
 			"RemoveModifier"
 			{
 				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
-				"Target" 		"CASTER"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 			}
 
 			"RunScript"
 			{
 				"ScriptFile"	"abilities/hero_bane.lua"
 				"Function"		"FiendsGripStopChannel"
-				"Target"		"TARGET"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 				"modifier"		"modifier_imba_bane_fiends_grip"
 				"sound1"		"Hero_Bane.FiendsGrip"
 				"sound2"		"Hero_Bane.FiendsGrip.Cast"
@@ -1733,14 +1753,22 @@
 			"RemoveModifier"
 			{
 				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
-				"Target" 		"CASTER"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 			}
 
 			"RunScript"
 			{
 				"ScriptFile"	"abilities/hero_bane.lua"
 				"Function"		"FiendsGripStopChannel"
-				"Target"		"TARGET"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
 				"modifier"		"modifier_imba_bane_fiends_grip"
 				"sound1"		"Hero_Bane.FiendsGrip"
 				"sound2"		"Hero_Bane.FiendsGrip.Cast"
@@ -1780,13 +1808,18 @@
 					"FireSound"
 					{
 						"EffectName"	"Hero_Bane.FiendsGrip"
-						"Target"		"TARGET"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
 					}
 				}
 				
 				"States"
 				{
-					"MODIFIER_STATE_STUNNED"	 "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
 				}
 			}
 
@@ -1800,11 +1833,9 @@
 					"RunScript"
 					{
 						"ScriptFile"			"abilities/hero_bane.lua"
-						"Function"				"FiendsGripNightmare"
+						"Function"				"FiendsGripScepter"
 
-						"ability_nightmare"		"imba_bane_nightmare"
-						"sound_nightmare"		"Hero_Bane.Nightmare"
-						"modifier_nightmare"	"modifier_imba_bane_fiends_grip"
+						"modifier_fiends_grip"	"modifier_imba_bane_fiends_grip"
 					}
 				}
 

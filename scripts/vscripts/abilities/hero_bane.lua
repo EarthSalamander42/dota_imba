@@ -54,13 +54,14 @@ function BrainSapSpellCast( keys )
 	local no_mana_sound = keys.no_mana_sound
 	local ability_level = ability:GetLevel() - 1
 
+	-- calculate adjusted spell mana cost
 	local spell_cost = casted_ability:GetManaCost(casted_ability_index)
 	local caster_mana = caster:GetMana()
 	local mana_multiplier = ability:GetLevelSpecialValueFor("mana_multiplier", ability_level) / 100
 	local true_mana_cost = (mana_multiplier + 1) * spell_cost
 
+	-- if the caster has not enough mana according to the increased mana cost, prevent casting. If he has, spend the extra mana
 	--if caster_mana < true_mana_cost then
-	--	print ("no mana")
 	--	EmitSoundOn(no_mana_sound, caster)
 	--	caster:Stop()	
 	--else
@@ -100,7 +101,7 @@ function FiendsGripStopChannel( keys )
 		max_duration = ability:GetLevelSpecialValueFor("fiends_grip_duration_scepter", (ability:GetLevel() -1))
 	end
 
-	local enemies_affected = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , 0, FIND_CLOSEST, false)
+	local enemies_affected = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 	local channel_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
 
 	if channel_time * 2 > max_duration then
@@ -122,21 +123,18 @@ function FiendsGripStopChannel( keys )
 	end
 end
 
-function FiendsGripNightmare( keys )
+function FiendsGripScepter( keys )
 	local caster = keys.caster
 	local scepter = HasScepter(caster)
 
 	if scepter == true then
 		local target = keys.target
 		local ability = keys.ability
-		local player_index = caster:GetPlayerID()
-		local ability_nightmare = caster:FindAbilityByName(keys.ability_nightmare)
-		local sound_nightmare = keys.sound_nightmare
-		local modifier = keys.modifier_nightmare
+		local modifier = keys.modifier_fiends_grip
 		local ability_level = ability:GetLevel() - 1
 
-		local vision_radius = ability:GetLevelSpecialValueFor("fiends_grip_nightmare_radius", ability_level)
-		local vision_cone = ability:GetLevelSpecialValueFor("fiends_grip_nightmare_vision_cone", ability_level)
+		local vision_radius = ability:GetLevelSpecialValueFor("fiends_grip_scepter_radius", ability_level)
+		local vision_cone = ability:GetLevelSpecialValueFor("fiends_grip_scepter_vision_cone", ability_level)
 		local caster_location = caster:GetAbsOrigin()
 		local enemies_to_check = FindUnitsInRadius(target:GetTeam(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , 0, FIND_CLOSEST, false)
 		
