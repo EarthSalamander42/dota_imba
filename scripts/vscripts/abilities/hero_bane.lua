@@ -111,6 +111,7 @@ function FiendsGripStopChannel( keys )
 				StopSoundEvent(sound1, v)
 				StopSoundEvent(sound2, v)
 			end
+			caster.fiends_grip_dummy:ForceKill(true)
 			end)
 	else
 		Timers:CreateTimer(channel_time, function()
@@ -119,6 +120,7 @@ function FiendsGripStopChannel( keys )
 				StopSoundEvent(sound1, v)
 				StopSoundEvent(sound2, v)
 			end
+			caster.fiends_grip_dummy:ForceKill(true)
 			end)
 	end
 end
@@ -149,6 +151,16 @@ function FiendsGripScepter( keys )
 			end
 		end
 	end
+end
+
+function FiendsGripTruesight( keys )
+	local target = keys.target
+	local caster = keys.caster
+	local ability = keys.ability
+
+	local target_location = target:GetAbsOrigin()
+	caster.fiends_grip_dummy = CreateUnitByName("npc_dummy_unit", target_location, false, nil, nil, caster:GetTeamNumber())
+	ability:ApplyDataDrivenModifier(caster, caster.fiends_grip_dummy, "modifier_item_gem_of_true_sight", {radius = 50})
 end
 
 function NightmareDamage( keys )

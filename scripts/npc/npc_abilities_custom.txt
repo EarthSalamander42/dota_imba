@@ -9,7 +9,7 @@
 // Dummy stuff
 //-------------------
   
-	"reflex_dummy_unit"
+	"dummy_unit_state"
 	{
 		"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
@@ -21,12 +21,13 @@
 			"dummy_unit"
 			{
 				"Passive"                        "1"
-				"IsHidden"                        "1"    
+				"IsHidden"                       "1"    
 				"States"
 				{
 					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -36,7 +37,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -47,7 +47,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -58,7 +57,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -69,7 +67,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -80,7 +77,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -91,7 +87,6 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		//"ID"							"5343"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"
 		"BaseClass" 					"ability_datadriven"
@@ -1718,6 +1713,14 @@
 					"Center"	"CASTER"
 					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/hero_bane.lua"
+				"Function"		"FiendsGripTruesight"
+
+				"Target"		"TARGET"
 			}
 		}	
 
