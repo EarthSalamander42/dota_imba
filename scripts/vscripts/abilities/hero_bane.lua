@@ -161,6 +161,7 @@ function FiendsGripTruesight( keys )
 	local target_location = target:GetAbsOrigin()
 	caster.fiends_grip_dummy = CreateUnitByName("npc_dummy_unit", target_location, false, nil, nil, caster:GetTeamNumber())
 	ability:ApplyDataDrivenModifier(caster, caster.fiends_grip_dummy, "modifier_item_gem_of_true_sight", {radius = 50})
+	ability:ApplyDataDrivenModifier(caster, caster.fiends_grip_dummy, "modifier_dummy_unit", {})
 end
 
 function NightmareDamage( keys )
