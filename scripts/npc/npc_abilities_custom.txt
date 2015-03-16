@@ -749,7 +749,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_bonus"						"12"
+				"speed_bonus"				"12"
 			}
 		}	
 
@@ -1929,6 +1929,7 @@
 			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
 			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
 			"particle"							"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
 		}
 		
 		"Modifiers"
@@ -2046,6 +2047,8 @@
 				"TextureName"					"imba_drow_ranger_frost_arrows"
 				
 				"EffectName"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
+				"StatusEffectPriority" 			"10"
 
 				"States"
 				{
@@ -2071,11 +2074,11 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"						"1100"
-		"AbilityCastPoint"						"0.4"
+		"AbilityCastPoint"						"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"13"
+		"AbilityCooldown"						"12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -2098,22 +2101,22 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wave_start_width"				"250"
+				"wave_width"					"300"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wave_end_width"				"350"
+				"attack_slow"					"-50"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"silence_duration"				"3 4 5 6"
+				"var_type"						"FIELD_INTEGER"
+				"move_slow"						"-20"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"knockback_distance_max"		"750"
+				"silence_duration"				"3 4 5 6"
 			}
 			"07"
 			{
@@ -2131,21 +2134,6 @@
 				"damage"						"80 120 160 200"
 			}
 			"10"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_hero_duration"	"1.5"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_creep_duration"	"7.0"
-			}
-			"12"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"freeze_duration"				"1.5"
-			}
-			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"wave_range_tooltip"			"1100"
@@ -2170,9 +2158,9 @@
 				"Target"				"POINT"
 				"EffectName"			"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
 				"MoveSpeed"				"%wave_speed"
-				"StartRadius"			"%wave_start_width"
+				"StartRadius"			"%wave_width"
 				"StartPosition"			"attach_attack1"
-				"EndRadius"				"%wave_end_width"
+				"EndRadius"				"%wave_width"
 				"FixedDistance"			"%wave_range"
 				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
@@ -2202,38 +2190,6 @@
 				"ModifierName"			"modifier_imba_drow_ranger_gust_debuff"
 				"Target"				"TARGET"
 			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"abilities/hero_drow_ranger.lua"
-				"Function"				"GustFrostArrows"
-
-				"frost_arrows_ability"	"imba_drow_ranger_frost_arrows"
-				"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-				"freeze_modifier"		"modifier_imba_frost_arrows_frozen"
-			}
-
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Types"				"DOTA_UNIT_TARGET_BASIC"
-				}
-				"ModifierName"			"modifier_imba_frost_arrows_slow"
-				"Duration"				"%frost_arrows_creep_duration"
-			}
-			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Types"				"DOTA_UNIT_TARGET_HERO"
-				}
-				"ModifierName"			"modifier_imba_frost_arrows_slow"
-				"Duration"				"%frost_arrows_hero_duration"
-			}
 			
 			"RunScript"
 			{
@@ -2242,7 +2198,6 @@
 				
 				"height"				"%knockback_height"
 				"duration"				"%knockback_duration"
-				"distance"				"%knockback_distance_max"
 				"range"					"%wave_range"
 			}
 		}
@@ -2257,63 +2212,15 @@
 				"EffectName"					"particles/generic_gameplay/generic_silence.vpcf"
 				"EffectAttachType"				"follow_overhead"
 				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%attack_slow"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_slow" 
+				}
+
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-			
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_slow"
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
-						"Function"				"FrostArrowsEnd"
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-						}
-
-						"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"TextureName"					"drow_ranger_frost_arrows"
-			}
-
-			"modifier_imba_frost_arrows_frozen"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"Duration"						"%freeze_duration"
-				"TextureName"					"imba_drow_ranger_frost_arrows"
-
-				"EffectName"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -2564,7 +2471,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"250"
+				"radius"								"300"
 			}
 			"06"
 			{
@@ -2579,7 +2486,7 @@
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tree_radius_scepter"					"450"
+				"tree_radius_scepter"					"425"
 			}
 		}
 		
@@ -2696,24 +2603,6 @@
 			{
 				"IsPurgable"					"0"
 				"IsHidden"						"1"
-				
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target" 		"CASTER"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target" 		"CASTER"
-					}
-				}
 
 				"States"
 				{

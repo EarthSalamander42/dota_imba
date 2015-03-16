@@ -23,29 +23,6 @@ function FrostArrows( keys )
 	end	
 end
 
-function GustFrostArrows( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local frost_arrows_ability = FindAbilityByName(keys.frost_arrows_ability)
-	local stack_modifier = keys.stack_modifier
-	local freeze_modifier = keys.freeze_modifier
-	local ability_level = ability:GetLevel() - 1
-	local stacks_to_freeze = frost_arrows_ability:GetLevelSpecialValueFor("stacks_to_freeze", frost_arrows_ability:GetLevel()-1)
-
-	-- Counts stacks up to stacks_to_freeze; when that number is reached, removes all stacks and roots the target with freeze_modifier
-	if not target:HasModifier(stack_modifier) then
-		ability:ApplyDataDrivenModifier(caster, target, stack_modifier, {})
-		target:SetModifierStackCount(stack_modifier, ability, 1)
-	elseif target:GetModifierStackCount(stack_modifier, ability) < stacks_to_freeze - 1 then
-		local stack_count = target:GetModifierStackCount(stack_modifier, ability)
-		target:SetModifierStackCount(stack_modifier, ability, stack_count + 1)
-	else
-		target:RemoveModifierByName(stack_modifier)
-		ability:ApplyDataDrivenModifier(caster, target, freeze_modifier, {})
-	end	
-end
-
 -- Resets frost arrows stacks on the target when the slow wears off
 function FrostArrowsEnd( keys )
 	local caster = keys.caster
@@ -59,12 +36,18 @@ end
 function Gust( keys )
 	local vCaster = keys.caster:GetAbsOrigin()
 	local vTarget = keys.target:GetAbsOrigin()
+	local caster = keys.caster
+	local distance = caster:GetAttackRange()
+
+	-- calculates knockback distance
 	local len = ( vTarget - vCaster ):Length2D()
-	if len > keys.distance then
-		len = 50
+	if len > distance then
+		len = 25
 	else
-		len = keys.distance - keys.distance * ( len / keys.range ) + 50
+		len = distance - len + 25
 	end
+
+	-- knockbacks using modifier_knockback
 	local knockbackModifierTable =
 	{
 		should_stun = 1,
@@ -95,12 +78,12 @@ function Trueshot( keys )
 				local percent = ability:GetLevelSpecialValueFor( "trueshot_ranged_damage", ability:GetLevel() - 1 )
 				local damage = math.floor( agility * percent / 100 )
 
-				-- check if the unit is Drow Ranger
+				-- Check if the unit is Drow Ranger
 				if target == caster then
 					damage = math.floor( agility * percent / 50 )
 				end
 				
-				-- check if unit has attribute
+				-- Check if unit has attribute
 				if not target.TrueshotDamage then
 					target.TrueshotDamage = 0
 				end
@@ -157,7 +140,7 @@ function Marksmanship( keys )
 	local modifier_invis = keys.modifier_invis
 	local scepter = HasScepter(caster)
 	local caster_position = caster:GetAbsOrigin()
-	
+
 	-- Count units in radius
 	local units = FindUnitsInRadius( caster:GetTeamNumber(), caster_position, caster, effect_radius,
 			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false )
@@ -172,7 +155,7 @@ function Marksmanship( keys )
 	for k, v in pairs( trees ) do
 		tree_count = tree_count + 1
 	end
-	
+
 	-- Apply and destroy
 	if scepter == true then
 		if caster:HasModifier( modifier_effect ) then
@@ -182,22 +165,17 @@ function Marksmanship( keys )
 			if not caster:HasModifier( modifier_scepter ) then
 				ability:ApplyDataDrivenModifier( caster, caster, modifier_scepter, {} )
 			end
-			if not tree_count == 0 then
-				if not caster:HasModifier( modifier_invis ) then
+			if tree_count ~= 0 then
 					ability:ApplyDataDrivenModifier( caster, caster, modifier_invis, {} )
-				end
+					caster:AddNewModifier(caster, ability, "modifier_invisible", {fadetime = 300.0})
 			else
-				if caster:HasModifier( modifier_invis ) then
 					caster:RemoveModifierByName( modifier_invis )
-				end
+					caster:RemoveModifierByName( "modifier_invisible" )
 			end
 		elseif count ~= 0 then
-			if caster:HasModifier( modifier_scepter ) then
 				caster:RemoveModifierByName( modifier_scepter )
-			end
-			if caster:HasModifier( modifier_invis ) then
 				caster:RemoveModifierByName( modifier_invis )
-			end
+				caster:RemoveModifierByName( "modifier_invisible" )
 		end
 	else
 		if caster:HasModifier( modifier_scepter ) then
@@ -205,6 +183,7 @@ function Marksmanship( keys )
 		end
 		if caster:HasModifier( modifier_invis ) then
 			caster:RemoveModifierByName( modifier_invis )
+			caster:RemoveModifierByName( "modifier_invisible" )
 		end
 		if count == 0 and not caster:HasModifier( modifier_effect ) then
 			ability:ApplyDataDrivenModifier( caster, caster, modifier_effect, {} )
