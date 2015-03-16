@@ -1874,7 +1874,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"625"
+		"AbilityCastRange"						"800"
 		"AbilityCastPoint"						"0.0"
 
 		// Time		
@@ -1926,9 +1926,10 @@
 		"precache"
 		{
 			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
 			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
 			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
 		}
 		
@@ -2046,9 +2047,18 @@
 				"Duration"						"%freeze_duration"
 				"TextureName"					"imba_drow_ranger_frost_arrows"
 				
-				"EffectName"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
 				"StatusEffectPriority" 			"10"
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"hero_Crystal.frostbite"
+					}
+				}
 
 				"States"
 				{
