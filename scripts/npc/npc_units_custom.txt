@@ -6,8 +6,8 @@
 	"npc_dummy_unit"
 	{
 		// General
-		//
-		"BaseClass"					"npc_dota_base_additive"	// Class of entity of link to.
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
 		"Model"						"models/development/invisiblebox.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
@@ -97,7 +97,7 @@
 	"npc_dummy_blank"
 	{
 		// General
-		//
+		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_base_additive"	// Class of entity of link to.
 		"Model"						"models/development/invisiblebox.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.

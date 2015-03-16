@@ -2,7 +2,7 @@ print ('[BAREBONES] barebones.lua' )
 
 ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
-ALLOW_SAME_HERO_SELECTION = false        -- Should we let people select the same hero as each other
+ALLOW_SAME_HERO_SELECTION = false       -- Should we let people select the same hero as each other
 
 HERO_SELECTION_TIME = 60.0             	-- How long should we let people select their hero?
 PRE_GAME_TIME = 90.0                   	-- How long after people select their heroes should the horn blow and the game start?
@@ -42,7 +42,7 @@ END_GAME_ON_KILLS = false               -- Should the game end after a certain n
 --KILLS_TO_END_GAME_FOR_TEAM = 50       -- How many kills for a team should signify an end of game?
 
 USE_CUSTOM_HERO_LEVELS = false          -- Should we allow heroes to have custom levels?
-MAX_LEVEL = 25                        -- What level should we let heroes get to?
+MAX_LEVEL = 25                        	-- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false            -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 Testing = true
