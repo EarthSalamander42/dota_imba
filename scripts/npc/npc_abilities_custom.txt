@@ -1463,7 +1463,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"90 160 230 300"	
+		"AbilityDamage"					"100 175 250 325"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -1475,13 +1475,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"heal_amt"						"90 160 230 300"
+				"heal_amt"						"100 175 250 325"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_steal_amt"				"45 80 115 150"
+				"mana_steal_amt"				"60 90 120 150"
 			}
 
 			"03"
@@ -1854,6 +1854,360 @@
 				{
 					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Shuriken Toss
+	//=================================================================================================================
+	"imba_bounty_hunter_shuriken_toss"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"bounty_hunter_shuriken_toss"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		  "particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+		  "particle"    				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+		  "particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+		 }
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"10"
+		"AbilityManaCost"				"90 100 110 120"	
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// just a mini stun
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 200 275 350"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"3000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mini_stun"				"0.1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_range"			"400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_strength"			"35 40 45 50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_duration"		"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_strength_tooltip"	"350 400 450 500"
+			}
+
+		}	
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+				"Function"				"ShurikenToss"
+
+				"track_modifier"		"modifier_bounty_hunter_track"
+				"shuriken_particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_BountyHunter.Shuriken"
+				"Target"				"CASTER"
+			}	
+		}	
+
+		"OnProjectileHitUnit"
+	    {
+	    	"FireEffect"
+	    	{
+	    		"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+	    		"Target"				"TARGET"
+	    		"EffectAttachType"		"attach_hitloc"
+	    	}	
+
+	        "Damage"
+	        {
+	        	"Type"					"DAMAGE_TYPE_MAGICAL"
+	        	"Damage"				"%damage"
+	        	"Target"				"TARGET"
+	        }	
+
+	        "Stun"
+	        {
+	        	"Duration"				"%mini_stun"
+	        	"Target"				"TARGET"        	
+	        }	
+
+	        "FireSound"
+	        {
+	        	"EffectName"			"Hero_BountyHunter.Shuriken.Impact"
+	        	"Target"				"TARGET"
+	        }
+
+	        "RunScript"
+	        {
+	        	"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+				"Function"				"ShurikenTossImpact"
+
+				"chain_particle"		"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+	        }
+
+	        "ApplyModifier"
+	        {
+	        	"ModifierName"			"modifier_imba_shuriken_toss_chain"
+	        	"Target" 				"TARGET"
+	        }
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_imba_shuriken_toss_chain"
+	    	{
+	    		"Passive"				"0"
+	    		"IsHidden"				"0"
+	    		"IsDebuff"				"1"
+	    		"Duration"				"%chain_duration"
+	    		
+	    		"ThinkInterval"  		"0.1"
+	    		"OnIntervalThink"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+						"Function"				"ShurikenTossChain"
+	    			}
+	    		}
+
+	    		"OnDestroy"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+						"Function"				"ShurikenTossChainEnd"
+	    			}
+	    		}
+	    	}
+	    }
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Shadow Walk
+	//=================================================================================================================
+	"imba_bounty_hunter_wind_walk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"bounty_hunter_wind_walk"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+		  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+		 }	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"40.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"30 60 90 120"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed"				"10 15 20 25"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+				"Target"				"CASTER"
+				"EffectAttachType"		"attach_origin"
+			}
+
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_BountyHunter.WindWalk"
+			}	
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_imba_wind_walk_fade"
+			}	
+
+			"DelayedAction"
+			{
+				"Delay"	"%fade_time"	
+
+				"Action" 
+				{
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_imba_wind_walk"
+					}
+
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}  
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_wind_walk_fade"
+			{
+				"Duration"				"%fade_time"
+				"IsBuff"				"1"
+				"EffectName"			"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
+				}
+			}
+
+			"modifier_imba_wind_walk"
+			{
+				"Duration"	"%duration"
+				"IsBuff"	"1"	
+
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_imba_wind_walk"
+					}
+
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}	
+
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_bounty_hunter.lua"
+						"Function"		"WindWalk"
+
+						"modifier"		"modifier_imba_wind_walk"
+					}
+				}	
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"ModifierName"	"modifier_invisible"
+					}
+				}	
 			}
 		}
 	}
