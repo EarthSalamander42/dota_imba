@@ -694,8 +694,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"axe_battle_hunger"	
 
@@ -718,7 +718,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"10 15 20 25"	
+		"AbilityDamage"					"8 12 16 20"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -764,7 +764,12 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_imba_axe_battle_hunger_enemy"
-				"Target" 		"TARGET"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+
 				"Duration"		"%duration"
 			}
 		}	
@@ -807,8 +812,13 @@
 				{
 					"Damage"
 					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Type"			"DAMAGE_TYPE_PURE"
 						"Damage"		"%AbilityDamage"
 					}
 				}	
@@ -1949,17 +1959,18 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
-				"Function"				"ShurikenToss"
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShurikenToss"
 
-				"track_modifier"		"modifier_bounty_hunter_track"
-				"shuriken_particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+				"track_modifier"			"modifier_imba_track_aura"
+				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"shuriken_particle"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
 			}
 
 			"FireSound"
 			{
-				"EffectName"			"Hero_BountyHunter.Shuriken"
-				"Target"				"CASTER"
+				"EffectName"				"Hero_BountyHunter.Shuriken"
+				"Target"					"CASTER"
 			}	
 		}	
 
@@ -1967,42 +1978,42 @@
 	    {
 	    	"FireEffect"
 	    	{
-	    		"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
-	    		"Target"				"TARGET"
-	    		"EffectAttachType"		"attach_hitloc"
+	    		"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+	    		"Target"					"TARGET"
+	    		"EffectAttachType"			"attach_hitloc"
 	    	}	
 
 	        "Damage"
 	        {
-	        	"Type"					"DAMAGE_TYPE_MAGICAL"
-	        	"Damage"				"%damage"
-	        	"Target"				"TARGET"
+	        	"Type"						"DAMAGE_TYPE_MAGICAL"
+	        	"Damage"					"%damage"
+	        	"Target"					"TARGET"
 	        }	
 
 	        "Stun"
 	        {
-	        	"Duration"				"%mini_stun"
-	        	"Target"				"TARGET"        	
+	        	"Duration"					"%mini_stun"
+	        	"Target"					"TARGET"        	
 	        }	
 
 	        "FireSound"
 	        {
-	        	"EffectName"			"Hero_BountyHunter.Shuriken.Impact"
-	        	"Target"				"TARGET"
+	        	"EffectName"				"Hero_BountyHunter.Shuriken.Impact"
+	        	"Target"					"TARGET"
 	        }
 
 	        "RunScript"
 	        {
-	        	"ScriptFile"			"abilities/hero_bounty_hunter.lua"
-				"Function"				"ShurikenTossImpact"
+	        	"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShurikenTossImpact"
 
-				"chain_particle"		"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+				"chain_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
 	        }
 
 	        "ApplyModifier"
 	        {
-	        	"ModifierName"			"modifier_imba_shuriken_toss_chain"
-	        	"Target" 				"TARGET"
+	        	"ModifierName"				"modifier_imba_shuriken_toss_chain"
+	        	"Target" 					"TARGET"
 	        }
 	    }
 
@@ -2211,6 +2222,387 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Track
+	//=================================================================================================================
+	"imba_bounty_hunter_track"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"bounty_hunter_track"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+			"particle"  	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+		}
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"8.0 6.0 4.0"
+		"AbilityManaCost"				"25"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1500"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_move_speed_pct"			"20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_radius"				"1500"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_self"				"200 275 350"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_self_percent"		"4 5 6"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold"					"50 100 150"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_percent"			"2 3 4"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"40.0 50.0 60.0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range_tooltip"			"1500"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"gold_steal_scepter"			"30 40 50"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_scepter"			"10 15 20"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" 		"CASTER"
+				"AbilityName"	"imba_bounty_hunter_shadow_jaunt"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"TrackCast"
+
+				"modifier_track"			"modifier_imba_track"
+				"modifier_track_scepter"	"modifier_imba_track_scepter"
+				"aura_track"				"modifier_imba_track_aura"
+				"aura_track_scepter"		"modifier_imba_track_aura_scepter"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
+	   			"EffectAttachType"			"start_at_customorigin"	
+
+				"ControlPointEntities"
+				{
+				    "CASTER" 				"attach_attack1"
+				    "TARGET" 				"attach_hitloc"
+				}	
+			}
+			
+			"FireSound"
+			{
+				"EffectName"				"Hero_BountyHunter.Target"
+				"Target"					"TARGET"
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_track_aura"
+			{
+				"Duration"				"%duration"
+				"IsDebuff"				"1"	
+
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+				"EffectAttachType"		"follow_origin"	
+
+				"Aura" 					"modifier_imba_track_speed"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"	"1"	
+
+				"ThinkInterval"  		"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+						"Duration"		"0.5"
+					}
+				}	
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}	
+
+			"modifier_imba_track_aura_scepter"
+			{
+				"Duration"				"%duration"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+				"IsHidden"				"1"
+
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+				"EffectAttachType"		"follow_origin"	
+
+				"Aura" 					"modifier_imba_track_speed"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"	"1"	
+
+				"ThinkInterval"  		"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+						"Duration"		"0.5"
+					}
+				}	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%bonus_damage_scepter"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}	
+
+			"modifier_imba_track_speed"
+			{
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+				"EffectAttachType"					"follow_origin"	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed_pct"
+				}
+			}	
+
+			"modifier_imba_track_reveal"
+			{
+				"IsHidden"							"1"
+				"IsPurgable"						"0"
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE" 		"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+
+			"modifier_imba_track"
+			{
+				"Duration"							"%duration"
+				"IsDebuff"							"1"
+				"IsHidden"							"1"
+
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+				"EffectAttachType"					"follow_overhead"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"Function"					"Track"
+						"Target"
+						{
+							"Center"				"TARGET"
+							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"modifier"					"modifier_imba_track"
+						"track_modifier"			"modifier_imba_track"
+						"track_scepter_modifier"	"modifier_imba_track_scepter"
+						"track_aura"				"modifier_imba_track_aura"
+						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+					}
+				}
+			}
+
+			"modifier_imba_track_scepter"
+			{
+				"Duration"							"%duration"
+				"IsDebuff"							"1"
+				"IsHidden"							"1"
+				"IsPurgable"						"0"
+
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+				"EffectAttachType"					"follow_overhead"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"Function"					"Track"
+						"Target"
+						{
+							"Center"				"TARGET"
+							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"modifier"					"modifier_imba_track_scepter"
+						"track_modifier"			"modifier_imba_track"
+						"track_scepter_modifier"	"modifier_imba_track_scepter"
+						"track_aura"				"modifier_imba_track_aura"
+						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Shadow Jaunt
+	//=================================================================================================================
+	"imba_bounty_hunter_shadow_jaunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"imba_bounty_hunter_shadow_jaunt"
+		"MaxLevel"						"3"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  	"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+		  	"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+		 }
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500 2000 2500"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"12 10 8"
+		"AbilityManaCost"				"0"	
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// just a mini stun
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1500 2000 2500"
+			}
+		}	
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShadowJaunt"
+
+				"track_modifier"			"modifier_imba_track_aura"
+				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"ability_jinada"			"bounty_hunter_jinada"
+				"blink_sound"				"Hero_Riki.Blink_Strike"
+
+				"Target"
+				{
+					"Center"  				"TARGET"
+
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_HERO"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+		}
+	}	
 
 	//=================================================================================================================
 	// Ability: Drow Ranger's Frost Arrows
