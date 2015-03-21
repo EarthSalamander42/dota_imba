@@ -1,8 +1,14 @@
 maps/
-resource/flash3/
+resource/flash3/scaleform
+resource/flash3/ValveLib
 soundevents/soundevents_diagnostics.vsndevts_c
 resource/overviews/
 particles/
 materials/
 tools_thumbnail_cache.bin
 tools_asset_info.bin
+resource/flash3/custom_ui.txt
+resource/flash3/CustomUI.as
+resource/flash3/CustomUI.fla
+resource/flash3/CustomUI.swf
+resource/flash3/StatsCollection.swf
