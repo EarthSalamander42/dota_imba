@@ -1588,6 +1588,27 @@ function Physics:BlockInSphere(unit, unitToRepel, radius, findClearSpace)
 	end
 end
 
+function Physics:BlockOutSphere(unit, unitToRepel, radius, buffer, findClearSpace)
+	local pos = unit:GetAbsOrigin()
+	local vPos = unitToRepel:GetAbsOrigin()
+	local dir = vPos - pos
+	local dist = dir:Length2D()
+
+	if radius > dist + buffer then
+		return
+	end
+
+	if IsPhysicsUnit(unitToRepel) then
+		unitToRepel.nSkipSlide = 1
+	end
+
+	if findClearSpace then
+		FindClearSpaceForUnit(unitToRepel, pos + dir:Normalized() * (radius - buffer), true)
+	else
+		unitToRepel:SetAbsOrigin(pos + dir:Normalized() * (radius - buffer))
+	end
+end
+
 function Physics:BlockInBox(unit, dist, normal, buffer, findClearSpace)
 	local toside = (dist + buffer) * normal
 
@@ -1745,6 +1766,48 @@ end
 
 
 Physics:start()
+
+Physics:CreateColliderProfile("hoof_stomp_pit_out",
+	{
+		type = COLLIDER_SPHERE,
+		radius = 100,
+		recollideTime = 0,
+		skipFrames = 0,
+		moveSelf = false,
+		buffer = 0,
+		findClearSpace = true,
+		test = function(self, collider, collided)
+			return not collided.is_inside_hoof_stomp_pit
+		end,
+		action = function(self, unit, v)
+			if self.moveSelf then
+				Physics:BlockInSphere(v, unit, self.radius + self.buffer, self.findClearSpace)
+			else
+				Physics:BlockInSphere(unit, v, self.radius + self.buffer, self.findClearSpace)
+			end
+		end
+	})
+
+Physics:CreateColliderProfile("hoof_stomp_pit_in",
+	{
+		type = COLLIDER_SPHERE,
+		radius = 100,
+		recollideTime = 0,
+		skipFrames = 0,
+		moveSelf = false,
+		buffer = 0,
+		findClearSpace = true,
+		test = function(self, collider, collided)
+			return collided.is_inside_hoof_stomp_pit
+		end,
+		action = function(self, unit, v)
+			if self.moveSelf then
+				Physics:BlockOutSphere(v, unit, self.radius, self.buffer, self.findClearSpace)
+			else
+				Physics:BlockOutSphere(unit, v, self.radius, self.buffer, self.findClearSpace)
+			end
+		end
+	})
 
 Physics:CreateColliderProfile("blocker",
 	{

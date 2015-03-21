@@ -3,7 +3,6 @@ BASE_MODULES = {
 	'timers',
 	'physics',
 	'lib.statcollection',
-	'abilities',
 	'barebones',
 }
 

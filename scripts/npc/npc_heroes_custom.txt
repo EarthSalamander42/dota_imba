@@ -57,6 +57,20 @@
 	//}
 
 	//=================================================================================================================
+	// HERO: Abaddon
+	//=================================================================================================================
+	"npc_imba_hero_abaddon"
+	{
+		"override_hero"				"npc_dota_hero_abaddon"
+
+		"Ability1"					"imba_abaddon_death_coil"
+		"Ability2"					"imba_abaddon_aphotic_shield"
+		"Ability3"					"imba_abaddon_frostmourne"
+		"Ability4"					"imba_abaddon_borrowed_time"
+		"Ability5"					"attribute_bonus_str"																		
+	}
+
+	//=================================================================================================================
 	// HERO: Antimage
 	//=================================================================================================================
 	"npc_imba_hero_antimage"
@@ -121,7 +135,6 @@
 		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
-		"Ability2"					"bounty_hunter_jinada"
 		"Ability3"					"imba_bounty_hunter_wind_walk"
 		"Ability4"					"imba_bounty_hunter_shadow_jaunt"
 		"Ability5"					"imba_bounty_hunter_track"
@@ -132,6 +145,27 @@
 		"AttackDamageMax"			"33"
 
 		"AttributeBaseAgility"		"24"
+	}
+
+	//=================================================================================================================
+	// HERO: Centaur
+	//=================================================================================================================
+    "npc_imba_hero_centaur"
+	{
+		"override_hero"				"npc_dota_hero_centaur"
+ 
+		"ModelScale" 				".90"
+		
+		"AttributeBaseStrength"		"28"
+		"AttributeStrengthGain"		"4.0"
+
+		"Ability1"					"imba_centaur_hoof_stomp"
+		//"Ability2"					"imba_centaur_double_edge"
+		//"Ability3"					"imba_centaur_return"
+		//"Ability4"					"imba_centaur_stampede"
+		"Ability5"					"attribute_bonus_str"	
+
+		"AttributeBaseAgility"		"30"
 	}
 
 	//=================================================================================================================
