@@ -151,20 +151,20 @@ function GameMode:OnGameInProgress()
 end
 
 function GameMode:PlayerSay( keys )
-	local ply = keys.ply
-	local hero = ply:GetAssignedHero()
-	local txt = keys.text
+	--local ply = keys.ply
+	--local hero = ply:GetAssignedHero()
+	--local txt = keys.text
 
-	if keys.teamOnly then
+	--if keys.teamOnly then
 		-- This text was team-only.
-	end
+	--end
 
-	if txt == nil or txt == "" then
-		return
-	end
+	--if txt == nil or txt == "" then
+	--	return
+	--end
 
   -- At this point we have valid text from a player.
-	print("P" .. ply .. " wrote: " .. keys.text)
+	--print("P" .. ply .. " wrote: " .. keys.text)
 end
 
 -- Cleanup a player when they leave

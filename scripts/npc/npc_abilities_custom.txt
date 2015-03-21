@@ -228,7 +228,712 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Ability: Abaddon's Mist Coil
+	//=================================================================================================================
+	"imba_abaddon_death_coil"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"								"1"
+		"AbilityTextureName"							"abaddon_death_coil"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"								"800"
+		"AbilityCastPoint"								"0.452 0.452 0.452 0.452"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"5.0 5.0 5.0 5.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"50 60 70 80"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"1250"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"self_heal"								"75 100 125 150"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"target_damage"							"100 150 200 250"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"heal_amount"							"100 150 200 250"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"2.5"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_base"								"-10"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_stack"							"-10"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"move_speed_pct"						"15"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_speed"							"20"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_stacks"							"4"
+			}
+		}
+
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"Function"								"DeathCoil"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_frostmourne_debuff_base"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+				
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"Function"		"FrostMourneAttacked"
+					}
+				}
+			}
+
+			"modifier_frostmourne_debuff"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+			}
+
+			"modifier_frostmourne_buff_base"
+			{
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+
+			"modifier_frostmourne_buff"
+			{
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Abaddon's Aphotic Shield
+	//=================================================================================================================
+	"imba_abaddon_aphotic_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_NO"
+		"FightRecapLevel"								"1"
+		"AbilityTextureName"							"abaddon_aphotic_shield"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"								"500"
+		"AbilityCastPoint"								"0.452 0.452 0.452 0.452"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"6.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"50"
+
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"15.0"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"damage_absorb"							"110.0 140.0 170.0 200.0"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius"								"675"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"2.5"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_base"								"-10"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_stack"							"-10"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"move_speed_pct"						"15"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_speed"							"20"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_stacks"							"4"
+			}
+		}
+
+		"precache"
+		{	
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"Function"								"AphoticShield"
+			}
+
+			"FireSound"
+			{
+				"EffectName"							"Hero_Abaddon.AphoticShield.Cast"
+				"Target"								"TARGET"  
+			}
+
+			"RemoveModifier"
+			{
+				"Target" 								"TARGET"
+				"ModifierName"							"modifier_aphotic_shield"
+			}
+
+			"ApplyModifier"
+			{
+				"Target" 								"TARGET"
+				"ModifierName"							"modifier_aphotic_shield"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_aphotic_shield"
+			{
+				"IsBuff"								"1"
+				"Duration"								"%duration"
+			
+				"ThinkInterval"							"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"AphoticShieldHealth"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"AphoticShieldAbsorb"
+						"DamageTaken"					"%attack_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"AttachEffect"
+					{
+					 	"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+					 	"EffectAttachType"				"follow_origin"
+					 	"Target"						"TARGET"
+					 	"ControlPointEntities"
+						{
+							"TARGET"					"attach_origin"
+							"TARGET"					"attach_origin"
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"EndShieldParticle"
+					}
+				}
+			}
+
+			"modifier_frostmourne_debuff_base"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+				
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"Function"		"FrostMourneAttacked"
+					}
+				}
+			}
+
+			"modifier_frostmourne_debuff"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+			}
+
+			"modifier_frostmourne_buff_base"
+			{
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+
+			"modifier_frostmourne_buff"
+			{
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"TextureName"							"abaddon_frostmourne"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Abaddon's Curse of Avernus
+	//=================================================================================================================
+	"imba_abaddon_frostmourne"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"							"abaddon_frostmourne"
+		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"2.5"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_base"								"-10"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow_stack"							"-10"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"move_speed_pct"						"15"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_speed"							"20"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_stacks"							"1 2 3 4"
+			}
+		}
+
+		"precache"
+		{
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+		}
+
+		"Modifiers"
+		{
+			"modifier_frostmourne"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"Function"		"FrostMourne"
+					}
+				}
+			}
+
+			"modifier_frostmourne_debuff_base"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+				
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"Function"		"FrostMourneAttacked"
+					}
+				}
+			}
+
+			"modifier_frostmourne_debuff"
+			{
+				"IsDebuff"								"1"
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
+				}
+			}
+
+			"modifier_frostmourne_buff_base"
+			{
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+
+			"modifier_frostmourne_buff"
+			{
+				"IsBuff"								"1"
+				"Duration"								"%buff_duration"
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+				"EffectAttachType"						"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Abaddon's Borrowed Time
+	//=================================================================================================================
+	"imba_abaddon_borrowed_time"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"								"2"
+		"AbilityTextureName"							"abaddon_borrowed_time"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"								"0.452 0.452 0.452"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"60.0 50.0 40.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0 0 0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"hp_threshold"							"400"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"4 6 8"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration_scepter"						"6 8 10"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"redirect"								"0.4"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"redirect_range"						"900"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"redirect_property"						"-40"
+			}
+		}
+
+		"precache"
+		{	
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"								"CASTER"
+				"EffectName"							"Hero_Abaddon.BorrowedTime"	
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"Function"								"BorrowedTimePurge"
+			}
+			
+		}
+
+		"Modifiers"
+		{
+			"modifier_borrowed_time_passive"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"BorrowedTimeActivate"
+					}
+				}
+			}
+
+			"modifier_borrowed_time"
+			{
+				"IsBuff"								"1"
+
+				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"						"follow_origin"
+
+				"StatusEffectName"						"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+				"StatusEffectPriority"  				"15"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"BorrowedTimeHeal"
+						"DamageTaken"					"%attack_damage"
+					}
+				}
+
+				"Aura"          						"modifier_borrowed_time_allies"
+				"Aura_Radius"   						"%redirect_range"
+				"Aura_Teams"    						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    						"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster"					"0"
+			}
+
+			"modifier_borrowed_time_allies"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+
+				"OnTakeDamage"
+				// "%attack_damage" is set to the damage value after mitigation
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"BorrowedTimeAllies"
+						"DamageTaken"					"%attack_damage"
+					}
+				}
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%redirect_property" 
+				}
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Ability: Antimage Mana Break
 	//=================================================================================================================
@@ -694,8 +1399,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"axe_battle_hunger"	
 
@@ -718,7 +1423,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"10 15 20 25"	
+		"AbilityDamage"					"8 12 16 20"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -764,7 +1469,12 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_imba_axe_battle_hunger_enemy"
-				"Target" 		"TARGET"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+
 				"Duration"		"%duration"
 			}
 		}	
@@ -807,8 +1517,13 @@
 				{
 					"Damage"
 					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Target"
+						{
+							"Center"  	"TARGET"
+							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+						
+						"Type"			"DAMAGE_TYPE_PURE"
 						"Damage"		"%AbilityDamage"
 					}
 				}	
@@ -1463,7 +2178,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"90 160 230 300"	
+		"AbilityDamage"					"100 175 250 325"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -1475,13 +2190,13 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"heal_amt"						"90 160 230 300"
+				"heal_amt"						"100 175 250 325"
 			}
 
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_steal_amt"				"45 80 115 150"
+				"mana_steal_amt"				"60 90 120 150"
 			}
 
 			"03"
@@ -1859,6 +2574,902 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Bounty Hunter's Shuriken Toss
+	//=================================================================================================================
+	"imba_bounty_hunter_shuriken_toss"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"bounty_hunter_shuriken_toss"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		  "particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+		  "particle"    				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+		  "particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+		 }
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"10"
+		"AbilityManaCost"				"90 100 110 120"	
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// just a mini stun
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 200 275 350"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"3000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mini_stun"				"0.1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_range"			"400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_strength"			"35 40 45 50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chain_duration"		"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_strength_tooltip"	"350 400 450 500"
+			}
+
+		}	
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShurikenToss"
+
+				"track_modifier"			"modifier_imba_track_aura"
+				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"shuriken_particle"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_BountyHunter.Shuriken"
+				"Target"					"CASTER"
+			}	
+		}	
+
+		"OnProjectileHitUnit"
+	    {
+	    	"FireEffect"
+	    	{
+	    		"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
+	    		"Target"					"TARGET"
+	    		"EffectAttachType"			"attach_hitloc"
+	    	}	
+
+	        "Damage"
+	        {
+	        	"Type"						"DAMAGE_TYPE_MAGICAL"
+	        	"Damage"					"%damage"
+	        	"Target"					"TARGET"
+	        }	
+
+	        "Stun"
+	        {
+	        	"Duration"					"%mini_stun"
+	        	"Target"					"TARGET"        	
+	        }	
+
+	        "FireSound"
+	        {
+	        	"EffectName"				"Hero_BountyHunter.Shuriken.Impact"
+	        	"Target"					"TARGET"
+	        }
+
+	        "RunScript"
+	        {
+	        	"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShurikenTossImpact"
+
+				"chain_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+	        }
+
+	        "ApplyModifier"
+	        {
+	        	"ModifierName"				"modifier_imba_shuriken_toss_chain"
+	        	"Target" 					"TARGET"
+	        }
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_imba_shuriken_toss_chain"
+	    	{
+	    		"Passive"				"0"
+	    		"IsHidden"				"0"
+	    		"IsDebuff"				"1"
+	    		"Duration"				"%chain_duration"
+	    		
+	    		"ThinkInterval"  		"0.1"
+	    		"OnIntervalThink"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+						"Function"				"ShurikenTossChain"
+	    			}
+	    		}
+
+	    		"OnDestroy"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+						"Function"				"ShurikenTossChainEnd"
+	    			}
+	    		}
+	    	}
+	    }
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Shadow Walk
+	//=================================================================================================================
+	"imba_bounty_hunter_wind_walk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"bounty_hunter_wind_walk"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+		  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+		  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
+		 }	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"40.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"30 60 90 120"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_speed"				"10 15 20 25"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+				"Target"				"CASTER"
+				"EffectAttachType"		"attach_origin"
+			}
+
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_BountyHunter.WindWalk"
+			}	
+
+			"ApplyModifier"
+			{
+				"Target"				"CASTER"
+				"ModifierName"			"modifier_imba_wind_walk_fade"
+			}	
+
+			"DelayedAction"
+			{
+				"Delay"	"%fade_time"	
+
+				"Action" 
+				{
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_imba_wind_walk"
+					}
+
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}  
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_wind_walk_fade"
+			{
+				"Duration"				"%fade_time"
+				"IsBuff"				"1"
+				"EffectName"			"particles/generic_hero_status/status_invisibility_start.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
+				}
+			}
+
+			"modifier_imba_wind_walk"
+			{
+				"Duration"	"%duration"
+				"IsBuff"	"1"	
+
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_imba_wind_walk"
+					}
+
+					"RemoveModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}	
+
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_bounty_hunter.lua"
+						"Function"		"WindWalk"
+
+						"modifier"		"modifier_imba_wind_walk"
+					}
+				}	
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"ModifierName"	"modifier_invisible"
+					}
+				}	
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Track
+	//=================================================================================================================
+	"imba_bounty_hunter_track"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"bounty_hunter_track"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+			"particle"  	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+		}
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"8.0 6.0 4.0"
+		"AbilityManaCost"				"25"
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1500"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_move_speed_pct"			"20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_radius"				"1500"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_self"				"200 275 350"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_self_percent"		"4 5 6"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold"					"50 100 150"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_gold_percent"			"2 3 4"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"40.0 50.0 60.0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range_tooltip"			"1500"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"gold_steal_scepter"			"30 40 50"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_scepter"			"10 15 20"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" 		"CASTER"
+				"AbilityName"	"imba_bounty_hunter_shadow_jaunt"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"TrackCast"
+
+				"modifier_track"			"modifier_imba_track"
+				"modifier_track_scepter"	"modifier_imba_track_scepter"
+				"aura_track"				"modifier_imba_track_aura"
+				"aura_track_scepter"		"modifier_imba_track_aura_scepter"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
+	   			"EffectAttachType"			"start_at_customorigin"	
+
+				"ControlPointEntities"
+				{
+				    "CASTER" 				"attach_attack1"
+				    "TARGET" 				"attach_hitloc"
+				}	
+			}
+			
+			"FireSound"
+			{
+				"EffectName"				"Hero_BountyHunter.Target"
+				"Target"					"TARGET"
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_track_aura"
+			{
+				"Duration"				"%duration"
+				"IsDebuff"				"1"	
+
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+				"EffectAttachType"		"follow_origin"	
+
+				"Aura" 					"modifier_imba_track_speed"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"	"1"	
+
+				"ThinkInterval"  		"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+						"Duration"		"0.5"
+					}
+				}	
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}	
+
+			"modifier_imba_track_aura_scepter"
+			{
+				"Duration"				"%duration"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+				"IsHidden"				"1"
+
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+				"EffectAttachType"		"follow_origin"	
+
+				"Aura" 					"modifier_imba_track_speed"
+				"Aura_Radius" 			"%aura_radius"
+				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"	"1"	
+
+				"ThinkInterval"  		"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_track_reveal"
+						"Target" 		"TARGET"
+						"Duration"		"0.5"
+					}
+				}	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%bonus_damage_scepter"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}	
+
+			"modifier_imba_track_speed"
+			{
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+				"EffectAttachType"					"follow_origin"	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed_pct"
+				}
+			}	
+
+			"modifier_imba_track_reveal"
+			{
+				"IsHidden"							"1"
+				"IsPurgable"						"0"
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE" 		"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+
+			"modifier_imba_track"
+			{
+				"Duration"							"%duration"
+				"IsDebuff"							"1"
+				"IsHidden"							"1"
+
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+				"EffectAttachType"					"follow_overhead"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"Function"					"Track"
+						"Target"
+						{
+							"Center"				"TARGET"
+							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"modifier"					"modifier_imba_track"
+						"track_modifier"			"modifier_imba_track"
+						"track_scepter_modifier"	"modifier_imba_track_scepter"
+						"track_aura"				"modifier_imba_track_aura"
+						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+					}
+				}
+			}
+
+			"modifier_imba_track_scepter"
+			{
+				"Duration"							"%duration"
+				"IsDebuff"							"1"
+				"IsHidden"							"1"
+				"IsPurgable"						"0"
+
+				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+				"EffectAttachType"					"follow_overhead"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"Function"					"Track"
+						"Target"
+						{
+							"Center"				"TARGET"
+							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+
+						"modifier"					"modifier_imba_track_scepter"
+						"track_modifier"			"modifier_imba_track"
+						"track_scepter_modifier"	"modifier_imba_track_scepter"
+						"track_aura"				"modifier_imba_track_aura"
+						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter's Shadow Jaunt
+	//=================================================================================================================
+	"imba_bounty_hunter_shadow_jaunt"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"imba_bounty_hunter_shadow_jaunt"
+		"MaxLevel"						"3"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		 {
+		  	"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+		  	"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
+		 }
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500 2000 2500"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"12 10 8"
+		"AbilityManaCost"				"0"	
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// just a mini stun
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1500 2000 2500"
+			}
+		}	
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"Function"					"ShadowJaunt"
+
+				"track_modifier"			"modifier_imba_track_aura"
+				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"ability_jinada"			"bounty_hunter_jinada"
+				"blink_sound"				"Hero_Riki.Blink_Strike"
+
+				"Target"
+				{
+					"Center"  				"TARGET"
+
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_HERO"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Ability: Centaur's Hoof Stomp
+	//=================================================================================================================
+	"imba_centaur_hoof_stomp"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"centaur_hoof_stomp"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.36"
+		"AbilityCastRange"				"325 350 375 400"
+		"AbilityCooldown"				"13.0"
+		"AbilityManaCost"				"130 120 110 100"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"325 350 375 400"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"2.0 2.25 2.5 2.75"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stomp_damage"					"100 150 200 250"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pit_duration"					"2.75 3.25 3.75 4.25"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"pit_width"						"150"
+			}
+		}	
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
+		}	
+
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
+				"EffectAttachType"  	"world_origin"
+				"EffectRadius"			"%radius"
+				"Target"            	"CASTER"
+				"ControlPoints"
+				//{
+				//	"01"	"%radius 0 0"
+				//}
+			}
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+				"EffectAttachType" 		"follow_origin"
+				"EffectRadius"			"%radius"
+				"Target" 				"CASTER"
+				"ControlPoints"
+				{
+					"01"	"%radius 0 %radius"
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"			"Hero_Centaur.HoofStomp"
+				"Target" 				"CASTER"
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"  			"CASTER"
+					"Radius" 			"%radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}	
+
+				"Action"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%stomp_damage"
+					}	
+
+					"ApplyModifier"
+					{
+						"Target" 		"TARGET"
+						"ModifierName"	"modifier_hoof_stomp"
+					}
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_centaur.lua"
+				"Function"				"HoofStomp"
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_hoof_stomp"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%stun_duration"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED" 	"MODIFIER_STATE_VALUE_ENABLED"			
+				}
+
+				"OverrideAnimation"				"ACT_DOTA_DISABLED"
+				"EffectName"					"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"				"follow_overhead"
+			}
+
+			//"modifier_dummy_particle"
+			//{
+			//	"IsHidden"			"1"
+			//	"FireEffect"
+			//	{
+			//		"EffectName"        "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_call_down_explosion_impact_h.vpcf"
+			//		"EffectAttachType"  "follow_origin"
+			//		"EffectRadius"		"%radius"
+			//		"Target"            "TARGET"
+			//		"ControlPoints"
+			//		{
+			//			"01"	"%radius 0 %radius"
+			//		}
+			//	}
+			//}
+		}
+	}
+
+	//=================================================================================================================
 	// Ability: Drow Ranger's Frost Arrows
 	//=================================================================================================================
 	"imba_drow_ranger_frost_arrows"
@@ -1874,7 +3485,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"625"
+		"AbilityCastRange"						"800"
 		"AbilityCastPoint"						"0.0"
 
 		// Time		
@@ -1926,9 +3537,10 @@
 		"precache"
 		{
 			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
 			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
 			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
 		}
 		
@@ -2046,9 +3658,18 @@
 				"Duration"						"%freeze_duration"
 				"TextureName"					"imba_drow_ranger_frost_arrows"
 				
-				"EffectName"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
 				"StatusEffectPriority" 			"10"
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"hero_Crystal.frostbite"
+					}
+				}
 
 				"States"
 				{

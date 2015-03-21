@@ -299,4 +299,31 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Bounty Hunter Jinada
+	//=================================================================================================================
+	"bounty_hunter_jinada"
+	{
+		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_multiplier"		"160 190 220 250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attackspeed"		"-25"
+			}
+		}
+	}	
 }
