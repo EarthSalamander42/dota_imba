@@ -239,7 +239,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"								"1"
@@ -411,7 +411,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_NO"
 		"FightRecapLevel"								"1"
@@ -485,6 +485,16 @@
 				"var_type"								"FIELD_INTEGER"
 				"strength_bonus"						"100"
 			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_charges"							"2"
+			}
+			"12"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"charge_cooldown"						"6.0"
+			}
 		}
 
 		"precache"
@@ -503,29 +513,34 @@
 			{
 				"ScriptFile"							"abilities/hero_abaddon.lua"
 				"Function"								"AphoticShield"
-			}
 
-			"FireSound"
-			{
-				"EffectName"							"Hero_Abaddon.AphoticShield.Cast"
-				"Target"								"TARGET"  
-			}
-
-			"RemoveModifier"
-			{
-				"Target" 								"TARGET"
-				"ModifierName"							"modifier_aphotic_shield"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 								"TARGET"
-				"ModifierName"							"modifier_aphotic_shield"
+				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
+				"shield_modifier"						"modifier_aphotic_shield"
+				"cast_sound"							"Hero_Abaddon.AphoticShield.Cast"
 			}
 		}
 
 		"Modifiers"
-		{
+		{	
+			"modifier_aphotic_shield_stack_counter"
+			{
+				"Passive"								"1"
+				"IsPurgable"							"0"
+				"IsBuff"								"1"
+				"IsHidden"								"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"AphoticShieldInitialize"
+
+						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
+					}
+				}
+			}
+
 			"modifier_aphotic_shield"
 			{
 				"IsBuff"								"1"
