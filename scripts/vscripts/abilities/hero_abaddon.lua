@@ -13,7 +13,11 @@ function DeathCoil( keys )
 	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
 	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
 	
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	local max_stacks = 1
+	if ability_frostmourne:GetLevel() ~= 0 then
+		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
+	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
 	local modifier_debuff = "modifier_frostmourne_debuff"
 	local modifier_buff_base = "modifier_frostmourne_buff_base"
@@ -44,7 +48,9 @@ function DeathCoil( keys )
 			target:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
 	else
-		target:Heal( heal, caster)
+		if target ~= caster then
+			target:Heal( heal, caster)
+		end
 		if target:HasModifier(modifier_buff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
@@ -150,9 +156,9 @@ function EndShieldParticle( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local strentgh = caster.GetStrength(caster)
+	local strength = caster.GetStrength(caster)
 	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
-	local max_damage_absorb = base_damage_absorb + strentgh
+	local max_damage_absorb = base_damage_absorb + strength
 	local damageType = DAMAGE_TYPE_MAGICAL
 	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
 
@@ -161,7 +167,11 @@ function EndShieldParticle( keys )
 
 	local enemies = FindUnitsInRadius(caster.GetTeam(caster), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	local max_stacks = 1
+	if ability_frostmourne:GetLevel() ~= 0 then
+		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
+	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
 	local modifier_debuff = "modifier_frostmourne_debuff"
 
@@ -326,7 +336,7 @@ function BorrowedTimeAllies( keys )
 	local ability = keys.ability
 	local damage_taken = keys.DamageTaken
 	local redirect = ability:GetLevelSpecialValueFor("redirect", ability:GetLevel() - 1 )
-	local unit = keys.unit
+	local unit = keys.attacker
 
 	local redirect_damage = damage_taken * ( redirect / (1 - redirect) )
 	
