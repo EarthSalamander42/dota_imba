@@ -2,7 +2,7 @@
 "DOTAUnits"
 {
 	"Version"	"1"
-  
+  	
 	"npc_dummy_unit"
 	{
 		// General
@@ -184,7 +184,6 @@
 		//----------------------------------------------------------------
 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
 	}
-
   
 	//------------------------------------------------------------------------------------
 	//- This unit can be used to precache different models/particles/sounds              -

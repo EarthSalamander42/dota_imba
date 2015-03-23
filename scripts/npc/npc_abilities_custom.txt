@@ -3374,32 +3374,20 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"pit_width"						"150"
+				"pit_width"						"180"
 			}
 		}	
 
 		"precache"
 		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-			"particle"	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"		"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
 		}	
 
 		"OnSpellStart"
 		{
-			"FireEffect"
-			{
-				"EffectName"        	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
-				"EffectAttachType"  	"world_origin"
-				"EffectRadius"			"%radius"
-				"Target"            	"CASTER"
-				"ControlPoints"
-				//{
-				//	"01"	"%radius 0 0"
-				//}
-			}
-
 			"FireEffect"
 			{
 				"EffectName"			"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
@@ -3467,22 +3455,6 @@
 				"EffectName"					"particles/generic_gameplay/generic_stunned.vpcf"
 				"EffectAttachType"				"follow_overhead"
 			}
-
-			//"modifier_dummy_particle"
-			//{
-			//	"IsHidden"			"1"
-			//	"FireEffect"
-			//	{
-			//		"EffectName"        "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_call_down_explosion_impact_h.vpcf"
-			//		"EffectAttachType"  "follow_origin"
-			//		"EffectRadius"		"%radius"
-			//		"Target"            "TARGET"
-			//		"ControlPoints"
-			//		{
-			//			"01"	"%radius 0 %radius"
-			//		}
-			//	}
-			//}
 		}
 	}
 
