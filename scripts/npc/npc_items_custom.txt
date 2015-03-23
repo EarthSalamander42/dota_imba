@@ -1121,49 +1121,49 @@
 	//=================================================================================================================
 	// Cheese
 	//=================================================================================================================
-	"item_imba_cheese"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1033"
-		"BaseClass"						"item_cheese"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"Model"							"models/props_gameplay/cheese.mdl"
-		"FightRecapLevel"				"2"
-		
-		// Stats	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3000"
-		"ItemShopTags"					""
-		"ItemQuality"					"epic"
-		"ItemPurchasable"				"0"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"3"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_restore"		"10000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_restore"			"5000"
-			}
-		}
-	}
+//	"item_imba_cheese"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"1033"
+//		"BaseClass"						"item_cheese"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+//		"Model"							"models/props_gameplay/cheese.mdl"
+//		"FightRecapLevel"				"2"
+//		
+//		// Stats	
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilityCooldown"				"10.0"
+//		
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"3000"
+//		"ItemShopTags"					""
+//		"ItemQuality"					"epic"
+//		"ItemPurchasable"				"0"
+//		"ItemStackable"					"1"
+//		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+//		"ItemPermanent"					"0"
+//		"ItemInitialCharges"			"3"
+//		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+//		"ItemContributesToNetWorthWhenDropped"	"0"
+//		
+//		// Special	
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilitySpecial"
+//		{
+//			"01"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"health_restore"		"10000"
+//			}
+//			"02"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"mana_restore"			"5000"
+//			}
+//		}
+//	}
 	
 	//=================================================================================================================
 	// Magic Stick
@@ -1614,7 +1614,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1043"
-		"BaseClass"						"item_imba_sentry"
+		"BaseClass"						"item_ward_sentry"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -5075,51 +5075,51 @@
 	//=================================================================================================================
 	// Aegis of Immortality
 	//=================================================================================================================
-	"item_imba_aegis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1117"
-		"BaseClass"						"item_aegis"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/aegis.mdl"		
-		"FightRecapLevel"				"2"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"
-		"ItemShopTags"					""
-		"ItemQuality"					"artifact"
+//	"item_imba_aegis"
+//	{
+//		// General
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ID"							"1117"
+//		"BaseClass"						"item_aegis"
+//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+//		"Model"							"models/props_gameplay/aegis.mdl"		
+//		"FightRecapLevel"				"2"
+//		
+//		// Item Info
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemCost"						"0"
+//		"ItemShopTags"					""
+//		"ItemQuality"					"artifact"
 
-		// Items		
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemPurchasable"				"0"
-		"ItemDroppable"					"0"
-		"ItemSellable"					"0"
-		"ItemKillable"					"1"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"reincarnate_time"		"3.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disappear_time"		"480.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"disappear_time_minutes_tooltip"		"8"
-			}
-		}
-	}
+//		// Items		
+//		//-------------------------------------------------------------------------------------------------------------
+//		"ItemPurchasable"				"0"
+//		"ItemDroppable"					"0"
+//		"ItemSellable"					"0"
+//		"ItemKillable"					"1"
+//		"ItemContributesToNetWorthWhenDropped"	"0"
+//		
+//		// Special	
+//		//-------------------------------------------------------------------------------------------------------------
+//		"AbilitySpecial"
+//		{
+//			"01"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"reincarnate_time"		"3.0"
+//			}
+//			"02"
+//			{
+//				"var_type"				"FIELD_FLOAT"
+//				"disappear_time"		"480.0"
+//			}
+//			"03"
+//			{
+//				"var_type"				"FIELD_INTEGER"
+//				"disappear_time_minutes_tooltip"		"8"
+//			}
+//		}
+//	}
 
 	//=================================================================================================================
 	// Recipe: Shiva's  Guard
