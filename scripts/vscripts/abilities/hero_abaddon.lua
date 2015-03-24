@@ -350,7 +350,7 @@ function BorrowedTimeActivate( keys )
 	if ability:GetCooldownTimeRemaining() == 0 then
 		if caster:GetHealth() < 400 then
 			-- prevents illusions from gaining the borrowed time buff
-			if caster:IsHero() then
+			if not caster:IsIllusion() then
 				BorrowedTimePurge( keys )
 				caster:EmitSound("Hero_Abaddon.BorrowedTime")
 				ability:StartCooldown(cooldown)

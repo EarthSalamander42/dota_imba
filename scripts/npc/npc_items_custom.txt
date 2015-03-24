@@ -8730,16 +8730,19 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1180"
-		"BaseClass"						"item_arcane_boots"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_imba_arcane_boots"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45.0"
+		"AbilityCooldown"				"55.0"
+		"AbilityManaCost"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
 		"ItemCost"						"1450"
 		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
 		"ItemQuality"					"rare"
@@ -8755,7 +8758,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"70"
+				"bonus_movement"		"65"
 			}
 			"02"
 			{
@@ -8770,7 +8773,71 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_amount"		"150"
+				"replenish_amount"		"135"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"replenish_percent"		"1.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"replenish_duration"	"8.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_arcane_boots.lua"
+				"Function"				"ArcaneBoots"
+
+				"replenish_radius"		"%replenish_radius"
+				"replenish_amount"		"%replenish_amount"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"item_imba_arcane_boots_replenish"
+				"Duration"				"%replenish_duration"
+
+				"Target"
+				{
+					"Center"  			"CASTER"
+					"Radius" 			"%replenish_radius"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}	
+			}
+		}
+		
+		"Modifiers"
+		{
+			"item_imba_arcane_boots"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				//"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+				}
+			}
+
+			"item_imba_arcane_boots_replenish"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%replenish_percent"
+				}
 			}
 		}
 	}
