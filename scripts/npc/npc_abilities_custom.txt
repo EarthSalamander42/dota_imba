@@ -239,7 +239,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"								"1"
@@ -248,11 +248,11 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"800"
-		"AbilityCastPoint"								"0.452 0.452 0.452 0.452"
+		"AbilityCastPoint"								"0.35"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"5.0 5.0 5.0 5.0"
+		"AbilityCooldown"								"5.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -312,16 +312,13 @@
 				"var_type"								"FIELD_INTEGER"
 				"attack_speed"							"20"
 			}
-			"11"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"max_stacks"							"4"
-			}
 		}
 
 		"precache"
 		{
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
 		}
 
@@ -339,14 +336,15 @@
 			"modifier_frostmourne_debuff_base"
 			{
 				"IsDebuff"								"1"
+				"IsHidden"								"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 				
 				"OnAttacked"
@@ -363,24 +361,24 @@
 			{
 				"IsDebuff"								"1"
 				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
+				
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 			}
 
 			"modifier_frostmourne_buff_base"
 			{
-				"IsHidden"								"0"
+				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 				"EffectAttachType"						"follow_origin"
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
@@ -392,9 +390,9 @@
 			{
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
+
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
@@ -413,7 +411,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_NO"
 		"FightRecapLevel"								"1"
@@ -422,7 +420,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"500"
-		"AbilityCastPoint"								"0.452 0.452 0.452 0.452"
+		"AbilityCastPoint"								"0.35"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -440,7 +438,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"15.0"
+				"duration"								"30.0"
 			}
 			"02"
 			{
@@ -485,7 +483,17 @@
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"max_stacks"							"4"
+				"strength_bonus"						"100"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"max_charges"							"2"
+			}
+			"12"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"charge_cooldown"						"6.0"
 			}
 		}
 
@@ -495,6 +503,8 @@
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
+			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 		}
 
 		"OnSpellStart"
@@ -503,29 +513,34 @@
 			{
 				"ScriptFile"							"abilities/hero_abaddon.lua"
 				"Function"								"AphoticShield"
-			}
 
-			"FireSound"
-			{
-				"EffectName"							"Hero_Abaddon.AphoticShield.Cast"
-				"Target"								"TARGET"  
-			}
-
-			"RemoveModifier"
-			{
-				"Target" 								"TARGET"
-				"ModifierName"							"modifier_aphotic_shield"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 								"TARGET"
-				"ModifierName"							"modifier_aphotic_shield"
+				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
+				"shield_modifier"						"modifier_aphotic_shield"
+				"cast_sound"							"Hero_Abaddon.AphoticShield.Cast"
 			}
 		}
 
 		"Modifiers"
-		{
+		{	
+			"modifier_aphotic_shield_stack_counter"
+			{
+				"Passive"								"1"
+				"IsPurgable"							"0"
+				"IsBuff"								"1"
+				"IsHidden"								"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"Function"						"AphoticShieldInitialize"
+
+						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
+					}
+				}
+			}
+
 			"modifier_aphotic_shield"
 			{
 				"IsBuff"								"1"
@@ -576,15 +591,16 @@
 
 			"modifier_frostmourne_debuff_base"
 			{
+				"IsHidden"								"1"
 				"IsDebuff"								"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 				
 				"OnAttacked"
@@ -601,19 +617,18 @@
 			{
 				"IsDebuff"								"1"
 				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
+
 				"TextureName"							"abaddon_frostmourne"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 			}
 
 			"modifier_frostmourne_buff_base"
 			{
-				"IsHidden"								"0"
+				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
@@ -630,8 +645,7 @@
 			{
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
+
 				"TextureName"							"abaddon_frostmourne"
 				"Properties"
 				{
@@ -693,6 +707,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"max_stacks"							"1 2 3 4"
 			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_attack_speed"						"20"
+			}
 		}
 
 		"precache"
@@ -720,14 +739,15 @@
 
 			"modifier_frostmourne_debuff_base"
 			{
+				"IsHidden"								"1"
 				"IsDebuff"								"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 				
 				"OnAttacked"
@@ -744,22 +764,21 @@
 			{
 				"IsDebuff"								"1"
 				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_tooltip"
 				}
 			}
 
 			"modifier_frostmourne_buff_base"
 			{
-				"IsHidden"								"0"
+				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 				"EffectAttachType"						"follow_origin"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
@@ -771,8 +790,7 @@
 			{
 				"IsBuff"								"1"
 				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
@@ -796,7 +814,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"								"0.452 0.452 0.452"
+		"AbilityCastPoint"								"0.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -804,7 +822,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"0 0 0"
+		"AbilityManaCost"								"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -817,28 +835,28 @@
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
+				"var_type"								"FIELD_INTEGER"
 				"duration"								"4 6 8"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
+				"var_type"								"FIELD_INTEGER"
 				"duration_scepter"						"6 8 10"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.4"
+				"redirect"								"0.30"
 			}
 			"05"
 			{
-				"var_type"								"FIELD_FLOAT"
+				"var_type"								"FIELD_INTEGER"
 				"redirect_range"						"900"
 			}
 			"06"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"redirect_property"						"-40"
+				"var_type"								"FIELD_INTEGER"
+				"redirect_property"						"-30"
 			}
 		}
 
@@ -905,15 +923,13 @@
 				"Aura"          						"modifier_borrowed_time_allies"
 				"Aura_Radius"   						"%redirect_range"
 				"Aura_Teams"    						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"    						"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO"
 				"Aura_ApplyToCaster"					"0"
 			}
 
 			"modifier_borrowed_time_allies"
 			{
 				"Passive"								"0"
-				"IsHidden"								"0"
 				"IsBuff"								"1"
 
 				"OnTakeDamage"
@@ -926,9 +942,10 @@
 						"DamageTaken"					"%attack_damage"
 					}
 				}
+
 				"Properties"
 				{
-				    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" "%redirect_property" 
+				    "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%redirect_property" 
 				}
 			}
 		}
@@ -942,6 +959,7 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
 		"AbilityTextureName"		"antimage_mana_break"
 
 		"precache"
@@ -3357,32 +3375,20 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"pit_width"						"150"
+				"pit_width"						"180"
 			}
 		}	
 
 		"precache"
 		{
-			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"	"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
-			"particle"	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"particle"		"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"		"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
 		}	
 
 		"OnSpellStart"
 		{
-			"FireEffect"
-			{
-				"EffectName"        	"particles/units/heroes/hero_gyrocopter/gyro_call_down_explosion_impact_a.vpcf"
-				"EffectAttachType"  	"world_origin"
-				"EffectRadius"			"%radius"
-				"Target"            	"CASTER"
-				"ControlPoints"
-				//{
-				//	"01"	"%radius 0 0"
-				//}
-			}
-
 			"FireEffect"
 			{
 				"EffectName"			"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
@@ -3450,22 +3456,6 @@
 				"EffectName"					"particles/generic_gameplay/generic_stunned.vpcf"
 				"EffectAttachType"				"follow_overhead"
 			}
-
-			//"modifier_dummy_particle"
-			//{
-			//	"IsHidden"			"1"
-			//	"FireEffect"
-			//	{
-			//		"EffectName"        "particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_call_down_explosion_impact_h.vpcf"
-			//		"EffectAttachType"  "follow_origin"
-			//		"EffectRadius"		"%radius"
-			//		"Target"            "TARGET"
-			//		"ControlPoints"
-			//		{
-			//			"01"	"%radius 0 %radius"
-			//		}
-			//	}
-			//}
 		}
 	}
 

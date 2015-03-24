@@ -29,4 +29,14 @@
     "stat_collection_send"
     {
     }
+
+    //Custom error messages
+    "custom_error_show"
+	{
+		"player_ID"		"short"
+		"_error"		"string"
+	}
 }
+
+	
+

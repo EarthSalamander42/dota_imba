@@ -13,7 +13,11 @@ function DeathCoil( keys )
 	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
 	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
 	
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	local max_stacks = 1
+	if ability_frostmourne:GetLevel() ~= 0 then
+		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
+	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
 	local modifier_debuff = "modifier_frostmourne_debuff"
 	local modifier_buff_base = "modifier_frostmourne_buff_base"
@@ -65,7 +69,9 @@ function DeathCoil( keys )
 	end
 
 	-- Self Heal
-	caster:Heal( self_heal, caster)
+	if target ~= caster then
+		caster:Heal( self_heal, caster)
+	end
 
 	-- Create the projectile
 	local info = {
@@ -83,37 +89,104 @@ function DeathCoil( keys )
 	ProjectileManager:CreateTrackingProjectile( info )
 end
 
-function AphoticShield( keys )
+function AphoticShieldInitialize( keys )
 	-- Variables
-	local target = keys.target
 	local caster = keys.caster
-	local strentgh = caster.GetStrength(caster)
-	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", keys.ability:GetLevel() - 1 )
-	local max_damage_absorb = base_damage_absorb + strentgh
-	local shield_size = 75 -- could be adjusted to model scale
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local stacks_modifier = keys.stacks_modifier
+	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level )
+	
+	-- Initialize stack and reset skill cooldown
+	caster:SetModifierStackCount(stacks_modifier, caster, max_charges)
+	ability:EndCooldown()
+	caster.aphotic_cooldown = 0.0
+end
 
-	-- Strong Dispel
-	local RemovePositiveBuffs = false
-	local RemoveDebuffs = true
-	local BuffsCreatedThisFrameOnly = false
-	local RemoveStuns = true
-	local RemoveExceptions = false
-	target:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)
+function AphoticShield( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local stacks_modifier = keys.stacks_modifier
+	local charges_on_cast = caster:GetModifierStackCount(stacks_modifier, caster)
+	
+	-- Check if there are enough charges to cast the skill
+	if charges_on_cast > 0 then
 
-	-- Reset the shield
-	target.AphoticShieldRemaining = max_damage_absorb
+		-- Variables
+		local target = keys.target
+		local ability_level = ability:GetLevel() - 1
+		local shield_modifier = keys.shield_modifier
+		local cast_sound = keys.cast_sound
+		local strength = caster.GetStrength(caster)
+		local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level)
+		local max_damage_absorb = base_damage_absorb + strength
+		local shield_size = target:GetModelRadius() * 0.7
+		local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
+		local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
 
-	-- Particle. Need to wait one frame for the older particle to be destroyed
-	Timers:CreateTimer(0.01, function() 
-		target.ShieldParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(target.ShieldParticle, 1, Vector(shield_size,0,shield_size))
-		ParticleManager:SetParticleControl(target.ShieldParticle, 2, Vector(shield_size,0,shield_size))
-		ParticleManager:SetParticleControl(target.ShieldParticle, 4, Vector(shield_size,0,shield_size))
-		ParticleManager:SetParticleControl(target.ShieldParticle, 5, Vector(shield_size,0,0))
+		-- Deplete charge
+		if charges_on_cast == max_charges then
+			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, charge_cooldown)
+		end
+		caster:SetModifierStackCount(stacks_modifier, caster, charges_on_cast - 1 )
 
-		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
-		ParticleManager:SetParticleControlEnt(target.ShieldParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	end)
+		-- Play sound, apply modifier
+		EmitSoundOn(cast_sound, target)
+		target:RemoveModifierByName(shield_modifier)
+		ability:ApplyDataDrivenModifier(caster, target, shield_modifier, {})
+
+		-- Strong Dispel
+		local RemovePositiveBuffs = false
+		local RemoveDebuffs = true
+		local BuffsCreatedThisFrameOnly = false
+		local RemoveStuns = true
+		local RemoveExceptions = false
+		target:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)	
+
+		-- Reset the shield
+		target.AphoticShieldRemaining = max_damage_absorb	
+
+		-- Particle. Need to wait one frame for the older particle to be destroyed
+		Timers:CreateTimer(0.01, function() 
+			target.ShieldParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(target.ShieldParticle, 1, Vector(shield_size,0,shield_size))
+			ParticleManager:SetParticleControl(target.ShieldParticle, 2, Vector(shield_size,0,shield_size))
+			ParticleManager:SetParticleControl(target.ShieldParticle, 4, Vector(shield_size,0,shield_size))
+			ParticleManager:SetParticleControl(target.ShieldParticle, 5, Vector(shield_size,0,0))	
+
+			-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
+			ParticleManager:SetParticleControlEnt(target.ShieldParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		end)
+
+		-- Check if stack is 0, display ability cooldown
+		if caster:GetModifierStackCount(stacks_modifier, caster) == 0 then
+			
+			-- Start cooldown from caster.aphotic_cooldown
+			ability:EndCooldown()
+			ability:StartCooldown(caster.aphotic_cooldown)
+		else
+			ability:EndCooldown()
+		end
+	else
+		ability:RefundManaCost()
+	end
+end
+
+function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charges, charge_cooldown, cooldown )
+	caster.aphotic_cooldown = cooldown
+	if caster.aphotic_cooldown <= 0 then
+		local current_charges = caster:GetModifierStackCount(stacks_modifier, caster)
+		caster:SetModifierStackCount(stacks_modifier, caster, current_charges + 1 )
+		if caster:GetModifierStackCount(stacks_modifier, caster) == max_charges then
+			return
+		else
+			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, charge_cooldown)
+		end
+	else
+		Timers:CreateTimer(0.03, function()
+			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, cooldown - 0.03 )
+			end)
+	end
 end
 
 function AphoticShieldAbsorb( keys )
@@ -150,9 +223,9 @@ function EndShieldParticle( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local strentgh = caster.GetStrength(caster)
+	local strength = caster.GetStrength(caster)
 	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
-	local max_damage_absorb = base_damage_absorb + strentgh
+	local max_damage_absorb = base_damage_absorb + strength
 	local damageType = DAMAGE_TYPE_MAGICAL
 	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
 
@@ -161,7 +234,11 @@ function EndShieldParticle( keys )
 
 	local enemies = FindUnitsInRadius(caster.GetTeam(caster), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	local max_stacks = 1
+	if ability_frostmourne:GetLevel() ~= 0 then
+		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
+	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
 	local modifier_debuff = "modifier_frostmourne_debuff"
 
@@ -264,7 +341,7 @@ function BorrowedTimeActivate( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local threshold = ability:GetLevelSpecialValueFor( "hp_threshold" , ability:GetLevel() - 1  )
-	local cooldown = ability:GetCooldown( ability:GetLevel() )
+	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
 	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
 	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
 	local scepter = HasScepter(caster)
@@ -272,9 +349,12 @@ function BorrowedTimeActivate( keys )
 	-- Apply the modifier
 	if ability:GetCooldownTimeRemaining() == 0 then
 		if caster:GetHealth() < 400 then
-			BorrowedTimePurge( keys )
-			caster:EmitSound("Hero_Abaddon.BorrowedTime")
-			ability:StartCooldown(cooldown)
+			-- prevents illusions from gaining the borrowed time buff
+			if caster:IsHero() then
+				BorrowedTimePurge( keys )
+				caster:EmitSound("Hero_Abaddon.BorrowedTime")
+				ability:StartCooldown(cooldown)
+			end
 		end
 	end
 end
@@ -326,7 +406,7 @@ function BorrowedTimeAllies( keys )
 	local ability = keys.ability
 	local damage_taken = keys.DamageTaken
 	local redirect = ability:GetLevelSpecialValueFor("redirect", ability:GetLevel() - 1 )
-	local unit = keys.unit
+	local unit = keys.attacker
 
 	local redirect_damage = damage_taken * ( redirect / (1 - redirect) )
 	
