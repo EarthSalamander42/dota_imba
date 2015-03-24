@@ -162,6 +162,7 @@ function AphoticShield( keys )
 		if caster:GetModifierStackCount(stacks_modifier, caster) == 0 then
 			
 			-- Start cooldown from caster.aphotic_cooldown
+			ability:EndCooldown()
 			ability:StartCooldown(caster.aphotic_cooldown)
 		else
 			ability:EndCooldown()
@@ -348,9 +349,12 @@ function BorrowedTimeActivate( keys )
 	-- Apply the modifier
 	if ability:GetCooldownTimeRemaining() == 0 then
 		if caster:GetHealth() < 400 then
-			BorrowedTimePurge( keys )
-			caster:EmitSound("Hero_Abaddon.BorrowedTime")
-			ability:StartCooldown(cooldown)
+			-- prevents illusions from gaining the borrowed time buff
+			if caster:IsHero() then
+				BorrowedTimePurge( keys )
+				caster:EmitSound("Hero_Abaddon.BorrowedTime")
+				ability:StartCooldown(cooldown)
+			end
 		end
 	end
 end

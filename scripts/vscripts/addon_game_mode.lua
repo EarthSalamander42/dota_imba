@@ -3,7 +3,7 @@ BASE_MODULES = {
 	'timers',
 	'physics',
 	'lib.statcollection',
-	'barebones',
+	'imba',
 }
 
 function Precache( context )
