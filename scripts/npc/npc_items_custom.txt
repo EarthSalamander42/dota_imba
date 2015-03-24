@@ -8815,7 +8815,7 @@
 		
 		"Modifiers"
 		{
-			"item_imba_arcane_boots"
+			"modifier_item_imba_arcane_boots"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -8828,7 +8828,7 @@
 				}
 			}
 
-			"item_imba_arcane_boots_replenish"
+			"modifier_item_imba_arcane_boots_replenish"
 			{
 				"Passive"			"0"
 				"IsHidden"			"0"

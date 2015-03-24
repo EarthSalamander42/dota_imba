@@ -5,7 +5,7 @@
 	Additional parameters: keys.ReplenishAmount and keys.ReplenishRadius
 ================================================================================================================= ]]
 
-function item_arcane_boots_datadriven_on_spell_start(keys)	
+function ArcaneBoots(keys)	
 	keys.caster:EmitSound("DOTA_Item.ArcaneBoots.Activate")
 	ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.caster)
 

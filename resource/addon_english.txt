@@ -111,8 +111,8 @@
 
 		// ******************** ITEM MODIFIERS ********************
 
-		"DOTA_Tooltip_item_imba_arcane_boots_replenish"									"Replenish"
-		"DOTA_Tooltip_item_imba_arcane_boots_replenish_Description"						"Regenerating mana"
+		"DOTA_Tooltip_modifier_item_imba_arcane_boots_replenish"						"Replenish"
+		"DOTA_Tooltip_modifier_item_imba_arcane_boots_replenish_Description"			"Regenerating mana"
 
 		// ******************** ABILITIES ********************
 		"DOTA_Tooltip_ability_reflex_dummy_unit"                                          "Reflex Dummy Unit"
