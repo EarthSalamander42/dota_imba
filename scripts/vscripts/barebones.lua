@@ -1,4 +1,4 @@
-print ('[IMBA] imba.lua loading...' )
+print ('[BAREBONES] barebones.lua' )
 
 ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
@@ -129,7 +129,7 @@ function GameMode:OnHeroInGame(hero)
     ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
 	-- This line for example will set the starting gold of every hero to 500 unreliable gold
-	hero:SetGold(625, false)
+	hero:SetGold(500, false)
 
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	local item = CreateItem("item_example_item", hero, hero)

@@ -3,7 +3,6 @@
 	"consumables"
 	{
 		"item"		"item_imba_clarity"
-		"item"		"item_imba_greater_clarity"
 		"item"		"item_imba_tango"
 		"item"		"item_imba_flask"
 		"item"		"item_imba_smoke_of_deceit"

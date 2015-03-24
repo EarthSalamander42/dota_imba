@@ -959,7 +959,6 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
-		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
 		"AbilityTextureName"		"antimage_mana_break"
 
 		"precache"

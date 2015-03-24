@@ -46,7 +46,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blink_range_clamp"		"1600"
+				"blink_range_clamp"	"1600"
 			}
 		}
 	}
@@ -1199,7 +1199,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"12"
+				"max_charges"			"20"
 			}
 			"02"
 			{
@@ -1273,7 +1273,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"24"
+				"max_charges"			"30"
 			}
 			"02"
 			{
@@ -1351,8 +1351,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/clarity.mdl"	
-
+		"Model"							"models/props_gameplay/clarity.mdl"		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"100"
@@ -1376,59 +1375,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"75"
+				"buff_duration"			"600"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_mana"			"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Greater Clarity
-	//=================================================================================================================
-	"item_imba_greater_clarity"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1228"
-		"BaseClass"						"item_clarity"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/salve_blue.mdl"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"100"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"clarity;big clarity;greater clarity"
-		"ItemStackable"					"1"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"SideShop"						"0"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_mana"			"75"
+				"total_mana"			"2100"
 			}
 		}
 	}
@@ -1469,12 +1421,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"12"
+				"buff_duration"			"15"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_health"			"480"
+				"total_health"			"600"
 			}
 		}
 	}
@@ -1584,7 +1536,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"restore_time"			"3"
+				"restore_time"			"2"
 			}
 			"04"
 			{
@@ -1612,7 +1564,7 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
+		"AbilityCastRange"				"2000"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"1.0"
 		
@@ -1671,7 +1623,7 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
+		"AbilityCastRange"				"2000"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"1.0"
 		
@@ -1696,7 +1648,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifetime"				"300"
+				"lifetime"				"360"
 			}
 			"02"
 			{
@@ -1706,7 +1658,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"true_sight_range"		"1200"
+				"true_sight_range"		"1600"
 			}
 			"04"
 			{
@@ -1759,7 +1711,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_heal"			"150"
+				"total_heal"			"180"
 			}
 		}
 	}
@@ -1808,7 +1760,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_heal"			"150"
+				"total_heal"			"180"
 			}
 		}
 	}
@@ -2501,18 +2453,17 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1065"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_hand_of_midas"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityTextureName" 			"item_imba_hand_of_midas"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"80.0"
+		"AbilityCooldown"				"60.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2540,56 +2491,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"190"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"passive_gold"			"1"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"items/item_midas.lua"
-				"Function"			"Midas"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_hand_of_midas"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-				
-				"ThinkInterval"  	"1.0"
-
-				"OnIntervalThink"
-				{	
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_midas.lua"
-						"Function"		"MidasPassiveGold"
-					}
-				}				
-			}
-
-			"modifier_item_imba_hand_of_midas_as"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%bonus_attack_speed"
-				}
+				"bonus_gold"			"250"
 			}
 		}
 	}
@@ -3089,7 +2991,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"04"
 			{
@@ -3104,7 +3006,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_radius"			"1200"
+				"heal_radius"			"25000"
 			}
 			"07"
 			{
@@ -3171,7 +3073,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"02"
 			{
@@ -3293,7 +3195,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_aoe_radius"		"1200"
+				"bonus_aoe_radius"		"25000"
 			}
 			"04"
 			{
@@ -3382,7 +3284,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"03"
 			{
@@ -3471,7 +3373,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"barrier_radius"		"1200"
+				"barrier_radius"		"25000"
 			}
 			"04"
 			{
@@ -3496,7 +3398,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"09"
 			{
@@ -3587,7 +3489,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_radius"			"1200"
+				"soul_radius"			"25000"
 			}
 			"04"
 			{
@@ -3683,7 +3585,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"03"
 			{
@@ -4159,121 +4061,6 @@
 			"02"						"item_imba_dagon_4;item_recipe_imba_dagon"
 		}
 	}
-
-	"item_recipe_imba_dagon_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1217"
-		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_dagon_6"
-		"ItemRequirements"
-		{
-			"02"						"item_imba_dagon_5;item_recipe_imba_dagon"
-		}
-	}
-
-	"item_recipe_imba_dagon_7"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1218"
-		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_dagon_7"
-		"ItemRequirements"
-		{
-			"02"						"item_imba_dagon_6;item_recipe_imba_dagon"
-		}
-	}
-
-	"item_recipe_imba_dagon_8"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1219"
-		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_dagon_8"
-		"ItemRequirements"
-		{
-			"02"						"item_imba_dagon_7;item_recipe_imba_dagon"
-		}
-	}
-
-	"item_recipe_imba_dagon_9"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1220"
-		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_dagon_9"
-		"ItemRequirements"
-		{
-			"02"						"item_imba_dagon_8;item_recipe_imba_dagon"
-		}
-	}
-
-	"item_recipe_imba_dagon_10"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1221"
-		"BaseClass"						"item_datadriven"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_dagon_10"
-		"ItemRequirements"
-		{
-			"02"						"item_imba_dagon_9;item_recipe_imba_dagon"
-		}
-	}
 	
 	//=================================================================================================================
 	// Dagon
@@ -4291,23 +4078,23 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"1000 1000 1000 1000 3000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"32.0"
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0 10.0"
 		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
+		"MaxUpgradeLevel"				"5"
 		"ItemBaseLevel"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
-		"ItemCost"						"2315"
+		"AbilityManaCost"				"150 120 90 60 30"
+		"ItemCost"						"2335"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 1"
 
-		"UpgradesItems"					"item_imba_dagon;item_imba_dagon_2;item_imba_dagon_3;item_imba_dagon_4;item_imba_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_imba_dagon;item_imba_dagon_2;item_imba_dagon_3;item_imba_dagon_4"
 		"UpgradeRecipe"					"item_recipe_imba_dagon"
 
 		// Special	
@@ -4317,27 +4104,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"16"
+				"bonus_intellect"		"16 18 21 24 28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"4"
+				"bonus_all_stats"		"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"9"
+				"bonus_damage"			"12 15 18 21 24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"420"
+				"damage"				"450 575 700 850 1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"800"
+				"range_tooltip"			"1000 1000 1000 1000 3000"
 			}
 		}
 	}
@@ -4355,23 +4142,23 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1000 1000 1000 1000 3000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"28.0"
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0 10.0"
 		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
+		"MaxUpgradeLevel"				"5"
 		"ItemBaseLevel"					"2"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170"
-		"ItemCost"						"3315"
+		"AbilityManaCost"				"150 120 90 60 30"
+		"ItemCost"						"3335"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 2"
 
-		"UpgradesItems"					"item_imba_dagon_2;item_imba_dagon_3;item_imba_dagon_4;item_imba_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_imba_dagon_2;item_imba_dagon_3;item_imba_dagon_4"
 		"UpgradeRecipe"					"item_recipe_imba_dagon"
 
 		// Special	
@@ -4381,27 +4168,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"18"
+				"bonus_intellect"		"16 18 21 24 28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_all_stats"		"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"12"
+				"bonus_damage"			"12 15 18 21 24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"540"
+				"damage"				"450 575 700 850 1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"900"
+				"range_tooltip"			"1000 1000 1000 1000 3000"
 			}
 		}
 	}
@@ -4419,23 +4206,23 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1000 1000 1000 1000 3000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0 10.0"
 		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
+		"MaxUpgradeLevel"				"5"
 		"ItemBaseLevel"					"3"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160"
-		"ItemCost"						"4315"
+		"AbilityManaCost"				"150 120 90 60 30"
+		"ItemCost"						"4335"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 3"
 
-		"UpgradesItems"					"item_imba_dagon_3;item_imba_dagon_4;item_imba_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_imba_dagon_3;item_imba_dagon_4"
 		"UpgradeRecipe"					"item_recipe_imba_dagon"
 
 		// Special	
@@ -4445,27 +4232,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"21"
+				"bonus_intellect"		"16 18 21 24 28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"6"
+				"bonus_all_stats"		"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"bonus_damage"			"12 15 18 21 24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"660"
+				"damage"				"450 575 700 850 1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1000"
+				"range_tooltip"			"1000 1000 1000 1000 3000"
 			}
 		}
 	}
@@ -4483,23 +4270,23 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"1000 1000 1000 1000 3000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"20.0"
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0 10.0"
 		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
+		"MaxUpgradeLevel"				"5"
 		"ItemBaseLevel"					"4"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
-		"ItemCost"						"5315"
+		"AbilityManaCost"				"150 120 90 60 30"
+		"ItemCost"						"5335"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 4"
 
-		"UpgradesItems"					"item_imba_dagon_4;item_imba_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
+		"UpgradesItems"					"item_imba_dagon_4"
 		"UpgradeRecipe"					"item_recipe_imba_dagon"
 
 		// Special	
@@ -4509,27 +4296,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"24"
+				"bonus_intellect"		"16 18 21 24 28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"7"
+				"bonus_all_stats"		"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"18"
+				"bonus_damage"			"12 15 18 21 24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"780"
+				"damage"				"450 575 700 850 1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1100"
+				"range_tooltip"			"1000 1000 1000 1000 3000"
 			}
 		}
 	}
@@ -4547,25 +4334,22 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"1000 1000 1000 1000 3000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"16.0"
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0 10.0"
 		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
+		"MaxUpgradeLevel"				"5"
 		"ItemBaseLevel"					"5"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140"
-		"ItemCost"						"6315"
+		"AbilityManaCost"				"150 120 90 60 30"
+		"ItemCost"						"6335"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 5"
 
-		"UpgradesItems"					"item_imba_dagon_5;item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
-		"UpgradeRecipe"					"item_recipe_imba_dagon"
-
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4573,416 +4357,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"28"
+				"bonus_intellect"		"16 18 21 24 28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"8"
+				"bonus_all_stats"		"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"21"
+				"bonus_damage"			"12 15 18 21 24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"450 575 700 850 1000"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1200"
-			}
-		}
-	}
-
-	"item_imba_dagon_6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1222"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"FightRecapLevel"				"2"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"12.0"
-		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
-		"ItemBaseLevel"					"6"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120"
-		"ItemCost"						"7315"
-		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"dagon 6"
-
-		"UpgradesItems"					"item_imba_dagon_6;item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
-		"UpgradeRecipe"					"item_recipe_imba_dagon"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"32"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"9"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"1040"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1400"
-			}
-		}
-	}
-
-	"item_imba_dagon_7"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1223"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"FightRecapLevel"				"2"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1600"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"11.0"
-		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
-		"ItemBaseLevel"					"7"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"8315"
-		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"dagon 7"
-
-		"UpgradesItems"					"item_imba_dagon_7;item_imba_dagon_8;item_imba_dagon_9"
-		"UpgradeRecipe"					"item_recipe_imba_dagon"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"37"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"27"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"1180"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1600"
-			}
-		}
-	}
-
-	"item_imba_dagon_8"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1224"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"FightRecapLevel"				"2"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"10.0"
-		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
-		"ItemBaseLevel"					"8"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80"
-		"ItemCost"						"9315"
-		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"dagon 8"
-
-		"UpgradesItems"					"item_imba_dagon_8;item_imba_dagon_9"
-		"UpgradeRecipe"					"item_recipe_imba_dagon"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"42"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"11"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"1320"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1800"
-			}
-		}
-	}
-
-	"item_imba_dagon_9"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1225"	
-		"BaseClass"						"item_datadriven"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName" 			"item_imba_dagon_9"
-		"FightRecapLevel"				"2"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"9.0"
-		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
-		"ItemBaseLevel"					"9"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
-		"ItemCost"						"10315"
-		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"dagon 9"
-
-		"UpgradesItems"					"item_imba_dagon_9"
-		"UpgradeRecipe"					"item_recipe_imba_dagon"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"48"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"13"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"35"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"1460"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"2000"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"61"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_dagon_9"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect_real"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_all_stats"
-				    "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
-				}
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"items/item_dagon.lua"
-				"Function"		"Dagon9SpellStart"
-
-				"Damage"		"%damage"
-			}
-		}
-	}
-
-	"item_imba_dagon_10"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1225"	
-		"BaseClass"						"item_datadriven"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName" 			"item_imba_dagon_10"
-		"FightRecapLevel"				"2"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2500"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"8.0"
-		"AbilitySharedCooldown"			"dagon"
-		"MaxUpgradeLevel"				"10"
-		"ItemBaseLevel"					"10"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40"
-		"ItemCost"						"11315"
-		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"dagon 10"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"54"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"16"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"1600"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"2500"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"70"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_dagon_10"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect_real"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_all_stats"
-				    "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
-				}
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"items/item_dagon.lua"
-				"Function"		"Dagon10SpellStart"
-
-				"Damage"		"%damage"
+				"range_tooltip"			"1000 1000 1000 1000 3000"
 			}
 		}
 	}
@@ -5498,7 +4893,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200 "
+				"aura_radius"			"25000 "
 			}
 			"04"
 			{
@@ -5795,7 +5190,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"04"
 			{
@@ -5911,7 +5306,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_range"			"1200"
+				"charge_range"			"25000"
 			}
 			"06"
 			{
@@ -6218,7 +5613,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_aoe_radius"		"1200"
+				"bonus_aoe_radius"		"25000"
 			}		
 			"11"
 			{
@@ -8768,7 +8163,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"1200"
+				"replenish_radius"		"25000"
 			}
 			"04"
 			{
@@ -8985,7 +8380,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"25000"
 			}
 		}
 	}
@@ -9124,7 +8519,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"25"
+				"bonus_movement_speed"		"40"
 			}
 			"04"
 			{
@@ -9174,7 +8569,7 @@
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"30"
-		"AbilityCastRange"				"1500"
+		"AbilityCastRange"				"25000"
 		"AbilityCastPoint"				"0.0"
 
 
@@ -9209,7 +8604,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"9"
+				"bonus_stats"		"9"
 			}
 			"05"
 			{
@@ -9608,7 +9003,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_radius"			"25000"
 			}
 			"07"
 			{
@@ -9773,5 +9168,5 @@
 		}
 	}
 
-	//next free ID: 1228
+	//next free ID: 1217
 }
