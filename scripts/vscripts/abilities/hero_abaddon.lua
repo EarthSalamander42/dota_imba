@@ -162,6 +162,7 @@ function AphoticShield( keys )
 		if caster:GetModifierStackCount(stacks_modifier, caster) == 0 then
 			
 			-- Start cooldown from caster.aphotic_cooldown
+			ability:EndCooldown()
 			ability:StartCooldown(caster.aphotic_cooldown)
 		else
 			ability:EndCooldown()
@@ -348,18 +349,12 @@ function BorrowedTimeActivate( keys )
 	-- Apply the modifier
 	if ability:GetCooldownTimeRemaining() == 0 then
 		if caster:GetHealth() < 400 then
-<<<<<<< HEAD
 			-- prevents illusions from gaining the borrowed time buff
 			if not caster:IsIllusion() then
 				BorrowedTimePurge( keys )
 				caster:EmitSound("Hero_Abaddon.BorrowedTime")
 				ability:StartCooldown(cooldown)
 			end
-=======
-			BorrowedTimePurge( keys )
-			caster:EmitSound("Hero_Abaddon.BorrowedTime")
-			ability:StartCooldown(cooldown)
->>>>>>> parent of 5ac02b8... Added Dagon (up to level 10) and IMBA Midas. Closed #17, #19, #10
 		end
 	end
 end
