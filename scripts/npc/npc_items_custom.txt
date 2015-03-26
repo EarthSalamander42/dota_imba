@@ -10550,5 +10550,207 @@
 		}
 	}
 
-	//next free ID: 1232
+	//=================================================================================================================
+	// Recipe: Azura
+	//=================================================================================================================
+	"item_recipe_imba_azura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1232"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_azura"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_staff_of_wizardry;item_imba_robe"
+		}
+	}
+
+	//=================================================================================================================
+	// Azura
+	//=================================================================================================================
+	"item_imba_azura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1233"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_azura"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2050"
+		"ItemShopTags"					"int;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"azura"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_damage"			"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amp"			"-10"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amp_tooltip"	"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"amp_duration"			"3.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_azura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_int"
+				}
+
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"			"modifier_item_imba_azura_damage"
+						"Target" 				"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"				"%proc_chance"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_item_imba_azura_damage"
+								"Target" 		"CASTER"
+							}
+						}
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_azura.lua"
+						"Function"				"Azura"
+		
+						"modifier_stacks"		"modifier_item_imba_azura_amp"
+					}
+				}
+
+			}
+
+			"modifier_item_imba_azura_damage"
+			{
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				"IsPurgable"			"0"
+
+				"OnAttackLanded"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/item/azura/purple_mana_burn.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
+						"Target" 			"TARGET"
+					}
+
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%proc_damage"
+					}
+
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_item_imba_azura_damage"
+						"Target" 			"ATTACKER"
+					}
+				}			
+			}
+
+			"modifier_item_imba_azura_amp"
+			{
+				"IsDebuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"1"
+
+				"Duration"			"%amp_duration"
+
+				"EffectName"		"particles/items2_fx/veil_of_discord_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%damage_amp"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_azura.lua"
+						"Function"		"AzuraEnd"
+
+						"modifier_stacks"		"modifier_item_imba_azura_amp"
+					}
+				}
+			}
+		}
+	}
+
+	//next free ID: 1234
 }

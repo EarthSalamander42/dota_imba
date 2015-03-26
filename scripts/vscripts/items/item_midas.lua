@@ -1,3 +1,6 @@
+--[[	Author: d2imba
+		Date:	24.03.2015	]]
+
 function MidasPassiveGold( keys )
 	local passive_gold = keys.ability:GetLevelSpecialValueFor("passive_gold", keys.ability:GetLevel() - 1)
 	keys.caster:ModifyGold(passive_gold, true, 0)
