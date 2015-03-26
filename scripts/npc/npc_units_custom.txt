@@ -451,6 +451,7 @@
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 			"soundfile"					"sounds/items/item_handofmidas.vsnd"
 			"soundfile"					"sounds/items/item_mekansm.vsnd"
+			"soundfile"					"sounds/items/pipe.vsnd"
 		}
 	}
 }

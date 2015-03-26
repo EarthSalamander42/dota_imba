@@ -4000,9 +4000,12 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1090"
-		"BaseClass"						"item_pipe"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"AbilityTextureName"			"item_imba_pipe"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -4024,48 +4027,150 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"14"
+				"var_type"					"FIELD_INTEGER"
+				"health_regen"				"12"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"magic_resistance"		"50"
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance"			"35"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"barrier_radius"		"1200"
+				"var_type"					"FIELD_INTEGER"
+				"barrier_radius"			"1200"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"barrier_block"			"600"
+				"var_type"					"FIELD_INTEGER"
+				"barrier_block"				"400"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"barrier_duration"		"15.0"
+				"var_type"					"FIELD_FLOAT"
+				"barrier_duration"			"8.0"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"barrier_debuff_duration"	"15.0"
+				"var_type"					"FIELD_FLOAT"
+				"barrier_debuff_duration"	"8.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_resist"			"50"
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_resist"			"40"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"1200"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"4"
+				"var_type"					"FIELD_INTEGER"
+				"aura_health_regen"			"4"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_magic_resist"			"15"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"barrier_resist"			"50"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"        "particles/items2_fx/pipe_of_insight_launch.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"
+				{
+					"Center"  		"CASTER"
+					"Radius" 		"%barrier_radius"
+					"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"DOTA_Item.Pipe.Activate"
+				"Target" 			"CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_item_imba_pipe_block"
+				"Duration"			"%barrier_duration"
+
+				"Target"
+				{
+					"Center"  		"CASTER"
+					"Radius" 		"%barrier_radius"
+					"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_pipe"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_ITEM_UNIQUE"	"%magic_resistance"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%health_regen"
+				}
+			}
+
+			"modifier_item_imba_pipe_aura_emitter"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Aura"          	"modifier_item_imba_pipe_aura"
+				"Aura_Radius"   	"%aura_radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster" "1"
+			}
+
+			"modifier_item_imba_pipe_aura"
+			{
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%aura_magic_resist"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%aura_health_regen"
+				}
+			}
+
+			"modifier_item_imba_pipe_block"
+			{
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsPurgable"		"1"
+
+				"EffectName"			"particles/items2_fx/pipe_of_insight.vpcf"
+				"EffectAttachType"		"follow_overhead"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 		"%barrier_resist"
+				}
 			}
 		}
 	}
@@ -7001,7 +7106,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_spell_resist"	"40"
+				"bonus_spell_resist"	"35"
 			}
 			"02"
 			{
