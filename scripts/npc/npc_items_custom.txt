@@ -6820,8 +6820,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1083"
-		"BaseClass"						"item_crimson_guard"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"item_crimson_guard"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -6903,7 +6904,114 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"block_chance_active"			"100"
-			}	
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"item_cooldown"			"70.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"items/item_crimson_guard.lua"
+				"Function"		"crimson_guard_activate"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_crimson_guard_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_crimson_guard.lua"
+						"Function"		"crimson_guard_created"
+					}
+				}
+			}
+
+			"modifier_crimson_guard_block_melee"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+			
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_melee"
+				}
+			}
+
+			"modifier_crimson_guard_block_ranged"
+			{
+				"Passive"			"1"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+			
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_ranged"
+				}
+			}
+
+			"modifier_crimson_guard_active_melee"
+			{
+				"Passive"			"0"	
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+				"Duration"			"%duration"
+				
+//				"EffectName"		""
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_aoe_armor"
+				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_melee_active"
+				}
+			}
+
+			"modifier_crimson_guard_active_ranged"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+				"Duration"			"%duration"
+			
+//				"EffectName"		""
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_aoe_armor"
+				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_ranged_active"
+				}
+			}
+
+			"modifier_crimson_guard_cooldown"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+				"Duration"			"%item_cooldown - 1"
+			}
 		}
 	}
 	
@@ -9701,10 +9809,11 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1185"
-		"BaseClass"						"item_ancient_janggo"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"ItemPermanent"					"1"
 		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"item_ancient_janggo"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -9722,6 +9831,12 @@
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"  "particles/items_fx/drum_of_endurance_buff.vpcf"
+//			"soundfile" ""
+		}
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -9765,6 +9880,83 @@
 				"radius"				"1200"
 			}
 		}
+
+		"OnSpellStart"
+		{
+			"SpendCharge" {}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_drums_active"
+				"Target"
+				{
+					"Center"  	"CASTER"
+					"Radius" 	"%radius"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+				"Duration"		"%duration"
+			}
+
+//			"FireSound"
+//			{
+//				"EffectName"	""
+//				"Target" 		"CASTER"
+//			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_drums_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsDebuff"			"0"
+
+				"Aura"          	"modifier_drums_aura"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster" "1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_stats"
+				}
+			}
+
+			"modifier_drums_aura"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_aura_attack_speed_pct"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_aura_movement_speed_pct" 
+				}
+			}
+
+			"modifier_drums_active"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"0"
+
+				"EffectName"			"particles/items_fx/drum_of_endurance_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%bonus_attack_speed_pct"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%bonus_movement_speed_pct" 
+				}
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -9801,12 +9993,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1187"
-		"BaseClass"						"item_medallion_of_courage"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"item_medallion_of_courage"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -9844,6 +10037,88 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"7.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_medallion_debuff"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_medallion_debuff"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Duration"		"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_medallion_buff"
+				"Target"
+				{
+					"Center"  	"TARGET"
+					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Duration"		"%duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_medallion_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_pct"
+				}
+			}
+
+			"modifier_medallion_debuff"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
+				}
+			}
+
+			"modifier_medallion_buff"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsPurgable"		"1"
+				
+				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
 			}
 		}
 	}
