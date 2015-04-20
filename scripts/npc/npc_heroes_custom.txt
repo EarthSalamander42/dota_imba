@@ -111,6 +111,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Crystal Maiden
+	//=================================================================================================================
+    "npc_imba_hero_crystal_maiden"
+	{
+		"override_hero"				"npc_dota_hero_crystal_maiden"
+
+		"AttributeBaseIntelligence"	"26"
+
+		"Ability1"					"imba_crystal_maiden_crystal_nova"
+		"Ability2"					"imba_crystal_maiden_frostbite"
+		"Ability3"					"imba_crystal_maiden_brilliance_aura"
+		"Ability4"					"imba_crystal_maiden_freezing_field"
+		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
+	// HERO: Dazzle
+	//=================================================================================================================
+	"npc_imba_hero_dazzle"
+	{
+		"override_hero"				"npc_dota_hero_dazzle"
+
+		"Ability1"					"imba_dazzle_poison_touch"
+		"Ability2"					"imba_dazzle_shallow_grave"
+		"Ability3"					"imba_dazzle_shadow_wave"
+		"Ability4"					"imba_dazzle_weave"
+		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
     "npc_imba_hero_drow_ranger"
@@ -132,19 +162,5 @@
 		"AttributeBaseAgility"		"30"
 
 		"MovementTurnRate"			"1.0"
-	}
-
-	//=================================================================================================================
-	// HERO: Crystal Maiden
-	//=================================================================================================================
-    "npc_imba_hero_crystal_maiden"
-	{
-		"override_hero"				"npc_dota_hero_crystal_maiden"
-
-		"Ability1"					"imba_crystal_maiden_crystal_nova"
-		"Ability2"					"imba_crystal_maiden_frost_bite"
-		"Ability3"					"imba_crystal_maiden_brilliance_aura"
-		"Ability4"					"imba_crystal_maiden_freezing_field"
-		"Ability5"					"attribute_bonus_int"
 	}
 }

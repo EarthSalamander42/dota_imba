@@ -1,158 +1,156 @@
---[[
-	Author: Hewdraw
-]]
+--[[ Author: Hewdraw ]]
 
-function crystal_nova( keys )
+function CrystalNova( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local target = keys.target_points[ 1 ]
-	local duration = ability:GetLevelSpecialValueFor( "vision_duration", ( ability:GetLevel() - 1 ) )
-	local radius = ability:GetLevelSpecialValueFor( "vision_radius", ( ability:GetLevel() - 1 ) )
-	local current_instance = 0
-	local max_instances = ability:GetLevelSpecialValueFor( "duration", ( ability:GetLevel() - 1 ) )
-	local dummyModifierName = "modifier_crystal_nova_dummy"
-	local interval = ability:GetLevelSpecialValueFor( "damage_interval", ability:GetLevel() - 1 )
-	local damage_tick = ability:GetLevelSpecialValueFor( "damage_per_tick", ability:GetLevel() - 1 )
-	local targetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
-	local targetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-	local targetFlag = DOTA_UNIT_TARGET_FLAG_NONE
-	local damageType = DAMAGE_TYPE_PURE
+	local effect_radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
+	local particle = keys.particle
+	
+	local good_aura_modifier = keys.good_aura_modifier
+	local bad_aura_modifier = keys.bad_aura_modifier
 	local scepter = caster:HasScepter()
 
+	-- Creates flying vision area
+	ability:CreateVisibilityNode(target, vision_radius, duration)
+
+	-- Creates the particle
+	local fxIndex = ParticleManager:CreateParticle( particle, PATTACH_CUSTOMORIGIN, caster )
+	local radiusVector = (Vector (radius, 0, 0))
+
+	ParticleManager:SetParticleControl(fxIndex, 0, target)
+	ParticleManager:SetParticleControl(fxIndex, 1, radiusVector)
+	ParticleManager:SetParticleControl(fxIndex, 5, radiusVector)
+
+	-- Creates buffing/debuffing dummy (3000 units above ground to prevent camp blocking)
 	local dummy = CreateUnitByName("npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
-	ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
+	dummy:SetAbsOrigin(target + Vector(0, 0, 3000))
+	ability:ApplyDataDrivenModifier(caster, dummy, good_aura_modifier, {} )
+	ability:ApplyDataDrivenModifier(caster, dummy, bad_aura_modifier, {} )
 
-	Timers:CreateTimer( function()
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, radius, targetTeam,targetType, targetFlag, FIND_ANY_ORDER, false)
-			for _,v in pairs( enemies ) do
-				if v:HasModifier("modifier_damage_dummy") then
-				else
-					ApplyDamage({ victim = v, attacker = caster, damage = damage_tick, damage_type = damageType })
-					ability:ApplyDataDrivenModifier(caster, v, "modifier_damage_dummy", {})
-				end
-			end
-			local allies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, targetFlag, FIND_ANY_ORDER, false)
-			for _,c in pairs( allies ) do
-				if c:HasModifier("modifier_crystal_maiden") then
-					ability:ApplyDataDrivenModifier(caster, c, "modifier_crystal_nova_aura_crystal_maiden", {})
-				end
-			end
-			if scepter == false then
-				current_instance = current_instance + 1
-				
-				if current_instance >= max_instances then
-					dummy:Destroy()
-					return nil
-				else
-					return interval
-				end
-			else
-				return interval
-			end
+	-- Destroys the dummy and particle when the effect expires
+	Timers:CreateTimer(duration, function()
+		if scepter then
+			Timers:CreateTimer(duration * 9, function()
+				dummy:Destroy()
+				ParticleManager:DestroyParticle(fxIndex, false)
+			end)
+		else
+			dummy:Destroy()
+			ParticleManager:DestroyParticle(fxIndex, false)
 		end
-	)
+	end)
 end
 
-function crystal_nova_post_vision( keys )
-	local ability = keys.ability
-	local target = keys.target_points[ 1 ]
-	local duration = ability:GetLevelSpecialValueFor( "vision_duration", ( ability:GetLevel() - 1 ) )
-	local radius = ability:GetLevelSpecialValueFor( "vision_radius", ( ability:GetLevel() - 1 ) )
-
-	ability:CreateVisibilityNode( target, radius, duration )
-end
-
-function frost_bite_attack( keys )
+function Frostbite( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local attacker = keys.attacker
-	local unit = keys.unit
-	local duration = keys.duration
-	local damage_interval = ability:GetLevelSpecialValueFor( "damage_interval", ( ability:GetLevel() - 1 ) )
-	local modifier = "modifier_frost_bite_passive"
-	local damage_duration = duration - damage_interval
+	local duration_hero = ability:GetLevelSpecialValueFor("duration", ability_level)
+	local duration_creep = ability:GetLevelSpecialValueFor("creep_duration", ability_level)
+	local cooldown_hero = ability:GetLevelSpecialValueFor("hero_cooldown", ability_level)
+	local cooldown_creep = ability:GetLevelSpecialValueFor("creep_cooldown", ability_level)
+	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
 
-	if target:HasModifier(modifier) then
-		ability:ApplyDataDrivenModifier(caster, attacker, "modifier_frost_bite_root", {duration = duration})
-		ability:ApplyDataDrivenModifier(caster, attacker, "modifier_frost_bite_damage", {duration = damage_duration})
-		caster:RemoveModifierByName("modifier_frost_bite_passive")
-		caster:RemoveModifierByName("modifier_frost_bite_passive_creep")
+	local modifier_root = keys.modifier_root
+	local modifier_damage = keys.modifier_damage
+	local modifier_passive = keys.modifier_passive
+	local modifier_cooldown = keys.modifier_cooldown
+
+	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
+	if attacker:GetTeam() ~= caster:GetTeam() and not attacker:IsMagicImmune() then
+		if attacker:IsHero() or attacker:IsAncient() then
+			ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_hero})
+			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_hero - damage_interval})
+			caster:RemoveModifierByName(modifier_passive)
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown_hero})
+		elseif not attacker:IsTower() then
+			ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_creep})
+			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_creep - damage_interval})
+			caster:RemoveModifierByName(modifier_passive)
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown_creep})
+		end
 	end
 end
 
-function brilliance_aura( keys )
+function BrillianceAura( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local mana = caster.GetMana(caster)
-	local maxmana = caster.GetMaxMana(caster)
+	local modifier_speed = keys.modifier_speed
 
-	if mana == maxmana then
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_brilliance_aura_movement_speed", {})
+	local mana_percent = caster:GetManaPercent()
+
+	if mana_percent == 100 then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_speed, {})
 	else
-		caster:RemoveModifierByName("modifier_brilliance_aura_movement_speed")
+		caster:RemoveModifierByName(modifier_speed)
 	end
 end
 
-function freezing_field_cast( keys )
+function FreezingFieldCast( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local scepter = caster:HasScepter()
-
-	if scepter == true then
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_freezing_field_caster_scepter", {})
+	local modifier_aura = keys.modifier_aura
+	local modifier_aura_scepter = keys.modifier_aura_scepter
+	local modifier_sector_0 = keys.modifier_sector_0
+	local modifier_sector_1 = keys.modifier_sector_1
+	local modifier_sector_2 = keys.modifier_sector_2
+	local modifier_sector_3 = keys.modifier_sector_3
+	
+	-- Grants the slowing aura to the caster
+	if scepter then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_aura_scepter, {})
 	else
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_freezing_field_caster", {})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
 	end
-end
 
-function freezing_field_order_explosion( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	Timers:CreateTimer( 0.1, function()
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_freezing_field_northwest_thinker", {} )
+	-- Initializes each sector's thinkers
+	Timers:CreateTimer(0.1, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_0, {} )
 		return nil
 		end )
 		
-	Timers:CreateTimer( 0.2, function()
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_freezing_field_northeast_thinker", {} )
+	Timers:CreateTimer(0.2, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_1, {} )
 		return nil
 		end )
 	
-	Timers:CreateTimer( 0.3, function()
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_freezing_field_southeast_thinker", {} )
+	Timers:CreateTimer(0.3, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_2, {} )
 		return nil
 		end )
 	
-	Timers:CreateTimer( 0.4, function()
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_freezing_field_southwest_thinker", {} )
+	Timers:CreateTimer(0.4, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_3, {} )
 		return nil
 		end )
 end
 
-function freezing_field_explode( keys )
+function FreezingFieldExplode( keys )
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local caster = keys.caster
-	local casterLocation = keys.caster:GetAbsOrigin()
-	local minDistance = ability:GetLevelSpecialValueFor( "explosion_min_dist", ( ability:GetLevel() - 1 ) )
-	local maxDistance = ability:GetLevelSpecialValueFor( "explosion_max_dist", ( ability:GetLevel() - 1 ) )
-	local radius = ability:GetLevelSpecialValueFor( "explosion_radius", ( ability:GetLevel() - 1 ) )
+	local casterLocation = caster:GetAbsOrigin()
+	local minDistance = ability:GetLevelSpecialValueFor("explosion_min_dist", ability_level)
+	local maxDistance = ability:GetLevelSpecialValueFor("explosion_max_dist", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("explosion_radius", ability_level)
 	local directionConstraint = keys.section
-	local modifierName = "modifier_freezing_field_debuff"
-	local refModifierName = "modifier_freezing_field_ref_point_datadriven"
+	local modifierName = "modifier_imba_freezing_field_debuff"
 	local particleName = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
 	local soundEventName = "hero_Crystal.freezingField.explosion"
-	local targetTeam = ability:GetAbilityTargetTeam() -- DOTA_UNIT_TARGET_TEAM_ENEMY
-	local targetType = ability:GetAbilityTargetType() -- DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO
-	local targetFlag = ability:GetAbilityTargetFlags() -- DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES
 	local damageType = ability:GetAbilityDamageType()
 	local scepter = caster:HasScepter()
 	local abilityDamage = 0
 
 	if scepter == true then
-		abilityDamage = ability:GetLevelSpecialValueFor( "damage_scepter", ( ability:GetLevel() - 1 ) )
+		abilityDamage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 	else
-		abilityDamage = ability:GetLevelSpecialValueFor( "damage", ( ability:GetLevel() - 1 ) )
+		abilityDamage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	end
 	
 	-- Get random point
@@ -174,22 +172,17 @@ function freezing_field_explode( keys )
 	
 	-- From here onwards might be possible to port it back to datadriven through modifierArgs with point but for now leave it as is
 	-- Loop through units
-	local units = FindUnitsInRadius(caster.GetTeam(caster), attackPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local units = FindUnitsInRadius(caster:GetTeam(), attackPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
 	for _,v in pairs( units ) do
-		ApplyDamage({ victim = v, attacker = caster, damage = abilityDamage, damage_type = DAMAGE_TYPE_MAGICAL })
+		ApplyDamage({victim = v, attacker = caster, damage = abilityDamage, damage_type = damageType})
 	end
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_CUSTOMORIGIN, caster )
-	ParticleManager:SetParticleControl( fxIndex, 0, attackPoint )
+	local fxIndex = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 	
-	-- Fire sound at dummy
-	local dummy = CreateUnitByName( "npc_dummy_blank", attackPoint, false, caster, caster, caster:GetTeamNumber() )
-	ability:ApplyDataDrivenModifier( caster, dummy, refModifierName, {} )
-	StartSoundEvent( soundEventName, dummy )
-	Timers:CreateTimer( 0.1, function()
-		dummy:ForceKill( true )
-		return nil
-	end )
+	-- Fire sound at caster's position
+	StartSoundEvent(soundEventName, caster)
+
 end

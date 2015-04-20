@@ -101,6 +101,7 @@ end
 
 function ShurikenTossChainEnd( keys )
 	local target = keys.target
+	local target_loc = target:GetAbsOrigin()
 	
 	-- disables physics.lua library functions on the target
 	target:StopPhysicsSimulation()
@@ -108,6 +109,9 @@ function ShurikenTossChainEnd( keys )
 	-- destroys the shuriken toss chain and dummy unit
 	ParticleManager:DestroyParticle(target.shuriken_particle,true)
 	target.shuriken_toss_dummy:ForceKill(true)
+
+	-- finds a legal position to the attached units to prevent them getting stuck
+	FindClearSpaceForUnit(target, target_loc, false)
 end
 
 function WindWalk( keys )
