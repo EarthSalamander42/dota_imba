@@ -104,12 +104,10 @@
 		"AttributeStrengthGain"		"4.0"
 
 		"Ability1"					"imba_centaur_hoof_stomp"
-		//"Ability2"					"imba_centaur_double_edge"
-		//"Ability3"					"imba_centaur_return"
-		//"Ability4"					"imba_centaur_stampede"
+		"Ability2"					"imba_centaur_double_edge"
+		"Ability3"					"imba_centaur_return"
+		"Ability4"					"imba_centaur_stampede"
 		"Ability5"					"attribute_bonus_str"	
-
-		"AttributeBaseAgility"		"30"
 	}
 
 	//=================================================================================================================

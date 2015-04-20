@@ -36,7 +36,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blink_range"			"1600"
+				"blink_range"			"1400"
 			}
 			"02"
 			{
@@ -46,7 +46,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blink_range_clamp"		"1600"
+				"blink_range_clamp"		"1400"
 			}
 		}
 	}
@@ -202,7 +202,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"7"
+				"bonus_armor"			"6"
 			}
 			"02"
 			{
@@ -308,7 +308,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"13"
+				"bonus_armor"			"12"
 			}
 		}
 	}
@@ -3147,7 +3147,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_armor_duration"	"30.0"
+				"heal_armor_duration"	"25.0"
 			}
 			"09"
 			{
@@ -3331,7 +3331,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_armor_duration"	"30.0"
+				"heal_armor_duration"	"25.0"
 			}
 			"09"
 			{
@@ -6162,7 +6162,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"14"
+				"bonus_armor"			"12"
 			}
 			"03"
 			{
@@ -6177,12 +6177,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_positive_armor"	"10"
+				"aura_positive_armor"	"8"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_negative_armor"	"-10"
+				"aura_negative_armor"	"-8"
 			}
 		}
 	}
@@ -6459,7 +6459,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"22"
+				"bonus_armor"			"18"
 			}
 			"03"
 			{
@@ -6970,7 +6970,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8"
+				"bonus_armor"			"7"
 			}
 			"03"
 			{
@@ -8316,7 +8316,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"10"
+				"bonus_armor"			"8"
 			}
 			"04"
 			{
@@ -8706,7 +8706,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"7"
+				"bonus_armor"			"6"
 			}
 			"03"
 			{
@@ -8875,7 +8875,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"corruption_armor"		"-12"
+				"corruption_armor"		"-10"
 			}
 			"03"
 			{
@@ -9828,7 +9828,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"10"
+				"bonus_armor"			"8"
 			}
 			"02"
 			{
@@ -9838,7 +9838,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"-10"
+				"armor_reduction"		"-8"
 			}
 			"04"
 			{
@@ -9996,7 +9996,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"9"
+				"bonus_armor"			"7"
 			}
 			"07"
 			{

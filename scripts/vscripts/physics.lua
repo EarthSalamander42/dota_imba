@@ -1777,6 +1777,11 @@ Physics:CreateColliderProfile("hoof_stomp_pit_out",
 		buffer = 0,
 		findClearSpace = true,
 		test = function(self, collider, collided)
+			if collided:GetUnitName() == "npc_dummy_centaur_pit_wall" then
+				return false
+			elseif collided:HasModifier("modifier_imba_centaur_stampede") then
+				return false
+			end
 			return not collided.is_inside_hoof_stomp_pit
 		end,
 		action = function(self, unit, v)
@@ -1798,6 +1803,11 @@ Physics:CreateColliderProfile("hoof_stomp_pit_in",
 		buffer = 0,
 		findClearSpace = true,
 		test = function(self, collider, collided)
+			if collided:GetUnitName() == "npc_dummy_centaur_pit_wall" then
+				return false
+			elseif collided:HasModifier("modifier_imba_centaur_stampede") then
+				return false
+			end
 			return collided.is_inside_hoof_stomp_pit
 		end,
 		action = function(self, unit, v)

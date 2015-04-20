@@ -119,21 +119,28 @@ function GameMode:OnHeroInGame(hero)
 	-- Store this hero handle in this table.
 	table.insert(self.vPlayers, hero)
 
-	if Testing then
-		Say(nil, "Testing is on.", false)
-	end
-
 	InitAbilities(hero)
 
 	-- Show a popup with game instructions.
     ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
-	-- This line for example will set the starting gold of every hero to 500 unreliable gold
+	-- This line for example will set the starting gold of every hero to 625 unreliable gold
 	hero:SetGold(625, false)
 
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
 	local item = CreateItem("item_example_item", hero, hero)
 	hero:AddItem(item)
+
+	if Testing then
+		Say(nil, "Testing is on.", false)
+		hero:SetGold(50000, false)
+		local item_1 = CreateItem("item_imba_travel_boots", hero, hero)
+		local item_2 = CreateItem("item_imba_ultimate_scepter", hero, hero)
+		local item_3 = CreateItem("item_imba_blink", hero, hero)
+		hero:AddItem(item_1)
+		hero:AddItem(item_2)
+		hero:AddItem(item_3)
+	end
 end
 
 --[[
