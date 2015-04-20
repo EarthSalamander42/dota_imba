@@ -133,4 +133,18 @@
 
 		"MovementTurnRate"			"1.0"
 	}
+
+	//=================================================================================================================
+	// HERO: Crystal Maiden
+	//=================================================================================================================
+    "npc_imba_hero_crystal_maiden"
+	{
+		"override_hero"				"npc_dota_hero_crystal_maiden"
+
+		"Ability1"					"imba_crystal_maiden_crystal_nova"
+		"Ability2"					"imba_crystal_maiden_frost_bite"
+		"Ability3"					"imba_crystal_maiden_brilliance_aura"
+		"Ability4"					"imba_crystal_maiden_freezing_field"
+		"Ability5"					"attribute_bonus_int"
+	}
 }
