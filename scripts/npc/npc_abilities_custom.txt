@@ -5746,27 +5746,31 @@
 			"RunScript"
 			{
 				"ScriptFile"							"abilities/hero_dazzle.lua"
-				"Function"								"WeaveScepter"
+				"Function"								"Weave"
 				"Target"								"POINT"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_weave_friendly"
+			"modifier_imba_weave_friendly"
 			{
 				"Passive"								"0"
 				"IsHidden"								"0"
 				"IsBuff"								"1"
+				"IsPurgable"							"0"
+				"Duration"								"%duration"
+
 		
 				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"WeavePositiveParticle"
+						"Function"						"WeaveParticle"
+
 						"particle_name"					"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
-						"modifier"						"modifier_weave_friendly"
+						"modifier"						"modifier_imba_weave_friendly"
 					}
 				}
 
@@ -5787,15 +5791,18 @@
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"WeaveRemovePositive"
-						"modifier"						"modifier_weave_positive"
+						"Function"						"WeaveRemoveBuff"
+						
+						"modifier"						"modifier_imba_weave_positive"
+						"modifier_scepter"				"modifier_imba_weave_positive_scepter"
 					}
 
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"EndWeavePositiveParticle"
-						"modifier"						"modifier_weave_friendly"
+						"Function"						"EndWeaveParticle"
+
+						"modifier"						"modifier_imba_weave_friendly"
 					}
 				}
 
@@ -5805,18 +5812,22 @@
 				}
 			}
 
-			"modifier_weave_enemy"
+			"modifier_imba_weave_enemy"
 			{
 				"IsDebuff"								"1"
+				"IsHidden"								"0"
+				"IsPurgable"							"0"
+				"Duration"								"%duration"
 
 				"OnCreated"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"WeaveNegativeParticle"
+						"Function"						"WeaveParticle"
+
 						"particle_name"					"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
-						"modifier"						"modifier_weave_enemy"
+						"modifier"						"modifier_imba_weave_enemy"
 					}
 				}
 
@@ -5825,10 +5836,10 @@
 				"ThinkInterval"  						"%tick_interval"
 				"OnIntervalThink"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"					"modifier_weave_negative"
-						"Target" 						"TARGET"
+						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"Function"						"WeaveInterval"
 					}
 				}
 
@@ -5837,15 +5848,17 @@
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"WeaveRemoveNegative"
-						"modifier"						"modifier_weave_negative"
+						"Function"						"WeaveRemoveBuff"
+
+						"modifier"						"modifier_imba_weave_negative"
+						"modifier_scepter"				"modifier_imba_weave_negative_scepter"
 					}
 
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"EndWeaveNegativeParticle"
-						"modifier"						"modifier_weave_enemy"
+						"Function"						"EndWeaveParticle"
+						"modifier"						"modifier_imba_weave_enemy"
 					}
 				}
 
@@ -5855,7 +5868,7 @@
 				}
 			}
 
-			"modifier_weave_positive"
+			"modifier_imba_weave_positive"
 			{
 				"IsHidden"								"1"
 				"IsPurgable"							"0"
@@ -5868,7 +5881,7 @@
 				}
 			}
 
-			"modifier_weave_positive_scepter"
+			"modifier_imba_weave_positive_scepter"
 			{
 				"IsHidden"								"1"
 				"IsPurgable"							"0"
@@ -5881,7 +5894,7 @@
 				}
 			}
 
-			"modifier_weave_negative"
+			"modifier_imba_weave_negative"
 			{
 				"IsHidden"								"1"
 				"IsPurgable"							"0"
@@ -5894,7 +5907,7 @@
 				}
 			}
 
-			"modifier_weave_negative"
+			"modifier_imba_weave_negative_scepter"
 			{
 				"IsHidden"								"1"
 				"IsPurgable"							"0"
