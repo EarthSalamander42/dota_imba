@@ -10349,12 +10349,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"				"450"
+				"bonus_health"			"450"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"				"70"
+				"slow"					"70"
 			}
 			"04"
 			{

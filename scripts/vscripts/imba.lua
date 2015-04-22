@@ -135,11 +135,13 @@ function GameMode:OnHeroInGame(hero)
 		Say(nil, "Testing is on.", false)
 		hero:SetGold(50000, false)
 		local item_1 = CreateItem("item_imba_travel_boots", hero, hero)
-		local item_2 = CreateItem("item_imba_ultimate_scepter", hero, hero)
+		local item_2 = CreateItem("item_imba_diffusal_blade", hero, hero)
 		local item_3 = CreateItem("item_imba_blink", hero, hero)
+		local item_4 = CreateItem("item_imba_ultimate_scepter", hero, hero)
 		hero:AddItem(item_1)
 		hero:AddItem(item_2)
 		hero:AddItem(item_3)
+		hero:AddItem(item_4)
 	end
 end
 

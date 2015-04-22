@@ -141,7 +141,7 @@ function AphoticShield( keys )
 		local BuffsCreatedThisFrameOnly = false
 		local RemoveStuns = true
 		local RemoveExceptions = false
-		target:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)	
+		target:Purge(RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)	
 
 		-- Reset the shield
 		target.AphoticShieldRemaining = max_damage_absorb	

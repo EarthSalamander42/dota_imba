@@ -8,7 +8,6 @@ function Azura( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_stacks = keys.modifier_stacks
 
-	local mana_on_hit = ability:GetLevelSpecialValueFor("mana_on_hit", ability_level)
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Increases the number of amp stacks

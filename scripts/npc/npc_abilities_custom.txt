@@ -1460,15 +1460,10 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"600.0"
-			}
-			"02"
-			{
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"-12"
 			}
-			"03"
+			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed_bonus"				"12"
@@ -1491,8 +1486,6 @@
 					"Center"  	"TARGET"
 					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
-
-				"Duration"		"%duration"
 			}
 		}	
 
@@ -2233,14 +2226,14 @@
 		{
 			"FireSound"
 			{
-				"EffectName" 	"Hero_Bane.BrainSap.Target"
-				"Target"		"TARGET"
+				"EffectName" 			"Hero_Bane.BrainSap.Target"
+				"Target"				"TARGET"
 			}	
 
 			"FireSound"
 			{
-				"EffectName"	"Hero_Bane.BrainSap"
-				"Target"		"CASTER"
+				"EffectName"			"Hero_Bane.BrainSap"
+				"Target"				"CASTER"
 			}	
 
 			"FireEffect"
@@ -2256,28 +2249,28 @@
 
 			"Damage"
 			{
-				"Target"			"TARGET"
-				"Type"				"DAMAGE_TYPE_PURE"
-				"Damage"			"%heal_amt"
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_PURE"
+				"Damage"				"%heal_amt"
 			}	
 
 			"Heal"
 			{
-				"Target"			"CASTER"
-				"HealAmount"		"%heal_amt"
+				"Target"				"CASTER"
+				"HealAmount"			"%heal_amt"
 			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"		"modifier_imba_bane_brain_sap"
-				"Target" 			"TARGET"
-				"Duration"			"%duration"
+				"ModifierName"			"modifier_imba_bane_brain_sap"
+				"Target" 				"TARGET"
+				"Duration"				"%duration"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_bane.lua"
-				"Function"			"BrainSapManaDrain"
+				"ScriptFile"			"abilities/hero_bane.lua"
+				"Function"				"BrainSapManaDrain"
 			}
 		}
 
@@ -2285,7 +2278,7 @@
 		{
 			"modifier_imba_bane_brain_sap"
 			{
-				"IsDebuff"			"1"
+				"IsDebuff"				"1"
 				
 				"OnAbilityExecuted"
 				{
@@ -2674,7 +2667,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"pull_strength_tooltip"	"350 400 450 500"
 			}
-
 		}	
 
 		"OnSpellStart"
@@ -2786,11 +2778,11 @@
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
-		 {
+		{
 		  "soundfile"   "soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 		  "particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
 		  "particle"	"particles/generic_hero_status/status_invisibility_start.vpcf"
-		 }	
+		}	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -3665,7 +3657,7 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 			"particle"				"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
 			"particle"				"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-			"particle"		"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"				"particles/generic_gameplay/generic_stunned.vpcf"
 		}	
 
 		"OnSpellStart"
@@ -4248,6 +4240,8 @@
 			"modifier_imba_frostbite_passive"
 			{
 				"Passive"								"1"
+				"IsPurgable"							"0"
+				"AllowIllusionDuplicate"				"0"
 			
 				"OnTakeDamage"
 				{
@@ -4279,6 +4273,9 @@
 			"modifier_imba_frostbite_passive_cooldown"
 			{
 				"TextureName"							"crystal_maiden_frostbite_cooldown"
+				"IsDebuff"								"1"
+				"IsPurgable"							"0"
+				"AllowIllusionDuplicate"				"0"
 
 				"OnDestroy"
 				{
@@ -4826,19 +4823,19 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"600"
-		"AbilityCastPoint"								"0.3 0.3 0.3 0.3"
+		"AbilityCastPoint"								"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"15 13 11 7"
+		"AbilityCooldown"								"13 11 9 7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"100 115 130 145"
+		"AbilityManaCost"								"100 110 120 130"
 		
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"									"14 20 26 32"
+		"AbilityDamage"									"16 24 32 40"
 		"AbilityDuration"								"10"
 		
 		// Stats
@@ -4852,72 +4849,72 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_delay"							"3"
+				"damage_delay"							"4 3 2 1"
 			}
 			"02"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"slow_1"								"-20 -30 -40 -60"
+				"slow_1"								"-20 -40 -60 -80"
 			}
 			"03"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"slow_2"								"-30 -40 -60 0"
+				"slow_2"								"-40 -60 -80 0"
 			}
 			"04"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"slow_3"								"-40 -50 0 0"
-			}
-			"04"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"slow_4"								"-50 0 -60 -60"
-			}
-			"04"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"slow_5"								"0 -40 -50 -50"
-			}
-			"04"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"slow_6"								"-30 -30 -40 -40"
-			}
-			"04"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"slow_7"								"-20 -20 -30 -30"
-			}
-			"04"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"slow_8"								"-10 -10 -20 -20"
+				"slow_3"								"-60 -80 0 -60"
 			}
 			"05"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1300"
+				"slow_4"								"-80 0 -50 -50"
+			}
+			"06"
+			{	
+				"var_type"								"FIELD_INTEGER"
+				"slow_5"								"0 -40 -40 -40"
 			}
 			"07"
 			{	
-				"var_type"								"FIELD_FLOAT"
-				"stun_duration"							"1"
+				"var_type"								"FIELD_INTEGER"
+				"slow_6"								"-30"
 			}
 			"08"
 			{	
+				"var_type"								"FIELD_INTEGER"
+				"slow_7"								"-20"
+			}
+			"09"
+			{	
+				"var_type"								"FIELD_INTEGER"
+				"slow_8"								"-10"
+			}
+			"10"
+			{	
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"1300"
+			}
+			"11"
+			{	
 				"var_type"								"FIELD_FLOAT"
-				"duration_tooltip"						"10"
+				"stun_duration"							"1.0"
 			}
 			"12"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"damage_duration"						"7"
+				"var_type"								"FIELD_INTEGER"
+				"tooltip_damage"						"16 24 32 40"
 			}
 			"13"
 			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_duration"						"6 7 8 9"
+			}
+			"14"
+			{
 				"var_type"								"FIELD_FLOAT"
-				"tick_interval"							"1"
+				"tick_interval"							"1.0"
 			}
 		}
 
@@ -4952,14 +4949,14 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"							"modifier_poison_touch_slow_1"
+				"ModifierName"							"modifier_imba_poison_touch_slow_1"
 				"Target" 								"TARGET"
 				"Duration"								"%tick_interval"
 			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"							"modifier_poison_touch_debuff"
+				"ModifierName"							"modifier_imba_poison_touch_debuff"
 				"Target" 								"TARGET"
 				"Duration"								"%duration_tooltip"
 			}
@@ -4971,7 +4968,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_damage"
+						"ModifierName"					"modifier_imba_poison_touch_damage"
 						"Target" 						"TARGET"
 						"Duration"						"%damage_duration"
 					}
@@ -4981,21 +4978,21 @@
 
 		"Modifiers"
 		{
-			"modifier_poison_touch_debuff"
+			"modifier_imba_poison_touch_debuff"
 			{
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"EffectName"							"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
 				"EffectAttachType"						"follow_origin"
 
 			}
 
-			"modifier_poison_touch_damage"
+			"modifier_imba_poison_touch_damage"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"OnCreated"
 				{
@@ -5019,11 +5016,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_1"
+			"modifier_imba_poison_touch_slow_1"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5042,7 +5039,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_2"
+						"ModifierName"					"modifier_imba_poison_touch_slow_2"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5054,11 +5051,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_2"
+			"modifier_imba_poison_touch_slow_2"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5077,7 +5074,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_3"
+						"ModifierName"					"modifier_imba_poison_touch_slow_3"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5089,11 +5086,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_3"
+			"modifier_imba_poison_touch_slow_3"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5112,7 +5109,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_4"
+						"ModifierName"					"modifier_imba_poison_touch_slow_4"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5124,11 +5121,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_4"
+			"modifier_imba_poison_touch_slow_4"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5147,7 +5144,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_5"
+						"ModifierName"					"modifier_imba_poison_touch_slow_5"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5159,11 +5156,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_5"
+			"modifier_imba_poison_touch_slow_5"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5182,7 +5179,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_6"
+						"ModifierName"					"modifier_imba_poison_touch_slow_6"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5194,11 +5191,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_6"
+			"modifier_imba_poison_touch_slow_6"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5217,7 +5214,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_7"
+						"ModifierName"					"modifier_imba_poison_touch_slow_7"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5229,11 +5226,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_7"
+			"modifier_imba_poison_touch_slow_7"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"StatusEffectName" 						"particles/status_fx/status_effect_poison_dazzle.vpcf"
 				"StatusEffectPriority"  				"10"
@@ -5252,7 +5249,7 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"					"modifier_poison_touch_slow_8"
+						"ModifierName"					"modifier_imba_poison_touch_slow_8"
 						"Target" 						"TARGET"
 						"Duration"						"%tick_interval"
 					}
@@ -5264,11 +5261,11 @@
 				}
 			}
 
-			"modifier_poison_touch_slow_8"
+			"modifier_imba_poison_touch_slow_8"
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
-				"IsPurgable"							"1"
+				"IsPurgable"							"0"
 
 				"OnCreated"
 				{
@@ -5314,17 +5311,17 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"550 700 850 1000"
-		"AbilityCastPoint"								"0.3 0.3 0.3 0.3"
+		"AbilityCastPoint"								"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"60 45 30 15"
+		"AbilityCooldown"								"45 35 25 15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"140 130 120 110"
+		"AbilityManaCost"								"110"
 		
-		"AbilityDuration"								"5 5 5 5"
+		"AbilityDuration"								"5"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5333,18 +5330,22 @@
 			"01"
 			{	
 				"var_type"								"FIELD_FLOAT"
-				"duration_tooltip"						"6 7 8 9"
+				"duration_tooltip"						"5.0"
 			}
 			"02"
 			{	
 				"var_type"								"FIELD_INTEGER"
 				"range_tooltip"							"550 700 850 1000"
 			}
-			// Extra
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
+				"var_type"								"FIELD_INTEGER"
 				"min_health"							"1"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"passive_cooldown_scepter"				"15.0"
 			}
 		}
 
@@ -5352,17 +5353,18 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"							"modifier_shallow_grave"
+				"ModifierName"							"modifier_imba_shallow_grave"
 				"Target" 								"TARGET"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_shallow_grave_passive"
+			"modifier_imba_shallow_grave_scepter_check"
 			{
 				"Passive"								"1"
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"ThinkInterval"  						"0.1"
 				"OnIntervalThink"
@@ -5372,13 +5374,17 @@
 						"ScriptFile"					"abilities/hero_dazzle.lua"
 						"Function"						"ShallowGravePassive"
 						"Target"						"CASTER"
+
+						"modifier_passive"				"modifier_imba_shallow_grave_scepter"
+						"modifier_cooldown"				"modifier_imba_shallow_grave_scepter_cooldown"
 					}
 				}
 			}
 
-			"modifier_shallow_grave"
+			"modifier_imba_shallow_grave"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"0"
 				"Duration"								"%duration_tooltip"
 
 				"EffectName"							"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
@@ -5395,12 +5401,6 @@
 					{
 						"EffectName"					"Hero_Dazzle.Shallow_Grave"
 						"Target" 						"TARGET"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"					"modifier_shallow_grave_scepter"
-						"Target" 						"CASTER"
 					}
 				}
 
@@ -5425,34 +5425,47 @@
 				}
 			}
 
-			"modifier_shallow_grave_scepter"
+			"modifier_imba_shallow_grave_scepter"
 			{
-				"IsHidden"								"1"
-			
-				"ThinkInterval"  						"0.1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"ShallowGraveDamage"
-						"Target"						"CASTER"
-					}
-				}
+				"IsHidden"								"0"
+				"IsPurgable"							"0"
+				"TextureName"							"dazzle_nothl_protection"
 
 				"OnTakeDamage"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
-						"Function"						"ShallowGraveDamageStorage"
-						"DamageTaken"					"%attack_damage"
+						"Function"						"ShallowGraveDamageCheck"
+
+						"modifier_grave"				"modifier_imba_shallow_grave"
+						"modifier_passive"				"modifier_imba_shallow_grave_scepter"
+						"modifier_cooldown"				"modifier_imba_shallow_grave_scepter_cooldown"
 					}
 				}
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MIN_HEALTH"		"%min_health" 
+				}
+			}
+
+			"modifier_imba_shallow_grave_scepter_cooldown"
+			{
+				"IsHidden"								"0"
+				"IsDebuff"								"1"
+				"IsPurgable"							"0"
+				"TextureName"							"dazzle_shallow_grave_cooldown"
+
+				"Duration"								"%passive_cooldown_scepter"
+
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_shallow_grave_scepter_check"
+						"Target" 		"CASTER"
+					}
 				}
 			}
 		}
@@ -5470,7 +5483,7 @@
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"	
-		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"							"dazzle_shadow_wave"
 
 		// Precache
@@ -5485,7 +5498,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"900"
-		"AbilityCastPoint"								"0.3 0.3 0.3 0.3"
+		"AbilityCastPoint"								"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -5511,12 +5524,12 @@
 			"02"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"damage_radius"							"185"
+				"damage_radius"							"225"
 			}
 			"03"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"max_targets"							"9999"
+				"max_targets"							"100"
 			}
 			"04"
 			{
@@ -5525,8 +5538,8 @@
 			}
 			"05"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_bonus"							"0.5 1.0 1.5 2.0"
+				"var_type"								"FIELD_INTEGER"
+				"armor_bonus"							"3 4 5 6"
 			}
 			"06"
 			{
@@ -5536,7 +5549,7 @@
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"duration"								"10"
+				"duration"								"7"
 			}
 		}
 
@@ -5564,6 +5577,9 @@
 			{
 				"ScriptFile"							"abilities/hero_dazzle.lua"
 				"Function"								"ShadowWave"
+
+				"armor_bonus"							"modifier_imba_shadow_wave_armor_bonus"
+				"armor_reduction"						"modifier_imba_shadow_wave_armor_reduction"
 				"shadow_wave_particle"					"particles/units/heroes/hero_dazzle/dazzle_shadow_wave.vpcf"
 				"damage_particle"						"particles/units/heroes/hero_dazzle/dazzle_shadow_wave_impact_damage.vpcf"
 			}
@@ -5571,12 +5587,11 @@
 
 		"Modifiers"
 		{
-			"modifier_armor_bonus"
+			"modifier_imba_shadow_wave_armor_bonus"
 			{
-				"IsHidden"								"1"
+				"IsHidden"								"0"
 				"IsBuff"								"1"
 				"IsPurgable"							"1"
-				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Duration"								"%duration"
 
 
@@ -5586,12 +5601,11 @@
 				}
 			}
 
-			"modifier_armor_reduction"
+			"modifier_imba_shadow_wave_armor_reduction"
 			{
-				"IsHidden"								"1"
+				"IsHidden"								"0"
 				"IsDebuff"								"1"
 				"IsPurgable"							"1"
-				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Duration"								"%duration"
 
 				"Properties"
@@ -5630,15 +5644,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"2000"
-		"AbilityCastPoint"								"0.3 0.3 0.3"
+		"AbilityCastPoint"								"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"40 40 40"
+		"AbilityCooldown"								"40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"100 100 100"
+		"AbilityManaCost"								"100"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5647,7 +5661,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"575 575 575"
+				"radius"								"575 675 775"
 			}
 			"02"
 			{	
@@ -5666,44 +5680,38 @@
 			}
 			"05"
 			{	
-				"var_type"								"FIELD_INTEGER"
-				"radius_scepter"						"775 775 775"
-			}
-			"06"
-			{	
-				"var_type"								"FIELD_INTEGER"
-				"duration_scepter"						"24"
-			}
-			"07"
-			{	
 				"var_type"								"FIELD_FLOAT"
 				"armor_per_second_scepter"				"1.25 1.5 1.75"
 			}
-			// Extra
-			"08"
+			"06"
 			{	
 				"var_type"								"FIELD_FLOAT"
 				"negative_armor_per_second"				"-0.75 -1 -1.25"
 			}
-			"09"
+			"07"
+			{	
+				"var_type"								"FIELD_FLOAT"
+				"negative_armor_per_second_scepter"		"-1.25 -1.5 -1.75"
+			}
+			"08"
 			{	
 				"var_type"								"FIELD_FLOAT"
 				"tick_interval"							"1.0"
 			}
-			"10"
+			"09"
 			{	
 				"var_type"								"FIELD_FLOAT"
 				"vision_duration"						"8.0"
 			}
-			"11"
+			"10"
 			{	
 				"var_type"								"FIELD_FLOAT"
-				"armor_bonus"							"6 9 12"
+				"armor_bonus"							"4 7 10"
 			}
 			"11"
 			{	
 				"var_type"								"FIELD_FLOAT"
-				"negative_armor"						"-6 -9 -12"
+				"negative_armor"						"-4 -7 -10"
 			}
 
 		}
@@ -5850,6 +5858,7 @@
 			"modifier_weave_positive"
 			{
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
 
@@ -5862,6 +5871,7 @@
 			"modifier_weave_positive_scepter"
 			{
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
 
@@ -5874,12 +5884,26 @@
 			"modifier_weave_negative"
 			{
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%negative_armor_per_second" 
+				}
+			}
+
+			"modifier_weave_negative"
+			{
+				"IsHidden"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" "%negative_armor_per_second_scepter" 
 				}
 			}
 		}
@@ -6479,7 +6503,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"			"drow_ranger_marksmanship"
 
-		"AbilityCastRange"				"250"
+		"AbilityCastRange"				"275"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -6508,7 +6532,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"300"
+				"radius"								"275"
 			}
 			"06"
 			{
