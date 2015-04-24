@@ -163,4 +163,28 @@
 
 		"MovementTurnRate"			"1.0"
 	}
+
+	//=================================================================================================================
+	// HERO: Jakiro
+	//=================================================================================================================
+    "npc_imba_hero_jakiro"
+	{
+		"override_hero"				"npc_dota_hero_jakiro"
+		
+		"Ability1"					"imba_jakiro_dual_breath"				
+		"Ability2"					"imba_jakiro_ice_path"					
+		"Ability3"					"imba_jakiro_liquid_fire"				
+		"Ability4"					"imba_jakiro_macropyre"
+		"Ability5"					"attribute_bonus_int"
+		"Ability6"					"imba_jakiro_dual_breath_fiery"
+
+		"ArmorPhysical"				"3"
+
+		"AttackRange"				"500"
+
+		"AttributeBaseStrength"		"25"
+		"AttributeStrengthGain"		"2.5"	
+		"AttributeBaseAgility"		"12"
+		"AttributeAgilityGain"		"2.0"
+	}
 }
