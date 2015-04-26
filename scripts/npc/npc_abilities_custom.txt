@@ -6959,7 +6959,8 @@
 						"Function"				"DualBreathCountdown"
 
 						"modifier"				"modifier_imba_dual_breath_fire"
-						"modifier_macropyre"	"modifier_macropyre_check_range_datadriven"
+						"modifier_macropyre"	"modifier_imba_macropyre"
+						"macropyre_scepter"		"modifier_imba_macropyre_scepter"
 					}
 				}
 			}
@@ -7151,7 +7152,8 @@
 						"Function"				"LiquidFireCountdown"
 
 						"modifier"				"modifier_imba_liquid_fire"
-						"modifier_macropyre"	"modifier_macropyre_check_range_datadriven"
+						"modifier_macropyre"	"modifier_imba_macropyre"
+						"macropyre_scepter"		"modifier_imba_macropyre_scepter"
 					}
 				}	
 
@@ -7182,12 +7184,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.65 0.65 0.65 0.65"	
+		"AbilityCastRange"				"1200 1800 2400"
+		"AbilityCastPoint"				"0.5"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 60 60"	
+		"AbilityCooldown"				"60"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7199,129 +7201,258 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_duration"			"7 7 7"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"9.0 12.0 15.0"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"100 140 180"
+				"var_type"					"FIELD_FLOAT"
+				"stun_time_scepter"			"1.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"900"					
+				"move_slow_scepter"			"-20 -30 -40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"			"7"
-			}			
+				"damage"					"50 75 100"
+			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"225"
-			}			
+				"damage_scepter"			"75 100 125"
+			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"burn_interval"				"0.5 0.5 0.5"
-			}			
+				"var_type"					"FIELD_INTEGER"
+				"range"						"1200 1800 2400"					
+			}		
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration_scepter"			"14"
+				"path_radius"				"275"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"125 175 225"
+				"var_type"					"FIELD_FLOAT"
+				"burn_interval"				"0.5"
 			}
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1800"
+				"var_type"					"FIELD_FLOAT"
+				"ice_delay"					"0.3"
 			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_damage"			"100 150 200"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_damage_scepter"	"150 200 250"
+			}		
 		}
 		
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-			"particle"					"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"						"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+			"particle"						"particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
+			"particle"						"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
+			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 		
 		"OnSpellStart"
 		{
 			"FireSound"
 			{
-				"EffectName"		"Hero_Jakiro.Macropyre.Cast"
-				"Target"			"CASTER"
+				"EffectName"				"Hero_Jakiro.Macropyre.Cast"
+				"Target"					"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_Jakiro.IcePath.Cast"
+				"Target" 					"CASTER"
 			}
 			
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_jakiro.lua"
-				"Function"			"FireMacropyre"
+				"ScriptFile"				"abilities/hero_jakiro.lua"
+				"Function"					"Macropyre"
 				
-				"cast_range"		"%cast_range"
-				"path_radius"		"%path_radius"
-				"duration"			"%duration"
+				"fire_particle"				"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+				"ice_particle"				"particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
+				"ice_particle_2"			"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
+				"modifier"					"modifier_imba_macropyre_aura"
+				"modifier_scepter"			"modifier_imba_macropyre_aura_scepter"
+				"modifier_dummy"			"modifier_imba_macropyre_dummy"
 			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"		"0"
-			
-			"RunScript"
+
+			"DelayedAction"
 			{
-				"ScriptFile"		"abilities/hero_jakiro.lua"
-				"Function"			"ApplyDummyModifier"
-				"Target"			"TARGET"
-				
-				"modifier_name"		"modifier_macropyre_check_range_datadriven"
+				"Delay"     "%ice_delay"
+				"Action"    
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Jakiro.IcePath"
+						"Target" 			"CASTER"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"hero_jakiro.macropyre.scepter"
+						"Target" 			"CASTER"
+					}
+				}
 			}
 		}
 		
 		"Modifiers"
 		{
-			"modifier_macropyre_check_range_datadriven"
+			"modifier_imba_macropyre_aura"
 			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"          			"modifier_imba_macropyre"
+				"Aura_Radius"   			"%path_radius"
+				"Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster" 		"0"
+			}
+
+			"modifier_imba_macropyre_aura_scepter"
+			{
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"          			"modifier_imba_macropyre_scepter"
+				"Aura_Radius"   			"%path_radius"
+				"Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster" 		"0"
+			}
+
+			"modifier_imba_macropyre"
+			{
+				"IsDebuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%damage"
+					}
+				}
+
+				"ThinkInterval"  			"%burn_interval"
 				
-				"ThinkInterval"	"%burn_interval"
 				"OnIntervalThink"
 				{
-					"RunScript"
+					"Damage"
 					{
-						"ScriptFile"		"abilities/hero_jakiro.lua"
-						"Function"			"CheckMacropyre"
 						"Target"			"TARGET"
-						
-						"path_radius"		"%path_radius"
-						"damage"			"%damage / 2"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%damage"
 					}
 				}
 			}
-			
-			"modifier_macropyre_destroy_tree_datadriven"
+
+			"modifier_imba_macropyre_scepter"
 			{
+				"IsDebuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+
+				"EffectName"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
+
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%damage_scepter"
+					}
+
+					"Stun"
+					{
+						"Duration"			"%stun_time_scepter"
+						"Target"			"TARGET"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_macropyre_scepter_stun"
+						"Target" 			"TARGET"
+						"Duration"			"%stun_time_scepter"
+					}
+				}
+
+				"ThinkInterval"  			"%burn_interval"
+				
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%damage_scepter"
+					}
+				}
+
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%move_slow_scepter" 
+				}
+			}
+
+			"modifier_imba_macropyre_scepter_stun"
+			{
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%stun_time_scepter"
+
+				"EffectName"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			}
+			
+			"modifier_imba_macropyre_dummy"
+			{
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%duration"
+
 				"OnCreated"
 				{
 					"DestroyTrees"
 					{
-						"Target"		"TARGET"
-						"Radius"		"%path_radius"
+						"Target"			"TARGET"
+						"Radius"			"%path_radius"
 					}
-					
-					"ApplyModifier"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
 					{
-						"Target"		"TARGET"
-						"ModifierName"	"modifier_kill"
-						"Duration"		"0.1"
+						"ScriptFile"		"abilities/hero_jakiro.lua"
+						"Function"			"MacropyreKillDummy"
 					}
 				}
 			}

@@ -10971,7 +10971,7 @@
 				{
 					"FireEffect"
 					{
-						"EffectName"        "particles/item/azura/purple_mana_burn.vpcf"
+						"EffectName"        "particles/generic_gameplay/generic_manaburn.vpcf"
 						"EffectAttachType"  "follow_origin"
 						"Target"            "TARGET"
 					}

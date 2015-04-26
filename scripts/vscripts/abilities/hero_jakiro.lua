@@ -106,9 +106,10 @@ function DualBreathCountdown( keys )
 
 	local modifier = keys.modifier
 	local modifier_macropyre = keys.modifier_macropyre
+	local macropyre_scepter = keys.macropyre_scepter
 
 	-- Checks if the target is in Macropyre's area. If yes, renews the dual breath debuff.
-	if target:HasModifier(modifier_macropyre) then
+	if target:HasModifier(modifier_macropyre) or target:HasModifier(macropyre_scepter) then
 		ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = target.dual_breath_duration})
 	else
 		target.dual_breath_duration = target.dual_breath_duration - damage_interval
@@ -173,142 +174,103 @@ function LiquidFireCountdown( keys )
 
 	local modifier = keys.modifier
 	local modifier_macropyre = keys.modifier_macropyre
+	local macropyre_scepter = keys.macropyre_scepter
 
 	-- Checks if the target is in Macropyre's area. If yes, renews the liquid fire debuff.
-	if target:HasModifier(modifier_macropyre) then
+	if target:HasModifier(modifier_macropyre) or target:HasModifier(macropyre_scepter) then
 		ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = target.liquid_fire_duration})
 	else
 		target.liquid_fire_duration = target.liquid_fire_duration - damage_interval
 	end
 end
 
---[[
-	Author: Ractidous
-	Date: 27.01.2015.
-	Create the particle effect and projectiles.
-]]
-function FireMacropyre( keys )
-	local caster		= keys.caster
-	local ability		= keys.ability
+function Macropyre( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local scepter = HasScepter(caster)
 
-	local pathLength	= keys.cast_range
-	local pathRadius	= keys.path_radius
-	local duration		= keys.duration
+	local path_length = ability:GetLevelSpecialValueFor("range", ability_level)
+	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
+	local ice_delay = ability:GetLevelSpecialValueFor("ice_delay", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
-	local startPos = caster:GetAbsOrigin()
-	local endPos = startPos + caster:GetForwardVector() * pathLength
+	local modifier = keys.modifier
+	local modifier_scepter = keys.modifier_scepter
+	local modifier_dummy = keys.modifier_dummy
 
-	ability.macropyre_startPos	= startPos
-	ability.macropyre_endPos	= endPos
-	ability.macropyre_expireTime = GameRules:GetGameTime() + duration
+	local start_pos = caster:GetAbsOrigin()
+	local end_pos = start_pos + caster:GetForwardVector() * path_length
 
-	-- Create particle effect
-	local particle_name = "particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
-	local pfx = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
-	ParticleManager:SetParticleControl( pfx, 0, startPos )
-	ParticleManager:SetParticleControl( pfx, 1, endPos )
+	local fire_particle = keys.fire_particle
+	local ice_particle = keys.ice_particle
+	local ice_particle_2 = keys.ice_particle_2
+
+	-- Create fire particle effect
+	local pfx = ParticleManager:CreateParticle( fire_particle, PATTACH_ABSORIGIN, caster )
+	ParticleManager:SetParticleControl( pfx, 0, start_pos )
+	ParticleManager:SetParticleControl( pfx, 1, end_pos )
 	ParticleManager:SetParticleControl( pfx, 2, Vector( duration, 0, 0 ) )
-	ParticleManager:SetParticleControl( pfx, 3, startPos )
+	ParticleManager:SetParticleControl( pfx, 3, start_pos )
 
-	-- Generate projectiles
-	pathRadius = math.max( pathRadius, 64 )
-	local projectileRadius = pathRadius * math.sqrt(2)
-	local numProjectiles = math.floor( pathLength / (pathRadius*2) ) + 1
-	local stepLength = pathLength / ( numProjectiles - 1 )
+	-- Create ice path particles (if the owner has Aghanim's Scepter)
+	if scepter then
+		-- Start and end points
+		local start_pos_left = RotatePosition(start_pos, QAngle(0, 90, 0), start_pos + caster:GetForwardVector() * (path_radius - 150))
+		local start_pos_right = RotatePosition(start_pos, QAngle(0, -90, 0), start_pos + caster:GetForwardVector() * (path_radius - 150))
+		local end_pos_left = RotatePosition(end_pos, QAngle(0, 90, 0), end_pos + caster:GetForwardVector() * (path_radius - 150))
+		local end_pos_right = RotatePosition(end_pos, QAngle(0, -90, 0), end_pos + caster:GetForwardVector() * (path_radius - 150))
 
-	local dummyModifierName = "modifier_macropyre_destroy_tree_datadriven"
+		-- Left side
+		local pfx = ParticleManager:CreateParticle( ice_particle, PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( pfx, 0, start_pos_left )
+		ParticleManager:SetParticleControl( pfx, 1, end_pos_left )
+		ParticleManager:SetParticleControl( pfx, 2, start_pos_left )
+	
+		pfx = ParticleManager:CreateParticle( ice_particle_2, PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( pfx, 0, start_pos_left )
+		ParticleManager:SetParticleControl( pfx, 1, end_pos_left )
+		ParticleManager:SetParticleControl( pfx, 2, Vector( ice_delay + duration, 0, 0 ) )
+		ParticleManager:SetParticleControl( pfx, 9, start_pos_left )
 
-	for i=1, numProjectiles do
-		local projectilePos = startPos + caster:GetForwardVector() * (i-1) * stepLength
+		-- Right side
+		local pfx = ParticleManager:CreateParticle( ice_particle, PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( pfx, 0, start_pos_right )
+		ParticleManager:SetParticleControl( pfx, 1, end_pos_right )
+		ParticleManager:SetParticleControl( pfx, 2, start_pos_right )
+	
+		pfx = ParticleManager:CreateParticle( ice_particle_2, PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( pfx, 0, start_pos_right )
+		ParticleManager:SetParticleControl( pfx, 1, end_pos_right )
+		ParticleManager:SetParticleControl( pfx, 2, Vector( ice_delay + duration, 0, 0 ) )
+		ParticleManager:SetParticleControl( pfx, 9, start_pos_right )
+	end
 
-		ProjectileManager:CreateLinearProjectile( {
-			Ability				= ability,
-		--	EffectName			= "",
-			vSpawnOrigin		= projectilePos,
-			fDistance			= 64,
-			fStartRadius		= projectileRadius,
-			fEndRadius			= projectileRadius,
-			Source				= caster,
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_MECHANICAL,
-			fExpireTime			= ability.macropyre_expireTime,
-			bDeleteOnHit		= false,
-			vVelocity			= Vector( 0, 0, 0 ),	-- Don't move!
-			bProvidesVision		= false,
-		--	iVisionRadius		= 0,
-		--	iVisionTeamNumber	= caster:GetTeamNumber(),
-		} )
+	-- Generate dummy units
+	local num_units = math.floor( path_length / path_radius ) + 1
 
-		-- Create dummy to destroy trees
-		if i~=1 and GridNav:IsNearbyTree( projectilePos, pathRadius, true ) then
-			local dummy = CreateUnitByName( "npc_dota_thinker", projectilePos, false, caster, caster, caster:GetTeamNumber() )
-			ability:ApplyDataDrivenModifier( caster, dummy, dummyModifierName, {} )
+	for i=1, num_units do
+		local dummy_pos = start_pos + caster:GetForwardVector() * (i-1) * path_radius
+
+		-- Creates debuffing dummy (3000 units above ground to prevent camp blocking)
+		local dummy = CreateUnitByName("npc_dummy_unit", dummy_pos, false, caster, caster, caster:GetTeamNumber())
+		dummy:SetAbsOrigin(dummy_pos + Vector(0, 0, 3000))
+		ability:ApplyDataDrivenModifier(caster, dummy, modifier_dummy, {} )
+
+		if scepter then
+			ability:ApplyDataDrivenModifier(caster, dummy, modifier_scepter, {} )
+		else
+			ability:ApplyDataDrivenModifier(caster, dummy, modifier, {} )
+		end
+
+		if dummy:HasModifier(modifier_dummy) then
+			print("lel")
 		end
 	end
 end
 
---[[
-	Author: Ractidous
-	Data: 27.01.2015.
-	Apply a dummy modifier that periodcally checks whether the target is within the macropyre's path.
-]]
-function ApplyDummyModifier( keys )
-	local caster = keys.caster
+function MacropyreKillDummy( keys )
 	local target = keys.target
-	local ability = keys.ability
-	local modifierName = keys.modifier_name
 
-	local duration = ability.macropyre_expireTime - GameRules:GetGameTime()
-
-	ability:ApplyDataDrivenModifier( caster, target, modifierName, { duration = duration } )
-end
-
---[[
-	Author: Ractidous
-	Date: 27.01.2015.
-	Check whether the target is within the path, and apply damage if neccesary.
-]]
-function CheckMacropyre( keys )
-	local caster		= keys.caster
-	local target		= keys.target
-	local ability		= keys.ability
-	local pathRadius	= keys.path_radius
-	local damage		= keys.damage
-
-	local target_pos = target:GetAbsOrigin()
-	target_pos.z = 0
-
-	local distance = DistancePointSegment( target_pos, ability.macropyre_startPos, ability.macropyre_endPos )
-	if distance < pathRadius then
-		-- Apply damage
-		ApplyDamage( {
-			ability = ability,
-			attacker = caster,
-			victim = target,
-			damage = damage,
-			damage_type = ability:GetAbilityDamageType(),
-		} )
-	end
-end
-
---[[
-	Author: Ractidous
-	Date: 27.01.2015.
-	Distance between a point and a segment.
-]]
-function DistancePointSegment( p, v, w )
-	local l = w - v
-	local l2 = l:Dot( l )
-	t = ( p - v ):Dot( w - v ) / l2
-	if t < 0.0 then
-		return ( v - p ):Length2D()
-	elseif t > 1.0 then
-		return ( w - p ):Length2D()
-	else
-		local proj = v + t * l
-		return ( proj - p ):Length2D()
-	end
+	target:Destroy()
 end
