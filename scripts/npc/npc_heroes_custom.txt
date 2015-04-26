@@ -186,4 +186,20 @@
 		"AttributeBaseAgility"		"12"
 		"AttributeAgilityGain"		"2.0"
 	}
+
+	//=================================================================================================================
+	// HERO: Lich
+	//=================================================================================================================
+    "npc_imba_hero_lich"
+	{
+		"override_hero"				"npc_dota_hero_lich"
+		
+		"Ability1"					"imba_lich_frost_nova"
+		//"Ability2"					"imba_lich_frost_armor"
+		//"Ability3"					"imba_lich_dark_ritual"
+		//"Ability4"					"imba_lich_chain_frost"
+		"Ability5"					"attribute_bonus_int"
+
+		"AttributeBaseIntelligence"	"22"
+	}
 }

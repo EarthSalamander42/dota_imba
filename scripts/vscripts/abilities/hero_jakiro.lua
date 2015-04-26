@@ -262,10 +262,6 @@ function Macropyre( keys )
 		else
 			ability:ApplyDataDrivenModifier(caster, dummy, modifier, {} )
 		end
-
-		if dummy:HasModifier(modifier_dummy) then
-			print("lel")
-		end
 	end
 end
 

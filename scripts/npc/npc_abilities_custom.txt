@@ -7458,4 +7458,243 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Lich's Frost Nova
+	//=================================================================================================================
+	"imba_lich_frost_nova"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lich_frost_nova"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"	
+		"AoERadius"						"250"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8.0"
+		"AbilityDuration"				"4.0"	
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"0 70 140 210"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 140 155 170"	
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.3"	// Primarily about the damage	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"-30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_attack_speed"		"-20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aoe_damage"			"150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_interval"		"2.5 2.0 1.5 1.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_stack"		"5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_per_stack"		"-5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chance_per_stack"		"5"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_aoe"				"800"
+			}
+		}	
+
+		"precache"
+		{
+			"particle" 					"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
+
+		"OnSpellStart"
+		{	
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"TARGET"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Ability.FrostNova"
+				"Target"				"TARGET"
+			}
+
+			"Damage"
+			{
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Target"				"TARGET"
+				"Damage"				"%AbilityDamage"
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"			"TARGET"
+					"Radius"			"%radius"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_frost_nova"
+						"Target"		"TARGET"
+						"Duration"		"%AbilityDuration"
+					}
+
+					"Damage"
+					{
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Target"		"TARGET"
+						"Damage"		"%aoe_damage"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_frost_nova"
+			{
+				"IsDebuff"				"1"	
+
+				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
+				"StatusEffectPriority"	"10"	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
+				}
+			}
+
+			"modifier_imba_frost_nova_aura"
+			{
+				"IsBuff"				"1"
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"Aura"					"modifier_imba_frost_nova_aura_debuff"
+				"Aura_Radius"			"%aura_aoe"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster" 	"0"
+			}
+
+			"modifier_imba_frost_nova_aura_debuff"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lich.lua"
+						"Function"		"FrostNova"
+
+						"modifier"		"modifier_imba_frost_nova_stacks"
+						"modifier_slow"	"modifier_imba_frost_nova"
+						"particle"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+						"sound"			"Ability.FrostNova"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_frost_nova_stacks"
+						"Target" 		"TARGET"
+					}
+				}
+
+				"ThinkInterval"  		"%stack_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lich.lua"
+						"Function"		"FrostNova"
+
+						"modifier"		"modifier_imba_frost_nova_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_frost_nova_stacks"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+
+				"EffectName"			"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_per_stack"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_per_stack" 
+				}
+			}
+		}
+	}
 }
