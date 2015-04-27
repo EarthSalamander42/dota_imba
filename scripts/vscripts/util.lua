@@ -504,3 +504,23 @@ function RemoveStacks(ability, unit, modifier, stack_amount)
 	end
 end
 
+-- Switches one skill with another
+function SwitchAbilities(hero, added_ability_name, removed_ability_name, keep_level, keep_cooldown)
+	local removed_ability = hero:FindAbilityByName(removed_ability_name)
+	local level = removed_ability:GetLevel()
+	local cooldown = removed_ability:GetCooldownTimeRemaining()
+	hero:RemoveAbility(removed_ability_name)
+	hero:AddAbility(added_ability_name)
+	local added_ability = hero:FindAbilityByName(added_ability_name)
+	
+	if keep_level then
+		for i = 1, level do
+			added_ability:UpgradeAbility(false)
+		end
+	end
+	
+	if keep_cooldown then
+		added_ability:StartCooldown(cooldown)
+	end
+end
+

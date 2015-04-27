@@ -8170,7 +8170,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"7.0"
-		"AbilityDuration"				"0.7"	
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
@@ -8204,19 +8203,14 @@
 				"var_type"						"FIELD_INTEGER"
 				"dragon_slave_distance"			"1150"
 			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"dragon_slave_delay"			"0.7"
-			}
 		}	
 
 		"OnUpgrade"
 		{
 			"LevelUpAbility"
 			{
-				"Target" 					"CASTER"
-				"AbilityName"				"imba_lina_dragon_slave_aux"
+				"Target" 						"CASTER"
+				"AbilityName"					"imba_lina_dragon_slave_aux"
 			}
 		}
 
@@ -8244,28 +8238,145 @@
 				"Target"				"CASTER"
 			}
 
-			"DelayedAction"
+			"RunScript"
 			{
-				"Delay"     			"%dragon_slave_delay"
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"DragonSlave"
+				"Target"				"POINT"
 
-				"Action"    
-				{	
-					"FireSound"
-					{
-						"EffectName"	"Hero_Lina.DragonSlave"
-						"Target"		"POINT"
-					}
+				"ability_name"			"imba_lina_dragon_slave_aux"
+				"particle_name"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+				"sound"					"Hero_Lina.DragonSlave"
+			}
 
-					"RunScript"
-					{
-						"ScriptFile"	"abilities/hero_lina.lua"
-						"Function"		"DragonSlave"
-						"Target"		"POINT"
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"FierySoul"
+			}
+		}	
 
-						"ability_name"	"imba_lina_dragon_slave_aux"
-						"particle_name"	"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-					}
-				}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"0"
+			"Damage"
+			{
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%AbilityDamage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Dragon Slave (Blazing Soul mode)
+	//=================================================================================================================
+	"imba_lina_dragon_slave_fiery"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lina_dragon_slave_fiery"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.25"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2.0"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"110 180 250 320"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 230 260 290"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_speed"			"1400"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_width_initial"	"275"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_width_end"		"250"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_distance"			"1150"
+			}
+		}	
+
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target" 						"CASTER"
+				"AbilityName"					"imba_lina_dragon_slave_aux"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"				"POINT"
+			    "EffectName"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+			    "MoveSpeed"				"%dragon_slave_speed"
+			    "StartRadius"			"%dragon_slave_width_initial"
+			    "StartPosition"			"attach_origin"
+			    "EndRadius"				"%dragon_slave_width_end"
+			    "FixedDistance"			"%dragon_slave_distance"
+			    "TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_MECHANICAL"
+			    "TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"		"1"
+			    "ProvidesVision"		"0"
+			}	
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_Lina.DragonSlave"
+				"Target"				"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"DragonSlave"
+				"Target"				"POINT"
+
+				"ability_name"			"imba_lina_dragon_slave_aux"
+				"particle_name"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+				"sound"					"Hero_Lina.DragonSlave"
 			}
 		}	
 
@@ -8341,6 +8452,1303 @@
 				"Target"						"TARGET"
 				"Type"							"DAMAGE_TYPE_MAGICAL"
 				"Damage"						"%AbilityDamage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Light Strike Array
+	//=================================================================================================================
+	"imba_lina_light_strike_array"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lina_light_strike_array"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.35"
+		"AOERadius"						"%light_strike_array_aoe"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0"
+		"AbilityDuration"				"1.6 1.9 2.2 2.5"	
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"120 160 200 240"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 100 110 120"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"light_strike_array_aoe"			"250"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"light_strike_array_delay_time"		"0.5"
+			}		
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"light_strike_array_stun_duration"	"1.6 1.9 2.2 2.5"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"light_strike_array_damage"			"120 160 200 240"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"secondary_delay"					"0.2"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"secondary_amount"					"10"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_lina.lua"
+				"Function"					"LightStrikeArrayPre"
+
+				"Target"					"POINT"
+				"particle_name"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Ability.PreLightStrikeArray"
+				"Target"					"CASTER"
+			}	
+
+			"DelayedAction"
+			{
+				"Delay"		"%light_strike_array_delay_time"	
+
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Ability.LightStrikeArray"
+						"Target"			"POINT"
+					}
+
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"TargetPoint"		"POINT"	
+
+						"ControlPoints"
+			            {
+			            	"00"	"POINT"
+			            	"01"	"%light_strike_array_aoe 0 0"
+			            	"03"	"0 0 0"
+			            }
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_light_strike_array_delay"
+						"Target" 			"CASTER"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_light_strike_array"
+						"Target"
+						{
+							"Center"  		"POINT"
+							"Radius" 		"%light_strike_array_aoe"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+					
+					"DestroyTrees"
+			        {
+			        	"Target"			"POINT"
+			        	"Radius"			"%light_strike_array_aoe"
+			        }					
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_lina.lua"
+				"Function"					"FierySoul"
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_light_strike_array"
+			{
+				"IsDebuff"			"1"
+
+				"Duration"			"%light_strike_array_stun_duration"
+				
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%AbilityDamage"
+					}
+				}
+
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"	
+
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"	
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_light_strike_array_delay"
+			{
+				"IsBuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+
+				"ThinkInterval"  	"%secondary_delay"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_lina.lua"
+						"Function"			"LightStrikeArray"
+
+						"Target"			"POINT"
+						"particle_name"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+						"modifier_stun"		"modifier_imba_light_strike_array"
+						"modifier_delay"	"modifier_imba_light_strike_array_delay"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Light Strike Array (Blazing Soul mode)
+	//=================================================================================================================
+	"imba_lina_light_strike_array_fiery"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lina_light_strike_array_fiery"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.25"
+		"AOERadius"						"%light_strike_array_aoe"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3.0"
+		"AbilityDuration"				"1.6 1.9 2.2 2.5"	
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"120 160 200 240"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"180 200 220 240"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"light_strike_array_aoe"			"250"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"light_strike_array_delay_time"		"0.5"
+			}		
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"light_strike_array_stun_duration"	"1.6 1.9 2.2 2.5"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"light_strike_array_damage"			"120 160 200 240"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"secondary_delay"					"0.2"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"secondary_amount"					"10"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_lina.lua"
+				"Function"					"LightStrikeArrayPre"
+
+				"Target"					"POINT"
+				"particle_name"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Ability.PreLightStrikeArray"
+				"Target"					"CASTER"
+			}	
+
+			"DelayedAction"
+			{
+				"Delay"		"%light_strike_array_delay_time"	
+
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Ability.LightStrikeArray"
+						"Target"			"POINT"
+					}
+
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"TargetPoint"		"POINT"	
+
+						"ControlPoints"
+			            {
+			            	"00"	"POINT"
+			            	"01"	"%light_strike_array_aoe 0 0"
+			            	"03"	"0 0 0"
+			            }
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_light_strike_array_delay"
+						"Target" 			"CASTER"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_light_strike_array"
+						"Target"
+						{
+							"Center"  		"POINT"
+							"Radius" 		"%light_strike_array_aoe"
+							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+					
+					"DestroyTrees"
+			        {
+			        	"Target"			"POINT"
+			        	"Radius"			"%light_strike_array_aoe"
+			        }					
+				}
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_light_strike_array"
+			{
+				"IsDebuff"			"1"
+
+				"Duration"			"%light_strike_array_stun_duration"
+				
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%AbilityDamage"
+					}
+				}
+
+				"OverrideAnimation"	"ACT_DOTA_DISABLED"	
+
+				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"	"follow_overhead"	
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_light_strike_array_delay"
+			{
+				"IsBuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+
+				"ThinkInterval"  	"%secondary_delay"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_lina.lua"
+						"Function"			"LightStrikeArray"
+
+						"Target"			"POINT"
+						"particle_name"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+						"modifier_stun"		"modifier_imba_light_strike_array"
+						"modifier_delay"	"modifier_imba_light_strike_array_delay"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Fiery Soul
+	//=================================================================================================================
+	"imba_lina_fiery_soul"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
+		"AbilityTextureName"			"lina_fiery_soul"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_attack_speed_bonus"	"40 60 80 100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_move_speed_bonus"	"5 6 7 8"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_max_stacks"			"3"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_duration"			"10"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_attack_speed_bonus"		"120 180 240 300"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_move_speed_bonus"			"15 18 21 24"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"abilities/hero_lina.lua"
+				"Function"						"FierySoulActivate"
+
+				"dragon_slave"					"imba_lina_dragon_slave"
+				"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
+				"light_strike_array"			"imba_lina_light_strike_array"
+				"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
+				"fiery_soul"					"imba_lina_fiery_soul"
+				"blazing_soul"					"imba_lina_blazing_soul"
+				"laguna_blade"					"imba_lina_laguna_blade"
+				"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+				"laguna_scepter"				"imba_lina_laguna_blade_scepter"
+				"laguna_scepter_fiery"			"imba_lina_laguna_blade_fiery_scepter"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_imba_fiery_soul"
+			{
+				"IsHidden"						"0"
+				"IsPurgable"					"0"
+				"Duration"						"%fiery_soul_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
+				}
+			}
+
+			"modifier_imba_fiery_soul_active"
+			{
+				"IsHidden"						"0"
+				"IsPurgable"					"0"
+				"Duration"						"%fiery_soul_duration"
+				"TextureName"					"lina_fiery_soul_fiery"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_lina.lua"
+						"Function"						"FierySoulEnd"
+
+						"dragon_slave"					"imba_lina_dragon_slave"
+						"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
+						"light_strike_array"			"imba_lina_light_strike_array"
+						"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
+						"fiery_soul"					"imba_lina_fiery_soul"
+						"blazing_soul"					"imba_lina_blazing_soul"
+						"laguna_blade"					"imba_lina_laguna_blade"
+						"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+						"laguna_scepter"				"imba_lina_laguna_blade_scepter"
+						"laguna_scepter_fiery"			"imba_lina_laguna_blade_fiery_scepter"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%max_attack_speed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%max_move_speed_bonus"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Blazing Soul
+	//=================================================================================================================
+	"imba_lina_blazing_soul"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"AbilityTextureName"			"lina_fiery_soul_fiery"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_attack_speed_bonus"	"40 60 80 100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_move_speed_bonus"	"5 6 7 8"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_max_stacks"			"3"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"fiery_soul_duration"			"10"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_attack_speed_bonus"		"120 180 240 300"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_move_speed_bonus"			"15 18 21 24"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"abilities/hero_lina.lua"
+				"Function"						"FierySoulActivate"
+
+				"dragon_slave"					"imba_lina_dragon_slave"
+				"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
+				"light_strike_array"			"imba_lina_light_strike_array"
+				"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
+				"fiery_soul"					"imba_lina_fiery_soul"
+				"blazing_soul"					"imba_lina_blazing_soul"
+				"laguna_blade"					"imba_lina_laguna_blade"
+				"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+				"laguna_scepter"				"imba_lina_laguna_blade_scepter"
+				"laguna_scepter_fiery"			"imba_lina_laguna_blade_fiery_scepter"
+			}
+		}
+	
+		"Modifiers"
+		{
+			"modifier_imba_fiery_soul"
+			{
+				"IsHidden"						"0"
+				"IsPurgable"					"0"
+				"Duration"						"%fiery_soul_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
+				}
+			}
+
+			"modifier_imba_fiery_soul_active"
+			{
+				"IsHidden"						"0"
+				"IsPurgable"					"0"
+				"Duration"						"%fiery_soul_duration"
+				"TextureName"					"lina_fiery_soul_fiery"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_lina.lua"
+						"Function"						"FierySoulEnd"
+
+						"dragon_slave"					"imba_lina_dragon_slave"
+						"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
+						"light_strike_array"			"imba_lina_light_strike_array"
+						"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
+						"fiery_soul"					"imba_lina_fiery_soul"
+						"blazing_soul"					"imba_lina_blazing_soul"
+						"laguna_blade"					"imba_lina_laguna_blade"
+						"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+						"laguna_scepter"				"imba_lina_laguna_blade_scepter"
+						"laguna_scepter_fiery"			"imba_lina_laguna_blade_fiery_scepter"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%max_attack_speed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%max_move_speed_bonus"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Laguna Blade
+	//=================================================================================================================
+	"imba_lina_laguna_blade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"lina_laguna_blade"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.35"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70.0 60.0 50.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"280 420 560"
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier just delays damage	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"450 700 950"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_multiplier_scepter"	"2.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"2800"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_width"				"100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_width"					"175"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.LagunaBlade"
+				"Target"				"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"LagunaBladeProjectile"
+
+				"Target"				"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"FierySoul"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+			
+			"FireSound"
+			{
+				"EffectName"		"Ability.LagunaBladeImpact"
+				"Target"			"TARGET"
+			}
+
+			"Damage"
+			{
+				"Target"			"TARGET"
+				"Type"				"DAMAGE_TYPE_MAGICAL"
+				"Damage"			"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_laguna_blade_scepter_check"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"  		"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lina.lua"
+						"Function"		"LagunaBladeGetScepterCheck"
+
+						"normal_name"	"imba_lina_laguna_blade"
+						"scepter_name"	"imba_lina_laguna_blade_scepter"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Laguna Blade (scepter version)
+	//=================================================================================================================
+	"imba_lina_laguna_blade_scepter"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"lina_laguna_blade"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1100"
+		"AbilityCastPoint"				"0.35"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70.0 60.0 50.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"280 420 560"
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier just delays damage	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"450 700 950"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_multiplier_scepter"	"2.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"4400"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_width"				"100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_width"					"175"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.LagunaBlade"
+				"Target"				"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"LagunaBladeProjectile"
+
+				"Target"				"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"FierySoul"
+			}
+		}	
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+			
+			"FireSound"
+			{
+				"EffectName"		"Ability.LagunaBladeImpact"
+				"Target"			"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"		"abilities/hero_lina.lua"
+				"Function"			"LagunaBladeScepterDamage"
+				"Target"			"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_laguna_blade_scepter_check"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"  		"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lina.lua"
+						"Function"		"LagunaBladeDropScepterCheck"
+
+						"normal_name"	"imba_lina_laguna_blade"
+						"scepter_name"	"imba_lina_laguna_blade_scepter"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Laguna Blade (Blazing Soul mode)
+	//=================================================================================================================
+	"imba_lina_laguna_blade_fiery"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"lina_laguna_blade_fiery"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.25"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"560 840 1120"
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier just delays damage	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"450 700 950"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_multiplier_scepter"	"2.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"2800"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_width"				"100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_width"					"175"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.LagunaBlade"
+				"Target"				"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"LagunaBladeProjectile"
+
+				"Target"				"TARGET"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+			
+			"FireSound"
+			{
+				"EffectName"		"Ability.LagunaBladeImpact"
+				"Target"			"TARGET"
+			}
+
+			"Damage"
+			{
+				"Target"			"TARGET"
+				"Type"				"DAMAGE_TYPE_MAGICAL"
+				"Damage"			"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_laguna_blade_scepter_check"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"  		"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lina.lua"
+						"Function"		"LagunaBladeGetScepterCheck"
+
+						"normal_name"	"imba_lina_laguna_blade_fiery"
+						"scepter_name"	"imba_lina_laguna_blade_fiery_scepter"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Laguna Blade (Blazing Soul mode, scepter version)
+	//=================================================================================================================
+	"imba_lina_laguna_blade_fiery_scepter"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"lina_laguna_blade_fiery"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1100"
+		"AbilityCastPoint"				"0.25"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"560 840 1120"
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.0"	// Modifier just delays damage	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"450 700 950"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"700"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1100"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_multiplier_scepter"	"2.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"4400"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_width"				"100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_width"					"175"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.LagunaBlade"
+				"Target"				"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"LagunaBladeProjectile"
+
+				"Target"				"TARGET"
+			}
+		}	
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+			
+			"FireSound"
+			{
+				"EffectName"		"Ability.LagunaBladeImpact"
+				"Target"			"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"		"abilities/hero_lina.lua"
+				"Function"			"LagunaBladeScepterDamage"
+				"Target"			"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_laguna_blade_scepter_check"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"  		"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_lina.lua"
+						"Function"		"LagunaBladeDropScepterCheck"
+
+						"normal_name"	"imba_lina_laguna_blade_fiery"
+						"scepter_name"	"imba_lina_laguna_blade_fiery_scepter"
+					}
+				}
 			}
 		}
 	}
