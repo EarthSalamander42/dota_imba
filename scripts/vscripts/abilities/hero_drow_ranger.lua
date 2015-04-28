@@ -33,6 +33,11 @@ function FrostArrowsEnd( keys )
 	target:RemoveModifierByName(stack_modifier)
 end
 
+-- Upgrades Frost Arrows' cast range when leveling up Marksmanship
+function UpgradeFrostArrows( keys )
+
+end
+
 function Gust( keys )
 	local vCaster = keys.caster:GetAbsOrigin()
 	local vTarget = keys.target:GetAbsOrigin()
@@ -133,62 +138,59 @@ end
 function Marksmanship( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local effect_radius = ability:GetLevelSpecialValueFor( "radius", ( ability:GetLevel() - 1 ) )
-	local tree_radius = ability:GetLevelSpecialValueFor( "tree_radius_scepter", ( ability:GetLevel() - 1 ) )
-	local modifier_effect = keys.modifier_effect
-	local modifier_scepter = keys.modifier_scepter
-	local modifier_invis = keys.modifier_invis
-	local scepter = HasScepter(caster)
+	local ability_level = ability:GetLevel() - 1
+	local enemy_radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local tree_radius = ability:GetLevelSpecialValueFor("tree_radius_scepter", ability_level)
 	local caster_position = caster:GetAbsOrigin()
 
-	-- Count units in radius
-	local units = FindUnitsInRadius( caster:GetTeamNumber(), caster_position, caster, effect_radius,
-			DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false )
-	local count = 0
-	for k, v in pairs( units ) do
-		count = count + 1
-	end
+	-- Modifier names
+	local modifier_regular = keys.modifier_effect
+	local modifier_scepter = keys.modifier_scepter
+	local modifier_invis = keys.modifier_invis
 
-	-- Count trees in radius
-	local trees = Entities:FindAllByClassnameWithin( "ent_dota_tree", caster_position, tree_radius )
-	local tree_count = 0
-	for k, v in pairs( trees ) do
-		tree_count = tree_count + 1
-	end
+	-- Effect logic
+	local scepter = HasScepter(caster)
+	local enemy_nearby
+	local tree_nearby
 
-	-- Apply and destroy
-	if scepter == true then
-		if caster:HasModifier( modifier_effect ) then
-			caster:RemoveModifierByName( modifier_effect )
+	-- Switches between scepter and regular modifiers
+	local modifier_effect
+	if scepter then 
+		if caster:HasModifier(modifier_regular) then
+			caster:RemoveModifierByName(modifier_regular)
 		end
-		if count == 0 then
-			if not caster:HasModifier( modifier_scepter ) then
-				ability:ApplyDataDrivenModifier( caster, caster, modifier_scepter, {} )
-			end
-			if tree_count ~= 0 then
-					ability:ApplyDataDrivenModifier( caster, caster, modifier_invis, {} )
-					caster:AddNewModifier(caster, ability, "modifier_invisible", {fadetime = 300.0})
-			else
-					caster:RemoveModifierByName( modifier_invis )
-					caster:RemoveModifierByName( "modifier_invisible" )
-			end
-		elseif count ~= 0 then
-				caster:RemoveModifierByName( modifier_scepter )
-				caster:RemoveModifierByName( modifier_invis )
-				caster:RemoveModifierByName( "modifier_invisible" )
+		modifier_effect = modifier_scepter
+	else
+		if caster:HasModifier(modifier_scepter) then
+			caster:RemoveModifierByName(modifier_scepter)
+		end
+		modifier_effect = modifier_regular
+	end
+
+	-- Check enemy presence in enemy_radius
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster_position, caster, enemy_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+	if #units > 0 then
+		enemy_nearby = true
+	end
+
+	-- Check tree presence in tree_radius
+	local trees = Entities:FindAllByClassnameWithin("ent_dota_tree", caster_position, tree_radius)
+	if #trees > 0 then
+		tree_nearby = true
+	end
+
+	-- Switches between scepter and regular modifiers
+	if not enemy_nearby then
+		if not caster:HasModifier(modifier_effect) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
+		end
+		if scepter and tree_nearby then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_invis, {})
+		else
+			caster:RemoveModifierByName(modifier_invis)
 		end
 	else
-		if caster:HasModifier( modifier_scepter ) then
-			caster:RemoveModifierByName( modifier_scepter )
-		end
-		if caster:HasModifier( modifier_invis ) then
-			caster:RemoveModifierByName( modifier_invis )
-			caster:RemoveModifierByName( "modifier_invisible" )
-		end
-		if count == 0 and not caster:HasModifier( modifier_effect ) then
-			ability:ApplyDataDrivenModifier( caster, caster, modifier_effect, {} )
-		elseif count ~= 0 and caster:HasModifier( modifier_effect ) then
-			caster:RemoveModifierByName( modifier_effect )
-		end
+		caster:RemoveModifierByName(modifier_effect)
+		caster:RemoveModifierByName(modifier_invis)
 	end
 end

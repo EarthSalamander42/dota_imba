@@ -5986,7 +5986,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"800"
+		"AbilityCastRange"						"625"
 		"AbilityCastPoint"						"0.0"
 
 		// Time		
@@ -6638,6 +6638,12 @@
 				"ModifierName"	"modifier_imba_marksmanship_effect_scepter"
 				"Target" 		"CASTER"
 			}
+
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/hero_drow_ranger.lua"
+				"Function"		"UpgradeFrostArrows"
+			}
 		}
 		
 		"Modifiers"
@@ -6660,6 +6666,11 @@
 						"modifier_scepter"		"modifier_imba_marksmanship_effect_scepter"
 						"modifier_invis"		"modifier_imba_marksmanship_invis"
 					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" 			"%range_bonus"
 				}
 			}
 			
@@ -6696,7 +6707,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%agility_bonus"
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" 			"%range_bonus"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_bonus"
 					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%night_vision_bonus"
 				}
@@ -6735,7 +6745,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%agility_bonus_scepter"
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS" 			"%range_bonus"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_bonus"
 					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%night_vision_bonus"
 				}
@@ -6750,6 +6759,46 @@
 				{
 					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"CASTER"
+					}
+				}
+
+				"OnAttack"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_marksmanship_invis"
+						"Target"		"ATTACKER"
+					}
+				}	
+
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_marksmanship_invis"
+						"Target"		"UNIT"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"
+						{
+							"Center"	"CASTER"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
 				}
 			}
 		}

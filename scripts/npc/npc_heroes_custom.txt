@@ -188,6 +188,22 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Kunkka
+	//=================================================================================================================
+    "npc_imba_hero_kunkka"
+	{
+		"override_hero"				"npc_dota_hero_kunkka"
+		
+	//	"Ability1"					"imba_kunkka_torrent"		
+	//	"Ability2"					"imba_kunkka_tidebringer"	
+	//	"Ability3"					"imba_kunkka_x_marks_the_spot"
+	//	"Ability4"					"imba_kunkka_ghostship"		
+		"Ability5"					"attribute_bonus_str"
+	//	"Ability6"					"imba_kunkka_return"				
+		
+	}
+
+	//=================================================================================================================
 	// HERO: Lich
 	//=================================================================================================================
     "npc_imba_hero_lich"
@@ -248,4 +264,25 @@
 
 		"VisionNighttimeRange"		"1800"
 	}
+
+	//=================================================================================================================
+	// HERO: Necrolyte
+	//=================================================================================================================
+    "npc_imba_hero_necrolyte"
+	{
+		"override_hero"				"npc_dota_hero_necrolyte"
+
+		"ArmorPhysical"				"1"
+
+		"AttributeBaseIntelligence"	"22"
+
+	//	"Ability1"					"imba_necrolyte_death_pulse"
+	//	"Ability2"					"imba_necrolyte_heartstopper_aura"
+	//	"Ability3"					"imba_necrolyte_sadist"
+	//	"Ability4"					"imba_necrolyte_reapers_scythe"
+		"Ability5"					"attribute_bonus_int"				
+		
+	}
+
+	
 }
