@@ -19,7 +19,7 @@ function CrystalNova( keys )
 
 	-- Creates the particle
 	local fxIndex = ParticleManager:CreateParticle( particle, PATTACH_CUSTOMORIGIN, caster )
-	local radiusVector = (Vector (radius, 0, 0))
+	local radiusVector = (Vector (effect_radius, 0, 0))
 
 	ParticleManager:SetParticleControl(fxIndex, 0, target)
 	ParticleManager:SetParticleControl(fxIndex, 1, radiusVector)

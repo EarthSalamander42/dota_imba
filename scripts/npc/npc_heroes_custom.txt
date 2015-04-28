@@ -222,7 +222,30 @@
 		"Ability4"					"imba_lina_laguna_blade"
 		"Ability5"					"attribute_bonus_int"
 		"Ability6"					"imba_lina_dragon_slave_aux"
+	}
 
-		"MovementTurnRate"			"0.8"
+	//=================================================================================================================
+	// HERO: Mirana
+	//=================================================================================================================
+    "npc_imba_hero_mirana"
+	{
+		"override_hero"				"npc_dota_hero_mirana"
+
+		"Ability1"					"imba_mirana_starfall"
+		"Ability2"					"imba_mirana_arrow"	
+		"Ability3"					"imba_mirana_leap"	
+		"Ability4"					"imba_mirana_invis"	
+		"Ability5"					"attribute_bonus_agi"
+
+		"AttackDamageMin"			"26"
+		"AttackDamageMax"			"30"
+		"AttackRate"				"1.5"
+
+		"AttributeBaseAgility"		"20"
+		"AttributeAgilityGain"		"3.0"
+
+		"MovementTurnRate"			"0.8"	
+
+		"VisionNighttimeRange"		"1800"
 	}
 }

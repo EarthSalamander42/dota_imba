@@ -337,6 +337,7 @@
 			{
 				"IsDebuff"								"1"
 				"IsHidden"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -360,6 +361,7 @@
 			"modifier_frostmourne_debuff"
 			{
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 				
 				"TextureName"							"abaddon_frostmourne"
@@ -374,6 +376,7 @@
 			{
 				"IsHidden"								"1"
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -389,6 +392,8 @@
 			"modifier_frostmourne_buff"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
+
 				"Duration"								"%buff_duration"
 
 				"TextureName"							"abaddon_frostmourne"
@@ -544,6 +549,7 @@
 			"modifier_aphotic_shield"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"0"
 				"Duration"								"%duration"
 			
 				"ThinkInterval"							"0.03"
@@ -593,6 +599,7 @@
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -616,6 +623,7 @@
 			"modifier_frostmourne_debuff"
 			{
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 
 				"TextureName"							"abaddon_frostmourne"
@@ -630,6 +638,7 @@
 			{
 				"IsHidden"								"1"
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -644,6 +653,7 @@
 			"modifier_frostmourne_buff"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%buff_duration"
 
 				"TextureName"							"abaddon_frostmourne"
@@ -726,6 +736,7 @@
 			{
 				"Passive"								"1"
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"OnAttack"
 				{
@@ -741,6 +752,7 @@
 			{
 				"IsHidden"								"1"
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -763,6 +775,7 @@
 			"modifier_frostmourne_debuff"
 			{
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%debuff_duration"
 
 				"Properties"
@@ -775,6 +788,7 @@
 			{
 				"IsHidden"								"1"
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%buff_duration"
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -789,6 +803,7 @@
 			"modifier_frostmourne_buff"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%buff_duration"
 
 				"Properties"
@@ -889,6 +904,7 @@
 			{
 				"Passive"								"1"
 				"IsHidden"								"1"
+				"IsPurgable"							"0"
 
 				"OnTakeDamage"
 				{
@@ -903,6 +919,7 @@
 			"modifier_borrowed_time"
 			{
 				"IsBuff"								"1"
+				"IsPurgable"							"0"
 
 				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 				"EffectAttachType"						"follow_origin"
@@ -931,9 +948,9 @@
 			{
 				"Passive"								"0"
 				"IsBuff"								"1"
+				"IsPurgable"							"0"
 
 				"OnTakeDamage"
-				// "%attack_damage" is set to the damage value after mitigation
 				{
 					"RunScript"
 					{
@@ -971,8 +988,9 @@
 		{
 			"modifier_imba_antimage_mana_break"
 			{
-				"IsHidden"			"1"
-				"Passive"			"1"
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -1075,10 +1093,12 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%spell_shield_resistance"
 				}
 			}
+
 			"modifier_imba_antimage_spell_shield_active"
 			{
 				"Duration"		"%spell_shield_active_duration"
 				"IsBuff"		"1"
+				"IsPurgable"	"0"
 			
 				"Properties"
 				{
@@ -1102,7 +1122,7 @@
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"spell_shield_active_duration"		"5 6 7 8"
+				"spell_shield_active_duration"		"8"
 			}
 		}
 	}
@@ -1251,8 +1271,10 @@
 		{
 			"modifier_imba_mana_void_ministun"
 			{
-				"Duration"	"%mana_void_ministun"
-				"IsDebuff"	"1"
+				"Duration"		"%mana_void_ministun"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -1512,7 +1534,8 @@
 
 			"modifier_imba_axe_battle_hunger_enemy"
 			{
-				"IsDebuff"		"1"	
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
 
 				"StatusEffectName" 		"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
 				"StatusEffectPriority"  "9"	
@@ -1711,7 +1734,8 @@
 		{
 			"modifier_imba_axe_culling_blade_sprint"
 			{
-				"IsBuff"	"1"
+				"IsBuff"		"1"
+				"IsPurgable"	"1"
 		
 				"EffectName"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
 				"EffectAttachType"	"follow_origin"	
@@ -1956,8 +1980,9 @@
 		{
 			"modifier_imba_bane_nightmare"
 			{
-				"Duration"	"%duration"
-				"IsDebuff"	"1"	
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
 
 				"EffectName"    		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
 	            "EffectAttachType"      "follow_overhead"	
@@ -2068,7 +2093,8 @@
 
 			"modifier_imba_bane_nightmare_damage"
 			{
-				"IsHidden"		"1"	
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
 
 				"ThinkInterval" "%nightmare_dot_interval"
 	            "OnIntervalThink"
@@ -2083,8 +2109,9 @@
 
 			"modifier_imba_bane_nightmare_debuff"
 			{
-				"IsHidden"	"1"
-				"IsDebuff"	"1"	
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
 
 				"OnAttackStart"
 				{
@@ -2099,7 +2126,8 @@
 
 			"modifier_imba_bane_nightmare_invul"
 			{
-				"IsDebuff"	"1"	
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
 
 				"States"
 				{
@@ -2279,6 +2307,7 @@
 			"modifier_imba_bane_brain_sap"
 			{
 				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 				
 				"OnAbilityExecuted"
 				{
@@ -2562,6 +2591,7 @@
 			"modifier_imba_bane_fiends_grip_caster"
 			{
 				"IsHidden"			"1"
+				"IsPurgable"		"0"
 				"ThinkInterval" 	"0.03"
 				
 				"OnIntervalThink"
@@ -2738,6 +2768,8 @@
 	    		"Passive"				"0"
 	    		"IsHidden"				"0"
 	    		"IsDebuff"				"1"
+	    		"IsPurgable"			"0"
+
 	    		"Duration"				"%chain_duration"
 	    		
 	    		"ThinkInterval"  		"0.1"
@@ -2867,6 +2899,8 @@
 			{
 				"Duration"				"%fade_time"
 				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
 				"EffectName"			"particles/generic_hero_status/status_invisibility_start.vpcf"
 				"EffectAttachType"		"follow_origin"
 
@@ -2879,8 +2913,9 @@
 
 			"modifier_imba_wind_walk"
 			{
-				"Duration"	"%duration"
-				"IsBuff"	"1"	
+				"Duration"		"%duration"
+				"IsBuff"		"1"
+				"IsPurgable"	"0"
 
 				"OnAttackLanded"
 				{
@@ -3081,7 +3116,8 @@
 			"modifier_imba_track_aura"
 			{
 				"Duration"				"%duration"
-				"IsDebuff"				"1"	
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 
 				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
 				"EffectAttachType"		"follow_origin"	
@@ -3186,6 +3222,7 @@
 				"Duration"							"%duration"
 				"IsDebuff"							"1"
 				"IsHidden"							"1"
+				"IsPurgable"						"1"
 
 				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
 				"EffectAttachType"					"follow_overhead"
@@ -3327,6 +3364,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
@@ -3436,8 +3474,9 @@
 		{
 			"modifier_imba_hoof_stomp"
 			{
-				"IsDebuff"	"1"
-				"Duration"	"%stun_duration"
+				"IsDebuff"		"1"
+				"IsPurgable"	"0"
+				"Duration"		"%stun_duration"
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED" 	"MODIFIER_STATE_VALUE_ENABLED"			
@@ -3687,6 +3726,7 @@
 			"modifier_imba_centaur_stampede"
 			{
 				"Duration"			"%duration"
+				"IsPurgable"		"0"
 
 				"Properties"
 				{
@@ -3736,6 +3776,7 @@
 			"modifier_imba_centaur_stampede_collision"
 			{
 				"IsHidden"		"1"
+				"IsPurgable"	"0"
 				"OnCreated"
 				{
 					"RunScript"
@@ -3757,6 +3798,7 @@
 			"modifier_imba_centaur_stampede_debuff"
 			{
 				"IsDebuff"					"1"
+				"IsPurgable"				"0"
 
 				"OverrideAnimation" 		"ACT_DOTA_DISABLED"
 				"EffectName"				"particles/generic_gameplay/generic_stunned.vpcf"
@@ -3780,7 +3822,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityType"							"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"1"
@@ -3897,7 +3940,7 @@
 					"Center"					"POINT"
 					"Radius"					"%radius"
 					"Teams"						"DOTA_UNIT_TARGET_TEAM_ENEMY" 
-					"Type"						"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					"Types"						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				}
 				
 				"Action"
@@ -3934,6 +3977,8 @@
 			"modifier_imba_crystal_nova_slow"
 			{
 				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
 				"Duration"						"%duration"
 				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
 				"StatusEffectName"				"particles/status_fx/status_effect_frost_lich.vpcf"
@@ -4242,7 +4287,13 @@
 				{
 					"Stun"
 					{
-						"Target"						"ATTACKER"
+						"Target"
+						{
+							"Center"  					"ATTACKER"
+							"Teams" 					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types" 					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+
 						"Duration"						"%stun_duration"
 					}
 					
@@ -4742,6 +4793,7 @@
 			"modifier_imba_freezing_field_debuff"
 			{
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%slow_duration"
 				
 				"EffectName"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
@@ -4758,6 +4810,7 @@
 			"modifier_imba_freezing_field_debuff_scepter"
 			{
 				"IsDebuff"								"1"
+				"IsPurgable"							"1"
 				"Duration"								"%slow_duration"
 				
 				"EffectName"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
@@ -6066,6 +6119,7 @@
 				"Passive"						"0"
 				"IsHidden"						"1"
 				"IsDebuff"						"1"
+				"IsPurgable"					"1"
 			
 				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
 			
@@ -6096,6 +6150,7 @@
 				"Passive"						"0"
 				"IsHidden"						"0"
 				"IsDebuff"						"1"
+				"IsPurgable"					"1"
 			}
 
 			"modifier_imba_frost_arrows_frozen"
@@ -6103,6 +6158,8 @@
 				"Passive"						"0"
 				"IsHidden"						"0"
 				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
 				"Duration"						"%freeze_duration"
 				"TextureName"					"imba_drow_ranger_frost_arrows"
 				
@@ -6276,6 +6333,7 @@
 			"modifier_imba_drow_ranger_gust_debuff"
 			{
 				"IsDebuff"						"1"
+				"IsPurgable"					"1"
 				"Duration"						"%silence_duration"
 				
 				"EffectName"					"particles/generic_gameplay/generic_silence.vpcf"
@@ -6565,6 +6623,21 @@
 		{
 			"particle"							"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
 			"particle"							"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
+		}
+
+		"OnUpgrade"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_imba_marksmanship_effect"
+				"Target" 		"CASTER"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_imba_marksmanship_effect_scepter"
+				"Target" 		"CASTER"
+			}
 		}
 		
 		"Modifiers"
@@ -7613,7 +7686,8 @@
 		{
 			"modifier_imba_frost_nova"
 			{
-				"IsDebuff"				"1"	
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 
 				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
 				"StatusEffectPriority"	"10"	
@@ -7847,7 +7921,8 @@
 
 			"modifier_imba_frost_armor_slow"
 			{
-				"IsDebuff"				"1"	
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 
 				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
 				"StatusEffectPriority"	"10"	
@@ -8122,7 +8197,7 @@
 				"Passive"				"0"
 				"IsHidden"				"0"
 				"IsDebuff"				"1"
-				"IsPurgable"			"0"
+				"IsPurgable"			"1"
 		
 				"Duration"				"%slow_duration"
 		
@@ -8618,6 +8693,7 @@
 			"modifier_imba_light_strike_array"
 			{
 				"IsDebuff"			"1"
+				"IsPurgable"		"0"
 
 				"Duration"			"%light_strike_array_stun_duration"
 				
@@ -8823,6 +8899,7 @@
 			"modifier_imba_light_strike_array"
 			{
 				"IsDebuff"			"1"
+				"IsPurgable"		"0"
 
 				"Duration"			"%light_strike_array_stun_duration"
 				
@@ -9748,6 +9825,708 @@
 						"normal_name"	"imba_lina_laguna_blade_fiery"
 						"scepter_name"	"imba_lina_laguna_blade_fiery_scepter"
 					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Mirana's Starfall
+	//=================================================================================================================
+	"imba_mirana_starfall"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"mirana_starfall"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"150 200 250 300"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 120 140 160"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"700 800 900 1000"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"secondary_radius"		"300 400 500 600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"0.57"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"secondary_damage_pct"	"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"secondary_count"		"0 1 2 3"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"secondary_delay"		"1.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"0 1 2 3"
+			}
+
+		}	
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.Starfall"
+				"Target"				"CASTER"
+			}	
+
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+				"EffectAttachType"		"attach_origin"
+				"Target"				"CASTER"
+			}	
+
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"			"CASTER"
+	                "Radius"			"%radius"
+	                "Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }	
+
+	            "Action"
+	            {
+	            	"FireEffect"
+	            	{
+	            		"EffectName"			"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+	            		"EffectAttachType"		"follow_origin"
+	            		"Target"				"TARGET"
+	            	}	
+
+	            	"DelayedAction"
+	            	{
+	            		"Delay"					"%delay"	
+
+	            		"Action"
+	            		{	
+	            			"FireSound"
+	            			{
+	            				"EffectName"	"Ability.StarfallImpact"
+	            				"Target"		"TARGET"
+	            			}	
+
+	            			"Damage"
+	            			{
+	            				"Target"		"TARGET"
+	            				"Type"			"DAMAGE_TYPE_MAGICAL"
+	            				"Damage"		"%AbilityDamage"
+	            			}
+	            		}
+	            	}
+	            }
+			}	
+
+			// Secondary starfall
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"					"CASTER"
+	                "Radius"					"%secondary_radius"
+	                "Teams"						"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types"						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                "MaxTargets"				"%secondary_targets"
+	                "Random"					"1"
+	            }	
+
+	            "Action"
+	            {
+	            	"DelayedAction"
+	            	{
+	            		"Delay"					"%delay"	
+
+	            		"Action"
+	            		{
+	            			"FireEffect"
+			            	{
+			            		"EffectName"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+			            		"EffectAttachType"	"follow_origin"
+			            		"Target"			"TARGET"
+			            	}	
+
+			            	"DelayedAction"
+			            	{
+			            		"Delay"				"%delay"	
+
+			            		"Action"
+			            		{	
+
+			            			"FireSound"
+			            			{
+			            				"EffectName"	"Ability.StarfallImpact"
+			            				"Target"		"TARGET"
+			            			}	
+
+			            			"Damage"
+			            			{
+			            				"Target"		"TARGET"
+			            				"Type"			"DAMAGE_TYPE_MAGICAL"
+			            				"Damage"		"%AbilityDamage"
+			            			}
+			            		}
+			            	}
+	            		}
+	            	}
+	            }
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Mirana's Sacred Arrow
+	//=================================================================================================================
+	"imba_mirana_arrow"	
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"mirana_arrow"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"25000"
+		"AbilityCastPoint"				"0.4"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"17.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"50 140 230 320"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"arrow_speed"			"900.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_width"			"115"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_range"			"25000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_max_stunrange"	"3000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"arrow_min_stun"		"0.01"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"arrow_max_stun"		"10.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_bonus_damage"	"280"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_vision"			"650"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_max_damagerange"	"25000"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.0"
+			}
+		}	
+
+		"OnSpellStart"
+		{
+			"LinearProjectile"
+			{
+				"Target"				"POINT"
+			    "EffectName"			"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+			    "MoveSpeed"				"%arrow_speed"
+			    "StartRadius"			"%arrow_width"
+			    "StartPosition"			"attach_origin"
+			    "EndRadius"				"%arrow_width"
+			    "FixedDistance"			"%arrow_range"
+			    "TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"		"0"
+			    "ProvidesVision"		"1"
+			    "VisionRadius"			"%arrow_vision"
+			}	
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_mirana.lua"
+				"Function"				"LaunchArrow"
+			}	
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_Mirana.ArrowCast"
+				"Target"				"CASTER"
+			}
+		}	
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_mirana.lua"
+				"Function"				"ArrowHit"
+				"Target"				"TARGET"
+			}	
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_Mirana.ArrowImpact"
+				"Target"				"TARGET"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Mirana's Leap
+	//=================================================================================================================
+	"imba_mirana_leap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"mirana_leap"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 800 1000 1200"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18.0 16.0 14.0 12.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_distance"			"600 800 1000 1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leap_speed"			"1600.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leap_acceleration"		"7000.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_radius"			"1000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_speedbonus"		"8 12 16 20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_speedbonus_as"	"20 30 40 50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leap_duration"			"10.0"
+			}
+		}	
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Ability.Leap"
+				"Target"				"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_mirana.lua"
+				"Function"				"Leap"
+			}	
+
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"			"CASTER"
+	                "Radius"			"%leap_radius"
+	                "Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+	                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }	
+
+	            "Action"
+	            {
+	            	"ApplyModifier"
+	            	{
+	            		"ModifierName"	"modifier_imba_leap"
+	            		"Target"		"TARGET"
+	            	}
+	            }
+			}	
+
+			"DelayedAction"
+			{
+				"Delay"					"%leap_distance / %leap_speed"	
+
+				"Action"
+				{
+					"ActOnTargets"
+					{
+						"Target"
+			            {
+			                "Center"	"CASTER"
+			                "Radius"	"%leap_radius"
+			                "Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+			                "Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			            }	
+
+			            "Action"
+			            {
+			            	"ApplyModifier"
+			            	{
+			            		"ModifierName"	"modifier_imba_leap"
+			            		"Target"		"TARGET"
+			            	}
+			            }
+					}
+				}
+			}
+		}	
+
+		"Modifiers"
+		{
+			"modifier_imba_leap"
+			{
+				"Duration"		"%leap_duration"	
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%leap_speedbonus_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%leap_speedbonus"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Mirana's Moonlight Shadow
+	//=================================================================================================================
+	"imba_mirana_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"mirana_invis"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"140.0 120.0 100.0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"2.0 1.0 0.3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0"
+			}
+		}	
+
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+		}	
+
+		"OnSpellStart"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"			"CASTER"
+	                "Radius"			"GLOBAL"
+	                "Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+	                "Types"				"DOTA_UNIT_TARGET_HERO"
+	            }	
+
+	            "Action"
+	            {
+	            	"ApplyModifier"
+	            	{
+	            		"ModifierName"	"modifier_imba_moonlight_duration"
+	            		"Target"		"TARGET"
+	            	}
+	            	"ApplyModifier"
+	            	{
+	            		"ModifierName"	"modifier_imba_moonlight_fade"
+	            		"Target"		"TARGET"
+	            	}	
+
+	            	"FireEffect"
+	            	{
+	            		"EffectName"		"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+	            		"EffectAttachType"	"follow_origin"
+	            		"Target"			"TARGET"
+	            	}
+	            }
+	        }	
+
+	        "FireSound"
+	        {
+	        	"EffectName"			"Ability.MoonlightShadow"
+	        	"Target"				"CASTER"
+	        }
+		}	
+	
+
+		"Modifiers"
+		{
+			"modifier_imba_moonlight_duration"
+			{
+				"Duration"				"%duration"	
+
+				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_fade"
+						"Target"		"ATTACKER"
+					}
+				}	
+
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_fade"
+						"Target"		"UNIT"
+					}
+				}	
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_fade"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}	
+
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_fade"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+			}	
+
+			"modifier_imba_moonlight_fade"
+			{
+				"Duration"				"%fade_delay"
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_invis"
+						"Target"		"TARGET"
+					}
+				}
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_moonlight_invis"
+						"Target"		"TARGET"
+					}
+				}
+			}	
+
+			"modifier_imba_moonlight_invis"
+			{
+				"IsHidden"	"1"	
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}	
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}	
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}

@@ -103,10 +103,9 @@ function LightStrikeArrayPre( keys )
 	local particle_name = keys.particle_name
 
 	-- Fixes the cast position for the next function call
-	ability.blast_pos = target_pos
-	ability.caster_pos = caster_pos
-	ability.blast_count = 0
-
+	caster.blast_pos = target_pos
+	caster.caster_pos = caster_pos
+	caster.blast_count = 0
 
 	-- Creates the pre-cast particles
 	for i=0, amount do
@@ -120,23 +119,35 @@ end
 function LightStrikeArray( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local radius = ability:GetLevelSpecialValueFor("light_strike_array_aoe", ability_level)
-	local amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level)
 
-	local target_pos = ability.blast_pos
-	local caster_pos = ability.caster_pos
+	local target_pos = caster.blast_pos
+	local caster_pos = caster.caster_pos
 	local particle_name = keys.particle_name
 	local modifier_stun = keys.modifier_stun
 	local modifier_delay = keys.modifier_delay
 
-	ability.step = (target_pos - caster_pos):Normalized() * radius
-	ability.blast_count = ability.blast_count + 1
+	-- If Blazing Soul was switched mid-cast, prevents the skill from spawning more blasts
+	if ability == nil then
+		-- Resets the global variables for the next cast
+		caster:RemoveModifierByName(modifier_delay)
+		caster.blast_count = nil
+		caster.step = nil
+		caster.blast_pos = nil
+		caster.caster_pos = nil
+		return
+	end
+
+	local ability_level = ability:GetLevel() - 1
+	local radius = ability:GetLevelSpecialValueFor("light_strike_array_aoe", ability_level)
+	local amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level)
+
+	caster.step = (target_pos - caster_pos):Normalized() * radius
+	caster.blast_count = caster.blast_count + 1
 
 	-- Checks if blast count has reached the amount of secondary blasts, if not, blasts
-	if ability.blast_count <= amount then
+	if caster.blast_count <= amount then
 		-- Updates the blast position
-		local blast_pos = target_pos + ability.step * ability.blast_count
+		local blast_pos = target_pos + caster.step * caster.blast_count
 
 		caster:EmitSound("Ability.LightStrikeArray")
 
@@ -154,10 +165,10 @@ function LightStrikeArray( keys )
 	else
 		-- Resets the global variables for the next cast
 		caster:RemoveModifierByName(modifier_delay)
-		ability.blast_count = nil
-		ability.step = nil
-		ability.blast_pos = nil
-		ability.caster_pos = nil
+		caster.blast_count = nil
+		caster.step = nil
+		caster.blast_pos = nil
+		caster.caster_pos = nil
 	end
 end
 
@@ -246,6 +257,7 @@ function FierySoulEnd( keys )
 
 	-- Switch skillset
 	SwitchAbilities(caster, dragon_slave, dragon_slave_fiery, true, false)
+	caster:RemoveModifierByName("modifier_imba_light_strike_array_delay")
 	SwitchAbilities(caster, light_strike_array, light_strike_array_fiery, true, false)
 	SwitchAbilities(caster, fiery_soul, blazing_soul, true, false)
 	caster:RemoveModifierByName("modifier_imba_laguna_blade_scepter_check")
