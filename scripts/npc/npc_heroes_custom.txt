@@ -232,9 +232,9 @@
 		"override_hero"				"npc_dota_hero_mirana"
 
 		"Ability1"					"imba_mirana_starfall"
-		"Ability2"					"imba_mirana_arrow"	
-		"Ability3"					"imba_mirana_leap"	
-		"Ability4"					"imba_mirana_invis"	
+		"Ability2"					"imba_mirana_arrow"
+		"Ability3"					"imba_mirana_leap"
+		"Ability4"					"imba_mirana_invis"
 		"Ability5"					"attribute_bonus_agi"
 
 		"AttackDamageMin"			"26"

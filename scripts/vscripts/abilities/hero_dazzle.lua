@@ -1,6 +1,4 @@
---[[
-	Author: Hewdraw
-]]
+--[[ Author: Hewdraw ]]
 
 function PoisonTouchStun( keys )
 	local caster = keys.caster

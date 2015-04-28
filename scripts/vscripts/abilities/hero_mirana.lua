@@ -1,32 +1,75 @@
-arrowTable = arrowTable or {}
+--[[ 	Author: D2imba
+		Date: 27.04.2015	]]
 
---[[Author: Pizzalol
-	Date: 04.01.2015.
-	Initializes the caster location for the arrow stun and damage calculation]]
+function Starfall( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Particles and sounds
+	local ambient_sound = keys.ambient_sound
+	local hit_sound = keys.hit_sound
+	local ambient_particle = keys.ambient_particle
+	local hit_particle = keys.hit_particle
+
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("secondary_radius", ability_level)
+	local max_count = ability:GetLevelSpecialValueFor("secondary_count", ability_level)
+	local pulse_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
+	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
+	local secondary_damage = ability:GetLevelSpecialValueFor("secondary_damage", ability_level)
+
+	local caster_pos = caster:GetAbsOrigin()
+	local current_count = 0
+
+	if max_count > 0 then
+		Timers:CreateTimer(pulse_delay, function()
+			-- Emit sound
+			caster:EmitSound(ambient_sound)
+
+			-- Create ambient particle
+			local pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(pfx, 0, caster_pos)
+			ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
+
+			-- Find targets and apply the particle, damage, and hit sound
+			targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
+			for _,v in pairs(targets) do
+				local pfx_2 = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, v)
+				ParticleManager:SetParticleControl(pfx_2, 0, v:GetAbsOrigin())
+				Timers:CreateTimer(hit_delay, function()
+					v:EmitSound(hit_sound)
+					ApplyDamage({victim = v, attacker = caster, damage = secondary_damage, damage_type = ability:GetAbilityDamageType()})
+				end)
+			end
+
+			-- If there are more pulses to create, call the function again after the pulse delay
+			current_count = current_count + 1
+			if current_count < max_count then
+				return pulse_delay
+			end
+		end)
+	end
+end
+
 function LaunchArrow( keys )
 	local caster = keys.caster
 	local caster_location = caster:GetAbsOrigin()
 
-	arrowTable[caster] = arrowTable[caster] or {}
-
-	arrowTable[caster].location = caster_location
+	caster.arrow_location = caster_location
 end
 
---[[Author: Pizzalol
-	Date: 04.01.2015.
-	Changed: 06.01.2015.
-	Calculates the distance traveled by the arrow, then applies damage and stun according to calculations
-	Provides vision of the area upon impact]]
 function ArrowHit( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local target_location = target:GetAbsOrigin()
 	local ability = keys.ability
-	local ability_damage = ability:GetAbilityDamage()
+	local ability_level = ability:GetLevel() - 1
+	local base_damage = ability:GetAbilityDamage()
 
 	-- Vision
-	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", (ability:GetLevel() - 1))
-	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", (ability:GetLevel() - 1))
+	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 	ability:CreateVisibilityNode(target_location, vision_radius, vision_duration)
 
 	-- Initializing the damage table
@@ -34,36 +77,30 @@ function ArrowHit( keys )
 	damage_table.attacker = caster
 	damage_table.victim = target
 	damage_table.damage_type = ability:GetAbilityDamageType()
-	damage_table.ability = ability	
+	damage_table.ability = ability
 
 	-- Arrow
-	local arrow_max_stunrange = ability:GetLevelSpecialValueFor("arrow_max_stunrange", (ability:GetLevel() - 1))
-	local arrow_max_damagerange = ability:GetLevelSpecialValueFor("arrow_max_damagerange", (ability:GetLevel() - 1))
-	local arrow_min_stun = ability:GetLevelSpecialValueFor("arrow_min_stun", (ability:GetLevel() - 1))
-	local arrow_max_stun = ability:GetLevelSpecialValueFor("arrow_max_stun", (ability:GetLevel() - 1))
-	local arrow_bonus_damage = ability:GetLevelSpecialValueFor("arrow_bonus_damage", (ability:GetLevel() - 1))
+	local arrow_max_stunrange = ability:GetLevelSpecialValueFor("arrow_max_stunrange", ability_level)
+	local arrow_min_stun = ability:GetLevelSpecialValueFor("arrow_min_stun", ability_level)
+	local arrow_max_stun = ability:GetLevelSpecialValueFor("arrow_max_stun", ability_level)
+	local arrow_bonus_damage = ability:GetLevelSpecialValueFor("arrow_bonus_damage", ability_level)
 
-	-- Stun and damage per distance
-	local stun_per_30 = arrow_max_stun/(arrow_max_stunrange*0.033)
-	local damage_per_30 = arrow_bonus_damage/(arrow_max_damagerange*0.033)
+	-- Stun per distance
+	local stun_per_100 = (arrow_max_stun - arrow_min_stun) * 100 / arrow_max_stunrange
+	local caster_pos = caster.arrow_location
 
 	local arrow_stun_duration
-	local arrow_damage
-	local distance = (target_location - arrowTable[caster].location):Length2D()
+	local distance = (target_location - caster_pos):Length2D()
 
 	-- Stun
 	if distance < arrow_max_stunrange then
-		arrow_stun_duration = distance*0.033*stun_per_30 + arrow_min_stun
+		arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
 	else
 		arrow_stun_duration = arrow_max_stun
 	end
 
 	-- Damage
-	if distance < arrow_max_damagerange then
-		arrow_damage = distance*0.033*damage_per_30 + ability_damage
-	else
-		arrow_damage = ability_damage + arrow_bonus_damage
-	end
+	local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
 
 	target:AddNewModifier(caster, nil, "modifier_stunned", {duration = arrow_stun_duration})
 	damage_table.damage = arrow_damage
@@ -73,19 +110,34 @@ end
 function Leap( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local leap_distance = ability:GetLevelSpecialValueFor("leap_distance", (ability:GetLevel() - 1))
-	local leap_speed = ability:GetLevelSpecialValueFor("leap_speed", (ability:GetLevel() - 1))
+	local ability_level = ability:GetLevel() - 1
+	local modifier = keys.modifier
 
-	-- Clears any current command
+	local caster_pos = caster:GetAbsOrigin()
+	local target_pos = keys.target_points[1]
+	local leap_speed = ability:GetLevelSpecialValueFor("leap_speed", ability_level)
+	local max_distance = ability:GetLevelSpecialValueFor("leap_distance", ability_level)
+	local max_time = ability:GetLevelSpecialValueFor("leap_time", ability_level)
+
+	-- Clears any current command, grants temporary invulnerability
 	caster:Stop()
+	ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
 
 	-- Physics
-	local direction = caster:GetForwardVector()
-	local velocity = leap_speed * 1.4
+	local direction = (target_pos - caster_pos):Normalized()
+	local leap_distance = (target_pos - caster_pos):Length2D()
+	if leap_distance > max_distance then
+		leap_distance = max_distance
+	end
 	local end_time = leap_distance / leap_speed
+	if end_time > max_time then
+		leap_speed = leap_distance / max_time
+		end_time = max_time
+	end
+	local velocity = leap_speed * 1.4
 	local time_elapsed = 0
-	local time = end_time/2
-	local jump = end_time/0.03
+	local time = end_time / 2
+	local jump = end_time / 0.03
 
 	Physics:Unit(caster)
 
@@ -95,9 +147,8 @@ function Leap( keys )
 	caster:FollowNavMesh(false)	
 	caster:SetPhysicsVelocity(direction * velocity)
 
-
 	-- Move the unit
-	Timers:CreateTimer(0, function()
+	Timers:CreateTimer(function()
 		local ground_position = GetGroundPosition(caster:GetAbsOrigin() , caster)
 		time_elapsed = time_elapsed + 0.03
 		if time_elapsed < time then
@@ -106,7 +157,8 @@ function Leap( keys )
 			caster:SetAbsOrigin(caster:GetAbsOrigin() - Vector(0,0,jump)) -- Going down
 		end
 		-- If the target reached the ground then remove physics
-		if caster:GetAbsOrigin().z - ground_position.z <= 0 then
+		if time_elapsed >= end_time then
+			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin() , caster))
 			caster:SetPhysicsAcceleration(Vector(0,0,0))
 			caster:SetPhysicsVelocity(Vector(0,0,0))
 			caster:OnPhysicsFrame(nil)
@@ -115,9 +167,32 @@ function Leap( keys )
 			caster:SetAutoUnstuck(true)
 			caster:FollowNavMesh(true)
 			caster:SetPhysicsFriction(.05)
+			caster:RemoveModifierByName(modifier)
 			return nil
 		end
 
 		return 0.03
 	end)
 end
+
+function MoonlightScepter( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local modifier = keys.modifier
+	local cast_modifier = keys.cast_modifier
+	local fade_modifier = keys.fade_modifier
+	local scepter = HasScepter(caster)
+
+	if scepter and not GameRules:IsDaytime() then
+		if not target:HasModifier(modifier) then
+			ability:ApplyDataDrivenModifier(caster, target, modifier, {})
+			ability:ApplyDataDrivenModifier(caster, target, fade_modifier, {})
+		end
+	else
+		if target:HasModifier(modifier) and not caster:HasModifier(cast_modifier) then
+			target:RemoveModifierByName(modifier)
+		end
+	end
+end
+

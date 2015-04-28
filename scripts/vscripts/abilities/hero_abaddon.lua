@@ -1,5 +1,5 @@
---[[Author: hewdraw
-	Date: 17-3-2015.]]
+--[[	Author: hewdraw
+		Date: 17-3-2015		]]
 
 function DeathCoil( keys )
 	-- Variables

@@ -1,3 +1,6 @@
+--[[	Author: D2imba
+		Date: 07.03.2015	]]
+
 function ManaBreak(event)
 	local caster = event.caster
 	local ability = event.ability 

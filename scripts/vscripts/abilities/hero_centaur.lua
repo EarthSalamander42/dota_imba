@@ -1,5 +1,5 @@
---[[Author: d2imba
-	Date: 20.03.2015.]]
+--[[	Author: D2imba
+		Date: 20.03.2015	]]
 
 function HoofStomp( keys )
 	local caster = keys.caster

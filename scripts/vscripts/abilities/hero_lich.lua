@@ -1,3 +1,6 @@
+--[[ 	Author: D2imba
+		Date: 25.04.2015	]]
+		
 function FrostNova( keys )
 	local caster = keys.caster
 	local ability = keys.ability

@@ -1,3 +1,6 @@
+--[[ 	Author: D2imba
+		Date: 26.04.2015	]]
+
 function DragonSlave( keys )
 	local caster = keys.caster
 	local ability = caster:FindAbilityByName(keys.ability_name)
@@ -110,7 +113,7 @@ function LightStrikeArrayPre( keys )
 	-- Creates the pre-cast particles
 	for i=0, amount do
 		local pfx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(pfx, 0, target_pos + step * i )
+		ParticleManager:SetParticleControl(pfx, 0, GetGroundPosition(target_pos + step * i, caster) )
 		ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
 		ParticleManager:SetParticleControl(pfx, 3, Vector(0, 0, 0))
 	end	
@@ -153,7 +156,7 @@ function LightStrikeArray( keys )
 
 		-- Draws the particle
 		local pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(pfx, 0, blast_pos)
+		ParticleManager:SetParticleControl(pfx, 0, GetGroundPosition(blast_pos, caster))
 		ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
 		ParticleManager:SetParticleControl(pfx, 3, Vector(0, 0, 0))
 

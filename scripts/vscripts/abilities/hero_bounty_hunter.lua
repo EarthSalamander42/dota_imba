@@ -1,5 +1,5 @@
---[[Author: d2imba
-	Date: 17-3-2015.]]
+--[[	Author: D2imba
+		Date: 17.03.2015	]]
 
 function ShurikenToss( keys )
 	local caster = keys.caster

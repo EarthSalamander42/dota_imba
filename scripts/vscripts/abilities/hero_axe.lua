@@ -1,6 +1,7 @@
---[[Author: Pizzalol
-	Date: 09.02.2015.
-	Updates the value of the stack modifier and applies the movement speed modifier]]
+--[[	Author: Pizzalol
+		Date: 09.02.2015	]]
+
+	-- Updates the value of the stack modifier and applies the movement speed modifier]]
 function BattleHungerStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability

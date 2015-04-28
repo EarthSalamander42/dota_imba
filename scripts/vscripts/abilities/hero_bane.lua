@@ -1,5 +1,5 @@
---[[Author: d2imba
-	Date: 10.03.2015.]]
+--[[	Author: D2imba
+		Date: 10.03.2015	]]
 
 function Enfeeble( keys )
 	local caster = keys.caster
