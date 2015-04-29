@@ -65,7 +65,7 @@ function ArrowHit( keys )
 	local target_location = target:GetAbsOrigin()
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local base_damage = ability:GetAbilityDamage()
+	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
 
 	-- Vision
 	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)

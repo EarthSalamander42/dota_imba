@@ -10468,12 +10468,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"secondary_delay"		"1.0"
 			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"0 1 2 3"
-			}
-
 		}	
 
 		"OnSpellStart"
@@ -10579,10 +10573,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"17.0"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"50 140 230 320"	
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100"	
@@ -10635,6 +10625,11 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"3.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"50 140 230 320"
 			}
 		}	
 
@@ -10968,6 +10963,11 @@
 		{
 			"modifier_imba_moonlight_duration"
 			{
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				"Passive"				"0"
+
 				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
 				"EffectAttachType"		"follow_overhead"
 				
@@ -11015,6 +11015,11 @@
 
 			"modifier_imba_moonlight_fade"
 			{
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				"Passive"				"0"
+
 				"Duration"				"%fade_delay"
 
 				"OnCreated"
