@@ -93,86 +93,78 @@ function DragonSlave( keys )
 	end)
 end
 
-function LightStrikeArrayPre( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local radius = ability:GetLevelSpecialValueFor("light_strike_array_aoe", ability_level)
-	local amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level)
-
-	local target_pos = keys.target_points[1]
-	local caster_pos = caster:GetAbsOrigin()
-	local step = (target_pos - caster_pos):Normalized() * radius
-	local particle_name = keys.particle_name
-
-	-- Fixes the cast position for the next function call
-	caster.blast_pos = target_pos
-	caster.caster_pos = caster_pos
-	caster.blast_count = 0
-
-	-- Creates the pre-cast particles
-	for i=0, amount do
-		local pfx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(pfx, 0, GetGroundPosition(target_pos + step * i, caster) )
-		ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
-		ParticleManager:SetParticleControl(pfx, 3, Vector(0, 0, 0))
-	end	
-end
-
 function LightStrikeArray( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 
-	local target_pos = caster.blast_pos
-	local caster_pos = caster.caster_pos
-	local particle_name = keys.particle_name
-	local modifier_stun = keys.modifier_stun
-	local modifier_delay = keys.modifier_delay
-
-	-- If Blazing Soul was switched mid-cast, prevents the skill from spawning more blasts
-	if ability == nil then
-		-- Resets the global variables for the next cast
-		caster:RemoveModifierByName(modifier_delay)
-		caster.blast_count = nil
-		caster.step = nil
-		caster.blast_pos = nil
-		caster.caster_pos = nil
-		return
-	end
-
+	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1
 	local radius = ability:GetLevelSpecialValueFor("light_strike_array_aoe", ability_level)
-	local amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level)
+	local blast_amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level) + 1
+	local main_delay = ability:GetLevelSpecialValueFor("light_strike_array_delay_time", ability_level)
+	local secondary_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
 
-	caster.step = (target_pos - caster_pos):Normalized() * radius
-	caster.blast_count = caster.blast_count + 1
+	-- Modifiers and resources
+	local pre_particle = keys.pre_particle
+	local blast_particle = keys.blast_particle
+	local pre_sound = keys.pre_sound
+	local blast_sound = keys.blast_sound
+	local hit_modifier = keys.hit_modifier
 
-	-- Checks if blast count has reached the amount of secondary blasts, if not, blasts
-	if caster.blast_count <= amount then
-		-- Updates the blast position
-		local blast_pos = target_pos + caster.step * caster.blast_count
+	-- Blast positioning variables
+	local target_pos = keys.target_points[1]
+	local caster_pos = caster:GetAbsOrigin()
+	local blast_pos = target_pos
+	local step = (target_pos - caster_pos):Normalized() * radius
+	local blast_count = 0
 
-		caster:EmitSound("Ability.LightStrikeArray")
+	-- Creates the pre-cast particles
+	for i = 1, blast_amount do
+		local light_pos = GetGroundPosition(target_pos + step * (i-1), caster)
+		local pre_fx = ParticleManager:CreateParticle(pre_particle, PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(pre_fx, 0, light_pos)
+		ParticleManager:SetParticleControl(pre_fx, 1, Vector(radius, 0, 0))
+		ParticleManager:SetParticleControl(pre_fx, 3, Vector(0, 0, 0))
+	end
 
-		-- Draws the particle
-		local pfx = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(pfx, 0, GetGroundPosition(blast_pos, caster))
-		ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
-		ParticleManager:SetParticleControl(pfx, 3, Vector(0, 0, 0))
+	-- Plays the pre-cast sound
+	caster:EmitSound(pre_sound)
+
+	-- Blasting loop
+	Timers:CreateTimer(main_delay, function()
+
+		-- Calculates this blast's position
+		blast_pos = GetGroundPosition(target_pos + step * blast_count, caster)
+
+		-- Creates the blast particle
+		local blast_fx = ParticleManager:CreateParticle(blast_particle, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(blast_fx, 0, blast_pos)
+		ParticleManager:SetParticleControl(blast_fx, 1, Vector(radius, 0, 0))
+		ParticleManager:SetParticleControl(blast_fx, 3, Vector(0, 0, 0))
 
 		-- Applies the damage and stun modifier
-		local targets = FindUnitsInRadius(caster:GetTeamNumber(), blast_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), blast_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false )
 		for _,v in pairs(targets) do
-			ability:ApplyDataDrivenModifier(caster, v, modifier_stun, {})
+			ability:ApplyDataDrivenModifier(caster, v, hit_modifier, {})
 		end
-	else
-		-- Resets the global variables for the next cast
-		caster:RemoveModifierByName(modifier_delay)
-		caster.blast_count = nil
-		caster.step = nil
-		caster.blast_pos = nil
-		caster.caster_pos = nil
-	end
+
+		-- Destroys trees
+		local trees = Entities:FindAllByClassnameWithin("ent_dota_tree", blast_pos, radius)
+		for _,v in pairs(trees) do
+			v:CutDown(0)
+		end
+
+		-- Creates a dummy to play the sound, then destroys it
+		local dummy = CreateUnitByName("npc_dummy_unit", blast_pos, false, caster, caster, caster:GetTeamNumber())
+		dummy:EmitSound(blast_sound)
+		dummy:Destroy()
+
+		-- Increases blast count and checks if blasting should continue
+		blast_count = blast_count + 1
+		if blast_count < blast_amount then
+			return secondary_delay
+		end
+	end)
 end
 
 function FierySoul( keys )

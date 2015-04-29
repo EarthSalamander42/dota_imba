@@ -126,7 +126,7 @@ function WindWalk( keys )
 	local current_ability = caster:GetCurrentActiveAbility()
 
 	-- if it's track, reapply invisibility as soon as the cast is concluded
-	if current_ability == ability_track or current_ability == ability_jaunt then
+	if current_ability == ability_track then
 		Timers:CreateTimer(0.1, function()caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
 	else
 		caster:RemoveModifierByName( modifier_invis )

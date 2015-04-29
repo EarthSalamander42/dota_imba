@@ -2871,26 +2871,6 @@
 				"Target"				"CASTER"
 				"ModifierName"			"modifier_imba_wind_walk_fade"
 			}	
-
-			"DelayedAction"
-			{
-				"Delay"	"%fade_time"	
-
-				"Action" 
-				{
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_imba_wind_walk"
-					}
-
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-				}  
-			}
 		}	
 
 		"Modifiers"
@@ -2909,6 +2889,21 @@
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
 				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
 				}
+
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_imba_wind_walk"
+						"Target" 		"CASTER"
+					}
+
+					"ApplyModifier"
+					{
+						"Target"		"CASTER"
+						"ModifierName"	"modifier_invisible"
+					}
+				}
 			}
 
 			"modifier_imba_wind_walk"
@@ -2923,12 +2918,6 @@
 					{
 						"Target"		"CASTER"
 						"ModifierName"	"modifier_imba_wind_walk"
-					}
-
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
 					}
 				}	
 
@@ -3118,6 +3107,7 @@
 				"Duration"				"%duration"
 				"IsDebuff"				"1"
 				"IsPurgable"			"1"
+				"IsHidden"				"0"
 
 				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
 				"EffectAttachType"		"follow_origin"	
@@ -9333,12 +9323,12 @@
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"secondary_delay"					"0.2"
+				"secondary_delay"					"0.25 0.2 0.15 0.1"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"10"
+				"secondary_amount"					"4 6 8 10"
 			}
 		}
 
@@ -9347,75 +9337,15 @@
 			"RunScript"
 			{
 				"ScriptFile"				"abilities/hero_lina.lua"
-				"Function"					"LightStrikeArrayPre"
+				"Function"					"LightStrikeArray"
 
 				"Target"					"POINT"
-				"particle_name"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Ability.PreLightStrikeArray"
-				"Target"					"CASTER"
-			}	
-
-			"DelayedAction"
-			{
-				"Delay"		"%light_strike_array_delay_time"	
-
-				"Action"
-				{
-					"FireSound"
-					{
-						"EffectName"		"Ability.LightStrikeArray"
-						"Target"			"POINT"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"TargetPoint"		"POINT"	
-
-						"ControlPoints"
-			            {
-			            	"00"	"POINT"
-			            	"01"	"%light_strike_array_aoe 0 0"
-			            	"03"	"0 0 0"
-			            }
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_light_strike_array_delay"
-						"Target" 			"CASTER"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_light_strike_array"
-						"Target"
-						{
-							"Center"  		"POINT"
-							"Radius" 		"%light_strike_array_aoe"
-							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
-					
-					"DestroyTrees"
-			        {
-			        	"Target"			"POINT"
-			        	"Radius"			"%light_strike_array_aoe"
-			        }					
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"abilities/hero_lina.lua"
-				"Function"					"FierySoul"
-			}
+				"pre_particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+				"blast_particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+				"pre_sound"					"Ability.PreLightStrikeArray"
+				"blast_sound"				"Ability.LightStrikeArray"
+				"hit_modifier"				"modifier_imba_light_strike_array"
+			}		
 		}	
 
 		"Modifiers"
@@ -9445,29 +9375,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_light_strike_array_delay"
-			{
-				"IsBuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
-
-				"ThinkInterval"  	"%secondary_delay"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"abilities/hero_lina.lua"
-						"Function"			"LightStrikeArray"
-
-						"Target"			"POINT"
-						"particle_name"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-						"modifier_stun"		"modifier_imba_light_strike_array"
-						"modifier_delay"	"modifier_imba_light_strike_array_delay"
-					}
 				}
 			}
 		}
@@ -9545,12 +9452,12 @@
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"secondary_delay"					"0.2"
+				"secondary_delay"					"0.25 0.2 0.15 0.1"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"10"
+				"secondary_amount"					"4 6 8 10"
 			}
 		}
 
@@ -9559,69 +9466,15 @@
 			"RunScript"
 			{
 				"ScriptFile"				"abilities/hero_lina.lua"
-				"Function"					"LightStrikeArrayPre"
+				"Function"					"LightStrikeArray"
 
 				"Target"					"POINT"
-				"particle_name"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Ability.PreLightStrikeArray"
-				"Target"					"CASTER"
-			}	
-
-			"DelayedAction"
-			{
-				"Delay"		"%light_strike_array_delay_time"	
-
-				"Action"
-				{
-					"FireSound"
-					{
-						"EffectName"		"Ability.LightStrikeArray"
-						"Target"			"POINT"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"TargetPoint"		"POINT"	
-
-						"ControlPoints"
-			            {
-			            	"00"	"POINT"
-			            	"01"	"%light_strike_array_aoe 0 0"
-			            	"03"	"0 0 0"
-			            }
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_light_strike_array_delay"
-						"Target" 			"CASTER"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_light_strike_array"
-						"Target"
-						{
-							"Center"  		"POINT"
-							"Radius" 		"%light_strike_array_aoe"
-							"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-					}
-					
-					"DestroyTrees"
-			        {
-			        	"Target"			"POINT"
-			        	"Radius"			"%light_strike_array_aoe"
-			        }					
-				}
-			}
+				"pre_particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+				"blast_particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+				"pre_sound"					"Ability.PreLightStrikeArray"
+				"blast_sound"				"Ability.LightStrikeArray"
+				"hit_modifier"				"modifier_imba_light_strike_array"
+			}		
 		}	
 
 		"Modifiers"
@@ -9651,29 +9504,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_light_strike_array_delay"
-			{
-				"IsBuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
-
-				"ThinkInterval"  	"%secondary_delay"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"abilities/hero_lina.lua"
-						"Function"			"LightStrikeArray"
-
-						"Target"			"POINT"
-						"particle_name"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-						"modifier_stun"		"modifier_imba_light_strike_array"
-						"modifier_delay"	"modifier_imba_light_strike_array_delay"
-					}
 				}
 			}
 		}
