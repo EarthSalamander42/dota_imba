@@ -281,8 +281,275 @@
 	//	"Ability3"					"imba_necrolyte_sadist"
 	//	"Ability4"					"imba_necrolyte_reapers_scythe"
 		"Ability5"					"attribute_bonus_int"				
-		
 	}
 
-	
+	//=================================================================================================================
+	// HERO: Night Stalker
+	//=================================================================================================================
+    "npc_imba_hero_night_stalker"
+	{
+		"override_hero"				"npc_dota_hero_night_stalker"
+
+		"ModelScale"				".84"
+
+		"ArmorPhysical"				"4"
+
+		"AttackDamageMin"			"43"
+		"AttackDamageMax"			"47"
+
+	//	"Ability1"					"imba_night_stalker_void"
+	//	"Ability2"					"imba_night_stalker_crippling_fear"
+	//	"Ability3"					"imba_night_stalker_hunter_in_the_night"
+	//	"Ability4"					"imba_night_stalker_darkness"
+		"Ability5"					"attribute_bonus_str"				
+	}
+
+	//=================================================================================================================
+	// HERO: Nyx Assassin
+	//=================================================================================================================
+    "npc_imba_hero_nyx_assassin"
+	{
+		"override_hero"				"npc_dota_hero_nyx_assassin"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
+
+		"AttributeBaseIntelligence"	"21"
+		"AttributeIntelligenceGain"	"2.25"
+
+	//	"Ability1"					"imba_nyx_assassin_impale"
+	//	"Ability2"					"imba_nyx_assassin_mana_burn"
+	//	"Ability3"					"imba_nyx_assassin_spiked_carapace"
+	//	"Ability4"					"imba_nyx_assassin_vendetta"
+		"Ability5"					"attribute_bonus_int"				
+	}
+
+	//=================================================================================================================
+	// HERO: Outworld Devourer
+	//=================================================================================================================
+    "npc_imba_hero_obsidian_destroyer"
+	{
+		"override_hero"				"npc_dota_hero_obsidian_destroyer"
+
+		"AttributeBaseIntelligence"	"30"
+		"AttributeIntelligenceGain"	"4.0"
+
+		"AttackRange"				"525"
+
+	//	"Ability1"					"imba_obsidian_destroyer_arcane_orb"
+	//	"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
+	//	"Ability3"					"imba_obsidian_destroyer_essence_aura"
+	//	"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
+		"Ability5"					"attribute_bonus_int"				
+	}
+
+	//=================================================================================================================
+	// HERO: Omniknight
+	//=================================================================================================================
+    "npc_imba_hero_omniknight"
+	{
+		"override_hero"				"npc_dota_hero_omniknight"
+
+	//	"Ability1"					"imba_omniknight_purification"
+	//	"Ability2"					"imba_omniknight_repel"
+	//	"Ability3"					"imba_omniknight_degen_aura"
+	//	"Ability4"					"imba_omniknight_guardian_angel"
+		"Ability5"					"attribute_bonus_str"				
+	}
+
+	//=================================================================================================================
+	// HERO: Phantom Assassin
+	//=================================================================================================================
+    "npc_imba_hero_phantom_assassin"
+	{
+		"override_hero"				"npc_dota_hero_phantom_assassin"
+
+		"AttackRate"				"1.5"
+
+	//	"Ability1"					"imba_phantom_assassin_stifling_dagger"
+	//	"Ability2"					"imba_phantom_assassin_phantom_strike"
+	//	"Ability3"					"imba_phantom_assassin_blur"
+	//	"Ability4"					"imba_phantom_assassin_coup_de_grace"
+		"Ability5"					"attribute_bonus_agi"				
+	}
+
+	//=================================================================================================================
+	// HERO: Pudge
+	//=================================================================================================================
+    "npc_imba_hero_pudge"
+	{
+		"override_hero"				"npc_dota_hero_pudge"
+
+		"ModelScale"				"1.10"
+
+		"MovementTurnRate"			"1.0"
+
+	//	"Ability1"					"imba_pudge_meat_hook"
+	//	"Ability2"					"imba_pudge_rot"
+	//	"Ability3"					"imba_pudge_flesh_heap"
+	//	"Ability4"					"imba_pudge_dismember"
+		"Ability5"					"attribute_bonus_str"				
+	}
+
+	//=================================================================================================================
+	// HERO: Queen of Pain
+	//=================================================================================================================
+    "npc_imba_hero_queenofpain"
+	{
+		"override_hero"				"npc_dota_hero_queenofpain"
+
+		"AttackRate"				"1.5"
+
+		"AttackDamageMin"			"29"
+
+		"AttributeAgilityGain"		"2.5"
+
+	//	"Ability1"					"imba_queenofpain_shadow_strike"
+	//	"Ability2"					"imba_queenofpain_blink"
+	//	"Ability3"					"imba_queenofpain_scream_of_pain"
+	//	"Ability4"					"imba_queenofpain_sonic_wave"
+		"Ability5"					"attribute_bonus_int"				
+	}
+
+	//=================================================================================================================
+	// HERO: Sand King
+	//=================================================================================================================
+    "npc_imba_hero_sand_king"
+	{
+		"override_hero"				"npc_dota_hero_sand_king"
+
+	//	"Ability1"					"imba_sandking_burrowstrike"
+	//	"Ability2"					"imba_sandking_sand_storm"
+	//	"Ability3"					"imba_sandking_caustic_finale"
+	//	"Ability4"					"imba_sandking_epicenter"
+		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
+	// HERO: Sniper
+	//=================================================================================================================
+    "npc_imba_hero_sniper"
+	{
+		"override_hero"				"npc_dota_hero_sniper"
+
+		"AttackAcquisitionRange"	"1400"
+
+	//	"Ability1"					"imba_sniper_shrapnel"
+	//	"Ability2"					"imba_sniper_headshot"
+	//	"Ability3"					"imba_sniper_take_aim"
+	//	"Ability4"					"imba_sniper_assassinate"
+		"Ability5"					"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Sven
+	//=================================================================================================================
+    "npc_imba_hero_sven"
+	{
+		"override_hero"				"npc_dota_hero_sven"
+
+		"ModelScale"				".96"
+
+		"ArmorPhysical"				"3"
+
+		"AttackRate"				"1.6"
+
+		"AttributeBaseStrength"		"25"
+
+	//	"Ability1"					"imba_sven_storm_bolt"
+	//	"Ability2"					"imba_sven_great_cleave"
+	//	"Ability3"					"imba_sven_warcry"
+	//	"Ability4"					"imba_sven_gods_strength"
+		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
+	// HERO: Tinker
+	//=================================================================================================================
+    "npc_imba_hero_tinker"
+	{
+		"override_hero"				"npc_dota_hero_tinker"
+
+	//	"Ability1"					"imba_tinker_laser"
+	//	"Ability2"					"imba_tinker_heat_seeking_missile"
+	//	"Ability3"					"imba_tinker_march_of_the_machines"
+	//	"Ability4"					"imba_tinker_rearm"
+		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
+	// HERO: Vengeful Spirit
+	//=================================================================================================================
+    "npc_imba_hero_vengefulspirit"
+	{
+		"override_hero"				"npc_dota_hero_vengefulspirit"
+
+		"AttackDamageMin"			"22"
+
+		"AttackRate"				"1.6"
+
+		"AttackRange"				"500"
+
+		"ArmorPhysical"				"1"
+
+	//	"Ability1"					"imba_vengefulspirit_magic_missile"
+	//	"Ability2"					"imba_vengefulspirit_wave_of_terror"
+	//	"Ability3"					"imba_vengefulspirit_command_aura"
+	//	"Ability4"					"imba_vengefulspirit_nether_swap"
+		"Ability5"					"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Venomancer
+	//=================================================================================================================
+    "npc_imba_hero_venomancer"
+	{
+		"override_hero"				"npc_dota_hero_venomancer"
+
+		"AttackRange"				"500"
+
+	//	"Ability1"					"imba_venomancer_venomous_gale"
+	//	"Ability2"					"imba_venomancer_poison_sting"
+	//	"Ability3"					"imba_venomancer_plague_ward"
+	//	"Ability4"					"imba_venomancer_poison_nova"
+		"Ability5"					"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Wraith King
+	//=================================================================================================================
+    "npc_imba_hero_skeleton_king"
+	{
+		"override_hero"				"npc_dota_hero_skeleton_king"
+
+		"AttributeBaseStrength"		"24"
+		"AttributeStrengthGain"		"3.0"
+
+	//	"Ability1"					"imba_skeleton_king_hellfire_blast"
+	//	"Ability2"					"imba_skeleton_king_vampiric_aura"
+	//	"Ability3"					"imba_skeleton_king_mortal_strike"
+	//	"Ability4"					"imba_skeleton_king_reincarnation"
+		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
+	// HERO: Wisp
+	//=================================================================================================================
+    "npc_imba_hero_wisp"
+	{
+		"override_hero"				"npc_dota_hero_wisp"
+
+	//	"AbilityLayout"				"6"
+	//	"Ability1"					"imba_wisp_tether"
+	//	"Ability2"					"imba_wisp_tether_break"							
+	//	"Ability3"					"imba_wisp_spirits"
+	//	"Ability4"					"imba_wisp_overcharge"
+	//	"Ability5"					"imba_wisp_empty1"
+	//	"Ability6"					"imba_wisp_empty2"
+	//	"Ability7"					"imba_wisp_relocate"
+	//	"Ability8"					"attribute_bonus_str"
+	//	"Ability9"					"imba_wisp_spirits_in"
+	//	"Ability10"					"imba_wisp_spirits_out"
+
+	}
+
 }

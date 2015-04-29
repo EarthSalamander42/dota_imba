@@ -514,9 +514,7 @@ function SwitchAbilities(hero, added_ability_name, removed_ability_name, keep_le
 	local added_ability = hero:FindAbilityByName(added_ability_name)
 	
 	if keep_level then
-		for i = 1, level do
-			added_ability:UpgradeAbility(false)
-		end
+		added_ability:SetLevel(level)
 	end
 	
 	if keep_cooldown then
@@ -524,3 +522,12 @@ function SwitchAbilities(hero, added_ability_name, removed_ability_name, keep_le
 	end
 end
 
+-- Removes unwanted passive modifiers from illusions upon their creation
+function IllusionPassiveRemover( keys )
+	local target = keys.target
+	local modifier = keys.modifier
+
+	if target:IsIllusion() then
+		target:RemoveModifierByName(modifier)
+	end
+end

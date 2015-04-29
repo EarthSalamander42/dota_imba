@@ -35,7 +35,35 @@ end
 
 -- Upgrades Frost Arrows' cast range when leveling up Marksmanship
 function UpgradeFrostArrows( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_0 = caster:FindAbilityByName(keys.ability_0)
+	local ability_1 = caster:FindAbilityByName(keys.ability_1)
+	local ability_2 = caster:FindAbilityByName(keys.ability_2)
+	local ability_3 = caster:FindAbilityByName(keys.ability_3)
 
+	local old_ability_name
+	local new_ability_name
+
+	-- Checks which level of Marksmanship we are upgrading to
+	if not ability_0 then
+		if not ability_1 then
+			old_ability_name = keys.ability_2
+			new_ability_name = keys.ability_3
+		else
+			old_ability_name = keys.ability_1
+			new_ability_name = keys.ability_2
+		end
+	else
+		old_ability_name = keys.ability_0
+		new_ability_name = keys.ability_1
+	end
+
+	-- Removes the passive modifier to prevent crashing
+	caster:RemoveModifierByName("modifier_imba_frost_arrows_caster")
+
+	-- Performs the switch
+	SwitchAbilities(caster, new_ability_name, old_ability_name, true, false)
 end
 
 function Gust( keys )
@@ -184,7 +212,7 @@ function Marksmanship( keys )
 		if not caster:HasModifier(modifier_effect) then
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
 		end
-		if scepter and tree_nearby then
+		if scepter and tree_nearby and not caster:IsAttacking() then
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_invis, {})
 		else
 			caster:RemoveModifierByName(modifier_invis)

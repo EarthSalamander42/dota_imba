@@ -111,7 +111,6 @@ function Leap( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier = keys.modifier
 
 	local caster_pos = caster:GetAbsOrigin()
 	local target_pos = keys.target_points[1]
@@ -121,7 +120,6 @@ function Leap( keys )
 
 	-- Clears any current command, grants temporary invulnerability
 	caster:Stop()
-	ability:ApplyDataDrivenModifier(caster, caster, modifier, {})
 
 	-- Physics
 	local direction = (target_pos - caster_pos):Normalized()
@@ -167,7 +165,6 @@ function Leap( keys )
 			caster:SetAutoUnstuck(true)
 			caster:FollowNavMesh(true)
 			caster:SetPhysicsFriction(.05)
-			caster:RemoveModifierByName(modifier)
 			return nil
 		end
 
