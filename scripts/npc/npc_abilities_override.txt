@@ -363,5 +363,2062 @@
 				"damage"					"100"
 			}
 		}		
+	}
+
+	//=================================================================================================================
+	// Night Stalker: Void
+	//=================================================================================================================
+	"night_stalker_void"
+	{
+		
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"6"
+		"AbilityManaCost"				"80"
+		"AbilityDamage"					"100 200 300 400"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_day"			"2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_night"		"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-60"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_slow"		"-60"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Night Stalker: Crippling Fear
+	//=================================================================================================================
+	"night_stalker_crippling_fear"
+	{
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"10"
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_day"			"3.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_night"		"5.0 6.0 7.0 8.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate_day"			"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate_night"		"75"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Night Stalker: Hunter in the Night
+	//=================================================================================================================
+	"night_stalker_hunter_in_the_night"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_movement_speed_pct_night"	"25 30 35 40"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_attack_speed_night"			"60 90 120 150"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Night Stalker: Darkness
+	//=================================================================================================================
+	"night_stalker_darkness"
+	{
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"70 60 50"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"30.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"fixed_vision"			"675 650 625"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nyx Assassin: Impale
+	//=================================================================================================================
+	"nyx_assassin_impale"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"9.0"
+
+		"AbilityManaCost"				"95 100 105 110"
+		
+		"AbilityDamage"					"120 200 280 360"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"width"				"225"
+			}
+			"02"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"1.87 2.17 2.47 2.77"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"length"			"1000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nyx Assassin: Mana Burn
+	//=================================================================================================================
+	"nyx_assassin_mana_burn"
+	{
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		
+		"AbilityCooldown"				"18.0 13.0 8.0 3.0"
+
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"float_multiplier"		"4.5 5.0 5.5 6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nyx Assassin: Spiked Carapace
+	//=================================================================================================================
+	"nyx_assassin_spiked_carapace"
+	{
+		"AbilityCooldown"				"16 14 12 10"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"reflect_duration"			"2.25 2.5 2.75 3.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.2 1.6 2.0 2.4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"3 4 5 6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"2 4 6 8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nyx Assassin: Vendetta
+	//=================================================================================================================
+	"nyx_assassin_vendetta"
+	{
+		"AbilityCooldown"				"50.0 35.0 20.0"
+
+		"AbilityManaCost"				"140 170 200"
+		
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"50.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"0.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"20 25 30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"300 500 700"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Obsidian Destroyer: Arcane Orb
+	//=================================================================================================================
+	"obsidian_destroyer_arcane_orb"
+	{
+		"AbilityCastRange"				"525"
+
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_pool_damage_pct"	"8 10 12 14"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_damage"		"10000"
+			}
+		}
 	}	
+
+	//=================================================================================================================
+	// Obsidian Destroyer: Astral Imprisonment
+	//=================================================================================================================
+	"obsidian_destroyer_astral_imprisonment"
+	{
+		"AbilityDuration"				"1.0 2.0 3.0 4.0"
+		"AbilityCooldown"				"16.0 14.0 12.0 10.0"
+
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.25"
+
+		"AbilityManaCost"				"120"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_steal"				"6 10 14 18"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"steal_duration"		"60.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"prison_duration"		"1.0 2.0 3.0 4.0"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Obsidian Destroyer: Essence Aura
+	//=================================================================================================================
+	"obsidian_destroyer_essence_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mana"	    "200 300 400 500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"restore_amount"	"15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"restore_chance"		"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Obsidian Destroyer: Sanity's Eclipse
+	//=================================================================================================================
+	"obsidian_destroyer_sanity_eclipse"
+	{
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.25"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500 600 700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"800"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_multiplier"			"9 11 13"
+			}	
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_threshold"				"100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1000"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_multiplier_scepter"		"10 13 16"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Omniknight: Purification
+	//=================================================================================================================
+	"omniknight_purification"
+	{
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		
+		"AbilityCooldown"				"9.0"
+		
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal"					"100 200 300 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"360"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Omniknight: Repel
+	//=================================================================================================================
+	"omniknight_repel"
+	{
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		
+		"AbilityCooldown"				"13.0 11.0 9.0 7.0"
+		
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"12.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Omniknight: Degen Aura
+	//=================================================================================================================
+	"omniknight_degen_aura"
+	{
+		"AbilityCastRange"				"550"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_bonus"			"-16 -24 -32 -40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_bonus_tooltip"	"-25 -40 -55 -70"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"550"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Omniknight: Guardian Angel
+	//=================================================================================================================
+	"omniknight_guardian_angel"
+	{
+		"AbilityCooldown"				"90.0"
+		"AbilityCastPoint"				"0.3"
+		
+		"AbilityManaCost"				"125 150 175"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0 9.0 10.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"10.0 11.0 12.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Phantom Assassin's Stifling Dagger
+	//=================================================================================================================
+	"phantom_assassin_stifling_dagger"
+	{
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"5"
+		"AbilityDuration"				"2.5 3.0 3.5 4.0"
+	
+		"AbilityManaCost"				"15"
+		
+		"AbilityDamage"					"80 120 160 200"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow"				"-60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dagger_speed"			"1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5 3.0 3.5 4.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Phantom Assassin's Phantom Strike
+	//=================================================================================================================
+	"phantom_assassin_phantom_strike"
+	{
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"7 6 5 4"
+
+		"AbilityDuration"				"4"
+
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"150 190 230 270"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_max_attack_count"	"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1400"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Phantom Assassin's Blur
+	//=================================================================================================================
+	"phantom_assassin_blur"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"35 50 65 80"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transparency_fade"			"0.80"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1600"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Phantom Coup de Grace
+	//=================================================================================================================
+	"phantom_assassin_coup_de_grace"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_bonus"				"300 425 550"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Pudge Flesh Heap
+	//=================================================================================================================
+	"pudge_flesh_heap"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"flesh_heap_magic_resist"		"8 12 16 20"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"flesh_heap_strength_buff_amount"	"1.6 2.4 3.2 4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"flesh_heap_range"				"2000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Pudge Meat Hook
+	//=================================================================================================================
+	"pudge_meat_hook"
+	{
+		"AbilityCastRange"				"1200 1600 2000 2400"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"12.0 11.0 10.0 9.0"
+
+		"AbilityDamage"					"200 300 400 500"
+
+		"AbilityManaCost"				"110"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"hook_speed"		"2200.0"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hook_width"		"100"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hook_distance"		"1200 1600 2000 2400"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"vision_radius"		"1000"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_duration"	"4.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Pudge Rot
+	//=================================================================================================================
+	"pudge_rot"
+	{
+		"AbilityDamage"					"60 90 120 150"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rot_radius"			"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rot_tick"				"0.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rot_slow"				"-24 -27 -30 -33"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Pudge Dismember
+	//=================================================================================================================
+	"pudge_dismember"
+	{
+		"AbilityCastRange"				"160"
+		"AbilityCastPoint"				"0.1"
+
+		"AbilityChannelTime"			"2.95 2.95 2.95"
+		"AbilityCooldown"				"20.0 15.0 10.0"
+
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dismember_damage"		"100 175 250"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"strength_damage_scepter"	"1.0 1.5 2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain: Shadow Strike
+	//=================================================================================================================
+	"queenofpain_shadow_strike"
+	{
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.35"
+		
+		"AbilityCooldown"				"4.0"
+		"AbilityDuration"				"15.0"
+	
+		"AbilityManaCost"				"90"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_damage"			"80 120 160 200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_damage"		"30 40 50 60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-35 -40 -45 -50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"700"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Queen of Pain: Blink
+	//=================================================================================================================
+	"queenofpain_blink"
+	{
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3 0.25 0.2 0.15"
+
+		"AbilityCooldown"				"6.0 5.0 4.0 3.0"
+		
+		"AbilityManaCost"				"60 40 20 0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"1500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_blink_range"		"200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Queen of Pain: Scream of Pain
+	//=================================================================================================================
+	"queenofpain_scream_of_pain"
+	{
+		"AbilityCooldown"				"4.5"
+
+		"AbilityDamage"					"160 240 320 400"
+
+		"AbilityManaCost"				"110"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain: Sonic Wave
+	//=================================================================================================================
+	"queenofpain_sonic_wave"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.35"
+
+		"AbilityCooldown"				"70 55 40"
+
+		"AbilityManaCost"				"200 275 350"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"starting_aoe"		"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"distance"			"1400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"final_aoe"			"600"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1500"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"320 460 600"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cooldown_scepter"	"20"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_scepter"	"400 560 720"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Sand King Burrowstrike
+	//=================================================================================================================
+	"sandking_burrowstrike"
+	{
+		"AbilityCastRange"				"550 700 850 1000"
+	
+		"AbilityCooldown"				"9.0"
+
+		"AbilityManaCost"				"110"
+		
+		"AbilityDamage"					"120 200 280 360"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"burrow_width"		"225"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"burrow_duration"	"2.17"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"burrow_speed"		"3000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"burrow_anim_time"	"0.4"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tooltip_range"		"550 700 850 1000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Sand King Sand Storm
+	//=================================================================================================================
+	"sandking_sand_storm"
+	{
+		"AbilityDuration"				"80.0"
+
+		"AbilityCooldown"				"18.0 14.0 10.0 6.0"
+		"AbilityChannelTime"			"80.0"
+
+		"AbilityDamage"					"50 80 110 140"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"sand_storm_invis_delay"	"1.5 1.8 2.1 2.4"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sand_storm_radius"		"525 600 675 750"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"AbilityDuration"		"80.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Sand King Caustic Finale
+	//=================================================================================================================
+	"sandking_caustic_finale"
+	{	
+		"AbilityDuration"				"90.0"
+		"AbilityDamage"					"100 175 250 325"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caustic_finale_radius"		"900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caustic_finale_damage"		"100 175 250 325"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"caustic_finale_duration"	"90.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Sand King Epicenter
+	//=================================================================================================================
+	"sandking_epicenter"
+	{
+		"AbilityCooldown"				"100.0"
+		"AbilityDuration"				"3.0"
+		"AbilityChannelTime"			"2.0"
+
+		"AbilityManaCost"				"175 200 225"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_radius"	"650 700 750 800 850 900 950 1000 1050 1100 1150 1200"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulses"	"6 8 10"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_damage"	"150 175 200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_slow"	"-40"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_slow_as"	"-60"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_slow_duration_tooltip"	"3"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"epicenter_pulses_scepter"	"8 10 12"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"epicenter_cooldown_scepter"	"60.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Sniper: Shrapnel
+	//=================================================================================================================
+	"sniper_shrapnel"
+	{
+		"AbilityCastRange"				"25000"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityDamage"					"20 30 40 50"
+
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_movement_speed"	"-18 -22 -26 -30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"625"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_delay"			"0.8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"2.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"3"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"20.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sniper: Headshot
+	//=================================================================================================================
+	"sniper_headshot"
+	{
+		"AbilityDamage"					"25 50 75 100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"0.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_chance"				"50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Sniper: Take Aim
+	//=================================================================================================================
+	"sniper_take_aim"
+	{
+		"AbilityCastRange"					"750 900 1050 1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"200 350 500 650"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sniper: Assassinate
+	//=================================================================================================================
+	"sniper_assassinate"
+	{
+		
+		"AbilityCastRange"				"5000"
+		"AbilityCastRangeBuffer"		"1000"
+		"AbilityCastPoint"				"2.0"
+
+		"AbilityCooldown"				"20.0 15.0 10.0"
+
+		"AbilityDamage"					"400 560 720"
+
+		"AbilityManaCost"				"175 225 275"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"3000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"				"5000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Sven: Storm Bolt
+	//=================================================================================================================
+	"sven_storm_bolt"
+	{
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"10.0"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bolt_speed"			"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bolt_stun_duration"	"2.0"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bolt_aoe"			"400"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"vision_radius"		"600"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sven: Great Cleave
+	//=================================================================================================================
+	"sven_great_cleave"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"great_cleave_radius"	"325.0 350.0 375.0 400.0"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"great_cleave_damage"	"55 70 85 100"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sven: Warcry
+	//=================================================================================================================
+	"sven_warcry"
+	{
+		"AbilityCooldown"				"12.0"
+		"AbilityDuration"				"8.0"
+	
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warcry_armor"		"8 12 16 20"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warcry_movespeed"	"20"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"warcry_radius"		"1200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration_tooltip"	"8"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sven: God's Strength
+	//=================================================================================================================
+	"sven_gods_strength"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"65.0 55.0 45.0"
+		"AbilityDuration"				"30.0"
+	
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gods_strength_damage"		"200 300 400"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"scepter_aoe"		"1200"		
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"gods_strength_damage_scepter"	"80 120 160"		
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker: Laser
+	//=================================================================================================================
+	"tinker_laser"
+	{
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"10.0"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilityManaCost"				"90 100 110 120"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"3.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_creep"		"6.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate"				"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"1500"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tinker: Heat Seeking Missile
+	//=================================================================================================================
+	"tinker_heat_seeking_missile"
+	{
+		"AbilityCooldown"				"15.0"
+
+		"AbilityDamage"					"160 240 320 400"
+
+		"AbilitySpecial"
+		{ 
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"3000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"targets"			"2 3 4 5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker: March of the Machines
+	//=================================================================================================================
+	"tinker_march_of_the_machines"
+	{
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"30.0"
+
+		"AbilityManaCost"				"140"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"950 1100 1250 1400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"collision_radius"		"50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_radius"			"150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"450 475 500 525"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"machines_per_sec"		"25 30 35 40"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"2500"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_scepter"		"4000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tinker: Rearm
+	//=================================================================================================================
+	"tinker_rearm"
+	{
+		"AbilityCastPoint"				"0.0"
+		"AbilityChannelTime"			"2.0 1.0 0.1"
+
+		"AbilityManaCost"				"100 200 300"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"channel_tooltip"			"2 1 0.1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Vengefulspirit Magic Missle
+	//=================================================================================================================
+	"vengefulspirit_magic_missile"
+	{
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"10.0 9.0 8.0 7.0"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilityManaCost"				"110"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_missile_speed"	"1400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"magic_missile_stun"	"1.7 1.8 1.9 2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Vengefulspirit Command Aura
+	//=================================================================================================================
+	"vengefulspirit_command_aura"
+	{
+		"AbilityCastRange"			"1200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage_pct"	"18 30 42 54"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Vengefulspirit Wave of Terror
+	//=================================================================================================================
+	"vengefulspirit_wave_of_terror"
+	{
+		"AbilityCastRange"				"3000"
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"14.0"
+		"AbilityDuration"				"16.0"
+
+		"AbilityDamage"					"60 80 100 120"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"wave_speed"		"3000.0"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"wave_width"		"300"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"	"-4 -6 -8 -10"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tooltip_duration"	"16.0"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_aoe"		"700"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_duration"	"6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Vengefulspirit Nether Swap
+	//=================================================================================================================
+	"vengefulspirit_nether_swap"
+	{
+		"AbilityCastRange"				"1000 1500 2000"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"20.0 16.0 12.0"
+
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tooltip_range"					"1000 1500 2000"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"nether_swap_cooldown_scepter"	"4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer: Venomous Gale
+	//=================================================================================================================
+	"venomancer_venomous_gale"
+	{
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.0"
+		
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"12.0 15.0 18.0 21.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_damage"			"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tick_damage"			"30 40 50 60"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-60"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer: Poison Sting
+	//=================================================================================================================
+	"venomancer_poison_sting"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"6 12 18 24"
+			}
+			"03"
+			{				
+				"var_type"					"FIELD_INTEGER"		
+				"movement_speed"			"-12 -14 -16 -18"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer: Plague Ward
+	//=================================================================================================================
+	"venomancer_plague_ward"
+	{
+		"AbilityCastRange"				"1000"
+
+		"AbilityCooldown"				"2.0"
+		
+		"AbilityManaCost"				"8"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_hp_tooltip"		"75 200 325 450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_damage_tooltip"	"10 19 29 38"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Venomancer: Poison Nova
+	//=================================================================================================================
+	"venomancer_poison_nova"
+	{
+		"AbilityCooldown"				"100.0"
+
+		"AbilityManaCost"				"200"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900 1000 1100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"13.0 14.0 15.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"40 65 90"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"60.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"14.0 16.0 18.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"60 90 120"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"800"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Skeleton King Hellfire Blast
+	//=================================================================================================================
+	"skeleton_king_hellfire_blast"
+	{
+		"AbilityCastRange"				"625"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"7.0"
+
+		"AbilityDamage"					"80 120 160 200"
+
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_speed"			"1000"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"blast_stun_duration"	"2.0"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_slow"			"-30"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"blast_dot_duration"	"4"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_dot_damage"		"40 60 80 100"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_slow_duration"	"2"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Skeleton King Vampiric Aura
+	//=================================================================================================================
+	"skeleton_king_vampiric_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vampiric_aura_radius"	"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vampiric_aura"			"20 30 40 50"
+			}
+		}
+	}
+		
+	//=================================================================================================================
+	// Ability: Skeleton King Mortal Strike
+	//=================================================================================================================
+	"skeleton_king_mortal_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_mult"					"150 200 250 300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_drain"					"20"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_duration"			"7.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ability: Skeleton King Reincarnation
+	//=================================================================================================================
+	"skeleton_king_reincarnation"
+	{
+		"AbilityCooldown"				"90 40 15"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reincarnate_time"		"3.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_radius"			"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed"				"-80"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackslow_tooltip"	"-80"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp: Tether
+	//=================================================================================================================
+	"wisp_tether"
+	{
+		"AbilityCooldown"				"0.0"
+		"AbilityDuration"				"600.0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilityCastRange"				"1800"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_distance"			"700"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"latch_speed"				"1400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tether_duration"			"600.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tether_heal_amp"			"2.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"-100"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackslow_tooltip"		"-100"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Wisp: Spirits
+	//=================================================================================================================
+	"wisp_spirits"
+	{
+		"AbilityCooldown"				"12.0"
+		"AbilityDuration"				"20.0"
+
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"creep_damage"				"15 20 25 30"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hero_damage"				"35 60 85 110"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"revolution_time"			"2.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_range"					"100"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_range"					"1200"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hero_hit_radius"			"150"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explode_radius"			"375"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hit_radius"				"225"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"default_radius"			"225"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spirit_movement_rate"		"400"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"spirit_duration"			"20.0"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Wisp: Overcharge
+	//=================================================================================================================
+	"wisp_overcharge"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_speed"		"60 80 100 120"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_pct"			"-10 -15 -20 -25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_interval"			"0.1"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_pct"					"0.03"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"drain_pct_tooltip"			"3.0"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Wisp: Relocate
+	//=================================================================================================================
+	"wisp_relocate"
+	{
+		"AbilityCooldown"				"60.0 50.0 40.0"
+
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_delay"				"1.6 0.8 0.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"return_time"				"12.0"
+			}
+		}
+	}
 }

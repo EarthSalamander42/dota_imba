@@ -546,7 +546,7 @@
 	//	"Ability5"					"imba_wisp_empty1"
 	//	"Ability6"					"imba_wisp_empty2"
 	//	"Ability7"					"imba_wisp_relocate"
-	//	"Ability8"					"attribute_bonus_str"
+		"Ability8"					"attribute_bonus_str"
 	//	"Ability9"					"imba_wisp_spirits_in"
 	//	"Ability10"					"imba_wisp_spirits_out"
 
