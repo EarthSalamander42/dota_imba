@@ -11131,4 +11131,647 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Necrolyte's Death Pulse
+	//=================================================================================================================
+	"imba_necrolyte_death_pulse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"necrolyte_death_pulse"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.5 5.0 4.5 4.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125 145 165 185"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"500 525 550 575"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"120 180 240 300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal"					"90 120 150 180"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_power"			"30"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"6.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Hero_Necrolyte.DeathPulse"
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"			"CASTER"
+	                "Radius"			"%area_of_effect"
+	                "Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	                "Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+	            }
+
+	            "Action"
+	            {
+	            	"TrackingProjectile"
+					{
+					    "Target"			"TARGET"
+					    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+					    "Dodgeable"			"0"
+					    "ProvidesVision"	"0"
+					    "MoveSpeed"			"%projectile_speed"
+					    "SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+					}
+	            }
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+	            {
+	                "Center"				"CASTER"
+	                "Radius"				"%area_of_effect"
+	                "Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+	                "Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            }
+
+	            "Action"
+	            {
+	            	"TrackingProjectile"
+					{
+					    "Target"			"TARGET"
+					    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+					    "Dodgeable"			"0"
+					    "ProvidesVision"	"0"
+					    "MoveSpeed"			"%projectile_speed"
+					    "SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+					}
+	            }
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/hero_necrolyte.lua"
+				"Function"		"DeathPulse"
+
+				"stack_buff"	"modifier_imba_death_pulse_buff_stack"
+				"stack_debuff"	"modifier_imba_death_pulse_debuff_stack"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_death_pulse_buff_stack"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Duration"			"%stack_duration"
+			}
+
+			"modifier_imba_death_pulse_debuff_stack"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+
+				"Duration"			"%stack_duration"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Necrolyte's Heartstopper Aura
+	//=================================================================================================================
+	"imba_necrolyte_heartstopper_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"necrolyte_heartstopper_aura"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aura_damage_tooltip"		"-0.6 -0.9 -1.2 -1.5" 
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aura_stack_interval"		"1.0" 
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_power_tooltip"		"20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"aura_damage"				"-0.48 -0.72 -0.96 -1.2" 
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stack_damage"				"-0.12 -0.18 -0.24 -0.3" 
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_heartstopper_aura"
+			{
+				"Passive"		"1"
+				"IsBuff"		"1"
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+
+				"Aura" 						"modifier_imba_heartstopper"
+				"Aura_Radius" 				"%aura_radius"
+				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+
+			"modifier_imba_heartstopper"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+				"Passive"		"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"Heartstopper"
+
+						"stack_modifier"	"modifier_imba_heartstopper_stack"
+						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
+					}
+				}
+
+				"ThinkInterval"	"%aura_stack_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"Heartstopper"
+
+						"stack_modifier"	"modifier_imba_heartstopper_stack"
+						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"HeartstopperEnd"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%aura_damage"
+				}
+			}
+
+			"modifier_imba_heartstopper_stack"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"IsPurgable"	"0"
+				"Passive"		"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%stack_damage"
+				}
+			}
+
+			"modifier_imba_heartstopper_visibility_dummy"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"0"
+				"IsPurgable"	"0"
+				"Passive"		"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Necrolyte's Sadist
+	//=================================================================================================================
+	"imba_necrolyte_sadist"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"necrolyte_sadist"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_regen"		"2 4 6 10"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hero_multiplier"	"10"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_regen"		"1 2 3 4"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"regen_duration"	"6.0"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"death_radius"		"1200"
+			}
+
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_sadist_aura"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Aura"          		"modifier_imba_sadist_debuff"
+				"Aura_Radius"   		"%death_radius"
+				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_imba_sadist_aura"
+					}
+				}
+			}
+
+			"modifier_imba_sadist_debuff"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"0"
+				"IsPurgable"		"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"Sadist"
+
+						"regen_modifier"	"modifier_imba_sadist_regen"
+					}
+				}
+			}
+
+			"modifier_imba_sadist_stack"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Duration"			"%regen_duration"
+			}
+
+			"modifier_imba_sadist_regen"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Duration"			"%regen_duration"
+
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"ApplySadist"
+
+						"stack_modifier"	"modifier_imba_sadist_stack"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"Function"			"RemoveSadist"
+
+						"stack_modifier"	"modifier_imba_sadist_stack"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Necrolyte's Reaper's Scythe
+	//=================================================================================================================
+	"imba_necrolyte_reapers_scythe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"necrolyte_reapers_scythe"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"100 85 70"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"170 340 500"		
+		
+		// Cast Range
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.1"	// Primarily about the damage
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"16 24 32"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"24 32 40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"animation_delay"			"0.8"		//stun duration -0.7 seconds
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"respawn_base"				"30"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"respawn_stack"				"2 3 4"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_imba_reapers_scythe"
+				"Target"
+				{
+					"Center"  				"TARGET"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO"
+					"Flags"     			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_Necrolyte.ReapersScythe.Cast"
+				"Target"					"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_Necrolyte.ReapersScythe.Target"
+				"Target"					"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_necrolyte.lua"
+				"Function"					"ReapersScythe"
+			}
+
+			"DelayedAction"
+			{
+				"Delay"						"%stun_duration"
+
+				"Action"
+				{
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"		"follow_origin"
+							"TARGET"		"follow_origin"
+						}
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_reapers_scythe"
+			{
+				"Passive"			"0"
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"0"
+
+				"Duration"					"%stun_duration"
+
+				"OverrideAnimation"			"ACT_DOTA_DISABLED"
+
+				"EffectName"				"particles/generic_gameplay/generic_stunned.vpcf"
+	        	"EffectAttachType"			"follow_overhead"
+
+				"OnCreated"
+				{
+					"DelayedAction"
+					{
+						"Delay"				"%animation_delay"
+
+						"Action"
+						{
+							"FireEffect"
+							{
+								"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+								"EffectAttachType"	"follow_origin"
+
+								"ControlPointEntities"
+								{
+									"CASTER"		"follow_origin"
+									"TARGET"		"follow_origin"
+								}
+							}
+						}
+					}
+
+					"AttachEffect"
+					{
+						"EffectName"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+						"EffectAttachType"			"follow_origin"
+						"Target"					"TARGET"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
 }

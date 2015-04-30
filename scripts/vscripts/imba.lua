@@ -224,6 +224,10 @@ function GameMode:OnNPCSpawned(keys)
 	PrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
+	if npc:IsRealHero() then
+		npc:SetBuyBackDisabledByReapersScythe(false)
+	end
+	
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		GameMode:OnHeroInGame(npc)

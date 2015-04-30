@@ -276,10 +276,10 @@
 
 		"AttributeBaseIntelligence"	"22"
 
-	//	"Ability1"					"imba_necrolyte_death_pulse"
-	//	"Ability2"					"imba_necrolyte_heartstopper_aura"
-	//	"Ability3"					"imba_necrolyte_sadist"
-	//	"Ability4"					"imba_necrolyte_reapers_scythe"
+		"Ability1"					"imba_necrolyte_death_pulse"
+		"Ability2"					"imba_necrolyte_heartstopper_aura"
+		"Ability3"					"imba_necrolyte_sadist"
+		"Ability4"					"imba_necrolyte_reapers_scythe"
 		"Ability5"					"attribute_bonus_int"				
 	}
 
