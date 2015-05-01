@@ -11141,6 +11141,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
@@ -11157,7 +11159,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
+		"AbilityCastRange"				"500 525 550 575"
 		"AbilityCastPoint"				"0.0"
 
 		// Time		
@@ -11307,6 +11309,8 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_HP_REMOVAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"necrolyte_heartstopper_aura"
 		
@@ -11326,27 +11330,17 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aura_damage_tooltip"		"-0.6 -0.9 -1.2 -1.5" 
+				"aura_damage"				"0.6 0.9 1.2 1.5" 
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aura_stack_interval"		"1.0" 
+				"aura_damage_interval"		"1.0" 
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_power_tooltip"		"20"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"aura_damage"				"-0.48 -0.72 -0.96 -1.2" 
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_damage"				"-0.12 -0.18 -0.24 -0.3" 
+				"stack_power"				"20"
 			}
 		}
 
@@ -11354,38 +11348,26 @@
 		{
 			"modifier_imba_heartstopper_aura"
 			{
-				"Passive"		"1"
-				"IsBuff"		"1"
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
+				"Passive"			"1"
+				"IsBuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
 
 				"Aura" 						"modifier_imba_heartstopper"
 				"Aura_Radius" 				"%aura_radius"
 				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 
 			"modifier_imba_heartstopper"
 			{
-				"IsDebuff"		"1"
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-				"Passive"		"0"
+				"IsDebuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+				"Passive"			"0"
 
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
-						"Function"			"Heartstopper"
-
-						"stack_modifier"	"modifier_imba_heartstopper_stack"
-						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
-					}
-				}
-
-				"ThinkInterval"	"%aura_stack_interval"
+				"ThinkInterval"				"%aura_damage_interval"
 
 				"OnIntervalThink"
 				{
@@ -11405,34 +11387,27 @@
 					{
 						"ScriptFile"		"abilities/hero_necrolyte.lua"
 						"Function"			"HeartstopperEnd"
-					}
-				}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%aura_damage"
+						"stack_modifier"	"modifier_imba_heartstopper_stack"
+						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
+					}
 				}
 			}
 
 			"modifier_imba_heartstopper_stack"
 			{
-				"IsDebuff"		"1"
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-				"Passive"		"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" "%stack_damage"
-				}
+				"IsDebuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+				"Passive"			"0"
 			}
 
 			"modifier_imba_heartstopper_visibility_dummy"
 			{
-				"IsDebuff"		"1"
-				"IsHidden"		"0"
-				"IsPurgable"	"0"
-				"Passive"		"0"
+				"IsDebuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"0"
+				"Passive"			"0"
 			}
 		}
 	}
