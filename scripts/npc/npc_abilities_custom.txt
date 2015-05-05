@@ -1901,8 +1901,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
-			"particle"		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
 		}		
 
 		// Casting
@@ -1944,7 +1944,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0 6.0 8.0 10.0"
+				"duration"					"4.5 6.0 7.5 9.0"
 			}
 			"04"
 			{
@@ -1967,14 +1967,29 @@
 		{
 			"FireSound"
 			{
-				"EffectName"	"Hero_Bane.Nightmare"
-				"Target"		"TARGET"
-			}	
+				"EffectName"				"Hero_Bane.Nightmare"
+				"Target"					"TARGET"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_Bane.Nightmare.Loop"
+				"Target"					"TARGET"
+			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_imba_bane_nightmare"
-				"Target"		"TARGET"
+				"ModifierName"				"modifier_imba_bane_nightmare"
+				"Target"					"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_bane.lua"
+        		"Function"					"NightmareSwap"
+
+        		"nightmare"					"imba_bane_nightmare"
+        		"nightmare_end"				"imba_bane_nightmare_end"
 			}
 		}	
 
@@ -1982,54 +1997,39 @@
 		{
 			"modifier_imba_bane_nightmare"
 			{
-				"Duration"		"%duration"
-				"IsDebuff"		"1"
-				"IsPurgable"	"0"
+				"Duration"				"%duration"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
 
-				"EffectName"    		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
-	            "EffectAttachType"      "follow_overhead"	
+				"EffectName"    			"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
+	            "EffectAttachType"      	"follow_overhead"	
 
-	            "OverrideAnimation"     "ACT_DOTA_FLAIL"
-	            "AnimationPlaybackRate"	"%animation_rate"	
+	            "OverrideAnimation"     	"ACT_DOTA_FLAIL"
+	            "AnimationPlaybackRate"		"%animation_rate"	
 
 	            "OnTakeDamage"
 	            {
 	            	"RemoveModifier"
 	            	{
-	            		"ModifierName"	"modifier_imba_bane_nightmare"
-	            		"Target" 		"UNIT"
+	            		"ModifierName"		"modifier_imba_bane_nightmare"
+	            		"Target" 			"UNIT"
 	            	}
 	            }	
 
 	            "OnCreated"
 	            {
-	            	"FireSound"
-	            	{
-	            		"EffectName"	"Hero_Bane.Nightmare.Loop"
-	            		"Target" 		"TARGET"
-	            	}	
-
 	            	"ApplyModifier"
 	            	{
-	            		"ModifierName"	"modifier_imba_bane_nightmare_damage"
-	            		"Target" 		"TARGET"
-	            		"Duration"		"%duration"
-	            	}	
-
-	            	"ApplyModifier"
-	            	{
-	            		"ModifierName"	"modifier_imba_bane_nightmare_invul"
-	            		"Target" 		"TARGET"
-	            		"Duration"		"%nightmare_invuln_time"
+	            		"ModifierName"		"modifier_imba_bane_nightmare_invul"
+	            		"Target" 			"TARGET"
+	            		"Duration"			"%nightmare_invuln_time"
 	            	}	
 
 	            	"RunScript"
 	            	{
 	            		"ScriptFile"		"abilities/hero_bane.lua"
-	            		"Function"			"NightmareCasterCheck"
-	            		"main_ability_name"	"imba_bane_nightmare"
-	            		"sub_ability_name"	"imba_bane_nightmare_end"
-	            		"check_ability"		"imba_bane_nightmare"
+	            		"Function"			"NightmareStart"
+
 	            		"invul_modifier"	"modifier_imba_bane_nightmare_invul"
 	            	}
 	            }	
@@ -2038,51 +2038,33 @@
 	            {
 	            	"FireSound"
 	               	{
-	              		"EffectName"	"Hero_Bane.Nightmare.End"
+	              		"EffectName"		"Hero_Bane.Nightmare.End"
 	               		"Target"
 	               		{
-	               			"Center"	"TARGET"
-	               			"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	               			"Center"		"TARGET"
+	               			"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	               		}
-	               	}	
-
-	               	"RemoveModifier"
-	            	{
-	            		"ModifierName"	"modifier_imba_bane_nightmare_damage"
-	            		"Target"
-	               		{
-	               			"Center"	"TARGET"
-	               			"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-	               		}
-	            	}	
+	               	}		
 
 	               	"RunScript"
 	            	{
-	            		"ScriptFile"	"abilities/hero_bane.lua"
-	            		"Function"		"NightmareStopSound"
-	            		"sound"			"Hero_Bane.Nightmare.Loop"
-	            	}            		
-
-	            	"RunScript"
-	            	{
 	            		"ScriptFile"		"abilities/hero_bane.lua"
-	            		"Function"			"NightmareCasterCheck"
-	            		"sub_ability_name"	"imba_bane_nightmare"
-	            		"main_ability_name"	"imba_bane_nightmare_end"
-	            		"check_ability"		"imba_bane_nightmare"
-	            	}
-	            }         	
+	            		"Function"			"NightmareStopSound"
 
-	            "ThinkInterval"  "0.1"
+	            		"loop_sound"		"Hero_Bane.Nightmare.Loop"
+	            	}            		
+	            }
+
+	            "ThinkInterval"  			"%nightmare_dot_interval"
+	            
 	            "OnIntervalThink"
 	            {
 	            	"RunScript"
 	            	{
-	            		"ScriptFile"	"abilities/hero_bane.lua"
-	            		"Function"		"NightmareAura"
-	            		"modifier"		"modifier_imba_bane_nightmare_debuff"
+	            		"ScriptFile"		"abilities/hero_bane.lua"
+	            		"Function"			"NightmareDamage"
 	            	}
-	            }			 	
+	            }
 
 	            "States"
 	            {
@@ -2091,23 +2073,13 @@
 		            "MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
 		            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
 	            }
-			}	
 
-			"modifier_imba_bane_nightmare_damage"
-			{
-				"IsHidden"		"1"
-				"IsPurgable"	"0"
-
-				"ThinkInterval" "%nightmare_dot_interval"
-	            "OnIntervalThink"
-	            {
-	            	"RunScript"
-	            	{
-	            		"ScriptFile"	"abilities/hero_bane.lua"
-	            		"Function"		"NightmareDamage"
-	            	}
-	            }
-			}	
+	            "Aura"          			"modifier_imba_bane_nightmare_debuff"
+	            "Aura_Radius"   			"%aura_radius"
+	            "Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
+	            "Aura_Types"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	            "Aura_ApplyToCaster" 		"1"
+			}		
 
 			"modifier_imba_bane_nightmare_debuff"
 			{
@@ -2120,7 +2092,8 @@
 					"RunScript"
 					{
 						"ScriptFile"			"abilities/hero_bane.lua"
-						"Function"				"NightmareBreak"
+						"Function"				"NightmareSpread"
+
 						"nightmare_modifier"	"modifier_imba_bane_nightmare"
 					}
 				}
@@ -2152,32 +2125,40 @@
 		"MaxLevel"						"1"
 		"AbilityTextureName"			"bane_nightmare_end"	
 
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"OnToggleOn"
 		{
 			"RemoveModifier"
 	        {
 	        	"ModifierName"		"modifier_imba_bane_nightmare"
 	        	"Target"
-	        	{
-	        		"Center"		"CASTER"
-	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-	        	}
+				{
+	        		"Center"  		"CASTER"
+	        		"Radius"		"25000"
+	        		"Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	        		"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	        }	
 
 	        "RemoveModifier"
 	        {
 	        	"ModifierName"		"modifier_imba_bane_nightmare_invul"
 	        	"Target"
-	        	{
-	        		"Center"		"CASTER"
-	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-	        	}
+				{
+	        		"Center"  		"CASTER"
+	        		"Radius"		"25000"
+	        		"Teams" 		"DOTA_UNIT_TARGET_TEAM_BOTH"
+	        		"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	        }	
 
 			"RunScript"
 	        {
 	        	"ScriptFile"		"abilities/hero_bane.lua"
-	            "Function"			"NightmareCasterEnd"
+	            "Function"			"NightmareEnd"
 	        }
 		}
 	}
@@ -2651,10 +2632,10 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"10"
-		"AbilityManaCost"				"90 100 110 120"	
+		"AbilityManaCost"				"120"	
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -2667,7 +2648,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 200 275 350"
+				"damage"				"160 240 320 400"
 			}
 			"02"
 			{

@@ -84,6 +84,7 @@
 		"Ability5"					"imba_bounty_hunter_track"
 		"Ability6"					"attribute_bonus_agi"
 
+		"AttributeIntelligenceGain"	"2.0"
 
 		"AttackDamageMin"			"29"
 		"AttackDamageMax"			"33"
