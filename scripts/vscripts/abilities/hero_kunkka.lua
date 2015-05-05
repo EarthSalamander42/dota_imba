@@ -1,4 +1,5 @@
---[[ Author: Hewdraw ]]
+--[[ 	Author: Hewdraw
+		Date: 05.05.2015	]]
 
 function torrent_bubble_allies( keys )
 	local caster = keys.caster

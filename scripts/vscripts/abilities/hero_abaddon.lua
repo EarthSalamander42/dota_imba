@@ -398,6 +398,9 @@ function BorrowedTimePurge( keys )
 	else
 		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = duration })
 	end
+
+	-- Toggle the ability off
+	ability:ToggleAbility()
 end
 
 function BorrowedTimeAllies( keys )

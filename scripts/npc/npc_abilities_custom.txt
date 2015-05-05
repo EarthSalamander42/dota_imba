@@ -822,7 +822,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
@@ -882,7 +882,7 @@
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
 		}
 
-		"OnSpellStart"
+		"OnToggleOn"
 		{
 			"FireSound"
 			{
@@ -895,7 +895,6 @@
 				"ScriptFile"							"abilities/hero_abaddon.lua"
 				"Function"								"BorrowedTimePurge"
 			}
-			
 		}
 
 		"Modifiers"
