@@ -128,28 +128,44 @@ function ReapersScythe( keys )
 	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
 	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
 	local damage_delay = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local particle_delay = ability:GetLevelSpecialValueFor("animation_delay", ability_level)
+	local reap_particle = keys.reap_particle
+	local scythe_particle = keys.scythe_particle
 	local scepter = HasScepter(caster)
 
 	if scepter then
 		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 	end
 
+	-- Initializes the respawn time variable if necessary
+	if not target.scythe_added_respawn then
+		target.scythe_added_respawn = 0
+	end
+
+	-- Scythe model particle
+	Timers:CreateTimer(particle_delay, function()
+		local scythe_fx = ParticleManager:CreateParticle(scythe_particle, PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		end)
+
 	-- Waits for damage_delay to apply damage
 	Timers:CreateTimer(damage_delay, function()
+
+		-- Reaping particle
+		local reap_fx = ParticleManager:CreateParticle(reap_particle, PATTACH_CUSTOMORIGIN, target)
+		ParticleManager:SetParticleControlEnt(reap_fx, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(reap_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
 		-- Calculates and deals damage
 		local damage_bonus = 1 - target:GetHealth() / target:GetMaxHealth() 
 		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) / 100
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 
-		-- Initializes the buyback variable if necessary
-		if not target.scythe_added_respawn then
-			target.scythe_added_respawn = respawn_base
-		end
-
 		-- Checking if target is alive to decide if it needs to increase respawn time
 		if not target:IsAlive() then
-			target.scythe_added_respawn = scythe_added_respawn + respawn_stack
-			target:SetTimeUntilRespawn(target:GetRespawnTime() + target.scythe_added_respawn)
+			target:SetTimeUntilRespawn(target:GetRespawnTime() + respawn_base + target.scythe_added_respawn)
+			target.scythe_added_respawn = target.scythe_added_respawn + respawn_stack
 			if scepter then
 				target:SetBuyBackDisabledByReapersScythe(true)
 			end

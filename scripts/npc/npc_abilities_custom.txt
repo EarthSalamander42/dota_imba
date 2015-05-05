@@ -1336,6 +1336,7 @@
 					"Radius"			"%radius"
 					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 
@@ -1349,6 +1350,7 @@
 					"Radius"			"%radius"
 					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 
@@ -9847,18 +9849,6 @@
 				"Target"				"CASTER"
 			}
 
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-
-				"ControlPointEntities"
-				{
-					"CASTER"			"attach_attack1"
-					"TARGET"			"attach_hitloc"
-				}
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"abilities/hero_lina.lua"
@@ -9882,6 +9872,18 @@
 			{
 				"EffectName"		"Ability.LagunaBladeImpact"
 				"Target"			"TARGET"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_attack1"
+					"TARGET"		"attach_hitloc"
+				}
 			}
 
 			"Damage"
@@ -10009,18 +10011,6 @@
 				"Target"				"CASTER"
 			}
 
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-
-				"ControlPointEntities"
-				{
-					"CASTER"			"attach_attack1"
-					"TARGET"			"attach_hitloc"
-				}
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"abilities/hero_lina.lua"
@@ -10044,6 +10034,18 @@
 			{
 				"EffectName"		"Ability.LagunaBladeImpact"
 				"Target"			"TARGET"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_attack1"
+					"TARGET"		"attach_hitloc"
+				}
 			}
 
 			"RunScript"
@@ -10170,18 +10172,6 @@
 				"Target"				"CASTER"
 			}
 
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-
-				"ControlPointEntities"
-				{
-					"CASTER"			"attach_attack1"
-					"TARGET"			"attach_hitloc"
-				}
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"abilities/hero_lina.lua"
@@ -10199,6 +10189,18 @@
 			{
 				"EffectName"		"Ability.LagunaBladeImpact"
 				"Target"			"TARGET"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_attack1"
+					"TARGET"		"attach_hitloc"
+				}
 			}
 
 			"Damage"
@@ -10326,18 +10328,6 @@
 				"Target"				"CASTER"
 			}
 
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-
-				"ControlPointEntities"
-				{
-					"CASTER"			"attach_attack1"
-					"TARGET"			"attach_hitloc"
-				}
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"abilities/hero_lina.lua"
@@ -10355,6 +10345,18 @@
 			{
 				"EffectName"		"Ability.LagunaBladeImpact"
 				"Target"			"TARGET"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"	"start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"		"attach_attack1"
+					"TARGET"		"attach_hitloc"
+				}
 			}
 
 			"RunScript"
@@ -11673,27 +11675,30 @@
 			{
 				"ScriptFile"				"abilities/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
+
+				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
 			}
 
-			"DelayedAction"
-			{
-				"Delay"						"%stun_duration"
+			//"DelayedAction"
+			//{
+			//	"Delay"						"%stun_duration"
 
-				"Action"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
-				}
-			}
+			//	"Action"
+			//	{
+			//		"FireEffect"
+			//		{
+			//			"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
+			//			"EffectAttachType"	"start_at_customorigin"
+
+			//			"ControlPointEntities"
+			//			{
+			//				"TARGET"		"follow_origin"
+			//				"TARGET"		"follow_origin"
+			//			}
+			//		}
+			//	}
+			//}
 		}
 
 		"Modifiers"
@@ -11714,26 +11719,6 @@
 
 				"OnCreated"
 				{
-					"DelayedAction"
-					{
-						"Delay"				"%animation_delay"
-
-						"Action"
-						{
-							"FireEffect"
-							{
-								"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
-								"EffectAttachType"	"follow_origin"
-
-								"ControlPointEntities"
-								{
-									"CASTER"		"follow_origin"
-									"TARGET"		"follow_origin"
-								}
-							}
-						}
-					}
-
 					"AttachEffect"
 					{
 						"EffectName"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"

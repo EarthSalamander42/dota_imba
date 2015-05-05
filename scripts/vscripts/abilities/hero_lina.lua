@@ -280,7 +280,7 @@ function LagunaBladeProjectile( keys )
 
 	ProjectileManager:CreateLinearProjectile( {
 		Ability				= ability,
-		EffectName			= "particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf",
+		--EffectName		= "",
 		vSpawnOrigin		= caster_pos,
 		fDistance			= distance,
 		fStartRadius		= start_width,
@@ -336,4 +336,11 @@ function LagunaBladeScepterDamage( keys )
 	damage = damage + int * int_multiplier
 
 	ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	if target:IsMagicImmune() then
+		if target:GetHealth() < damage then
+			target:Kill(ability, caster)
+		else
+			target:SetHealth(target:GetHealth() - damage)
+		end
+	end
 end

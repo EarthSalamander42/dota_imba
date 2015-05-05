@@ -150,10 +150,12 @@ function CullingBlade( keys )
 
 		-- Play the sound
 		caster:EmitSound(sound_success)
-		-- Update the table info and apply the damage
-		damage_table.damage_type = DAMAGE_TYPE_PURE
-		damage_table.damage = kill_threshold
-		ApplyDamage(damage_table)
+		-- Kill the target
+		target:Kill(ability, caster)
+		if target:HasModifier("modifier_imba_shallow_grave") then
+			target:RemoveModifierByName("modifier_imba_shallow_grave")
+			target:Kill(ability, caster)
+		end
 
 		-- Find the valid units in the area that should recieve the speed buff and then apply it to them
 		local units_to_buff = FindUnitsInRadius(caster:GetTeam(), caster_location, nil, speed_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, ability:GetAbilityTargetType() , 0, FIND_CLOSEST, false)

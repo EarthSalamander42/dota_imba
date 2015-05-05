@@ -224,6 +224,7 @@ function GameMode:OnNPCSpawned(keys)
 	PrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
+	-- Reaper's Scythe buyback clean-up
 	if npc:IsRealHero() then
 		npc:SetBuyBackDisabledByReapersScythe(false)
 	end
@@ -439,7 +440,10 @@ function GameMode:OnEntityKilled( keys )
 		end
 	end
 
-	-- Put code here to handle when an entity gets killed
+	-- Reaper's Scythe death timer increase
+	if killedUnit.scythe_added_respawn then
+		killedUnit:SetTimeUntilRespawn(killedUnit:GetRespawnTime() + killedUnit.scythe_added_respawn)
+	end
 end
 
 
