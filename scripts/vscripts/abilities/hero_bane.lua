@@ -74,13 +74,13 @@ function FiendsGripManaDrain( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local scepter = HasScepter(caster)
-	local mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain", (ability:GetLevel() -1)) / 100
-	local target_max_mana = target:GetMaxMana()
+	local mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain", ability:GetLevel() -1) / 100
 	
 	if scepter == true then
-		mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain_scepter", (ability:GetLevel() -1)) / 100
+		mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain_scepter", ability:GetLevel() -1) / 100
 	end
 
+	local target_max_mana = target:GetMaxMana()
 	local actual_mana_drained = mana_drain * target_max_mana
 	
 	target:ReduceMana(actual_mana_drained)
@@ -92,8 +92,6 @@ function FiendsGripStopChannel( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier = keys.modifier
-	local sound1 = keys.sound1
-	local sound2 = keys.sound2
 	local scepter = HasScepter(caster)
 	local max_duration = ability:GetLevelSpecialValueFor("fiends_grip_duration", (ability:GetLevel() -1))
 
@@ -105,24 +103,28 @@ function FiendsGripStopChannel( keys )
 	local channel_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
 
 	if channel_time * 2 > max_duration then
-		Timers:CreateTimer(max_duration - channel_time, function()
-			for _,v in pairs(enemies_affected) do
-				v:RemoveModifierByName(modifier)
-				StopSoundEvent(sound1, v)
-				StopSoundEvent(sound2, v)
+		for _,v in pairs(enemies_affected) do
+			if v:HasModifier(modifier) then
+				ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = max_duration - channel_time})
 			end
-			caster.fiends_grip_dummy:ForceKill(true)
-			end)
+		end
 	else
-		Timers:CreateTimer(channel_time, function()
-			for _,v in pairs(enemies_affected) do
-				v:RemoveModifierByName(modifier)
-				StopSoundEvent(sound1, v)
-				StopSoundEvent(sound2, v)
+		for _,v in pairs(enemies_affected) do
+			if v:HasModifier(modifier) then
+				ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = channel_time})
 			end
-			caster.fiends_grip_dummy:ForceKill(true)
-			end)
+		end
 	end
+end
+
+function FiendsGripEndSound( keys )
+	local target = keys.target
+	local sound_1 = keys.sound_1
+	local sound_2 = keys.sound_2
+
+	StopSoundEvent(sound_1, target)
+	StopSoundEvent(sound_2, target)
+	target.fiends_grip_dummy:Destroy()
 end
 
 function FiendsGripScepter( keys )
@@ -159,9 +161,8 @@ function FiendsGripTruesight( keys )
 	local ability = keys.ability
 
 	local target_location = target:GetAbsOrigin()
-	caster.fiends_grip_dummy = CreateUnitByName("npc_dummy_unit", target_location, false, nil, nil, caster:GetTeamNumber())
-	ability:ApplyDataDrivenModifier(caster, caster.fiends_grip_dummy, "modifier_item_gem_of_true_sight", {radius = 50})
-	ability:ApplyDataDrivenModifier(caster, caster.fiends_grip_dummy, "modifier_dummy_unit", {})
+	target.fiends_grip_dummy = CreateUnitByName("npc_dummy_unit", target_location, false, nil, nil, caster:GetTeamNumber())
+	ability:ApplyDataDrivenModifier(caster, target.fiends_grip_dummy, "modifier_item_gem_of_true_sight", {radius = 50})
 end
 
 function NightmareDamage( keys )

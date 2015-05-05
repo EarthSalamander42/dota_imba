@@ -2156,21 +2156,21 @@
 		{
 			"RemoveModifier"
 	        {
-	        	"ModifierName"	"modifier_imba_bane_nightmare"
+	        	"ModifierName"		"modifier_imba_bane_nightmare"
 	        	"Target"
 	        	{
-	        		"Center"	"CASTER"
-	        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	        		"Center"		"CASTER"
+	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	        	}
 	        }	
 
 	        "RemoveModifier"
 	        {
-	        	"ModifierName"	"modifier_imba_bane_nightmare_invul"
+	        	"ModifierName"		"modifier_imba_bane_nightmare_invul"
 	        	"Target"
 	        	{
-	        		"Center"	"CASTER"
-	        		"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+	        		"Center"		"CASTER"
+	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 	        	}
 	        }	
 
@@ -2222,7 +2222,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 150 175 200"	
+		"AbilityManaCost"				"100 125 150 175"	
 
 		
 		"AbilitySpecial"
@@ -2236,7 +2236,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_steal_amt"				"60 90 120 150"
+				"mana_steal_amt"				"50 75 100 125"
 			}
 
 			"03"
@@ -2347,9 +2347,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
-			"particle"		"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
-			"particle"		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"		
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
+			"particle"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
+			"particle"					"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"		
 		}		
 
 		// Casting
@@ -2440,50 +2440,47 @@
 
 		"OnSpellStart"
 		{	
-
 			"FireSound"
 			{
-				"EffectName"	"Hero_Bane.FiendsGrip.Cast"
+				"EffectName"			"Hero_Bane.FiendsGrip.Cast"
 				"Target"
 				{
-					"Center"	"TARGET"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Center"			"TARGET"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}	
 			}	
 
 			"Damage"
 			{
-				"Target"	"TARGET"
-				"Type"		"DAMAGE_TYPE_MAGICAL"
-				"Damage"	"%fiends_grip_damage"
-			}	
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%fiends_grip_damage"
+			}
 
-			"ApplyModifier"
+			"RemoveModifier"
 			{
-				"ModifierName"	"modifier_imba_bane_fiends_grip"
+				"ModifierName"			"modifier_imba_bane_fiends_grip"
 				"Target"
 				{
-					"Center"	"TARGET"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Center"			"TARGET"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
+				"ModifierName"			"modifier_imba_bane_fiends_grip"
 				"Target"
 				{
-					"Center"	"CASTER"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Center"			"TARGET"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 
-			"RunScript"
+			"ApplyModifier"
 			{
-				"ScriptFile"	"abilities/hero_bane.lua"
-				"Function"		"FiendsGripTruesight"
-
-				"Target"		"TARGET"
+				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
+				"Target"				"CASTER"
 			}
 		}	
 
@@ -2491,26 +2488,19 @@
 		{
 			"RemoveModifier"
 			{
-				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
+				"Target"				"CASTER"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"	"abilities/hero_bane.lua"
-				"Function"		"FiendsGripStopChannel"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"modifier"		"modifier_imba_bane_fiends_grip"
-				"sound1"		"Hero_Bane.FiendsGrip"
-				"sound2"		"Hero_Bane.FiendsGrip.Cast"
+				"ScriptFile"			"abilities/hero_bane.lua"
+				"Function"				"FiendsGripStopChannel"
+				"Target"				"TARGET"
+
+				"modifier"				"modifier_imba_bane_fiends_grip"
+				"sound1"				"Hero_Bane.FiendsGrip"
+				"sound2"				"Hero_Bane.FiendsGrip.Cast"
 			}
 		}	
 
@@ -2518,26 +2508,17 @@
 		{
 			"RemoveModifier"
 			{
-				"ModifierName"	"modifier_imba_bane_fiends_grip_caster"
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
+				"Target"				"CASTER"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"	"abilities/hero_bane.lua"
-				"Function"		"FiendsGripStopChannel"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"modifier"		"modifier_imba_bane_fiends_grip"
-				"sound1"		"Hero_Bane.FiendsGrip"
-				"sound2"		"Hero_Bane.FiendsGrip.Cast"
+				"ScriptFile"			"abilities/hero_bane.lua"
+				"Function"				"FiendsGripStopChannel"
+				"Target"				"TARGET"
+
+				"modifier"				"modifier_imba_bane_fiends_grip"
 			}
 		}	
 
@@ -2545,21 +2526,23 @@
 		{
 			"modifier_imba_bane_fiends_grip"
 			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-				"ThinkInterval"		"%fiends_grip_tick_interval"
-				"EffectName"		"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
-				"EffectAttachType"	"attach_origin"	
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
 
-				"OverrideAnimation" "ACT_DOTA_FLAIL"	
+				"EffectName"			"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
+				"EffectAttachType"		"attach_origin"	
+
+				"OverrideAnimation" 	"ACT_DOTA_FLAIL"	
+
+				"ThinkInterval"			"%fiends_grip_tick_interval"
 
 				"OnIntervalThink"
 				{
 					"Damage"
 					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%fiends_grip_damage"
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%fiends_grip_damage"
 					}	
 
 					"RunScript"
@@ -2578,8 +2561,29 @@
 						"Target"
 						{
 							"Center"	"TARGET"
-							"Flags"     "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_bane.lua"
+						"Function"		"FiendsGripTruesight"
+
+						"Target"		"TARGET"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_bane.lua"
+						"Function"		"FiendsGripEndSound"
+
+						"Target"		"TARGET"
+						"sound_1"		"Hero_Bane.FiendsGrip"
+						"sound_2"		"Hero_Bane.FiendsGrip.Cast"
 					}
 				}
 				
@@ -2592,24 +2596,25 @@
 
 			"modifier_imba_bane_fiends_grip_caster"
 			{
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
-				"ThinkInterval" 	"0.03"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval" 		"0.03"
 				
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_bane.lua"
-						"Function"				"FiendsGripScepter"
+						"ScriptFile"				"abilities/hero_bane.lua"
+						"Function"					"FiendsGripScepter"
 
-						"modifier_fiends_grip"	"modifier_imba_bane_fiends_grip"
+						"modifier_fiends_grip"		"modifier_imba_bane_fiends_grip"
 					}
 				}
 
 				"States"
 				{
-					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -11679,26 +11684,6 @@
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
 			}
-
-			//"DelayedAction"
-			//{
-			//	"Delay"						"%stun_duration"
-
-			//	"Action"
-			//	{
-			//		"FireEffect"
-			//		{
-			//			"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
-			//			"EffectAttachType"	"start_at_customorigin"
-
-			//			"ControlPointEntities"
-			//			{
-			//				"TARGET"		"follow_origin"
-			//				"TARGET"		"follow_origin"
-			//			}
-			//		}
-			//	}
-			//}
 		}
 
 		"Modifiers"
