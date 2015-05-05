@@ -11700,4 +11700,1142 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Ability: Kunkka's Torrent
+	//=================================================================================================================
+	"imba_kunkka_torrent"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"kunkka_torrent"
+		"AOERadius"						"225"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"120 180 240 300"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 120 120 120"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5"	// applies 2 modifiers
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"225"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"-35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"1.0 2.0 3.0 4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.53 1.53 1.53 1.53"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"1.6 1.6 1.6 1.6"
+			}
+			// Extra variables
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tick_count"				"10"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"2.0"				// I just guess
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"torrent_height"			"400"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"120 180 240 300"
+			}
+		}
+
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------	
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"Function"					"torrent_bubble_allies"
+				"Target"					"POINT"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_kunkka.lua"
+				"Function"				"torrent"
+				"Target"				"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_torrent_slow_debuff"
+			{
+				"IsPurgable"				"1"
+				"IsDebuff"					"1"
+			
+				"Duration"					"%stun_duration + %slow_duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"movespeed_bonus"
+				}
+			}
+
+			"modifier_torrent_knockup"
+			{
+				"IsHidden"			"1"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				"IsStunDebuff"		"1"
+				"Duration"			"%stun_duration"
+
+				"OnCreated"
+				{
+					"Knockback"
+					{
+						"Target"			"TARGET"
+						"Center"			"CASTER"
+						"Duration"			"%stun_duration"
+						"Distance"			"0"
+						"Height"			"%torrent_height"
+						"IsFixedDistance"	"1"
+						"ShouldStun"		"1"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_torrent_knockup_tsunami"
+			{
+				"IsHidden"			"1"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+				"IsStunDebuff"		"1"
+				"Duration"			"%stun_duration * 2"
+
+				"OnCreated"
+				{
+					"Knockback"
+					{
+						"Target"			"TARGET"
+						"Center"			"CASTER"
+						"Duration"			"%stun_duration * 2"
+						"Distance"			"0"
+						"Height"			"%torrent_height"
+						"IsFixedDistance"	"1"
+						"ShouldStun"		"1"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Kunkka's Tidebringer
+	//=================================================================================================================
+	"imba_kunkka_tidebringer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"kunkka_tidebringer"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0 10.0 7.0 4.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500 500 500 600"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_bonus"				"15 30 45 60"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"high_tide_radius"			"650 650 650 750"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"torrent_height"			"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"torrent_duration"			"0.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"torrent_radius"			"50"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"precache"
+			{
+				"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+				"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+			}
+
+			"modifier_tidebringer_cooldown"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"ThinkInterval"  "0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_kunkka.lua"
+						"Function"		"tidebringer_cooldown"
+					}
+				}
+			}
+
+			"modifier_tidebringer"
+			{
+				"IsHidden"			"1"
+
+				"OnCreated"
+				{
+					"Random"
+					{
+						"Chance"			"25"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"	"modifier_tidebringer_high_tide"
+								"Target" 		"CASTER"
+							}
+
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_tidebringer"
+								"Target" 		"CASTER"
+							}
+						}
+						"OnFailure"
+						{
+							"Random"
+							{
+								"Chance"			"33.3"
+								"OnSuccess"
+								{
+									"ApplyModifier"
+									{
+										"ModifierName"	"modifier_tidebringer_low_tide"
+										"Target" 		"CASTER"
+									}
+
+									"RemoveModifier"
+									{
+										"ModifierName"	"modifier_tidebringer"
+										"Target" 		"CASTER"
+									}
+								}
+								"OnFailure"
+								{
+									"Random"
+									{
+										"Chance"			"50"
+										"OnSuccess"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_tidebringer_tsunami"
+												"Target" 		"CASTER"
+											}
+
+											"RemoveModifier"
+											{
+												"ModifierName"	"modifier_tidebringer"
+												"Target" 		"CASTER"
+											}
+										}
+										"OnFailure"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_tidebringer_wave_break"
+												"Target" 		"CASTER"
+											}
+
+											"RemoveModifier"
+											{
+												"ModifierName"	"modifier_tidebringer"
+												"Target" 		"CASTER"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		
+			"modifier_tidebringer_low_tide"
+			{
+				"TextureName"				"kunkka_tidebringer"
+
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+							
+							"RunScript"
+							{
+								"ScriptFile"		"abilities/hero_kunkka.lua"
+								"Function"			"tidebringer_set_cooldown"
+							}
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+				}
+			}
+
+			"modifier_tidebringer_high_tide"
+			{
+				"TextureName"				"kunkka_tidebringer"
+
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%high_tide_radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+							
+							"RunScript"
+							{
+								"ScriptFile"		"abilities/hero_kunkka.lua"
+								"Function"			"tidebringer_set_cooldown"
+							}
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus * 2"
+				}
+			}
+
+			"modifier_tidebringer_wave_break"
+			{
+				"TextureName"				"morphling_waveform"
+
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+
+							"RemoveModifier"
+							{
+								"ModifierName"	"modifier_tidebringer_wave_break"
+								"Target" 		"CASTER"
+							}
+						}
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+				}
+			}
+
+			"modifier_tidebringer_tsunami"
+			{
+				"TextureName"				"kunkka_torrent"
+
+				"OnCreated"
+				{
+					"FireEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"Hero_Kunkaa.Tidebringer"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+				
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"Hero_Kunkka.Tidebringer.Attack"
+					}
+				
+					"ActOnTargets"
+					{
+						"Target"
+						{
+							"Center"		"TARGET"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						}
+						
+						"Action"
+						{
+							"FireSound"
+							{
+								"Target"			"TARGET"
+								"EffectName"		"Hero_Kunkka.TidebringerDamage"
+							}
+						
+							"CleaveAttack"
+							{
+								"CleavePercent"		"100"
+								"CleaveRadius"		"%radius"
+								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+							}
+							
+							"RunScript"
+							{
+								"ScriptFile"		"abilities/hero_kunkka.lua"
+								"Function"			"tidebringer_set_cooldown"
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"tidebringer_tsunami"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+				}
+			}
+
+			"modifier_tidebringer_knockup"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%torrent_duration"
+				
+				"OnCreated"
+				{
+					"Knockback"
+					{
+						"Target"			"TARGET"
+						"Center"			"CASTER"
+						"Duration"			"%torrent_duration"
+						"Distance"			"0"
+						"Height"			"%torrent_height"
+						"IsFixedDistance"	"1"
+						"ShouldStun"		"1"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Kunkka's X Mark
+	//=================================================================================================================
+	"imba_kunkka_x_marks_the_spot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"kunkka_x_marks_the_spot"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"350 550 750 1000"
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19 16 13 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}	
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"allied_duration"			"8.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"				"350 550 750 1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fow_range"					"300"
+			}	  
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fow_duration"				"5.94"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"return_range"				"200 275 350 425"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"Function"					"LevelUpAbility"
+				"ability_name"				"imba_kunkka_return"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff"
+				"Duration"			"%allied_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff"
+				"Duration"			"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"		"TARGET"
+					"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+				"ModifierName"		"modifier_x_marks_the_spot_debuff_forced"
+				"Duration"			"%duration - 0.1"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_x_marks_the_spot_debuff"
+			{
+				"IsDebuff"			"1"
+			
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Target"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+						"EffectAttachType"			"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"				"attach_origin"
+						}
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_kunkka.lua"
+						"Function"					"x_marks_the_spot_init"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"FireSound"
+					{
+						"Target"					"TARGET"
+						"EffectName"				"Ability.XMarksTheSpot.Return"
+					}
+				
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_kunkka.lua"
+						"Function"					"x_marks_the_spot_return"
+					}
+				}
+			}
+
+			"modifier_x_marks_the_spot_debuff_forced"
+			{
+				"IsDebuff"			"1"
+				"IsHidden"			"1"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_kunkka.lua"
+						"Function"					"ForcedReturn"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Kunkka's Return
+	//=================================================================================================================
+	"imba_kunkka_return"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"kunkka_return"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.4 0.4 0.4 0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_kunkka.lua"
+				"Function"				"x_marks_the_spot_force_return"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_kunkka.lua"
+				"Function"				"LevelUpAbility"
+				"ability_name"			"imba_kunkka_x_marks_the_spot"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Kunkka's Ghost Ship
+	//=================================================================================================================
+	"imba_kunkka_ghostship"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"kunkka_ghostship"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60.0 50.0 40.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"250" // "400 500 600"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 200 250"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_delay"				"4 2 1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_distance"		"1000 1000 1000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_width"			"425 425 425"
+			}			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"10 10 10"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"buff_duration"				"10"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.4 1.4 1.4"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_speed"			"500 1000 2000"
+			}
+			// Extra variable
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rum_reduce_pct"			"50"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_duration"			"10.0"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"1.0"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_speed_scepter"	"1000 2000 4000"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rum_reduce_pct_scepter"	"70"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ghostship_distance_scepter"	"2000 2000 2000"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
+			"particle"						"particles/status_fx/status_effect_rum.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship.bell"
+			}
+		
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Ability.Ghostship"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"Function"					"ghostship_start_traverse"
+				"Target"					"POINT"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"0"
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"				"TARGET"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				}
+				"ModifierName"				"modifier_ghostship_rum"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"Function"					"OnABoat"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ghostship_rum"
+			{
+				"IsBuff"				"1"
+				
+				"Duration"				"%buff_duration"
+				
+				"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
+				"StatusEffectPriority"	"10"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"scepterCheck"
+					}
+				}
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"ghostship_register_damage"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"ghostship_spread_damage"
+						"Target"			"TARGET"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
+				}
+			}
+
+			"modifier_ghostship_rum_scepter"
+			{
+				"IsBuff"				"1"
+				
+				"Duration"				"%buff_duration"
+				
+				"StatusEffectName"		"particles/status_fx/status_effect_rum.vpcf"
+				"StatusEffectPriority"	"10"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"ghostship_register_damage"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"Function"			"ghostship_spread_damage"
+						"Target"			"TARGET"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct_scepter"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
+				}
+			}
+		}
+	}
 }
