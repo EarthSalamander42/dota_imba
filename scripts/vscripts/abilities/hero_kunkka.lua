@@ -1,495 +1,461 @@
 --[[ 	Author: Hewdraw
 		Date: 05.05.2015	]]
 
-function torrent_bubble_allies( keys )
+function TorrentBubble( keys )
 	local caster = keys.caster
-	
-	local allHeroes = HeroList:GetAllHeroes()
-	local delay = keys.ability:GetLevelSpecialValueFor( "delay", keys.ability:GetLevel() - 1 )
-	local particleName = "particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
+	local ability = keys.ability
 	local target = keys.target_points[1]
+	local delay = ability:GetLevelSpecialValueFor("delay", ability:GetLevel() - 1 )
+
+	-- Sound and particle
+	local particle_name = keys.particle_name
+	local sound_name = keys.sound_name
 	
-	for k, v in pairs( allHeroes ) do
+	-- Retrieves a list with all heroes in the game
+	local all_heroes = HeroList:GetAllHeroes()
+	
+	-- Draws the particle and plays the sound only for the caster's allies
+	for k, v in pairs(all_heroes) do
 		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local fxIndex = ParticleManager:CreateParticleForPlayer( particleName, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl( fxIndex, 0, target )
-			
-			EmitSoundOnClient( "Ability.pre.Torrent", PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			local bubbles_fx = ParticleManager:CreateParticleForPlayer(particle_name, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl(bubbles_fx, 0, target )
+			player:EmitSoundOnClient(sound_name, PlayerResource:GetPlayer( v:GetPlayerID() ) )
 			
 			-- Destroy particle after delay
-			Timers:CreateTimer( delay, function()
-					ParticleManager:DestroyParticle( fxIndex, false )
-					return nil
-				end
-			)
+			Timers:CreateTimer(delay, function()
+				ParticleManager:DestroyParticle(bubbles_fx, false )
+			end)
 		end
 	end
 end
 
-function torrent_emit_sound( keys )
-	local dummy = CreateUnitByName( "npc_dummy_blank", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber() )
-	EmitSoundOn( "Ability.Torrent", dummy )
-	dummy:ForceKill( true )
-end
-
-function torrent_post_vision( keys )
-	local ability = keys.ability
-	local target = keys.target_points[1]
-	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
-	local duration = ability:GetLevelSpecialValueFor( "vision_duration", ability:GetLevel() - 1 )
-	
-	ability:CreateVisibilityNode( target, radius, duration )
-end
-
-function torrent( keys )
+function Torrent( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target_points[1]
-	local ability_level = ability:GetLevel() -1
-	local radius = ability:GetLevelSpecialValueFor( "radius", ability_level )
-	local damage = ability:GetLevelSpecialValueFor( "damage", ability_level )
-	local duration = ability:GetLevelSpecialValueFor( "stun_duration", ability_level )
-	local tick_count = ability:GetLevelSpecialValueFor( "tick_count", ability_level )
-	local tick_interval = duration / tick_count
-	local particleName = "particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+	local ability_level = ability:GetLevel() - 1
 
-	if caster:HasModifier("modifier_tidebringer_high_tide") then
-		radius = radius + 100
-		damage = damage + 100
+	-- Ability parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local vision_duration = ability:GetLevelSpecialValueFor( "vision_duration", ability:GetLevel() - 1 )
+	local delay = ability:GetLevelSpecialValueFor("delay", ability_level)
+	local height = ability:GetLevelSpecialValueFor("torrent_height", ability_level)
+	local max_ticks = ability:GetLevelSpecialValueFor("tick_count", ability_level)
+	local high_tide_damage = ability:GetLevelSpecialValueFor("high_tide_damage", ability_level)
+	local high_tide_radius = ability:GetLevelSpecialValueFor("high_tide_radius", ability_level)
+
+	-- Modifiers and effects
+	local particle_name = keys.particle_name
+	local sound_name = keys.sound_name
+	local modifier_high_tide = keys.modifier_high_tide
+	local modifier_tsunami = keys.modifier_tsunami
+	local modifier_wave_break = keys.modifier_wave_break
+	local modifier_slow = keys.modifier_slow
+	local modifier_phase = keys.modifier_phase
+
+	-- Modifies parameters according to the current Tidebringer buff
+	if caster:HasModifier(modifier_high_tide) or caster:HasModifier(modifier_tsunami) then
+		radius = radius + high_tide_radius
+		damage = damage + high_tide_damage
+	end
+	if caster:HasModifier(modifier_wave_break) then
+		delay = 0
 	end
 
-	local damage_tick = damage / (2 * tick_count)
-	local tick_amount = 0
+	-- Calculates the damage to deal per tick
+	local tick_interval = duration / max_ticks
+	local damage_tick = damage / (2 * max_ticks)
+	local current_ticks = 0
 
-
-
-	if not caster:HasModifier("modifier_tidebringer_wave_break") then
-		Timers:CreateTimer( 1.6, function()
-			local enemies = FindUnitsInRadius(caster.GetTeam(caster), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			local torrent_particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-			ParticleManager:SetParticleControl(torrent_particle, 0, target)
-			for _,enemy in pairs(enemies) do
-				ApplyDamage({victim = enemy, attacker = caster, damage = damage / 2, damage_type = DAMAGE_TYPE_MAGICAL})
-				if caster:HasModifier("modifier_tidebringer_tsunami") then
-					ability:ApplyDataDrivenModifier(caster, enemy, "modifier_torrent_knockup_tsunami", {})
-				else
-					ability:ApplyDataDrivenModifier(caster, enemy, "modifier_torrent_knockup", {})
-				end
-				Timers:CreateTimer( 0, function()
-					if tick_amount < tick_count then
-						ApplyDamage({victim = enemy, attacker = caster, damage = damage_tick, damage_type = DAMAGE_TYPE_MAGICAL})
-						tick_amount = tick_amount + 1
-						return tick_interval
-					else
-						return nil
-					end
-				end)
-				ability:ApplyDataDrivenModifier(caster, enemy, "modifier_torrent_slow_debuff", {})
-			end
-			return nil
-		end)
-	else
-		local enemies = FindUnitsInRadius(caster.GetTeam(caster), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		local torrent_particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(torrent_particle, 0, target)
+	-- After [delay], applies damage, knockback, and draws the particle
+	Timers:CreateTimer(delay, function()
+		-- Finds affected enemies
+		local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
+		
+		-- Draws the particle
+		local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(torrent_fx, 0, target)
+		
 		for _,enemy in pairs(enemies) do
-			ApplyDamage({victim = enemy, attacker = caster, damage = damage / 2, damage_type = DAMAGE_TYPE_MAGICAL})
-			ability:ApplyDataDrivenModifier(caster, enemy, "modifier_torrent_knockup", {})
-			Timers:CreateTimer( 0, function()
-				if tick_amount < tick_count then
-					ApplyDamage({victim = enemy, attacker = caster, damage = damage_tick, damage_type = DAMAGE_TYPE_MAGICAL})	
-					tick_amount = tick_amount + 1
+			-- Deals the initial damage
+			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage / 2, damage_type = ability:GetAbilityDamageType()})
+			
+			-- Calculates the knockback position (for Tsunami)
+			local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
+			local distance_from_center = ( enemy:GetAbsOrigin() - target ):Length2D()
+			if not caster:HasModifier(modifier_tsunami) then
+				distance_from_center = 0
+			end
+
+			-- Knocks the target up
+			local knockback =
+			{	should_stun = 1,
+				knockback_duration = duration,
+				duration = duration,
+				knockback_distance = distance_from_center,
+				knockback_height = height,
+				center_x = (target + torrent_border).x,
+				center_y = (target + torrent_border).y,
+				center_z = (target + torrent_border).z
+			}
+
+			-- Applies the phasing and knockback modifiers
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_phase, {})
+			enemy:AddNewModifier(caster, ability, "modifier_knockback", knockback)
+
+			-- Deals tick damage [max_ticks] times
+			Timers:CreateTimer(function()
+				if current_ticks < max_ticks then
+					ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage_tick, damage_type = ability:GetAbilityDamageType()})
+					current_ticks = current_ticks + 1
 					return tick_interval
-				else
-					return nil
 				end
 			end)
-			ability:ApplyDataDrivenModifier(caster, enemy, "modifier_torrent_slow_debuff", {})
+
+			-- Applies the slow
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 		end
-		return nil
+
+		-- Creates the post-ability vision node and sound effect
+		ability:CreateVisibilityNode(target, radius, vision_duration)
+		local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
+		EmitSoundOn(sound_name, dummy)
+		dummy:Destroy()
+	end)
+end
+
+function TidebringerCooldown( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Modifiers
+	local modifier_name = keys.modifier_name
+	local modifier_tsunami = keys.modifier_tsunami
+	local modifier_wave_break = keys.modifier_wave_break
+	local modifier_high_tide = keys.modifier_high_tide
+	local modifier_low_tide = keys.modifier_low_tide
+
+	-- Logical checks
+	local cooldown = ability:GetCooldownTimeRemaining()
+	local tsunami = caster:HasModifier(modifier_tsunami)
+	local wave_break = caster:HasModifier(modifier_wave_break)
+	local high_tide = caster:HasModifier(modifier_high_tide)
+	local low_tide = caster:HasModifier(modifier_low_tide)
+
+	-- If the skill has finished its cooldown and no modifiers are present, apply one at random
+	if cooldown == 0 and not tsunami and not high_tide and not low_tide and not wave_break then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
 	end
 end
 
-function tidebringer_cooldown( keys )
+function TidebringerStartCooldown( keys )
 	local caster = keys.caster
+	local target = keys.target
 	local ability = keys.ability
-	local modifierName = "modifier_tidebringer"
+	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
 
-	if ability:GetCooldownTimeRemaining() == 0 then
-		if not caster:HasModifier("modifier_tidebringer_low_tide") then
-			if not caster:HasModifier("modifier_tidebringer_high_tide") then
-				if not caster:HasModifier("modifier_tidebringer_wave_break") then
-					if not caster:HasModifier("modifier_tidebringer_tsunami") then
-						ability:ApplyDataDrivenModifier( caster, caster, modifierName, {} )
-					end
-				end
-			end
-		end
+	-- Modifiers
+	local modifier_tsunami = keys.modifier_tsunami
+	local modifier_high_tide = keys.modifier_high_tide
+	local modifier_low_tide = keys.modifier_low_tide
+
+	-- If the target was a non-structure enemy, start the cooldown
+	if target:GetTeam() ~= caster:GetTeam() then
+		caster:RemoveModifierByName(modifier_tsunami)
+		caster:RemoveModifierByName(modifier_high_tide)
+		caster:RemoveModifierByName(modifier_low_tide)
+		ability:StartCooldown(cooldown)
 	end
 end
 
-function tidebringer_set_cooldown( keys )
-	-- Variables
-	local caster = keys.caster
-	local ability = keys.ability
-	local cooldown = ability:GetCooldown( ability:GetLevel() - 1)
-
-	-- Remove cooldown
-	caster:RemoveModifierByName( "modifier_tidebringer_low_tide" )
-	caster:RemoveModifierByName( "modifier_tidebringer_high_tide" )
-	caster:RemoveModifierByName( "modifier_tidebringer_tsunami" )
-	ability:StartCooldown( cooldown )
-end
-
-function tidebringer_tsunami( keys )
+function TidebringerTsunami( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
-	local particleName = "particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-	local radius = ability:GetLevelSpecialValueFor( "radius", ability:GetLevel() - 1 )
+	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
+	local tsunami_radius = ability:GetLevelSpecialValueFor("tsunami_radius", ability:GetLevel() - 1 )
 
-	local enemies = FindUnitsInRadius(caster.GetTeam(caster), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	for _,enemy in pairs(enemies) do
-		local torrent_particle = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(torrent_particle, 0, enemy:GetAbsOrigin())
-		ability:ApplyDataDrivenModifier(caster, enemy, "modifier_tidebringer_knockup", {})
-	end
-end
-
-function x_marks_the_spot_init( keys )
-  -- Variables
-	local caster = keys.caster
-	local target = keys.target
-	local targetLoc = keys.target:GetAbsOrigin()
-	local x_marks_return_name = "imba_kunkka_return"
+	-- Particles and modifiers
+	local particle_name = keys.particle_name
+	local modifier_knockup = keys.modifier_knockup
 	
-	-- Set variables
+	-- Calculates the AOE's center point and affected enemies
+	local effect_center = caster:GetAbsOrigin() + caster:GetForwardVector() * radius
+	local enemies = FindUnitsInRadius(caster:GetTeam(), effect_center, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
+
+	-- Draws the particle and applies knockback to each enemy
+	if target:GetTeam() ~= caster:GetTeam() then
+		for _,enemy in pairs(enemies) do
+			local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
+			ParticleManager:SetParticleControl(torrent_fx, 0, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(torrent_fx, 1, Vector(tsunami_radius, 0, 0))
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_knockup, {})
+		end
+	end
+end
+
+function XmarksCast( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local target_loc = target:GetAbsOrigin()
+	local return_name = keys.return_name
+	
+	-- Set x marks origin point
 	caster.x_marks_target = target
-	caster.x_marks_origin = targetLoc
+	caster.x_marks_origin = target_loc
 	
-	-- Swap ability
-	caster:SwapAbilities( keys.ability:GetAbilityName(), x_marks_return_name, false, true )
+	-- Swap x marks with return 
+	caster:SwapAbilities(ability:GetAbilityName(), return_name, false, true)
 end
 
-function x_marks_the_spot_force_return( keys )
+function XmarksReturn( keys )
 	local caster = keys.caster
-	local modifierName = "modifier_x_marks_the_spot_debuff"
-	caster.x_marks_target:RemoveModifierByName( modifierName )
-	Timers:CreateTimer(0.1, function()
-		caster.x_marks_target:RemoveModifierByName( "modifier_x_marks_the_spot_debuff_forced" )
-		return nil
-	end )
-end
-
-function x_marks_the_spot_return( keys )
-  -- Variables
-	local caster = keys.caster
-	local x_marks = "imba_kunkka_x_marks_the_spot"
-	local x_marks_return = "imba_kunkka_return"
-	local modifierName = "modifier_x_marks_the_spot_debuff"
+	local x_marks_name = keys.x_marks_name
+	local return_name = keys.return_name
+	local modifier_name = keys.modifier_name
 	
-	-- Check if there is target unit
-	if caster.x_marks_target ~= nil and caster.x_marks_origin ~= nil then
-		Timers:CreateTimer(0.2, function()
-			FindClearSpaceForUnit( caster.x_marks_target, caster.x_marks_origin, true )
-			caster.x_marks_target = nil
-			caster.x_marks_origin = nil
-			return nil
-		end )
-		
+	-- Check if there is a target unit
+	if caster.x_marks_target and caster.x_marks_origin then
+		FindClearSpaceForUnit(caster.x_marks_target, caster.x_marks_origin, true)
+		caster.x_marks_target = nil
+		caster.x_marks_origin = nil
 	end
 	
-	-- Swap ability
-	caster:SwapAbilities( x_marks, x_marks_return, true, false )
-	x_marks_start_cooldown( keys )
+	-- Swap abilities
+	caster:SwapAbilities(x_marks_name, return_name, true, false )
 end
 
-function x_marks_start_cooldown( keys )
-  -- Name of both abilities
-	local x_marks = "imba_kunkka_x_marks_the_spot"
-	local x_marks_return = "imba_kunkka_return"
-
-  -- Loop to reset cooldown
-	for i = 0, keys.caster:GetAbilityCount() - 1 do
-		local currentAbility = keys.caster:GetAbilityByIndex( i )
-		if currentAbility ~= nil and ( currentAbility:GetAbilityName() == x_marks or currentAbility:GetAbilityName() == x_marks_return ) then
-			currentAbility:EndCooldown()
-			currentAbility:StartCooldown( currentAbility:GetCooldown( currentAbility:GetLevel() - 1 ) )
-		end
-	end
-end
-
-function x_marks_the_spot_level_up( keys )
-  -- Variable for sub ability
-	local x_marks_return_name = "imba_kunkka_return"
-
-  -- loop to find the ability
-	for i = 0, keys.caster:GetAbilityCount() do
-		local currentAbility = keys.caster:GetAbilityByIndex( i )
-		if currentAbility ~= nil and currentAbility:GetAbilityName() == x_marks_return_name then
-			if currentAbility:GetLevel() ~= keys.ability:GetLevel() then
-				currentAbility:SetLevel( keys.ability:GetLevel() )
-			end
-			break
-		end
-	end
-end
-
-function LevelUpAbility( keys )
-	local caster = keys.caster
-	local this_ability = keys.ability		
-	local this_abilityName = this_ability:GetAbilityName()
-	local this_abilityLevel = this_ability:GetLevel()
-
-	-- The ability to level up
+function LevelUpReturn( keys )
+	local caster = keys.caster		
 	local ability_name = keys.ability_name
 	local ability_handle = caster:FindAbilityByName(ability_name)	
-	local ability_level = ability_handle:GetLevel()
 
-	-- Check to not enter a level up loop
-	if ability_level ~= this_abilityLevel then
-		ability_handle:SetLevel(this_abilityLevel)
+	-- Upgrades Return to level 1 if it hasn't already
+	ability_handle:SetLevel(1)
+end
+
+function XmarksForcedReturn( keys )
+	local caster = keys.caster
+	local ability = caster:FindAbilityByName(keys.x_marks_name)
+	local modifier_name = keys.modifier_name
+	local radius = ability:GetLevelSpecialValueFor("return_range" , ability:GetLevel() - 1 )
+
+	if caster.x_marks_target and caster.x_marks_origin then
+		local units
+		local target = caster.x_marks_target
+		local origin = caster.x_marks_origin
+		if target:GetTeam() == caster:GetTeam() then
+			units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+		else
+			units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+		end
+		for _,unit in pairs(units) do
+			FindClearSpaceForUnit(unit, origin, true)
+		end
+
+		-- Removes the x marks modifier from the original target, triggering XmarksReturn()
+		target:RemoveModifierByName(modifier_name)
 	end
 end
 
-function ForcedReturn( keys )
+function GhostShip( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local target = keys.target
-	local radius = ability:GetLevelSpecialValueFor( "return_range" , ability:GetLevel() - 1 )
+	local ability_level = ability:GetLevel() - 1
 
-	if not caster:HasModifier("modifier_x_marks_the_spot_debuff") then
-		if caster.x_marks_origin ~= nil then
-			local enemies = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-			for _,enemy in pairs( enemies ) do
-				FindClearSpaceForUnit(enemy, caster.x_marks_origin, true)
-			end
-		end
+	-- Particles and sounds
+	local particle_name = keys.particle_name
+	local projectile_name = keys.projectile_name
+	local crash_sound = keys.crash_sound
+
+	-- Parameters
+	local spawn_distance = ability:GetLevelSpecialValueFor("spawn_distance", ability_level)
+	local crash_distance = ability:GetLevelSpecialValueFor("crash_distance", ability_level)
+	local ship_speed = ability:GetLevelSpecialValueFor("ghostship_speed", ability_level)
+	local ship_radius = ability:GetLevelSpecialValueFor("ghostship_width", ability_level)
+	local crash_delay = ability:GetLevelSpecialValueFor("tooltip_delay", ability_level)
+	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local crash_damage = ability:GetLevelSpecialValueFor("crash_damage", ability_level)
+
+	-- Scepter parameters
+	local scepter = HasScepter(caster)
+	if scepter then
+		spawn_distance = ability:GetLevelSpecialValueFor("spawn_distance_scepter", ability_level)
+		ship_speed = ability:GetLevelSpecialValueFor("ghostship_speed_scepter", ability_level)
 	end
-end
 
-function ghostship_mark_allies( caster, ability, target )
-	local allHeroes = HeroList:GetAllHeroes()
-	local delay = ability:GetLevelSpecialValueFor( "tooltip_delay", ability:GetLevel() - 1 )
-	local particleName = "particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
-	
-	for k, v in pairs( allHeroes ) do
+	-- Calculate spawn and crash positions
+	local caster_pos = caster:GetAbsOrigin()
+	local target_pos = keys.target_points[1]
+	local boat_direction = ( target_pos - caster_pos ):Normalized()
+	local crash_pos = caster_pos + boat_direction * crash_distance
+	local spawn_pos = caster_pos + boat_direction * spawn_distance * (-1)
+
+	-- Persistent target point (for OnABoat function)
+	caster.ghostship_crash_pos = crash_pos
+
+	-- Show visual crash point effect to allies only
+	local all_heroes = HeroList:GetAllHeroes()
+	for k, v in pairs(all_heroes) do
 		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local fxIndex = ParticleManager:CreateParticleForPlayer( particleName, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl( fxIndex, 0, target )
+			local crash_fx = ParticleManager:CreateParticleForPlayer(particle_name, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl(crash_fx, 0, crash_pos)
 			
-			EmitSoundOnClient( "Ability.pre.Torrent", PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			
-			-- Destroy particle after delay
-			Timers:CreateTimer( delay, function()
-					ParticleManager:DestroyParticle( fxIndex, false )
-					return nil
-				end
-			)
+			-- Destroy particle after the crash
+			Timers:CreateTimer(crash_delay, function()
+					ParticleManager:DestroyParticle(crash_fx, false)
+			end)
 		end
 	end
-end
 
-function ghostship_start_traverse( keys )
-	-- Variables
-	local caster = keys.caster
-	local ability = keys.ability
-	local casterPoint = caster:GetAbsOrigin()
-	local targetPoint = keys.target_points[1]
-	local spawnDistance = ability:GetLevelSpecialValueFor( "ghostship_distance", ability:GetLevel() - 1 )
-	local spawnDistanceScepter = ability:GetLevelSpecialValueFor( "ghostship_distance_scepter", ability:GetLevel() - 1 )
-	local projectileSpeed = ability:GetLevelSpecialValueFor( "ghostship_speed", ability:GetLevel() - 1 )
-	local projectileSpeedScepter = ability:GetLevelSpecialValueFor( "ghostship_speed_scepter", ability:GetLevel() - 1 )
-	local radius = ability:GetLevelSpecialValueFor( "ghostship_width", ability:GetLevel() - 1 )
-	local stunDelay = ability:GetLevelSpecialValueFor( "tooltip_delay", ability:GetLevel() - 1 )
-	local stunDuration = ability:GetLevelSpecialValueFor( "stun_duration", ability:GetLevel() - 1 )
-	local damage = ability:GetAbilityDamage()
-	local damageType = ability:GetAbilityDamageType()
-	local targetBuffTeam = DOTA_UNIT_TARGET_TEAM_FRIENDLY
-	local targetImpactTeam = DOTA_UNIT_TARGET_TEAM_ENEMY
-	local targetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL
-	local targetFlag = DOTA_UNIT_TARGET_FLAG_NONE
-	local scepter = caster:HasScepter()
-	caster.target_point = targetPoint
-	
-	-- Get necessary vectors
-	local forwardVec = targetPoint - casterPoint
-		forwardVec = forwardVec:Normalized()
-	local backwardVec = casterPoint - targetPoint
-		backwardVec = backwardVec:Normalized()
-	if scepter == true then
-		spawnDistance = spawnDistanceScepter
-		projectileSpeed = projectileSpeedScepter
-	end
-	local spawnPoint = casterPoint + ( spawnDistance * backwardVec )
-	local impactPoint = casterPoint + ( spawnDistance * forwardVec )
-	local velocityVec = Vector( forwardVec.x, forwardVec.y, 0 )
-	
-	-- Show visual effect
-	ghostship_mark_allies( caster, ability, impactPoint )
-	
-	-- Spawn projectiles
-	local projectileTable = {
+	-- Spawn the boat projectile
+	local boat_projectile = {
 		Ability = ability,
 		EffectName = "particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf",
-		vSpawnOrigin = spawnPoint,
-		fDistance = spawnDistance * 2,
-		fStartRadius = radius,
-		fEndRadius = radius,
-		fExpireTime = GameRules:GetGameTime() + 5,
+		vSpawnOrigin = spawn_pos,
+		fDistance = spawn_distance + crash_distance - ship_radius,
+		fStartRadius = ship_radius,
+		fEndRadius = ship_radius,
+		fExpireTime = GameRules:GetGameTime() + crash_delay + 2,
 		Source = caster,
 		bHasFrontalCone = false,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		iUnitTargetTeam = targetBuffTeam + targetImpactTeam,
-		iUnitTargetType = targetType,
-		vVelocity = velocityVec * projectileSpeed
+		iUnitTargetTeam = ability:GetAbilityTargetTeam(),
+		iUnitTargetType = ability:GetAbilityTargetType(),
+		vVelocity = boat_direction * ship_speed
 	}
-	ProjectileManager:CreateLinearProjectile( projectileTable )
+
+	ProjectileManager:CreateLinearProjectile(boat_projectile)
 	
-	-- Create timer for crashing
-	Timers:CreateTimer( stunDelay, function()
-			local units = FindUnitsInRadius(
-				caster:GetTeamNumber(), impactPoint, caster, radius, targetImpactTeam,
-				targetType, targetFlag, FIND_ANY_ORDER, false
-			)
-			
-			-- Fire sound event
-			local dummy = CreateUnitByName( "npc_dummy_blank", impactPoint, false, caster, caster, caster:GetTeamNumber() )
-			StartSoundEvent( "Ability.Ghostship.crash", dummy )
-			dummy:ForceKill( true )
-			
-			-- Stun and damage enemies
-			for k, v in pairs( units ) do
-				if not v:IsMagicImmune() then
-					local damageTable = {
-						victim = v,
-						attacker = caster,
-						damage = damage,
-						damage_type = damageType
-					}
-					ApplyDamage( damageTable )
-				end
-				
-				v:AddNewModifier( caster, nil, "modifier_stunned", { duration = stunDuration } )
-			end
-			
-			return nil	-- Delete timer
+	-- After [crash_delay], apply damage and stun in the target area
+	Timers:CreateTimer(crash_delay, function()
+		
+		-- Fire sound on crash point
+		local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, false, caster, caster, caster:GetTeamNumber() )
+		EmitSoundOn(crash_sound, dummy)
+		dummy:Destroy()
+		
+		-- Stun and damage enemies
+		local enemies = FindUnitsInRadius(caster:GetTeam(), crash_pos, nil, ship_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
+		for k, enemy in pairs(enemies) do
+			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = crash_damage, damage_type = ability:GetAbilityDamageType()})
+			enemy:AddNewModifier(caster, ability, "modifier_stunned", { duration = stun_duration })
 		end
-	)
-end
-
-function ghostship_register_damage( keys )
-	local target = keys.unit
-	local damageTaken = keys.DamageTaken
-	if not target.ghostship_damage then
-		target.ghostship_damage = 0
-	end
-	
-	target.ghostship_damage = target.ghostship_damage + damageTaken
-end
-
-function ghostship_spread_damage( keys )
-	-- Init in case never take any damage
-	if not keys.target.ghostship_damage then
-		keys.target.ghostship_damage = 0
-	end
-
-	-- Variables
-	local target = keys.target
-	local ability = keys.ability
-	local damageDuration = ability:GetLevelSpecialValueFor( "damage_duration", ability:GetLevel() - 1 )
-	local damageInterval = ability:GetLevelSpecialValueFor( "damage_interval", ability:GetLevel() - 1 )
-	local damageCurrentTime = 0.0
-	local damagePerInterval = target.ghostship_damage * ( damageInterval / damageDuration )
-	local minimumHealth = 1
-
-	-- Overtime debuff
-	Timers:CreateTimer( damageInterval, function()
-			-- HP Removal
-			local targetHealth = target:GetHealth()
-			if targetHealth - damagePerInterval <= minimumHealth then
-				target:SetHealth( minimumHealth )
-			else
-				target:SetHealth( targetHealth - damagePerInterval )
-			end
-			
-			-- Update timer
-			damageCurrentTime = damageCurrentTime + damageInterval
-			
-			-- Check closing condition
-			if damageCurrentTime >= damageDuration then
-				return nil
-			else
-				return damageInterval
-			end
-		end
-	)
-end
-
-function scepterCheck( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local scepter = caster:HasScepter()
-	local unit = keys.target
-
-	if scepter == true then
-		unit:RemoveModifierByName("modifier_ghostship_rum")
-		ability:ApplyDataDrivenModifier(caster, unit, "modifier_ghostship_rum_scepter",{})
-	end
+	end)
 end
 
 function OnABoat( keys )
 	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
-	local targetPoint = caster.target_point
-	local casterPoint = caster:GetAbsOrigin()
-	local spawnDistance = ability:GetLevelSpecialValueFor( "ghostship_distance", ability:GetLevel() - 1 )
-	local spawnDistanceScepter = ability:GetLevelSpecialValueFor( "ghostship_distance_scepter", ability:GetLevel() - 1 )
-	local projectileSpeed = ability:GetLevelSpecialValueFor( "ghostship_speed", ability:GetLevel() - 1 )
-	local projectileSpeedScepter = ability:GetLevelSpecialValueFor( "ghostship_speed_scepter", ability:GetLevel() - 1 )
-	local radius = ability:GetLevelSpecialValueFor( "ghostship_width", ability:GetLevel() - 1 )
-	local stunDelay = ability:GetLevelSpecialValueFor( "tooltip_delay", ability:GetLevel() - 1 )
-	local stunDuration = ability:GetLevelSpecialValueFor( "stun_duration", ability:GetLevel() - 1 )
-	local scepter = caster:HasScepter()
-	
-	-- Get necessary vectors
-	local forwardVec = targetPoint - casterPoint
-		forwardVec = forwardVec:Normalized()
-	local backwardVec = casterPoint - targetPoint
-		backwardVec = backwardVec:Normalized()
-	if scepter == true then
-		spawnDistance = spawnDistanceScepter
-		projectileSpeed = projectileSpeedScepter
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local crash_distance = ability:GetLevelSpecialValueFor("crash_distance", ability_level)
+	local ship_speed = ability:GetLevelSpecialValueFor("ghostship_speed", ability_level)
+	local impact_damage = ability:GetLevelSpecialValueFor("impact_damage", ability_level)
+	local modifier_rum = keys.modifier_rum
+
+	-- Scepter parameters
+	local scepter = HasScepter(caster)
+	if scepter then
+		ship_speed = ability:GetLevelSpecialValueFor("ghostship_speed_scepter", ability_level)
+		modifier_rum = keys.modifier_rum_scepter
 	end
-	local spawnPoint = casterPoint + ( spawnDistance * backwardVec )
-	local impactPoint = casterPoint + ( spawnDistance * forwardVec )
-	local velocityVec = Vector( forwardVec.x, forwardVec.y, 0 )
 
-	local vCaster = spawnPoint
-	local vTarget = target:GetAbsOrigin()
-	local distance = spawnDistance * 2
+	-- If the target is an ally, apply the rum buff and exit the function
+	if caster:GetTeam() == target:GetTeam() then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_rum, {})
+		return nil
+	end
+	
+	-- Retrieve crash position and calculate knockback parameters
+	local crash_pos = caster.ghostship_crash_pos
+	local target_pos = target:GetAbsOrigin()
+	local knockback_origin = target_pos + (target_pos - crash_pos):Normalized() * 100
+	local distance = (crash_pos - target_pos):Length2D()
+	local duration = distance / ship_speed
 
-	-- calculates knockback distance
-	local len = distance - ( vTarget - vCaster ):Length2D()
-	local duration = len / projectileSpeed
-
-	-- knockbacks using modifier_knockback
-	local knockbackModifierTable =
-	{
-		should_stun = 1,
+	-- Apply the knockback modifier and deal impact damage
+	local knockback =
+	{	should_stun = 0,
 		knockback_duration = duration,
 		duration = duration,
-		knockback_distance = len,
+		knockback_distance = distance,
 		knockback_height = 0,
-		center_x = spawnPoint.x,
-		center_y = spawnPoint.y,
-		center_z = spawnPoint.z
+		center_x = knockback_origin.x,
+		center_y = knockback_origin.y,
+		center_z = knockback_origin.z
 	}
-	if target:GetTeam() ~= caster:GetTeam() then
-		target:AddNewModifier( caster, nil, "modifier_knockback", knockbackModifierTable )
-		ApplyDamage({victim = target, attacker = caster, damage = 50, damage_type = DAMAGE_TYPE_PURE})
+	target:AddNewModifier(caster, nil, "modifier_knockback", knockback)
+	ApplyDamage({victim = target, attacker = caster, ability = ability, damage = impact_damage, damage_type = ability:GetAbilityDamageType()})
+end
+
+function GhostShipRegisterDamage( keys )
+	local target = keys.unit
+	local ability = keys.ability
+	local damage_taken = keys.damage_taken
+	local rum_reduce_pct = ability:GetLevelSpecialValueFor("rum_reduce_pct", ability:GetLevel() - 1 ) * (-1) / 100
+
+	if not target.ghostship_damage_prevented then
+		target.ghostship_damage_prevented = 0
 	end
+	
+	target.ghostship_damage_prevented = target.ghostship_damage_prevented + damage_taken * rum_reduce_pct / (1 - rum_reduce_pct)
+end
+
+function GhostShipRegisterDamageScepter( keys )
+	local target = keys.unit
+	local ability = keys.ability
+	local damage_taken = keys.damage_taken
+	local rum_reduce_pct = ability:GetLevelSpecialValueFor("rum_reduce_pct_scepter", ability:GetLevel() - 1 ) * (-1) / 100
+
+	if not target.ghostship_damage_prevented then
+		target.ghostship_damage_prevented = 0
+	end
+	
+	target.ghostship_damage_prevented = target.ghostship_damage_prevented + damage_taken * rum_reduce_pct / (1 - rum_reduce_pct)
+end
+
+function GhostShipDelayedDamage( keys )
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Initialize the variable in case the unit took no damage
+	if not target.ghostship_damage_prevented then
+		target.ghostship_damage_prevented = 0
+	end
+
+	-- Parameters
+	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
+	local damage_duration = ability:GetLevelSpecialValueFor("buff_duration", ability_level)
+	local max_ticks = damage_duration / damage_interval
+	local current_ticks = 0
+	local damage_per_tick = target.ghostship_damage_prevented / max_ticks
+	
+	-- Deal the prevented damage over time
+	Timers:CreateTimer(damage_interval, function()
+
+		-- Nonlethal HP removal
+		local target_hp = target:GetHealth()
+		if target_hp - damage_per_tick < 1 then
+			target:SetHealth(1)
+		else
+			target:SetHealth(target_hp - damage_per_tick)
+		end
+		
+		-- Check if all the damage has been dealt, if yes, reset the global variable
+		current_ticks = current_ticks + 1
+		if current_ticks >= max_ticks then
+			target.ghostship_damage_prevented = nil
+			return nil
+		else
+			return damage_interval
+		end
+	end)
 end

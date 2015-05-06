@@ -67,6 +67,7 @@ function UpgradeFrostArrows( keys )
 end
 
 function Gust( keys )
+	local ability = keys.ability
 	local vCaster = keys.caster:GetAbsOrigin()
 	local vTarget = keys.target:GetAbsOrigin()
 	local caster = keys.caster
@@ -92,7 +93,7 @@ function Gust( keys )
 		center_y = keys.caster:GetAbsOrigin().y,
 		center_z = keys.caster:GetAbsOrigin().z
 	}
-	keys.target:AddNewModifier( keys.caster, nil, "modifier_knockback", knockbackModifierTable )
+	keys.target:AddNewModifier( keys.caster, ability, "modifier_knockback", knockbackModifierTable )
 end
 
 function Trueshot( keys )

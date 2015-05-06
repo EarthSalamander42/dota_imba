@@ -194,6 +194,10 @@ function FierySoulActivate( keys )
 		return
 	end
 
+	-- Play the sound
+	local activate_sound = keys.activate_sound
+	caster:EmitSound(activate_sound)
+
 	-- Fetch the skill names
 	local dragon_slave = keys.dragon_slave
 	local dragon_slave_fiery = keys.dragon_slave_fiery
