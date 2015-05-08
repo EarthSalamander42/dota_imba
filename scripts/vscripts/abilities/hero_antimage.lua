@@ -1,11 +1,18 @@
 --[[	Author: D2imba
 		Date: 07.03.2015	]]
 
-function ManaBreak(event)
-	local caster = event.caster
-	local ability = event.ability 
-	local target = event.target
-	if not(caster and ability and target) then return end
+function ManaBreak( keys )
+	local caster = keys.caster
+	local ability = keys.ability 
+	local target = keys.target
+	if not (caster and ability and target) or target:GetMaxMana() == 0 or target:IsMagicImmune() then return end
+
+	-- Plays the sound
+	target:EmitSound("Hero_Antimage.ManaBreak")
+
+	-- Plays the particle
+	local manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(manaburn_fx, 0, target:GetAbsOrigin() )
 
 	local manaPerHit = ability:GetLevelSpecialValueFor("mana_per_hit", ability:GetLevel() - 1)
 	local manaPercentagePerHit = ability:GetLevelSpecialValueFor('mana_percentage_per_hit', ability:GetLevel() -1) / 100

@@ -69,14 +69,16 @@ function ShurikenTossImpact( keys )
 		-- Enable physics.lua library functions on the target
 		Physics:Unit(target)
 
+		-- Delete previously spawned chain if it still exists
+		if target.shuriken_particle then
+			ParticleManager:DestroyParticle(target.shuriken_particle,true)
+		end
+
 		-- Retrieve the impact position
 		local target_position = target:GetAbsOrigin()
 		target.shuriken_toss_dummy = CreateUnitByName("npc_dummy_unit", target_position, false, nil, nil, caster:GetTeamNumber())
 		target.shuriken_position = target:GetAbsOrigin()
-
-		-- Delete previously spawned chain/dummy if they still exist
-		ParticleManager:DestroyParticle(target.shuriken_particle,true)
-		target.shuriken_toss_dummy:Destroy()
+		target.shuriken_toss_dummy:SetAbsOrigin(target.shuriken_position + Vector(0, 0, 500))
 
 		-- Spawn a chain attached to the target and the impact point
 		target.shuriken_particle = ParticleManager:CreateParticle(chain_particle, PATTACH_RENDERORIGIN_FOLLOW, caster)

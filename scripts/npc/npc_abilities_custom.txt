@@ -972,49 +972,23 @@
 	//=================================================================================================================
 	"imba_antimage_mana_break"
 	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"					"ability_datadriven"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"		"antimage_mana_break"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"particle"  "particles/generic_gameplay/generic_manaburn.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
-		"Modifiers"
-		{
-			"modifier_imba_antimage_mana_break"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"IsPurgable"			"0"
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 	"abilities/hero_antimage.lua"
-						"Target"		"TARGET"
-						"Function"		"ManaBreak"
-					}
-
-					"FireSound"
-					{
-						"EffectName"	"Hero_Antimage.ManaBreak"
-						"Target" 		"TARGET"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"        "particles/generic_gameplay/generic_manaburn.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}
-				}
-			}
-		}
-
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -1031,6 +1005,28 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"mana_percentage_per_hit"	"6 8 10 12"
+			}
+		}
+
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_imba_antimage_mana_break"
+			{
+				"IsHidden"				"1"
+				"Passive"				"1"
+				"IsPurgable"			"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 	"abilities/hero_antimage.lua"
+						"Target"		"TARGET"
+						"Function"		"ManaBreak"
+					}
+				}
 			}
 		}
 	}
@@ -1210,7 +1206,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"		"Hero_Antimage.ManaVoidCast"
+				"EffectName"	"Hero_Antimage.ManaVoidCast"
 				"Target"
 				{
 					"Center"	"TARGET"
@@ -1223,7 +1219,7 @@
 		{
 			"FireSound"
 			{
-				"EffectName"		"Hero_Antimage.ManaVoid"
+				"EffectName"	"Hero_Antimage.ManaVoid"
 				"Target"
 				{
 					"Center"	"TARGET"
