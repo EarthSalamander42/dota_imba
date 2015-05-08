@@ -66,15 +66,19 @@ function ShurikenTossImpact( keys )
 
 	if target:IsAlive() then
 		
-		-- enables physics.lua library functions on the target
+		-- Enable physics.lua library functions on the target
 		Physics:Unit(target)
 
-		-- retrieves the impact position
+		-- Retrieve the impact position
 		local target_position = target:GetAbsOrigin()
 		target.shuriken_toss_dummy = CreateUnitByName("npc_dummy_unit", target_position, false, nil, nil, caster:GetTeamNumber())
 		target.shuriken_position = target:GetAbsOrigin()
 
-		-- spawns a chain attached to the target and the impact point
+		-- Delete previously spawned chain/dummy if they still exist
+		ParticleManager:DestroyParticle(target.shuriken_particle,true)
+		target.shuriken_toss_dummy:Destroy()
+
+		-- Spawn a chain attached to the target and the impact point
 		target.shuriken_particle = ParticleManager:CreateParticle(chain_particle, PATTACH_RENDERORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 6, target.shuriken_toss_dummy, 5, "attach_attack1", target.shuriken_position, false)
 		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 0, target, 5, "attach_hitloc", target_position, false)
@@ -103,14 +107,14 @@ function ShurikenTossChainEnd( keys )
 	local target = keys.target
 	local target_loc = target:GetAbsOrigin()
 	
-	-- disables physics.lua library functions on the target
+	-- Disable physics.lua library functions on the target
 	target:StopPhysicsSimulation()
 
-	-- destroys the shuriken toss chain and dummy unit
+	-- Destroy the shuriken toss chain and dummy unit
 	ParticleManager:DestroyParticle(target.shuriken_particle,true)
-	target.shuriken_toss_dummy:ForceKill(true)
+	target.shuriken_toss_dummy:Destroy()
 
-	-- finds a legal position to the attached units to prevent them getting stuck
+	-- Find a legal position to the attached units to prevent them getting stuck
 	FindClearSpaceForUnit(target, target_loc, false)
 end
 
@@ -143,7 +147,7 @@ function TrackCast( keys )
 	local aura_track_scepter = keys.aura_track_scepter
 	local scepter = HasScepter(caster)
 
-	-- applies the relevant modifier depending on the presence of aghanim's scepter or not
+	-- Applies the relevant modifier depending on the presence of aghanim's scepter or not
 	if scepter == true then
 		target:RemoveModifierByName( modifier_track )
 		ability:ApplyDataDrivenModifier(caster, target, aura_track_scepter, {} )
@@ -213,6 +217,30 @@ function Track( keys )
 	-- NOTE: Trying to do this in KV is not possible it seems
 	target:RemoveModifierByName( track_aura ) 
 	target:RemoveModifierByName( track_scepter_aura ) 
+end
+
+function TrackParticle( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local particle_1 = keys.particle_1
+	local particle_2 = keys.particle_2
+
+	-- Draws the particle for Gondar's allies only
+	local all_heroes = HeroList:GetAllHeroes()
+	for k, v in pairs(all_heroes) do
+		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
+			local track_fx_1 = ParticleManager:CreateParticleForPlayer(particle_1, PATTACH_ABSORIGIN_FOLLOW, target, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl(track_fx_1, 0, target:GetAbsOrigin() )
+			local track_fx_2 = ParticleManager:CreateParticleForPlayer(particle_2, PATTACH_OVERHEAD_FOLLOW, target, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl(track_fx_2, 0, target:GetAbsOrigin() )
+
+			-- Destroys the particle after a set time
+			Timers:CreateTimer(0.5, function()
+				ParticleManager:DestroyParticle(track_fx_1, true)
+				ParticleManager:DestroyParticle(track_fx_2, true)
+			end)
+		end
+	end
 end
 
 function ShadowJaunt( keys )

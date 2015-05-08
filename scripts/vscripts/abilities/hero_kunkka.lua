@@ -19,11 +19,11 @@ function TorrentBubble( keys )
 		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
 			local bubbles_fx = ParticleManager:CreateParticleForPlayer(particle_name, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
 			ParticleManager:SetParticleControl(bubbles_fx, 0, target )
-			player:EmitSoundOnClient(sound_name, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			EmitSoundOnClient(sound_name, PlayerResource:GetPlayer( v:GetPlayerID() ) )
 			
 			-- Destroy particle after delay
 			Timers:CreateTimer(delay, function()
-				ParticleManager:DestroyParticle(bubbles_fx, false )
+				ParticleManager:DestroyParticle(bubbles_fx, false)
 			end)
 		end
 	end

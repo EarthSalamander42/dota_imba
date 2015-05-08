@@ -1666,12 +1666,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"speed_bonus"					"40"
+				"speed_bonus"					"30"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"as_bonus"						"40 80 120"
+				"as_bonus"						"40 70 100"
 			}
 			"05"
 			{
@@ -3096,9 +3096,6 @@
 				"IsPurgable"			"1"
 				"IsHidden"				"0"
 
-				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-				"EffectAttachType"		"follow_origin"	
-
 				"Aura" 					"modifier_imba_track_speed"
 				"Aura_Radius" 			"%aura_radius"
 				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -3134,9 +3131,6 @@
 				"IsDebuff"				"1"
 				"IsPurgable"			"0"
 				"IsHidden"				"1"
-
-				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-				"EffectAttachType"		"follow_origin"	
 
 				"Aura" 					"modifier_imba_track_speed"
 				"Aura_Radius" 			"%aura_radius"
@@ -3188,6 +3182,18 @@
 				"IsHidden"							"1"
 				"IsPurgable"						"0"
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"Function"					"TrackParticle"
+
+						"particle_1"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+						"particle_2"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+					}
+				}
+
 				"States"
 				{
 					"MODIFIER_STATE_INVISIBLE" 		"MODIFIER_STATE_VALUE_DISABLED"
@@ -3200,9 +3206,6 @@
 				"IsDebuff"							"1"
 				"IsHidden"							"1"
 				"IsPurgable"						"1"
-
-				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-				"EffectAttachType"					"follow_overhead"
 
 				"OnDestroy"
 				{
@@ -3231,9 +3234,6 @@
 				"IsDebuff"							"1"
 				"IsHidden"							"1"
 				"IsPurgable"						"0"
-
-				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-				"EffectAttachType"					"follow_overhead"
 
 				"OnDestroy"
 				{
@@ -10158,10 +10158,12 @@
 
 		"OnUpgrade"
 		{
-			"LevelUpAbility"
+			"RunScript"
 			{
-				"Target" 						"CASTER"
-				"AbilityName"					"imba_lina_dragon_slave_aux"
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"DragonSlaveLevel"
+
+				"ability_name"			"imba_lina_dragon_slave_aux"
 			}
 		}
 
@@ -10267,31 +10269,33 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_speed"			"1400"
+				"dragon_slave_speed"			"1600"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_initial"	"275"
+				"dragon_slave_width_initial"	"300"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_end"		"250"
+				"dragon_slave_width_end"		"275"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_distance"			"1150"
+				"dragon_slave_distance"			"1200"
 			}
 		}	
 
 		"OnUpgrade"
 		{
-			"LevelUpAbility"
+			"RunScript"
 			{
-				"Target" 						"CASTER"
-				"AbilityName"					"imba_lina_dragon_slave_aux"
+				"ScriptFile"			"abilities/hero_lina.lua"
+				"Function"				"DragonSlaveLevel"
+
+				"ability_name"			"imba_lina_dragon_slave_aux_fiery"
 			}
 		}
 
@@ -10325,7 +10329,7 @@
 				"Function"				"DragonSlave"
 				"Target"				"POINT"
 
-				"ability_name"			"imba_lina_dragon_slave_aux"
+				"ability_name"			"imba_lina_dragon_slave_aux_fiery"
 				"particle_name"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
 				"sound"					"Hero_Lina.DragonSlave"
 			}
@@ -10391,6 +10395,70 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"dragon_slave_distance"			"600"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"						"0"
+
+			"Damage"
+			{
+				"Target"						"TARGET"
+				"Type"							"DAMAGE_TYPE_MAGICAL"
+				"Damage"						"%AbilityDamage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Lina's Dragon Slave secondary projectiles (Blazing Soul mode)
+	//=================================================================================================================
+	"imba_lina_dragon_slave_aux_fiery"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"lina_dragon_slave"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Damage
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"55 90 125 160"	
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"	
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"	
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_speed"			"1400"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_width_initial"	"175"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_width_end"		"275"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"dragon_slave_distance"			"1000"
 			}
 		}
 
@@ -10696,7 +10764,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"  				"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
 			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
 		
@@ -10765,13 +10832,6 @@
 				"IsPurgable"					"0"
 				"Duration"						"%fiery_soul_duration"
 
-				"AttachEffect"
-				{
-					"EffectName"				"particles\units\heroes\hero_lina\lina_fiery_soul.vpcf"
-					"EffectAttachType"			"follow_origin"
-					"Target"					"CASTER"
-				}
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
@@ -10785,13 +10845,6 @@
 				"IsPurgable"					"0"
 				"Duration"						"%fiery_soul_duration"
 				"TextureName"					"lina_fiery_soul_fiery"
-
-				"AttachEffect"
-				{
-					"EffectName"				"particles\units\heroes\hero_lina\lina_fiery_soul.vpcf"
-					"EffectAttachType"			"follow_origin"
-					"Target"					"CASTER"
-				}
 
 				"OnDestroy"
 				{
@@ -10838,7 +10891,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"  				"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
 			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
 		
@@ -10907,13 +10959,6 @@
 				"IsPurgable"					"0"
 				"Duration"						"%fiery_soul_duration"
 
-				"AttachEffect"
-				{
-					"EffectName"				"particles\units\heroes\hero_lina\lina_fiery_soul.vpcf"
-					"EffectAttachType"			"follow_origin"
-					"Target"					"CASTER"
-				}
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
@@ -10927,13 +10972,6 @@
 				"IsPurgable"					"0"
 				"Duration"						"%fiery_soul_duration"
 				"TextureName"					"lina_fiery_soul_fiery"
-
-				"AttachEffect"
-				{
-					"EffectName"				"particles\units\heroes\hero_lina\lina_fiery_soul.vpcf"
-					"EffectAttachType"			"follow_origin"
-					"Target"					"CASTER"
-				}
 
 				"OnDestroy"
 				{
