@@ -314,7 +314,7 @@ function GhostShip( keys )
 	-- Spawn the boat projectile
 	local boat_projectile = {
 		Ability = ability,
-		EffectName = "particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf",
+		EffectName = projectile_name,
 		vSpawnOrigin = spawn_pos,
 		fDistance = spawn_distance + crash_distance - ship_radius,
 		fStartRadius = ship_radius,

@@ -54,9 +54,49 @@ end
 
 function LaunchArrow( keys )
 	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local target = keys.target_points[1]
 	local caster_location = caster:GetAbsOrigin()
 
+	-- Memorizes the cast location to calculate the distance traveled later
 	caster.arrow_location = caster_location
+
+	-- Parameters
+	local projectile_name = keys.projectile_name
+	local arrow_speed = ability:GetLevelSpecialValueFor("arrow_speed", ability_level)
+	local arrow_width = ability:GetLevelSpecialValueFor("arrow_width", ability_level)
+	local arrow_range = ability:GetLevelSpecialValueFor("arrow_range", ability_level)
+	local arrow_vision = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
+
+	-- During the night, ignores creeps
+	local arrow_target_type = ability:GetAbilityTargetType()
+	if not GameRules:IsDaytime() then
+		arrow_target_type = DOTA_UNIT_TARGET_HERO
+	end
+
+	-- Spawn the arrow projectile
+	local arrow_projectile = {
+		Ability = ability,
+		EffectName = projectile_name,
+		vSpawnOrigin = caster_location,
+		fDistance = 25000,
+		fStartRadius = arrow_width,
+		fEndRadius = arrow_width,
+	--	fExpireTime = ,
+		Source = caster,
+		bHasFrontalCone = false,
+		bReplaceExisting = false,
+		bProvidesVision = true,
+		iVisionRadius = arrow_vision,
+		iVisionTeamNumber = caster:GetTeamNumber(),
+		iUnitTargetTeam = ability:GetAbilityTargetTeam(),
+		iUnitTargetType = arrow_target_type,
+		vVelocity = arrow_speed * (target - caster_location):Normalized()
+	}
+
+	ProjectileManager:CreateLinearProjectile(arrow_projectile)
+
 end
 
 function ArrowHit( keys )
