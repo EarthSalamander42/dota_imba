@@ -1603,7 +1603,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"warcry_armor"		"8 12 16 20"		
+				"warcry_armor"		"6 12 18 24"		
 			}
 			"02"
 			{
@@ -1674,7 +1674,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration_hero"			"3.0"
+				"duration_hero"			"3.0 3.5 4.0 4.5"
 			}
 			"02"
 			{

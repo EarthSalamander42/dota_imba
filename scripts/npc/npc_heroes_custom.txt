@@ -440,6 +440,8 @@
 	//	"Ability3"					"imba_sniper_take_aim"
 	//	"Ability4"					"imba_sniper_assassinate"
 		"Ability5"					"attribute_bonus_agi"
+
+		"AttributeAgilityGain"		"2.5"
 	}
 
 	//=================================================================================================================
