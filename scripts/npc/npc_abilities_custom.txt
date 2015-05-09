@@ -3662,6 +3662,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"105"
 			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_reduction"	"-70"
+			}
 		}	
 
 		"precache"
@@ -3678,6 +3683,8 @@
 			{
 				"ScriptFile"		"abilities/hero_centaur.lua"
 				"Function"			"StampedeStart"
+
+				"scepter_modifier"	"modifier_imba_centaur_stampede_scepter"
 			}	
 
 			"ApplyModifier"
@@ -3703,7 +3710,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"522"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"522"
 				}
 
 				"States"
@@ -3780,6 +3787,20 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_centaur_stampede_scepter"
+			{
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"522"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction"
 				}
 			}
 		}

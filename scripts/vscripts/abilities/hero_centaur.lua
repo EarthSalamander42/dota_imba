@@ -271,7 +271,7 @@ function Stampede( keys )
 		ApplyDamage({victim = target, attacker = caster, damage = total_damage / target.stampede_hit_count, damage_type = damage_type})
 
 		-- Reduced duration stun
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = duration / target.stampede_hit_count})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = duration / 2})
 	end
 
 
@@ -279,13 +279,28 @@ end
 
 -- Emits the global sound and initializes a table to keep track of the units hit
 function StampedeStart( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local scepter_modifier = keys.scepter_modifier
+	local scepter = HasScepter(caster)
+
+	-- If Centaur has scepter, apply the scepter modifier to all allies
+	if scepter then
+		local units_to_buff = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
+		for k,v in pairs(units_to_buff) do
+			ability:ApplyDataDrivenModifier(caster, v, scepter_modifier, {})
+		end
+	end
+	
+	-- Plays the global sound
 	EmitGlobalSound("Hero_Centaur.Stampede.Cast")
 
+	-- Cleans the hit count table
 	if not targets_hit == nil then
 		for k,v in pairs(targets_hit) do
 			v.stampede_hit_count = 0
 		end
 	end
 
-	keys.ability.targets_hit = {}
+	ability.targets_hit = {}
 end
