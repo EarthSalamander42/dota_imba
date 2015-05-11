@@ -8099,7 +8099,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"15"
+				"bonus_movement_speed"	"14"
 			}
 			"06"
 			{
@@ -8109,27 +8109,27 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"images_do_damage_percent_melee"	"-70"
+				"tooltip_illusion_duration"			"20"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"images_take_damage_percent_melee"	"250"
+				"images_do_damage_percent_melee"	"-70"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"images_do_damage_percent_ranged"	"-75"
+				"images_take_damage_percent_melee"	"250"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"images_take_damage_percent_ranged"	"250"
+				"images_do_damage_percent_ranged"	"-75"
 			}
 			"11"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_melee"		"32.0"
+				"var_type"				"FIELD_INTEGER"
+				"images_take_damage_percent_ranged"	"250"
 			}
 			"12"
 			{
@@ -8165,7 +8165,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_damage_incoming_melee_total_pct"			"350"
-			}	
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_ranged_tooltip"		"50"
+			}
 		}
 	}
 	

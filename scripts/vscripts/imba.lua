@@ -1,4 +1,4 @@
-print ('[IMBA] imba.lua loading...' )
+-- Dota IMBA version 6.84.1
 
 ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
@@ -12,7 +12,7 @@ TREE_REGROW_TIME = 300.0                -- How long should it take individual tr
 GOLD_PER_TICK = 2                     	-- How much gold should players get per tick?
 GOLD_TICK_TIME = 0.8                    -- How long should we wait in seconds between gold ticks?
 
-RECOMMENDED_BUILDS_DISABLED = false     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
+RECOMMENDED_BUILDS_DISABLED = true     -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
 CAMERA_DISTANCE_OVERRIDE = 1134.0       -- How far out should we allow the camera to go?  1134 is the default in Dota
 
 MINIMAP_ICON_SIZE = 1                   -- What icon size should we use for our heroes?
@@ -27,7 +27,7 @@ BUYBACK_ENABLED = true              	-- Should we allow people to buyback when t
 DISABLE_FOG_OF_WAR_ENTIRELY = false     -- Should we disable fog of war entirely for both teams?
 										-- NOTE: This won't reveal particle effects for everyone. You need to create vision dummies for that.
 
-USE_STANDARD_DOTA_BOT_THINKING = true 	-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
+USE_STANDARD_DOTA_BOT_THINKING = false 	-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_STANDARD_HERO_GOLD_BOUNTY = true    -- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
 
 USE_CUSTOM_TOP_BAR_VALUES = false       -- Should we do customized top bar values or use the default kill count per team?
@@ -45,12 +45,12 @@ USE_CUSTOM_HERO_LEVELS = false          -- Should we allow heroes to have custom
 MAX_LEVEL = 25                        	-- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false            -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
-Testing = true
+Testing = false
 OutOfWorldVector = Vector(11000, 11000, -200)
 
 if not Testing then
   statcollection.addStats({
-    modID = 'XXXXXXXXXXXXXXXXXXX'
+    modID = "3c618932c8379fe1284bc14438f76c89"
   })
 end
 
@@ -62,12 +62,11 @@ end
 
 -- Generated from template
 if GameMode == nil then
-	print ( '[BAREBONES] creating barebones game mode' )
 	GameMode = class({})
 end
 
 function GameMode:PostLoadPrecache()
-	print("[BAREBONES] Performing Post-Load precache")
+	print("[IMBA] Performing Post-Load precache")
 
 	PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
 end
@@ -77,7 +76,7 @@ end
   It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
 ]]
 function GameMode:OnFirstPlayerLoaded()
-	print("[BAREBONES] First Player has loaded")
+	print("[IMBA] First Player has loaded")
 end
 
 --[[
@@ -85,7 +84,7 @@ end
   It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
 ]]
 function GameMode:OnAllPlayersLoaded()
-	print("[BAREBONES] All Players have loaded into the game")
+	print("[IMBA] All Players have loaded into the game")
 end
 
 --[[
@@ -96,17 +95,15 @@ end
   The hero parameter is the hero entity that just spawned in.
 ]]
 function GameMode:OnHeroInGame(hero)
-	print("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
+	print("[IMBA] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
 		
-	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Barebones! ", "magenta") .. ColorIt("v0.1", "blue");
-	    local secondLine = ColorIt("Developer: ", "green") .. ColorIt("XXX", "orange")
+	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.1", "blue");
 		-- Send the first greeting in 4 secs.
 		Timers:CreateTimer(4, function()
 	        GameRules:SendCustomMessage(firstLine, 0, 0)
-	        GameRules:SendCustomMessage(secondLine, 0, 0)
 		end)
 
 		self.greetPlayers = true
@@ -119,8 +116,6 @@ function GameMode:OnHeroInGame(hero)
 	-- Store this hero handle in this table.
 	table.insert(self.vPlayers, hero)
 
-	--InitAbilities(hero)
-
 	-- Show a popup with game instructions.
     ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
@@ -128,20 +123,22 @@ function GameMode:OnHeroInGame(hero)
 	hero:SetGold(625, false)
 
 	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
-	local item = CreateItem("item_example_item", hero, hero)
-	hero:AddItem(item)
+	--local item = CreateItem("item_example_item", hero, hero)
+	--hero:AddItem(item)
 
 	if Testing then
 		Say(nil, "Testing is on.", false)
 		hero:SetGold(50000, false)
-		local item_1 = CreateItem("item_imba_travel_boots", hero, hero)
-		local item_2 = CreateItem("item_imba_diffusal_blade", hero, hero)
+		local item_1 = CreateItem("item_imba_diffusal_blade", hero, hero)
+		local item_2 = CreateItem("item_imba_manta", hero, hero)
 		local item_3 = CreateItem("item_imba_blink", hero, hero)
-		local item_4 = CreateItem("item_imba_ultimate_scepter", hero, hero)
+		local item_4 = CreateItem("item_imba_travel_boots", hero, hero)
+		local item_5 = CreateItem("item_imba_ultimate_scepter", hero, hero)
 		hero:AddItem(item_1)
 		hero:AddItem(item_2)
 		hero:AddItem(item_3)
 		hero:AddItem(item_4)
+		hero:AddItem(item_5)
 	end
 end
 
@@ -151,12 +148,17 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
-	print("[BAREBONES] The game has officially begun")
+	print("[IMBA] The game has officially begun")
 
-	Timers:CreateTimer(30, function() -- Start this timer 30 game-time seconds later
-		print("This function is called 30 seconds after the game begins, and every 30 seconds thereafter")
-		return 30.0 -- Rerun this timer every 30 game-time seconds
-	end)
+	-- Makes all non-T1 structures invulnerable
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name ~= "dota_goodguys_tower1_top" and name ~= "dota_goodguys_tower1_mid" and name ~= "dota_goodguys_tower1_bot"
+			and name ~= "dota_badguys_tower1_top" and name ~= "dota_badguys_tower1_mid" and name ~= "dota_badguys_tower1_bot" then
+				v:AddNewModifier(nil, nil, "modifier_invulnerable", {})
+			end
+		end
 end
 
 function GameMode:PlayerSay( keys )
@@ -178,7 +180,7 @@ end
 
 -- Cleanup a player when they leave
 function GameMode:OnDisconnect(keys)
-	print('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
+	print('[IMBA] Player Disconnected ' .. tostring(keys.userid))
 	PrintTable(keys)
 
 	local name = keys.name
@@ -189,7 +191,7 @@ end
 
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
-	print("[BAREBONES] GameRules State Changed")
+	print("[IMBA] GameRules State Changed")
 	PrintTable(keys)
 
 	local newState = GameRules:State_Get()
@@ -220,8 +222,6 @@ end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
 function GameMode:OnNPCSpawned(keys)
-	print("[BAREBONES] NPC Spawned")
-	PrintTable(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-- Reaper's Scythe buyback clean-up
@@ -229,136 +229,146 @@ function GameMode:OnNPCSpawned(keys)
 		npc:SetBuyBackDisabledByReapersScythe(false)
 	end
 	
+	-- First hero spawn function call
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
 		GameMode:OnHeroInGame(npc)
+	end
+
+	-- Creep bounty adjustment
+	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
+		local gold_bounty = npc:GetGoldBounty()
+		local xp_bounty = npc:GetDeathXP()
+
+		npc:SetDeathXP(math.floor( xp_bounty * 1.3 ))
+		npc:SetMaximumGoldBounty(math.floor( gold_bounty * 1.4 ))
+		npc:SetMinimumGoldBounty(math.floor( gold_bounty * 1.3 ))
 	end
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
 -- operations here
 function GameMode:OnEntityHurt(keys)
-	--print("[BAREBONES] Entity Hurt")
-	--PrintTable(keys)
-	local attacker = EntIndexToHScript(keys.entindex_attacker)
-	local victim = EntIndexToHScript(keys.entindex_killed)
+--	print("[IMBA] Entity Hurt")
+--	PrintTable(keys)
+--	local attacker = EntIndexToHScript(keys.entindex_attacker)
+--	local victim = EntIndexToHScript(keys.entindex_killed)
 end
 
 -- An item was picked up off the ground
 function GameMode:OnItemPickedUp(keys)
---	print ( '[BAREBONES] OnItemPurchased' )
+--	print ( '[IMBA] OnItemPurchased' )
 --	PrintTable(keys)
 
-	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
+--	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+--	local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
+--	local player = PlayerResource:GetPlayer(keys.PlayerID)
+--	local itemname = keys.itemname
 end
 
 -- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
-	print ( '[BAREBONES] OnPlayerReconnect' )
-	PrintTable(keys)
+
 end
 
 -- An item was purchased by a player
 function GameMode:OnItemPurchased( keys )
-	print ( '[BAREBONES] OnItemPurchased' )
-	PrintTable(keys)
+--	print ( '[IMBA] OnItemPurchased' )
+--	PrintTable(keys)
 
 	-- The playerID of the hero who is buying something
-	local plyID = keys.PlayerID
-	if not plyID then return end
+--	local plyID = keys.PlayerID
+--	if not plyID then return end
 
 	-- The name of the item purchased
-	local itemName = keys.itemname
+--	local itemName = keys.itemname
 
 	-- The cost of the item purchased
-	local itemcost = keys.itemcost
+--	local itemcost = keys.itemcost
 
 end
 
 -- An ability was used by a player
 function GameMode:OnAbilityUsed(keys)
-	print('[BAREBONES] AbilityUsed')
-	PrintTable(keys)
+--	print('[IMBA] AbilityUsed')
+--	PrintTable(keys)
 
-	local player = EntIndexToHScript(keys.PlayerID)
-	local abilityname = keys.abilityname
+--	local player = EntIndexToHScript(keys.PlayerID)
+--	local abilityname = keys.abilityname
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
 function GameMode:OnNonPlayerUsedAbility(keys)
-	print('[BAREBONES] OnNonPlayerUsedAbility')
-	PrintTable(keys)
+--	print('[IMBA] OnNonPlayerUsedAbility')
+--	PrintTable(keys)
 
-	local abilityname = keys.abilityname
+--	local abilityname = keys.abilityname
 end
 
 -- A player changed their name
 function GameMode:OnPlayerChangedName(keys)
-	print('[BAREBONES] OnPlayerChangedName')
-	PrintTable(keys)
+--	print('[IMBA] OnPlayerChangedName')
+--	PrintTable(keys)
 
-	local newName = keys.newname
-	local oldName = keys.oldName
+--	local newName = keys.newname
+--	local oldName = keys.oldName
 end
 
 -- A player leveled up an ability
 function GameMode:OnPlayerLearnedAbility( keys)
-	print ('[BAREBONES] OnPlayerLearnedAbility')
-	PrintTable(keys)
+--	print ('[IMBA] OnPlayerLearnedAbility')
+--	PrintTable(keys)
 
-	local player = EntIndexToHScript(keys.player)
-	local abilityname = keys.abilityname
+--	local player = EntIndexToHScript(keys.player)
+--	local abilityname = keys.abilityname
 end
 
 -- A channelled ability finished by either completing or being interrupted
 function GameMode:OnAbilityChannelFinished(keys)
-	print ('[BAREBONES] OnAbilityChannelFinished')
-	PrintTable(keys)
+--	print ('[IMBA] OnAbilityChannelFinished')
+--	PrintTable(keys)
 
-	local abilityname = keys.abilityname
-	local interrupted = keys.interrupted == 1
+--	local abilityname = keys.abilityname
+--	local interrupted = keys.interrupted == 1
 end
 
 -- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
-	print ('[BAREBONES] OnPlayerLevelUp')
-	PrintTable(keys)
+--	print ('[IMBA] OnPlayerLevelUp')
+--	PrintTable(keys)
 
-	local player = EntIndexToHScript(keys.player)
-	local level = keys.level
+--	local player = EntIndexToHScript(keys.player)
+--	local level = keys.level
 end
 
 -- A player last hit a creep, a tower, or a hero
 function GameMode:OnLastHit(keys)
-	print ('[BAREBONES] OnLastHit')
-	PrintTable(keys)
+--	print ('[IMBA] OnLastHit')
+--	PrintTable(keys)
 
-	local isFirstBlood = keys.FirstBlood == 1
-	local isHeroKill = keys.HeroKill == 1
-	local isTowerKill = keys.TowerKill == 1
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
+--	local isFirstBlood = keys.FirstBlood == 1
+--	local isHeroKill = keys.HeroKill == 1
+--	local isTowerKill = keys.TowerKill == 1
+--	local player = PlayerResource:GetPlayer(keys.PlayerID)
 end
 
 -- A tree was cut down by tango, quelling blade, etc
 function GameMode:OnTreeCut(keys)
-	print ('[BAREBONES] OnTreeCut')
-	PrintTable(keys)
+--	print ('[IMBA] OnTreeCut')
+--	PrintTable(keys)
 
-	local treeX = keys.tree_x
-	local treeY = keys.tree_y
+--	local treeX = keys.tree_x
+--	local treeY = keys.tree_y
 end
 
 -- A rune was activated by a player
 function GameMode:OnRuneActivated (keys)
-	print ('[BAREBONES] OnRuneActivated')
-	PrintTable(keys)
+--	print ('[IMBA] OnRuneActivated')
+--	PrintTable(keys)
 
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local rune = keys.rune
+--	local player = PlayerResource:GetPlayer(keys.PlayerID)
+--	local rune = keys.rune
 
 	--[[ Rune Can be one of the following types
 	DOTA_RUNE_DOUBLEDAMAGE
@@ -376,26 +386,26 @@ end
 
 -- A player took damage from a tower
 function GameMode:OnPlayerTakeTowerDamage(keys)
-	print ('[BAREBONES] OnPlayerTakeTowerDamage')
-	PrintTable(keys)
+--	print ('[IMBA] OnPlayerTakeTowerDamage')
+--	PrintTable(keys)
 
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local damage = keys.damage
+--	local player = PlayerResource:GetPlayer(keys.PlayerID)
+--	local damage = keys.damage
 end
 
 -- A player picked a hero
 function GameMode:OnPlayerPickHero(keys)
-	print ('[BAREBONES] OnPlayerPickHero')
-	PrintTable(keys)
+--	print ('[IMBA] OnPlayerPickHero')
+--	PrintTable(keys)
 
-	local heroClass = keys.hero
-	local heroEntity = EntIndexToHScript(keys.heroindex)
-	local player = EntIndexToHScript(keys.player)
+--	local heroClass = keys.hero
+--	local heroEntity = EntIndexToHScript(keys.heroindex)
+--	local player = EntIndexToHScript(keys.player)
 end
 
 -- A player killed another player in a multi-team context
 function GameMode:OnTeamKillCredit(keys)
-	print ('[BAREBONES] OnTeamKillCredit')
+	print ('[IMBA] OnTeamKillCredit')
 	PrintTable(keys)
 
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
@@ -406,7 +416,7 @@ end
 
 -- An entity died
 function GameMode:OnEntityKilled( keys )
-	--print( '[BAREBONES] OnEntityKilled Called' )
+	--print( '[IMBA] OnEntityKilled Called' )
 	--PrintTable( keys )
 
 	-- The Unit that was Killed
@@ -418,19 +428,68 @@ function GameMode:OnEntityKilled( keys )
 		killerEntity = EntIndexToHScript( keys.entindex_attacker )
 	end
 
+	-- Sets the game winner if an ancient is destroyed
+	if killedUnit:GetName() == "npc_dota_badguys_fort" then
+		GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+	elseif killedUnit:GetName() == "npc_dota_goodguys_fort" then
+		GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
+	end
+
 	if killedUnit:IsRealHero() then
-		print ("KILLEDKILLER: " .. killedUnit:GetName() .. " -- " .. killerEntity:GetName())
+		print ("KILLED: " .. killedUnit:GetName() .. " -- KILLER: " .. killerEntity:GetName())
 		if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS and killerEntity:GetTeam() == DOTA_TEAM_GOODGUYS then
 			self.nRadiantKills = self.nRadiantKills + 1
 			if END_GAME_ON_KILLS and self.nRadiantKills >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetSafeToLeave( true )
 				GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
 			end
+			-- Hero kill and assist bounty
+			local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+			local killer_bounty = 100 + killedUnit:GetLevel() * 10
+			local assist_bounty
+			if #allies == 1 then
+				assist_bounty = 140 + killedUnit:GetLevel() * 7
+			elseif #allies == 2 then
+				assist_bounty = 110 + killedUnit:GetLevel() * 6
+			elseif #allies == 3 then
+				assist_bounty = 90 + killedUnit:GetLevel() * 5
+			elseif #allies == 4 then
+				assist_bounty = 70 + killedUnit:GetLevel() * 4
+			else
+				assist_bounty = 60 + killedUnit:GetLevel() * 3
+			end
+
+			killerEntity:ModifyGold(killer_bounty, true, 0)
+			for _,ally in pairs(allies) do
+				ally:ModifyGold(assist_bounty, true, 0)
+			end
+
 		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killerEntity:GetTeam() == DOTA_TEAM_BADGUYS then
 			self.nDireKills = self.nDireKills + 1
 			if END_GAME_ON_KILLS and self.nDireKills >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetSafeToLeave( true )
 				GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
+			end
+
+			-- Hero kill and assist bounty
+			local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+			local killer_bounty = 100 + killedUnit:GetLevel() * 10
+			local assist_bounty
+			if #allies == 1 then
+				assist_bounty = 140 + killedUnit:GetLevel() * 7
+			elseif #allies == 2 then
+				assist_bounty = 110 + killedUnit:GetLevel() * 6
+			elseif #allies == 3 then
+				assist_bounty = 90 + killedUnit:GetLevel() * 5
+			elseif #allies == 4 then
+				assist_bounty = 70 + killedUnit:GetLevel() * 4
+			else
+				assist_bounty = 60 + killedUnit:GetLevel() * 3
+			end
+
+			killerEntity:ModifyGold(killer_bounty, true, 0)
+			for _,ally in pairs(allies) do
+				ally:ModifyGold(assist_bounty, true, 0)
 			end
 		end
 
@@ -444,6 +503,183 @@ function GameMode:OnEntityKilled( keys )
 	if killedUnit.scythe_added_respawn then
 		killedUnit:SetTimeUntilRespawn(killedUnit:GetRespawnTime() + killedUnit.scythe_added_respawn)
 	end
+
+	-- Tower invulnerability removal
+	if killedUnit:GetName() == "npc_dota_goodguys_tower1_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower2_top" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower1_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower2_mid" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower1_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower2_bot" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower3_top" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower3_mid" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower3_bot" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_melee_rax_top" or name == "npc_dota_goodguys_range_rax_top" or name == "npc_dota_goodguys_tower4" or name == "npc_dota_goodguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_melee_rax_mid" or name == "npc_dota_goodguys_range_rax_mid" or name == "npc_dota_goodguys_tower4" or name == "npc_dota_goodguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_melee_rax_bot" or name == "npc_dota_goodguys_range_rax_bot" or name == "npc_dota_goodguys_tower4" or name == "npc_dota_goodguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_goodguys_tower4" then
+		local other_t4_killed = true
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_tower4" then
+				other_t4_killed = false
+			end
+		end
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_goodguys_fort" and other_t4_killed then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower2_top" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower2_mid" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower2_bot" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower3_top" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower3_mid" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower3_bot" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_top" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_melee_rax_top" or name == "npc_dota_badguys_range_rax_top" or name == "npc_dota_badguys_tower4" or name == "npc_dota_badguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_mid" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_melee_rax_mid" or name == "npc_dota_badguys_range_rax_mid" or name == "npc_dota_badguys_tower4" or name == "npc_dota_badguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_bot" then
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_melee_rax_bot" or name == "npc_dota_badguys_range_rax_bot" or name == "npc_dota_badguys_tower4" or name == "npc_dota_badguys_fillers" then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	elseif killedUnit:GetName() == "npc_dota_badguys_tower4" then
+		local other_t4_killed = true
+		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_tower4" then
+				other_t4_killed = false
+			end
+		end
+		for _,v in pairs(structures) do
+			local name = v:GetName()
+			if name == "npc_dota_badguys_fort" and other_t4_killed then
+				v:RemoveModifierByName("modifier_invulnerable")
+			end
+		end
+	end
 end
 
 
@@ -451,7 +687,7 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
 	GameMode = self
-	print('[BAREBONES] Starting to load Barebones gamemode...')
+	print('[IMBA] Starting to load Barebones gamemode...')
 
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
@@ -469,7 +705,7 @@ function GameMode:InitGameMode()
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
-	print('[BAREBONES] GameRules set')
+	print('[IMBA] GameRules set')
 
 	InitLogFile( "log/barebones.txt","")
 
@@ -597,7 +833,7 @@ function GameMode:InitGameMode()
 		GameRules:GetGameModeEntity():SetHUDVisible( DOTA_HUD_VISIBILITY_SHOP_SUGGESTEDITEMS, false )
 	end
 
-	print('[BAREBONES] Done loading Barebones gamemode!\n\n')
+	print('[IMBA] Done loading Barebones gamemode!\n\n')
 end
 
 mode = nil
@@ -632,7 +868,7 @@ end
 -- This function is called 1 to 2 times as the player connects initially but before they
 -- have completely connected
 function GameMode:PlayerConnect(keys)
-	print('[BAREBONES] PlayerConnect')
+	print('[IMBA] PlayerConnect')
 	PrintTable(keys)
 
 	if keys.bot == 1 then
@@ -643,7 +879,7 @@ end
 
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:OnConnectFull(keys)
-	print ('[BAREBONES] OnConnectFull')
+	print ('[IMBA] OnConnectFull')
 	PrintTable(keys)
 	GameMode:CaptureGameMode()
 
