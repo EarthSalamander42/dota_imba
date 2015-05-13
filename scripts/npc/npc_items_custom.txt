@@ -5889,8 +5889,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1106"
-		"BaseClass"						"item_necronomicon"
+		"ID"							"1237"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -5920,12 +5921,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"20 28 36"
+				"bonus_intellect"		"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10 16 22"
+				"bonus_strength"		"10"
 			}
 			"03"
 			{
@@ -5935,7 +5936,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_feedback"	"30 60 90"
+				"warrior_mana_feedback"	"30"
 			}
 			"05"
 			{
@@ -5945,17 +5946,219 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_mana_burn"		"150 225 300"
+				"warrior_health"		"600"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_attack_speed"	"6 9 12"
+				"archer_mana_burn"		"150"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"6"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"archer_attack_speed_radius"	"1200"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health"			"600"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_chance"			"10"
+			}
+		}
+
+		// Datadriven	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"DOTA_Item.Necronomicon.Activate"
+				"Target" 				"CASTER"
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_warrior_1"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"MeleeNecro1"
+					}
+				}
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_archer_1"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"RangedNecro1"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_necronomicon"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+				}
+			}
+
+			"modifier_item_imba_necronomicon_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+		
+				"Aura"          		"modifier_item_imba_necronomicon_debuff"
+				"Aura_Radius"   		"%aura_radius"
+				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+			}
+
+			"modifier_item_imba_necronomicon_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"OnDeath"
+				{
+					"Random"
+					{
+						"Chance"		"%spawn_chance"
+
+						"OnSuccess"
+						{
+							"Random"
+							{
+								"Chance"						"50"
+
+								"OnSuccess"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_warrior_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+
+								"OnFailure"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_archer_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+											
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -5964,8 +6167,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1193"
-		"BaseClass"						"item_necronomicon_2"
+		"ID"							"1238"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -5977,7 +6181,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"2700"
+		"ItemCost"						"3950"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 2"
@@ -5995,12 +6199,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"20 28 36"
+				"bonus_intellect"		"28"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10 16 22"
+				"bonus_strength"		"16"
 			}
 			"03"
 			{
@@ -6010,7 +6214,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_feedback"	"30 60 90"
+				"warrior_mana_feedback"	"60"
 			}
 			"05"
 			{
@@ -6020,17 +6224,228 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_mana_burn"		"150 225 300"
+				"warrior_health"		"900"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_attack_speed"	"6 9 12"
+				"archer_mana_burn"		"225"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"9"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"archer_attack_speed_radius"	"1200"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health"			"800"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_chance"			"20"
+			}
+		}
+
+		// Datadriven	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.Necronomicon.Activate"
+				"Target" 		"CASTER"
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_warrior_2"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"MeleeNecro2"
+					}
+				}
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_archer_2"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"RangedNecro2"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_necronomicon_2"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+				}
+			}
+
+			"modifier_item_imba_necronomicon_2_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+		
+				"Aura"          		"modifier_item_imba_necronomicon_2_debuff"
+				"Aura_Radius"   		"%aura_radius"
+				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_item_imba_necronomicon_1_aura"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+
+			"modifier_item_imba_necronomicon_2_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"OnDeath"
+				{
+					"Random"
+					{
+						"Chance"		"%spawn_chance"
+
+						"OnSuccess"
+						{
+							"Random"
+							{
+								"Chance"						"50"
+
+								"OnSuccess"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_warrior_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+											
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+
+								"OnFailure"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_archer_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+											
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -6039,8 +6454,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1194"
-		"BaseClass"						"item_necronomicon_3"
+		"ID"							"1239"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_necronomicon_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -6052,7 +6468,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		"ItemCost"						"2700"
+		"ItemCost"						"5200"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"necronomicon 3"
@@ -6067,12 +6483,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"20 28 36"
+				"bonus_intellect"		"36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"10 16 22"
+				"bonus_strength"		"22"
 			}
 			"03"
 			{
@@ -6082,7 +6498,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"warrior_mana_feedback"	"30 60 90"
+				"warrior_mana_feedback"	"90"
 			}
 			"05"
 			{
@@ -6092,17 +6508,237 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_mana_burn"		"150 225 300"
+				"warrior_health"		"1200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"archer_attack_speed"	"6 9 12"
+				"archer_mana_burn"		"300"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"archer_attack_speed"	"12"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"archer_attack_speed_radius"	"1200"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"archer_health"			"1000"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_chance"			"30"
+			}
+		}
+
+		// Datadriven	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.Necronomicon.Activate"
+				"Target" 		"CASTER"
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_warrior_3"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"MeleeNecro3"
+					}
+				}
+			}
+
+			"SpawnUnit"
+			{
+				"UnitName"				"npc_imba_necronomicon_archer_3"
+				"Target" 				"CASTER"
+				"Duration"				"%summon_duration"
+				"UnitCount"				"1"
+				"UnitLimit"				"1"
+				"SpawnRadius"			"150"
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_kill"
+						"Target"		"TARGET"
+						"Duration"		"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_necronomicon.lua"
+						"Function"		"RangedNecro3"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_necronomicon_3"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+				}
+			}
+
+			"modifier_item_imba_necronomicon_3_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+		
+				"Aura"          		"modifier_item_imba_necronomicon_3_debuff"
+				"Aura_Radius"   		"%aura_radius"
+				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_item_imba_necronomicon_1_aura"
+						"Target" 		"CASTER"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_item_imba_necronomicon_2_aura"
+						"Target" 		"CASTER"
+					}
+				}
+			}
+
+			"modifier_item_imba_necronomicon_3_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"OnDeath"
+				{
+					"Random"
+					{
+						"Chance"		"%spawn_chance"
+
+						"OnSuccess"
+						{
+							"Random"
+							{
+								"Chance"						"50"
+
+								"OnSuccess"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_warrior_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+											
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+
+								"OnFailure"
+								{
+									"SpawnUnit"
+									{
+										"UnitName"				"npc_imba_necronomicon_archer_0"
+										"Target"
+										{
+											"Center"  			"UNIT"
+											"Flags"				"DOTA_UNIT_TARGET_FLAG_DEAD"
+										}
+										"Duration"				"%summon_duration"
+										"UnitCount"				"1"
+										"UnitLimit"				"10"
+										"SpawnRadius"			"10"
+										"OnSpawn"
+										{
+											"ApplyModifier"
+											{
+												"ModifierName"	"modifier_kill"
+												"Target"		"TARGET"
+												"Duration"		"%summon_duration"
+											}
+											
+											"RunScript"
+											{
+												"ScriptFile"	"items/item_necronomicon.lua"
+												"Function"		"NecroMinion"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -7417,8 +8053,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1133"
-		"BaseClass"						"item_rapier"
+		"ID"							"1240"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
@@ -7431,6 +8068,7 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
 		
@@ -7441,7 +8079,31 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"666"
+				"bonus_damage"			"100"
+			}
+		}
+
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"Rapier"
+
+						"damage"		"%attack_damage"
+					}
+				}
 			}
 		}
 	}
@@ -11304,5 +11966,5 @@
 		}
 	}
 
-	//next free ID: 1237
+	//next free ID: 1241
 }

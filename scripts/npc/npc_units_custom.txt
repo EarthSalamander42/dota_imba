@@ -366,6 +366,750 @@
 		//----------------------------------------------------------------
 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
 	}
+
+	//=================================================================================
+	// Mini Necronomicon Warrior
+	//=================================================================================
+	"npc_imba_necronomicon_warrior_0"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.4"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necrowarrior"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"			// Physical protection.
+		"MagicalResistance"			"20"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"35"		// Damage range min.
+		"AttackDamageMax"			"35"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.75"		// Speed of attack.
+		"AttackAnimationPoint"		"0.56"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			""			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"40"
+		"HealthBarOffset"			"150"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"30"		// Experience earn.
+		"BountyGoldMin"				"30"		// Gold earned min.
+		"BountyGoldMax"				"30"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"360"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"350"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+
+	//=================================================================================
+	// Necronomicon Warrior Level 1
+	//=================================================================================
+	"npc_imba_necronomicon_warrior_1"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.6"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necrowarrior"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_warrior_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_warrior_last_will"			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"			// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50"		// Damage range min.
+		"AttackDamageMax"			"50"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.75"		// Speed of attack.
+		"AttackAnimationPoint"		"0.56"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			""			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"40"
+		"HealthBarOffset"			"150"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"100"		// Experience earn.
+		"BountyGoldMin"				"100"		// Gold earned min.
+		"BountyGoldMax"				"100"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"360"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+
+	//=================================================================================
+	// Necronomicon Warrior Level 2
+	//=================================================================================
+	"npc_imba_necronomicon_warrior_2"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.7"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necrowarrior"
+
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_warrior_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_warrior_last_will"			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"			// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"75"		// Damage range min.
+		"AttackDamageMax"			"75"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.75"		// Speed of attack.
+		"AttackAnimationPoint"		"0.56"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			""			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"		// Experience earn.
+		"BountyGoldMin"				"150"		// Gold earned min.
+		"BountyGoldMax"				"150"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"160"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"390"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"900"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}	
+
+	//=================================================================================
+	// Necronomicon Warrior Level 3
+	//=================================================================================
+	"npc_imba_necronomicon_warrior_3"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Melee"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.8"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necrowarrior"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_warrior_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_warrior_last_will"			// Ability 2.
+		"Ability3"					"necronomicon_warrior_sight"			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"		// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"100"		// Damage range min.
+		"AttackDamageMax"			"100"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.75"		// Speed of attack.
+		"AttackAnimationPoint"		"0.56"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"100"		// Range within a target can be attacked.
+		"ProjectileModel"			""			// Particle system model for projectile.
+		"ProjectileSpeed"			""			// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"200"		// Experience earn.
+		"BountyGoldMin"				"200"		// Gold earned min.
+		"BountyGoldMax"				"200"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"165"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"420"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1200"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1500"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}	
+
+	//=================================================================================
+	// Mini Necronomicon Archer
+	//=================================================================================
+	"npc_imba_necronomicon_archer_0"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.4"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necroarcher"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					""			// Ability 1.
+		"Ability2"					""			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"			// Physical protection.
+		"MagicalResistance"			"20"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"40"		// Damage range min.
+		"AttackDamageMax"			"40"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.8"			// Speed of attack.
+		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"350"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"30"		// Experience earn.
+		"BountyGoldMin"				"30"		// Gold earned min.
+		"BountyGoldMax"				"30"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"155"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"360"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"300"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+
+	//=================================================================================
+	// Necronomicon Archer Level 1
+	//=================================================================================
+	"npc_imba_necronomicon_archer_1"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.6"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necroarcher"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_archer_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_archer_aoe"			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"			// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"70"		// Damage range min.
+		"AttackDamageMax"			"70"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.8"			// Speed of attack.
+		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"350"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"100"		// Experience earn.
+		"BountyGoldMin"				"100"		// Gold earned min.
+		"BountyGoldMax"				"100"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"155"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"360"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"600"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}
+	
+	//=================================================================================
+	// Necronomicon Archer Level 2
+	//=================================================================================
+	"npc_imba_necronomicon_archer_2"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.7"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necroarcher"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_archer_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_archer_aoe"			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"			// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"110"		// Damage range min.
+		"AttackDamageMax"			"110"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.8"			// Speed of attack.
+		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"450"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"		// Experience earn.
+		"BountyGoldMin"				"150"		// Gold earned min.
+		"BountyGoldMax"				"150"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"160"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"390"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"800"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}	
+
+	//=================================================================================
+	// Necronomicon Archer Level 3
+	//=================================================================================
+	"npc_imba_necronomicon_archer_3"
+	{
+		// General
+		"BaseClass"					"npc_dota_creep"	// Class of entity of link to.
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"5"
+		"ModelScale"				"0.8"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necroarcher"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		
+		"Ability1"					"necronomicon_archer_mana_burn"			// Ability 1.
+		"Ability2"					"necronomicon_archer_aoe"			// Ability 2.
+		"Ability3"					""			// Ability 3.
+		"Ability4"					""			// Ability 4.
+		"Ability5"					""			// Ability 5.
+		"Ability6"					""			// Ability 6 - Extra.
+		"Ability7"					""			// Ability 7 - Extra.
+		"Ability8"					""			// Ability 8 - Extra.
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"		// Physical protection.
+		"MagicalResistance"			"40"		// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"150"		// Damage range min.
+		"AttackDamageMax"			"150"		// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.8"			// Speed of attack.
+		"AttackAnimationPoint"		"0.7"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"550"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"200"		// Experience earn.
+		"BountyGoldMin"				"200"		// Gold earned min.
+		"BountyGoldMax"				"200"		// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+		"HealthBarOffset"			"165"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"420"		// Speed
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1000"		// Base health.
+		"StatusHealthRegen"			"5"			// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1500"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
+	}	
   
 	//------------------------------------------------------------------------------------
 	//- This unit can be used to precache different models/particles/sounds              -

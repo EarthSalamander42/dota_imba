@@ -546,17 +546,6 @@
 						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
 					}
 				}
-
-				"OnRespawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
-						"Function"						"AphoticShieldInitialize"
-
-						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
-					}
-				}
 			}
 
 			"modifier_aphotic_shield"
@@ -9915,14 +9904,8 @@
 		    {
 		        "ScriptFile"			"abilities/hero_lich.lua"
 		        "Function"				"DarkRitual"
-		        
-		        "Target"
-		        {
-		        	"Center"  			"TARGET"
-		        	"Radius" 			"%xp_radius"
-		        	"Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		        	"Types" 			"DOTA_UNIT_TARGET_HERO"
-			    }
+
+		        "Target"				"TARGET"
 		    }
 		}
 	}

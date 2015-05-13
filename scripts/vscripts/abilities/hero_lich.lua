@@ -65,13 +65,16 @@ end
 function DarkRitual( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local heroes = keys.target_entities
 	local ability = keys.ability
+	local xp_radius = ability:GetLevelSpecialValueFor("xp_radius", ability:GetLevel() - 1 )
 
 	-- Mana to give	
 	local target_health = target:GetMaxHealth()
 	local rate = ability:GetLevelSpecialValueFor("health_conversion", ability:GetLevel() - 1 ) * 0.01
 	local mana_gain = target_health * rate
+	
+	-- Heroes to share XP
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, xp_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false )
 
 	-- XP to share
 	local XP = target:GetDeathXP()

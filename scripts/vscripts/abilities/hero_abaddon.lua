@@ -177,7 +177,8 @@ function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charg
 	if caster.aphotic_cooldown <= 0 then
 		local current_charges = caster:GetModifierStackCount(stacks_modifier, caster)
 		caster:SetModifierStackCount(stacks_modifier, caster, current_charges + 1 )
-		if caster:GetModifierStackCount(stacks_modifier, caster) == max_charges then
+		if caster:GetModifierStackCount(stacks_modifier, caster) >= max_charges then
+			caster:SetModifierStackCount(stacks_modifier, caster, max_charges)
 			return
 		else
 			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, charge_cooldown)
