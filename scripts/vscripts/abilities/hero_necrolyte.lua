@@ -1,3 +1,6 @@
+--[[ 	Author: D2imba
+		Date: 27.04.2015	]]
+		
 function DeathPulse( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -59,6 +62,11 @@ function Heartstopper( keys )
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	else
 		target:SetHealth(target:GetHealth() - damage)
+	end
+
+	-- Forces the kill if the target is at or below zero health (prevents edge case bugs)
+	if target:GetHealth() <= 0 then
+		target:ForceKill(true)
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos

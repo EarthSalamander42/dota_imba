@@ -48,7 +48,7 @@ function DeathCoil( keys )
 			target:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
 	else
-		target:Heal( heal, caster)
+		target:Heal(heal, caster)
 		if target:HasModifier(modifier_buff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
@@ -117,7 +117,7 @@ function AphoticShield( keys )
 		local ability_level = ability:GetLevel() - 1
 		local shield_modifier = keys.shield_modifier
 		local cast_sound = keys.cast_sound
-		local strength = caster.GetStrength(caster)
+		local strength = caster:GetStrength()
 		local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level)
 		local max_damage_absorb = base_damage_absorb + strength
 		local shield_size = target:GetModelRadius() * 0.7

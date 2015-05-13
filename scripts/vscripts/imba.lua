@@ -45,7 +45,7 @@ USE_CUSTOM_HERO_LEVELS = false          -- Should we allow heroes to have custom
 MAX_LEVEL = 25                        	-- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false            -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
-Testing = false
+Testing = true
 OutOfWorldVector = Vector(11000, 11000, -200)
 
 if not Testing then
@@ -444,24 +444,26 @@ function GameMode:OnEntityKilled( keys )
 				GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
 			end
 			-- Hero kill and assist bounty
-			local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-			local killer_bounty = 100 + killedUnit:GetLevel() * 10
-			local assist_bounty
-			if #allies == 1 then
-				assist_bounty = 140 + killedUnit:GetLevel() * 7
-			elseif #allies == 2 then
-				assist_bounty = 110 + killedUnit:GetLevel() * 6
-			elseif #allies == 3 then
-				assist_bounty = 90 + killedUnit:GetLevel() * 5
-			elseif #allies == 4 then
-				assist_bounty = 70 + killedUnit:GetLevel() * 4
-			else
-				assist_bounty = 60 + killedUnit:GetLevel() * 3
-			end
+			if killerEntity:IsHero() then
+				local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+				local killer_bounty = 100 + killedUnit:GetLevel() * 10
+				local assist_bounty
+				if #allies == 1 then
+					assist_bounty = 140 + killedUnit:GetLevel() * 7
+				elseif #allies == 2 then
+					assist_bounty = 110 + killedUnit:GetLevel() * 6
+				elseif #allies == 3 then
+					assist_bounty = 90 + killedUnit:GetLevel() * 5
+				elseif #allies == 4 then
+					assist_bounty = 70 + killedUnit:GetLevel() * 4
+				else
+					assist_bounty = 60 + killedUnit:GetLevel() * 3
+				end
 
-			killerEntity:ModifyGold(killer_bounty, true, 0)
-			for _,ally in pairs(allies) do
-				ally:ModifyGold(assist_bounty, true, 0)
+				killerEntity:ModifyGold(killer_bounty, true, 0)
+				for _,ally in pairs(allies) do
+					ally:ModifyGold(assist_bounty, true, 0)
+				end
 			end
 
 		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killerEntity:GetTeam() == DOTA_TEAM_BADGUYS then
@@ -472,24 +474,26 @@ function GameMode:OnEntityKilled( keys )
 			end
 
 			-- Hero kill and assist bounty
-			local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-			local killer_bounty = 100 + killedUnit:GetLevel() * 10
-			local assist_bounty
-			if #allies == 1 then
-				assist_bounty = 140 + killedUnit:GetLevel() * 7
-			elseif #allies == 2 then
-				assist_bounty = 110 + killedUnit:GetLevel() * 6
-			elseif #allies == 3 then
-				assist_bounty = 90 + killedUnit:GetLevel() * 5
-			elseif #allies == 4 then
-				assist_bounty = 70 + killedUnit:GetLevel() * 4
-			else
-				assist_bounty = 60 + killedUnit:GetLevel() * 3
-			end
+			if killerEntity:IsHero() then
+				local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+				local killer_bounty = 100 + killedUnit:GetLevel() * 10
+				local assist_bounty
+				if #allies == 1 then
+					assist_bounty = 140 + killedUnit:GetLevel() * 7
+				elseif #allies == 2 then
+					assist_bounty = 110 + killedUnit:GetLevel() * 6
+				elseif #allies == 3 then
+					assist_bounty = 90 + killedUnit:GetLevel() * 5
+				elseif #allies == 4 then
+					assist_bounty = 70 + killedUnit:GetLevel() * 4
+				else
+					assist_bounty = 60 + killedUnit:GetLevel() * 3
+				end
 
-			killerEntity:ModifyGold(killer_bounty, true, 0)
-			for _,ally in pairs(allies) do
-				ally:ModifyGold(assist_bounty, true, 0)
+				killerEntity:ModifyGold(killer_bounty, true, 0)
+				for _,ally in pairs(allies) do
+					ally:ModifyGold(assist_bounty, true, 0)
+				end
 			end
 		end
 
@@ -854,7 +858,7 @@ function GameMode:CaptureGameMode()
 		mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
 		mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 
-		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
+		--mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
 		mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
 
 		mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)

@@ -33,7 +33,7 @@ function Starfall( keys )
 			ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
 
 			-- Find targets and apply the particle, damage, and hit sound
-			targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
+			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
 			for _,v in pairs(targets) do
 				local pfx_2 = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, v)
 				ParticleManager:SetParticleControl(pfx_2, 0, v:GetAbsOrigin())
@@ -145,6 +145,7 @@ function ArrowHit( keys )
 	target:AddNewModifier(caster, nil, "modifier_stunned", {duration = arrow_stun_duration})
 	damage_table.damage = arrow_damage
 	ApplyDamage(damage_table)
+
 end
 
 function Leap( keys )
@@ -157,6 +158,7 @@ function Leap( keys )
 	local leap_speed = ability:GetLevelSpecialValueFor("leap_speed", ability_level)
 	local max_distance = ability:GetLevelSpecialValueFor("leap_distance", ability_level)
 	local max_time = ability:GetLevelSpecialValueFor("leap_time", ability_level)
+	local root_modifier = keys.root_modifier
 
 	-- Clears any current command, grants temporary invulnerability
 	caster:Stop()
@@ -179,7 +181,7 @@ function Leap( keys )
 
 	Physics:Unit(caster)
 
-	caster:PreventDI(true)
+	ability:ApplyDataDrivenModifier(caster, caster, root_modifier, {})
 	caster:SetAutoUnstuck(false)
 	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	caster:FollowNavMesh(false)	
@@ -196,11 +198,11 @@ function Leap( keys )
 		end
 		-- If the target reached the ground then remove physics
 		if time_elapsed >= end_time then
+			caster:RemoveModifierByName(root_modifier)
 			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin() , caster))
 			caster:SetPhysicsAcceleration(Vector(0,0,0))
 			caster:SetPhysicsVelocity(Vector(0,0,0))
 			caster:OnPhysicsFrame(nil)
-			caster:PreventDI(false)
 			caster:SetNavCollisionType(PHYSICS_NAV_SLIDE)
 			caster:SetAutoUnstuck(true)
 			caster:FollowNavMesh(true)
