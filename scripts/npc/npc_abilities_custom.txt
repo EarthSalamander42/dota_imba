@@ -4958,7 +4958,7 @@
 			"12"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_damage"						"16 24 32 40"
+				"tooltip_damage"						"20 30 40 50"
 			}
 			"13"
 			{
@@ -5389,7 +5389,7 @@
 			"02"
 			{	
 				"var_type"								"FIELD_INTEGER"
-				"range_tooltip"							"550 700 850 1000"
+				"range_tooltip"							"600 800 1000 1200"
 			}
 			"03"
 			{
@@ -5609,7 +5609,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_reduction"						"-0.5 -1.0 -1.5 -2.0"
+				"armor_reduction"						"-0.8 -1.2 -1.6 -2.0"
 			}
 			"07"
 			{
@@ -6838,7 +6838,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"1100"
+		"AbilityCastRange"						"1050"
 		"AbilityCastPoint"						"0.3"
 
 		// Time		
@@ -6871,7 +6871,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"attack_slow"					"-50"
+				"attack_slow"					"-20"
 			}
 			"05"
 			{
@@ -7244,7 +7244,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"movement_speed_bonus"					"10 14 18"
+				"movement_speed_bonus"					"10"
 			}
 			"03"
 			{
@@ -7259,7 +7259,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"275"
+				"radius"								"300"
 			}
 			"06"
 			{
@@ -7269,7 +7269,7 @@
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"agility_bonus_scepter"					"80 140 200"
+				"agility_bonus_scepter"					"70 125 180"
 			}
 			"08"
 			{
@@ -7290,25 +7290,25 @@
 		{
 			"RemoveModifier"
 			{
-				"ModifierName"	"modifier_imba_marksmanship_effect"
-				"Target" 		"CASTER"
+				"ModifierName"					"modifier_imba_marksmanship_effect"
+				"Target" 						"CASTER"
 			}
 
 			"RemoveModifier"
 			{
-				"ModifierName"	"modifier_imba_marksmanship_effect_scepter"
-				"Target" 		"CASTER"
+				"ModifierName"					"modifier_imba_marksmanship_effect_scepter"
+				"Target" 						"CASTER"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"	"abilities/hero_drow_ranger.lua"
-				"Function"		"UpgradeFrostArrows"
+				"ScriptFile"					"abilities/hero_drow_ranger.lua"
+				"Function"						"UpgradeFrostArrows"
 
-				"ability_0"		"imba_drow_ranger_frost_arrows"
-				"ability_1"		"imba_drow_ranger_frost_arrows_mark1"
-				"ability_2"		"imba_drow_ranger_frost_arrows_mark2"
-				"ability_3"		"imba_drow_ranger_frost_arrows_mark3"
+				"ability_0"						"imba_drow_ranger_frost_arrows"
+				"ability_1"						"imba_drow_ranger_frost_arrows_mark1"
+				"ability_2"						"imba_drow_ranger_frost_arrows_mark2"
+				"ability_3"						"imba_drow_ranger_frost_arrows_mark3"
 			}
 		}
 		
@@ -7816,6 +7816,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"5.0"
 			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"turn_slow"				"-20 -30 -40 -50"
+			}
 		}
 		
 		// Data driven
@@ -7943,6 +7948,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed_pct"
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"%turn_slow"
 				}
 			}
 		}
