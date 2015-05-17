@@ -29,7 +29,6 @@ function Sheepstick( keys )
 		end
 		local magical_armor_stacks = math.floor( 100 * ( 1 / ( 1 - magical_armor ) - 1 ) )
 		local armor_stacks = math.floor(target:GetPhysicalArmorValue())
-
 		AddStacks(ability, caster, target, modifier_dearmor, armor_stacks, false)
 		AddStacks(ability, caster, target, modifier_demagic, magical_armor_stacks, false)
 	end

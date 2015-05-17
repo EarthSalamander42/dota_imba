@@ -77,6 +77,14 @@ function Frostbite( keys )
 	end
 end
 
+function FrostbitePassive( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_passive = keys.modifier_passive
+
+	ApplyDataDrivenModifierWhenPossible(caster, caster, ability, modifier_passive)
+end
+
 function BrillianceAura( keys )
 	local caster = keys.caster
 	local ability = keys.ability

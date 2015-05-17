@@ -339,10 +339,10 @@
 
 		"AttackRange"				"525"
 
-		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
-		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
-		"Ability3"					"imba_obsidian_destroyer_essence_aura"
-		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
+		//"Ability1"					"imba_obsidian_destroyer_arcane_orb"
+		//"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
+		//"Ability3"					"imba_obsidian_destroyer_essence_aura"
+		//"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 		"Ability5"					"attribute_bonus_int"				
 	}
 

@@ -3604,6 +3604,8 @@
 				"IsHidden"					"1"
 				"IsPurgable"				"0"
 				"IsDebuff"					"1"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 		}
 	}
@@ -4277,6 +4279,8 @@
 			{
 				"Passive"								"1"
 				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				
 				"OnCreated"
 				{
@@ -4329,12 +4333,16 @@
 				"IsPurgable"							"0"
 				"AllowIllusionDuplicate"				"0"
 
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
 				"OnDestroy"
-				{
-					"ApplyModifier"
+				{	
+					"RunScript"
 					{
-						"ModifierName"					"modifier_imba_frostbite_passive"
-						"Target" 						"CASTER"
+						"ScriptFile"					"abilities/hero_crystal_maiden"
+						"Function"						"FrostbitePassive"
+
+						"modifier_passive"				"modifier_imba_frostbite_passive"
 					}
 				}
 			}
@@ -8513,10 +8521,10 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util.lua"
-						"Function"		"IllusionPassiveRemover"
+						"ScriptFile"			"util.lua"
+						"Function"				"IllusionPassiveRemover"
 
-						"modifier"		"modifier_imba_tidebringer_cooldown"
+						"modifier"				"modifier_imba_tidebringer_cooldown"
 					}
 				}
 
@@ -12981,6 +12989,12 @@
 					}
 				}
 
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH" 					"1"
+				    "MODIFIER_PROPERTY_DISABLE_HEALING" 			"1" 
+				}
+				
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"

@@ -29,15 +29,14 @@ function FrostNova( keys )
 
 	-- Rolls for the chance of casting Frost Nova
 	if RandomInt(1, 100) <= cast_chance * stack_count then
+		-- Casts the spell
+		target:EmitSound(sound)
+		local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false )
 		for _,v in pairs(targets) do
 			ApplyDamage({victim = v, attacker = caster, damage = aoe_damage, damage_type = ability:GetAbilityDamageType()})
 			ability:ApplyDataDrivenModifier(caster, v, modifier_slow, {duration = ability:GetDuration()})
 		end
-		-- Casts the spell
-		ApplyDamage({victim = target, attacker = caster, damage = target_damage, damage_type = ability:GetAbilityDamageType()})
-		target:EmitSound(sound)
-		local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)
 	end
 end
 

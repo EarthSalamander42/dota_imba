@@ -144,8 +144,8 @@ function TidebringerCooldown( keys )
 	local high_tide = caster:HasModifier(modifier_high_tide)
 	local low_tide = caster:HasModifier(modifier_low_tide)
 
-	-- If the skill has finished its cooldown and no modifiers are present, apply one at random
-	if cooldown == 0 and not tsunami and not high_tide and not low_tide and not wave_break then
+	-- If the skill has finished its cooldown and no modifiers are present, apply one at random when able
+	if cooldown == 0 and not tsunami and not high_tide and not low_tide and not wave_break and not caster:IsOutOfGame() and not caster:IsInvulnerable() then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
 	end
 end

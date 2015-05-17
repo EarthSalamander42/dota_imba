@@ -531,3 +531,13 @@ function IllusionPassiveRemover( keys )
 		target:RemoveModifierByName(modifier)
 	end
 end
+
+function ApplyDataDrivenModifierWhenPossible( caster, target, ability, modifier_name)
+	Timers:CreateTimer(0, function()
+		if target:IsOutOfGame() or target:IsInvulnerable() then
+			return 0.1
+		else
+			ability:ApplyDataDrivenModifier(caster, target, modifier_name, {})
+		end			
+	end)
+end

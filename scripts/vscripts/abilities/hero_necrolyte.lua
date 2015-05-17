@@ -66,7 +66,7 @@ function Heartstopper( keys )
 
 	-- Forces the kill if the target is at or below zero health (prevents edge case bugs)
 	if target:GetHealth() <= 0 then
-		target:ForceKill(true)
+		target:Kill(ability, caster)
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos
@@ -169,6 +169,11 @@ function ReapersScythe( keys )
 		local damage_bonus = 1 - target:GetHealth() / target:GetMaxHealth() 
 		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) / 100
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+
+		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
+		if target:GetHealth() <= 1 then
+			target:Kill(ability, caster)
+		end
 
 		-- Checking if target is alive to decide if it needs to increase respawn time
 		if not target:IsAlive() then

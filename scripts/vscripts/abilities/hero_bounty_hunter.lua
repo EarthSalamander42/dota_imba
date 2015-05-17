@@ -78,7 +78,7 @@ function ShurikenTossImpact( keys )
 		local target_position = target:GetAbsOrigin()
 		target.shuriken_toss_dummy = CreateUnitByName("npc_dummy_unit", target_position, false, nil, nil, caster:GetTeamNumber())
 		target.shuriken_position = target:GetAbsOrigin()
-		target.shuriken_toss_dummy:SetAbsOrigin(target.shuriken_position + Vector(0, 0, 500))
+		target.shuriken_toss_dummy:SetAbsOrigin(target.shuriken_position)
 
 		-- Spawn a chain attached to the target and the impact point
 		target.shuriken_particle = ParticleManager:CreateParticle(chain_particle, PATTACH_RENDERORIGIN_FOLLOW, caster)
