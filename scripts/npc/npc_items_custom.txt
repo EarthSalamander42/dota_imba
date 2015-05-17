@@ -7065,7 +7065,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1375"	
+		"ItemCost"						"0"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -7074,7 +7074,7 @@
 		"ItemResult"					"item_imba_black_king_bar"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_ogre_axe;item_imba_mithril_hammer"
+			"01"						"item_imba_ogre_axe;item_imba_mithril_hammer;item_imba_white_queen_cape"
 		}
 	}
 	
@@ -7101,6 +7101,7 @@
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bkb;black king bar"
 		"ItemSellable"					"1"
+		"AbilitySharedCooldown"			"bkb"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
@@ -7110,12 +7111,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"14"
+				"bonus_strength"		"16"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"32"
+				"bonus_damage"			"40"
 			}
 			"03"
 			{
@@ -8065,7 +8066,7 @@
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 		"ItemDroppable" 				"0"
@@ -8079,7 +8080,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"100"
+				"damage"				"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"100"
 			}
 		}
 
@@ -8102,6 +8108,26 @@
 						"Function"		"Rapier"
 
 						"damage"		"%attack_damage"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 	"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
 					}
 				}
 			}
@@ -8400,9 +8426,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1139"
-		"BaseClass"						"item_butterfly"
+		"ID"							"1241"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" 			"item_imba_butterfly"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8443,12 +8470,98 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6"
+				"flutter_duration"		"5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_move_speed"		"100"
+				"flutter_move_speed"	"100"
+			}
+		}
+
+		// Datadriven
+		//-------------------------------------------------------------------------------------------------------------
+		
+		"OnSpellStart"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"			"modifier_item_imba_butterfly"
+				"Target" 				"CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_imba_butterfly_flutter"
+				"Target" 				"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_butterfly"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS" 		"%bonus_agility"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 		"%bonus_damage"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT" 			"%bonus_evasion"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_butterfly.lua"
+						"Function"		"ButterflyEffect"
+
+						"damage"		"%attack_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_butterfly_flutter"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"0"
+
+				"Duration"				"%flutter_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS" 		"%bonus_agility"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 		"%bonus_damage"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%flutter_move_speed"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_butterfly.lua"
+						"Function"		"ButterflyEffect"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_item_imba_butterfly"
+						"Target" 		"CASTER"
+					}
+				}
 			}
 		}
 	}
@@ -11966,5 +12079,90 @@
 		}
 	}
 
-	//next free ID: 1241
+	//=================================================================================================================
+	// Recipe: White Queen Cape
+	//=================================================================================================================
+	"item_recipe_imba_white_queen_cape"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1242"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"505"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_white_queen_cape"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_belt_of_strength;item_imba_blades_of_attack"
+		}
+	}
+	
+	//=================================================================================================================
+	// White Queen Cape
+	//=================================================================================================================
+	"item_imba_white_queen_cape"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1243"
+		"BaseClass"						"item_black_king_bar"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"item_imba_white_queen_cape"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1375"
+		"ItemShopTags"					"str;damage;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"wqc;white queen cape"
+		"ItemSellable"					"1"
+		"AbilitySharedCooldown"			"bkb"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_level"				"1"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"model_scale"			"30"     // Percentage over model scale
+			}
+		}
+	}
+
+	//next free ID: 1244
 }

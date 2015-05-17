@@ -223,7 +223,7 @@ function MoonlightScepter( keys )
 	local fade_modifier = keys.fade_modifier
 	local scepter = HasScepter(caster)
 
-	if scepter and not GameRules:IsDaytime() then
+	if scepter and not GameRules:IsDaytime() and caster:IsAlive() then
 		if not target:HasModifier(modifier) then
 			ability:ApplyDataDrivenModifier(caster, target, modifier, {})
 			ability:ApplyDataDrivenModifier(caster, target, fade_modifier, {})

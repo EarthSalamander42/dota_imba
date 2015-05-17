@@ -8235,15 +8235,6 @@
 
 				"Duration"					"%duration"
 
-				"OnCreated"
-				{
-					"DestroyTrees"
-					{
-						"Target"			"TARGET"
-						"Radius"			"%path_radius"
-					}
-				}
-
 				"OnDestroy"
 				{
 					"RunScript"
@@ -9487,37 +9478,42 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_interval"		"2.5 1.67 1.25 1.0"
+				"stack_interval"		"1.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_stack"		"5"
+				"slow_per_stack"		"-3"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_per_stack"		"-5"
+				"var_type"				"FIELD_FLOAT"
+				"chance_per_stack"		"1.0 1.5 2.0 2.5"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"chance_per_stack"		"5"
+				"aura_aoe"				"650"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_aoe"				"800"
+				"target_damage"			"0 70 140 210"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_tooltip"			"0.4 0.6 0.8 1.0"
+				"aura_stickyness"		"2.0"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"target_damage"			"0 70 140 210"
+				"base_slow"				"-7"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_base_slow"		"-10"
 			}
 		}	
 
@@ -9642,15 +9638,6 @@
 					}
 				}
 
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_imba_frost_nova_stacks"
-						"Target" 		"TARGET"
-					}
-				}
-
 				"ThinkInterval"  		"%stack_interval"
 
 				"OnIntervalThink"
@@ -9666,6 +9653,12 @@
 						"sound"			"Ability.FrostNova"
 					}
 				}
+
+				"Properties"
+				{	
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%base_slow"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_slow" 
+				}
 			}
 
 			"modifier_imba_frost_nova_stacks"
@@ -9673,6 +9666,8 @@
 				"IsDebuff"				"1"
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
+
+				"Duration"				"%aura_stickyness"
 
 				"EffectName"			"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
 
@@ -12994,7 +12989,7 @@
 					"MODIFIER_PROPERTY_MIN_HEALTH" 					"1"
 				    "MODIFIER_PROPERTY_DISABLE_HEALING" 			"1" 
 				}
-				
+
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
