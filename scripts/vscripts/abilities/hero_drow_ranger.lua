@@ -93,6 +93,7 @@ function Gust( keys )
 		center_y = keys.caster:GetAbsOrigin().y,
 		center_z = keys.caster:GetAbsOrigin().z
 	}
+	keys.target:RemoveModifierByName("modifier_knockback")
 	keys.target:AddNewModifier( keys.caster, ability, "modifier_knockback", knockbackModifierTable )
 end
 

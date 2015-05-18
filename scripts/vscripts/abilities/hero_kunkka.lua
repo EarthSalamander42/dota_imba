@@ -103,6 +103,7 @@ function Torrent( keys )
 
 			-- Applies the phasing and knockback modifiers
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_phase, {})
+			enemy:RemoveModifierByName("modifier_knockback")
 			enemy:AddNewModifier(caster, ability, "modifier_knockback", knockback)
 
 			-- Deals tick damage [max_ticks] times

@@ -57,16 +57,11 @@ function Heartstopper( keys )
 	local stack_count = target:GetModifierStackCount(stack_modifier, ability)
 	damage = damage * max_hp * ( 1 + stack_power * stack_count / 100 ) / 100
 	
-	-- Damage is dealt by modifying the target's HP directly (HP removal). Deals 1 pure damage to kill targets when appropriate
+	-- Damage is dealt by modifying the target's HP directly (HP removal). Kills targets directly when appropriate
 	if target:GetHealth() <= damage then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+		target:Kill(ability, caster)
 	else
 		target:SetHealth(target:GetHealth() - damage)
-	end
-
-	-- Forces the kill if the target is at or below zero health (prevents edge case bugs)
-	if target:GetHealth() <= 0 then
-		target:Kill(ability, caster)
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos
