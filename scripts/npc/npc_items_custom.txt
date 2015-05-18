@@ -10938,7 +10938,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1187"
 		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -10986,45 +10986,51 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"FireSound"
 			{
-				"ModifierName"	"modifier_medallion_debuff"
-				"Target" 		"CASTER"
-				"Duration"		"%duration"
+				"EffectName"			"DOTA_Item.MedallionOfCourage.Activate"
+				"Target" 				"TARGET"
 			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_medallion_debuff"
-				"Target"
-				{
-					"Center"  	"TARGET"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-				}
-				"Duration"		"%duration"
+				"ModifierName"			"modifier_item_imba_medallion_debuff"
+				"Target" 				"CASTER"
+				"Duration"				"%duration"
 			}
 
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_medallion_buff"
+				"ModifierName"			"modifier_item_imba_medallion_debuff"
 				"Target"
 				{
-					"Center"  	"TARGET"
-					"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					"Center"  			"TARGET"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 				}
-				"Duration"		"%duration"
+				"Duration"				"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_imba_medallion_buff"
+				"Target"
+				{
+					"Center"  			"TARGET"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+				"Duration"				"%duration"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_medallion_passive"
+			"modifier_item_imba_medallion_passive"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -11033,12 +11039,12 @@
 				}
 			}
 
-			"modifier_medallion_debuff"
+			"modifier_item_imba_medallion_debuff"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 				
 				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
 				"EffectAttachType"		"follow_overhead"
@@ -11049,12 +11055,12 @@
 				}
 			}
 
-			"modifier_medallion_buff"
+			"modifier_item_imba_medallion_buff"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"1"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"1"
 				
 				"EffectName"			"particles/items2_fx/medallion_of_courage.vpcf"
 				"EffectAttachType"		"follow_overhead"
@@ -12164,5 +12170,366 @@
 		}
 	}
 
-	//next free ID: 1244
+	//=================================================================================================================
+	// Recipe: Solar Crest
+	//=================================================================================================================
+	"item_recipe_imba_solar_crest"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1227"
+		"BaseClass"             		"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_solar_crest"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_medallion_of_courage;item_imba_talisman_of_evasion"
+		}
+	}
+
+	//=================================================================================================================
+	// Solar Crest
+	//=================================================================================================================
+	"item_imba_solar_crest"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1244"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"BaseClass"             		"item_datadriven"
+		"AbilityTextureName" 			"item_imba_solar_crest"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"FightRecapLevel"				"1"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"7.0"
+		"AbilitySharedCooldown"			"medallion"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3000"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemShopTags"					"armor;regen_mana;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"solar crest"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_armor"						"12"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_mana_regen_pct"				"100"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_evasion"						"35"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"allied_armor"						"12"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"allied_evasion"					"35"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"armor_reduction"					"-12"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"enemy_armor_reduction_tooltip"		"12"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"miss_chance"						"35"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"duration"							"7"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"valor_cast_range_tooltip"			"1000"
+			}			
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"						"DOTA_Item.MedallionOfCourage.Activate"
+				"Target" 							"TARGET"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"						"modifier_item_imba_solar_crest_passive"
+				"Target" 							"CASTER"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"						"modifier_item_imba_solar_crest_dummy"
+				"Target" 							"CASTER"
+				"Duration"							"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"						"modifier_item_imba_solar_crest_debuff"
+				"Target"
+				{
+					"Center"  						"TARGET"
+					"Teams" 						"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+					"Flags"     					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+
+				"Duration"							"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"						"modifier_item_imba_solar_crest_buff"
+				"Target"
+				{
+					"Center"  						"TARGET"
+					"Teams" 						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types" 						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				}
+
+				"Duration"							"%duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_solar_crest_passive"
+			{
+				"Passive"							"1"
+				"IsHidden"							"1"
+
+				"Attributes"						"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_pct"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+				}
+			}
+
+			"modifier_item_imba_solar_crest_dummy"
+			{
+				"Passive"							"0"
+				"IsHidden"							"0"
+				"IsDebuff"							"1"
+				"IsPurgable"						"1"
+			
+				"EffectName"						"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"					"follow_overhead"
+			
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"				"modifier_item_imba_solar_crest_passive"
+						"Target" 					"CASTER"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen_pct"
+				}
+			}
+
+			"modifier_item_imba_solar_crest_debuff"
+			{
+				"Passive"							"0"
+				"IsHidden"							"0"
+				"IsDebuff"							"1"
+				"IsPurgable"						"1"
+				
+				"EffectName"						"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"					"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%miss_chance"
+				}
+			}
+
+			"modifier_item_imba_solar_crest_buff"
+			{
+				"Passive"							"0"
+				"IsHidden"							"0"
+				"IsBuff"							"1"
+				"IsPurgable"						"1"
+				
+				"EffectName"						"particles/items2_fx/medallion_of_courage.vpcf"
+				"EffectAttachType"					"follow_overhead"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Moon Shard
+	//=================================================================================================================
+	"item_recipe_imba_moon_shard"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1245"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"300"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_moon_shard"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_hyperstone;item_imba_hyperstone"
+		}
+	}
+
+	//=================================================================================================================
+	// Moon Shard
+	//=================================================================================================================
+	"item_imba_moon_shard"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1246"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_moon_shard"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CUSTOM"
+
+		"AbilityCastRange"				"600"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4300"
+		"ItemShopTags"					"attack_speed"
+		"ItemQuality"					"common"
+		"ItemAliases"					"moon shard"
+		"SideShop"						"0"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"160"
+			}			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_night_vision"	"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"consumed_bonus"		"90"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"Item.MoonShard.Consume"
+				"Target" 				"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_moon_shard.lua"
+				"Function"				"MoonShardActive"
+
+				"modifier"				"modifier_imba_moon_shard_activated"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_moon_shard"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%bonus_night_vision"
+				}
+			}
+
+			"modifier_imba_moon_shard_activated"
+			{
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"TextureName"		"item_imba_moon_shard"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consumed_bonus"
+				}
+			}
+		}
+	}
+
+	//next free ID: 1247
 }

@@ -45,7 +45,7 @@ USE_CUSTOM_HERO_LEVELS = false          -- Should we allow heroes to have custom
 MAX_LEVEL = 25                        	-- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false            -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
-Testing = true
+Testing = false
 OutOfWorldVector = Vector(11000, 11000, -200)
 
 if not Testing then
