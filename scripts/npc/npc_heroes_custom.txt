@@ -321,7 +321,6 @@
 		"AttributeIntelligenceGain"	"2.25"
 
 		"Ability1"					"imba_nyx_assassin_impale"
-		"Ability2"					"imba_nyx_assassin_mana_burn"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
 		"Ability4"					"imba_nyx_assassin_vendetta"
 		"Ability5"					"attribute_bonus_int"				
@@ -339,10 +338,10 @@
 
 		"AttackRange"				"525"
 
-		//"Ability1"					"imba_obsidian_destroyer_arcane_orb"
-		//"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
-		//"Ability3"					"imba_obsidian_destroyer_essence_aura"
-		//"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
+		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
+		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
+		"Ability3"					"imba_obsidian_destroyer_essence_aura"
+		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 		"Ability5"					"attribute_bonus_int"				
 	}
 

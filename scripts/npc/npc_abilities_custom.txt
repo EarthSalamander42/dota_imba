@@ -416,7 +416,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_NO"
 		"FightRecapLevel"								"1"
@@ -13520,6 +13520,1030 @@
 				{
 					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Nyx Assassin's Impale
+	//=================================================================================================================
+	"imba_nyx_assassin_impale"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"nyx_assassin_impale"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"95 115 135 155"
+		
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"80 140 200 260"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"180"
+			}
+			"02"
+			{	
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.87 2.17 2.47 2.77"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"				"900"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"air_time"				"0.57"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_repeat"			"20 30 40 50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_duration"		"3.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 140 200 260"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"global_radius"			"25000"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_NyxAssassin.Impale"
+			}
+		
+			"LinearProjectile"
+			{
+				"Target"				"POINT"
+				"EffectName"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+				"StartRadius"			"%width"
+				"EndRadius"				"%width"
+				"MoveSpeed"				"%speed"
+				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"FixedDistance"			"%length"
+				"ProvidesVision"		"0"
+				"HasFrontalCone"		"0"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"0"
+		
+			"FireSound"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"Hero_NyxAssassin.Impale.Target" 
+			}
+		
+			"RemoveModifier"
+			{
+				"Target"				"TARGET"
+				"ModifierName"			"modifier_knockback"
+			}
+			
+			"Knockback"
+			{
+				"Target"				"TARGET"
+				"Center"				"CASTER"
+				"Distance"				"0"
+				"Duration"				"%air_time"
+				"Height"				"200"
+				"IsFixedDistance"		"1"
+			}
+			
+			"Stun"
+			{
+				"Target"				"TARGET"
+				"Duration"				"%duration"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_nyx_assassin.lua"
+				"Function"				"Impale"
+
+				"land_sound"			"Hero_NyxAssassin.Impale.TargetLand"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_impale_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"Aura"          		"modifier_imba_impale_damage_counter"
+				"Aura_Radius"   		"%global_radius"
+				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster" 	"0"
+			}
+
+			"modifier_imba_impale_damage_counter"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_nyx_assassin.lua"
+						"Function"		"ImpaleDamageCounter"
+
+						"damage"		"%attack_damage"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Nyx Assassin's Spiked Carapace
+	//=================================================================================================================
+	"imba_nyx_assassin_spiked_carapace"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"nyx_assassin_spiked_carapace"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21 18 15 12"
+		"AbilityCastPoint"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"reflect_duration"			"2.25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0 1.5 2.0 2.5"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_imba_spiked_carapace"
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_NyxAssassin.SpikedCarapace"
+				"Target" 					"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_spiked_carapace"
+			{
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+			
+				"Duration"					"%reflect_duration"
+				
+				"EffectName"				"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"Function"			"SpikedCarapaceReflect"
+
+						"damage_taken"		"%attack_damage"
+						"stun_modifier"		"modifier_imba_spiked_carapaced_stun"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"		"1" 
+				}
+			}
+			
+			"modifier_imba_spiked_carapaced_stun"
+			{
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+			
+				"Duration"				"%stun_duration"
+				
+				"OverrideAnimation"		"ACT_DOTA_DISABLED"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"ControlPoints"
+						{
+							"02"			"%stun_duration %stun_duration %stun_duration"
+						}
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
+						"EffectAttachType"	"follow_overhead"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"Hero_NyxAssassin.SpikedCarapace.Stun"
+						"Target" 			"TARGET"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Nyx Assassin's Vendetta
+	//=================================================================================================================
+	"imba_nyx_assassin_vendetta"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"nyx_assassin_vendetta"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70.0 60.0 50.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"160 210 260"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"30.0 40.0 50.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"250 400 550"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_storage"		"300 500 700"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_scepter"		"55.0 40.0 25.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle"						"particles/status_fx/status_effect_base.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"					"CASTER"
+				"EffectName"				"Hero_NyxAssassin.Vendetta"
+			}
+		
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_imba_vendetta"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"					"CASTER"
+				"ModifierName"				"modifier_invisible"
+				"Duration"					"%duration"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_vendetta"
+			{
+				"Duration"					"%duration"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+						"EffectAttachType"	"start_at_origin"
+					}
+				}
+			
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"Function"			"Vendetta"
+
+						"modifier"			"modifier_imba_vendetta"
+						"stack_modifier"	"modifier_imba_vendetta_damage_stacks"
+						"particle_name"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta.vpcf"
+						"attack_sound"		"Hero_NyxAssassin.Vendetta.Crit"
+					}
+				}
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed"
+				}
+			
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_vendetta_damage_counter"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"Function"			"VendettaDamageCount"
+
+						"damage_taken"		"%attack_damage"
+						"stack_modifier"	"modifier_imba_vendetta_damage_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_vendetta_damage_stacks"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Outhouse Decorator's Arcane Orb
+	//=================================================================================================================
+	"imba_obsidian_destroyer_arcane_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"obsidian_destroyer_arcane_orb"
+		"AbilityCastRange"					"525"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+			"particle"						"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+			"particle"  					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+		}	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"mana_pool_damage_pct"		"7 8 9 10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage"			"1000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_steal_pct"				"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_steal_duration"		"20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_gain"					"2 3 4 5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_arcane_orb"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+
+				"Orb"
+				{
+					"Priority"				"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
+					"CastAttack"			"1"
+				}
+
+				"OnOrbFire"
+				{
+					"SpendMana"
+					{
+						"Mana"				"%AbilityManaCost"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb"
+						"Target"			"TARGET"	
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"Function"			"ArcaneOrbRestoreMana"
+						"Target"			"CASTER"
+
+						"ability_name"		"imba_obsidian_destroyer_essence_aura"
+						"particle_name"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+						"sound_name"		"Hero_ObsidianDestroyer.EssenceAura"
+					}
+
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+				}
+
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"Function"			"ArcaneOrb"
+						"Target"			"TARGET"
+
+						"int_gain_modifier"	"modifier_imba_obsidian_destroyer_int_gain"
+						"int_loss_modifier"	"modifier_imba_obsidian_destroyer_int_steal"
+					}
+				}
+			}
+
+			"modifier_imba_obsidian_destroyer_int_gain"
+			{
+				"Duration"					"%int_steal_duration"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+
+				"TextureName"				"obsidian_destroyer_int_gain"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"1"
+				}
+			}
+
+			"modifier_imba_obsidian_destroyer_int_steal"
+			{
+				"Duration"					"%int_steal_duration"
+				"IsPurgable"				"0"
+				"IsDebuff"					"1"
+				"IsHidden"					"0"
+
+				"TextureName"				"obsidian_destroyer_int_steal"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Outhouse Decorator's Astral Imprisoment
+	//=================================================================================================================
+	"imba_obsidian_destroyer_astral_imprisonment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDuration"				"4.0"
+		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"525"
+		"AbilityCastPoint"				"0.2"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 140 160 180"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5" // applies multiple modifiers
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_steal_pct"			"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"steal_duration"		"50.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"prison_duration"		"4.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_gain"				"4 7 10 13"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName" 			"Hero_ObsidianDestroyer.AstralImprisonment.Cast"
+				"Target"				"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_ObsidianDestroyer.AstralImprisonment"
+				"Target"				"TARGET"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"abilities/hero_outhouse_decorator.lua"
+				"Function"				"AstralImprisonment"
+
+				"ability_name"			"imba_obsidian_destroyer_arcane_orb"
+				"int_gain_modifier"		"modifier_imba_obsidian_destroyer_int_gain"
+				"int_loss_modifier"		"modifier_imba_obsidian_destroyer_int_steal"				
+			}	
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_imba_astral_imprisonment"
+				"Target"				"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_astral_imprisonment"
+			{
+				"Duration"				"%prison_duration"
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+
+				"EffectName"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+				"EffectAttachType"		"attach_origin"
+
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"abilities/hero_outhouse_decorator.lua"
+						"Function"		"AstralImprisonmentEnd"
+
+						"sound_name"	"Hero_ObsidianDestroyer.AstralImprisonment"				
+					}
+
+					"FireSound"
+					{
+						"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment.End"
+						"Target"		"TARGET"
+					}
+				}				
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Outhouse Decorator's Essence Aura
+	//=================================================================================================================
+	"imba_obsidian_destroyer_essence_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+
+			// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"		
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"	    	"2 3 4 5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"restore_amount"		"6 8 10 12"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_essence_aura"
+			{
+				"Passive"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+
+				"Aura"						"modifier_imba_essence_aura_buff"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
+				"Aura_ApplyToCaster" 		"1"
+
+				"ThinkInterval"  			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_outhouse_decorator"
+						"Function"			"EssenceAuraMana"
+					}
+				}
+			}
+
+			"modifier_imba_essence_aura_buff"
+			{
+				"IsHidden"					"0"
+				
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"Function"			"RestoreMana"
+
+						"Target"			"UNIT"
+					}
+
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"UNIT"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"Hero_ObsidianDestroyer.EssenceAura"
+						"Target"			"UNIT"
+					}
+				}
+			}
+
+			"modifier_essence_aura_mana"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"	"%bonus_mana"
+				}
+			}
+
+			"modifier_essence_aura_mana_dummy"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Outhouse Decorator's Sanity Eclipse
+	//=================================================================================================================
+	"imba_obsidian_destroyer_sanity_eclipse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.2"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		"AOERadius"						"%radius"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_aoe.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_embers.vpcf"	
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area_glow.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_smoke_main.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			
+		}
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"						"160.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"						"175 250 325"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_multiplier"				"8 10 12"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"400 500 600"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range"					"700"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mana_burn_pct"					"75"
+			}	
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"					"Hero_ObsidianDestroyer.SanityEclipse.Cast"
+				"Target"						"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"					"Hero_ObsidianDestroyer.SanityEclipse"
+				"Target"						"POINT"
+			}
+
+			"FireEffect"
+			{ 
+				"EffectName"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+				"EffectAttachType"				"start_at_customorigin"
+				"TargetPoint"					"POINT"
+
+				"ControlPoints"
+				{
+					"00" "POINT"
+					"01" "%radius 0 0"
+					"02" "%radius 0 0"
+					"03" "%radius 0 0"				
+				}
+			}		
+
+			"RunScript"
+			{
+				"ScriptFile"					"abilities/hero_outhouse_decorator.lua"
+				"Function"						"SanityEclipse"
+				"Target"						"POINT"
+
+				"astral_name"					"imba_obsidian_destroyer_astral_imprisonment"
+				"astral_modifier"				"modifier_imba_astral_imprisonment"
+				"astral_sound"					"Hero_ObsidianDestroyer.AstralImprisonment"
+				"ability_name"					"imba_obsidian_destroyer_arcane_orb"
+				"int_gain_modifier"				"modifier_imba_obsidian_destroyer_int_gain"
+				"int_loss_modifier"				"modifier_imba_obsidian_destroyer_int_steal"
+			}			
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_sanity_eclipse_dummy"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsDebuff"						"1"
+
+				"Duration"						"1"
 			}
 		}
 	}
