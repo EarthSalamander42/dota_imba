@@ -102,95 +102,150 @@ end
 function FreezingFieldCast( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local scepter = caster:HasScepter()
 	local modifier_aura = keys.modifier_aura
-	local modifier_aura_scepter = keys.modifier_aura_scepter
 	local modifier_sector_0 = keys.modifier_sector_0
 	local modifier_sector_1 = keys.modifier_sector_1
 	local modifier_sector_2 = keys.modifier_sector_2
 	local modifier_sector_3 = keys.modifier_sector_3
-	
-	-- Grants the slowing aura to the caster
+
+	-- Defines the center point (caster or dummy unit)
+	caster.freezing_field_center = caster
+	local scepter = HasScepter(caster)
 	if scepter then
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_aura_scepter, {})
-	else
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
+		caster.freezing_field_center = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, caster, caster, caster:GetTeamNumber())
+		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster )
+
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, keys.target_points[1])
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
 	end
+
+	-- Grants the slowing aura to the center unit
+	ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_aura, {})
 
 	-- Initializes each sector's thinkers
 	Timers:CreateTimer(0.1, function()
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_0, {} )
-		return nil
-		end )
+		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_0, {} )
+	end)
 		
 	Timers:CreateTimer(0.2, function()
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_1, {} )
-		return nil
-		end )
+		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_1, {} )
+	end)
 	
 	Timers:CreateTimer(0.3, function()
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_2, {} )
-		return nil
-		end )
+		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_2, {} )
+	end)
 	
 	Timers:CreateTimer(0.4, function()
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_sector_3, {} )
-		return nil
-		end )
+		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_3, {} )
+	end)
 end
 
 function FreezingFieldExplode( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local caster = keys.caster
-	local casterLocation = caster:GetAbsOrigin()
-	local minDistance = ability:GetLevelSpecialValueFor("explosion_min_dist", ability_level)
-	local maxDistance = ability:GetLevelSpecialValueFor("explosion_max_dist", ability_level)
+	local target_loc = caster:GetAbsOrigin()
+	local min_distance = ability:GetLevelSpecialValueFor("explosion_min_dist", ability_level)
+	local max_distance = ability:GetLevelSpecialValueFor("explosion_max_dist", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("explosion_radius", ability_level)
-	local directionConstraint = keys.section
-	local modifierName = "modifier_imba_freezing_field_debuff"
-	local particleName = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-	local soundEventName = "hero_Crystal.freezingField.explosion"
-	local damageType = ability:GetAbilityDamageType()
+	local direction_constraint = keys.section
+	local particle_name = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+	local sound_name = "hero_Crystal.freezingField.explosion"
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local scepter = caster:HasScepter()
-	local abilityDamage = 0
 
-	if scepter == true then
-		abilityDamage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
-	else
-		abilityDamage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	if scepter then
+		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+		target_loc = caster.freezing_field_center:GetAbsOrigin()
 	end
 	
 	-- Get random point
-	local castDistance = RandomInt( minDistance, maxDistance )
+	local castDistance = RandomInt( min_distance, max_distance )
 	local angle = RandomInt( 0, 90 )
 	local dy = castDistance * math.sin( angle )
 	local dx = castDistance * math.cos( angle )
 	local attackPoint = Vector( 0, 0, 0 )
 	
-	if directionConstraint == 0 then			-- NW
-		attackPoint = Vector( casterLocation.x - dx, casterLocation.y + dy, casterLocation.z )
-	elseif directionConstraint == 1 then		-- NE
-		attackPoint = Vector( casterLocation.x + dx, casterLocation.y + dy, casterLocation.z )
-	elseif directionConstraint == 2 then		-- SE
-		attackPoint = Vector( casterLocation.x + dx, casterLocation.y - dy, casterLocation.z )
+	if direction_constraint == 0 then			-- NW
+		attackPoint = Vector( target_loc.x - dx, target_loc.y + dy, target_loc.z )
+	elseif direction_constraint == 1 then		-- NE
+		attackPoint = Vector( target_loc.x + dx, target_loc.y + dy, target_loc.z )
+	elseif direction_constraint == 2 then		-- SE
+		attackPoint = Vector( target_loc.x + dx, target_loc.y - dy, target_loc.z )
 	else										-- SW
-		attackPoint = Vector( casterLocation.x - dx, casterLocation.y - dy, casterLocation.z )
+		attackPoint = Vector( target_loc.x - dx, target_loc.y - dy, target_loc.z )
 	end
 	
-	-- From here onwards might be possible to port it back to datadriven through modifierArgs with point but for now leave it as is
 	-- Loop through units
 	local units = FindUnitsInRadius(caster:GetTeam(), attackPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
 	for _,v in pairs( units ) do
-		ApplyDamage({victim = v, attacker = caster, damage = abilityDamage, damage_type = damageType})
+		ApplyDamage({victim = v, attacker = caster, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	end
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle(particleName, PATTACH_CUSTOMORIGIN, caster)
+	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 	
-	-- Fire sound at caster's position
-	StartSoundEvent(soundEventName, caster)
+	-- Fire sound at the center position
+	StartSoundEvent(sound_name, caster.freezing_field_center)
+end
 
+function FreezingFieldEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local scepter = HasScepter(caster)
+	local modifier_aura = keys.modifier_aura
+	local modifier_caster = keys.modifier_caster
+	local modifier_NE = keys.modifier_NE
+	local modifier_NW = keys.modifier_NW
+	local modifier_SW = keys.modifier_SW
+	local modifier_SE = keys.modifier_SE
+
+	-- Removes auras and modifiers
+	if scepter then
+		caster.freezing_field_center:Destroy()
+		caster:RemoveModifierByName(modifier_caster)
+		ParticleManager:DestroyParticle(caster.freezing_field_particle, false)
+	else
+		caster:RemoveModifierByName(modifier_aura)
+		caster:RemoveModifierByName(modifier_NE)
+		caster:RemoveModifierByName(modifier_NW)
+		caster:RemoveModifierByName(modifier_SW)
+		caster:RemoveModifierByName(modifier_SE)
+	end
+
+	-- Resets the center position
+	caster.freezing_field_center = nil
+	caster.freezing_field_particle = nil
+
+end
+
+function ScepterCheck( keys )
+	local caster = keys.caster
+	local scepter = HasScepter(caster)
+	local ability = keys.skill_name
+	local new_ability = keys.scepter_skill_name
+
+	if scepter then
+		caster:RemoveModifierByName("modifier_imba_freezing_field_scepter_check")
+		SwitchAbilities(caster, new_ability, ability, true, true)
+	else
+		return nil
+	end
+end
+
+function ScepterLostCheck( keys )
+	local caster = keys.caster
+	local scepter = HasScepter(caster)
+	local ability = keys.scepter_skill_name
+	local new_ability = keys.skill_name
+
+	if scepter then
+		return nil
+	else
+		caster:RemoveModifierByName("modifier_imba_freezing_field_scepter_check")
+		SwitchAbilities(caster, new_ability, ability, true, true)
+	end
 end

@@ -4576,7 +4576,6 @@
 				"Function"								"FreezingFieldCast"
 
 				"modifier_aura"							"modifier_imba_freezing_field_caster"
-				"modifier_aura_scepter"					"modifier_imba_freezing_field_caster_scepter"
 				"modifier_sector_0"						"modifier_imba_freezing_field_northwest"
 				"modifier_sector_1"						"modifier_imba_freezing_field_northeast"
 				"modifier_sector_2"						"modifier_imba_freezing_field_southeast"
@@ -4626,48 +4625,54 @@
 		}
 		
 		"OnChannelFinish"
-		{
-			"RemoveModifier"
+		{	
+			"RunScript"
 			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_caster"
-			}
+				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"Function"								"FreezingFieldEnd"
 
-			"RemoveModifier"
-			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_caster_scepter"
-			}
-			
-			// Remove 4 modifiers, one for each section
-			
-			"RemoveModifier"
-			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_northeast"
-			}
-			
-			"RemoveModifier"
-			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_northwest"
-			}
-			
-			"RemoveModifier"
-			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_southwest"
-			}
-			
-			"RemoveModifier"
-			{
-				"Target"								"CASTER"
-				"ModifierName"							"modifier_imba_freezing_field_southeast"
+				"modifier_aura"							"modifier_imba_freezing_field_caster"
+				"modifier_NE"							"modifier_imba_freezing_field_northeast"
+				"modifier_NW"							"modifier_imba_freezing_field_northwest"
+				"modifier_SW"							"modifier_imba_freezing_field_southwest"
+				"modifier_SE"							"modifier_imba_freezing_field_southeast"
 			}
 		}
 		
 		"Modifiers"
-		{
+		{	
+			"modifier_imba_freezing_field_scepter_check"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"  						"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"ScepterCheck"
+
+						"skill_name"					"imba_crystal_maiden_freezing_field"
+						"scepter_skill_name"			"imba_crystal_maiden_freezing_field_scepter"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_imba_freezing_field_scepter_check"
+					}
+				}
+			}
+
 			"modifier_imba_freezing_field_caster"
 			{
 				"IsHidden"								"1"
@@ -4690,45 +4695,6 @@
 						"EffectAttachType"				"follow_origin"
 						"EffectRadius"					"%radius"
 					}
-				}
-			}
-
-			"modifier_imba_freezing_field_caster_scepter"
-			{
-				"IsHidden"								"1"
-				"OverrideAnimation"						"ACT_DOTA_CHANNEL_ABILITY_4"
-				
-				"Aura"									"modifier_imba_freezing_field_debuff_scepter"
-				"Aura_Radius"							"%radius"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				
-				"Duration"								"%AbilityDuration"
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"						"CASTER"
-						"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-						"EffectAttachType"				"follow_origin"
-						"EffectRadius"					"%radius"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"100"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			
@@ -4821,7 +4787,355 @@
 				}
 			}
 
-			"modifier_imba_freezing_field_debuff_scepter"
+			"modifier_imba_frostbite_root"
+			{
+				"IsPurgable"							"1"
+				"IsDebuff"								"1"
+				"TextureName"							"crystal_maiden_frostbite"
+			
+				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Crystal Maiden's Freezing Field (Scepter version)
+	//=================================================================================================================
+	"imba_crystal_maiden_freezing_field_scepter"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"								"2"
+		"AbilityTextureName"							"crystal_maiden_freezing_field"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"								"1200"
+		"AbilityChannelTime"							"10.0"
+		"AbilityCastPoint"								"0.2"
+		"AOERadius"										"%radius"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"90"
+		"AbilityDuration"								"10.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"200 400 600"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"					"0.35"	// Primarily about the damage
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius"								"1000"
+			}
+		
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"explosion_radius"						"300 325 350"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"explosion_interval"					"0.1"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"movespeed_slow"						"-30 -40 -50"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_slow"							"-40 -60 -80"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"slow_duration"							"1.0"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"explosion_min_dist"					"200"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"explosion_max_dist"					"800"
+			}
+			"10"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage"								"110 180 250"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_scepter"						"180 250 320"
+			}
+			"12"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"movespeed_slow_scepter" 				"-60"
+			}
+			"13"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"attack_slow_scepter"					"-100"
+			}
+			"14"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"frostbite_duration"					"1.0 1.4 1.8"
+			}
+			"15"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"stun_duration"							"0.1"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"Target"								"POINT"
+				"EffectName"							"hero_Crystal.freezingField.wind"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"Function"								"FreezingFieldCast"
+				"Target"								"POINT"
+
+				"modifier_aura"							"modifier_imba_freezing_field_aura"
+				"modifier_sector_0"						"modifier_imba_freezing_field_northwest"
+				"modifier_sector_1"						"modifier_imba_freezing_field_northeast"
+				"modifier_sector_2"						"modifier_imba_freezing_field_southeast"
+				"modifier_sector_3"						"modifier_imba_freezing_field_southwest"
+			}
+			
+			"TrackingProjectile"
+			{
+				"Target"
+				{
+					"Center"  							"POINT"
+					"Radius" 							"%radius"
+					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+
+				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
+				"MoveSpeed"								"2000"
+			}
+		
+			"Stun"
+			{
+				"Target"
+				{
+					"Center"  							"POINT"
+					"Radius" 							"%radius"
+					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+
+				"Duration"								"%stun_duration"
+			}
+			
+			"ApplyModifier"
+			{
+				"Target"
+				{
+					"Center"  							"POINT"
+					"Radius" 							"%radius"
+					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				}
+
+				"ModifierName"							"modifier_imba_frostbite_root"
+				"Duration"								"%frostbite_duration"
+			}
+		}
+		
+		"OnChannelFinish"
+		{	
+			"RunScript"
+			{
+				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"Function"								"FreezingFieldEnd"
+
+				"modifier_aura"							"modifier_imba_freezing_field_aura"
+				"modifier_caster"						"modifier_imba_freezing_field_caster"
+				"modifier_NE"							"modifier_imba_freezing_field_northeast"
+				"modifier_NW"							"modifier_imba_freezing_field_northwest"
+				"modifier_SW"							"modifier_imba_freezing_field_southwest"
+				"modifier_SE"							"modifier_imba_freezing_field_southeast"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_freezing_field_scepter_check"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"  						"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"ScepterLostCheck"
+
+						"skill_name"					"imba_crystal_maiden_freezing_field"
+						"scepter_skill_name"			"imba_crystal_maiden_freezing_field_scepter"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_imba_freezing_field_scepter_check"
+					}
+				}
+			}
+
+			"modifier_imba_freezing_field_caster"
+			{
+				"IsHidden"								"1"
+				"OverrideAnimation"						"ACT_DOTA_CHANNEL_ABILITY_4"
+
+				"Duration"								"%AbilityDuration"
+			}
+
+			"modifier_imba_freezing_field_aura"
+			{
+				"IsHidden"								"1"
+
+				"Aura"									"modifier_imba_freezing_field_debuff"
+				"Aura_Radius"							"%radius"
+				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				
+				"Duration"								"%AbilityDuration"
+			}
+			
+			"modifier_imba_freezing_field_northwest"
+			{
+				"IsHidden"								"1"
+				"ThinkInterval"							"%explosion_interval * 4"
+				
+				"Duration"								"%AbilityDuration"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"FreezingFieldExplode"
+						"section"						"0"
+					}
+				}
+			}
+			
+			"modifier_imba_freezing_field_northeast"
+			{
+				"IsHidden"								"1"
+				"ThinkInterval"							"%explosion_interval * 4"
+				
+				"Duration"								"%AbilityDuration"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"FreezingFieldExplode"
+						"section"						"1"
+					}
+				}
+			}
+			
+			"modifier_imba_freezing_field_southeast"
+			{
+				"IsHidden"								"1"
+				"ThinkInterval"							"%explosion_interval * 4"
+				
+				"Duration"								"%AbilityDuration"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"FreezingFieldExplode"
+						"section"						"2"
+					}
+				}
+			}
+			
+			"modifier_imba_freezing_field_southwest"
+			{
+				"IsHidden"								"1"
+				"ThinkInterval"							"%explosion_interval * 4"
+				
+				"Duration"								"%AbilityDuration"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"Function"						"FreezingFieldExplode"
+						"section"						"3"
+					}
+				}
+			}
+			
+			"modifier_imba_freezing_field_debuff"
 			{
 				"IsDebuff"								"1"
 				"IsPurgable"							"1"
@@ -13964,6 +14278,15 @@
 						"stack_modifier"	"modifier_imba_vendetta_damage_stacks"
 						"particle_name"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta.vpcf"
 						"attack_sound"		"Hero_NyxAssassin.Vendetta.Crit"
+					}
+				}
+
+				"OnAbilityExecuted"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_imba_vendetta"
+						"Target" 			"CASTER"
 					}
 				}
 			
