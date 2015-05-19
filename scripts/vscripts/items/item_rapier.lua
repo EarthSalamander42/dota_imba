@@ -14,17 +14,29 @@ function Rapier( keys )
 	end	
 end
 
+function AegisCheck( keys )
+	local caster = keys.caster
+
+	if not caster.has_aegis then
+		caster.has_aegis = false
+	end
+
+	if HasAegis(caster) then
+		caster.has_aegis = true
+	else
+		caster.has_aegis = false
+	end
+end
+
 function RapierDrop( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local caster_pos = caster:GetAbsOrigin()
 
 	for i=0,5 do
-		print("badlel")
 		local item = caster:GetItemInSlot(i)
-		if item and item:GetAbilityName() == "item_imba_rapier" then
+		if item and item:GetAbilityName() == "item_imba_rapier" and not caster.has_aegis then
 			caster:DropItemAtPositionImmediate(item, caster_pos)
-			print("lel")
 		end
 	end
 end

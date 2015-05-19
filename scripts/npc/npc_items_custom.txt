@@ -8130,6 +8130,17 @@
 						"Function"		"RapierDrop"
 					}
 				}
+
+				"ThinkInterval"  		"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
 			}
 		}
 	}

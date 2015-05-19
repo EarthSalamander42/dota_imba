@@ -480,6 +480,17 @@ function HasScepter(hero)
 	return false
 end
 
+-- Checks if a hero is wielding an Aegis of the immortal
+function HasAegis(hero)
+	for i=0,5 do
+		local item = hero:GetItemInSlot(i)
+		if item and item:GetAbilityName() == "item_aegis" then
+			return true
+		end
+	end
+	return false
+end
+
 -- Adds [stack_amount] stacks to a modifier
 function AddStacks(ability, caster, unit, modifier, stack_amount, refresh)
 	if unit:HasModifier(modifier) then
