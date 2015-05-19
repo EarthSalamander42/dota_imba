@@ -14384,7 +14384,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"int_steal_duration"		"20.0"
+				"int_steal_duration"		"10.0"
 			}
 			"05"
 			{
@@ -14548,6 +14548,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_gain"				"4 7 10 13"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_gain_duration"		"50.0"
 			}
 		}
 

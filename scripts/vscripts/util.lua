@@ -471,7 +471,7 @@ end
 
 -- Checks if a hero is wielding Aghanim's Scepter
 function HasScepter(hero)
-	for i=0,15 do
+	for i=0,5 do
 		local item = hero:GetItemInSlot(i)
 		if item and item:GetAbilityName() == "item_imba_ultimate_scepter" then
 			return true

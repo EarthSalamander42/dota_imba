@@ -45,7 +45,7 @@ function ArcaneOrbRestoreMana( keys )
 	local ability = caster:FindAbilityByName(keys.ability_name)
 
 	-- Check if Essence Aura is learned
-	if not ability then
+	if ability:GetLevel() == 0 then
 		return
 	end
 
@@ -79,6 +79,7 @@ function AstralImprisonment( keys )
 	local int_loss_modifier = keys.int_loss_modifier
 	local int_steal = ability:GetLevelSpecialValueFor("int_gain", ability_level)
 	local int_steal_pct = ability:GetLevelSpecialValueFor("int_steal_pct", ability_level)
+	local int_steal_duration = ability:GetLevelSpecialValueFor("int_gain_duration", ability_level)
 
 	-- If the target is an enemy, steal its intelligence
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -92,6 +93,8 @@ function AstralImprisonment( keys )
 		-- Add the appropriate number of stacks to the caster and the target
 		AddStacks(int_steal_ability, caster, caster, int_gain_modifier, int_steal, true)
 		AddStacks(int_steal_ability, caster, target, int_loss_modifier, int_steal, true)
+		ability:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
+		ability:ApplyDataDrivenModifier(caster, target, int_loss_modifier, {duration = int_steal_duration})
 	end
 
 	-- Remove the target's model from the game
@@ -99,6 +102,8 @@ function AstralImprisonment( keys )
 end
 
 function AstralImprisonmentEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
 	local sound_name = keys.sound_name
 	local target = keys.target
 
@@ -107,6 +112,11 @@ function AstralImprisonmentEnd( keys )
 
 	-- Redraw the target's model
 	target:RemoveNoDraw()
+
+	-- Deal 1 pure damage to enemies (prevents blinks)
+	if target:GetTeam() ~= caster:GetTeam() then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 1, damage_type = DAMAGE_TYPE_PURE})
+	end
 end
 
 function RestoreMana( keys )
@@ -149,17 +159,18 @@ function SanityEclipse( keys )
 
 	-- Find the enemies to be affected
 	local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-
-	if scepter and ability_astral then
-
+	
+	if scepter and ability_astral:GetLevel() ~= 0 then
+		
 		-- Astral Imprisonment Parameters
 		local ability_name = keys.ability_name
 		local astral_sound = keys.astral_sound
 		local int_steal_ability = caster:FindAbilityByName(ability_name)
 		local int_gain_modifier = keys.int_gain_modifier
 		local int_loss_modifier = keys.int_loss_modifier
-		local int_steal = ability_astral:GetLevelSpecialValueFor("int_gain", ability_level)
-		local int_steal_pct = ability_astral:GetLevelSpecialValueFor("int_steal_pct", ability_level)
+		local int_steal = ability_astral:GetLevelSpecialValueFor("int_gain", ability_astral:GetLevel() - 1)
+		local int_steal_pct = ability_astral:GetLevelSpecialValueFor("int_steal_pct", ability_astral:GetLevel() - 1)
+		local int_steal_duration = ability_astral:GetLevelSpecialValueFor("int_gain_duration", ability_astral:GetLevel() - 1)
 
 		-- Affect each valid enemy
 		for _,enemy in pairs(enemies) do
@@ -177,6 +188,8 @@ function SanityEclipse( keys )
 			-- Adds the appropriate number of stacks to the caster and the target
 			AddStacks(int_steal_ability, caster, caster, int_gain_modifier, this_target_int_steal, true)
 			AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
+			ability_astral:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
+			ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
 
 			-- Play sound, remove the target's model, and apply the Astral Imprisonment debuff
 			enemy:EmitSound(astral_sound)
