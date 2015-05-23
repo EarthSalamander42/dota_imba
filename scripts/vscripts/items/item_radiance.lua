@@ -25,7 +25,7 @@ function Radiance( keys )
 	local damage_table = {}
  	damage_table.victim = target
  	damage_table.attacker = caster
- 	damage_table.ability = "Radiance"
+ 	damage_table.ability = ability
  	damage_table.damage_type = DAMAGE_TYPE_MAGICAL
  	damage_table.damage = aura_damage + stacks * stacking_damage
 	ApplyDamage(damage_table)

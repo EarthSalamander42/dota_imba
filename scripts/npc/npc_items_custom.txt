@@ -1428,7 +1428,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_percent"			"40"
+				"mana_percent"			"35"
 			}
 			"03"
 			{
@@ -1709,7 +1709,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"50"
+		"ItemCost"						"75"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemAliases"					"sentry ward"
@@ -1733,7 +1733,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_range"			"200"
+				"vision_range"			"400"
 			}
 			"03"
 			{
@@ -1888,7 +1888,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
-		"AbilityCooldown"				"45.0"
+		"AbilityCooldown"				"50.0"
 		"AbilitySharedCooldown"			"teleport"
 		"AbilityChannelTime"			"2.0"
 		"AbilityCastPoint"				"0.0"
@@ -3373,7 +3373,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hot_duration"			"5"
+				"hot_duration"			"6"
 			}
 		}
 
@@ -4878,7 +4878,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"	
+		"ItemCost"						"1200"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -5116,7 +5116,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"32.0"
+		"AbilityCooldown"				"22.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"1"
@@ -5125,7 +5125,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"180"
-		"ItemCost"						"2315"
+		"ItemCost"						"2515"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 1"
@@ -5140,7 +5140,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"16"
+				"bonus_intellect"		"15"
 			}
 			"02"
 			{
@@ -5150,7 +5150,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"9"
+				"bonus_damage"			"11"
 			}
 			"04"
 			{
@@ -5178,9 +5178,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"850"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"28.0"
+		"AbilityCooldown"				"19.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"2"
@@ -5188,8 +5188,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170"
-		"ItemCost"						"3315"
+		"AbilityManaCost"				"175"
+		"ItemCost"						"3715"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 2"
@@ -5209,7 +5209,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"5"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
@@ -5224,7 +5224,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"900"
+				"range_tooltip"			"850"
 			}
 		}
 	}
@@ -5242,9 +5242,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"16.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"3"
@@ -5252,8 +5252,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160"
-		"ItemCost"						"4315"
+		"AbilityManaCost"				"170"
+		"ItemCost"						"4915"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 3"
@@ -5273,12 +5273,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"6"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"bonus_damage"			"13"
 			}
 			"04"
 			{
@@ -5288,7 +5288,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1000"
+				"range_tooltip"			"900"
 			}
 		}
 	}
@@ -5306,9 +5306,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"950"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"20.0"
+		"AbilityCooldown"				"13.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"4"
@@ -5316,8 +5316,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
-		"ItemCost"						"5315"
+		"AbilityManaCost"				"165"
+		"ItemCost"						"6115"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 4"
@@ -5337,12 +5337,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"7"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"18"
+				"bonus_damage"			"14"
 			}
 			"04"
 			{
@@ -5352,7 +5352,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1100"
+				"range_tooltip"			"950"
 			}
 		}
 	}
@@ -5370,9 +5370,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"16.0"
+		"AbilityCooldown"				"10.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"5"
@@ -5380,8 +5380,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140"
-		"ItemCost"						"6315"
+		"AbilityManaCost"				"160"
+		"ItemCost"						"7315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 5"
@@ -5396,17 +5396,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"28"
+				"bonus_intellect"		"27"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"8"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"21"
+				"bonus_damage"			"15"
 			}
 			"04"
 			{
@@ -5416,7 +5416,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1200"
+				"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -5434,9 +5434,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"1100"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"9.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"6"
@@ -5444,8 +5444,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120"
-		"ItemCost"						"7315"
+		"AbilityManaCost"				"155"
+		"ItemCost"						"8515"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 6"
@@ -5460,27 +5460,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"32"
+				"bonus_intellect"		"30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"9"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_damage"			"17"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1040"
+				"damage"				"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1400"
+				"range_tooltip"			"1100"
 			}
 		}
 	}
@@ -5498,9 +5498,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1600"
+		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"11.0"
+		"AbilityCooldown"				"8.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"7"
@@ -5508,8 +5508,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"8315"
+		"AbilityManaCost"				"150"
+		"ItemCost"						"9715"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 7"
@@ -5524,27 +5524,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"37"
+				"bonus_intellect"		"33"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"10"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"27"
+				"bonus_damage"			"19"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1180"
+				"damage"				"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1600"
+				"range_tooltip"			"1200"
 			}
 		}
 	}
@@ -5562,9 +5562,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1800"
+		"AbilityCastRange"				"1300"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"7.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"8"
@@ -5572,8 +5572,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80"
-		"ItemCost"						"9315"
+		"AbilityManaCost"				"140"
+		"ItemCost"						"10915"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 8"
@@ -5588,27 +5588,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"42"
+				"bonus_intellect"		"36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"11"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30"
+				"bonus_damage"			"21"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1320"
+				"damage"				"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1800"
+				"range_tooltip"			"1300"
 			}
 		}
 	}
@@ -5627,9 +5627,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000"
+		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"6.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"9"
@@ -5637,8 +5637,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
-		"ItemCost"						"10315"
+		"AbilityManaCost"				"130"
+		"ItemCost"						"12115"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 9"
@@ -5653,32 +5653,32 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"48"
+				"bonus_intellect"		"39"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"13"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"35"
+				"bonus_damage"			"23"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1460"
+				"damage"				"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"2000"
+				"range_tooltip"			"1400"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"61"
+				"bonus_intellect_real"	"43"
 			}
 		}
 
@@ -5727,9 +5727,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2500"
+		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"5.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"10"
@@ -5737,8 +5737,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"40"
-		"ItemCost"						"11315"
+		"AbilityManaCost"				"120"
+		"ItemCost"						"13315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 10"
@@ -5750,32 +5750,32 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"54"
+				"bonus_intellect"		"42"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"16"
+				"bonus_all_stats"		"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40"
+				"bonus_damage"			"25"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1600"
+				"damage"				"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"2500"
+				"range_tooltip"			"1500"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect_real"	"70"
+				"bonus_intellect_real"	"46"
 			}
 		}
 
@@ -8276,7 +8276,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"100"
+				"bonus_damage"			"90"
 			}
 			"02"
 			{
@@ -8290,8 +8290,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stacking_damage"		"10"
+				"var_type"				"FIELD_FLOAT"
+				"stacking_damage"		"7.5"
 			}
 			"05"
 			{
@@ -11971,7 +11971,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"4"
+				"max_stacks"			"3"
 			}
 			"07"
 			{
