@@ -162,6 +162,9 @@ function CullingBlade( keys )
 		if target:HasModifier("modifier_imba_spiked_carapace") then
 			target:RemoveModifierByName("modifier_imba_spiked_carapace")
 		end
+		if target:HasModifier("imba_modifier_purification_passive") then
+			target:RemoveModifierByName("imba_modifier_purification_passive")
+		end
 		target:Kill(ability, caster)
 
 		-- Find the valid units in the area that should recieve the speed buff and then apply it to them

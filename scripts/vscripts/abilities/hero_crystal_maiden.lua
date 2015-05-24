@@ -225,11 +225,13 @@ end
 function ScepterCheck( keys )
 	local caster = keys.caster
 	local scepter = HasScepter(caster)
-	local ability = keys.skill_name
-	local new_ability = keys.scepter_skill_name
 
 	if scepter then
-		caster:RemoveModifierByName("modifier_imba_freezing_field_scepter_check")
+		local ability = keys.skill_name
+		local new_ability = keys.scepter_skill_name
+		local modifier = keys.modifier
+
+		caster:RemoveModifierByName(modifier)
 		SwitchAbilities(caster, new_ability, ability, true, true)
 	else
 		return nil
@@ -239,13 +241,15 @@ end
 function ScepterLostCheck( keys )
 	local caster = keys.caster
 	local scepter = HasScepter(caster)
-	local ability = keys.scepter_skill_name
-	local new_ability = keys.skill_name
 
 	if scepter then
 		return nil
 	else
-		caster:RemoveModifierByName("modifier_imba_freezing_field_scepter_check")
+		local ability = keys.scepter_skill_name
+		local new_ability = keys.skill_name
+		local modifier = keys.modifier
+		
+		caster:RemoveModifierByName(modifier)
 		SwitchAbilities(caster, new_ability, ability, true, true)
 	end
 end
