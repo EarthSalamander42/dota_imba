@@ -144,26 +144,26 @@
 	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
-    "npc_imba_hero_drow_ranger"
-	{
-		"override_hero"				"npc_dota_hero_drow_ranger"
+    //"npc_imba_hero_drow_ranger"
+	//{
+	//	"override_hero"				"npc_dota_hero_drow_ranger"
 		
-		"Ability1"					"imba_drow_ranger_frost_arrows"
-		"Ability2"					"imba_drow_ranger_gust"
-		"Ability3"					"imba_drow_ranger_trueshot"
-		"Ability4"					"imba_drow_ranger_marksmanship"
-		"Ability5"					"attribute_bonus_agi"
+	//	"Ability1"					"imba_drow_ranger_frost_arrows"
+	//	"Ability2"					"imba_drow_ranger_gust"
+	//	"Ability3"					"imba_drow_ranger_trueshot"
+	//	"Ability4"					"imba_drow_ranger_marksmanship"
+	//	"Ability5"					"attribute_bonus_agi"
 
-		"ArmorPhysical"				"-2"
+	//	"ArmorPhysical"				"-2"
 
-		"AttackDamageMin"			"20"
-		"AttackDamageMax"			"25"
-		"AttackAcquisitionRange"	"900"
+	//	"AttackDamageMin"			"20"
+	//	"AttackDamageMax"			"25"
+	//	"AttackAcquisitionRange"	"900"
 
-		"AttributeBaseAgility"		"30"
+	//	"AttributeBaseAgility"		"30"
 
-		"MovementTurnRate"			"1.0"
-	}
+	//	"MovementTurnRate"			"1.0"
+	//}
 
 	//=================================================================================================================
 	// HERO: Jakiro

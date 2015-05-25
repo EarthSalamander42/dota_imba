@@ -117,7 +117,8 @@ function GameMode:OnHeroInGame(hero)
 	table.insert(self.vPlayers, hero)
 
 	-- Show a popup with game instructions.
-    ShowGenericPopupToPlayer(hero.player, "#barebones_instructions_title", "#barebones_instructions_body", "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
+	local scepter_string = "#"..hero:GetName().."_instructions_body"
+    ShowGenericPopupToPlayer(hero.player, "#imba_instructions_title", scepter_string, "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
 	-- This line for example will set the starting gold of every hero to 625 unreliable gold
 	hero:SetGold(625, false)
