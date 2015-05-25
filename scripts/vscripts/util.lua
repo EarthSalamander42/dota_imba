@@ -552,3 +552,29 @@ function ApplyDataDrivenModifierWhenPossible( caster, target, ability, modifier_
 		end			
 	end)
 end
+
+--[[ ============================================================================================================
+	Author: Rook
+	Date: February 3, 2015
+	A helper method that switches the removed_item item to one with the inputted name.
+================================================================================================================= ]]
+function SwapToItem(caster, removed_item, added_item)
+	for i=0, 5, 1 do  --Fill all empty slots in the player's inventory with "dummy" items.
+		local current_item = caster:GetItemInSlot(i)
+		if current_item == nil then
+			caster:AddItem(CreateItem("item_imba_dummy", caster, caster))
+		end
+	end
+	
+	caster:RemoveItem(removed_item)
+	caster:AddItem(CreateItem(added_item, caster, caster))  --This should be put into the same slot that the removed item was in.
+	
+	for i=0, 5, 1 do  --Remove all dummy items from the player's inventory.
+		local current_item = caster:GetItemInSlot(i)
+		if current_item ~= nil then
+			if current_item:GetName() == "item_imba_dummy" then
+				caster:RemoveItem(current_item)
+			end
+		end
+	end
+end
