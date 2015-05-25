@@ -12937,6 +12937,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_power"				"20"
 			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_creep_stacks"			"5"
+			}
 		}
 
 		"Modifiers"

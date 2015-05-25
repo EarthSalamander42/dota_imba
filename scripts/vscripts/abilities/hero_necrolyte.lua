@@ -50,9 +50,13 @@ function Heartstopper( keys )
 	local damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level)
 	local damage_interval = ability:GetLevelSpecialValueFor("aura_damage_interval", ability_level)
 	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
+	local max_creep_stacks = ability:GetLevelSpecialValueFor("max_creep_stacks", ability_level)
 
 	-- Calculate damage
-	AddStacks(ability, caster, target, stack_modifier, 1, true)
+	if target:IsHero() or target:GetModifierStackCount(stack_modifier, ability) < max_creep_stacks then
+		AddStacks(ability, caster, target, stack_modifier, 1, true)
+	end
+	
 	local max_hp = target:GetMaxHealth()
 	local stack_count = target:GetModifierStackCount(stack_modifier, ability)
 	damage = damage * max_hp * ( 1 + stack_power * stack_count / 100 ) / 100
@@ -61,7 +65,7 @@ function Heartstopper( keys )
 	if target:GetHealth() <= damage then
 		target:Kill(ability, caster)
 	else
-		target:SetHealth(target:GetHealth() - damage)
+		target:SetHealth( math.max( target:GetHealth() - damage, 1) )
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos

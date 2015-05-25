@@ -10,11 +10,14 @@ function Radiance( keys )
 
 	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level)
 	local stacking_damage = ability:GetLevelSpecialValueFor("stacking_damage", ability_level)
+	local max_creep_stacks = ability:GetLevelSpecialValueFor("max_creep_stacks", ability_level)
 
 	-- Increases the number of radiance stacks
 	if target:HasModifier(modifier_stacks) then
 		local current_stacks = target:GetModifierStackCount(modifier_stacks, ability)
-		target:SetModifierStackCount(modifier_stacks, caster, current_stacks + 1 )
+		if target:IsHero() or current_stacks < max_creep_stacks then
+			target:SetModifierStackCount(modifier_stacks, caster, current_stacks + 1 )
+		end
 	else
 		ability:ApplyDataDrivenModifier(caster, target, modifier_stacks, {})
 		target:SetModifierStackCount(modifier_stacks, caster, 1 )

@@ -5124,7 +5124,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"180"
+		"AbilityManaCost"				"175"
 		"ItemCost"						"2515"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5252,7 +5252,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170"
+		"AbilityManaCost"				"175"
 		"ItemCost"						"4915"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5316,7 +5316,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"165"
+		"AbilityManaCost"				"175"
 		"ItemCost"						"6115"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5380,7 +5380,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160"
+		"AbilityManaCost"				"175"
 		"ItemCost"						"7315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5444,7 +5444,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"155"
+		"AbilityManaCost"				"160"
 		"ItemCost"						"8515"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5508,7 +5508,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"145"
 		"ItemCost"						"9715"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5572,7 +5572,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"140"
+		"AbilityManaCost"				"130"
 		"ItemCost"						"10915"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5637,7 +5637,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130"
+		"AbilityManaCost"				"115"
 		"ItemCost"						"12115"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -5737,7 +5737,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120"
+		"AbilityManaCost"				"100"
 		"ItemCost"						"13315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -8302,6 +8302,11 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"think_interval"		"1.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_creep_stacks"		"5"
 			}
 		}
 
