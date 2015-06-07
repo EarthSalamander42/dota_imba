@@ -406,10 +406,10 @@
 
 		"AttributeAgilityGain"		"2.5"
 
-	//	"Ability1"					"imba_queenofpain_shadow_strike"
-	//	"Ability2"					"imba_queenofpain_blink"
-	//	"Ability3"					"imba_queenofpain_scream_of_pain"
-	//	"Ability4"					"imba_queenofpain_sonic_wave"
+		"Ability1"					"imba_queenofpain_shadow_strike"
+		"Ability2"					"imba_queenofpain_blink"
+		"Ability3"					"imba_queenofpain_scream_of_pain"
+		"Ability4"					"imba_queenofpain_sonic_wave"
 		"Ability5"					"attribute_bonus_int"				
 	}
 

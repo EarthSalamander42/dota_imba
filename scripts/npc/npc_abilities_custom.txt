@@ -16738,13 +16738,13 @@
 					}
 				}
 
-				"Aura" 			"modifier_rot_slow_datadriven"
+				"Aura" 			"modifier_rot_slow"
 				"Aura_Radius" 	"%rot_radius"
 				"Aura_Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 			}
 
-			"modifier_rot_slow_datadriven"
+			"modifier_rot_slow"
 			{
 				"IsDebuff"	"1"			
 
@@ -17037,6 +17037,841 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Queen of Pain's Shadow Strike
+	//=================================================================================================================
+	"imba_queenofpain_shadow_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"queenofpain_shadow_strike"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450 475 500 525"
+		"AbilityCastPoint"				"0.452 0.452 0.452 0.452"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0 12.0 8.0 4.0"
+		"AbilityDuration"				"15.0 15.0 15.0 15.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_damage"			"50 75 100 125"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_damage"		"30 40 50 60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-20 -30 -40 -50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"		"450 475 500 525"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow_small"			"-1.33 -2 -2.67 -3.33"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"strike_chance"			"50"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"           "TARGET"
+			    "EffectName"       "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+			    "Dodgeable"        "1"
+			    "ProvidesVision"   "0"
+			    "MoveSpeed"        "%projectile_speed"
+			    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+			}
+
+			"FireSound"
+			{
+				"EffectName"		"Hero_QueenOfPain.ShadowStrike"
+				"Target"			"CASTER"
+			}
+
+			"AttachEffect"
+			{
+				"Target"			"CASTER"
+				"EffectAttachType"	"attach_origin"
+				"EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"Damage"
+			{
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_MAGICAL"
+				"Damage"		"%strike_damage"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_debuff"
+				"Target"		"TARGET"
+			}
+
+			// Slow stacks(15 of them)
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_1"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_2"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_3"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_4"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_5"
+				"Target"		"TARGET"
+			}
+			// 5
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_6"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_7"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_8"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_9"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_10"
+				"Target"		"TARGET"
+			}
+			// 10
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_11"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_12"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_13"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_14"
+				"Target"		"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_shadow_strike_slow_15"
+				"Target"		"TARGET"
+			}
+			// 15
+		}
+
+		"Modifiers"
+		{
+			"modifier_shadow_strike_passive"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+
+				"OnAttack"
+				{
+					"Random"
+					{
+						"Chance"			"%strike_chance"
+						"OnSuccess"
+						{
+							"TrackingProjectile"
+							{
+								"Target"           "TARGET"
+							    "EffectName"       "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+							    "Dodgeable"        "1"
+							    "ProvidesVision"   "0"
+							    "MoveSpeed"        "%projectile_speed"
+							    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+							}
+
+							"FireSound"
+							{
+								"EffectName"		"Hero_QueenOfPain.ShadowStrike"
+								"Target"			"CASTER"
+							}
+
+							"AttachEffect"
+							{
+								"Target"			"CASTER"
+								"EffectAttachType"	"attach_origin"
+								"EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+							}
+						}
+					}
+				}
+
+				
+			}
+
+			"modifier_shadow_strike_debuff"
+			{
+				"Duration"	"%AbilityDuration"
+				"IsDebuff"	"1"
+				"IsPurgable"		"1"
+
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
+				"EffectAttachType"	"follow_chest"
+
+				"ThinkInterval"	"3.0"
+
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"		"TARGET"
+						"Type"			"DAMAGE_TYPE_MAGICAL"
+						"Damage"		"%duration_damage"
+					}
+				}
+			}
+
+			"modifier_shadow_strike_slow_1"
+			{
+				"IsHidden"		"1"
+				"Duration"		"1"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_2"
+			{
+				"IsHidden"		"1"
+				"Duration"		"2"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_3"
+			{
+				"IsHidden"		"1"
+				"Duration"		"3"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_4"
+			{
+				"IsHidden"		"1"
+				"Duration"		"4"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_5"
+			{
+				"IsHidden"		"1"
+				"Duration"		"5"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_6"
+			{
+				"IsHidden"		"1"
+				"Duration"		"6"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_7"
+			{
+				"IsHidden"		"1"
+				"Duration"		"7"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_8"
+			{
+				"IsHidden"		"1"
+				"Duration"		"8"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_9"
+			{
+				"IsHidden"		"1"
+				"Duration"		"9"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_10"
+			{
+				"IsHidden"		"1"
+				"Duration"		"10"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_11"
+			{
+				"IsHidden"		"1"
+				"Duration"		"11"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_12"
+			{
+				"IsHidden"		"1"
+				"Duration"		"12"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_13"
+			{
+				"IsHidden"		"1"
+				"Duration"		"13"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_14"
+			{
+				"IsHidden"		"1"
+				"Duration"		"14"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+
+			"modifier_shadow_strike_slow_15"
+			{
+				"IsHidden"		"1"
+				"Duration"		"15"
+				"IsDebuff"		"1"
+				"IsPurgable"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movement_slow_small"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Queen of Pain's Blink
+	//=================================================================================================================
+	"imba_queenofpain_blink"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"AbilityTextureName"			"queenofpain_blink"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.33 0.33 0.33 0.33"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 60 60 60"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_range"			"700 850 1000 1150"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_blink_range"		"200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/hero_queen_of_pain.lua"
+				"Function"		"Blink"
+				"Target"		"POINT"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.Blink_out"
+				"Target"		"CASTER"
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+				"Target"		"CASTER"
+				"EffectAttachType"	"attach_hitloc"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.Blink_in"
+				"Target"		"CASTER"
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+				"Target"		"CASTER"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Queen of Pain's Scream of Pain
+	//=================================================================================================================
+	"imba_queenofpain_scream_of_pain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"queenofpain_scream_of_pain"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0 7.0 7.0 7.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"85 165 225 300"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"		"475"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.ScreamOfPain"
+				"Target"		"CASTER"
+			}
+
+			"AttachEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"CASTER"
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"%area_of_effect"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+				}
+
+				"Action"
+				{
+					"TrackingProjectile"
+					{
+						"Target"           "TARGET"
+					    "EffectName"       "particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf"
+					    "Dodgeable"        "0"
+					    "ProvidesVision"   "0"
+					    "MoveSpeed"        "%projectile_speed"
+					    "SourceAttachment"  "DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
+					}
+				}
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_MAGICAL"
+				"Damage"	"%AbilityDamage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Queen of Pain's Sonic Wave
+	//=================================================================================================================
+	"imba_queenofpain_sonic_wave"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"		   
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"queenofpain_sonic_wave"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"			"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.452 0.452 0.452"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"135 135 135"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 360 500"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"starting_aoe"		"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"distance"			"900"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"final_aoe"			"450"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1100"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"290 390 490"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cooldown_scepter"	"40"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_scepter"	"350 530 725"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"debuff_duration"		"5 10 15"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_increase"		"50"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cooldown"		"40"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_QueenOfPain.SonicWave"
+				"Target"		"CASTER"
+			}
+
+			"LinearProjectile"
+			{
+				"Target"      "POINT"
+			    "EffectName"  "particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+			    "MoveSpeed"   "%speed"
+			    "StartRadius"   "%starting_aoe"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "%final_aoe"
+			    "FixedDistance" "%distance"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"    "1"
+			    "ProvidesVision" "0"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"	"0"
+			"Damage"
+			{
+				"Target"	"TARGET"
+				"Type"		"DAMAGE_TYPE_PURE"
+				"Damage"	"%damage"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_sonic_wave_confusion"
+				"Target" 		"TARGET"
+				"Duration"		"%debuff_duration"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"	"abilities/hero_queen_of_pain.lua"
+				"Function"		"ScepterCheck"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_sonic_wave_confusion"
+			{
+				"IsHidden"			"0"
+				"IsDebuff"			"1"
+				"IsPurgable"		"1"
+		
+				"OnUnitMoved"
+				// Example: Bloodseeker ult
+				{
+					"Random"
+					{
+						"Chance"			"10"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"abilities/hero_queen_of_pain.lua"
+								"Function"		"Confusion"
+							}
+						}
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_increase"
 				}
 			}
 		}
