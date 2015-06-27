@@ -14950,7 +14950,7 @@
 			"ApplyModifier"
 			{
 				"Target" 				"TARGET"
-				"ModifierName"			"modifier_imba_repel"
+				"ModifierName"			"modifier_omniknight_repel"
 			}
 
 			"FireEffect"
@@ -14963,33 +14963,14 @@
 			"ApplyModifier"
 			{
 				"Target" 				"CASTER"
-				"ModifierName"			"modifier_imba_repel"
+				"ModifierName"			"modifier_omniknight_repel"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_omniknight.lua"
-				"Function"			"Repel"
-				"Target"			"TARGET"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_repel"
-			{
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"ScriptFile"			"abilities/hero_omniknight.lua"
+				"Function"				"Repel"
+				"Target"				"TARGET"
 			}
 		}
 	}
@@ -15062,7 +15043,7 @@
 			"ApplyModifier"
 			{
 				"Target" 				"TARGET"
-				"ModifierName"			"modifier_imba_repel"
+				"ModifierName"			"modifier_omniknight_repel"
 			}
 
 			"FireEffect"
@@ -15075,26 +15056,14 @@
 			"ApplyModifier"
 			{
 				"Target" 				"CASTER"
-				"ModifierName"			"modifier_imba_repel"
+				"ModifierName"			"modifier_omniknight_repel"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_repel"
+			"RunScript"
 			{
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"ScriptFile"			"abilities/hero_omniknight.lua"
+				"Function"				"Repel"
+				"Target"				"TARGET"
 			}
 		}
 	}
@@ -15393,17 +15362,9 @@
 
 				 	"AttachEffect"
 					{
-						"Target"
-						{
-							"Center"  		"CASTER"
-							"Radius"		"%radius"
-							"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-						}
-
+						"Target"			"TARGET"
 						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
 					}
 				}
 
@@ -15555,17 +15516,9 @@
 
 				 	"AttachEffect"
 					{
-						"Target"
-						{
-							"Center"  		"CASTER"
-							"Radius"		"%radius"
-							"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-							"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
-						}
-
+						"Target"			"TARGET"
 						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"%radius"
 					}
 				}
 
@@ -16925,7 +16878,7 @@
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"	"0"
+			"DeleteOnHit"				"0"
 
 			"RunScript"
 			{
@@ -16948,7 +16901,7 @@
 				{
 					"Random"
 					{
-						"Chance"			"10"
+						"Chance"			"25"
 						"OnSuccess"
 						{
 							"RunScript"
