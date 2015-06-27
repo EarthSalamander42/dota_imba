@@ -84,7 +84,7 @@
 	"npc_dota_hero_phantom_assassin" "1"
 	"npc_dota_hero_gyrocopter" "0"
 	"npc_dota_hero_rubick" "0"
-	"npc_dota_hero_luna" "1"
+	"npc_dota_hero_luna" "0"
 	"npc_dota_hero_wisp" "1"
 	"npc_dota_hero_disruptor" "0"
 	"npc_dota_hero_undying" "0"

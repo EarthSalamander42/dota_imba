@@ -14951,6 +14951,7 @@
 			{
 				"Target" 				"TARGET"
 				"ModifierName"			"modifier_omniknight_repel"
+				"Duration"				"%duration"
 			}
 
 			"FireEffect"
@@ -14964,6 +14965,7 @@
 			{
 				"Target" 				"CASTER"
 				"ModifierName"			"modifier_omniknight_repel"
+				"Duration"				"%duration"
 			}
 
 			"RunScript"
@@ -15044,6 +15046,7 @@
 			{
 				"Target" 				"TARGET"
 				"ModifierName"			"modifier_omniknight_repel"
+				"Duration"				"%duration"
 			}
 
 			"FireEffect"
@@ -15057,6 +15060,7 @@
 			{
 				"Target" 				"CASTER"
 				"ModifierName"			"modifier_omniknight_repel"
+				"Duration"				"%duration"
 			}
 
 			"RunScript"
