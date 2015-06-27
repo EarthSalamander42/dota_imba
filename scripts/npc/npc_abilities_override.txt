@@ -848,7 +848,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 12.0 18.0"
+				"duration"				"8.0 14.0 20.0"
 			}
 			"02"
 			{
@@ -858,7 +858,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"12.0 15.0 18.0"
+				"duration_scepter"		"12.0 16.0 20.0"
 			}
 			"04"
 			{
@@ -2832,7 +2832,7 @@
 	//=================================================================================================================
 	"sven_warcry"
 	{
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"26.0 22.0 18.0 14.0"
 		"AbilityDuration"				"8.0"
 	
 		"AbilityManaCost"				"0"
@@ -2847,7 +2847,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"warcry_movespeed"	"20"
+				"warcry_movespeed"	"12 14 16 18"
 			}
 			"03"
 			{
@@ -2879,7 +2879,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gods_strength_damage"		"200 300 400"		
+				"gods_strength_damage"		"150 225 300"		
 			}
 			"02"
 			{

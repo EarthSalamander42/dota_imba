@@ -29,6 +29,7 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -835,7 +836,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"60.0 50.0 40.0"
+		"AbilityCooldown"								"55.0 45.0 35.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -2048,10 +2049,13 @@
 
 	               	"RunScript"
 	            	{
-	            		"ScriptFile"		"abilities/hero_bane.lua"
-	            		"Function"			"NightmareStopSound"
+	            		"ScriptFile"			"abilities/hero_bane.lua"
+	            		"Function"				"NightmareEnd"
 
-	            		"loop_sound"		"Hero_Bane.Nightmare.Loop"
+	            		"loop_sound"			"Hero_Bane.Nightmare.Loop"
+	            		"nightmare"				"imba_bane_nightmare"
+        				"nightmare_end"			"imba_bane_nightmare_end"
+        				"nightmare_modifier"	"modifier_imba_bane_nightmare"
 	            	}            		
 	            }
 
@@ -2154,12 +2158,6 @@
 	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 				}
 	        }	
-
-			"RunScript"
-	        {
-	        	"ScriptFile"		"abilities/hero_bane.lua"
-	            "Function"			"NightmareEnd"
-	        }
 		}
 	}
 
@@ -4010,6 +4008,7 @@
 					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"					"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 

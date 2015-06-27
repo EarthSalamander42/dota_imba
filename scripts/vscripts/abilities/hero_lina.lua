@@ -159,10 +159,7 @@ function LightStrikeArray( keys )
 		end
 
 		-- Destroys trees
-		local trees = Entities:FindAllByClassnameWithin("ent_dota_tree", blast_pos, radius)
-		for _,v in pairs(trees) do
-			v:CutDown(0)
-		end
+		GridNav:DestroyTreesAroundPoint(blast_pos, radius, false)
 
 		-- Creates a dummy to play the sound, then destroys it
 		local dummy = CreateUnitByName("npc_dummy_unit", blast_pos, false, caster, caster, caster:GetTeamNumber())

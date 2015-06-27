@@ -197,11 +197,39 @@ function NightmareSpread( keys )
 	end
 end
 
-function NightmareStopSound( keys )
+function NightmareEnd( keys )
+	local caster = keys.caster
 	local target = keys.target
+	local nightmare = keys.nightmare
+	local nightmare_end = keys.nightmare_end
+	local nightmare_modifier = keys.nightmare_modifier
+	local ability_nightmare = keys.ability
 	local loop_sound = keys.loop_sound
 
+	-- Stops playing sound
 	StopSoundEvent(loop_sound, target)
+
+	-- Verifies if nightmared targets still exist
+	local all_units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+	local nightmares_remaining = false
+	for _,unit in pairs(all_units) do
+		if unit:HasModifier(nightmare_modifier) then
+			nightmares_remaining = true
+		end
+	end
+
+	-- Toggles Nightmare End off if no nightmared units exist
+	if not nightmares_remaining then
+		for _,unit in pairs(all_units) do
+			if unit:GetUnitName() == "npc_dota_hero_bane" then
+				local ability_nightmare_end = unit:FindAbilityByName(nightmare_end)
+				if ability_nightmare_end:GetToggleState() then
+					ability_nightmare_end:ToggleAbility()
+				end
+				unit:SwapAbilities(nightmare, nightmare_end, true, false)
+			end
+		end
+	end
 end
 
 function NightmareStart( keys )
@@ -232,32 +260,4 @@ function NightmareSwap( keys )
 	-- Upgrade Nightmare End to level 1
 	local level_ability = caster:FindAbilityByName(nightmare_end)
 	level_ability:SetLevel(1)
-
-	-- Swaps abilities back after the skill cools down
-	Timers:CreateTimer(cooldown, function()
-		caster:SwapAbilities(nightmare, nightmare_end, true, false)
-	end)
-end
-
-function NightmareSwapToMain( keys )
-	local caster = keys.caster
-
-	-- Ability names
-	local sub_ability_name = keys.sub_ability_name
-	local main_ability_name = keys.main_ability_name
-
-	caster:SwapAbilities(main_ability_name, sub_ability_name, false, true)
-
-	-- Upgrade Nightmare End to level 1
-	local level_ability = caster:FindAbilityByName(sub_ability_name)
-	level_ability:SetLevel(1)
-end
-
-function NightmareEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local nightmare = keys.nightmare
-	local nightmare_end = keys.nightmare_end
-
-	ability:ToggleAbility()
 end

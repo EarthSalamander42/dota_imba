@@ -253,10 +253,7 @@ function Macropyre( keys )
 		local dummy_pos = start_pos + caster:GetForwardVector() * (i-1) * path_radius
 
 		-- Destroys trees around the target area
-		local trees = Entities:FindAllByClassnameWithin("ent_dota_tree", dummy_pos, path_radius)
-		for k, tree in pairs(trees) do
-			tree:CutDown(caster:GetTeam())
-		end
+		GridNav:DestroyTreesAroundPoint(dummy_pos, path_radius, false)
 
 		-- Creates debuffing dummy (3000 units above ground to prevent camp blocking)
 		local dummy = CreateUnitByName("npc_dummy_unit", dummy_pos, false, caster, caster, caster:GetTeamNumber())

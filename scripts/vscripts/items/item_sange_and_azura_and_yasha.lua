@@ -81,6 +81,11 @@ function YashaIllusion( keys )
 	local modifier_yasha_5 = keys.modifier_yasha_5
 	local modifier_yasha_6 = keys.modifier_yasha_6
 
+	-- If there's no valid target, do nothing
+	if not target:IsHero() and not target:IsCreep() then
+		return nil
+	end
+
 	-- Parameters
 	local illusion_duration = ability:GetLevelSpecialValueFor("stack_duration", ability_level)
 	local illusion_incoming_dmg = ability:GetLevelSpecialValueFor("illu_incoming_dmg", ability_level)

@@ -44,6 +44,11 @@ function YashaIllusion( keys )
 	local modifier_yasha_5 = keys.modifier_yasha_5
 	local modifier_yasha_6 = keys.modifier_yasha_6
 
+	-- If there's no valid target, do nothing
+	if not target:IsHero() and not target:IsCreep() then
+		return nil
+	end
+
 	-- If a higher-priority illusion generation buff is present, do nothing
 	if caster:HasModifier("modifier_item_imba_azura_and_yasha_proc") or caster:HasModifier("modifier_item_imba_sange_and_yasha_proc") or caster:HasModifier("modifier_item_imba_sange_and_azura_and_yasha_proc") then
 		return nil
