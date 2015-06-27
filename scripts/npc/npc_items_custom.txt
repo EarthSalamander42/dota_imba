@@ -9,9 +9,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"                            "2001"
+		"ID"                            "1999"
 		"BaseClass"                     "item_datadriven"
 		"ItemBaseLevel"                 "1"
+		"ItemPurchasable" 				"0"
 	}
 
 	//=================================================================================================================
@@ -312,6 +313,7 @@
 		"ItemShopTags"					"armor"
 		"ItemQuality"					"component"
 		"ItemAliases"					"platemail"
+		"SecretShop"					"1"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -562,6 +564,7 @@
 		"ItemShopTags"					"int"
 		"ItemQuality"					"component"
 		"ItemAliases"					"mantle of intelligence"
+		"SideShop"						"1"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -837,6 +840,7 @@
 		"ItemQuality"					"component"
 		"ItemAliases"					"ultimate orb"
 		"SideShop"						"1"
+		"SecretShop"					"1"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -1115,6 +1119,7 @@
 		"ItemShopTags"					"evasion"
 		"ItemQuality"					"component"
 		"ItemAliases"					"talisman of evasion"
+		"SecretShop"					"1"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -1231,7 +1236,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1035"
+		"ID"							"2000"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -1403,7 +1408,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1234"
+		"ID"							"2001"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -1457,6 +1462,12 @@
 				"Function"		"Mango"
 			}
 
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.Mango.Activate"
+				"Target" 		"TARGET"
+			}
+
 			"SpendCharge" {}
 		}
 
@@ -1467,7 +1478,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -1947,7 +1958,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1047"
+		"ID"							"2002"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -1963,6 +1974,32 @@
 		"ItemRequirements"
 		{
 			"01"						"item_imba_boots;item_imba_tpscroll"
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Travel Boots II
+	//=================================================================================================================
+	"item_recipe_imba_travel_boots_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2114"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_travel_boots_2"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_travel_boots;item_recipe_imba_travel_boots"
 		}
 	}
 	
@@ -1994,6 +2031,55 @@
 		"ItemQuality"					"common"
 		"ItemAliases"					"bot;boots of travel"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"1"
+
+		"UpgradesItems"					"item_imba_travel_boots"
+		"UpgradeRecipe"					"item_recipe_imba_travel_boots"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"110"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Travel Boots II
+	//=================================================================================================================
+	"item_imba_travel_boots_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2115"
+		"BaseClass"						"item_travel_boots_2"
+		"AbilityTextureName" 			"item_imba_travel_boots_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30.0"
+		"AbilitySharedCooldown"			"teleport"
+		"AbilityChannelTime"			"1.5"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"4350"
+		"ItemShopTags"					"teleport;move_speed"
+		"ItemQuality"					"common"
+		"ItemAliases"					"bot;boots of travel"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"MaxUpgradeLevel"				"2"
+		"ItemBaseLevel"					"2"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -2014,7 +2100,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1049"
+		"ID"							"2003"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 	
@@ -2256,7 +2342,7 @@
 		"ItemQuality"					"secret_shop"
 		"ItemAliases"					"roh;ring of health"
 		"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
-		"SecretShop"					"1"		
+		"SecretShop"					"0"		
 		"SideShop"						"1"
 		
 		// Sound
@@ -2295,7 +2381,8 @@
 		"ItemQuality"					"secret_shop"
 		"ItemAliases"					"void stone"
 		"ItemShareability"				"ITEM_PARTIALLY_SHAREABLE"
-		"SecretShop"					"1"
+		"SecretShop"					"0"
+		"SideShop"						"1"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -2448,7 +2535,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1062"
+		"ID"							"2004"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -2517,7 +2604,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1064"
+		"ID"							"2005"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -2544,7 +2631,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1065"
+		"ID"							"2006"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -2628,7 +2715,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -2645,7 +2732,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1066"
+		"ID"							"2007"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -2716,7 +2803,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1068"
+		"ID"							"2008"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -2784,7 +2871,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1070"
+		"ID"							"2009"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -2860,7 +2947,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1072"
+		"ID"							"2010"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -2930,7 +3017,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1074"
+		"ID"							"2011"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -3000,7 +3087,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1076"
+		"ID"							"2012"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -3071,7 +3158,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1078"
+		"ID"							"2013"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -3094,7 +3181,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1230"
+		"ID"							"2014"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -3120,7 +3207,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1079"
+		"ID"							"2015"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
@@ -3227,7 +3314,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3307,7 +3394,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1231"
+		"ID"							"2016"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
@@ -3410,7 +3497,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3493,7 +3580,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1080"
+		"ID"							"2017"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -3516,7 +3603,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1228"
+		"ID"							"2018"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -3542,7 +3629,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1081"
+		"ID"							"2019"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
@@ -3610,7 +3697,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3661,7 +3748,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1229"
+		"ID"							"2020"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
@@ -3741,7 +3828,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3857,7 +3944,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1085"
+		"ID"							"2021"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -3943,7 +4030,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1087"
+		"ID"							"2022"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -4032,7 +4119,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1089"
+		"ID"							"2023"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4058,7 +4145,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1090"
+		"ID"							"2024"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
@@ -4183,7 +4270,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -4241,7 +4328,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1091"
+		"ID"							"2025"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4362,7 +4449,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1093"
+		"ID"							"2026"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4428,7 +4515,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1095"
+		"ID"							"2027"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4454,7 +4541,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1235"
+		"ID"							"2028"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_sheepstick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -4550,7 +4637,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -4585,6 +4672,7 @@
 					"MODIFIER_STATE_MUTED"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_PASSIVES_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 
 				"Properties"
@@ -4630,7 +4718,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1097"
+		"ID"							"2029"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4722,7 +4810,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1099"
+		"ID"							"2030"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4807,7 +4895,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1101"
+		"ID"							"2031"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4884,7 +4972,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1103"
+		"ID"							"2032"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4907,7 +4995,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1197"
+		"ID"							"2033"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4930,7 +5018,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1198"
+		"ID"							"2034"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4953,7 +5041,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1199"
+		"ID"							"2035"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4976,7 +5064,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1200"
+		"ID"							"2036"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -4999,7 +5087,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1217"
+		"ID"							"2037"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5022,7 +5110,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1218"
+		"ID"							"2038"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5045,7 +5133,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1219"
+		"ID"							"2039"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5068,7 +5156,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1220"
+		"ID"							"2040"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5091,7 +5179,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1221"
+		"ID"							"2041"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5629,7 +5717,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1225"	
+		"ID"							"2042"	
 		"BaseClass"						"item_datadriven"													
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -5701,7 +5789,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5729,7 +5817,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1226"	
+		"ID"							"2043"	
 		"BaseClass"						"item_datadriven"													
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -5798,7 +5886,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5829,7 +5917,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1105"
+		"ID"							"2044"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -5852,7 +5940,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1191"
+		"ID"							"2045"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -5875,7 +5963,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1192"
+		"ID"							"2046"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -5901,7 +5989,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1237"
+		"ID"							"2047"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -6061,7 +6149,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -6179,7 +6267,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1238"
+		"ID"							"2048"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -6339,7 +6427,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -6466,7 +6554,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1239"
+		"ID"							"2049"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_necronomicon_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
@@ -6623,7 +6711,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -6762,7 +6850,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1107"
+		"ID"							"2050"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -6829,7 +6917,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1109"
+		"ID"							"2051"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		"FightRecapLevel"				"2"
@@ -6913,7 +7001,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1111"
+		"ID"							"2052"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -6995,7 +7083,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1113"
+		"ID"							"2053"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7071,7 +7159,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1115"
+		"ID"							"2054"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7204,7 +7292,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1118"
+		"ID"							"2055"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7308,7 +7396,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1120"
+		"ID"							"2056"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7334,14 +7422,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1121"
-		"BaseClass"						"item_bloodstone"
+		"ID"							"2126"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_bloodstone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"250"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"200.0"
 
@@ -7351,7 +7440,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;mana_pool;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bs;bloodstone"
-		"ItemInitialCharges"			"8"
+		"ItemInitialCharges"			"5"
 		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
@@ -7361,68 +7450,255 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"600"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_health"				"600"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"500"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_mana_regen"			"300"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"12"
+				"var_type"					"FIELD_INTEGER"
+				"effect_radius"				"2000"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"300"
+				"var_type"					"FIELD_INTEGER"
+				"heal_on_death_base"		"500"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_range"			"2000"
+				"var_type"					"FIELD_INTEGER"
+				"heal_on_death_per_charge"	"60"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_on_death_range"	"2000"
+				"var_type"					"FIELD_FLOAT"
+				"respawn_time_reduction"	"5.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_on_death_base"	"500"
+				"var_type"					"FIELD_FLOAT"
+				"on_death_loss"				"0.67" //33% gone
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_on_death_per_charge"	"50"
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen_per_charge"		"2"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_on_death_radius"	"2000"
+				"var_type"					"FIELD_FLOAT"
+				"mana_regen_per_charge"		"0.2"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"respawn_time_reduction"	"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"max_mana_per_charge"		"100"
 			}
-			"11"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"death_gold_reduction"	"40"
+				"ScriptFile"				"items/item_bloodstone.lua"
+				"Function"					"Suicide"
 			}
-			"12"
+		}
+
+		"OnEquip"
+		{
+			"ApplyModifier"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"on_death_removal"		"0.67" //33% gone
+				"ModifierName"				"modifier_item_imba_bloodstone_charges"
+				"Target" 					"CASTER"
 			}
-			"13"
+		}
+
+		"OnUnequip"
+		{
+			"RemoveModifier"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"0"
+				"ModifierName"				"modifier_item_imba_bloodstone_charges"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_bloodstone"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+				
+				//"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS" 					"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 			"%bonus_mana_regen"
+				}
+			}
+
+			"modifier_item_imba_bloodstone_charges"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS" 						"%max_mana_per_charge"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen_per_charge"
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mana_regen_per_charge"
+				}
+			}
+
+			"modifier_item_imba_bloodstone_charge_changer"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+
+				"Aura"          			"modifier_item_imba_bloodstone_assist_detector"
+				"Aura_Radius"   			"%effect_radius"
+				"Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    			"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags"    			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+				"ThinkInterval"  			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"UpdateCharges"
+
+						"charges_modifier"	"modifier_item_imba_bloodstone_charges"
+						"dummy_modifier"	"modifier_item_imba_bloodstone_mana_dummy"
+					}
+				}
+
+				"OnHeroKilled"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"GainChargesOnKill"
+
+						"assist_modifier"	"modifier_item_imba_bloodstone_assist_detector"
+					}
+				}
+
+				"OnDeath"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/items_fx/bloodstone_glyph.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+
+						"Target"
+						{
+							"Center"		"CASTER"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+							"Types"			"DOTA_UNIT_TARGET_HERO"
+							"Flags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+
+					"FireEffect"
+					{
+						"EffectName"        "particles/items_fx/bloodstone_heal.vpcf"
+						"EffectAttachType"  "follow_origin"
+
+						"Target"
+						{
+							"Center"		"CASTER"
+							"Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+							"Radius"		"%effect_radius"
+							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"LoseCharges"
+
+						"exp_modifier"		"modifier_item_imba_bloodstone_exp_counter"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_bloodstone_aura"
+					}
+				}
+			}
+
+			"modifier_item_imba_bloodstone_assist_detector"
+			{
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"GainChargesOnAssist"
+					}
+				}
+			}
+
+			"modifier_item_imba_bloodstone_exp_counter"
+			{
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+
+				"Aura"          			"modifier_item_imba_bloodstone_exp_counter_debuff"
+				"Aura_Radius"   			"%effect_radius"
+				"Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+
+			"modifier_item_imba_bloodstone_exp_counter_debuff"
+			{
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bloodstone.lua"
+						"Function"			"GainExp"
+					}
+				}
+			}
+
+			"modifier_item_imba_bloodstone_mana_dummy"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
+				}
 			}
 		}
 	}
@@ -7434,7 +7710,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1122"
+		"ID"							"2057"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7519,7 +7795,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1124"
+		"ID"							"2058"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7596,7 +7872,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1082"
+		"ID"							"2059"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -7622,7 +7898,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1083"
+		"ID"							"2060"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"item_crimson_guard"
@@ -7726,7 +8002,7 @@
 
 		"Modifiers"
 		{
-			"modifier_crimson_guard_passive"
+			"modifier_item_crimson_guard_passive"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
@@ -7752,10 +8028,10 @@
 				}
 			}
 
-			"modifier_crimson_guard_block_melee"
+			"modifier_item_crimson_guard_block_melee"
 			{
 				"Passive"			"1"
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 				"IsDebuff"			"0"
 			
 				"Properties"
@@ -7764,10 +8040,10 @@
 				}
 			}
 
-			"modifier_crimson_guard_block_ranged"
+			"modifier_item_crimson_guard_block_ranged"
 			{
 				"Passive"			"1"
-				"IsHidden"			"0"
+				"IsHidden"			"1"
 				"IsDebuff"			"0"
 			
 				"Properties"
@@ -7776,7 +8052,7 @@
 				}
 			}
 
-			"modifier_crimson_guard_active_melee"
+			"modifier_item_crimson_guard_active_melee"
 			{
 				"Passive"			"0"	
 				"IsHidden"			"0"
@@ -7792,7 +8068,7 @@
 				}
 			}
 
-			"modifier_crimson_guard_active_ranged"
+			"modifier_item_crimson_guard_active_ranged"
 			{
 				"Passive"			"0"
 				"IsHidden"			"0"
@@ -7808,7 +8084,7 @@
 				}
 			}
 
-			"modifier_crimson_guard_cooldown"
+			"modifier_item_crimson_guard_cooldown"
 			{
 				"Passive"			"0"
 				"IsHidden"			"0"
@@ -7825,7 +8101,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1126"
+		"ID"							"2061"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		"FightRecapLevel"				"1"
@@ -7903,7 +8179,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1128"
+		"ID"							"2062"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -7973,7 +8249,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1130"
+		"ID"							"2063"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -8040,7 +8316,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1132"
+		"ID"							"2064"
 		"BaseClass"						"item_datadriven"
 
 		
@@ -8066,7 +8342,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1240"
+		"ID"							"2065"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_rapier"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -8110,7 +8386,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"OnDealDamage"
 				{
@@ -8126,6 +8402,17 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 	"%damage"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_rapier"
+					}
 				}
 			}
 
@@ -8164,7 +8451,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1134"
+		"ID"							"2066"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -8240,7 +8527,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1136"
+		"ID"							"2067"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -8266,7 +8553,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1137"
+		"ID"							"2068"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"AbilityTextureName"			"item_imba_radiance"
@@ -8308,7 +8595,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"20"
+				"miss_base"				"15"
 			}
 			"06"
 			{
@@ -8319,6 +8606,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_creep_stacks"		"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"miss_stacking"			"2.5"
 			}
 		}
 
@@ -8346,7 +8638,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -8408,7 +8700,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_chance"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_base"
 				}
 			}
 
@@ -8418,6 +8710,11 @@
 				"IsHidden"				"0"
 				"IsDebuff"				"1"
 				"IsPurgable"			"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_stacking"
+				}
 			}
 		}
 	}
@@ -8429,7 +8726,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1138"
+		"ID"							"2069"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -8454,7 +8751,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1241"
+		"ID"							"2070"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName" 			"item_imba_butterfly"
@@ -8505,6 +8802,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"flutter_move_speed"	"100"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"50"
+			}
 		}
 
 		// Datadriven
@@ -8533,7 +8835,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -8541,17 +8843,6 @@
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 		"%bonus_damage"
 					"MODIFIER_PROPERTY_EVASION_CONSTANT" 			"%bonus_evasion"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_butterfly.lua"
-						"Function"		"ButterflyEffect"
-
-						"damage"		"%attack_damage"
-					}
 				}
 			}
 
@@ -8571,23 +8862,49 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
 				}
 
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"items/item_butterfly.lua"
-						"Function"		"ButterflyEffect"
-
-						"damage"		"%attack_damage"
-					}
-				}
-
 				"OnDestroy"
 				{
 					"ApplyModifier"
 					{
 						"ModifierName"	"modifier_item_imba_butterfly"
 						"Target" 		"CASTER"
+					}
+				}
+			}
+
+			"modifier_item_imba_butterfly_effect"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"			"%proc_chance"
+
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"items/item_butterfly.lua"
+								"Function"		"ButterflyEffect"
+
+								"damage"		"%attack_damage"
+							}
+						}
+					}	
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_butterfly_effect"
 					}
 				}
 			}
@@ -8601,7 +8918,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1140"
+		"ID"							"2071"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -8668,7 +8985,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1142"
+		"ID"							"2072"
 		"BaseClass"						"item_datadriven"
 		"InvalidHeroes"					"npc_imba_hero_spirit_breaker;npc_imba_hero_faceless_void;npc_imba_hero_slardar;npc_imba_hero_troll_warlord"
 		"Model"							"models/props_gameplay/recipe.mdl"
@@ -8755,7 +9072,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1144"
+		"ID"							"2073"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -8831,7 +9148,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1146"
+		"ID"							"2074"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -8985,7 +9302,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1148"
+		"ID"							"2075"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -9051,7 +9368,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1150"
+		"ID"							"2076"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -9078,7 +9395,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"ID"							"1151"
+		"ID"							"2077"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -9172,7 +9489,7 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
-				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -9193,7 +9510,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"item_datadriven"
-		"ID"							"1247"
+		"ID"							"2078"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -9204,6 +9521,7 @@
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
+		"ItemPurchasable" 				"0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9276,7 +9594,7 @@
 			
 			"FireSound"
 			{
-				"EffectName"				"DOTA_Item.Armlet.Activate"
+				"EffectName"				"DOTA_Item.Armlet.DeActivate"
 				"Target"					"CASTER"
 			}
 		}
@@ -9287,7 +9605,7 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
-				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -9357,7 +9675,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1183"
+		"ID"							"2079"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -9417,7 +9735,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"windwalk_duration"		"18.0"
+				"windwalk_duration"		"14.0"
 			}
 			"04"
 			{
@@ -9438,13 +9756,148 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Sange and Yasha
+	// Recipe: Silver Edge
+	//=================================================================================================================
+	"item_recipe_imba_silver_edge"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2118"
+		"BaseClass"						"item_datadriven"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_silver_edge"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_invis_sword;item_imba_sange"
+		}
+	}
+	
+	//=================================================================================================================
+	// Silver Edge
+	//=================================================================================================================
+	"item_imba_silver_edge"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2119"
+		"BaseClass"						"item_silver_edge"
+		"AbilityTextureName" 			"item_imba_silver_edge"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"FightRecapLevel"				"1"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0"
+		"AbilitySharedCooldown"			"shadow_blade"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"5450"
+		"ItemShopTags"					"damage;attack_speed;movespeed;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"sb;invis;shadow blade"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"21"
+			}	
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_chance"			"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_movement_speed"	"-20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_attack_speed"		"-20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"maim_duration"			"4.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"windwalk_duration"		"14.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"windwalk_movement_speed"	"25"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"windwalk_fade_time"	"0.3"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"windwalk_bonus_damage"	"300"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"backstab_slow"			"0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"backstab_reduction"	"-50"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"backstab_duration"		"5"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"backstab_duration_range"		"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Sange & Yasha
 	//=================================================================================================================
 	"item_recipe_imba_sange_and_yasha"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1153"
+		"ID"							"2080"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -9463,20 +9916,21 @@
 	}
 	
 	//=================================================================================================================
-	// Sange and Yasha
+	// Sange & Yasha
 	//=================================================================================================================
 	"item_imba_sange_and_yasha"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1154"
-		"BaseClass"						"item_sange_and_yasha"
+		"ID"							"2134"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_sange_and_yasha"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"4100"
-		"ItemShopTags"					"damage;str;agi;attack_speed;unique"
+		"ItemShopTags"					"damage;str;agi;attack_speed;illusion;unique"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"sny;s&y;sy;sange and yasha"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
@@ -9489,47 +9943,266 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_chance"			"100"
+				"bonus_damage"			"24"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_slow_movement"	"-30"
-			}			
+				"bonus_strength"		"24"
+			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_slow_attack"		"-30"
+				"bonus_agility"			"24"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"24"
+				"bonus_attack_speed"	"10"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"24"
+				"movement_speed_percent_bonus"	"12"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"24"
-			}			
+				"stacking_as"			"5"
+			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"24"
+				"stacking_ms"			"1"
 			}
 			"08"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"movement_speed_percent_bonus"	"18"
-			}			
+				"var_type"				"FIELD_INTEGER"
+				"buff_stacks"			"8"
+			}
 			"09"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_base"				"12"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_stacking"			"8"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"12"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"maim_duration"			"4.0"
+				"passive_duration"		"3.0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"1.0"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg"		"300"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg_tooltip"		"400"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg"		"-50"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg_tooltip"		"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_sange_and_yasha"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 				"%bonus_strength"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
+				}
+			}
+
+			"modifier_item_imba_sange_and_yasha_proc"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_item_imba_sange_and_yasha_proc"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						
+						"OnSuccess"
+						{
+							"ActOnTargets"
+							{
+								"Target"
+								{
+									"Center"  				"TARGET"
+									"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							
+								"Action"    
+								{
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+										"Target"			"TARGET"
+									}
+
+									"ApplyModifier"
+									{
+										"ModifierName"		"modifier_item_imba_sange_and_yasha_proc_effect"
+										"Duration"			"%proc_duration"
+										"Target"			"TARGET"
+									}
+								}
+							}
+
+							"FireSound"
+							{
+								"EffectName"				"Hero_PhantomLancer.Doppelganger.Appear"
+								"Target"					"CASTER"
+							}
+
+							"FireEffect"
+							{
+								"EffectName"				"particles/items2_fx/butterfly_active.vpcf"
+								"EffectAttachType"			"attach_origin"
+								
+								"ControlPointEntities"
+								{
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+								}
+							}
+
+							"RunScript"
+							{
+								"ScriptFile"				"items/item_sange_and_yasha.lua"
+								"Function"					"YashaIllusion"
+
+								"modifier_stacks"			"modifier_item_imba_sange_and_yasha_stack"
+								"modifier_yasha"			"modifier_item_imba_yasha_proc"
+								"modifier_yasha_2"			"modifier_item_imba_azura_and_yasha_proc"
+								"modifier_yasha_3"			"modifier_item_imba_sange_and_yasha_proc"
+								"modifier_yasha_4"			"modifier_item_imba_sange_and_azura_and_yasha_proc"
+								"modifier_yasha_5"			"modifier_item_imba_manta_proc"
+								"modifier_yasha_6"			"modifier_item_imba_sange_and_azura_proc"
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"						"items/item_sange_and_yasha.lua"
+						"Function"							"Maim"
+		
+						"modifier_stacks"					"modifier_item_imba_sange_and_yasha_maim_stacks"
+						"sound_maim"						"DOTA_Item.Maim"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"						"items/item_sange_and_yasha.lua"
+						"Function"							"Yasha"
+
+						"modifier_stacks"					"modifier_item_imba_sange_and_yasha_stack"
+						"sound_battle_rhythm"				"DOTA_Item.Butterfly"
+					}
+				}
+			}
+
+			"modifier_item_imba_sange_and_yasha_maim_stacks"
+			{
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%passive_duration"
+
+				"EffectName"					"particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
+				}
+			}
+
+			"modifier_item_imba_sange_and_yasha_stack"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%passive_duration"
+
+				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
+				}
+			}
+
+			"modifier_item_imba_sange_and_yasha_proc_effect"
+			{
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"EffectName"					"particles/items2_fx/heavens_halberd.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -9541,7 +10214,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1155"
+		"ID"							"2081"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -9628,7 +10301,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1157"
+		"ID"							"2082"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -9765,7 +10438,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1159"
+		"ID"							"2083"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -9851,7 +10524,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1161"
+		"ID"							"2084"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -9869,7 +10542,7 @@
 			"01"						"item_imba_ogre_axe;item_imba_belt_of_strength"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Sange
 	//=================================================================================================================
@@ -9877,9 +10550,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1162"
-		"BaseClass"						"item_sange"
+		"ID"							"2127"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_sange"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9895,22 +10569,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_chance"			"100"
+				"disarm_chance"			"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_movement_speed"	"-20"
+				"maim_base"				"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_attack_speed"		"-20"
+				"maim_stacking"			"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"maim_duration"			"4.0"
+				"maim_duration"			"3.0"
 			}
 			"05"
 			{
@@ -9921,7 +10595,131 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_strength"		"21"
-			}			
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"1.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_cap"				"30"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_sange"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				}
+			}
+
+			"modifier_item_imba_sange_effects"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"util.lua"
+						"Function"					"IllusionPassiveRemover"
+
+						"modifier"					"modifier_item_imba_sange_effects"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"					"%disarm_chance"
+
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+								"Target"
+								{
+									"Center"		"TARGET"
+									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							}
+
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_item_imba_sange_disarm"
+								"Duration"			"%disarm_duration"
+								"Target"
+								{
+									"Center"		"TARGET"
+									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_sange.lua"
+						"Function"					"Maim"
+
+						"modifier_maim"				"modifier_item_imba_sange_maim"
+						"sound_maim"				"DOTA_Item.Maim"
+					}
+				}	
+			}
+
+			"modifier_item_imba_sange_disarm"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"EffectName"			"particles/items2_fx/heavens_halberd.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_item_imba_sange_maim"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"Duration"				"%maim_duration"
+
+				"EffectName"			"particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "-1"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-1" 
+				}
+			}
 		}
 	}
 
@@ -9932,7 +10730,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1163"
+		"ID"							"2085"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -10023,7 +10821,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1165"
+		"ID"							"2086"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10110,7 +10908,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1167"
+		"ID"							"2087"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10177,7 +10975,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1169"
+		"ID"							"2088"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -10194,7 +10992,7 @@
 			"01"						"item_imba_blade_of_alacrity;item_imba_boots_of_elves"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Yasha
 	//=================================================================================================================
@@ -10202,17 +11000,25 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1170"
-		"BaseClass"						"item_yasha"
+		"ID"							"2131"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_yasha"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"2050"
-		"ItemShopTags"					"agi;attack_speed;move_speed"
+		"ItemShopTags"					"agi;attack_speed;move_speed;illusion"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"yasha"
-		
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+		}
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10225,12 +11031,170 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"18"
+				"bonus_attack_speed"	"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed_percent_bonus"	"12"
+				"movement_speed_percent_bonus"	"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_as"			"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_ms"			"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"3.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"4"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"3.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg"		"300"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg_tooltip"		"400"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg"		"-50"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg_tooltip"		"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_yasha"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
+				}
+			}
+
+			"modifier_item_imba_yasha_proc"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"util.lua"
+						"Function"					"IllusionPassiveRemover"
+
+						"modifier"					"modifier_item_imba_yasha_proc"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"					"%proc_chance"
+
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
+								"Target"			"CASTER"
+							}
+
+							"FireEffect"
+							{
+								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
+								"EffectAttachType"	"attach_origin"
+								
+								"ControlPointEntities"
+								{
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+								}
+							}
+
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_yasha.lua"
+								"Function"				"YashaIllusion"
+
+								"modifier_stacks"		"modifier_item_imba_yasha_stacks"
+								"modifier_yasha"		"modifier_item_imba_yasha_proc"
+								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
+								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
+								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
+								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
+								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_yasha.lua"
+						"Function"					"Yasha"
+
+						"modifier_stacks"			"modifier_item_imba_yasha_stacks"
+						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
+					}
+				}	
+			}
+
+			"modifier_item_imba_yasha_stacks"
+			{
+				"IsBuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"Duration"				"%stack_duration"
+
+				"EffectName"			"particles/items2_fx/butterfly_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%stacking_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%stacking_ms"
+				}
 			}
 		}
 	}
@@ -10242,7 +11206,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1171"
+		"ID"							"2089"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10325,7 +11289,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1173"
+		"ID"							"2090"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10348,7 +11312,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1195"
+		"ID"							"2091"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -10564,7 +11528,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1175"
+		"ID"							"2092"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -10676,7 +11640,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1177"
+		"ID"							"2093"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10765,7 +11729,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1179"
+		"ID"							"2094"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -10790,7 +11754,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1180"
+		"ID"							"2095"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
@@ -10880,7 +11844,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -10921,7 +11885,7 @@
 		"ItemShopTags"					"hard_to_tag"
 		"ItemQuality"					"secret_shop"
 		"ItemAliases"					"orb of venom"
-		"SecretShop"					"1"	
+		"SecretShop"					"0"	
 		"SideShop"						"1"
 
 		// Special	
@@ -10958,7 +11922,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1184"
+		"ID"							"2096"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -10985,7 +11949,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1185"
+		"ID"							"2097"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"ItemPermanent"					"1"
@@ -11143,7 +12107,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1186"
+		"ID"							"2098"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -11169,7 +12133,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1187"
+		"ID"							"2099"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
@@ -11263,7 +12227,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -11376,7 +12340,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1189"
+		"ID"							"2100"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -11402,7 +12366,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1236"
+		"ID"							"2101"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_veil_of_discord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -11513,7 +12477,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -11579,7 +12543,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1205"
+		"ID"							"2102"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -11663,7 +12627,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1207"
+		"ID"							"2103"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -11766,7 +12730,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1209"
+		"ID"							"2104"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -11783,8 +12747,7 @@
 			"01"						"item_imba_sange;item_imba_talisman_of_evasion"
 		}
 	}
-	
-	
+
 	//=================================================================================================================
 	// Heaven's Halberd
 	//=================================================================================================================
@@ -11792,19 +12755,19 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1210"
-		"BaseClass"						"item_heavens_halberd"
+		"ID"							"2128"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"1"
-		
+		"AbilityTextureName" 			"item_imba_heavens_halberd"
+
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"20"
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11819,26 +12782,25 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_evasion"			"30"
+				"disarm_chance"			"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_chance"			"100"
+				"maim_base"				"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maim_movement_speed"	"-20"
-			}			
+				"maim_stacking"			"5"
+			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"maim_attack_speed"		"-20"
+				"var_type"				"FIELD_FLOAT"
+				"maim_duration"			"3.0"
 			}
 			"05"
 			{
@@ -11852,19 +12814,135 @@
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"maim_duration"			"4.0"
-			}			
+				"var_type"				"FIELD_INTEGER"
+				"maim_cap"				"30"
+			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_range"			"4.5"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_evasion"			"30"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
+				"disarm_range"			"4.5"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
 				"disarm_melee"			"3.0"
-			}				
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_passive"		"1.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"			"DOTA_Item.HeavensHalberd.Activate"
+				"Target" 				"TARGET"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_imba_sange_disarm"
+				"Duration"				"%disarm_melee"
+				"Target"
+				{
+					"Center"  			"TARGET"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+				}
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_imba_sange_disarm"
+				"Duration"				"%disarm_range"
+				"Target"
+				{
+					"Center"  			"TARGET"
+					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+				}
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_heavens_halberd"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+				}
+			}
+
+			"modifier_item_imba_sange_effects"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"					"%disarm_chance"
+
+						"OnSuccess"
+						{
+							"FireSound"
+							{
+								"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+								"Target"
+								{
+									"Center"		"TARGET"
+									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							}
+
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_item_imba_sange_disarm"
+								"Duration"			"%disarm_passive"
+								"Target"
+								{
+									"Center"		"TARGET"
+									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_sange.lua"
+						"Function"					"Maim"
+
+						"modifier_maim"				"modifier_item_imba_sange_maim"
+						"sound_maim"				"DOTA_Item.Maim"
+					}
+				}	
+			}
 		}
 	}
 	
@@ -11875,7 +12953,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1211"
+		"ID"							"2105"
 		"BaseClass"						"item_datadriven"
 		
 		// Item Info
@@ -11973,7 +13051,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1213"
+		"ID"							"2106"
 		"BaseClass"						"item_datadriven"
 	
 		// Item Info
@@ -12111,7 +13189,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"36"
+				"bonus_attack_speed"	"30"
 			}
 		}
 	}
@@ -12123,7 +13201,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1232"
+		"ID"							"2107"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -12149,7 +13227,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1233"
+		"ID"							"2108"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName" 			"item_imba_azura"
@@ -12193,7 +13271,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"3"
+				"amp_stacks"			"3"
 			}
 			"07"
 			{
@@ -12210,109 +13288,990 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_int"
 				}
+			}
 
-				"OnAttackStart"
+			"modifier_item_imba_azura_effects"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
 				{
-					"RemoveModifier"
+					"RunScript"
 					{
-						"ModifierName"			"modifier_item_imba_azura_damage"
-						"Target" 				"CASTER"
-					}
+						"ScriptFile"				"util.lua"
+						"Function"					"IllusionPassiveRemover"
 
-					"Random"
-					{
-						"Chance"				"%proc_chance"
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_item_imba_azura_damage"
-								"Target" 		"CASTER"
-							}
-						}
+						"modifier"					"modifier_item_imba_azura_effects"
 					}
 				}
 
 				"OnAttackLanded"
 				{
+					"Random"
+					{
+						"Chance"				"%proc_chance"
+
+						"OnSuccess"
+						{
+							"ActOnTargets"
+							{
+								"Target"
+								{
+									"Center"  	"TARGET"
+									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							
+								"Action"    
+								{
+									"FireEffect"
+									{
+										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+										"EffectAttachType"	"follow_origin"
+										"Target"			"TARGET"
+									}
+
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.DiffusalBlade.Target"
+										"Target" 			"TARGET"
+									}
+
+									"Damage"
+									{
+										"Target"			"TARGET"
+										"Type"				"DAMAGE_TYPE_MAGICAL"
+										"Damage"			"%proc_damage"
+									}
+								}
+							}
+						}
+					}
+
 					"RunScript"
 					{
 						"ScriptFile"			"items/item_azura.lua"
 						"Function"				"Azura"
 		
 						"modifier_stacks"		"modifier_item_imba_azura_amp"
+						"stack_sound"			"DOTA_Item.VeilofDiscord.Activate"
 					}
 				}
 
 			}
 
-			"modifier_item_imba_azura_damage"
-			{
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				"IsPurgable"			"0"
-
-				"OnAttackLanded"
-				{
-					"FireEffect"
-					{
-						"EffectName"        "particles/generic_gameplay/generic_manaburn.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "TARGET"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
-						"Target" 			"TARGET"
-					}
-
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%proc_damage"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_azura_damage"
-						"Target" 			"ATTACKER"
-					}
-				}			
-			}
-
 			"modifier_item_imba_azura_amp"
 			{
-				"IsDebuff"			"1"
-				"IsHidden"			"0"
-				"IsPurgable"		"1"
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
 
-				"Duration"			"%amp_duration"
+				"Duration"						"%amp_duration"
 
-				"EffectName"		"particles/items2_fx/veil_of_discord_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"EffectName"					"particles/items2_fx/veil_of_discord_debuff.vpcf"
+				"EffectAttachType"				"follow_origin"
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%damage_amp"
 				}
+			}
+		}
+	}
 
-				"OnDestroy"
+	//=================================================================================================================
+	// Recipe: Sange & Azura
+	//=================================================================================================================
+	"item_recipe_imba_sange_and_azura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2129"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_sange_and_azura"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_sange;item_imba_azura"
+		}
+	}
+
+	//=================================================================================================================
+	// Sange & Azura
+	//=================================================================================================================
+	"item_imba_sange_and_azura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2130"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_sange_and_azura"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4100"
+		"ItemShopTags"					"damage;str;int;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"sna;s&a;sa;sange and azura"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"24"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"24"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_damage"			"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_base"				"12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maim_stacking"			"8"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"passive_duration"		"3.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"1.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_sange_and_azura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_int"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_proc"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"items/item_azura.lua"
-						"Function"		"AzuraEnd"
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
 
-						"modifier_stacks"		"modifier_item_imba_azura_amp"
+						"modifier"						"modifier_item_imba_sange_and_azura_proc"
 					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						
+						"OnSuccess"
+						{
+							"ActOnTargets"
+							{
+								"Target"
+								{
+									"Center"  				"TARGET"
+									"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							
+								"Action"    
+								{
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
+										"Target" 			"TARGET"
+									}
+
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+										"Target"			"TARGET"
+									}
+
+									"Damage"
+									{
+										"Target"			"TARGET"
+										"Type"				"DAMAGE_TYPE_MAGICAL"
+										"Damage"			"%proc_damage"
+									}
+
+									"ApplyModifier"
+									{
+										"ModifierName"		"modifier_item_imba_sange_and_azura_proc_effect"
+										"Duration"			"%proc_duration"
+										"Target"			"TARGET"
+									}
+								}
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_sange_and_azura.lua"
+						"Function"				"Maim"
+		
+						"modifier_stacks"		"modifier_item_imba_sange_and_azura_stack"
+
+						"sound_maim"			"DOTA_Item.Maim"
+						"sound_amp"				"DOTA_Item.DiffusalBlade.Activate"
+					}
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_stack"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"Duration"				"%passive_duration"
+
+				"EffectName"			"particles/item/sange_and_azura/sange_maim.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"-1"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_proc_effect"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"EffectName"			"particles/item/sange_and_azura/heavens_halberd.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Azura & Yasha
+	//=================================================================================================================
+	"item_recipe_imba_azura_and_yasha"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2132"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_azura_and_yasha"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_azura;item_imba_yasha"
+		}
+	}
+
+	//=================================================================================================================
+	// Azura & Yasha
+	//=================================================================================================================
+	"item_imba_azura_and_yasha"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2133"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_azura_and_yasha"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4100"
+		"ItemShopTags"					"agi;int;attack_speed;move_speed;illusion;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"any;a&y;ay;azura and yasha"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"24"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_percent_bonus"	"12"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_as"			"5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_ms"			"1"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_stacks"			"8"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_damage"			"100"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_amp"				"12"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_amp"			"8"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"3.0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg"		"300"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg_tooltip"		"400"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg"		"-50"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg_tooltip"		"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_azura_and_yasha"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 				"%bonus_int"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
+				}
+			}
+
+			"modifier_item_imba_azura_and_yasha_proc"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_item_imba_azura_and_yasha_proc"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						
+						"OnSuccess"
+						{
+							"ActOnTargets"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							
+								"Action"    
+								{
+									"FireEffect"
+									{
+										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+										"EffectAttachType"	"follow_origin"
+										"Target"			"TARGET"
+									}
+
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.DiffusalBlade.Target"
+										"Target" 			"TARGET"
+									}
+
+									"Damage"
+									{
+										"Target"			"TARGET"
+										"Type"				"DAMAGE_TYPE_MAGICAL"
+										"Damage"			"%proc_damage"
+									}
+								}
+							}
+
+							"FireSound"
+							{
+								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
+								"Target"			"CASTER"
+							}
+
+							"FireEffect"
+							{
+								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
+								"EffectAttachType"	"attach_origin"
+								
+								"ControlPointEntities"
+								{
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+								}
+							}
+
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_azura_and_yasha.lua"
+								"Function"				"YashaIllusion"
+
+								"modifier_stacks"		"modifier_item_imba_azura_and_yasha_stack"
+								"modifier_yasha"		"modifier_item_imba_yasha_proc"
+								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
+								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
+								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
+								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
+								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_azura_and_yasha.lua"
+						"Function"					"Yasha"
+
+						"modifier_stacks"			"modifier_item_imba_azura_and_yasha_stack"
+						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_azura_and_yasha.lua"
+						"Function"					"Azura"
+		
+						"modifier_stacks"			"modifier_item_imba_azura_and_yasha_amp_stack"
+						"stack_sound"				"DOTA_Item.VeilofDiscord.Activate"
+					}
+				}
+			}
+
+			"modifier_item_imba_azura_and_yasha_stack"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%stack_duration"
+
+				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
+				}
+			}
+
+			"modifier_item_imba_azura_and_yasha_amp_stack"
+			{
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%stack_duration"
+
+				"EffectName"					"particles/items2_fx/veil_of_discord_debuff.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: The Triumvirate
+	//=================================================================================================================
+	"item_recipe_imba_sange_and_azura_and_yasha"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2135"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_sange_and_azura_and_yasha"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_sange;item_imba_azura;item_imba_yasha"
+			"02"						"item_imba_sange;item_imba_azura_and_yasha"
+			"03"						"item_imba_sange_and_azura;item_imba_yasha"
+			"04"						"item_imba_sange_and_yasha;item_imba_azura"
+		}
+	}
+
+	//=================================================================================================================
+	// The Triumvirate
+	//=================================================================================================================
+	"item_imba_sange_and_azura_and_yasha"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2136"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName" 			"item_imba_sange_and_azura_and_yasha"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6150"
+		"ItemShopTags"					"agi;int;st';damage;attack_speed;move_speed;illusion;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"snany;s&a&y;say;sange and azura and yasha;triumvirate"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_str"				"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"30"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed_percent_bonus"	"12"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_as"			"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_ms"			"1"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_stacks"			"10"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"20"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"1.0"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_damage"			"150"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_maim"				"12"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stacking_maim"			"8"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"3.0"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg"		"300"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_incoming_dmg_tooltip"		"400"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg"		"-50"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illu_outgoing_dmg_tooltip"		"50"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_sange_and_azura_and_yasha"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+				
+				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 				"%bonus_str"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 				"%bonus_int"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_and_yasha_proc"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_item_imba_sange_and_azura_and_yasha_proc"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						
+						"OnSuccess"
+						{
+							"ActOnTargets"
+							{
+								"Target"
+								{
+									"Center"	"TARGET"
+									"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+									"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+								}
+							
+								"Action"    
+								{
+									"FireEffect"
+									{
+										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+										"EffectAttachType"	"follow_origin"
+										"Target"			"TARGET"
+									}
+
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
+										"Target" 			"TARGET"
+									}
+
+									"FireSound"
+									{
+										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+										"Target"			"TARGET"
+									}
+
+									"ApplyModifier"
+									{
+										"ModifierName"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
+										"Duration"			"%proc_duration"
+										"Target"			"TARGET"
+									}
+
+									"Damage"
+									{
+										"Target"			"TARGET"
+										"Type"				"DAMAGE_TYPE_MAGICAL"
+										"Damage"			"%proc_damage"
+									}
+								}
+							}
+
+							"FireSound"
+							{
+								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
+								"Target"			"CASTER"
+							}
+
+							"FireEffect"
+							{
+								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
+								"EffectAttachType"	"attach_origin"
+								
+								"ControlPointEntities"
+								{
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+									"CASTER"	"follow_origin"
+								}
+							}
+
+							"RunScript"
+							{
+								"ScriptFile"			"items/item_sange_and_azura_and_yasha.lua"
+								"Function"				"YashaIllusion"
+
+								"modifier_stacks"		"modifier_item_imba_sange_and_azura_and_yasha_stack"
+								"modifier_yasha"		"modifier_item_imba_yasha_proc"
+								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
+								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
+								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
+								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
+								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+							}
+						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_sange_and_azura_and_yasha.lua"
+						"Function"					"Yasha"
+
+						"modifier_stacks"			"modifier_item_imba_sange_and_azura_and_yasha_stack"
+						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_sange_and_azura_and_yasha.lua"
+						"Function"					"Maim"
+		
+						"modifier_stacks"			"modifier_item_imba_sange_and_azura_and_yasha_maim_stack"
+						"sound_maim"				"DOTA_Item.Maim"
+						"sound_amp"					"DOTA_Item.DiffusalBlade.Activate"
+					}
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_and_yasha_stack"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%stack_duration"
+
+				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_and_yasha_maim_stack"
+			{
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"Duration"						"%stack_duration"
+
+				"EffectName"					"particles/item/sange_and_azura_and_yasha/triumvirate_maim.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"-1"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
+				}
+			}
+
+			"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
+			{
+				"IsDebuff"						"1"
+				"IsHidden"						"0"
+				"IsPurgable"					"1"
+
+				"EffectName"					"particles/item/sange_and_azura_and_yasha/triumvirate.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -12325,7 +14284,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1242"
+		"ID"							"2109"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -12388,7 +14347,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
+				"duration"				"2.5"
 			}
 			"04"
 			{
@@ -12410,7 +14369,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1227"
+		"ID"							"2110"
 		"BaseClass"             		"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -12436,7 +14395,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1244"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2111"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"BaseClass"             		"item_datadriven"
 		"AbilityTextureName" 			"item_imba_solar_crest"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -12572,7 +14531,7 @@
 				"Passive"							"1"
 				"IsHidden"							"1"
 
-				"Attributes"						"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"						"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -12650,7 +14609,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1245"
+		"ID"							"2112"
 		"BaseClass"						"item_datadriven"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
@@ -12676,7 +14635,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1246"
+		"ID"							"2113"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_moon_shard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -12738,7 +14697,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -12753,6 +14712,7 @@
 				"IsPurgable"		"0"
 
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"TextureName"		"item_imba_moon_shard"
 
@@ -12764,5 +14724,414 @@
 		}
 	}
 
-	//next free ID: 1248
+	//=================================================================================================================
+	// Recipe: Lotus Orb
+	//=================================================================================================================
+	"item_recipe_imba_lotus_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2116"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"900"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_lotus_orb"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_pers;item_imba_platemail"
+		}
+	}
+	
+	//=================================================================================================================
+	// Lotus Orb
+	//=================================================================================================================
+	"item_imba_lotus_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2117"
+		"BaseClass"						"item_lotus_orb"
+		"AbilityTextureName" 			"item_imba_lotus_orb"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCooldown"				"12.0"
+		"AbilityCastRange"				"1000"
+		"AbilityManaCost"				"50"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4050"
+		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"ls;lotus orb"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"200"
+			}			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"6"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_range_tooltip"	"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Octarine Core
+	//=================================================================================================================
+	"item_recipe_imba_octarine_core"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2120"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_octarine_core"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_mystic_staff;item_imba_soul_booster"
+		}
+	}
+	
+	//=================================================================================================================
+	// Octarine Core
+	//=================================================================================================================
+	"item_imba_octarine_core"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2121"
+		"BaseClass"						"item_octarine_core"
+		"AbilityTextureName" 			"item_imba_octarine_core"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5900"
+		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"mana;mb;octarine core"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"550"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"8"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cooldown"		"30"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_lifesteal"		"30"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_lifesteal"		"10"
+			}	
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Guardian Greaves
+	//=================================================================================================================
+	"item_recipe_imba_guardian_greaves"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2122"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1000"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_guardian_greaves"
+
+		"ItemRequirements"
+		{
+			"01"						"item_imba_mekansm_2;item_imba_arcane_boots"
+		}
+	}
+	
+	//=================================================================================================================
+	// Guardian Greaves
+	//=================================================================================================================
+	"item_imba_guardian_greaves"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2123"
+		"BaseClass"						"item_guardian_greaves"
+		"AbilityTextureName" 			"item_imba_guardian_greaves"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"FightRecapLevel"				"1"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"7150"
+		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"guardian greaves"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemAlertable"					"1"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{				
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement"		"65"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"350"
+			}		
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"6"
+			}	
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_health_regen"		"8"
+			}			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_armor"			"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_health_regen_bonus"	"50"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_armor_bonus"		"25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_bonus_threshold"	"20"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}	
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_health"		"500"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_mana"		"200"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_radius"		"1200"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration_limit"	"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Glimmer Cape
+	//=================================================================================================================
+	"item_recipe_imba_glimmer_cape"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2124"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_glimmer_cape"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_shadow_amulet;item_imba_cloak"
+		}
+	}
+
+	//=================================================================================================================
+	// Glimmer Cape
+	//=================================================================================================================
+	"item_imba_glimmer_cape"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2125"
+		"BaseClass"						"item_glimmer_cape"
+		"AbilityTextureName" 			"item_imba_glimmer_cape"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"14.0"
+		"AbilityManaCost"				"110"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1950"
+		"ItemShopTags"					""
+		"ItemQuality"					"rare"
+		"ItemAliases"					"glimmer cape"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_magical_armor"	"24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"0.4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_magical_armor"	"80"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5"
+			}
+		}
+	}
+
+	//next free ID: 2137
 }

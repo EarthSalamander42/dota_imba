@@ -281,7 +281,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
-		"Model"						"models/projectiles/mirana_arrow.vmdl"	// Model.
+		"Model"						"models/development/invisiblebox.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"
@@ -338,8 +338,8 @@
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
-		"MovementSpeed"				"450"		// Speed
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"			// Type of locomotion - ground, air
+		"MovementSpeed"				"900"		// Speed
 		"MovementTurnRate"			"1.0"		// Turning rate.
 		"FollowRange"				"250"		// Distance to keep when following
 
@@ -359,8 +359,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"0"		// Range of vision during day light.
-		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+		"VisionDaytimeRange"		"650"		// Range of vision during day light.
+		"VisionNighttimeRange"		"650"		// Range of vision at night time.
 
 		// Bots
 		//----------------------------------------------------------------

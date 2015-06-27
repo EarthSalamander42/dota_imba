@@ -11,6 +11,12 @@ function Midas( keys )
 	local target = keys.target
 	local ability = keys.ability
 
+	print(caster:GetUnitName())
+	if caster:GetUnitName() == "npc_dota_hero_tinker" then
+		print("Tinker detected")
+		return nil
+	end
+
 	local creep_XP = target:GetDeathXP()
 	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability:GetLevel() - 1)
 	local xp_multiplier = ability:GetLevelSpecialValueFor("xp_multiplier", ability:GetLevel() - 1)

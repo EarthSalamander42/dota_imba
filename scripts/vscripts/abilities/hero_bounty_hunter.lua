@@ -6,7 +6,6 @@ function ShurikenToss( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local ability_track = caster:FindAbilityByName("imba_bounty_hunter_track")
 	local track_modifier = keys.track_modifier
 	local track_scepter_modifier = keys.track_scepter_modifier
 	local target_location = target:GetAbsOrigin()
@@ -36,7 +35,6 @@ function ShurikenToss( keys )
 	local tracked_targets = FindUnitsInRadius(caster:GetTeam(), target_location, nil, bounce_radius, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 
 	-- if a target is tracked and is not the main target, create a shuriken projectile flying towards it
-	ProjectileManager:CreateTrackingProjectile(projectile)
 	for _,v in pairs(tracked_targets) do
 		if v:HasModifier(track_modifier) or v:HasModifier(track_scepter_modifier) then
 			if v ~= target then
@@ -133,7 +131,7 @@ function WindWalk( keys )
 
 	-- if it's track, reapply invisibility as soon as the cast is concluded
 	if current_ability == ability_track then
-		Timers:CreateTimer(0.1, function()caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
+		Timers:CreateTimer(0.01, function()caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
 	else
 		caster:RemoveModifierByName( modifier_invis )
 	end

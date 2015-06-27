@@ -15,6 +15,21 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Ancient Apparition
+	//=================================================================================================================
+	"npc_imba_hero_ancient_apparition"
+	{
+		"override_hero"				"npc_dota_hero_ancient_apparition"
+
+		//"Ability1"					"ancient_apparition_cold_feet"		
+		//"Ability2"					"ancient_apparition_ice_vortex"		
+		//"Ability3"					"ancient_apparition_chilling_touch"	
+		//"Ability4"					"ancient_apparition_ice_blast"		
+		//"Ability5"					"ancient_apparition_ice_blast_release"
+		"Ability6"					"attribute_bonus_int"												
+	}
+
+	//=================================================================================================================
 	// HERO: Antimage
 	//=================================================================================================================
 	"npc_imba_hero_antimage"
@@ -60,6 +75,17 @@
 	"npc_imba_hero_bane"
 	{
 		"override_hero"				"npc_dota_hero_bane"
+
+		"ModelScale"				"1.1"
+
+		"AttackDamageMin"			"58"
+		"AttackDamageMax"			"64"
+
+		"AttackRate"				"2.0"
+
+		"AttackRange"				"500"
+
+		"ProjectileSpeed"			"400"
 
 		"Ability1"					"imba_bane_enfeeble"							
 		"Ability2"					"imba_bane_brain_sap"
@@ -142,28 +168,64 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Doombringer
+	//=================================================================================================================
+	"npc_imba_hero_doom_bringer"
+	{
+		"override_hero"				"npc_dota_hero_doom_bringer"
+
+		"ModelScale" 				"1.05"
+
+		"ArmorPhysical"				"1"
+
+		//"Ability1"					"doom_bringer_devour"			
+		//"Ability2"					"doom_bringer_scorched_earth"	
+		//"Ability3"					"doom_bringer_lvl_death"		
+		//"Ability4"					"doom_bringer_empty1"			
+		//"Ability5"					"doom_bringer_empty2"			
+		//"Ability6"					"doom_bringer_doom"				
+		"Ability7"					"attribute_bonus_str"														
+	}
+
+	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
-    //"npc_imba_hero_drow_ranger"
-	//{
-	//	"override_hero"				"npc_dota_hero_drow_ranger"
+    "npc_imba_hero_drow_ranger"
+	{
+		"override_hero"				"npc_dota_hero_drow_ranger"
 		
-	//	"Ability1"					"imba_drow_ranger_frost_arrows"
-	//	"Ability2"					"imba_drow_ranger_gust"
-	//	"Ability3"					"imba_drow_ranger_trueshot"
-	//	"Ability4"					"imba_drow_ranger_marksmanship"
-	//	"Ability5"					"attribute_bonus_agi"
+		"Ability1"					"imba_drow_ranger_frost_arrows"
+		"Ability2"					"imba_drow_ranger_gust"
+		"Ability3"					"imba_drow_ranger_trueshot"
+		"Ability4"					"imba_drow_ranger_marksmanship"
+		"Ability5"					"attribute_bonus_agi"
 
-	//	"ArmorPhysical"				"-2"
+		"ArmorPhysical"				"-2"
 
-	//	"AttackDamageMin"			"20"
-	//	"AttackDamageMax"			"25"
-	//	"AttackAcquisitionRange"	"900"
+		"AttackDamageMin"			"20"
+		"AttackDamageMax"			"25"
+		"AttackAcquisitionRange"	"900"
 
-	//	"AttributeBaseAgility"		"30"
+		"AttributeBaseAgility"		"30"
 
-	//	"MovementTurnRate"			"1.0"
-	//}
+		"MovementTurnRate"			"1.0"
+	}
+
+	//=================================================================================================================
+	// HERO: Faceless Void
+	//=================================================================================================================
+	"npc_imba_hero_faceless_void"
+	{
+		"override_hero"				"npc_dota_hero_faceless_void"
+
+		"AttackRate"				"1.5"
+
+		//"Ability1"					"faceless_void_time_walk"					
+		//"Ability2"					"faceless_void_backtrack"					
+		//"Ability3"					"faceless_void_time_lock"					
+		//"Ability4"					"faceless_void_chronosphere"				
+		"Ability5"					"attribute_bonus_agi"													
+	}
 
 	//=================================================================================================================
 	// HERO: Jakiro
@@ -243,6 +305,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Lion
+	//=================================================================================================================
+	"npc_imba_hero_lion"
+	{
+		"override_hero"				"npc_dota_hero_lion"
+
+		//"Ability1"				"lion_impale"				
+		//"Ability2"				"lion_voodoo"				
+		//"Ability3"				"lion_mana_drain"			
+		//"Ability4"				"lion_finger_of_death"		
+		"Ability5"				"attribute_bonus_int"														
+	}
+
+	//=================================================================================================================
+	// HERO: Medusa
+	//=================================================================================================================
+	"npc_imba_hero_medusa"
+	{
+		"override_hero"				"npc_dota_hero_medusa"
+
+		"AttackRate"				"1.5"
+
+		//"Ability1"					"medusa_split_shot"	
+		//"Ability2"					"medusa_mystic_snake"		
+		//"Ability3"					"medusa_mana_shield"
+		//"Ability4"					"medusa_stone_gaze"
+		"Ability5"					"attribute_bonus_agi"														
+	}
+
+	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
     "npc_imba_hero_mirana"
@@ -268,9 +360,30 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Naga Siren
+	//=================================================================================================================
+	"npc_imba_hero_naga_siren"
+	{
+		"override_hero"				"npc_dota_hero_naga_siren"
+
+		"AttackDamageMin"			"33"
+		"AttackDamageMax"			"35"
+
+		"AttributeBaseIntelligence"	"22"
+		"AttributeIntelligenceGain"	"2.0"	
+
+		//"Ability1"				"imba_naga_siren_mirror_image"
+		//"Ability2"				"imba_naga_siren_ensnare"
+		//"Ability3"				"imba_naga_siren_rip_tide"
+		//"Ability4"				"imba_naga_siren_song_of_the_siren"
+		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
+		"Ability6"				"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
 	// HERO: Necrolyte
 	//=================================================================================================================
-    "npc_imba_hero_necrolyte"
+	"npc_imba_hero_necrolyte"
 	{
 		"override_hero"				"npc_dota_hero_necrolyte"
 
@@ -322,8 +435,9 @@
 
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
-		"Ability4"					"imba_nyx_assassin_vendetta"
-		"Ability5"					"attribute_bonus_int"				
+		//"Ability4"					"imba_nyx_assassin_burrow"
+		"Ability6"					"imba_nyx_assassin_vendetta"
+		"Ability7"					"attribute_bonus_int"				
 	}
 
 	//=================================================================================================================
@@ -376,20 +490,39 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Phoenix
+	//=================================================================================================================
+	"npc_imba_hero_phoenix"
+	{
+		"override_hero"				"npc_dota_hero_phoenix"
+
+		//"Ability1"					"imba_phoenix_icarus_dive"
+		//"Ability2"					"imba_phoenix_fire_spirits"
+		//"Ability3"					"imba_phoenix_sun_ray"
+		//"Ability4"					"imba_phoenix_sun_ray_toggle_move_empty"
+		//"Ability5"					"imba_phoenix_supernova"
+		//"Ability6"					"imba_phoenix_launch_fire_spirit"
+		//"Ability7"					"imba_phoenix_icarus_dive_stop"
+		//"Ability8"					"imba_phoenix_sun_ray_stop"
+		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
+		"Ability10"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
 	// HERO: Pudge
 	//=================================================================================================================
     "npc_imba_hero_pudge"
 	{
 		"override_hero"				"npc_dota_hero_pudge"
 
-		"ModelScale"				"1.10"
+		"ModelScale"				"1.2"
 
 		"MovementTurnRate"			"1.0"
 
-		"Ability1"					"imba_pudge_meat_hook"
-		"Ability2"					"imba_pudge_rot"
-		"Ability3"					"imba_pudge_flesh_heap"
-		"Ability4"					"imba_pudge_dismember"
+		//"Ability1"					"imba_pudge_meat_hook"
+		//"Ability2"					"imba_pudge_rot"
+		//"Ability3"					"imba_pudge_flesh_heap"
+		//"Ability4"					"imba_pudge_dismember"
 		"Ability5"					"attribute_bonus_str"				
 	}
 
@@ -400,16 +533,16 @@
 	{
 		"override_hero"				"npc_dota_hero_queenofpain"
 
-		"AttackRate"				"1.5"
+		"AttackRate"				"1.6"
 
 		"AttackDamageMin"			"29"
 
 		"AttributeAgilityGain"		"2.5"
 
-	//	"Ability1"					"imba_queenofpain_shadow_strike"
-	//	"Ability2"					"imba_queenofpain_blink"
-	//	"Ability3"					"imba_queenofpain_scream_of_pain"
-	//	"Ability4"					"imba_queenofpain_sonic_wave"
+		"Ability1"					"imba_queenofpain_shadow_strike"
+		"Ability2"					"imba_queenofpain_blink"
+		"Ability3"					"imba_queenofpain_scream_of_pain"
+		"Ability4"					"imba_queenofpain_sonic_wave"
 		"Ability5"					"attribute_bonus_int"				
 	}
 
@@ -428,6 +561,24 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Silencer
+	//=================================================================================================================
+	"npc_imba_hero_silencer"
+	{
+		"override_hero"				"npc_dota_hero_silencer"
+
+		"AttackRate"				"1.5"
+
+		"AttributeIntelligenceGain"		"3.0"
+
+		//"Ability1"					"imba_silencer_curse_of_the_silent"
+		//"Ability2"					"imba_silencer_glaives_of_wisdom"
+		//"Ability3"					"imba_silencer_last_word"
+		//"Ability4"					"imba_silencer_global_silence"
+		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
 	// HERO: Sniper
 	//=================================================================================================================
     "npc_imba_hero_sniper"
@@ -443,6 +594,20 @@
 		"Ability5"					"attribute_bonus_agi"
 
 		"AttributeAgilityGain"		"2.5"
+	}
+
+	//=================================================================================================================
+	// HERO: Storm Spirit
+	//=================================================================================================================
+	"npc_imba_hero_storm_spirit"
+	{
+		"override_hero"				"npc_dota_hero_storm_spirit"
+
+		//"Ability1"					"imba_storm_spirit_static_remnant"
+		//"Ability2"					"imba_storm_spirit_electric_vortex"
+		//"Ability3"					"imba_storm_spirit_overload"
+		//"Ability4"					"imba_storm_spirit_ball_lightning"
+		"Ability5"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -479,6 +644,28 @@
 	//	"Ability3"					"imba_tinker_march_of_the_machines"
 	//	"Ability4"					"imba_tinker_rearm"
 		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
+	// HERO: Ursa
+	//=================================================================================================================
+	"npc_imba_hero_ursa"
+	{
+		"override_hero"				"npc_dota_hero_ursa"
+
+		"ModelScale" 				".88"
+
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+
+		"AttackAnimationPoint"		"0.2"
+
+		"AttackRate"				"1.5"
+
+		//"Ability1"					"imba_ursa_earthshock"
+		//"Ability2"					"imba_ursa_overpower"
+		//"Ability3"					"imba_ursa_fury_swipes"
+		"Ability4"					"ursa_enrage"
+		"Ability5"					"attribute_bonus_str"
 	}
 
 	//=================================================================================================================
@@ -522,7 +709,7 @@
 	//=================================================================================================================
 	// HERO: Wraith King
 	//=================================================================================================================
-    "npc_imba_hero_skeleton_king"
+	"npc_imba_hero_skeleton_king"
 	{
 		"override_hero"				"npc_dota_hero_skeleton_king"
 

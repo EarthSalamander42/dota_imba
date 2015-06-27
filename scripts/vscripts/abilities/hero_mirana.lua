@@ -57,95 +57,99 @@ function LaunchArrow( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local target = keys.target_points[1]
-	local caster_location = caster:GetAbsOrigin()
-
+	
 	-- Memorizes the cast location to calculate the distance traveled later
-	caster.arrow_location = caster_location
+	local arrow_location = caster:GetAbsOrigin()
 
 	-- Parameters
-	local projectile_name = keys.projectile_name
+	local arrow_direction = caster:GetForwardVector()
+	local modifier_arrow = keys.modifier_arrow
+	local sound_arrow = keys.sound_arrow
 	local arrow_speed = ability:GetLevelSpecialValueFor("arrow_speed", ability_level)
 	local arrow_width = ability:GetLevelSpecialValueFor("arrow_width", ability_level)
-	local arrow_range = ability:GetLevelSpecialValueFor("arrow_range", ability_level)
-	local arrow_vision = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
-
-	-- During the night, ignores creeps
-	local arrow_target_type = ability:GetAbilityTargetType()
-	if not GameRules:IsDaytime() then
-		arrow_target_type = DOTA_UNIT_TARGET_HERO
-	end
-
-	-- Spawn the arrow projectile
-	local arrow_projectile = {
-		Ability = ability,
-		EffectName = projectile_name,
-		vSpawnOrigin = caster_location,
-		fDistance = 25000,
-		fStartRadius = arrow_width,
-		fEndRadius = arrow_width,
-	--	fExpireTime = ,
-		Source = caster,
-		bHasFrontalCone = false,
-		bReplaceExisting = false,
-		bProvidesVision = true,
-		iVisionRadius = arrow_vision,
-		iVisionTeamNumber = caster:GetTeamNumber(),
-		iUnitTargetTeam = ability:GetAbilityTargetTeam(),
-		iUnitTargetType = arrow_target_type,
-		vVelocity = arrow_speed * (target - caster_location):Normalized()
-	}
-
-	ProjectileManager:CreateLinearProjectile(arrow_projectile)
-
-end
-
-function ArrowHit( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local target_location = target:GetAbsOrigin()
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
+	local arrow_max_stunrange = ability:GetLevelSpecialValueFor("arrow_max_stunrange", ability_level)
+	local arrow_min_stun = ability:GetLevelSpecialValueFor("arrow_min_stun", ability_level)
+	local arrow_max_stun = ability:GetLevelSpecialValueFor("arrow_max_stun", ability_level)
 	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-
-	-- Vision
-	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
+	local arrow_bonus_damage = ability:GetLevelSpecialValueFor("arrow_bonus_damage", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
-	ability:CreateVisibilityNode(target_location, vision_radius, vision_duration)
+	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
+	local enemy_units
 
 	-- Initializing the damage table
 	local damage_table = {}
 	damage_table.attacker = caster
-	damage_table.victim = target
 	damage_table.damage_type = ability:GetAbilityDamageType()
 	damage_table.ability = ability
 
-	-- Arrow
-	local arrow_max_stunrange = ability:GetLevelSpecialValueFor("arrow_max_stunrange", ability_level)
-	local arrow_min_stun = ability:GetLevelSpecialValueFor("arrow_min_stun", ability_level)
-	local arrow_max_stun = ability:GetLevelSpecialValueFor("arrow_max_stun", ability_level)
-	local arrow_bonus_damage = ability:GetLevelSpecialValueFor("arrow_bonus_damage", ability_level)
-
 	-- Stun per distance
 	local stun_per_100 = (arrow_max_stun - arrow_min_stun) * 100 / arrow_max_stunrange
-	local caster_pos = caster.arrow_location
-
 	local arrow_stun_duration
-	local distance = (target_location - caster_pos):Length2D()
 
-	-- Stun
-	if distance < arrow_max_stunrange then
-		arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
-	else
-		arrow_stun_duration = arrow_max_stun
-	end
+	-- Spawn the arrow unit and move it forward
+	local sacred_arrow = CreateUnitByName("npc_dummy_mirana_arrow", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
+	sacred_arrow:SetForwardVector(arrow_direction)
+	ability:ApplyDataDrivenModifier(caster, sacred_arrow, modifier_arrow, {})
+	Physics:Unit(sacred_arrow)
+	sacred_arrow:SetPhysicsVelocity(arrow_direction * arrow_speed * 1.58)	
+	sacred_arrow:SetPhysicsFriction(0)
+	sacred_arrow:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+	sacred_arrow:SetAutoUnstuck(false)
+	sacred_arrow:FollowNavMesh(false)
+	sacred_arrow:SetGroundBehavior(PHYSICS_GROUND_ABOVE)
 
-	-- Damage
-	local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
+	-- Arrow duration counter (destroys the arrow after it travels for too long)
+	local arrow_ticks = 0
 
-	target:AddNewModifier(caster, nil, "modifier_stunned", {duration = arrow_stun_duration})
-	damage_table.damage = arrow_damage
-	ApplyDamage(damage_table)
+	Timers:CreateTimer(0, function()
+		-- During the night, ignores creeps and hits only heroes
+		if GameRules:IsDaytime() then
+			enemy_units = FindUnitsInRadius(caster:GetTeamNumber(), sacred_arrow:GetAbsOrigin(), nil, arrow_width, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+		else
+			enemy_units = FindUnitsInRadius(caster:GetTeamNumber(), sacred_arrow:GetAbsOrigin(), nil, arrow_width, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+		end
 
+		-- If no enemy is found, keep going
+		if #enemy_units == 0 then
+			arrow_ticks = arrow_ticks + 1
+			
+			-- Destroys the arrow after 1000 ticks (~30 seconds)
+			if arrow_ticks >= 1000 then
+				sacred_arrow:StopPhysicsSimulation()
+				sacred_arrow:Destroy()
+			else
+				return 0.03
+			end
+
+		-- else, play the impact sound and apply damage
+		else
+			for _,unit in pairs(enemy_units) do
+				-- Calculate hit distance 
+				local distance = (sacred_arrow:GetAbsOrigin() - arrow_location):Length2D()
+
+				-- Calculate and apply stun
+				if distance < arrow_max_stunrange then
+					arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
+				else
+					arrow_stun_duration = arrow_max_stun
+				end
+
+				unit:AddNewModifier(caster, nil, "modifier_stunned", {duration = arrow_stun_duration})
+
+				-- Damage
+				local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
+				damage_table.victim = unit
+				damage_table.damage = arrow_damage
+				ApplyDamage(damage_table)
+
+				-- Destroy the arrow and play the hit sound
+				sacred_arrow:StopPhysicsSimulation()
+				sacred_arrow:Destroy()
+				unit:EmitSound(sound_arrow)
+				ability:CreateVisibilityNode(unit:GetAbsOrigin(), vision_radius, vision_duration)
+			end
+		end
+	end)
 end
 
 function Leap( keys )

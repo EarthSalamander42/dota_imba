@@ -29,7 +29,6 @@
 		"item"		"item_imba_ogre_axe"
 		"item"		"item_imba_blade_of_alacrity"
 		"item"		"item_imba_staff_of_wizardry"
-		"item"		"item_imba_ultimate_orb"
 	}
 
 	"weapons_armor"
@@ -37,6 +36,7 @@
 		"item"		"item_imba_ring_of_protection"
 		"item"		"item_imba_stout_shield"
 		"item"		"item_imba_quelling_blade"
+		"item"		"item_imba_orb_of_venom"
 		"item"		"item_imba_blades_of_attack"
 		"item"		"item_imba_chainmail"
 		"item"		"item_imba_quarterstaff"
@@ -44,7 +44,6 @@
 		"item"		"item_imba_broadsword"
 		"item"		"item_imba_claymore"
 		"item"		"item_imba_javelin"
-		"item"		"item_imba_platemail"
 		"item"		"item_imba_mithril_hammer"
 	}
 			
@@ -56,11 +55,12 @@
 		"item"		"item_imba_boots"
 		"item"		"item_imba_gloves"
 		"item"		"item_imba_cloak"
+		"item"		"item_imba_ring_of_health"
+		"item"		"item_imba_void_stone"
 		"item"		"item_imba_gem"
 		"item"		"item_imba_lifesteal"
 		"item"		"item_imba_shadow_amulet"
 		"item"		"item_imba_ghost"
-		"item"		"item_imba_talisman_of_evasion"
 		"item"		"item_imba_blink"
 			
 	}	
@@ -80,6 +80,7 @@
 		"item"		"item_imba_pers"
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_imba_travel_boots"
+		"item"		"item_imba_moon_shard"
 	}
 
 	// Level 2 - Blue Recipes
@@ -97,21 +98,24 @@
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
 		"item"		"item_imba_pipe"
+		"item"		"item_imba_guardian_greaves"
 	}
 				
 	"magics"			
 	{
+		"item"		"item_imba_glimmer_cape"
 		"item"		"item_imba_force_staff"
-		"item"		"item_imba_azura"
 		"item"		"item_imba_veil_of_discord"
 		"item"		"item_imba_necronomicon"
 		"item"		"item_imba_dagon"
 		"item"		"item_imba_cyclone"
 		"item"		"item_imba_rod_of_atos"
+		"item"		"item_imba_lotus_orb"
 		"item"		"item_imba_orchid"
 		"item"		"item_imba_ultimate_scepter"
 		"item"		"item_imba_refresher"
 		"item"		"item_imba_sheepstick"
+		"item"		"item_imba_octarine_core"
 	}
 		
 	// Level 3 - Purple Recipes	
@@ -126,6 +130,7 @@
 		"item"		"item_imba_black_king_bar"
 		"item"		"item_imba_shivas_guard"
 		"item"		"item_imba_bloodstone"
+		"item"		"item_imba_manta"
 		"item"		"item_imba_sphere"
 		"item"		"item_imba_assault"
 		"item"		"item_imba_heart"
@@ -139,6 +144,7 @@
 		"item"		"item_imba_basher"
 		"item"		"item_imba_bfury"
 		"item"		"item_imba_ethereal_blade"
+		"item"		"item_imba_silver_edge"
 		"item"		"item_imba_radiance"
 		"item"		"item_imba_monkey_king_bar"
 		"item"		"item_imba_greater_crit"
@@ -152,16 +158,17 @@
 	{
 		"item"		"item_imba_mask_of_madness"
 		"item"		"item_imba_helm_of_the_dominator"
-		"item"		"item_imba_satanic"
 		"item"		"item_imba_sange"
-		"item"		"item_imba_heavens_halberd"
 		"item"		"item_imba_yasha"
-		"item"		"item_imba_manta"
+		"item"		"item_imba_azura"
 		"item"		"item_imba_maelstrom"
-		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_diffusal_blade"
 		"item"		"item_imba_desolator"
+		"item"		"item_imba_heavens_halberd"
 		"item"		"item_imba_skadi"
+		"item"		"item_imba_mjollnir"
+		"item"		"item_imba_satanic"
+		"item"		"item_imba_sange_and_azura_and_yasha"
 	}
 
 	"sideshop1"
@@ -175,6 +182,7 @@
 		"item"		"item_imba_boots"
 		"item"		"item_imba_cloak"
 		"item"		"item_imba_ring_of_health"
+		"item"		"item_imba_void_stone"
 		"item"		"item_imba_lifesteal"
 		"item"		"item_imba_helm_of_iron_will"
 		"item"		"item_imba_energy_booster"
@@ -183,6 +191,7 @@
 	"sideshop2"
 	{
 		"item"		"item_imba_slippers"
+		"item"		"item_imba_mantle"
 		"item"		"item_imba_quelling_blade"
 		"item"		"item_imba_belt_of_strength"
 		"item"		"item_imba_boots_of_elves"
@@ -198,13 +207,13 @@
 	
 	"secretshop"
 	{
-		"item"		"item_imba_orb_of_venom"
-		"item"		"item_imba_ring_of_health"
-		"item"		"item_imba_void_stone"
 		"item"		"item_imba_energy_booster"
 		"item"		"item_imba_vitality_booster"
 		"item"		"item_imba_point_booster"
+		"item"		"item_imba_platemail"
+		"item"		"item_imba_talisman_of_evasion"
 		"item"		"item_imba_hyperstone"
+		"item"		"item_imba_ultimate_orb"
 		"item"		"item_imba_demon_edge"
 		"item"		"item_imba_mystic_staff"
 		"item"		"item_imba_reaver"

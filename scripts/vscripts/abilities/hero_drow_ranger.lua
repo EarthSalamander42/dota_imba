@@ -101,67 +101,24 @@ function Trueshot( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local buff_modifier = keys.modifier
-	local prefix = "modifier_trueshot_damage_mod_"
-	
-	if(target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK) then
-		Timers:CreateTimer( DoUniqueString( "trueshot_updateDamage_" .. target:entindex() ), {
-			endTime = 0.25,
-			callback = function()
-				-- Adjust damage based on agility of caster
-				local agility = caster:GetAgility()
-				local percent = ability:GetLevelSpecialValueFor( "trueshot_ranged_damage", ability:GetLevel() - 1 )
-				local damage = math.floor( agility * percent / 100 )
+	local modifier_stack = keys.modifier_stack
 
-				-- Check if the unit is Drow Ranger
-				if target == caster then
-					damage = math.floor( agility * percent / 50 )
-				end
-				
-				-- Check if unit has attribute
-				if not target.TrueshotDamage then
-					target.TrueshotDamage = 0
-				end
-				
-				-- Check if unit doesn't have buff
-				if not target:HasModifier(buff_modifier) then
-					damage = 0
-				end
-				
-				local damage_ref = damage
-				
-				-- If the stored value is different
-				if target.TrueshotDamage ~= damage then
-					-- modifier values
-					local bitTable = { 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 }
-					
-					-- Get the list of modifiers on the hero and loops through removing
-					local modCount = target:GetModifierCount()
-					for i = 0, modCount do
-						for u = 1, #bitTable do
-							local val = bitTable[u]
-							if target:GetModifierNameByIndex( i ) == prefix .. val then
-								target:RemoveModifierByName( prefix .. val )
-							end
-						end
-					end
-					
-					-- Add modifiers
-					for p = 1, #bitTable do
-						local val = bitTable[p]
-						local count = math.floor( damage / val )
-						if count >= 1 then
-							ability:ApplyDataDrivenModifier( caster, target, prefix .. val, {} )
-							damage = damage - val
-						end
-					end
-				end
-				target.TrueshotDamage = damage_ref
-				return 0.25
-			end
-		})
-	else
-		target:RemoveModifierByName(buff_modifier)
+	-- Remove previous instance of the aura
+	target:RemoveModifierByName(modifier_stack)
+
+	-- Adjust damage based on agility of caster
+	local agility = caster:GetAgility()
+	local percent = ability:GetLevelSpecialValueFor( "trueshot_ranged_damage", ability:GetLevel() - 1 )
+	local damage = math.floor( agility * percent / 100 )
+
+	-- Check if the unit is Drow Ranger
+	if target == caster then
+		damage = math.floor( agility * percent / 50 )
+	end
+
+	-- Apply stacks equal to the bonus damage only if the target is ranged
+	if target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
+		AddStacks(ability, caster, target, modifier_stack, damage, true)
 	end
 end
 
@@ -176,15 +133,15 @@ function Marksmanship( keys )
 	-- Modifier names
 	local modifier_regular = keys.modifier_effect
 	local modifier_scepter = keys.modifier_scepter
-	local modifier_invis = keys.modifier_invis
+	local modifier_invis = "modifier_invisible"
 
 	-- Effect logic
 	local scepter = HasScepter(caster)
 	local enemy_nearby
 	local tree_nearby
+	local modifier_effect
 
 	-- Switches between scepter and regular modifiers
-	local modifier_effect
 	if scepter then 
 		if caster:HasModifier(modifier_regular) then
 			caster:RemoveModifierByName(modifier_regular)
@@ -204,10 +161,7 @@ function Marksmanship( keys )
 	end
 
 	-- Check tree presence in tree_radius
-	local trees = Entities:FindAllByClassnameWithin("ent_dota_tree", caster_position, tree_radius)
-	if #trees > 0 then
-		tree_nearby = true
-	end
+	local tree_nearby = GridNav:IsNearbyTree(caster_position, tree_radius, true)
 
 	-- Switches between scepter and regular modifiers
 	if not enemy_nearby then
@@ -215,7 +169,7 @@ function Marksmanship( keys )
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
 		end
 		if scepter and tree_nearby and not caster:IsAttacking() then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_invis, {})
+			caster:AddNewModifier(caster, ability, modifier_invis, {})
 		else
 			caster:RemoveModifierByName(modifier_invis)
 		end

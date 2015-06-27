@@ -538,7 +538,7 @@ function IllusionPassiveRemover( keys )
 	local target = keys.target
 	local modifier = keys.modifier
 
-	if target:IsIllusion() then
+	if target:IsIllusion() or not target:GetPlayerOwner() then
 		target:RemoveModifierByName(modifier)
 	end
 end
@@ -576,5 +576,14 @@ function SwapToItem(caster, removed_item, added_item)
 				caster:RemoveItem(current_item)
 			end
 		end
+	end
+end
+
+-- Checks if a given unit is Roshan
+function IsRoshan(unit)
+	if unit:GetName() == "npc_dota_roshan" then
+		return true
+	else
+		return false
 	end
 end

@@ -47,25 +47,16 @@ function Heartstopper( keys )
 
 	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1
-	local damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level)
-	local damage_interval = ability:GetLevelSpecialValueFor("aura_damage_interval", ability_level)
-	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
 	local max_creep_stacks = ability:GetLevelSpecialValueFor("max_creep_stacks", ability_level)
 
-	-- Calculate damage
+	-- Adds a stack of the debuff
 	if target:IsHero() or target:GetModifierStackCount(stack_modifier, ability) < max_creep_stacks then
 		AddStacks(ability, caster, target, stack_modifier, 1, true)
 	end
 	
-	local max_hp = target:GetMaxHealth()
-	local stack_count = target:GetModifierStackCount(stack_modifier, ability)
-	damage = damage * max_hp * ( 1 + stack_power * stack_count / 100 ) / 100
-	
-	-- Damage is dealt by modifying the target's HP directly (HP removal). Kills targets directly when appropriate
-	if target:GetHealth() <= damage then
+	-- If the target is at low enough HP, kill it
+	if target:GetHealth() <= 5 then
 		target:Kill(ability, caster)
-	else
-		target:SetHealth( math.max( target:GetHealth() - damage, 1) )
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos
@@ -149,12 +140,18 @@ function ReapersScythe( keys )
 		target.scythe_added_respawn = 0
 	end
 
+	-- Checks if the target is not wraith king, and does not have aegis
+	local should_increase_respawn_time = true
+	if target:GetUnitName() == "npc_dota_hero_skeleton_king" or HasAegis(target) then
+		should_increase_respawn_time = false
+	end
+
 	-- Scythe model particle
 	Timers:CreateTimer(particle_delay, function()
 		local scythe_fx = ParticleManager:CreateParticle(scythe_particle, PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		end)
+	end)
 
 	-- Waits for damage_delay to apply damage
 	Timers:CreateTimer(damage_delay, function()
@@ -175,7 +172,7 @@ function ReapersScythe( keys )
 		end
 
 		-- Checking if target is alive to decide if it needs to increase respawn time
-		if not target:IsAlive() then
+		if not target:IsAlive() and should_increase_respawn_time then
 			target:SetTimeUntilRespawn(target:GetRespawnTime() + respawn_base + target.scythe_added_respawn)
 			target.scythe_added_respawn = target.scythe_added_respawn + respawn_stack
 			if scepter then

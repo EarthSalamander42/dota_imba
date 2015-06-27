@@ -87,6 +87,14 @@ function PurificationDeath( keys )
 	end
 end
 
+function Repel( keys )
+	local target = keys.target
+	local caster = keys.caster
+
+	target:Purge(false, true, false, true, false)
+	caster:Purge(false, true, false, true, false)
+end
+
 function DegenAura( keys )
 	local caster = keys.caster
 	local target = keys.target

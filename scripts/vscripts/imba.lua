@@ -1,5 +1,8 @@
 -- Dota IMBA version 6.84.1
 
+-- Carryovers from Barebones
+-------------------------------------------------------------------------------------------------------------------------------------
+
 ENABLE_HERO_RESPAWN = true              -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = true       -- Should we let people select the same hero as each other
@@ -45,14 +48,34 @@ USE_CUSTOM_HERO_LEVELS = false          -- Should we allow heroes to have custom
 MAX_LEVEL = 25                        	-- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = false            -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
-Testing = false
 OutOfWorldVector = Vector(11000, 11000, -200)
 
-if not Testing then
-  statcollection.addStats({
-    modID = "3c618932c8379fe1284bc14438f76c89"
-  })
-end
+-- Game globals
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Testing = false							-- Set true to enable testing mode
+
+CREEP_XP_BONUS = 30						-- Amount of bonus XP granted by creeps (in %)
+CREEP_GOLD_BONUS = 30					-- Amount of bonus gold granted by creeps (in %)
+
+HERO_KILL_GOLD_BASE = 200				-- Base amount of gold awarded on a hero kill
+HERO_KILL_GOLD_PER_LEVEL = 20			-- Amount of gold awarded on a hero kill per killed hero's level
+HERO_KILL_GOLD_PER_KILLSTREAK = 80		-- Amount of gold awarded per killstreak, starting on 3 kills
+HERO_KILL_GOLD_PER_DEATHSTREAK = 80		-- Amount of gold reduced from the hero's bounty on a deathstreak, starting at 3 deaths
+
+HERO_ASSIST_RADIUS = 1300				-- Radius around the killed hero where allies will gain assist gold and experience
+
+HERO_ASSIST_BOUNTY_FACTOR_2 = 0.70		-- Factor to multiply the assist bounty by when 2 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_3 = 0.55		-- Factor to multiply the assist bounty by when 3 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_4 = 0.40		-- Factor to multiply the assist bounty by when 4 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_5 = 0.30		-- Factor to multiply the assist bounty by when 5 heroes are involved
+
+-- Enable stat collection
+--if not Testing then
+--  statcollection.addStats({
+--    modID = "3c618932c8379fe1284bc14438f76c89"
+--  })
+--end
 
 -- Fill this table up with the required XP per level if you want to change it
 XP_PER_LEVEL_TABLE = {}
@@ -65,9 +88,8 @@ if GameMode == nil then
 	GameMode = class({})
 end
 
+-- Precaches everything in the "npc_precache_everything" block in npc_units_custom.txt
 function GameMode:PostLoadPrecache()
-	print("[IMBA] Performing Post-Load precache")
-
 	PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
 end
 
@@ -100,7 +122,7 @@ function GameMode:OnHeroInGame(hero)
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
 		
-	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.1", "blue");
+	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.3", "blue");
 		-- Send the first greeting in 4 secs.
 		Timers:CreateTimer(4, function()
 	        GameRules:SendCustomMessage(firstLine, 0, 0)
@@ -152,14 +174,14 @@ function GameMode:OnGameInProgress()
 	print("[IMBA] The game has officially begun")
 
 	-- Makes all non-T1 structures invulnerable
-		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-		for _,v in pairs(structures) do
-			local name = v:GetName()
-			if name ~= "dota_goodguys_tower1_top" and name ~= "dota_goodguys_tower1_mid" and name ~= "dota_goodguys_tower1_bot"
-			and name ~= "dota_badguys_tower1_top" and name ~= "dota_badguys_tower1_mid" and name ~= "dota_badguys_tower1_bot" then
-				v:AddNewModifier(nil, nil, "modifier_invulnerable", {})
-			end
+	local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+	for _,v in pairs(structures) do
+		local name = v:GetName()
+		if name ~= "dota_goodguys_tower1_top" and name ~= "dota_goodguys_tower1_mid" and name ~= "dota_goodguys_tower1_bot"
+		and name ~= "dota_badguys_tower1_top" and name ~= "dota_badguys_tower1_mid" and name ~= "dota_badguys_tower1_bot" then
+			v:AddNewModifier(nil, nil, "modifier_invulnerable", {})
 		end
+	end
 end
 
 function GameMode:PlayerSay( keys )
@@ -232,6 +254,18 @@ function GameMode:OnNPCSpawned(keys)
 	
 	-- First hero spawn function call
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
+
+		-- Create kill and death streak globals
+		npc.kill_streak = false
+		npc.death_streak = false
+		npc.kill_streak_count = 0
+		npc.death_streak_count = 0
+
+		-- Set up the level 1 gold bounty
+		npc:SetMaximumGoldBounty( HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL )
+		npc:SetMinimumGoldBounty( HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL )
+
+		-- Prevent this function from being called again and go to OnHeroInGame function
 		npc.bFirstSpawned = true
 		GameMode:OnHeroInGame(npc)
 	end
@@ -241,9 +275,9 @@ function GameMode:OnNPCSpawned(keys)
 		local gold_bounty = npc:GetGoldBounty()
 		local xp_bounty = npc:GetDeathXP()
 
-		npc:SetDeathXP(math.floor( xp_bounty * 1.3 ))
-		npc:SetMaximumGoldBounty(math.floor( gold_bounty * 1.4 ))
-		npc:SetMinimumGoldBounty(math.floor( gold_bounty * 1.3 ))
+		npc:SetDeathXP(math.floor( xp_bounty * (1 + CREEP_XP_BONUS / 100 ) ))
+		npc:SetMaximumGoldBounty( math.floor( gold_bounty * ( 1.05 + CREEP_GOLD_BONUS / 100 ) ))
+		npc:SetMinimumGoldBounty( math.floor( gold_bounty * ( 0.95 + CREEP_GOLD_BONUS / 100 ) ))
 	end
 end
 
@@ -336,11 +370,15 @@ end
 
 -- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
---	print ('[IMBA] OnPlayerLevelUp')
---	PrintTable(keys)
+	local player = EntIndexToHScript(keys.player)
+	local level = keys.level
+	
+	-- Updates the target's bounty
+	local hero = player:GetAssignedHero()
+	local hero_bounty = hero:GetGoldBounty()
 
---	local player = EntIndexToHScript(keys.player)
---	local level = keys.level
+	hero:SetMaximumGoldBounty( hero_bounty + HERO_KILL_GOLD_PER_LEVEL )
+	hero:SetMinimumGoldBounty( hero_bounty + HERO_KILL_GOLD_PER_LEVEL )
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -417,100 +455,167 @@ end
 
 -- An entity died
 function GameMode:OnEntityKilled( keys )
-	--print( '[IMBA] OnEntityKilled Called' )
-	--PrintTable( keys )
-
-	-- The Unit that was Killed
-	local killedUnit = EntIndexToHScript( keys.entindex_killed )
-	-- The Killing entity
-	local killerEntity = nil
+	local killed_unit = EntIndexToHScript( keys.entindex_killed )
+	local killer = nil
 
 	if keys.entindex_attacker ~= nil then
-		killerEntity = EntIndexToHScript( keys.entindex_attacker )
+		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
 	-- Sets the game winner if an ancient is destroyed
-	if killedUnit:GetName() == "npc_dota_badguys_fort" then
+	if killed_unit:GetName() == "npc_dota_badguys_fort" then
+		GameRules:SetSafeToLeave( true )
 		GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-	elseif killedUnit:GetName() == "npc_dota_goodguys_fort" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_fort" then
+		GameRules:SetSafeToLeave( true )
 		GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
 	end
 
-	if killedUnit:IsRealHero() then
-		print ("KILLED: " .. killedUnit:GetName() .. " -- KILLER: " .. killerEntity:GetName())
-		if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS and killerEntity:GetTeam() == DOTA_TEAM_GOODGUYS then
-			self.nRadiantKills = self.nRadiantKills + 1
+	-- Hero kill logic
+	if killed_unit:IsRealHero() then
+
+		-- Check if the killer is not a neutral unit
+		local non_neutral_killer = false
+		if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
+			non_neutral_killer = true
+		end
+
+		-- Check if killed unit and killer belong to different teams
+		if killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
+
+			-- Increase scoreboard for the killer team
+			if killer:GetTeam() == DOTA_TEAM_GOODGUYS then
+				self.nRadiantKills = self.nRadiantKills + 1
+			elseif killer:GetTeam() == DOTA_TEAM_BADGUYS then
+				self.nDireKills = self.nDireKills + 1
+			end
+
+			-- Update the scoreboard
+			if SHOW_KILLS_ON_TOPBAR then
+				GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireKills )
+				GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantKills )
+			end
+
+			-- End the game if it is set to end on a fixed number of kills
 			if END_GAME_ON_KILLS and self.nRadiantKills >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetSafeToLeave( true )
 				GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-			end
-			-- Hero kill and assist bounty
-			if killerEntity:IsHero() then
-				local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-				local killer_bounty = 100 + killedUnit:GetLevel() * 10
-				local assist_bounty
-				if #allies == 1 then
-					assist_bounty = 140 + killedUnit:GetLevel() * 7
-				elseif #allies == 2 then
-					assist_bounty = 110 + killedUnit:GetLevel() * 6
-				elseif #allies == 3 then
-					assist_bounty = 90 + killedUnit:GetLevel() * 5
-				elseif #allies == 4 then
-					assist_bounty = 70 + killedUnit:GetLevel() * 4
-				else
-					assist_bounty = 60 + killedUnit:GetLevel() * 3
-				end
-
-				killerEntity:ModifyGold(killer_bounty, true, 0)
-				for _,ally in pairs(allies) do
-					ally:ModifyGold(assist_bounty, true, 0)
-				end
-			end
-
-		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killerEntity:GetTeam() == DOTA_TEAM_BADGUYS then
-			self.nDireKills = self.nDireKills + 1
-			if END_GAME_ON_KILLS and self.nDireKills >= KILLS_TO_END_GAME_FOR_TEAM then
+			elseif END_GAME_ON_KILLS and self.nDireKills >= KILLS_TO_END_GAME_FOR_TEAM then
 				GameRules:SetSafeToLeave( true )
 				GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
 			end
 
-			-- Hero kill and assist bounty
-			if killerEntity:IsHero() then
-				local allies = FindUnitsInRadius(killerEntity:GetTeam(), killedUnit:GetAbsOrigin(), nil, 1300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-				local killer_bounty = 100 + killedUnit:GetLevel() * 10
-				local assist_bounty
-				if #allies == 1 then
-					assist_bounty = 140 + killedUnit:GetLevel() * 7
-				elseif #allies == 2 then
-					assist_bounty = 110 + killedUnit:GetLevel() * 6
-				elseif #allies == 3 then
-					assist_bounty = 90 + killedUnit:GetLevel() * 5
-				elseif #allies == 4 then
-					assist_bounty = 70 + killedUnit:GetLevel() * 4
-				else
-					assist_bounty = 60 + killedUnit:GetLevel() * 3
-				end
+			-- Calculate assist bounty
+			local nearby_allies = FindUnitsInRadius(killer:GetTeam(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD, 0, false)
+			local assist_bounty = killed_unit:GetGoldBounty()
+			print("initial assist bounty: "..assist_bounty)
+			local ally_count = 0
 
-				killerEntity:ModifyGold(killer_bounty, true, 0)
-				for _,ally in pairs(allies) do
-					ally:ModifyGold(assist_bounty, true, 0)
+			-- Count the number of nearby allies who are not illusions
+			for _,hero in pairs(nearby_allies) do
+				if hero:IsRealHero() then
+					ally_count = ally_count + 1
 				end
 			end
-		end
 
-		if SHOW_KILLS_ON_TOPBAR then
-			GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireKills )
-			GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantKills )
+			-- Reduce assist bounty according to the number of nearby allies
+			if not killer:IsHero() then
+
+				-- If the kill was made by a non-hero unit, divide the bounty equally by all of the team's heroes
+				local all_team_heroes = FindUnitsInRadius(killer:GetTeam(), killed_unit:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD, 0, false)
+				assist_bounty = assist_bounty / #all_team_heroes
+				for _,hero in pairs(all_team_heroes) do
+					hero:ModifyGold(assist_bounty, true, 0)
+				end
+
+			elseif ally_count == 2 then
+				assist_bounty = assist_bounty * HERO_ASSIST_BOUNTY_FACTOR_2
+				print("bounty after 2 division: "..assist_bounty)
+			elseif ally_count == 3 then
+				assist_bounty = assist_bounty * HERO_ASSIST_BOUNTY_FACTOR_3
+				print("bounty after 3 division: "..assist_bounty)
+			elseif ally_count == 4 then
+				assist_bounty = assist_bounty * HERO_ASSIST_BOUNTY_FACTOR_4
+				print("bounty after 4 division: "..assist_bounty)
+			else
+				assist_bounty = assist_bounty * HERO_ASSIST_BOUNTY_FACTOR_5
+				print("bounty after 5 division: "..assist_bounty)
+			end
+
+			-- Grant bounties
+			for _,hero in pairs(nearby_allies) do
+				if hero ~= killer then
+					hero:ModifyGold(assist_bounty, true, 0)
+				end
+			end
+
+			-- Update streak bounties and display streak messages
+			if killed_unit.kill_streak then
+				killed_unit:SetMaximumGoldBounty( HERO_KILL_GOLD_BASE + killed_unit:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
+				killed_unit:SetMinimumGoldBounty( HERO_KILL_GOLD_BASE + killed_unit:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
+			elseif killed_unit.death_streak then
+				killed_unit:SetMaximumGoldBounty( math.max( killed_unit:GetGoldBounty() - HERO_KILL_GOLD_PER_DEATHSTREAK, 0) )
+				killed_unit:SetMinimumGoldBounty( math.max( killed_unit:GetGoldBounty() - HERO_KILL_GOLD_PER_DEATHSTREAK, 0) )
+
+				
+				local killed_hero_name = "#"..killed_unit:GetName()
+				if killed_unit.death_streak_count == 3 then
+					GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#00FF40'><b>DYING SPREE</b></font>", 0, 0)
+				elseif killed_unit.death_streak_count == 4 then
+					GameRules:SendCustomMessage(killed_hero_name.." is being <font color='#5E00BD'><b>DOMINATED</b></font>", 0, 0)
+				elseif killed_unit.death_streak_count == 5 then
+					GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#FF0080'><b>MEGA DEATH</b></font> streak", 0, 0)
+				elseif killed_unit.death_streak_count == 6 then
+					GameRules:SendCustomMessage(killed_hero_name.." is <font color='#FF8000'><b>HOPELESS</b></font>", 0, 0)
+				elseif killed_unit.death_streak_count == 7 then
+					GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#808000'><b>WICKED FEEDING</b></font> streak", 0, 0)
+				elseif killed_unit.death_streak_count == 8 then
+					GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#FF80FF'><b>MONSTER FEED</b></font> streak", 0, 0)
+				elseif killed_unit.death_streak_count == 9 then
+					GameRules:SendCustomMessage(killed_hero_name.." is <font color='#FF0000'><b>GHOSTLIKE</b></font>", 0, 0)
+				elseif killed_unit.death_streak_count >= 10 then
+					GameRules:SendCustomMessage(killed_hero_name.." is beyond <font color='#FF8000'><b>GHOSTLIKE</b></font>, someone FEED them!!", 0, 0)
+				end
+			end
+
+			if killer.kill_streak then
+				killer:SetMaximumGoldBounty( killer:GetGoldBounty() + HERO_KILL_GOLD_PER_KILLSTREAK )
+				killer:SetMinimumGoldBounty( killer:GetGoldBounty() + HERO_KILL_GOLD_PER_KILLSTREAK )
+			elseif killer.death_streak then
+				killer:SetMaximumGoldBounty( HERO_KILL_GOLD_BASE + killer:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
+				killer:SetMinimumGoldBounty( HERO_KILL_GOLD_BASE + killer:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
+			end
+				
+
+			-- Update the killer's kill and death streaks
+			if killer:IsRealHero() then
+				killer.death_streak = false
+				killer.death_streak_count = 0
+				killer.kill_streak_count = killer.kill_streak_count + 1
+				if killer.kill_streak_count >= 2 then
+					killer.kill_streak = true
+				end
+			end
+
+			-- Update the killed hero's kill and death streaks
+			if killed_unit:IsRealHero() then
+				killed_unit.kill_streak = false
+				killed_unit.kill_streak_count = 0
+				killed_unit.death_streak_count = killed_unit.death_streak_count + 1
+				if killed_unit.death_streak_count >= 2 then
+					killed_unit.death_streak = true
+				end
+			end
 		end
 	end
 
 	-- Reaper's Scythe death timer increase
-	if killedUnit.scythe_added_respawn then
-		killedUnit:SetTimeUntilRespawn(killedUnit:GetRespawnTime() + killedUnit.scythe_added_respawn)
+	if killed_unit.scythe_added_respawn then
+		killed_unit:SetTimeUntilRespawn(killed_unit:GetRespawnTime() + killed_unit.scythe_added_respawn)
 	end
 
 	-- Tower invulnerability removal
-	if killedUnit:GetName() == "npc_dota_goodguys_tower1_top" then
+	if killed_unit:GetName() == "npc_dota_goodguys_tower1_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -518,7 +623,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower1_mid" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower1_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -526,7 +631,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower1_bot" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower1_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -534,7 +639,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_top" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower2_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -542,7 +647,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_mid" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower2_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -550,7 +655,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower2_bot" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower2_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -558,7 +663,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_top" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower3_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -566,7 +671,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_mid" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower3_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -574,7 +679,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower3_bot" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower3_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -582,7 +687,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_goodguys_tower4" then
+	elseif killed_unit:GetName() == "npc_dota_goodguys_tower4" then
 		local other_t4_killed = true
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
@@ -597,7 +702,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_top" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower1_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -605,7 +710,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_mid" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower1_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -613,7 +718,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower1_bot" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower1_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -621,7 +726,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_top" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower2_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -629,7 +734,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_mid" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower2_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -637,7 +742,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower2_bot" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower2_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -645,7 +750,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_top" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower3_top" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -653,7 +758,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_mid" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower3_mid" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -661,7 +766,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower3_bot" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower3_bot" then
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do
 			local name = v:GetName()
@@ -669,7 +774,7 @@ function GameMode:OnEntityKilled( keys )
 				v:RemoveModifierByName("modifier_invulnerable")
 			end
 		end
-	elseif killedUnit:GetName() == "npc_dota_badguys_tower4" then
+	elseif killed_unit:GetName() == "npc_dota_badguys_tower4" then
 		local other_t4_killed = true
 		local structures = FindUnitsInRadius(1, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,v in pairs(structures) do

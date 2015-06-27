@@ -26,6 +26,8 @@ function Sheepstick( keys )
 		local magical_armor = target:GetMagicalArmorValue()
 		if magical_armor > 0.8 then
 			magical_armor = 0.8
+		elseif magical_armor < 0 then
+			magical_armor = 0
 		end
 		local magical_armor_stacks = math.floor( 100 * ( 1 / ( 1 - magical_armor ) - 1 ) )
 		local armor_stacks = math.floor(target:GetPhysicalArmorValue())

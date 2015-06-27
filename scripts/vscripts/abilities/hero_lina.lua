@@ -350,11 +350,4 @@ function LagunaBladeScepterDamage( keys )
 	damage = damage + int * int_multiplier
 
 	ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
-	if target:IsMagicImmune() then
-		if target:GetHealth() < damage then
-			target:Kill(ability, caster)
-		else
-			target:SetHealth(target:GetHealth() - damage)
-		end
-	end
 end
