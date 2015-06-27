@@ -18,7 +18,7 @@ function Yasha( keys )
 	end
 
 	-- If a lower-priority battle rhythm buff is present, remove it
-	target:RemoveModifierByName("modifier_item_imba_yasha_stacks")
+	caster:RemoveModifierByName("modifier_item_imba_yasha_stacks")
 
 	-- Increase or refresh the number of battle rhythm stacks
 	if caster:HasModifier(modifier_stacks) then
@@ -47,6 +47,11 @@ function YashaIllusion( keys )
 	local modifier_yasha_5 = keys.modifier_yasha_5
 	local modifier_yasha_6 = keys.modifier_yasha_6
 
+	-- If a higher-priority illusion generation buff is present, do nothing
+	if caster:HasModifier("modifier_item_imba_sange_and_yasha_proc") or caster:HasModifier("modifier_item_imba_sange_and_azura_and_yasha_proc") then
+		return nil
+	end
+
 	-- Parameters
 	local illusion_duration = ability:GetLevelSpecialValueFor("stack_duration", ability_level)
 	local illusion_incoming_dmg = ability:GetLevelSpecialValueFor("illu_incoming_dmg", ability_level)
@@ -57,24 +62,23 @@ function YashaIllusion( keys )
 
 	-- Spawn the illusion
 	local illusion = CreateUnitByName(hero_name, illusion_pos, true, caster, nil, caster:GetTeamNumber())
+	
+	-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
 	illusion:SetPlayerID(player)
+	illusion:MakeIllusion()
+	ability:ApplyDataDrivenModifier(caster, illusion, "modifier_item_imba_azura_and_yasha_illusion_effect", {})
 
+	-- Set the unit as an illusion
+	-- modifier_illusion controls many illusion properties like +green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle 
+	illusion:AddNewModifier(caster, ability, "modifier_illusion", {duration = illusion_duration, outgoing_damage = illusion_outgoing_dmg, incoming_damage = illusion_incoming_dmg })
+
+	-- Set the illusion's HP the same as the caster's
+	illusion:SetHealth(caster:GetHealth())
+	
  	-- Level up the illusion to the caster's level
 	local caster_level = caster:GetLevel()
 	for i = 1, caster_level - 1 do
 		illusion:HeroLevelUp(false)
-	end
-
-	-- Set the skill points to 0 and learn the skills of the caster
-	illusion:SetAbilityPoints(0)
-	for ability_slot = 0,15 do
-		local ability = caster:GetAbilityByIndex(ability_slot)
-		if ability ~= nil then 
-			local ability_level = ability:GetLevel()
-			local ability_name = ability:GetAbilityName()
-			local illusion_ability = illusion:FindAbilityByName(ability_name)
-			illusion_ability:SetLevel(ability_level)
-		end
 	end
 
 	-- Recreate the items of the caster
@@ -101,15 +105,11 @@ function YashaIllusion( keys )
 	illusion:RemoveModifierByName(modifier_yasha_5)
 	illusion:RemoveModifierByName(modifier_yasha_6)
 
-	-- Set the unit as an illusion
-	-- modifier_illusion controls many illusion properties like +green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle 
-	illusion:AddNewModifier(caster, ability, "modifier_illusion", {duration = illusion_duration, outgoing_damage = illusion_outgoing_dmg, incoming_damage = illusion_incoming_dmg })
-
-	-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
-	illusion:MakeIllusion()
-
 	-- Make the illusion attack the current target immediately
 	illusion:SetForceAttackTarget(target)
+
+	-- Set the skill points to 0
+	illusion:SetAbilityPoints(0)
 end
 
 function Azura( keys )

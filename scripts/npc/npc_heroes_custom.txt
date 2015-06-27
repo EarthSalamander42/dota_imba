@@ -15,6 +15,21 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Alchemist
+	//=================================================================================================================
+	"npc_imba_hero_alchemist"
+	{
+		"override_hero"				"npc_dota_hero_alchemist"
+
+		//"Ability1"					"imba_alchemist_acid_spray"
+		//"Ability2"					"imba_alchemist_unstable_concoction"
+		//"Ability3"					"imba_alchemist_goblins_greed"
+		//"Ability4"					"imba_alchemist_chemical_rage"
+		"Ability5"					"attribute_bonus_str"
+		//"Ability6"					"imba_alchemist_unstable_concoction_throw"																		
+	}
+
+	//=================================================================================================================
 	// HERO: Ancient Apparition
 	//=================================================================================================================
 	"npc_imba_hero_ancient_apparition"
@@ -251,6 +266,22 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Juggernaut
+	//=================================================================================================================
+	"npc_imba_hero_juggernaut"
+	{
+		"override_hero"				"npc_dota_hero_juggernaut"
+
+		"AttackRate"				"1.3"
+
+		//"Ability1"					"imba_juggernaut_blade_fury"
+		//"Ability2"					"imba_juggernaut_healing_ward"
+		//"Ability3"					"imba_juggernaut_blade_dance"
+		//"Ability4"					"imba_juggernaut_omni_slash"
+		"Ability5"					"attribute_bonus_agi"																	
+	}
+
+	//=================================================================================================================
 	// HERO: Kunkka
 	//=================================================================================================================
     "npc_imba_hero_kunkka"
@@ -315,7 +346,25 @@
 		//"Ability2"				"lion_voodoo"				
 		//"Ability3"				"lion_mana_drain"			
 		//"Ability4"				"lion_finger_of_death"		
-		"Ability5"				"attribute_bonus_int"														
+		"Ability5"					"attribute_bonus_int"														
+	}
+
+	//=================================================================================================================
+	// HERO: Luna
+	//=================================================================================================================
+	"npc_imba_hero_luna"
+	{
+		"override_hero"				"npc_dota_hero_luna"
+
+		"AttackRate"				"1.6"
+
+		"AttackRange"				"475"
+
+		//"Ability1"					"imba_luna_lucent_beam"
+		//"Ability2"					"imba_luna_moon_glaive"
+		//"Ability3"					"imba_luna_lunar_blessing"
+		//"Ability4"					"imba_luna_eclipse"
+		"Ability5"					"attribute_bonus_agi"																	
 	}
 
 	//=================================================================================================================
@@ -561,6 +610,24 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Slark
+	//=================================================================================================================
+	"npc_imba_hero_slark"
+	{
+		"override_hero"				"npc_dota_hero_slark"
+
+		"AttackRate"				"1.6"
+
+		"AttributeAgilityGain"		"2.0"
+
+		//"Ability1"					"imba_slark_dark_pact"
+		//"Ability2"					"imba_slark_pounce"
+		//"Ability3"					"imba_slark_essence_shift"
+		//"Ability4"					"imba_slark_shadow_dance"
+		"Ability5"					"attribute_bonus_agi"																	
+	}
+
+	//=================================================================================================================
 	// HERO: Silencer
 	//=================================================================================================================
 	"npc_imba_hero_silencer"
@@ -584,6 +651,8 @@
     "npc_imba_hero_sniper"
 	{
 		"override_hero"				"npc_dota_hero_sniper"
+
+		"ModelScale" 				".60"
 
 		"AttackAcquisitionRange"	"1400"
 

@@ -261,6 +261,225 @@
     "item_recipe_glimmer_cape"		"REMOVE"
     "item_glimmer_cape"				"REMOVE"
 
+    //=================================================================================================================
+	// Alchemist: Acid Spray
+	//=================================================================================================================
+	"alchemist_acid_spray"
+	{
+		"AbilityCastRange"				"1000"
+
+		"AbilityCooldown"				"16.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"650 700 750 800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"4 6 8 10"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alchemist: Unstable Concoction
+	//=================================================================================================================
+	"alchemist_unstable_concoction"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_time"					"10.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_explosion"			"10.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_stun"					"1.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_stun"					"2.0 3.0 4.0 5.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"100"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_damage"				"300 450 600 750"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"200 240 280 320"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alchemist: Unstable Concoction Throw
+	//=================================================================================================================
+	"alchemist_unstable_concoction_throw"
+	{
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_time"					"10.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"min_stun"					"1.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_stun"					"2.0 3.0 4.0 5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_damage"				"100"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_damage"				"300 450 600 750"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"1000"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_range"				"400"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"midair_explosion_radius"	"200 240 280 320"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_explosion"			"12.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alchemist: Goblin's Greed
+	//=================================================================================================================
+	"alchemist_goblins_greed"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"10 14 18 22"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_bonus_gold"		"3 4 5 6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold_cap"		"77"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Alchemist: Chemical Rage
+	//=================================================================================================================
+	"alchemist_chemical_rage"
+	{
+		"AbilityCooldown"				"45.0 40.0 35.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"0.35"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"1.3 1.0 0.7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"300 500 700"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"60 100 140"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"6.0 10.0 15.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"40 50 60"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Ancient Apparition: Cold Feet
 	//=================================================================================================================
@@ -823,6 +1042,136 @@
 	}
 
 	//=================================================================================================================
+	// Ability: Juggernaut Blade Fury
+	//=================================================================================================================
+	"juggernaut_blade_fury"
+	{
+		"AbilityCooldown"				"25 20 15 10"
+		"AbilityDuration"				"5.0"
+
+		"AbilityDamage"					"90 120 150 180"
+
+		"AbilityManaCost"				"90"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"blade_fury_damage_tick"	"0.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_fury_radius"			"275 350 425 500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Blade Dance
+	//=================================================================================================================
+	"juggernaut_blade_dance"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_mult"		"200 220 240 260"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blade_dance_crit_chance"	"25 30 35 40"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Healing Ward
+	//=================================================================================================================
+	"juggernaut_healing_ward"
+	{
+		"AbilityCastRange"				"525 575 625 675"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"60.0"
+		"AbilityDuration"				"25.0"
+	
+		"AbilityManaCost"				"120"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"healing_ward_heal_amount"	"3 4.5 6 7.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"healing_ward_aura_radius"	"525 575 625 675"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"healing_ward_movespeed_tooltip"	"420"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"healing_ward_duration_tooltip"		"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Juggernaut Omni Slash
+	//=================================================================================================================
+	"juggernaut_omni_slash"
+	{
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0.2"
+	
+		"AbilityManaCost"				"200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"omni_slash_damage"				"240"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"omni_slash_jumps"				"6 15 30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"omni_slash_radius"				"600"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"omni_slash_bounce_tick"		"0.25 0.15 0.06"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"omni_slash_jumps_scepter"		"10 30 100"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"omni_slash_cooldown_scepter"	"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Lion: Impale
 	//================================================================================================================
 	"lion_impale"
@@ -968,6 +1317,142 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"splash_radius_scepter"		"300 325 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Luna: Lucent Beam
+	//=================================================================================================================
+	"luna_lucent_beam"
+	{
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.45"
+		
+		"AbilityCooldown"				"5.0"
+	
+		"AbilityDamage"					"120 190 260 330"
+
+		"AbilityManaCost"				"90"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Luna: Moon Glaive
+	//=================================================================================================================
+	"luna_moon_glaive"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"500 600 700 800"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounces"					"2 4 6 8"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_reduction_percent"	"35 30 25 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Luna: Lunar Blessing
+	//=================================================================================================================
+	"luna_lunar_blessing"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"25000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"20 30 40 50"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_night_vision"		"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Luna: Eclipse
+	//=================================================================================================================
+	"luna_eclipse"
+	{
+		"AbilityCastPoint"				"0.45"
+		"AbilityCastRange"				"2500"
+
+		"AbilityCooldown"				"160.0 150.0 140.0"
+
+		"AbilityManaCost"				"150 175 200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"beams"						"6 10 15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hit_count"					"6 10 15"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"beam_interval"				"0.6 0.5 0.4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_tooltip"			"3.0 4.5 5.6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"700 750 800"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"beams_scepter"				"9 14 20"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hit_count_scepter"			"9 14 20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_tooltip_scepter"	"4.8 6.5 7.6"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip_scepter"	"2500"
 			}
 		}
 	}
@@ -1952,6 +2437,172 @@
 				"var_type"			"FIELD_FLOAT"
 				"epicenter_cooldown_scepter"	"60.0"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Slark: Dark Pact
+	//=================================================================================================================
+	"slark_dark_pact"
+	{
+		"AbilityCastPoint"				"0.001"
+		"AbilityCastRange"				"425"
+
+		"AbilityCooldown"				"8.0 7.0 6.0 5.0"
+
+		"AbilityManaCost"				"45 30 15 0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"					"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pulse_duration"		"2.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"425"
+			}	
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_damage"			"120 180 240 300"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_pulses"			"20"
+			}	
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pulse_interval"		"0.1"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Slark: Pounce
+	//=================================================================================================================
+	"slark_pounce"
+	{
+		"AbilityCooldown"				"15.0 12.0 9.0 6.0"
+
+		"AbilityManaCost"				"75"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pounce_distance"		"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pounce_speed"			"1000.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pounce_acceleration"	"7000.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pounce_radius"			"120"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pounce_damage"			"100 150 200 250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leash_duration"		"3.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leash_radius"			"325"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Slark: Essence Shift
+	//=================================================================================================================
+	"slark_essence_shift"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"agi_gain"				"3 4 5 6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stat_loss"				"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"30 60 90 120"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Slark Shadow Dance
+	//=================================================================================================================
+	"slark_shadow_dance"
+	{
+		"AbilityCooldown"				"60.0 45.0 30.0"
+
+		"AbilityManaCost"				"110"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0 4.5 5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"30 35 40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_regen_pct"			"4 6 8"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_delay"			"0.3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"neutral_disable"			"0.0"
+			}
+			
 		}
 	}
 

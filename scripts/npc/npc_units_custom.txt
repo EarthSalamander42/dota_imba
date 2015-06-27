@@ -1269,6 +1269,7 @@
 			"particle_folder"				"particles/item"
 			"particle_folder"				"particles/items_fx/"
 			"particle_folder"				"particles/items2_fx/"
+			"particle"						"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 			
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"

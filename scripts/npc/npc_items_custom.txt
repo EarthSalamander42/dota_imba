@@ -10204,6 +10204,16 @@
 					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+
+			"modifier_item_imba_sange_and_yasha_illusion_effect"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"				"follow_origin"
+			}
 		}
 	}
 
@@ -11195,6 +11205,16 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%stacking_as"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%stacking_ms"
 				}
+			}
+
+			"modifier_item_imba_yasha_illusion_effect"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"				"follow_origin"
 			}
 		}
 	}
@@ -13920,6 +13940,16 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
 				}
 			}
+
+			"modifier_item_imba_azura_and_yasha_illusion_effect"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"				"follow_origin"
+			}
 		}
 	}
 
@@ -14273,6 +14303,16 @@
 				{
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+
+			"modifier_item_imba_sange_and_azura_and_yasha_illusion_effect"
+			{
+				"IsBuff"						"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"				"follow_origin"
 			}
 		}
 	}

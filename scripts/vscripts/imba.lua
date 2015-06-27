@@ -122,7 +122,7 @@ function GameMode:OnHeroInGame(hero)
 	if not self.greetPlayers then
 		-- At this point a player now has a hero spawned in your map.
 		
-	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.3", "blue");
+	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.4", "blue");
 		-- Send the first greeting in 4 secs.
 		Timers:CreateTimer(4, function()
 	        GameRules:SendCustomMessage(firstLine, 0, 0)
