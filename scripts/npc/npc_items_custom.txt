@@ -10218,6 +10218,15 @@
 
 				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 				"EffectAttachType"				"follow_origin"
+
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_sange_and_yasha.lua"
+						"Function"				"IllusionKillBounty"
+					}
+				}
 			}
 		}
 	}
@@ -11220,6 +11229,15 @@
 
 				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 				"EffectAttachType"				"follow_origin"
+
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_yasha.lua"
+						"Function"				"IllusionKillBounty"
+					}
+				}
 			}
 		}
 	}
@@ -13954,6 +13972,15 @@
 
 				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 				"EffectAttachType"				"follow_origin"
+
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_azura_and_yasha.lua"
+						"Function"				"IllusionKillBounty"
+					}
+				}
 			}
 		}
 	}
@@ -14318,6 +14345,15 @@
 
 				"EffectName"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 				"EffectAttachType"				"follow_origin"
+
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_sange_and_azura_and_yasha.lua"
+						"Function"				"IllusionKillBounty"
+					}
+				}
 			}
 		}
 	}

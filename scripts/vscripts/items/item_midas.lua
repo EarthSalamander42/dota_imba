@@ -11,9 +11,7 @@ function Midas( keys )
 	local target = keys.target
 	local ability = keys.ability
 
-	print(caster:GetUnitName())
 	if caster:GetUnitName() == "npc_dota_hero_tinker" then
-		print("Tinker detected")
 		return nil
 	end
 
@@ -24,6 +22,7 @@ function Midas( keys )
 	local bonus_xp = creep_XP * xp_multiplier
 
 	target:EmitSound("DOTA_Item.Hand_Of_Midas")
+	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
 
 	local midas_particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)	
 	ParticleManager:SetParticleControlEnt(midas_particle, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), false)

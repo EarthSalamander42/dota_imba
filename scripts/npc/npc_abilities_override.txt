@@ -660,9 +660,11 @@
 	//=================================================================================================================
 	"antimage_blink"
 	{
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.3 0.25 0.2 0.15"
 		
 		"AbilityManaCost"				"0"
+
+		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
 		
 		"AbilitySpecial"
 		{

@@ -117,6 +117,18 @@ function YashaIllusion( keys )
 	illusion:SetAbilityPoints(0)
 end
 
+function IllusionKillBounty( keys )
+	local caster = keys.caster
+	local unit = keys.unit
+
+	if not unit:IsHero() then
+		local bounty = unit:GetGoldBounty()
+		caster:ModifyGold(bounty, false, DOTA_ModifyGold_CreepKill)
+		unit:EmitSound("General.Coins")
+		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, unit, bounty, nil)
+	end
+end
+
 function Azura( keys )
 	local caster = keys.caster
 	local target = keys.target

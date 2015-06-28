@@ -49,6 +49,8 @@ function DeathCoil( keys )
 		end
 	else
 		target:Heal(heal, caster)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
 		if target:HasModifier(modifier_buff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
@@ -70,7 +72,8 @@ function DeathCoil( keys )
 
 	-- Self Heal
 	if target ~= caster then
-		caster:Heal( self_heal, caster)
+		caster:Heal(self_heal, caster)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
 	end
 
 	-- Create the projectile
