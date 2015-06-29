@@ -57,8 +57,7 @@ function StiflingDaggerCrit( keys )
 		-- Deal bonus damage
 		if scepter then
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 77777, damage_type = DAMAGE_TYPE_PURE})
-			SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, 77777, nil)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, 77777, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, 77777, nil)
 		else
 			if target:IsHero() then
 				ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage * (crit_bonus - 100) / 100 * hero_dmg_pct / 100 , damage_type = DAMAGE_TYPE_PURE})

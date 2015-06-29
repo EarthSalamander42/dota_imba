@@ -204,13 +204,13 @@ function Track( keys )
 
 		-- Gives gold to the caster
 		caster:ModifyGold(bonus_gold_self, true, 0)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, caster, bonus_gold_self, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, caster, bonus_gold_self, nil)
 
 		-- Gives gold to allies in the nearby area
 		for i,v in ipairs(bonus_gold_targets) do
 			if not (v == caster) then
 				v:ModifyGold(bonus_gold, true, 0)
-				SendOverheadEventMessage(PlayerResource:GetPlayer(v:GetPlayerID()), OVERHEAD_ALERT_GOLD, v, bonus_gold, nil)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, v, bonus_gold, nil)
 			end
 		end
 	end

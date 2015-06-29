@@ -77,7 +77,7 @@ function ShallowGraveHeal( keys )
 
 	-- heal the target after shallow grave ends
 	unit:Heal(unit.grave_damage, caster)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, caster, unit.grave_damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, unit.grave_damage, nil)
 	unit.grave_damage = nil
 end
 
@@ -117,7 +117,7 @@ function ShadowWave( keys )
 		-- Heal the caster and do damage to the units around it
 		ability:ApplyDataDrivenModifier(caster, caster, armor_bonus, {})
 		caster:Heal(heal, caster)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, caster, heal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal, nil)
 
 		local units_to_damage = FindUnitsInRadius(caster:GetTeam(), caster_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
@@ -139,8 +139,7 @@ function ShadowWave( keys )
 	-- Heal the initial target and do the damage to the units around it
 	ability:ApplyDataDrivenModifier(caster, target, armor_bonus, {})
 	target:Heal(heal, caster)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 
 	local units_to_damage = FindUnitsInRadius(caster:GetTeam(), target_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
@@ -190,8 +189,7 @@ function ShadowWave( keys )
 				-- Heal it and deal damage to enemy units around it
 				ability:ApplyDataDrivenModifier(caster, target, armor_bonus, {})
 				target:Heal(heal, caster)
-				SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
-				SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 				local units_to_damage = FindUnitsInRadius(caster:GetTeam(), target_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
 				for _,v in pairs(units_to_damage) do

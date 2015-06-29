@@ -25,10 +25,7 @@ function DeathPulse( keys )
 		end
 		heal = heal * (1 + stack_power * stack_count / 100)
 		target:Heal(heal, caster)
-		if caster ~= target then
-			SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
-		end
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		AddStacks(ability, caster, target, stack_buff, 1, true)
 	else
 		if target:HasModifier(stack_debuff) then
@@ -174,8 +171,7 @@ function ReapersScythe( keys )
 			target:RemoveModifierByName("modifier_aphotic_shield")
 		end
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, damage, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, damage, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
 
 		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
 		if target:GetHealth() <= 1 then

@@ -27,10 +27,7 @@ function Purification( keys )
 
 	-- Heal and apply the strong purge on the target
 	target:Heal(heal, caster)
-	if caster ~= target then
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
-	end
-	SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 	target:Purge(false, true, false, true, false)
 
 	-- Play cast sound and particles
@@ -70,7 +67,7 @@ function PurificationDeath( keys )
 		-- Heal and apply the strong purge
 		caster:Heal(heal, caster)
 		caster:Purge(false, true, false, true, false)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, caster, heal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal, nil)
 
 		-- Play cast sound and particles
 		caster:EmitSound(cast_sound)

@@ -49,8 +49,7 @@ function DeathCoil( keys )
 		end
 	else
 		target:Heal(heal, caster)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, target, heal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
 		if target:HasModifier(modifier_buff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
@@ -73,7 +72,7 @@ function DeathCoil( keys )
 	-- Self Heal
 	if target ~= caster then
 		caster:Heal(self_heal, caster)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
 	end
 
 	-- Create the projectile
@@ -207,14 +206,14 @@ function AphoticShieldAbsorb( keys )
 		if damage > shield_remaining then
 			local health_before = unit:GetHealth()
 			unit:Heal(shield_remaining, unit)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_BLOCK, unit, shield_remaining, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, shield_remaining, nil)
 			if unit:GetHealth() == health_before then
 				unit:SetHealth(unit:GetHealth() + shield_remaining)
 			end
 		else
 			local health_before = unit:GetHealth()
 			unit:Heal(damage, unit)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_BLOCK, unit, damage, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, damage, nil)
 			if unit:GetHealth() == health_before then
 				unit:SetHealth(unit:GetHealth() + damage)
 			end

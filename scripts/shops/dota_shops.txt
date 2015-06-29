@@ -7,7 +7,7 @@
 		"item"		"item_imba_tango"
 		"item"		"item_imba_flask"
 		"item"		"item_imba_smoke_of_deceit"
-		"item"		"item_imba_tpscroll"
+		"item"		"item_tpscroll"
 		"item"		"item_imba_dust"
 		"item"		"item_imba_courier"
 		"item"		"item_imba_flying_courier"
@@ -79,7 +79,7 @@
 		"item"		"item_imba_oblivion_staff"
 		"item"		"item_imba_pers"
 		"item"		"item_imba_hand_of_midas"
-		"item"		"item_imba_travel_boots"
+		"item"		"item_travel_boots"
 		"item"		"item_imba_moon_shard"
 	}
 

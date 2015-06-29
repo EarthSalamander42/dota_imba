@@ -26,9 +26,9 @@ function ManaBreak( keys )
 	end
 
 	-- Parameters
-	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level) / illusion_factor
-	local current_mana_percent = ability:GetLevelSpecialValueFor('current_mana_percent', ability_level) / illusion_factor
-	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) / illusion_factor
+	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level) * illusion_factor
+	local current_mana_percent = ability:GetLevelSpecialValueFor('current_mana_percent', ability_level) * illusion_factor
+	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) * illusion_factor
 	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level)
 	local target_current_mana = target:GetMana()
 	local target_max_mana = target:GetMaxMana()
@@ -38,13 +38,11 @@ function ManaBreak( keys )
 	-- Burns mana
 	if target_current_mana < mana_to_burn then
 		target:SetMana(0)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, target_current_mana, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, target_current_mana, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, target_current_mana, nil)
 		mana_is_low = true
 	else
 		target:SetMana(target_current_mana - mana_to_burn)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, mana_to_burn, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, mana_to_burn, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_burn, nil)
 		mana_is_low = false
 	end
 
@@ -87,9 +85,6 @@ function ManaVoid(keys)
 		damageToDeal = damagePerMana * (targetMaxMana - targetMana + manaToBurn)
 	end
 
-	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damageToDeal, nil)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damageToDeal, nil)
-
 	local damageTable = {}
 	damageTable.attacker = caster
 	damageTable.ability = ability
@@ -102,6 +97,7 @@ function ManaVoid(keys)
 	for _,v in ipairs(unitsToDamage) do
 		damageTable.victim = v
 		ApplyDamage(damageTable)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, v, damageToDeal, nil)
 	end
 
 	ScreenShake(target:GetOrigin(), 10, 0.1, 1, 500, 0, true)

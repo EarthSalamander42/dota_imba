@@ -28,8 +28,8 @@ function ArcaneOrb( keys )
 		-- Add the appropriate number of stacks to the caster and the target
 		AddStacks(ability, caster, caster, int_gain_modifier, int_steal, true)
 		AddStacks(ability, caster, target, int_loss_modifier, int_steal, true)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
 	end
 
 	-- Calculate and deals damage
@@ -40,8 +40,7 @@ function ArcaneOrb( keys )
 	end 
 
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = ability:GetAbilityDamageType()})
-	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, bonus_damage, nil)
-	SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, bonus_damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, bonus_damage, nil)
 end
 
 function ArcaneOrbRestoreMana( keys )
@@ -99,8 +98,8 @@ function AstralImprisonment( keys )
 		AddStacks(int_steal_ability, caster, target, int_loss_modifier, int_steal, true)
 		ability:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
 		ability:ApplyDataDrivenModifier(caster, target, int_loss_modifier, {duration = int_steal_duration})
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
-		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
 	end
 
 	-- Remove the target's model from the game
@@ -197,8 +196,8 @@ function SanityEclipse( keys )
 			AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
 			ability_astral:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
 			ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
-			SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(enemy:GetPlayerID()), OVERHEAD_ALERT_MANA_LOSS, enemy, int_steal, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, int_steal, nil)
 
 
 			-- Play sound, remove the target's model, and apply the Astral Imprisonment debuff
@@ -221,6 +220,7 @@ function SanityEclipse( keys )
 		-- If the target is affected by Astral Imprisonment, checks if the damage would be enough to kill it
 		if enemy:HasModifier(astral_modifier) then
 			local actual_damage = damage * ( 1 - enemy:GetMagicalArmorValue() )
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 
 			-- If the damage is enough, ends Astral Imprisonment and kills the target
 			if enemy:GetHealth() <= actual_damage then
@@ -232,8 +232,7 @@ function SanityEclipse( keys )
 		else
 			-- Deals damage
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
-			SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
-			SendOverheadEventMessage(PlayerResource:GetPlayer(enemy:GetPlayerID()), OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 		end
 
 		-- Burns 75% of the enemy's current mana

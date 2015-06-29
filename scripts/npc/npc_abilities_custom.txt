@@ -1003,10 +1003,15 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_when_empty"			"10"
 			}
-			"04"
+			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"illusion_factor"			"0.5"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_factor_tooltip"	"50"
 			}
 		}
 
@@ -5909,7 +5914,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bounce_radius"							"475"
+				"bounce_radius"							"480 520 560 600"
 			}
 			"02"
 			{	
