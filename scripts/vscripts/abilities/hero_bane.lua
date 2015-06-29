@@ -30,7 +30,7 @@ function Enfeeble( keys )
 		target:ModifyStrength(-reduction_str)
 		target:ModifyAgility(-reduction_agi)
 		target:ModifyIntellect(-reduction_int)
-		end)
+	end)
 end
 
 function BrainSapManaDrain( keys )

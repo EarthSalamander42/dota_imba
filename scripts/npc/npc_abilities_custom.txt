@@ -554,17 +554,6 @@
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
 				"Duration"								"%duration"
-			
-				"ThinkInterval"							"0.03"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
-						"Function"						"AphoticShieldHealth"
-					}
-				}
 
 				"OnTakeDamage"
 				{
@@ -580,10 +569,10 @@
 				{
 					"AttachEffect"
 					{
-					 	"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-					 	"EffectAttachType"				"follow_origin"
-					 	"Target"						"TARGET"
-					 	"ControlPointEntities"
+						"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
+						"EffectAttachType"				"follow_origin"
+						"Target"						"TARGET"
+						"ControlPointEntities"
 						{
 							"TARGET"					"attach_origin"
 							"TARGET"					"attach_origin"
@@ -977,17 +966,17 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"					"ability_datadriven"
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"		"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"		"antimage_mana_break"
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"				"antimage_mana_break"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"  			"particles/generic_gameplay/generic_manaburn.vpcf"
-			"soundfile" 			"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+			"particle"  					"particles/generic_gameplay/generic_manaburn.vpcf"
+			"soundfile" 					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
 		// Special
@@ -1002,12 +991,22 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_hit"				"18 24 30 36"
+				"max_mana_percent"			"4 6 8 10"
 			}
 			"03"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"current_mana_percent"		"12"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_when_empty"			"10"
+			}
+			"04"
+			{
 				"var_type"					"FIELD_FLOAT"
-				"mana_percentage_per_hit"	"6 8 10 12"
+				"illusion_factor"			"0.5"
 			}
 		}
 
@@ -1017,17 +1016,17 @@
 		{
 			"modifier_imba_antimage_mana_break"
 			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"IsPurgable"			"0"
+				"IsHidden"					"1"
+				"Passive"					"1"
+				"IsPurgable"				"0"
 
 				"OnAttackLanded"
 				{
 					"RunScript"
 					{
-						"ScriptFile" 	"abilities/hero_antimage.lua"
-						"Target"		"TARGET"
-						"Function"		"ManaBreak"
+						"ScriptFile" 		"abilities/hero_antimage.lua"
+						"Target"			"TARGET"
+						"Function"			"ManaBreak"
 					}
 				}
 			}

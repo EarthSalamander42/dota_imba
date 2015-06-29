@@ -141,6 +141,8 @@ function LaunchArrow( keys )
 				damage_table.victim = unit
 				damage_table.damage = arrow_damage
 				ApplyDamage(damage_table)
+				SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, unit, arrow_damage, nil)
+				SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, unit, arrow_damage, nil)
 
 				-- Destroy the arrow and play the hit sound
 				sacred_arrow:StopPhysicsSimulation()

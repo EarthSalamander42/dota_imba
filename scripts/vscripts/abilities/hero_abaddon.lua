@@ -194,7 +194,6 @@ function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charg
 end
 
 function AphoticShieldAbsorb( keys )
-	-- Variables
 	local damage = keys.DamageTaken
 	local unit = keys.unit
 	local ability = keys.ability
@@ -202,17 +201,26 @@ function AphoticShieldAbsorb( keys )
 	-- Track how much damage was already absorbed by the shield
 	local shield_remaining = unit.AphoticShieldRemaining
 
-	-- If the damage is bigger than what the shield can absorb, heal a portion
 	if unit:HasModifier("modifier_borrowed_time") == false then
+		
+		-- If the damage is bigger than what the shield can absorb, heal a portion
 		if damage > shield_remaining then
+			local health_before = unit:GetHealth()
 			unit:Heal(shield_remaining, unit)
-		else			
+			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_BLOCK, unit, shield_remaining, nil)
+			if unit:GetHealth() == health_before then
+				unit:SetHealth(unit:GetHealth() + shield_remaining)
+			end
+		else
+			local health_before = unit:GetHealth()
 			unit:Heal(damage, unit)
+			SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_BLOCK, unit, damage, nil)
+			if unit:GetHealth() == health_before then
+				unit:SetHealth(unit:GetHealth() + damage)
+			end
 		end
-	end
 
-	-- Reduce the shield remaining and remove
-	if unit:HasModifier("modifier_borrowed_time") == false then
+		-- Reduce the shield remaining and remove
 		unit.AphoticShieldRemaining = unit.AphoticShieldRemaining - damage
 		if unit.AphoticShieldRemaining <= 0 then
 			unit.AphoticShieldRemaining = nil
@@ -265,13 +273,6 @@ function EndShieldParticle( keys )
 			enemy:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
 	end
-end
-
--- Keeps track of the targets health
-function AphoticShieldHealth( keys )
-	local target = keys.target
-
-	target.OldHealth = target:GetHealth()
 end
 
 function FrostMourne( keys )

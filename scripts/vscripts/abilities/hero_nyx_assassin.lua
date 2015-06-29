@@ -26,6 +26,8 @@ function Impale ( keys )
 		-- Applies damage and plays landing sound
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_to_repeat, damage_type = DAMAGE_TYPE_PURE})
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, damage + damage_to_repeat, nil)
+		SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, damage + damage_to_repeat, nil)
 		target:EmitSound(land_sound)
 	end)
 end
@@ -117,6 +119,8 @@ function Vendetta( keys )
 
 	-- Apply damage	
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage + stored_damage, damage_type = ability:GetAbilityDamageType()})
+	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, base_damage + stored_damage, nil)
+	SendOverheadEventMessage(PlayerResource:GetPlayer(target:GetPlayerID()), OVERHEAD_ALERT_DAMAGE, target, base_damage + stored_damage, nil)
 	
 	caster:RemoveModifierByName(modifier)
 end
