@@ -175,6 +175,11 @@ function Track( keys )
 	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability_level)
 	local bonus_gold_radius = ability:GetLevelSpecialValueFor("bonus_gold_radius", ability_level)
 
+	-- If the target is an illusion, do nothing
+	if target:IsIllusion() then
+		return nil
+	end
+
 	-- Calculates bonus gold based on the target's net worth
 	local bonus_gold_self_percent = ability:GetLevelSpecialValueFor("bonus_gold_self_percent", ability_level)
 	local bonus_gold_percent = ability:GetLevelSpecialValueFor("bonus_gold_percent", ability_level)

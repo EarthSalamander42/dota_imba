@@ -49,19 +49,18 @@ function ShallowGraveDamageStorage( keys )
 	local unit = keys.unit
 	local ability = keys.ability
 
-	local health = caster:GetHealth()
+	local health = unit:GetHealth()
 	local damage = keys.DamageTaken
-
-	local newHealth = health - damage
-	local damageStored = 1 - newHealth
 
 	-- creates unit.grave_damage if it doesn't exist
 	if not unit.grave_damage then
 		unit.grave_damage = 0
 	end
 
-	if newHealth < 1 then
-		unit.grave_damage = unit.grave_damage + damageStored
+	if health <= 1 then
+		unit.grave_damage = unit.grave_damage + damage
+		print("stored "..damage.." damage on "..unit:GetName())
+		print("TOTAL: "..unit.grave_damage)
 	end
 end
 
@@ -77,7 +76,8 @@ function ShallowGraveHeal( keys )
 
 	-- heal the target after shallow grave ends
 	unit:Heal(unit.grave_damage, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, unit.grave_damage, nil)
+	print("healed "..unit:GetName().."for "..unit.grave_damage)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, unit.grave_damage, nil)
 	unit.grave_damage = nil
 end
 

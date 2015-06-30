@@ -7,6 +7,6 @@ function MoonShardActive( keys )
 	local ability = keys.ability
 	local modifier = keys.modifier
 	
-	ability:ApplyDataDrivenModifier(caster, target, modifier, {}) 
+	AddStacks(ability, caster, target, modifier, 1, true)
 	caster:RemoveItem(ability)
 end

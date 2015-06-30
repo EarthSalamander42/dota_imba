@@ -14591,13 +14591,13 @@
 				"IsPurgable"		"0"
 
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"TextureName"		"item_imba_moon_shard"
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consumed_bonus"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%bonus_night_vision"
 				}
 			}
 		}

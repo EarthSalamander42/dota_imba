@@ -5815,7 +5815,6 @@
 					{
 						"ScriptFile"					"abilities/hero_dazzle.lua"
 						"Function"						"ShallowGraveHeal"
-						"Target"						"TARGET"
 					}
 				}
 			}
