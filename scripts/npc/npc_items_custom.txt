@@ -362,50 +362,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Quelling Blade
-	//=================================================================================================================
-	"item_imba_quelling_blade"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1011"
-		"BaseClass"						"item_quelling_blade"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-
-		"AbilityCastRange"				"450"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
-		"Model"							"models/props_gameplay/quelling_blade.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"ItemCost"						"225"
-		"ItemShopTags"					"damage"
-		"ItemQuality"					"component"
-		"ItemAliases"					"quelling blade"
-		"SideShop"						"1"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"40"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus_ranged"	"20"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Ring of Protection
@@ -458,7 +414,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"
+		"ItemCost"						"100"
 		"ItemShopTags"					"block"
 		"ItemQuality"					"component"
 		"ItemAliases"					"stout shield"
@@ -2366,7 +2322,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
+		"ItemCost"						"400"
 		"ItemShopTags"					"agi;block"
 		"ItemQuality"					"common"
 		"ItemAliases"					"pms;poor man's shield"
@@ -7173,7 +7129,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2175"
+		"ItemCost"						"2075"
 		"ItemShopTags"					"regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"vanguard"
@@ -7255,7 +7211,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3750"
+		"ItemCost"						"3650"
 		"ItemShopTags"					"armor;boost_armor;regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
@@ -8437,7 +8393,7 @@
 		"ItemResult"					"item_imba_bfury"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_broadsword;item_imba_claymore;item_imba_pers"
+			"01"						"item_quelling_blade;item_imba_broadsword;item_imba_claymore;item_imba_pers"
 		}
 	}
 	
@@ -8450,11 +8406,17 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1145"
 		"BaseClass"						"item_bfury"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
+
+		"AbilityCastRange"				"450"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"1.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4350"
+		"ItemCost"						"4450"
 		"ItemShopTags"					"damage;health_regen;mana_regen;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bf;battle fury"
@@ -8487,7 +8449,27 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"quelling_bonus"		"160"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quelling_bonus_ranged"	"140"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"cleave_radius"			"400"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"450"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_ward"		"450"
 			}
 		}
 	}

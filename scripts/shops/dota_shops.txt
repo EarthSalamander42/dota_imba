@@ -35,7 +35,7 @@
 	{
 		"item"		"item_imba_ring_of_protection"
 		"item"		"item_imba_stout_shield"
-		"item"		"item_imba_quelling_blade"
+		"item"		"item_quelling_blade"
 		"item"		"item_imba_orb_of_venom"
 		"item"		"item_imba_blades_of_attack"
 		"item"		"item_imba_chainmail"

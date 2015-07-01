@@ -16,7 +16,7 @@
 	"item_mithril_hammer"			"REMOVE"
 	"item_platemail"				"REMOVE"
 	"item_quarterstaff"				"REMOVE"
-	"item_quelling_blade"			"REMOVE"
+	//"item_quelling_blade"			"REMOVE"
 	"item_ring_of_protection"		"REMOVE"
 	"item_stout_shield"				"REMOVE"
 	"item_gauntlets"				"REMOVE"
@@ -466,6 +466,9 @@
 	"item_courier"
 	{
 		"ItemCost"						"5"
+
+		"ItemStockInitial"				"1"
+
 		"ItemStockTime"					"600.0"
 	}
 
@@ -712,6 +715,42 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_mana"			"250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Quelling Blade
+	//=================================================================================================================
+	"item_quelling_blade"
+	{
+		"AbilityCastRange"				"450"
+
+		"AbilityCooldown"				"1.0"
+
+		"ItemCost"						"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_bonus"				"140"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_bonus_ranged"		"120"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"quelling_range_tooltip"	"450"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_ward"			"450"
 			}
 		}
 	}
