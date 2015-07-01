@@ -176,7 +176,6 @@ function TidebringerTsunami( keys )
 	local ability = keys.ability
 	local target = keys.target
 	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
-	local tsunami_radius = ability:GetLevelSpecialValueFor("tsunami_radius", ability:GetLevel() - 1 )
 
 	-- Particles and modifiers
 	local particle_name = keys.particle_name
@@ -186,12 +185,14 @@ function TidebringerTsunami( keys )
 	local effect_center = caster:GetAbsOrigin() + caster:GetForwardVector() * radius
 	local enemies = FindUnitsInRadius(caster:GetTeam(), effect_center, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
 
-	-- Draws the particle and applies knockback to each enemy
+	-- Draws the particle only once
+	local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl(torrent_fx, 0, effect_center)
+	ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius, 0, 0))
+
+	-- Applies knockback to each enemy
 	if target:GetTeam() ~= caster:GetTeam() then
 		for _,enemy in pairs(enemies) do
-			local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-			ParticleManager:SetParticleControl(torrent_fx, 0, enemy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(torrent_fx, 1, Vector(tsunami_radius, 0, 0))
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_knockup, {})
 		end
 	end
