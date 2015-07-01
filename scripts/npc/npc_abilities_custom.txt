@@ -13489,6 +13489,11 @@
 				"var_type"							"FIELD_INTEGER"
 				"stacking_attack_speed"				"15"
 			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stacking_night_vision"				"50"
+			}
 		}
 
 		"Modifiers"
@@ -13573,6 +13578,7 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_move_speed"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_attack_speed"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 			"%stacking_night_vision"
 				}
 			}
 		}
@@ -13661,6 +13667,12 @@
 				"Target"					"CASTER"
 			}
 
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_imba_darkness_owner_vision"
+				"Target" 					"CASTER"
+			}
+
 			"RunScript"
 			{
 				"ScriptFile"				"abilities/hero_night_stalker.lua"
@@ -13694,6 +13706,22 @@
 						"ScriptFile"		"abilities/hero_night_stalker.lua"
 						"Function"			"RevertVision"
 					}
+				}
+			}
+
+			"modifier_imba_darkness_owner_vision"
+			{
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+
+				"Duration"					"%duration"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 		"%bonus_vision"
 				}
 			}
 
@@ -14588,19 +14616,8 @@
 						"Function"			"RestoreMana"
 
 						"Target"			"UNIT"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"UNIT"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_ObsidianDestroyer.EssenceAura"
-						"Target"			"UNIT"
+						"essence_particle"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+						"essence_sound"		"Hero_ObsidianDestroyer.EssenceAura"
 					}
 				}
 			}

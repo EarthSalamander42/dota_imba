@@ -409,13 +409,18 @@ end
 
 function BorrowedTimeAllies( keys )
 	local caster = keys.caster
-	local target = keys.target
+	local unit = keys.unit
 	local ability = keys.ability
 	local damage_taken = keys.DamageTaken
+	local attacker = keys.attacker
 	local redirect = ability:GetLevelSpecialValueFor("redirect", ability:GetLevel() - 1 )
-	local unit = keys.attacker
+
+	-- If this unit is an illusion, do nothing
+	if unit:IsIllusion() then
+		return nil
+	end
 
 	local redirect_damage = damage_taken * ( redirect / (1 - redirect) )
 	
-	ApplyDamage({ victim = caster, attacker = unit, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
+	ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
 end

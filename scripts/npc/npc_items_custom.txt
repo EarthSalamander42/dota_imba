@@ -1021,52 +1021,6 @@
 	}
 	
 	//=================================================================================================================
-	// Gem
-	//=================================================================================================================
-	"item_imba_gem"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1030"
-		"BaseClass"						"item_gem"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/gem01.mdl"
-		"Effect"						"dropped_gem"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"900"
-		"ItemShopTags"					"see_invis"
-		"ItemQuality"					"component"
-		"ItemAliases"					"gem of true sight"
-		"ItemSellable"					"0"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemStockMax"					"1"
-		"ItemStockTime"					"600.0"
-		"ItemSupport"					"1"
-		"ItemKillable"					"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		
-		// Sound
-		//-------------------------------------------------------------------------------------------------------------			
-		"UIPickupSound"					"Item.PickUpGemShop"
-		"UIDropSound"					"Item.DropGemShop"
-		"WorldDropSound"				"Item.DropGemWorld"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1400"
-			}
-		}
-	}
-	
-	//=================================================================================================================
 	// Cloak
 	//=================================================================================================================
 	"item_imba_cloak"
@@ -1132,53 +1086,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Cheese
-	//=================================================================================================================
-//	"item_imba_cheese"
-//	{
-//		// General
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ID"							"1033"
-//		"BaseClass"						"item_cheese"
-//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-//		"Model"							"models/props_gameplay/cheese.mdl"
-//		"FightRecapLevel"				"2"
-//		
-//		// Stats	
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AbilityCooldown"				"10.0"
-//		
-//		// Item Info
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ItemCost"						"3000"
-//		"ItemShopTags"					""
-//		"ItemQuality"					"epic"
-//		"ItemPurchasable"				"0"
-//		"ItemStackable"					"1"
-//		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-//		"ItemPermanent"					"0"
-//		"ItemInitialCharges"			"3"
-//		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-//		"ItemContributesToNetWorthWhenDropped"	"0"
-//		
-//		// Special	
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AbilitySpecial"
-//		{
-//			"01"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"health_restore"		"10000"
-//			}
-//			"02"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"mana_restore"			"5000"
-//			}
-//		}
-//	}
 	
 	//=================================================================================================================
 	// Magic Stick
@@ -1554,14 +1461,14 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"180"
+		"ItemCost"						"80"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemAliases"					"dust of appearance"
 		"ItemStackable"					"1"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
 		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"2"		  
+		"ItemInitialCharges"			"1"		  
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
 		"ItemSupport"					"1"
 
@@ -1647,249 +1554,6 @@
 				"movement_speed_percent_bonus"	"-30"
 			}
 		}
-	}
-
-	//=================================================================================================================
-	// Observer Wards
-	//=================================================================================================================
-	"item_imba_ward_observer"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1042"
-		"BaseClass"						"item_ward_observer"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"Model"							"models/props_gameplay/observer_ward_bundle.mdl"
-		
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"25"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"observer ward"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"ItemStockMax"					"6"
-		"ItemStockInitial"				"2"
-		"ItemStockTime"					"60.0"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
-		"ItemSupport"					"1"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lifetime"				"420"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_range"			"1600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health"				"200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sentry Ward
-	//=================================================================================================================
-	"item_imba_ward_sentry"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1043"
-		"BaseClass"						"item_ward_sentry"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"Model"							"models/props_gameplay/sentry_ward_bundle.mdl"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"75"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"sentry ward"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
-		"ItemSupport"					"1"
-
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lifetime"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_range"			"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"true_sight_range"		"1200"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health"				"200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tango
-	//=================================================================================================================
-	"item_imba_tango"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1044"
-		"BaseClass"						"item_tango"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"Model"							"models/props_gameplay/tango.mdl"
-		"Effect"						"dropped_tango"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"450"
-		"AbilityCastPoint"				"0.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"125"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"tango"
-		"ItemStackable"					"1"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"4"
-		"SideShop"						"0"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"20.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_heal"			"150"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tango Single Instance
-	//=================================================================================================================
-	"item_imba_tango_single"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1216"
-		"BaseClass"						"item_tango_single"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"Model"							"models/props_gameplay/tango.mdl"
-		"Effect"						"dropped_tango"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"165"
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"20.0"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"30"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"0"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"ItemPurchasable"				"0"
-		"ItemSellable"					"0"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"20.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_heal"			"150"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Courier
-	//=================================================================================================================
-	"item_imba_courier"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1045"
-		"BaseClass"						"item_courier"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"50"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"donkey;chicken;animal courier"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemStockMax"					"1"
-		"ItemStockTime"					"7.0"
-		"ItemSupport"					"1"
 	}
 	
 	//=================================================================================================================
@@ -3708,31 +3372,6 @@
 				}
 			}	
 		}
-	}
-
-	//=================================================================================================================
-	// Flying Courier
-	//=================================================================================================================
-	"item_imba_flying_courier"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1084"
-		"BaseClass"						"item_flying_courier"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"100"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"crow;flying courier"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemStockMax"					"1"
-		"ItemStockInitial"				"0"
-		"ItemStockTime"					"270.0"
-		"ItemSupport"					"1"
 	}
 	
 	//=================================================================================================================
@@ -5566,7 +5205,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"950"
 			}
 			"05"
 			{
@@ -5663,7 +5302,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"1000"
 			}
 			"05"
 			{
@@ -6644,7 +6283,7 @@
 	//=================================================================================================================
 	// Recipe: Scepter
 	//=================================================================================================================
-	"item_recipe_imba_ultimate_scepter"
+	"item_recipe_ultimate_scepter"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -6659,52 +6298,10 @@
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_ultimate_scepter"
+		"ItemResult"					"item_ultimate_scepter"
 		"ItemRequirements"
 		{
 			"01"						"item_imba_point_booster;item_imba_staff_of_wizardry;item_imba_ogre_axe;item_imba_blade_of_alacrity"
-		}
-	}
-	
-	//=================================================================================================================
-	// Scepter
-	//=================================================================================================================
-	"item_imba_ultimate_scepter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1108"
-		"BaseClass"						"item_ultimate_scepter"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4200"
-		"ItemShopTags"					"int;str;agi;mana_pool;health_pool;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"ultimate;aghanim's scepter"
-		//"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"		// heroes for whom this is a problem solve it in their code - ogre magi, meepo
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"14"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"300"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
-			}
 		}
 	}
 
@@ -7033,55 +6630,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Aegis of Immortality
-	//=================================================================================================================
-//	"item_imba_aegis"
-//	{
-//		// General
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ID"							"1117"
-//		"BaseClass"						"item_aegis"
-//		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-//		"Model"							"models/props_gameplay/aegis.mdl"		
-//		"FightRecapLevel"				"2"
-//		
-//		// Item Info
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ItemCost"						"0"
-//		"ItemShopTags"					""
-//		"ItemQuality"					"artifact"
-
-//		// Items		
-//		//-------------------------------------------------------------------------------------------------------------
-//		"ItemPurchasable"				"0"
-//		"ItemDroppable"					"0"
-//		"ItemSellable"					"0"
-//		"ItemKillable"					"1"
-//		"ItemContributesToNetWorthWhenDropped"	"0"
-//		
-//		// Special	
-//		//-------------------------------------------------------------------------------------------------------------
-//		"AbilitySpecial"
-//		{
-//			"01"
-//			{
-//				"var_type"				"FIELD_FLOAT"
-//				"reincarnate_time"		"3.0"
-//			}
-//			"02"
-//			{
-//				"var_type"				"FIELD_FLOAT"
-//				"disappear_time"		"480.0"
-//			}
-//			"03"
-//			{
-//				"var_type"				"FIELD_INTEGER"
-//				"disappear_time_minutes_tooltip"		"8"
-//			}
-//		}
-//	}
 
 	//=================================================================================================================
 	// Recipe: Shiva's  Guard
@@ -12107,69 +11655,6 @@
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Smoke of Deceit
-	//=================================================================================================================
-	"item_imba_smoke_of_deceit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1188"
-		"BaseClass"						"item_smoke_of_deceit"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"Model"							"models/props_gameplay/smoke.mdl"
-		"Effect"						"dropped_smoke"
-		"FightRecapLevel"				"1"
-																																																																												 
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"100"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemAliases"					"smoke of deceit"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"ItemDisplayCharges"			"1"
-		"ItemStockMax"					"3"
-		"ItemStockTime"					"720.0"			  
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemSupport"					"1"
-		"ItemAlertable"					"1"
-
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"application_radius"	"2000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"visibility_radius"		"750"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"35.0"
 			}
 		}
 	}
