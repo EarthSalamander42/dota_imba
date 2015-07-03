@@ -8449,12 +8449,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"quelling_bonus"		"160"
+				"quelling_bonus"		"200"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"quelling_bonus_ranged"	"140"
+				"quelling_bonus_ranged"	"160"
 			}			
 			"07"
 			{

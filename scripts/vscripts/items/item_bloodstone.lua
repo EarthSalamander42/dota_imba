@@ -5,7 +5,7 @@ function Suicide( keys )
 	local caster = keys.caster
 	local item = keys.ability
 
-	caster:Kill(item, caster)
+	TrueKill(caster, caster, item)
 end
 
 function UpdateCharges( keys )
