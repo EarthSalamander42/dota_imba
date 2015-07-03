@@ -2,9 +2,10 @@
 {
 	"addonSteamAppID"				"816"
 	"addontitle"					"Dota IMBA"
-	"addonversion"					"6.84.6.alpha"
+	"addon_game_name"				"Dota IMBA"
+	"addonversion"					"6.84.4c"
 	"addontagline"					"IMBA"
-	"addonauthor"					"fcalife"
+	"addonauthor"					"Firetoad and Hewdraw"
 	"addonSteamGroupName"			""
 	"addonauthorSteamID"			"fcalife"
 	"addonContent_Campaign"			"0"

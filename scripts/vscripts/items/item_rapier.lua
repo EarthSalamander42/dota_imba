@@ -1,17 +1,30 @@
 --[[	Author: d2imba
 		Date:	16.05.2015	]]
 
-function Rapier( keys )
+function RapierPickup( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Apply stacks of the Rapier buff
+	local rapier_stacks = ability:GetCurrentCharges()
+	AddStacks(ability, caster, caster, "modifier_item_imba_rapier", rapier_stacks, true)
+	print("applied "..rapier_stacks.." stacks of RAPIRA")
+end
+
+function RapierDamage( keys )
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
 	local damage = keys.damage
 
-	if target:GetHealth() < damage then
-		target:Kill(ability, caster)
-	else
-		target:SetHealth(target:GetHealth() - damage)
-	end	
+	-- Retrieve the current amount of rapier stacks
+	local rapier_stacks = caster:GetModifierStackCount("modifier_item_imba_rapier", ability)
+	print(rapier_stacks.." stacks of RAPIRA found! multiplying damage")
+
+	-- Deal extra damage
+	caster:RemoveModifierByName("modifier_item_imba_rapier")
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * rapier_stacks, damage_type = DAMAGE_TYPE_PURE})
+	AddStacks(ability, caster, caster, "modifier_item_imba_rapier", rapier_stacks, true)
 end
 
 function AegisCheck( keys )
@@ -33,10 +46,24 @@ function RapierDrop( keys )
 	local ability = keys.ability
 	local caster_pos = caster:GetAbsOrigin()
 
-	for i=0,5 do
+	-- If the caster has aegis, do nothing
+	if caster.has_aegis then
+		return nil
+	end
+
+	-- Retrieve the current amount of rapier stacks
+	local rapier_stacks = caster:GetModifierStackCount("modifier_item_imba_rapier", ability)
+	print("RAPIRA owner died with "..rapier_stacks.." stacks!")
+
+	-- Remove the rapier stacks
+	caster:RemoveModifierByName("modifier_item_imba_rapier")
+
+	-- Removes the rapiers from the player's inventory
+	for i = 0, 12 do
 		local item = caster:GetItemInSlot(i)
-		if item and item:GetAbilityName() == "item_imba_rapier" and not caster.has_aegis then
-			caster:DropItemAtPositionImmediate(item, caster_pos)
+		if item and item:GetAbilityName() == "item_imba_rapier" then
+			print("RAPIRA found! Removing RAPIRA from slot "..i)
+			caster:DropItemAtPositionImmediate(item, caster:GetAbsOrigin())
 		end
 	end
 end

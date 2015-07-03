@@ -1341,7 +1341,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -2134,7 +2134,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -2733,7 +2733,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -2916,7 +2916,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3116,7 +3116,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3247,7 +3247,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -3663,7 +3663,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				//"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -4030,7 +4030,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5182,7 +5182,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5279,7 +5279,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5542,7 +5542,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -5820,7 +5820,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -6104,7 +6104,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -6837,7 +6837,7 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"0"
 				
-				//"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -7620,7 +7620,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2064"
 		"BaseClass"						"item_datadriven"
-
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7662,6 +7661,10 @@
 		"ItemDroppable" 				"0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemInitialCharges"			"1"
+		"ItemDisplayCharges"			"1"
+		"ItemStackable"					"1"
+		"ItemRequiresCharges"			"0"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -7681,21 +7684,31 @@
 
 		// Datadriven
 		//-------------------------------------------------------------------------------------------------------------
+		"OnEquip"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickup"
+			}
+		}
+
 		"Modifiers"
 		{
 			"modifier_item_imba_rapier"
 			{
-				"Passive"				"1"
 				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
 
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"OnDealDamage"
 				{
 					"RunScript"
 					{
 						"ScriptFile"	"items/item_rapier.lua"
-						"Function"		"Rapier"
+						"Function"		"RapierDamage"
 
 						"damage"		"%attack_damage"
 					}
@@ -7710,10 +7723,10 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
-						"Function"			"IllusionPassiveRemover"
+						"ScriptFile"	"util.lua"
+						"Function"		"IllusionPassiveRemover"
 
-						"modifier"			"modifier_item_imba_rapier"
+						"modifier"		"modifier_item_imba_rapier"
 					}
 				}
 			}
@@ -7722,6 +7735,8 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
 
 				"OnDeath"
 				{
@@ -7940,7 +7955,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -8137,7 +8152,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -8822,7 +8837,7 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
-				//"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -8938,7 +8953,7 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
-				//"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -9368,7 +9383,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -9968,7 +9983,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -10450,7 +10465,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -11215,7 +11230,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				//"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -11598,7 +11613,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -11785,7 +11800,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -11973,9 +11988,8 @@
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"30"
-		"AbilityCastRange"				"140"
-		"AbilityCastPoint"				"1.0"
-
+		"AbilityCastRange"				"225"
+		"AbilityCastPoint"				"0.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12190,7 +12204,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -12596,7 +12610,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -12802,7 +12816,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -13069,7 +13083,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -13409,7 +13423,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				//"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
@@ -13877,7 +13891,7 @@
 				"Passive"							"1"
 				"IsHidden"							"1"
 
-				//"Attributes"						"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"						"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
 				"Properties"
 				{
@@ -14043,7 +14057,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				//"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{

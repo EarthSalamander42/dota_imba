@@ -341,6 +341,7 @@ function FrostMourneAttacked( keys )
 end
 
 function BorrowedTimeActivate( keys )
+
 	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
@@ -364,6 +365,7 @@ function BorrowedTimeActivate( keys )
 end
 
 function BorrowedTimeHeal( keys )
+
 	-- Variables
 	local damage = keys.DamageTaken
 	local caster = keys.caster
@@ -420,7 +422,7 @@ function BorrowedTimeAllies( keys )
 		return nil
 	end
 
-	local redirect_damage = damage_taken * ( redirect / (1 - redirect) )
+	local redirect_damage = damage_taken * ( redirect / ( 1 - redirect ) )
 	
 	ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
 end

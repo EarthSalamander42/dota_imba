@@ -14610,7 +14610,7 @@
 			{
 				"IsHidden"					"0"
 				
-				"OnAbilityExecuted"
+				"OnSpentMana"
 				{
 					"RunScript"
 					{

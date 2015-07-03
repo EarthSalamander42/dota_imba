@@ -135,19 +135,15 @@ function RestoreMana( keys )
 	local mana_restore = target:GetMaxMana() * restore_amount / 100
 
 	-- Check which ability is being cast
-	local casted_ability = target:GetCurrentActiveAbility()
-	print(target:GetName().." is using "..casted_ability:GetName())
+	--local casted_ability = target:GetCurrentActiveAbility()
+	--print(target:GetName().." is using "..casted_ability:GetName())
 
-	-- Restores mana if the casted ability is not item-based
-	if not string.find("item", casted_ability:GetName()) then
-		target:GiveMana(mana_restore)
-		print("restoring mana to "..target:GetName().."due to using "..casted_ability:GetName())
+	-- Restores mana
+	target:GiveMana(mana_restore)
 
-		-- Plays sound and effect
-		local essence_fx = ParticleManager:CreateParticle(essence_particle, PATTACH_ABSORIGIN_FOLLOW, target)
-		target:EmitSound("essence_sound")
-	end
-
+	-- Plays sound and effect
+	local essence_fx = ParticleManager:CreateParticle(essence_particle, PATTACH_ABSORIGIN_FOLLOW, target)
+	target:EmitSound("essence_sound")
 end
 
 function EssenceAuraMana( keys )

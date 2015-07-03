@@ -590,6 +590,9 @@ end
 
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
+	
+	-- Shallow Grave is more pesky
+	target:RemoveModifierByName("modifier_imba_shallow_grave")
 
 	-- Deals lethal damage in order to trigger death-preventing abilities
 	target:Kill(ability, caster)
