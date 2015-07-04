@@ -53,8 +53,6 @@ OutOfWorldVector = Vector(11000, 11000, -200)
 -- Game globals
 -------------------------------------------------------------------------------------------------------------------------------------
 
-Testing = false							-- Set true to enable testing mode
-
 CREEP_XP_BONUS = 30						-- Amount of bonus XP granted by creeps (in %)
 CREEP_GOLD_BONUS = 30					-- Amount of bonus gold granted by creeps (in %)
 
@@ -120,12 +118,25 @@ function GameMode:OnHeroInGame(hero)
 	print("[IMBA] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	if not self.greetPlayers then
+
 		-- At this point a player now has a hero spawned in your map.
+		local line_1 = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.4", "blue");
+		local line_2 = ColorIt("Hover over your abilities to find out ", "green") .. ColorIt("what they do.", "orange");
+		local line_3 = ColorIt("You can check out the new items and scepter upgrades on the shop.", "green");
+		local line_4 = ColorIt("Check our workshop page for the newest updates. ", "green") .. ColorIt("HAVE FUN!", "orange");
 		
-	    local firstLine = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.4", "blue");
 		-- Send the first greeting in 4 secs.
 		Timers:CreateTimer(4, function()
-	        GameRules:SendCustomMessage(firstLine, 0, 0)
+			GameRules:SendCustomMessage(line_1, 0, 0)
+			Timers:CreateTimer(3, function()
+				GameRules:SendCustomMessage(line_2, 0, 0)
+				Timers:CreateTimer(3, function()
+					GameRules:SendCustomMessage(line_3, 0, 0)
+					Timers:CreateTimer(3, function()
+						GameRules:SendCustomMessage(line_4, 0, 0)
+					end)
+				end)
+			end)
 		end)
 
 		self.greetPlayers = true
@@ -139,30 +150,11 @@ function GameMode:OnHeroInGame(hero)
 	table.insert(self.vPlayers, hero)
 
 	-- Show a popup with game instructions.
-	local scepter_string = "#"..hero:GetName().."_instructions_body"
-    ShowGenericPopupToPlayer(hero.player, "#imba_instructions_title", scepter_string, "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
+	-- local scepter_string = "#"..hero:GetName().."_instructions_body"
+	-- ShowGenericPopupToPlayer(hero.player, "#imba_instructions_title", scepter_string, "", "", DOTA_SHOWGENERICPOPUP_TINT_SCREEN )
 
 	-- This line for example will set the starting gold of every hero to 625 unreliable gold
 	hero:SetGold(625, false)
-
-	-- These lines will create an item and add it to the player, effectively ensuring they start with the item
-	--local item = CreateItem("item_example_item", hero, hero)
-	--hero:AddItem(item)
-
-	if Testing then
-		Say(nil, "Testing is on.", false)
-		hero:SetGold(50000, false)
-		local item_1 = CreateItem("item_imba_diffusal_blade", hero, hero)
-		local item_2 = CreateItem("item_imba_manta", hero, hero)
-		local item_3 = CreateItem("item_imba_blink", hero, hero)
-		local item_4 = CreateItem("item_imba_travel_boots", hero, hero)
-		local item_5 = CreateItem("item_imba_ultimate_scepter", hero, hero)
-		hero:AddItem(item_1)
-		hero:AddItem(item_2)
-		hero:AddItem(item_3)
-		hero:AddItem(item_4)
-		hero:AddItem(item_5)
-	end
 end
 
 --[[

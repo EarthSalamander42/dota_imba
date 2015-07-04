@@ -124,7 +124,7 @@
 	"item_necronomicon"				"REMOVE"
 	"item_necronomicon_2"			"REMOVE"
 	"item_necronomicon_3"			"REMOVE"
-	"item_recipe_ultimate_scepter"	"REMOVE"
+	//"item_recipe_ultimate_scepter"	"REMOVE"
 	//"item_ultimate_scepter"		"REMOVE"
 	"item_recipe_refresher"			"REMOVE"
 	"item_refresher"				"REMOVE"
@@ -691,6 +691,17 @@
 				"var_type"							"FIELD_FLOAT"
 				"buff_duration"						"20.0"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Scepter
+	//=================================================================================================================
+	"item_recipe_ultimate_scepter"
+	{
+		"ItemRequirements"
+		{
+			"01"			"item_imba_point_booster;item_imba_staff_of_wizardry;item_imba_ogre_axe;item_imba_blade_of_alacrity"
 		}
 	}
 
