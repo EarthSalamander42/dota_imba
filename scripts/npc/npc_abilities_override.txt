@@ -1565,7 +1565,7 @@
 
 		"AbilityDamage"					"90 120 150 180"
 
-		"AbilityManaCost"				"90"		
+		"AbilityManaCost"				"90"
 
 		"AbilitySpecial"
 		{
@@ -1577,7 +1577,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_fury_radius"			"275 350 425 500"
+				"blade_fury_radius"			"350 400 450 500"
 			}
 		}
 	}
@@ -1697,14 +1697,14 @@
 
 		"AbilityManaCost"				"100 110 120 130"
 		
-		"AbilityDamage"					"100 175 250 325"
+		"AbilityDamage"					"120 200 280 360"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"width"				"140 160 180 200"
+				"width"				"200"
 			}
 			"02"
 			{	
@@ -1733,7 +1733,7 @@
 
 		"AbilityCooldown"				"30.0 24.0 18.0 12.0"
 
-		"AbilityManaCost"				"100 110 120 130"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
@@ -1805,7 +1805,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"650 800 950"
+				"damage"					"650 825 1000"
 			}
 			"02"
 			{
@@ -1830,7 +1830,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"splash_radius_scepter"		"300 325 350"
+				"splash_radius_scepter"		"300 350 400"
 			}
 		}
 	}
@@ -2025,7 +2025,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"illusion_duration"			"40.0"
+				"illusion_duration"			"50.0"
 			}
 			"02"
 			{
@@ -2098,11 +2098,11 @@
 	//=================================================================================================================
 	"naga_siren_rip_tide"
 	{
-		"AbilityCooldown"				"10.0 9.0 8.0 7.0"
+		"AbilityCooldown"				"7.0"
 
 		"AbilityManaCost"				"80"
 		
-		"AbilityDamage"					"130 170 210 250"
+		"AbilityDamage"					"130 180 230 280"
 
 		"AbilityCastRange"				"425"
 
@@ -2136,7 +2136,7 @@
 
 		"AbilityCooldown"				"120.0 90.0 60.0"
 
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
 		{
@@ -3001,12 +3001,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-18 -22 -26 -30"
+				"slow_movement_speed"	"-30"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
+				"radius"				"375 425 475 525"
 			}
 			"04"
 			{
@@ -3016,7 +3016,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_delay"			"0.9"
+				"damage_delay"			"0.8"
 			}
 			"06"
 			{
@@ -3026,87 +3026,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"4"
+				"max_charges"			"3"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"20.0"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sniper: Headshot
-	//=================================================================================================================
-	"sniper_headshot"
-	{
-		"AbilityDamage"					"25 50 75 100"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"0.5"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"proc_chance"				"50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow"						"-100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sniper: Take Aim
-	//=================================================================================================================
-	"sniper_take_aim"
-	{
-		"AbilityCastRange"					"750 900 1050 1200"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"200 350 500 650"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sniper: Assassinate
-	//=================================================================================================================
-	"sniper_assassinate"
-	{
-		
-		"AbilityCastRange"				"5000"
-		"AbilityCastRangeBuffer"		"1000"
-		"AbilityCastPoint"				"2.0"
-
-		"AbilityCooldown"				"20.0 15.0 10.0"
-
-		"AbilityDamage"					"400 560 720"
-
-		"AbilityManaCost"				"175 225 275"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"3000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"5000"
+				"charge_restore_time"	"25.0"
 			}
 		}
 	}
@@ -3230,9 +3155,9 @@
 	//=================================================================================================================
 	"storm_spirit_ball_lightning"
 	{
-		"AbilityCastPoint"				"0.25 0.2 0.15"
+		"AbilityCastPoint"				"0.25"
 
-		"AbilityDamage"					"8 14 20"
+		"AbilityDamage"					"8 12 16"
 		
 		"AbilityManaCost"				"0"
 
@@ -3246,7 +3171,7 @@
 			"02"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_initial_mana_base"			"0"		
+				"ball_lightning_initial_mana_base"			"20 10 0"		
 			}
 			"03"
 			{
@@ -3286,7 +3211,7 @@
 	//=================================================================================================================
 	"sven_storm_bolt"
 	{
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.2"
 
 		"AbilityCooldown"				"10.0"
@@ -3309,13 +3234,13 @@
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"bolt_aoe"			"400"
+				"var_type"				"FIELD_INTEGER"
+				"bolt_aoe"				"275 325 375 425"
 			}
 			"04"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"vision_radius"		"600"
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"600"
 			}
 		}
 	}
@@ -3330,7 +3255,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"great_cleave_radius"	"325.0 350.0 375.0 400.0"
+				"great_cleave_radius"	"400.0"
 			}
 			
 			"02"
@@ -3346,7 +3271,7 @@
 	//=================================================================================================================
 	"sven_warcry"
 	{
-		"AbilityCooldown"				"26.0 22.0 18.0 14.0"
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
 		"AbilityDuration"				"8.0"
 	
 		"AbilityManaCost"				"0"
@@ -3356,7 +3281,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"warcry_armor"		"6 12 18 24"		
+				"warcry_armor"		"10 15 20 25"		
 			}
 			"02"
 			{
@@ -3383,17 +3308,17 @@
 	{
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityCooldown"				"65.0 55.0 45.0"
+		"AbilityCooldown"				"70.0 60.0 50.0"
 		"AbilityDuration"				"30.0"
 	
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"50 75 100"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"gods_strength_damage"		"150 225 300"		
+				"gods_strength_damage"		"150 250 350"		
 			}
 			"02"
 			{
@@ -3712,7 +3637,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage_pct"	"18 30 42 54"
+				"bonus_damage_pct"	"25 40 55 70"
 			}
 			"02"
 			{
@@ -3733,7 +3658,7 @@
 		"AbilityCooldown"				"14.0"
 		"AbilityDuration"				"16.0"
 
-		"AbilityDamage"					"60 80 100 120"
+		"AbilityDamage"					"60 90 120 150"
 
 		"AbilityManaCost"				"0"
 
@@ -3780,9 +3705,9 @@
 		"AbilityCastRange"				"1000 1500 2000"
 		"AbilityCastPoint"				"0.2"
 		
-		"AbilityCooldown"				"20.0 16.0 12.0"
+		"AbilityCooldown"				"10.0"
 
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"40"
 		
 		"AbilitySpecial"
 		{
@@ -3910,9 +3835,9 @@
 	//=================================================================================================================
 	"venomancer_poison_nova"
 	{
-		"AbilityCooldown"				"100.0"
+		"AbilityCooldown"				"70.0"
 
-		"AbilityManaCost"				"200"		
+		"AbilityManaCost"				"150 200 250"		
 
 		"AbilitySpecial"
 		{
@@ -3929,7 +3854,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"13.0 14.0 15.0"
+				"duration"					"14.0 15.0 16.0"
 			}
 			"04"
 			{
@@ -3939,12 +3864,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"60.0"
+				"cooldown_scepter"			"40.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"14.0 16.0 18.0"
+				"duration_scepter"			"14.0 17.0 20.0"
 			}
 			"07"
 			{

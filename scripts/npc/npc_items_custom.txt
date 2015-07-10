@@ -1277,7 +1277,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName" 			"item_imba_mango"
-		"Model"							"models/props_gameplay/salve_blue.mdl"
+		"Model"							"models/props_gameplay/mango.mdl"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -7797,17 +7797,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"7"
+				"bash_chance"			"10"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"777"
+				"bash_damage"			"200"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bash_stun"				"1.0"
+				"bash_stun"				"0.1"
 			}
 		}
 	}

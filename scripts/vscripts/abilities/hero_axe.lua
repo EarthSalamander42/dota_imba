@@ -61,6 +61,17 @@ function BattleHungerKill( keys )
 	end
 end
 
+function BattleHungerAntiRegen( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_stacks = keys.modifier_stacks
+
+	target:RemoveModifierByName(modifier_stacks)
+	local hp_regen = target:GetHealthRegen()
+	AddStacks(ability, caster, target, modifier_stacks, hp_regen * 10, true)
+end
+
 function CullingBlade( keys )
 	local caster = keys.caster
 	local target = keys.target

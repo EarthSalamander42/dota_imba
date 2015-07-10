@@ -11,7 +11,7 @@ function FrostNova( keys )
 	local sound = keys.sound
 	local ability_level = ability:GetLevel() - 1
 
-	local cast_chance = ability:GetLevelSpecialValueFor("chance_per_stack", ability_level)
+	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local aoe_damage = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
 
@@ -24,7 +24,8 @@ function FrostNova( keys )
 	local stack_count = target:GetModifierStackCount(modifier, ability)
 
 	-- Rolls for the chance of casting Frost Nova
-	if RandomInt(1, 100) <= cast_chance * stack_count then
+	if RandomInt(1, 100) <= proc_chance then
+		
 		-- Casts the spell
 		target:EmitSound(sound)
 		local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)

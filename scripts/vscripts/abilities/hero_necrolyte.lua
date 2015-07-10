@@ -13,6 +13,7 @@ function DeathPulse( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local heal = ability:GetLevelSpecialValueFor("heal", ability_level)
 	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
+	local stack_cap = ability:GetLevelSpecialValueFor("stack_cap", ability_level)
 
 	local stack_count
 
@@ -26,7 +27,11 @@ function DeathPulse( keys )
 		heal = heal * (1 + stack_power * stack_count / 100)
 		target:Heal(heal, caster)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-		AddStacks(ability, caster, target, stack_buff, 1, true)
+		if stack_count < stack_cap then
+			AddStacks(ability, caster, target, stack_buff, 1, true)
+		else
+			AddStacks(ability, caster, target, stack_buff, 0, true)
+		end
 	else
 		if target:HasModifier(stack_debuff) then
 			stack_count = target:GetModifierStackCount(stack_debuff, ability)
@@ -35,7 +40,11 @@ function DeathPulse( keys )
 		end
 		damage = damage * (1 + stack_power * stack_count / 100)
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		AddStacks(ability, caster, target, stack_debuff, 1, true)
+		if stack_count < stack_cap then
+			AddStacks(ability, caster, target, stack_debuff, 1, true)
+		else
+			AddStacks(ability, caster, target, stack_debuff, 0, true)
+		end
 	end
 end
 

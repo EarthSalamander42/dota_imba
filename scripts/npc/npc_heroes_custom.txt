@@ -652,13 +652,17 @@
 
 		"ModelScale" 				".60"
 
-		"AttackAcquisitionRange"	"1400"
+		"AttackAcquisitionRange"	"1800"
+
+		"AbilityLayout"				"5"
 
 	//	"Ability1"					"imba_sniper_shrapnel"
-	//	"Ability2"					"imba_sniper_headshot"
-	//	"Ability3"					"imba_sniper_take_aim"
-	//	"Ability4"					"imba_sniper_assassinate"
-		"Ability5"					"attribute_bonus_agi"
+		"Ability2"					"imba_sniper_take_aim_near"
+		"Ability3"					"imba_sniper_take_aim_far"
+		"Ability4"					"imba_sniper_headshot"
+		"Ability5"					"imba_sniper_assassinate"
+		"Ability6"					"attribute_bonus_agi"
+		"Ability7"					"imba_sniper_take_aim_normal"
 
 		"AttributeAgilityGain"		"2.5"
 	}
@@ -684,13 +688,15 @@
 	{
 		"override_hero"				"npc_dota_hero_sven"
 
-		"ModelScale"				".96"
+		"ModelScale"				".99"
 
 		"ArmorPhysical"				"3"
 
 		"AttackRate"				"1.6"
 
 		"AttributeBaseStrength"		"25"
+
+		"MovementSpeed"				"310"
 
 	//	"Ability1"					"imba_sven_storm_bolt"
 	//	"Ability2"					"imba_sven_great_cleave"
@@ -742,9 +748,12 @@
 	{
 		"override_hero"				"npc_dota_hero_vengefulspirit"
 
-		"AttackDamageMin"			"22"
+		"AttackDamageMin"			"28"
+		"AttackDamageMax"			"34"
 
-		"AttackRate"				"1.6"
+		"AttributeAgilityGain"		"3.5"
+
+		"AttackRate"				"1.5"
 
 		"AttackRange"				"500"
 

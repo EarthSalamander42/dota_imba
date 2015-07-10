@@ -131,7 +131,7 @@ function WindWalk( keys )
 
 	-- if it's track, reapply invisibility as soon as the cast is concluded
 	if current_ability == ability_track then
-		Timers:CreateTimer(0.01, function()caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
+		Timers:CreateTimer(0.01, function() caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
 	else
 		caster:RemoveModifierByName( modifier_invis )
 	end
@@ -180,12 +180,12 @@ function Track( keys )
 		return nil
 	end
 
-	-- Calculates bonus gold based on the target's net worth
-	local bonus_gold_self_percent = ability:GetLevelSpecialValueFor("bonus_gold_self_percent", ability_level)
-	local bonus_gold_percent = ability:GetLevelSpecialValueFor("bonus_gold_percent", ability_level)
-	local target_networth = PlayerResource:GetTotalEarnedGold(target:GetPlayerID())
-	bonus_gold_self = bonus_gold_self + target_networth * bonus_gold_self_percent / 100
-	bonus_gold = bonus_gold + target_networth * bonus_gold_percent / 100
+	-- Calculates bonus gold based on the target's level
+	local bonus_gold_self_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_self_per_lvl", ability_level)
+	local bonus_gold_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_per_lvl", ability_level)
+	local target_level = target:GetLevel()
+	bonus_gold_self = bonus_gold_self + target_level * bonus_gold_self_per_lvl
+	bonus_gold = bonus_gold + target_level * bonus_gold_per_lvl
 
 	-- Finds all valid friendly heroes within the bonus gold radius
 	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , targetLocation, nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, 0, 0, false)
