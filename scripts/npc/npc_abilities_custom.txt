@@ -327,7 +327,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"ScriptFile"							"hero/hero_abaddon.lua"
 				"Function"								"DeathCoil"
 			}
 		}
@@ -353,7 +353,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"ScriptFile"	"hero/hero_abaddon.lua"
 						"Function"		"FrostMourneAttacked"
 					}
 				}
@@ -517,7 +517,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"ScriptFile"							"hero/hero_abaddon.lua"
 				"Function"								"AphoticShield"
 
 				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
@@ -541,7 +541,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"AphoticShieldInitialize"
 
 						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
@@ -559,7 +559,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"AphoticShieldAbsorb"
 						"DamageTaken"					"%attack_damage"
 					}
@@ -581,7 +581,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"EndShieldParticle"
 					}
 				}
@@ -606,7 +606,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"ScriptFile"	"hero/hero_abaddon.lua"
 						"Function"		"FrostMourneAttacked"
 					}
 				}
@@ -734,7 +734,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"ScriptFile"	"hero/hero_abaddon.lua"
 						"Function"		"FrostMourne"
 					}
 				}
@@ -758,7 +758,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_abaddon.lua"
+						"ScriptFile"	"hero/hero_abaddon.lua"
 						"Function"		"FrostMourneAttacked"
 					}
 				}
@@ -884,7 +884,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_abaddon.lua"
+				"ScriptFile"							"hero/hero_abaddon.lua"
 				"Function"								"BorrowedTimePurge"
 			}
 		}
@@ -901,7 +901,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"BorrowedTimeActivate"
 					}
 				}
@@ -922,7 +922,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"BorrowedTimeHeal"
 						"DamageTaken"					"%attack_damage"
 					}
@@ -945,7 +945,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_abaddon.lua"
+						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"BorrowedTimeAllies"
 						"DamageTaken"					"%attack_damage"
 					}
@@ -1029,7 +1029,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile" 		"abilities/hero_antimage.lua"
+						"ScriptFile" 		"hero/hero_antimage.lua"
 						"Target"			"TARGET"
 						"Function"			"ManaBreak"
 					}
@@ -1265,7 +1265,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"	"abilities/hero_antimage.lua"
+				"ScriptFile"	"hero/hero_antimage.lua"
 				"Function"		"ManaVoid"
 				"Target"		"TARGET"
 			}
@@ -1543,7 +1543,7 @@
 				"StatusEffectName" 			"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
 				"StatusEffectPriority"  	"9"	
 
-				"ThinkInterval"  			"1.0"
+				"ThinkInterval"  			"0.5"
 
 				"OnIntervalThink"
 				{
@@ -1556,12 +1556,12 @@
 						}
 						
 						"Type"				"DAMAGE_TYPE_PURE"
-						"Damage"			"%damage"
+						"Damage"			"%damage / 2"
 					}
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_axe.lua"
+						"ScriptFile"		"hero/hero_axe.lua"
 						"Function"			"BattleHungerAntiRegen"
 						"Target"			"TARGET"
 
@@ -1580,7 +1580,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_axe.lua"
+						"ScriptFile"		"hero/hero_axe.lua"
 						"Function"			"BattleHungerStart"
 
 						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
@@ -1592,7 +1592,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_axe.lua"
+						"ScriptFile"		"hero/hero_axe.lua"
 						"Function"			"BattleHungerEnd"
 
 						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
@@ -1604,7 +1604,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_axe.lua"
+						"ScriptFile"		"hero/hero_axe.lua"
 						"Function"			"BattleHungerKill"
 
 						"modifier"			"modifier_imba_axe_battle_hunger_enemy"
@@ -1619,11 +1619,11 @@
 				"IsPurgable"		"1"
 				"Passive"			"0"
 
-				"Duration"			"1.0"
+				"Duration"			"0.5"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" 	"-0.1"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"-0.1"
 				}
 			}
 		}	
@@ -1747,7 +1747,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_axe.lua"
+				"ScriptFile"		"hero/hero_axe.lua"
 				"Function"			"CullingBlade"
 				"sound_fail"		"Hero_Axe.Culling_Blade_Fail"
 				"sound_success"		"Hero_Axe.Culling_Blade_Success"
@@ -1897,7 +1897,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_bane.lua"
+						"ScriptFile"		"hero/hero_bane.lua"
 						"Function"			"Enfeeble"
 					}
 				}
@@ -2009,7 +2009,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_bane.lua"
+				"ScriptFile"				"hero/hero_bane.lua"
         		"Function"					"NightmareSwap"
 
         		"nightmare"					"imba_bane_nightmare"
@@ -2051,7 +2051,7 @@
 
 	            	"RunScript"
 	            	{
-	            		"ScriptFile"		"abilities/hero_bane.lua"
+	            		"ScriptFile"		"hero/hero_bane.lua"
 	            		"Function"			"NightmareStart"
 
 	            		"invul_modifier"	"modifier_imba_bane_nightmare_invul"
@@ -2072,7 +2072,7 @@
 
 	               	"RunScript"
 	            	{
-	            		"ScriptFile"			"abilities/hero_bane.lua"
+	            		"ScriptFile"			"hero/hero_bane.lua"
 	            		"Function"				"NightmareEnd"
 
 	            		"loop_sound"			"Hero_Bane.Nightmare.Loop"
@@ -2088,7 +2088,7 @@
 	            {
 	            	"RunScript"
 	            	{
-	            		"ScriptFile"		"abilities/hero_bane.lua"
+	            		"ScriptFile"		"hero/hero_bane.lua"
 	            		"Function"			"NightmareDamage"
 	            	}
 	            }
@@ -2118,7 +2118,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_bane.lua"
+						"ScriptFile"			"hero/hero_bane.lua"
 						"Function"				"NightmareSpread"
 
 						"nightmare_modifier"	"modifier_imba_bane_nightmare"
@@ -2301,7 +2301,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_bane.lua"
+				"ScriptFile"			"hero/hero_bane.lua"
 				"Function"				"BrainSapManaDrain"
 			}
 		}
@@ -2317,7 +2317,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_bane.lua"
+						"ScriptFile"		"hero/hero_bane.lua"
 						"Function"			"BrainSapSpellCast"
 
 						"no_mana_sound"		"General.CastFail_NoMana"
@@ -2496,7 +2496,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_bane.lua"
+				"ScriptFile"			"hero/hero_bane.lua"
 				"Function"				"FiendsGripStopChannel"
 				"Target"				"TARGET"
 
@@ -2516,7 +2516,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_bane.lua"
+				"ScriptFile"			"hero/hero_bane.lua"
 				"Function"				"FiendsGripStopChannel"
 				"Target"				"TARGET"
 
@@ -2549,7 +2549,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_bane.lua"
+						"ScriptFile"	"hero/hero_bane.lua"
 						"Function"		"FiendsGripManaDrain"
 						"Target"		"TARGET"
 					}				
@@ -2569,7 +2569,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_bane.lua"
+						"ScriptFile"	"hero/hero_bane.lua"
 						"Function"		"FiendsGripTruesight"
 
 						"Target"		"TARGET"
@@ -2580,7 +2580,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_bane.lua"
+						"ScriptFile"	"hero/hero_bane.lua"
 						"Function"		"FiendsGripEndSound"
 
 						"Target"		"TARGET"
@@ -2607,7 +2607,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_bane.lua"
+						"ScriptFile"				"hero/hero_bane.lua"
 						"Function"					"FiendsGripScepter"
 
 						"modifier_fiends_grip"		"modifier_imba_bane_fiends_grip"
@@ -2712,7 +2712,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShurikenToss"
 
 				"track_modifier"			"modifier_imba_track_aura"
@@ -2757,7 +2757,7 @@
 
 	        "RunScript"
 	        {
-	        	"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+	        	"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShurikenTossImpact"
 
 				"chain_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
@@ -2786,7 +2786,7 @@
 	    		{
 	    			"RunScript"
 	    			{
-	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+	    				"ScriptFile"			"hero/hero_bounty_hunter.lua"
 						"Function"				"ShurikenTossChain"
 	    			}
 	    		}
@@ -2795,7 +2795,7 @@
 	    		{
 	    			"RunScript"
 	    			{
-	    				"ScriptFile"			"abilities/hero_bounty_hunter.lua"
+	    				"ScriptFile"			"hero/hero_bounty_hunter.lua"
 						"Function"				"ShurikenTossChainEnd"
 	    			}
 	    		}
@@ -2934,7 +2934,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_bounty_hunter.lua"
+						"ScriptFile"	"hero/hero_bounty_hunter.lua"
 						"Function"		"WindWalk"
 
 						"modifier"		"modifier_imba_wind_walk"
@@ -3081,7 +3081,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"TrackCast"
 
 				"modifier_track"			"modifier_imba_track"
@@ -3210,7 +3210,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"ScriptFile"				"hero/hero_bounty_hunter.lua"
 						"Function"					"TrackParticle"
 
 						"particle_1"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
@@ -3235,7 +3235,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"ScriptFile"				"hero/hero_bounty_hunter.lua"
 						"Function"					"Track"
 						"Target"
 						{
@@ -3263,7 +3263,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+						"ScriptFile"				"hero/hero_bounty_hunter.lua"
 						"Function"					"Track"
 						"Target"
 						{
@@ -3336,7 +3336,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_bounty_hunter.lua"
+				"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShadowJaunt"
 
 				"track_modifier"			"modifier_imba_track_aura"
@@ -3466,7 +3466,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_centaur.lua"
+				"ScriptFile"			"hero/hero_centaur.lua"
 				"Function"				"HoofStomp"
 			}
 		}	
@@ -3552,7 +3552,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_centaur.lua"
+				"ScriptFile"		"hero/hero_centaur.lua"
 				"Function"			"DoubleEdge"
 			}
 		}
@@ -3603,7 +3603,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_centaur.lua"
+						"ScriptFile"		"hero/hero_centaur.lua"
 						"Function"			"Return"
 
 						"modifier_prevent_return"	"modifier_imba_centaur_prevent_return"
@@ -3711,7 +3711,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_centaur.lua"
+				"ScriptFile"		"hero/hero_centaur.lua"
 				"Function"			"StampedeStart"
 
 				"scepter_modifier"	"modifier_imba_centaur_stampede_scepter"
@@ -3791,7 +3791,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_centaur.lua"
+						"ScriptFile"		"hero/hero_centaur.lua"
 						"Function"			"Stampede"
 
 						"modifier_debuff"	"modifier_imba_centaur_stampede_debuff"
@@ -3986,7 +3986,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+				"ScriptFile"					"hero/hero_crystal_maiden.lua"
 				"Function"						"CrystalNova"
 				"Target"						"POINT"
 
@@ -4336,7 +4336,7 @@
 					
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden"
+						"ScriptFile"					"hero/hero_crystal_maiden"
 						"Function"						"Frostbite"
 
 						"modifier_root"					"modifier_imba_frostbite_root"
@@ -4366,7 +4366,7 @@
 				{	
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden"
+						"ScriptFile"					"hero/hero_crystal_maiden"
 						"Function"						"FrostbitePassive"
 
 						"modifier_passive"				"modifier_imba_frostbite_passive"
@@ -4432,7 +4432,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"BrillianceAura"
 
 						"modifier_speed"				"modifier_imba_brilliance_aura_speed"
@@ -4599,7 +4599,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
 				"Function"								"FreezingFieldCast"
 
 				"modifier_aura"							"modifier_imba_freezing_field_caster"
@@ -4655,7 +4655,7 @@
 		{	
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
 				"Function"								"FreezingFieldEnd"
 
 				"modifier_aura"							"modifier_imba_freezing_field_caster"
@@ -4680,7 +4680,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"ScepterCheck"
 
 						"modifier"						"modifier_imba_freezing_field_scepter_check"
@@ -4737,7 +4737,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"0"
 					}
@@ -4755,7 +4755,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"1"
 					}
@@ -4773,7 +4773,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"2"
 					}
@@ -4791,7 +4791,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"3"
 					}
@@ -4967,7 +4967,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
 				"Function"								"FreezingFieldCast"
 				"Target"								"POINT"
 
@@ -5024,7 +5024,7 @@
 		{	
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_crystal_maiden.lua"
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
 				"Function"								"FreezingFieldEnd"
 
 				"modifier_aura"							"modifier_imba_freezing_field_aura"
@@ -5050,7 +5050,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"ScepterLostCheck"
 
 						"modifier"						"modifier_imba_freezing_field_scepter_check"
@@ -5103,7 +5103,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"0"
 					}
@@ -5121,7 +5121,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"1"
 					}
@@ -5139,7 +5139,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"2"
 					}
@@ -5157,7 +5157,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_crystal_maiden.lua"
+						"ScriptFile"					"hero/hero_crystal_maiden.lua"
 						"Function"						"FreezingFieldExplode"
 						"section"						"3"
 					}
@@ -5434,7 +5434,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_1"
 					}
@@ -5469,7 +5469,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_2"
 					}
@@ -5504,7 +5504,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_3"
 					}
@@ -5539,7 +5539,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_4"
 					}
@@ -5574,7 +5574,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_5"
 					}
@@ -5609,7 +5609,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_6"
 					}
@@ -5644,7 +5644,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_7"
 					}
@@ -5676,7 +5676,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"PoisonTouchStun"
 						"Slow"							"slow_8"
 					}
@@ -5776,7 +5776,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"ShallowGravePassive"
 						"Target"						"CASTER"
 
@@ -5824,7 +5824,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"ShallowGraveDamageStorage"
 						"DamageTaken"					"%attack_damage"
 					}
@@ -5834,7 +5834,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"ShallowGraveHeal"
 					}
 				}
@@ -5850,7 +5850,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"ShallowGraveDamageCheck"
 
 						"modifier_grave"				"modifier_imba_shallow_grave"
@@ -5990,7 +5990,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_dazzle.lua"
+				"ScriptFile"							"hero/hero_dazzle.lua"
 				"Function"								"ShadowWave"
 
 				"armor_bonus"							"modifier_imba_shadow_wave_armor_bonus"
@@ -6153,14 +6153,14 @@
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_dazzle.lua"
+				"ScriptFile"							"hero/hero_dazzle.lua"
 				"Function"								"WeaveVision"
 				"Target"								"POINT"
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"							"abilities/hero_dazzle.lua"
+				"ScriptFile"							"hero/hero_dazzle.lua"
 				"Function"								"Weave"
 				"Target"								"POINT"
 			}
@@ -6181,7 +6181,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveParticle"
 
 						"particle_name"					"particles/units/heroes/hero_dazzle/dazzle_armor_friend.vpcf"
@@ -6196,7 +6196,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveInterval"
 					}
 				}
@@ -6205,7 +6205,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveRemoveBuff"
 						
 						"modifier"						"modifier_imba_weave_positive"
@@ -6214,7 +6214,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"EndWeaveParticle"
 
 						"modifier"						"modifier_imba_weave_friendly"
@@ -6238,7 +6238,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveParticle"
 
 						"particle_name"					"particles/units/heroes/hero_dazzle/dazzle_armor_enemy.vpcf"
@@ -6253,7 +6253,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveInterval"
 					}
 				}
@@ -6262,7 +6262,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"WeaveRemoveBuff"
 
 						"modifier"						"modifier_imba_weave_negative"
@@ -6271,7 +6271,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_dazzle.lua"
+						"ScriptFile"					"hero/hero_dazzle.lua"
 						"Function"						"EndWeaveParticle"
 						"modifier"						"modifier_imba_weave_enemy"
 					}
@@ -6462,7 +6462,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrows"
 						"Target"
 						{
@@ -6494,7 +6494,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrowsEnd"
 						"Target"
 						{
@@ -6671,7 +6671,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrows"
 						"Target"
 						{
@@ -6703,7 +6703,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrowsEnd"
 						"Target"
 						{
@@ -6880,7 +6880,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrows"
 						"Target"
 						{
@@ -6912,7 +6912,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrowsEnd"
 						"Target"
 						{
@@ -7089,7 +7089,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrows"
 						"Target"
 						{
@@ -7121,7 +7121,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"FrostArrowsEnd"
 						"Target"
 						{
@@ -7308,7 +7308,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_drow_ranger.lua"
+				"ScriptFile"			"hero/hero_drow_ranger.lua"
 				"Function"				"Gust"
 				
 				"height"				"%knockback_height"
@@ -7455,7 +7455,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_drow_ranger.lua"
+						"ScriptFile"		"hero/hero_drow_ranger.lua"
 						"Function"			"Trueshot"
 
 						"modifier_stack"	"modifier_imba_trueshot_damage_stack"
@@ -7569,7 +7569,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"					"abilities/hero_drow_ranger.lua"
+				"ScriptFile"					"hero/hero_drow_ranger.lua"
 				"Function"						"UpgradeFrostArrows"
 
 				"ability_0"						"imba_drow_ranger_frost_arrows"
@@ -7592,7 +7592,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_drow_ranger.lua"
+						"ScriptFile"			"hero/hero_drow_ranger.lua"
 						"Function"				"Marksmanship"
 
 						"modifier_effect"		"modifier_imba_marksmanship_effect"
@@ -7808,7 +7808,7 @@
 			"RunScript"
 			{
 				"Target"					"POINT"
-				"ScriptFile"				"abilities/hero_jakiro.lua"
+				"ScriptFile"				"hero/hero_jakiro.lua"
 				"Function"					"LaunchIcyBreath"
 				
 				"distance"					"%range"
@@ -7827,7 +7827,7 @@
 					"RunScript"
 					{
 						"Target"				"POINT"
-						"ScriptFile"			"abilities/hero_jakiro.lua"
+						"ScriptFile"			"hero/hero_jakiro.lua"
 						"Function"				"LaunchFieryBreath"
 						
 						"fiery_ability_name"	"imba_jakiro_dual_breath_fiery"	
@@ -7925,7 +7925,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_jakiro.lua"
+				"ScriptFile"				"hero/hero_jakiro.lua"
 				"Function"					"DualBreathInitialize"
 
 				"modifier"					"modifier_imba_dual_breath_fire"
@@ -7953,7 +7953,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_jakiro.lua"
+						"ScriptFile"			"hero/hero_jakiro.lua"
 						"Function"				"DualBreathCountdown"
 
 						"modifier"				"modifier_imba_dual_breath_fire"
@@ -8053,7 +8053,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_jakiro.lua"
+				"ScriptFile"			"hero/hero_jakiro.lua"
 				"Function"				"LiquidFireCheckOrb"
 			}
 		}
@@ -8085,7 +8085,7 @@
 					
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_jakiro.lua"
+						"ScriptFile"	"hero/hero_jakiro.lua"
 						"Function"		"LiquidFireCooldown"
 					}
 				}
@@ -8106,7 +8106,7 @@
 						{
 							"RunScript"
 							{
-								"ScriptFile"	"abilities/hero_jakiro.lua"
+								"ScriptFile"	"hero/hero_jakiro.lua"
 								"Function"		"LiquidFireInitialize"
 
 								"modifier"		"modifier_imba_liquid_fire"
@@ -8151,7 +8151,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_jakiro.lua"
+						"ScriptFile"			"hero/hero_jakiro.lua"
 						"Function"				"LiquidFireCountdown"
 
 						"modifier"				"modifier_imba_liquid_fire"
@@ -8287,7 +8287,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_jakiro.lua"
+				"ScriptFile"				"hero/hero_jakiro.lua"
 				"Function"					"Macropyre"
 				
 				"fire_particle"				"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
@@ -8446,7 +8446,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_jakiro.lua"
+						"ScriptFile"		"hero/hero_jakiro.lua"
 						"Function"			"MacropyreKillDummy"
 					}
 				}
@@ -8562,7 +8562,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"ScriptFile"				"hero/hero_kunkka.lua"
 				"Function"					"TorrentBubble"
 				"Target"					"POINT"
 
@@ -8572,7 +8572,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"ScriptFile"				"hero/hero_kunkka.lua"
 				"Function"					"Torrent"
 				"Target"					"POINT"
 
@@ -8704,7 +8704,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_kunkka.lua"
+						"ScriptFile"			"hero/hero_kunkka.lua"
 						"Function"				"TidebringerCooldown"
 
 						"modifier_name"			"modifier_imba_tidebringer"
@@ -8836,7 +8836,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_kunkka.lua"
+						"ScriptFile"			"hero/hero_kunkka.lua"
 						"Function"				"TidebringerStartCooldown"
 
 						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
@@ -8915,7 +8915,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_kunkka.lua"
+						"ScriptFile"			"hero/hero_kunkka.lua"
 						"Function"				"TidebringerStartCooldown"
 
 						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
@@ -9069,7 +9069,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_kunkka.lua"
+						"ScriptFile"			"hero/hero_kunkka.lua"
 						"Function"				"TidebringerStartCooldown"
 
 						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
@@ -9079,7 +9079,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"			"abilities/hero_kunkka.lua"
+						"ScriptFile"			"hero/hero_kunkka.lua"
 						"Function"				"TidebringerTsunami"
 
 						"particle_name"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
@@ -9219,7 +9219,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"ScriptFile"				"hero/hero_kunkka.lua"
 				"Function"					"LevelUpReturn"
 
 				"ability_name"				"imba_kunkka_return"
@@ -9279,7 +9279,7 @@
 				
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_kunkka.lua"
+						"ScriptFile"				"hero/hero_kunkka.lua"
 						"Function"					"XmarksCast"
 
 						"return_name"				"imba_kunkka_return"
@@ -9296,7 +9296,7 @@
 				
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_kunkka.lua"
+						"ScriptFile"				"hero/hero_kunkka.lua"
 						"Function"					"XmarksReturn"
 
 						"x_marks_name"				"imba_kunkka_x_marks_the_spot"
@@ -9350,7 +9350,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_kunkka.lua"
+				"ScriptFile"			"hero/hero_kunkka.lua"
 				"Function"				"XmarksForcedReturn"
 
 				"modifier_name"			"modifier_imba_x_marks_the_spot"
@@ -9501,7 +9501,7 @@
 		
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"ScriptFile"				"hero/hero_kunkka.lua"
 				"Function"					"GhostShip"
 				"Target"					"POINT"
 
@@ -9517,7 +9517,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_kunkka.lua"
+				"ScriptFile"				"hero/hero_kunkka.lua"
 				"Function"					"OnABoat"
 
 				"modifier_rum"				"modifier_imba_ghostship_rum"
@@ -9540,7 +9540,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"ScriptFile"		"hero/hero_kunkka.lua"
 						"Function"			"GhostShipRegisterDamage"
 
 						"damage_taken"		"%attack_damage"
@@ -9551,7 +9551,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"ScriptFile"		"hero/hero_kunkka.lua"
 						"Function"			"GhostShipDelayedDamage"
 						"Target"			"TARGET"
 					}
@@ -9583,7 +9583,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"ScriptFile"		"hero/hero_kunkka.lua"
 						"Function"			"GhostShipRegisterDamageScepter"
 
 						"damage_taken"		"%attack_damage"
@@ -9594,7 +9594,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_kunkka.lua"
+						"ScriptFile"		"hero/hero_kunkka.lua"
 						"Function"			"GhostShipDelayedDamage"
 						"Target"			"TARGET"
 					}
@@ -9835,7 +9835,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lich.lua"
+						"ScriptFile"	"hero/hero_lich.lua"
 						"Function"		"FrostNova"
 
 						"modifier"		"modifier_imba_frost_nova_stacks"
@@ -9851,7 +9851,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lich.lua"
+						"ScriptFile"	"hero/hero_lich.lua"
 						"Function"		"FrostNova"
 
 						"modifier"		"modifier_imba_frost_nova_stacks"
@@ -9987,7 +9987,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"    "abilities/hero_lich.lua"
+						"ScriptFile"    "hero/hero_lich.lua"
 				        "Function"      "FrostArmorParticle"	
 
 				        "particle"		"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
@@ -9998,7 +9998,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"    "abilities/hero_lich.lua"
+						"ScriptFile"    "hero/hero_lich.lua"
 				        "Function"      "EndFrostArmorParticle"	
 				    }
 				}	
@@ -10118,7 +10118,7 @@
 
 			"RunScript"
 		    {
-		        "ScriptFile"			"abilities/hero_lich.lua"
+		        "ScriptFile"			"hero/hero_lich.lua"
 		        "Function"				"DarkRitual"
 
 		        "Target"				"TARGET"
@@ -10284,7 +10284,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lich.lua"
+				"ScriptFile"			"hero/hero_lich.lua"
 				"Function"				"ChainFrost"
 
 				"particle_name"			"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
@@ -10390,7 +10390,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"DragonSlaveLevel"
 
 				"ability_name"			"imba_lina_dragon_slave_aux"
@@ -10423,7 +10423,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"DragonSlave"
 				"Target"				"POINT"
 
@@ -10434,7 +10434,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"FierySoul"
 			}
 		}	
@@ -10527,7 +10527,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"DragonSlaveLevel"
 
 				"ability_name"			"imba_lina_dragon_slave_aux_fiery"
@@ -10560,7 +10560,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"DragonSlave"
 				"Target"				"POINT"
 
@@ -10795,7 +10795,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_lina.lua"
+				"ScriptFile"				"hero/hero_lina.lua"
 				"Function"					"LightStrikeArray"
 
 				"Target"					"POINT"
@@ -10808,7 +10808,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"FierySoul"
 			}
 		}	
@@ -10930,7 +10930,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_lina.lua"
+				"ScriptFile"				"hero/hero_lina.lua"
 				"Function"					"LightStrikeArray"
 
 				"Target"					"POINT"
@@ -11042,7 +11042,7 @@
 		{	
 			"RunScript"
 			{
-				"ScriptFile"					"abilities/hero_lina.lua"
+				"ScriptFile"					"hero/hero_lina.lua"
 				"Function"						"FierySoulActivate"
 
 				"activate_sound"				"Hero_Clinkz.Strafe"
@@ -11085,7 +11085,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_lina.lua"
+						"ScriptFile"					"hero/hero_lina.lua"
 						"Function"						"FierySoulEnd"
 
 						"dragon_slave"					"imba_lina_dragon_slave"
@@ -11169,7 +11169,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"					"abilities/hero_lina.lua"
+				"ScriptFile"					"hero/hero_lina.lua"
 				"Function"						"FierySoulActivate"
 
 				"activate_sound"				"Hero_Clinkz.Strafe"
@@ -11212,7 +11212,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_lina.lua"
+						"ScriptFile"					"hero/hero_lina.lua"
 						"Function"						"FierySoulEnd"
 
 						"dragon_slave"					"imba_lina_dragon_slave"
@@ -11330,7 +11330,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"LagunaBladeProjectile"
 
 				"Target"				"TARGET"
@@ -11338,7 +11338,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"FierySoul"
 			}
 		}
@@ -11387,7 +11387,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lina.lua"
+						"ScriptFile"	"hero/hero_lina.lua"
 						"Function"		"LagunaBladeGetScepterCheck"
 
 						"normal_name"	"imba_lina_laguna_blade"
@@ -11492,7 +11492,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"LagunaBladeProjectile"
 
 				"Target"				"TARGET"
@@ -11500,7 +11500,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"FierySoul"
 			}
 		}	
@@ -11529,7 +11529,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_lina.lua"
+				"ScriptFile"		"hero/hero_lina.lua"
 				"Function"			"LagunaBladeScepterDamage"
 				"Target"			"TARGET"
 			}
@@ -11549,7 +11549,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lina.lua"
+						"ScriptFile"	"hero/hero_lina.lua"
 						"Function"		"LagunaBladeDropScepterCheck"
 
 						"normal_name"	"imba_lina_laguna_blade"
@@ -11653,7 +11653,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"LagunaBladeProjectile"
 
 				"Target"				"TARGET"
@@ -11704,7 +11704,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lina.lua"
+						"ScriptFile"	"hero/hero_lina.lua"
 						"Function"		"LagunaBladeGetScepterCheck"
 
 						"normal_name"	"imba_lina_laguna_blade_fiery"
@@ -11809,7 +11809,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_lina.lua"
+				"ScriptFile"			"hero/hero_lina.lua"
 				"Function"				"LagunaBladeProjectile"
 
 				"Target"				"TARGET"
@@ -11840,7 +11840,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_lina.lua"
+				"ScriptFile"		"hero/hero_lina.lua"
 				"Function"			"LagunaBladeScepterDamage"
 				"Target"			"TARGET"
 			}
@@ -11860,7 +11860,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_lina.lua"
+						"ScriptFile"	"hero/hero_lina.lua"
 						"Function"		"LagunaBladeDropScepterCheck"
 
 						"normal_name"	"imba_lina_laguna_blade_fiery"
@@ -12010,7 +12010,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"abilities/hero_mirana.lua"
+				"ScriptFile"		"hero/hero_mirana.lua"
 				"Function"			"Starfall"
 
 				"ambient_sound"		"Ability.Starfall"
@@ -12126,7 +12126,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_mirana.lua"
+				"ScriptFile"			"hero/hero_mirana.lua"
 				"Function"				"LaunchArrow"
 				"Target"				"POINT"
 
@@ -12235,7 +12235,7 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_mirana.lua"
+				"ScriptFile"			"hero/hero_mirana.lua"
 				"Function"				"Leap"
 
 				"Target"				"POINT"
@@ -12596,7 +12596,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_mirana.lua"
+						"ScriptFile"	"hero/hero_mirana.lua"
 						"Function"		"MoonlightScepter"
 
 						"Target"		"TARGET"
@@ -12757,7 +12757,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"abilities/hero_necrolyte.lua"
+				"ScriptFile"	"hero/hero_necrolyte.lua"
 				"Function"		"DeathPulse"
 
 				"stack_buff"	"modifier_imba_death_pulse_buff_stack"
@@ -12873,7 +12873,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"Heartstopper"
 
 						"stack_modifier"	"modifier_imba_heartstopper_stack"
@@ -12885,7 +12885,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"HeartstopperEnd"
 
 						"stack_modifier"	"modifier_imba_heartstopper_stack"
@@ -13003,7 +13003,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"Sadist"
 
 						"regen_modifier"	"modifier_imba_sadist_regen"
@@ -13036,7 +13036,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"ApplySadist"
 
 						"stack_modifier"	"modifier_imba_sadist_stack"
@@ -13047,7 +13047,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_necrolyte.lua"
+						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"RemoveSadist"
 
 						"stack_modifier"	"modifier_imba_sadist_stack"
@@ -13176,7 +13176,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_necrolyte.lua"
+				"ScriptFile"				"hero/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
 
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
@@ -13316,7 +13316,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_night_stalker.lua"
+				"ScriptFile"			"hero/hero_night_stalker.lua"
 				"Function"				"Void"
 				"modifier"				"modifier_imba_void"
 			}
@@ -13424,7 +13424,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_night_stalker.lua"
+				"ScriptFile"			"hero/hero_night_stalker.lua"
 				"Function"				"CripplingFear"
 
 				"modifier_day"			"modifier_imba_crippling_fear_day"
@@ -13543,7 +13543,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_night_stalker.lua"
+						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"HunterInTheNight"
 
 						"modifier"			"modifier_imba_hunter_in_the_night_buff"
@@ -13571,7 +13571,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_night_stalker.lua"
+						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"HunterInTheNightModelChange"
 
 						"night_model"		"models/heroes/nightstalker/nightstalker_night.vmdl"
@@ -13589,7 +13589,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_night_stalker.lua"
+						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"HunterInTheNightModelRevert"
 					}
 				}
@@ -13707,7 +13707,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_night_stalker.lua"
+				"ScriptFile"				"hero/hero_night_stalker.lua"
 				"Function"					"Darkness"
 
 				"modifier"					"modifier_imba_darkness"
@@ -13726,7 +13726,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_night_stalker.lua"
+						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"ReduceVision"
 					}
 				}
@@ -13735,7 +13735,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_night_stalker.lua"
+						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"RevertVision"
 					}
 				}
@@ -13922,7 +13922,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_nyx_assassin.lua"
+				"ScriptFile"			"hero/hero_nyx_assassin.lua"
 				"Function"				"Impale"
 
 				"land_sound"			"Hero_NyxAssassin.Impale.TargetLand"
@@ -13957,7 +13957,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_nyx_assassin.lua"
+						"ScriptFile"	"hero/hero_nyx_assassin.lua"
 						"Function"		"ImpaleDamageCounter"
 
 						"damage"		"%attack_damage"
@@ -14047,7 +14047,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"ScriptFile"		"hero/hero_nyx_assassin.lua"
 						"Function"			"SpikedCarapaceReflect"
 
 						"damage_taken"		"%attack_damage"
@@ -14211,7 +14211,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"ScriptFile"		"hero/hero_nyx_assassin.lua"
 						"Function"			"Vendetta"
 
 						"modifier"			"modifier_imba_vendetta"
@@ -14253,7 +14253,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_nyx_assassin.lua"
+						"ScriptFile"		"hero/hero_nyx_assassin.lua"
 						"Function"			"VendettaDamageCount"
 
 						"damage_taken"		"%attack_damage"
@@ -14362,7 +14362,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
 						"Function"			"ArcaneOrbRestoreMana"
 						"Target"			"CASTER"
 
@@ -14383,7 +14383,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
 						"Function"			"ArcaneOrb"
 						"Target"			"TARGET"
 
@@ -14512,7 +14512,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_outhouse_decorator.lua"
+				"ScriptFile"			"hero/hero_outhouse_decorator.lua"
 				"Function"				"AstralImprisonment"
 
 				"ability_name"			"imba_obsidian_destroyer_arcane_orb"
@@ -14552,7 +14552,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_outhouse_decorator.lua"
+						"ScriptFile"	"hero/hero_outhouse_decorator.lua"
 						"Function"		"AstralImprisonmentEnd"
 
 						"sound_name"	"Hero_ObsidianDestroyer.AstralImprisonment"				
@@ -14630,7 +14630,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_outhouse_decorator"
+						"ScriptFile"		"hero/hero_outhouse_decorator"
 						"Function"			"EssenceAuraMana"
 					}
 				}
@@ -14644,7 +14644,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_outhouse_decorator.lua"
+						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
 						"Function"			"RestoreMana"
 
 						"Target"			"UNIT"
@@ -14777,7 +14777,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"					"abilities/hero_outhouse_decorator.lua"
+				"ScriptFile"					"hero/hero_outhouse_decorator.lua"
 				"Function"						"SanityEclipse"
 				"Target"						"POINT"
 
@@ -14855,7 +14855,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_omniknight.lua"
+				"ScriptFile"				"hero/hero_omniknight.lua"
 				"Function"					"Purification"
 
 				"cast_sound"				"Hero_Omniknight.Purification"
@@ -14895,7 +14895,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_omniknight.lua"
+						"ScriptFile"		"hero/hero_omniknight.lua"
 						"Function"			"PurificationDeath"
 
 						"damage"			"%attack_damage"
@@ -15021,7 +15021,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_omniknight.lua"
+				"ScriptFile"			"hero/hero_omniknight.lua"
 				"Function"				"Repel"
 				"Target"				"TARGET"
 			}
@@ -15116,7 +15116,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_omniknight.lua"
+				"ScriptFile"			"hero/hero_omniknight.lua"
 				"Function"				"Repel"
 				"Target"				"TARGET"
 			}
@@ -15231,7 +15231,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_omniknight.lua"
+						"ScriptFile"		"hero/hero_omniknight.lua"
 						"Function"			"DegenAura"
 
 						"modifier"			"modifier_imba_degen_aura_"
@@ -15441,7 +15441,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_omniknight.lua"
+						"ScriptFile"					"hero/hero_omniknight.lua"
 						"Function"						"ScepterCheck"
 
 						"modifier"						"modifier_imba_guardian_angel_scepter_check"
@@ -15595,7 +15595,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"abilities/hero_omniknight.lua"
+						"ScriptFile"					"hero/hero_omniknight.lua"
 						"Function"						"ScepterLostCheck"
 
 						"modifier"						"modifier_imba_guardian_angel_scepter_check"
@@ -15758,7 +15758,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_phantom_assassin.lua"
+				"ScriptFile"			"hero/hero_phantom_assassin.lua"
 				"Function"				"StiflingDaggerCrit"
 				"Target"				"TARGET"
 
@@ -15943,7 +15943,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_phantom_assassin.lua"
+				"ScriptFile"				"hero/hero_phantom_assassin.lua"
 				"Function"					"PhantomStrike"
 
 				"Target"					"TARGET"
@@ -16032,7 +16032,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_phantom_assassin.lua"
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"Blur"
 
 						"modifier_enemy"	"modifier_imba_blur_enemy"
@@ -16059,7 +16059,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_phantom_assassin.lua"
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"BlurStacks"
 
 						"damage"			"%attack_damage"
@@ -16195,7 +16195,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_phantom_assassin.lua"
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"CoupDeGrace"
 						"Target"			"TARGET"
 
@@ -16226,7 +16226,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_phantom_assassin.lua"
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"CoupDeGraceHit"
 
 						"stack_modifier"	"modifier_imba_coup_de_grace_stacks"
@@ -16272,7 +16272,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_phantom_assassin.lua"
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"CoupDeGraceHit"
 
 						"stack_modifier"	"modifier_imba_coup_de_grace_stacks"
@@ -16439,7 +16439,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_queen_of_pain.lua"
+				"ScriptFile"			"hero/hero_queen_of_pain.lua"
 				"Function"				"ShadowStrike"
 				"Target"				"TARGET"
 
@@ -16528,7 +16528,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"				"abilities/hero_queen_of_pain.lua"
+						"ScriptFile"				"hero/hero_queen_of_pain.lua"
 						"Function"					"ShadowStrikeDecay"
 						"Target"					"TARGET"
 
@@ -16625,7 +16625,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_queen_of_pain.lua"
+				"ScriptFile"			"hero/hero_queen_of_pain.lua"
 				"Function"				"Blink"
 				"Target"				"POINT"
 			}
@@ -16661,7 +16661,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_queen_of_pain.lua"
+				"ScriptFile"			"hero/hero_queen_of_pain.lua"
 				"Function"				"BlinkScream"
 				"Target"				"TARGET"
 
@@ -16936,7 +16936,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"			"abilities/hero_queen_of_pain.lua"
+				"ScriptFile"			"hero/hero_queen_of_pain.lua"
 				"Function"				"SonicWave"
 
 				"modifier_daze"			"modifier_imba_sonic_wave_daze"
@@ -16960,7 +16960,7 @@
 						{
 							"RunScript"
 							{
-								"ScriptFile"	"abilities/hero_queen_of_pain.lua"
+								"ScriptFile"	"hero/hero_queen_of_pain.lua"
 								"Function"		"Daze"
 							}
 						}
@@ -17101,7 +17101,7 @@
 						{
 							"RunScript"
 							{
-								"ScriptFile"				"abilities/hero_sniper.lua"
+								"ScriptFile"				"hero/hero_sniper.lua"
 								"Function"					"Headshot"
 
 								"modifier_near"				"modifier_imba_take_aim_near"
@@ -17207,7 +17207,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"TakeAimUpgrade"
 
 				"near_skill_name"			"imba_sniper_take_aim_near"
@@ -17226,7 +17226,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"TakeAimNear"
 
 				"modifier_near"				"modifier_imba_take_aim_near"
@@ -17368,7 +17368,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"TakeAimFar"
 
 				"modifier_near"				"modifier_imba_take_aim_near"
@@ -17511,7 +17511,7 @@
 
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"AssassinateCast"
 
 				"modifier_shrapnel"			"modifier_sniper_shrapnel_slow"
@@ -17525,7 +17525,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"Assassinate"
 			}
 
@@ -17554,7 +17554,7 @@
 		
 			"RunScript"
 			{
-				"ScriptFile"				"abilities/hero_sniper.lua"
+				"ScriptFile"				"hero/hero_sniper.lua"
 				"Function"					"AssassinateHit"
 				"Target"					"TARGET"
 
@@ -17580,7 +17580,7 @@
 
 					"RunScript"
 					{
-						"ScriptFile"		"abilities/hero_sniper.lua"
+						"ScriptFile"		"hero/hero_sniper.lua"
 						"Function"			"AssassinateStop"
 
 						"target_modifier"	"modifier_imba_assassinate_target"
@@ -17627,13 +17627,951 @@
 				"IsHidden"				"1"
 				"IsPurgable"			"0"
 
+				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
 				"OnOrder"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"abilities/hero_sniper.lua"
+						"ScriptFile"	"hero/hero_sniper.lua"
 						"Function"		"AssassinateCastCheck"
 					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Meat Hook
+	//=================================================================================================================
+	"imba_pudge_meat_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"pudge_meat_hook"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
+			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+			"particle"					"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"4400"
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0 12.0 11.0 10.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_speed"			"1600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_speed"			"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_range"			"1100 1200 1300 1400"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_range"			"60"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"90 180 270 360"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_damage"			"15"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hook_width"			"100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"550"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_duration"		"4"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"120"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{	
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_imba_meat_hook_cast_check"
+				"Target" 				"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_pudge.lua"
+				"Function"				"HookCast"
+				"Target"				"POINT"
+
+				"modifier_cast_check"	"modifier_imba_meat_hook_cast_check"
+				"modifier_light"		"modifier_imba_hook_light_stack"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_pudge.lua"
+				"Function"				"MeatHook"
+				"Target"				"POINT"
+
+				"sound_extend"			"Hero_Pudge.AttackHookExtend"
+				"sound_hit"				"Hero_Pudge.AttackHookImpact"
+				"sound_scepter_hit"		"Hero_Bloodseeker.Rupture"
+				"sound_retract"			"Hero_Pudge.AttackHookRetract"
+				"sound_retract_stop"	"Hero_Pudge.AttackHookRetractStop"
+				"particle_hook"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+				"particle_hit"			"particles/units/heroes/hero_pudge/pudge_meathook_impact.vpcf"
+				"particle_hit_scepter"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+				"modifier_caster"		"modifier_imba_hook_caster"
+				"modifier_target_enemy"	"modifier_imba_hook_target_enemy"
+				"modifier_target_ally"	"modifier_imba_hook_target_ally"
+				"modifier_dummy"		"modifier_imba_hook_dummy"
+				"modifier_light"		"modifier_imba_hook_light_stack"
+				"modifier_sharp"		"modifier_imba_hook_sharp_stack"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"HookUpgrade"
+
+				"ability_sharp"				"imba_pudge_sharp_hook"
+				"ability_light"				"imba_pudge_light_hook"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_hook_stack_updater"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"  			"0.2"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"hero/hero_pudge.lua"
+						"Function"					"HookStacksUpdater"
+
+						"modifier_sharp"			"modifier_imba_hook_sharp_stack"
+						"modifier_light"			"modifier_imba_hook_light_stack"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"util.lua"
+						"Function"					"IllusionPassiveRemover"
+
+						"modifier"					"modifier_imba_hook_stack_controller"
+					}
+				}
+			}
+
+			"modifier_imba_hook_sharp_stack"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"TextureName"				"pudge_sharp_hook"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+			"modifier_imba_hook_light_stack"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"TextureName"				"pudge_light_hook"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+			"modifier_imba_hook_caster"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"OverrideAnimation"     	"ACT_DOTA_OVERRIDE_ABILITY_1"
+
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_hook_target_enemy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"OverrideAnimation"			"ACT_DOTA_FLAIL"
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_hook_target_ally"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"OverrideAnimation"			"ACT_DOTA_FLAIL"
+
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_hook_dummy"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_meat_hook_cast_check"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_pudge.lua"
+						"Function"		"HookCastCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Rot
+	//=================================================================================================================
+	"imba_pudge_rot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"pudge_rot"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"					"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_2"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_radius"			"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rot_tick"				"0.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rot_slow"				"-24 -26 -28 -30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"35 60 85 110"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_damage"			"6"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_radius"			"15"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rot_stickyness"		"0.5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_radius"			"550"
+			}
+		}
+
+		"OnToggleOn"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_imba_rot"
+				"Target"				"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_pudge.lua"
+				"Function"				"RotResponse"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_Pudge.Rot"
+				"Target"				"CASTER"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"			"modifier_imba_rot"
+				"Target"
+				{
+					"Center"			"CASTER"
+					"Flags" 			"DOTA_UNIT_TARGET_FLAG_DEAD"
+				}
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_pudge.lua"
+				"Function"				"RotEnd"
+
+				"rot_sound"				"Hero_Pudge.Rot"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_rot"
+			{
+				"IsBuff"				"1"
+				"Passive"				"0"
+				"IsPurgable"			"0"
+				"IsHidden"				"1"
+
+				"ThinkInterval"			"%rot_tick"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_pudge.lua"
+						"Function"		"Rot"
+
+						"modifier_slow"	"modifier_imba_rot_slow"
+						"modifier_heap"	"modifier_imba_flesh_heap_stacks"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_pudge.lua"
+						"Function"		"RotParticle"
+
+						"rot_particle"	"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+						"modifier_heap"	"modifier_imba_flesh_heap_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_rot_slow"
+			{
+				"IsDebuff"				"1"
+				"Passive"				"0"
+				"IsPurgable"			"0"
+				"IsHidden"				"0"
+
+				"Duration"				"%rot_stickyness"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%rot_slow"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Flesh Heap
+	//=================================================================================================================
+	"imba_pudge_flesh_heap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"pudge_flesh_heap"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"base_magic_resist"					"6 8 10 12"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_str"							"1.5 2.0 2.5 3.0"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"range"								"3000"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_magic_resist"				"3 4 5 6"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_scale_up"					"6"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"						"hero/hero_pudge.lua"
+				"Function"							"FleshHeapUpgrade"
+
+				"modifier_bonus"					"modifier_imba_flesh_heap_bonus"
+				"modifier_stacks"					"modifier_imba_flesh_heap_stacks"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_flesh_heap_aura"
+			{
+				"Passive"				"1"
+				"IsBuff"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%base_magic_resist"
+				}
+
+				"Aura" 								"modifier_imba_flesh_heap_death_detector"
+				"Aura_ApplyToCaster"				"0"
+				"Aura_Radius" 						"%range"
+				"Aura_Teams" 						"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types" 						"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"util.lua"
+						"Function"					"IllusionPassiveRemover"
+
+						"modifier"					"modifier_imba_flesh_heap_aura"
+					}
+				}
+			}
+
+			"modifier_imba_flesh_heap_bonus"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stack_str"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%stack_magic_resist"
+				}
+			}
+
+			"modifier_imba_flesh_heap_stacks"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+			"modifier_imba_flesh_heap_death_detector"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"hero/hero_pudge.lua"
+						"Function"					"FleshHeap"
+
+						"modifier_bonus"			"modifier_imba_flesh_heap_bonus"
+						"modifier_stacks"			"modifier_imba_flesh_heap_stacks"
+					}
+
+					"FireEffect"
+					{
+						"EffectName"				"particles/units/heroes/hero_pudge/pudge_fleshheap_count.vpcf"
+						"EffectAttachType"			"follow_overhead"
+						"Target"					"CASTER"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Sharp Hook
+	//=================================================================================================================
+	"imba_pudge_sharp_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"pudge_sharp_hook"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"think_interval"			"0.2 0.17 0.14 0.12"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_stacks_per_second"	"5 6 7 8"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_damage"				"15"
+			}
+		}
+
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"SharpHookToggle"
+
+				"ability_light"				"imba_pudge_light_hook"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_imba_sharp_hook"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"				"modifier_imba_sharp_hook"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_sharp_hook"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"				"%think_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pudge.lua"
+						"Function"			"SharpHook"
+
+						"ability_hook"		"imba_pudge_meat_hook"
+						"modifier_sharp"	"modifier_imba_hook_sharp_stack"
+						"modifier_light"	"modifier_imba_hook_light_stack"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Light Hook
+	//=================================================================================================================
+	"imba_pudge_light_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"pudge_light_hook"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"think_interval"			"0.2 0.17 0.14 0.12"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_stacks_per_second"	"5 6 7 8"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_speed"				"25"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_range"				"60"
+			}
+		}
+
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"LightHookToggle"
+
+				"ability_sharp"				"imba_pudge_sharp_hook"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_imba_light_hook"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"				"modifier_imba_light_hook"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_light_hook"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"				"%think_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pudge.lua"
+						"Function"			"LightHook"
+
+						"ability_hook"		"imba_pudge_meat_hook"
+						"modifier_sharp"	"modifier_imba_hook_sharp_stack"
+						"modifier_light"	"modifier_imba_hook_light_stack"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Pudge's Dismember
+	//=================================================================================================================
+	"imba_pudge_dismember"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"					"2"
+		"AbilityTextureName"				"pudge_dismember"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"particle"						"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"160"
+		"AbilityCastPoint"					"0.2"
+		"AbilityCastAnimation"				"ACT_DOTA_CHANNEL_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"				"2.95"
+		"AbilityCooldown"					"30.0 25.0 20.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 125 150"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dismember_damage"			"75 125 175"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"strength_damage"			"100"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"Dismember"
+
+				"particle_target"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"				"modifier_imba_dismember"
+				"Target"
+				{
+					"Center"				"TARGET"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_Pudge.Dismember"
+				"Target" 					"CASTER"
+			}
+		}
+
+		"OnChannelInterrupted"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"				"modifier_imba_dismember"
+				"Target"
+				{
+					"Center"				"TARGET"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+		}
+
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"				"modifier_imba_dismember"
+				"Target"
+				{
+					"Center"				"TARGET"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_dismember"
+			{
+				"Passive"					"0"
+				"IsDebuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"1.0"
+
+				"OverrideAnimation"			"ACT_DOTA_DISABLED"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pudge.lua"
+						"Function"			"Dismember"
+
+						"particle_target"	"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+					}
+
+					"FireSound"
+					{
+						"EffectName"				"Hero_Pudge.Dismember"
+						"Target" 					"CASTER"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
