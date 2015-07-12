@@ -10300,7 +10300,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"corruption_armor"		"-10"
+				"corruption_armor"		"-12"
 			}
 			"03"
 			{

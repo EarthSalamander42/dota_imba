@@ -10782,12 +10782,12 @@
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"secondary_delay"					"0.25 0.2 0.15 0.1"
+				"secondary_delay"					"0.3 0.24 0.18 0.12"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"4 6 8 10"
+				"secondary_amount"					"3 5 7 9"
 			}
 		}
 
@@ -10922,7 +10922,7 @@
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"4 6 8 10"
+				"secondary_amount"					"3 5 7 9"
 			}
 		}
 
@@ -14847,7 +14847,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"passive_cooldown"		"10.0"
+				"passive_cooldown"		"25.0 20.0 15.0 10.0"
 			}
 		}
 

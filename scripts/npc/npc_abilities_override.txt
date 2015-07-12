@@ -1253,136 +1253,119 @@
 	}
 
 	//=================================================================================================================
-	// Doom Bringer: Devour
+	//  Earthshaker Fissure
 	//=================================================================================================================
-	"doom_bringer_devour"
+	"earthshaker_fissure"
 	{
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"1800 2100 2400 2700"
+		"AbilityCastPoint"				"0.55"
 
-		"AbilityCastRange"				"500"
-		"AbilityCooldown"				"40.0"
+		"AbilityDuration"				"1.4 1.6 1.8 2.0"
 
-		"AbilityManaCost"				"0"
+		"AbilityDamage"					"150 200 250 300"
+
+		"AbilityManaCost"				"125 130 135 140"		
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"60 90 130 180"
+				"var_type"					"FIELD_INTEGER"
+				"fissure_range"				"1800 2100 2400 2700"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_second"		"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Scorched Earth
-	//=================================================================================================================
-	"doom_bringer_scorched_earth"
-	{
-		"AbilityCastRange"				"700 800 900 1000"
-		"AbilityCooldown"				"30.0"
-
-		"AbilityManaCost"				"66"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"18 24 30 36"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"700 800 900 1000"
+				"var_type"					"FIELD_FLOAT"
+				"fissure_duration"			"8.0"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"26"
+				"var_type"					"FIELD_INTEGER"
+				"fissure_radius"			"225 240 255 270"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"16.0"
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.4 1.6 1.8 2.0"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Doom Bringer: Lvl? Death
+	//  Earthshaker Totem
 	//=================================================================================================================
-	"doom_bringer_lvl_death"
+	"earthshaker_enchant_totem"
 	{
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.55"
 
-		"AbilityCastRange"				"666"
+		"AbilityCooldown"				"9.0 7.5 6.0 4.5"
 
-		"AbilityManaCost"				"66"
+		"AbilityManaCost"				"20"		
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 175 225 275"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"lvl_bonus_damage"		"66.6"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lvl_bonus_multiple"	"5 4 3 2"
+				"var_type"					"FIELD_INTEGER"
+				"totem_damage_percentage"	"400"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Doom Bringer: Doom
+	//  Earthshaker Aftershock
 	//=================================================================================================================
-	"doom_bringer_doom"
+	"earthshaker_aftershock"
 	{
-		"AbilityCastPoint"				"0.3"
+		"AbilityDuration"				"0.85 1.1 1.35 1.6"
 
-		"AbilityCastRange"				"666"
-		"AbilityCooldown"				"66.6"
-
-		"AbilityManaCost"				"166"
+		"AbilityDamage"					"80 100 120 140"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0 14.0 20.0"
+				"var_type"					"FIELD_INTEGER"
+				"aftershock_range"			"350 375 400 425"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"66"
+				"var_type"					"FIELD_FLOAT"
+				"tooltip_duration"			"0.85 1.1 1.35 1.6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//  Earthshaker Echo Slam
+	//=================================================================================================================
+	"earthshaker_echo_slam"
+	{
+		"AbilityDamage"					"150 200 250"
+
+		"AbilityManaCost"				"150 200 250"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"echo_slam_damage_range"		"600 750 900"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"echo_slam_echo_search_range"	"600 750 900"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"12.0 16.0 20.0"
+				"var_type"						"FIELD_INTEGER"
+				"echo_slam_echo_range"			"600 750 900"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"66 100 666"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"6.6"
+				"var_type"						"FIELD_INTEGER"
+				"echo_slam_echo_damage"			"50 70 90"
 			}
 		}
 	}
@@ -1556,7 +1539,7 @@
 	}
 
 	//=================================================================================================================
-	// Ability: Juggernaut Blade Fury
+	//  Juggernaut Blade Fury
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
@@ -1583,7 +1566,7 @@
 	}
 
 	//=================================================================================================================
-	// Ability: Juggernaut Blade Dance
+	//  Juggernaut Blade Dance
 	//=================================================================================================================
 	"juggernaut_blade_dance"
 	{
@@ -1603,7 +1586,7 @@
 	}
 
 	//=================================================================================================================
-	// Ability: Juggernaut Healing Ward
+	//  Juggernaut Healing Ward
 	//=================================================================================================================
 	"juggernaut_healing_ward"
 	{
@@ -1641,7 +1624,7 @@
 	}
 
 	//=================================================================================================================
-	// Ability: Juggernaut Omni Slash
+	//  Juggernaut Omni Slash
 	//=================================================================================================================
 	"juggernaut_omni_slash"
 	{
@@ -2169,6 +2152,133 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"regen_rate_tooltip_scepter"	"6 8 10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nature's Prophet: Sprout
+	//=================================================================================================================
+	"furion_sprout"
+	{
+		"AbilityCastRange"				"25000"
+
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityManaCost"				"100 110 120 130"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_range"			"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3 4 5 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"25000"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Nature's Prophet: Teleportation
+	//=================================================================================================================
+	"furion_teleportation"
+	{
+		"AbilityCastPoint"				"2.5 2.2 1.9 1.5"
+		"AbilityCooldown"				"50 40 30 20"
+		"AbilityManaCost"				"45 30 15 0"
+	}
+	
+	//=================================================================================================================
+	// Nature's Prophet: Force of Nature
+	//=================================================================================================================
+	"furion_force_of_nature"
+	{
+		"AbilityCastRange"				"25000"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"30"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"150 300 375 425"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_treants"				"2 4 6 8"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"90 120 150 180"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"treant_health_tooltip"		"550"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"treant_min_dmg_tooltip"	"22"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"treant_max_dmg_tooltip"	"28"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Nature's Prophet: Wrath of Nature
+	//=================================================================================================================
+	"furion_wrath_of_nature"
+	{
+		"AbilityCastPoint"				"0.4"
+			
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets"			"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150 200 250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_percent_add"	"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_delay"			"0.2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets_scepter"	"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"190 250 310"
 			}
 		}
 	}
@@ -2991,7 +3101,7 @@
 	}
 		
 	//=================================================================================================================
-	// Ability: Storm Spirit Overload
+	//  Storm Spirit Overload
 	//=================================================================================================================
 	"storm_spirit_overload"
 	{
@@ -3027,7 +3137,7 @@
 	}
 	
 	//=================================================================================================================
-	// Ability: Storm Spirit Ball Lightning
+	//  Storm Spirit Ball Lightning
 	//=================================================================================================================
 	"storm_spirit_ball_lightning"
 	{
@@ -3205,6 +3315,194 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"gods_strength_damage_scepter"	"80 120 160"		
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Templar Assassin: Refraction
+	//=================================================================================================================
+	"templar_assassin_refraction"
+	{
+		"AbilityManaCost"				"75"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"instances"					"4 6 8 10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_threshold"			"6 10 14 18"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Templar Assassin: Meld
+	//=================================================================================================================
+	"templar_assassin_meld"
+	{
+		"AbilityCooldown"				"6.0 5.5 5.0 4.5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_damage"							"100 150 200 250"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bonus_armor"							"-4 -6 -8 -10"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_reduction_duration_tooltip"		"10"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Templar Assassin: Psi Blades
+	//=================================================================================================================
+	"templar_assassin_psi_blades"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_attack_range"		"160 210 260 310"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_spill_range"		"600 700 800 900"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_spill_width"		"90"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
+	// Templar Assassin: Psionic Trap
+	//=================================================================================================================
+	"templar_assassin_psionic_trap"
+	{
+		"AbilityCastRange"				"2500"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"10.0 7.0 4.0"
+	
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_traps"					"10 20 30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trap_fade_time"			"0.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_min_tooltip"			"40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_max_tooltip"			"60"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trap_duration_tooltip"			"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Templar Assassin: Trap
+	//=================================================================================================================
+	"templar_assassin_trap"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_bonus"		"-40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trap_radius"				"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trap_duration"				"5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_bonus_stage"		"-5"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Templar Assassin: Self Trap
+	//=================================================================================================================
+	"templar_assassin_self_trap"
+	{
+		"AbilityCastPoint"				"0.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_bonus"		"-40"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trap_radius"				"500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trap_duration"				"5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_bonus_stage"		"-5"
 			}
 		}
 	}
@@ -3665,7 +3963,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"6 12 18 24"
+				"damage"					"6 14 22 30"
 			}
 			"03"
 			{				
@@ -3756,149 +4054,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"800"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Skeleton King Hellfire Blast
-	//=================================================================================================================
-	"skeleton_king_hellfire_blast"
-	{
-		"AbilityCastRange"				"625"
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityCooldown"				"7.0"
-
-		"AbilityDamage"					"80 120 160 200"
-
-		"AbilityManaCost"				"100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_speed"			"1000"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"blast_stun_duration"	"2.0"
-			}
-			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_slow"			"-30"
-			}
-			
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"blast_dot_duration"	"4"
-			}
-			
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blast_dot_damage"		"40 60 80 100"
-			}
-			
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_slow_duration"	"2"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Skeleton King Vampiric Aura
-	//=================================================================================================================
-	"skeleton_king_vampiric_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura_radius"	"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"30 40 50 60"
-			}
-		}
-	}
-		
-	//=================================================================================================================
-	// Skeleton King Mortal Strike
-	//=================================================================================================================
-	"skeleton_king_mortal_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_mult"					"210 240 270 300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"16 19 22 25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_drain"					"20"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"drain_duration"			"7.0"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Skeleton King Reincarnation
-	//=================================================================================================================
-	"skeleton_king_reincarnation"
-	{
-		"AbilityCooldown"				"90 40 15"
-
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"reincarnate_time"		"3.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_radius"			"1200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed"				"-80"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackslow_tooltip"	"-80"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"5.0"
 			}
 		}
 	}

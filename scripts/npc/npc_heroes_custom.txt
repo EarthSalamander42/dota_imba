@@ -227,6 +227,27 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Earthshaker
+	//=================================================================================================================
+	"npc_imba_hero_earthshaker"
+	{
+		"override_hero"				"npc_dota_hero_earthshaker"
+
+		"ArmorPhysical"				"2"
+
+		"ModelScale"				".87"
+
+		"AttributeBaseStrength"		"25"
+		"AttributeStrengthGain"		"3.0"
+
+		//"Ability1"				"imba_earthshaker_fissure"
+		//"Ability2"				"imba_earthshaker_enchant_totem"
+		//"Ability3"				"imba_earthshaker_aftershock"
+		//"Ability4"				"imba_earthshaker_echo_slam"
+		"Ability5"					"attribute_bonus_str"													
+	}
+
+	//=================================================================================================================
 	// HERO: Faceless Void
 	//=================================================================================================================
 	"npc_imba_hero_faceless_void"
@@ -427,6 +448,27 @@
 		//"Ability4"				"imba_naga_siren_song_of_the_siren"
 		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
 		"Ability6"				"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Nature's Prophet
+	//=================================================================================================================
+	"npc_imba_hero_furion"
+	{
+		"override_hero"				"npc_dota_hero_furion"
+
+		"AttackDamageMin"			"28"
+		"AttackDamageMax"			"38"
+		"AttackRate"				"1.5"
+
+		"AttributeBaseIntelligence"	"25"
+		"AttributeIntelligenceGain"	"3.0"
+
+		//"Ability1"				"imba_furion_sprout"
+		//"Ability2"				"imba_furion_teleportation"
+		//"Ability3"				"imba_furion_force_of_nature"
+		//"Ability4"				"imba_furion_wrath_of_nature"
+		"Ability5"				"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -709,6 +751,23 @@
 	//	"Ability3"					"imba_sven_warcry"
 	//	"Ability4"					"imba_sven_gods_strength"
 		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
+	// HERO: Templar Assassin
+	//=================================================================================================================
+	"npc_imba_hero_templar_assassin"
+	{
+		"override_hero"				"npc_dota_hero_templar_assassin"
+
+		"AttackRate"				"1.6"
+
+		//"Ability1"				"imba_templar_assassin_refraction"
+		//"Ability2"				"imba_templar_assassin_meld"
+		//"Ability3"				"imba_templar_assassin_psi_blades"
+		//"Ability4"				"imba_templar_assassin_trap"
+		//"Ability5"				"imba_templar_assassin_psionic_trap"
+		"Ability6"				"attribute_bonus_agi"
 	}
 
 	//=================================================================================================================
