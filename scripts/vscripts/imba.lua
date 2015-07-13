@@ -120,7 +120,7 @@ function GameMode:OnHeroInGame(hero)
 	if not self.greetPlayers then
 
 		-- At this point a player now has a hero spawned in your map.
-		local line_1 = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.4", "blue");
+		local line_1 = ColorIt("Welcome to ", "green") .. ColorIt("Dota IMBA! ", "orange") .. ColorIt("v6.84.5", "blue");
 		local line_2 = ColorIt("Hover over your abilities to find out ", "green") .. ColorIt("what they do.", "orange");
 		local line_3 = ColorIt("You can check out the new items and scepter upgrades on the shop.", "green");
 		local line_4 = ColorIt("Check our workshop page for the newest updates. ", "green") .. ColorIt("HAVE FUN!", "orange");

@@ -113,8 +113,8 @@ function LaunchArrow( keys )
 		if #enemy_units == 0 then
 			arrow_ticks = arrow_ticks + 1
 			
-			-- Destroys the arrow after 1000 ticks (~30 seconds)
-			if arrow_ticks >= 1000 then
+			-- Destroys the arrow after 1000 ticks (~30 seconds) or when near the enemy fountain
+			if arrow_ticks >= 1000 or IsNearEnemyClass(sacred_arrow, 1150, "ent_dota_fountain") then
 				sacred_arrow:StopPhysicsSimulation()
 				sacred_arrow:Destroy()
 			else

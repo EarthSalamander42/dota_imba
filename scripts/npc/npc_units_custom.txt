@@ -282,6 +282,7 @@
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep_neutral"	// Class of entity of link to.
 		"Model"						"models/development/invisiblebox.vmdl"	// Model.
+		"ModelScale"				"0.8"
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"

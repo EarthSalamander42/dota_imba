@@ -12042,7 +12042,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
-			"particle"					"particles/econ/items/luna/luna_lucent_ti5/luna_shield_ambient_moonfall.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow.vpcf"
 		}
 		
 		// Casting
@@ -12117,7 +12117,7 @@
 				"IsHidden"				"1"
 				"IsPurgable"			"0"
 		
-				"EffectName"			"particles/econ/items/luna/luna_lucent_ti5/luna_shield_ambient_moonfall.vpcf"
+				"EffectName"			"particles/hero/mirana/mirana_sacred_arrow.vpcf"
 				"EffectAttachType"		"follow_origin"
 			}
 		}
@@ -17213,6 +17213,9 @@
 				"near_skill_name"			"imba_sniper_take_aim_near"
 				"normal_skill_name"			"imba_sniper_take_aim_normal"
 				"far_skill_name"			"imba_sniper_take_aim_far"
+				"modifier_near"				"modifier_imba_take_aim_near"
+				"modifier_normal"			"modifier_imba_take_aim_normal"
+				"modifier_far"				"modifier_imba_take_aim_far"
 			}
 		}
 
@@ -18187,6 +18190,20 @@
 						"modifier"					"modifier_imba_flesh_heap_aura"
 					}
 				}
+
+				"ThinkInterval"  					"0.5"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"hero/hero_pudge.lua"
+						"Function"					"HeapUpdater"
+
+						"modifier_bonus"			"modifier_imba_flesh_heap_bonus"
+						"modifier_stacks"			"modifier_imba_flesh_heap_stacks"
+					}
+				}
 			}
 
 			"modifier_imba_flesh_heap_bonus"
@@ -18228,9 +18245,6 @@
 					{
 						"ScriptFile"				"hero/hero_pudge.lua"
 						"Function"					"FleshHeap"
-
-						"modifier_bonus"			"modifier_imba_flesh_heap_bonus"
-						"modifier_stacks"			"modifier_imba_flesh_heap_stacks"
 					}
 
 					"FireEffect"
@@ -18517,7 +18531,7 @@
 					"Center"				"TARGET"
 					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
 				}
 			}
 		}
@@ -18532,7 +18546,7 @@
 					"Center"				"TARGET"
 					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
 				}
 			}
 		}

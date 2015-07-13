@@ -478,14 +478,17 @@ function FleshHeapUpgrade( keys )
 	local stack_amount
 
 	-- If Heap is already learned, fetch the current amount of stacks
-	if caster:HasModifier(modifier_stacks) or caster:HasModifier(modifier_bonus) then
-		stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
+	if caster.heap_stacks then
+		stack_amount = caster.heap_stacks
 
 	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
 	else
 		local assists = caster:GetAssists()
 		local kills = caster:GetKills()	
 		stack_amount = kills + assists
+
+		-- Define the global variable which keeps track of heap stacks
+		caster.heap_stacks = stack_amount
 	end
 	
 	-- Remove both modifiers in order to update their bonuses
@@ -508,6 +511,16 @@ end
 
 function FleshHeap( keys )
 	local caster = keys.caster
+
+	-- Update the global heap stacks variable
+	caster.heap_stacks = caster.heap_stacks + 1
+
+	-- Play pudge's voice reaction
+	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
+end
+
+function HeapUpdater( keys )
+	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_bonus = keys.modifier_bonus
@@ -515,19 +528,20 @@ function FleshHeap( keys )
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
-
-	-- Add a stack of the real (hidden) bonus modifier
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
-
-	-- Add a stack of the fake modifier
-	AddStacks(ability, caster, caster, modifier_stacks, 1, true)
-
-	-- Make pudge GROW
 	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
-	caster:SetModelScale( 1 + stack_scale_up * stack_amount * math.exp( -0.012 * stack_amount) / 100 )
 
-	-- Play pudge's voice reaction
-	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
+	-- If the amount of stacks has increased, update it
+	if caster.heap_stacks > stack_amount then
+
+		-- Add a stack of the real (hidden) bonus modifier
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
+
+		-- Add a stack of the fake modifier
+		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+
+		-- Make pudge GROW
+		caster:SetModelScale( 1 + stack_scale_up * stack_amount * math.exp( -0.012 * stack_amount) / 100 )
+	end
 end
 
 function Dismember( keys )

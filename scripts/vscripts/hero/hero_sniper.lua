@@ -112,9 +112,14 @@ end
 function TakeAimUpgrade( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+
+	-- Parameters
 	local near_skill_name = keys.near_skill_name
 	local normal_skill_name = keys.normal_skill_name
 	local far_skill_name = keys.far_skill_name
+	local modifier_near = keys.modifier_near
+	local modifier_normal = keys.modifier_normal
+	local modifier_far = keys.modifier_far
 
 	-- Fetch the ability's current level
 	local ability_level = ability:GetLevel()
@@ -124,6 +129,19 @@ function TakeAimUpgrade( keys )
 	local ability_far = caster:FindAbilityByName(far_skill_name)
 	ability_normal:SetLevel(ability_level)
 	ability_far:SetLevel(ability_level)
+
+	-- Update the respective modifiers
+	if caster:HasModifier(modifier_near) then
+		caster:RemoveModifierByName(modifier_near)
+		caster:RemoveModifierByName(modifier_normal)
+		caster:RemoveModifierByName(modifier_far)
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_near, {})
+	elseif caster:HasModifier(modifier_far) then
+		caster:RemoveModifierByName(modifier_near)
+		caster:RemoveModifierByName(modifier_normal)
+		caster:RemoveModifierByName(modifier_far)
+		ability_far:ApplyDataDrivenModifier(caster, caster, modifier_far, {})
+	end
 end
 
 function AssassinateCast( keys )
