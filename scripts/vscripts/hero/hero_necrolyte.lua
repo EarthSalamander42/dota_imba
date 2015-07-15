@@ -135,7 +135,7 @@ function ReapersScythe( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
 	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
-	local damage_delay = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local damage_delay = ability:GetLevelSpecialValueFor("stun_duration", ability_level) - 0.05
 	local particle_delay = ability:GetLevelSpecialValueFor("animation_delay", ability_level)
 	local reap_particle = keys.reap_particle
 	local scythe_particle = keys.scythe_particle
@@ -179,18 +179,26 @@ function ReapersScythe( keys )
 		if target:HasModifier("modifier_aphotic_shield") then
 			target:RemoveModifierByName("modifier_aphotic_shield")
 		end
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
 
 		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
 		if target:GetHealth() <= 1 then
-			target:Kill(ability, caster)
-		end
 
-		-- Checking if target is alive to decide if it needs to increase respawn time
-		if not target:IsAlive() and should_increase_respawn_time then
-			target:SetTimeUntilRespawn(target:GetRespawnTime() + respawn_base + target.scythe_added_respawn)
-			target.scythe_added_respawn = target.scythe_added_respawn + respawn_stack
+			-- Initialize or increase scythe respawn timer stacking penalty
+			if target.scythe_stacking_respawn_timer then
+				target.scythe_stacking_respawn_timer = target.scythe_stacking_respawn_timer + respawn_stack
+			else
+				target.scythe_stacking_respawn_timer = respawn_stack
+			end
+
+			-- Flag this as a scythe death, increasing respawn timer by respawn_base
+			target.scythe_added_respawn = respawn_base
+
+			target:RemoveModifierByName("modifier_imba_reapers_scythe")
+			target:Kill(ability, caster)
+
+			-- Prevent buyback if caster has scepter
 			if scepter then
 				target:SetBuyBackDisabledByReapersScythe(true)
 			end

@@ -4313,7 +4313,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_frostbite_passive"
@@ -4693,7 +4693,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_freezing_field_scepter_check"
@@ -5063,7 +5063,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_freezing_field_scepter_check"
@@ -5789,7 +5789,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_shallow_grave_scepter_check"
@@ -7414,7 +7414,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_imba_trueshot_aura_owner_hero"
@@ -7436,7 +7436,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_imba_trueshot_aura_owner_creep"
@@ -8719,7 +8719,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"util.lua"
+						"ScriptFile"			"internal/util.lua"
 						"Function"				"IllusionPassiveRemover"
 
 						"modifier"				"modifier_imba_tidebringer_cooldown"
@@ -9817,7 +9817,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util.lua"
+						"ScriptFile"	"internal/util.lua"
 						"Function"		"IllusionPassiveRemover"
 
 						"modifier"		"modifier_imba_frost_nova_aura"
@@ -12575,7 +12575,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util.lua"
+						"ScriptFile"	"internal/util.lua"
 						"Function"		"IllusionPassiveRemover"
 
 						"modifier"		"modifier_imba_moonlight_scepter_aura"
@@ -12984,7 +12984,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util.lua"
+						"ScriptFile"	"internal/util.lua"
 						"Function"		"IllusionPassiveRemover"
 
 						"modifier"		"modifier_imba_sadist_aura"
@@ -13077,7 +13077,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"necrolyte_reapers_scythe"
 
@@ -13119,12 +13119,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"16 24 32"
+				"damage"					"20 30 40"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"24 32 40"
+				"damage_scepter"			"30 40 50"
 			}
 			"03"
 			{
@@ -13139,12 +13139,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_base"				"30"
+				"respawn_base"				"20"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_stack"				"2 3 4"
+				"respawn_stack"				"3"
 			}
 		}
 
@@ -14879,7 +14879,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_imba_purification_passive"
@@ -15454,7 +15454,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_guardian_angel_scepter_check"
@@ -15608,7 +15608,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_imba_guardian_angel_scepter_check"
@@ -16071,7 +16071,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_imba_blur_stacking"
@@ -16498,7 +16498,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_imba_shadow_strike_passive"
@@ -17821,7 +17821,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_imba_hook_stack_controller"
@@ -18143,7 +18143,7 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stack_scale_up"					"6"
+				"stack_scale_up"					"5"
 			}
 		}
 
@@ -18184,7 +18184,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_imba_flesh_heap_aura"

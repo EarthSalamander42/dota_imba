@@ -506,7 +506,7 @@ function FleshHeapUpgrade( keys )
 	AddStacks(ability, caster, caster, modifier_stacks, stack_amount, true)
 
 	-- Make pudge GROW
-	caster:SetModelScale( 1 + stack_scale_up * stack_amount * math.exp( -0.012 * stack_amount) / 100 )
+	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.8) )
 end
 
 function FleshHeap( keys )
@@ -540,7 +540,7 @@ function HeapUpdater( keys )
 		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
 
 		-- Make pudge GROW
-		caster:SetModelScale( 1 + stack_scale_up * stack_amount * math.exp( -0.012 * stack_amount) / 100 )
+		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.8) )
 	end
 end
 

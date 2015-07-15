@@ -6915,7 +6915,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_item_imba_bloodstone_aura"
@@ -7698,7 +7698,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util.lua"
+						"ScriptFile"	"internal/util.lua"
 						"Function"		"IllusionPassiveRemover"
 
 						"modifier"		"modifier_item_imba_rapier"
@@ -8193,7 +8193,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"util.lua"
+						"ScriptFile"		"internal/util.lua"
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_item_imba_butterfly_effect"
@@ -9380,7 +9380,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_item_imba_sange_and_yasha_proc"
@@ -9977,7 +9977,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_item_imba_sange_effects"
@@ -10460,7 +10460,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_item_imba_yasha_proc"
@@ -12603,7 +12603,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"util.lua"
+						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
 						"modifier"					"modifier_item_imba_azura_effects"
@@ -12811,7 +12811,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_item_imba_sange_and_azura_proc"
@@ -13079,7 +13079,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_item_imba_azura_and_yasha_proc"
@@ -13421,7 +13421,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"util.lua"
+						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
 						"modifier"						"modifier_item_imba_sange_and_azura_and_yasha_proc"
