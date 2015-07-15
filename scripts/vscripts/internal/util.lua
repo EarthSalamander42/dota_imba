@@ -236,3 +236,18 @@ function IsNearEnemyClass(unit, radius, class)
 	
 	return false
 end
+
+-- Returns the killstreak/deathstreak bonus gold for this hero
+function GetKillstreakGold( hero )
+	local gold = ( hero.kill_streak_count ^ KILLSTREAK_EXP_FACTOR ) * HERO_KILL_GOLD_PER_KILLSTREAK - hero.death_streak_count * HERO_KILL_GOLD_PER_DEATHSTREAK
+	return gold
+end
+
+-- Returns if this unit is a fountain or not
+function IsFountain( unit )
+	if unit:GetName() == "ent_dota_fountain_bad" or unit:GetName() == "ent_dota_fountain_good" then
+		return true
+	end
+	
+	return false
+end

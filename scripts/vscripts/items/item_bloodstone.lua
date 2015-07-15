@@ -18,6 +18,10 @@ function UpdateCharges( keys )
 
 	item:ApplyDataDrivenModifier(caster, caster, charges_modifier, {})
 	caster:SetModifierStackCount(charges_modifier, caster, current_charges)
+	
+	-- Reduce respawn timer
+	local respawn_time_reduction = item:GetLevelSpecialValueFor("respawn_time_reduction", item:GetLevel() - 1)
+	caster.bloodstone_respawn_reduction = current_charges * respawn_time_reduction
 
 	-- Apply a dummy modifier to keep the mana value updated
 	caster:RemoveModifierByName(dummy_modifier)
@@ -51,7 +55,6 @@ function LoseCharges( keys )
 	-- Parameters
 	local exp_modifier = keys.exp_modifier
 	local on_death_charge_loss = item:GetLevelSpecialValueFor("on_death_loss", item_level)
-	local respawn_time_reduction = item:GetLevelSpecialValueFor("respawn_time_reduction", item_level)
 	local effect_radius = item:GetLevelSpecialValueFor("effect_radius", item_level)
 	local heal_on_death_base = item:GetLevelSpecialValueFor("heal_on_death_base", item_level)
 	local heal_on_death_per_charge = item:GetLevelSpecialValueFor("heal_on_death_per_charge", item_level)
@@ -59,7 +62,6 @@ function LoseCharges( keys )
 	-- Calculations
 	local current_charges = item:GetCurrentCharges()
 	local total_heal = heal_on_death_base + current_charges * heal_on_death_per_charge
-	local respawn_time_reduction = respawn_time_reduction * current_charges
 
 	-- Lose charges
 	item:SetCurrentCharges( math.floor(current_charges * on_death_charge_loss) )
@@ -68,13 +70,6 @@ function LoseCharges( keys )
 	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, effect_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 	for _,ally in pairs(allies) do
 		ally:Heal(total_heal, caster)
-	end
-
-	-- Reduce respawn timer
-	if caster:GetRespawnTime() < respawn_time_reduction then
-		caster:SetTimeUntilRespawn(0)
-	else
-		caster:SetTimeUntilRespawn( caster:GetRespawnTime() - respawn_time_reduction )
 	end
 
 	-- Vision
@@ -97,4 +92,11 @@ function GainExp( keys )
 	local unit = keys.unit
 
 	caster:AddExperience(unit:GetDeathXP(), 0, false, true)
+end
+
+function RespawnTimeReset( keys )
+	local caster = keys.caster
+
+	caster.bloodstone_respawn_reduction = nil
+	print("reset")
 end

@@ -5,7 +5,7 @@
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 
 
-BAREBONES_DEBUG_SPEW = false
+BAREBONES_DEBUG_SPEW = true
 
 if GameMode == nil then
 	DebugPrint( '[IMBA] creating game mode' )
@@ -114,6 +114,16 @@ function GameMode:OnHeroInGame(hero)
 	else
 		hero:SetGold(HERO_INITIAL_GOLD, false)
 	end
+
+	-- Set up initial hero kill bounty
+	local hero_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
+
+	-- Multiply bounty by the lobby options
+	hero_bounty = hero_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100
+
+	-- Update the hero's bounty
+	hero:SetMinimumGoldBounty(hero_bounty)
+	hero:SetMaximumGoldBounty(hero_bounty)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player greeting and explanations

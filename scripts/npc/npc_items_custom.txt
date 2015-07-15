@@ -6753,7 +6753,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"respawn_time_reduction"	"5.0"
+				"respawn_time_reduction"	"3.0"
 			}
 			"07"
 			{
@@ -6801,6 +6801,12 @@
 			{
 				"ModifierName"				"modifier_item_imba_bloodstone_charges"
 				"Target" 					"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_bloodstone.lua"
+				"Function"					"RespawnTimeReset"
 			}
 		}
 

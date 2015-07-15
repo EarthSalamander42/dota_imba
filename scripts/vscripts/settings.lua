@@ -116,19 +116,29 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
 
-BOUNTY_BONUS = 40															-- Amount of bonus XP granted by creeps (in %)
+CREEP_BOUNTY_BONUS = 40														-- Amount of bonus gold/XP granted by creeps and passive gold (in %)
+HERO_BOUNTY_BONUS = 40														-- Amount of bonus gold/XP granted by heroes (in %)
 
-ADJUSTED_GOLD_TICK_TIME = GOLD_TICK_TIME / ( ( 100 + BOUNTY_BONUS ) / 100 )	-- Gold per tick adjusted with the bounty bonus
+GOLD_TICK_TIME = GOLD_TICK_TIME / ( ( 100 + CREEP_BOUNTY_BONUS ) / 100 )	-- Gold per tick adjusted with the bounty bonus
 
-HERO_KILL_GOLD_PER_KILLSTREAK = 80											-- Amount of gold awarded per killstreak, starting on 3 kills
-HERO_KILL_GOLD_PER_DEATHSTREAK = 80											-- Amount of gold reduced from the hero's bounty on a deathstreak, starting at 3 deaths
+HERO_KILL_GOLD_BASE = 100													-- Hero gold bounty base value
+HERO_KILL_GOLD_PER_LEVEL = 9												-- Hero gold bounty increase per level
+
+HERO_KILL_GOLD_PER_KILLSTREAK = 60											-- Amount of gold awarded per killstreak
+HERO_KILL_GOLD_PER_DEATHSTREAK = 60											-- Amount of gold reduced from the hero's bounty on a deathstreak
+
+HERO_DEATH_GOLD_LOSS_PER_LEVEL = 30											-- Amount of gold lost on death per level
+
+HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK = 20									-- Amount of gold prevented from being lost on death per deathstreak (in %)
+
+KILLSTREAK_EXP_FACTOR = 1.35												-- Killstreak gold formula exponent
 
 HERO_ASSIST_RADIUS = 1300													-- Radius around the killed hero where allies will gain assist gold and experience
 
-HERO_ASSIST_BOUNTY_FACTOR_2 = 0.70											-- Factor to multiply the assist bounty by when 2 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_3 = 0.55											-- Factor to multiply the assist bounty by when 3 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_4 = 0.40											-- Factor to multiply the assist bounty by when 4 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_5 = 0.30											-- Factor to multiply the assist bounty by when 5 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_2 = 0.60											-- Factor to multiply the assist bounty by when 2 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_3 = 0.40											-- Factor to multiply the assist bounty by when 3 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_4 = 0.30											-- Factor to multiply the assist bounty by when 4 heroes are involved
+HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bounty by when 5 heroes are involved
 
 HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
 HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the start of the game on repicking their hero
@@ -148,6 +158,14 @@ HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
+
+-------------------------------------------------------------------------------------------------
+-- IMBA: game mode globals
+-------------------------------------------------------------------------------------------------
+
+IMBA_PICK_MODE_ALL_PICK = true												-- Activates Random OMG mode when true
+
+IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Stat collection

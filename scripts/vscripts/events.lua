@@ -34,8 +34,9 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Reaper's Scythe buyback clean-up
+	-- IMBA: Reaper's Scythe buyback prevention clean-up
 	-------------------------------------------------------------------------------------------------
+
 	if npc:IsRealHero() then
 		npc:SetBuyBackDisabledByReapersScythe(false)
 	end
@@ -74,13 +75,15 @@ function GameMode:OnNPCSpawned(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Generic creep bounty adjustment
 	-------------------------------------------------------------------------------------------------
+
 	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
-		local gold_bounty = npc:GetGoldBounty()
+		local max_bounty = npc:GetMaximumGoldBounty()
+		local min_bounty = npc:GetMinimumGoldBounty()
 		local xp_bounty = npc:GetDeathXP()
 
-		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + BOUNTY_BONUS / 100 ) ) )
-		npc:SetMaximumGoldBounty( math.floor( gold_bounty * ( 1.1 + BOUNTY_BONUS / 100 ) ) )
-		npc:SetMinimumGoldBounty( math.floor( gold_bounty * ( 0.9 + BOUNTY_BONUS / 100 ) ) )
+		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
+		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
+		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
 	end
 
 end
@@ -189,14 +192,16 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- IMBA: Update hero bounty on level up
 	-------------------------------------------------------------------------------------------------
 
+	-- Calculate new base bounty
 	local hero = player:GetAssignedHero()
-	local hero_bounty = hero:GetGoldBounty()
+	local hero_level = hero:GetLevel()
+	local hero_bounty = HERO_KILL_GOLD_BASE + hero_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(hero)
 
-	print(hero:GetUnitName().."'s new bounty: "..hero:GetGoldBounty())
-	--hero:SetMaximumGoldBounty( hero_bounty + HERO_KILL_GOLD_PER_LEVEL )
-	--hero:SetMinimumGoldBounty( hero_bounty + HERO_KILL_GOLD_PER_LEVEL )
-	--print("Set up "..hero:GetUnitName().."'s bounty: "..hero:GetGoldBounty())
-	--print("Should be: "..(HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL * hero:GetLevel()))
+	-- Adjust bounty with the game options multiplier
+	hero_bounty = math.max( hero_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
+	hero:SetMaximumGoldBounty(hero_bounty)
+	hero:SetMinimumGoldBounty(hero_bounty)
+
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -260,6 +265,28 @@ function GameMode:OnPlayerPickHero(keys)
 	local heroClass = keys.hero
 	local heroEntity = EntIndexToHScript(keys.heroindex)
 	local player = EntIndexToHScript(keys.player)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: All Pick hero pick logic
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_PICK_MODE_ALL_PICK then
+
+		-- Fetch player's team and chosen hero
+		local team = PlayerResource:GetTeam(player:GetPlayerID())
+		local hero = player:GetAssignedHero()
+		local hero_name = hero:GetName()
+
+		-- Check if the hero was already picked in the same team
+		if PlayerResource:IsHeroSelected(hero_name) then
+			local all_heroes = HeroList:GetAllHeroes()
+			for _,picked_hero in pairs(all_heroes) do
+				if hero_name == picked_hero:GetName() and team == picked_hero:GetTeam() then
+					--player:MakeRandomHeroSelection()
+				end
+			end
+		end
+	end
 end
 
 -- A player killed another player in a multi-team context
@@ -283,6 +310,7 @@ function GameMode:OnEntityKilled( keys )
 
 	-- The Unit that was Killed
 	local killed_unit = EntIndexToHScript( keys.entindex_killed )
+
 	-- The Killing entity
 	local killer = nil
 
@@ -314,6 +342,11 @@ function GameMode:OnEntityKilled( keys )
 		-- Fetch stacking increased respawn timer due to Reaper's Scythe
 		if killed_unit.scythe_stacking_respawn_timer then
 			respawn_time = respawn_time + killed_unit.scythe_stacking_respawn_timer
+		end
+
+		-- Fetch decreased respawn timer due to Bloodstone charges
+		if killed_unit.bloodstone_respawn_reduction then
+			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 
 		-- Set up the respawn timer
@@ -359,68 +392,151 @@ function GameMode:OnEntityKilled( keys )
 	if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
 		non_neutral_killer = true
 	end
-
+	
 	-- Check if killed unit is a hero, and killer/killed belong to different teams
 	if killed_unit:IsRealHero() and killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
 
-		print(killed_unit:GetName().." died, granting bounty of: "..killed_unit:GetGoldBounty())
-		-- Update streak bounties and display streak messages
-		--if killed_unit.kill_streak then
-		--	killed_unit:SetMaximumGoldBounty( HERO_KILL_GOLD_BASE + killed_unit:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
-		--	killed_unit:SetMinimumGoldBounty( HERO_KILL_GOLD_BASE + killed_unit:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
-		--elseif killed_unit.death_streak then
-		--	killed_unit:SetMaximumGoldBounty( math.max( killed_unit:GetGoldBounty() - HERO_KILL_GOLD_PER_DEATHSTREAK, 0) )
-		--	killed_unit:SetMinimumGoldBounty( math.max( killed_unit:GetGoldBounty() - HERO_KILL_GOLD_PER_DEATHSTREAK, 0) )
+		-- Killed hero gold loss
+		local killed_level = killed_unit:GetLevel()
+		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
+		killed_gold_loss = -1 * killed_gold_loss * ( 100 + HERO_BOUNTY_BONUS ) / 100
+		killed_unit:ModifyGold(killed_gold_loss, false, DOTA_ModifyGold_Death)
 
+		-- Nearby allied heroes gold gain
+		local allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local assist_gold = killed_unit:GetGoldBounty()
+		print("Initial assist bounty: "..assist_gold)
+
+		-- If no allied hero was near the kill, distribute gold evenly to all of the team's heroes
+		if #allied_heroes == 0 then
+			assist_gold = assist_gold * 0.2
+			allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_UNITS_EVERYWHERE, false)
+			for _,ally in pairs(allied_heroes) do
+				ally:EmitSound("General.Coins")
+				SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
+				ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
+			end
+			print("Granted bounty to all allied heroes: "..assist_gold)
+		else
+			local is_killer_present = false
+			local nearby_allies = #allied_heroes
+
+			-- Check if the killer was near the kill
+			for _,ally in pairs(allied_heroes) do
+				if ally == killer then
+					is_killer_present = true
+				end
+			end
 			
-		--	local killed_hero_name = "#"..killed_unit:GetName()
-		--	if killed_unit.death_streak_count == 3 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#00FF40'><b>DYING SPREE</b></font>", 0, 0)
-		--	elseif killed_unit.death_streak_count == 4 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is being <font color='#5E00BD'><b>DOMINATED</b></font>", 0, 0)
-		--	elseif killed_unit.death_streak_count == 5 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#FF0080'><b>MEGA DEATH</b></font> streak", 0, 0)
-		--	elseif killed_unit.death_streak_count == 6 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is <font color='#FF8000'><b>HOPELESS</b></font>", 0, 0)
-		--	elseif killed_unit.death_streak_count == 7 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#808000'><b>WICKED FEEDING</b></font> streak", 0, 0)
-		--	elseif killed_unit.death_streak_count == 8 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is on a <font color='#FF80FF'><b>MONSTER FEED</b></font> streak", 0, 0)
-		--	elseif killed_unit.death_streak_count == 9 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is <font color='#FF0000'><b>GHOSTLIKE</b></font>", 0, 0)
-		--	elseif killed_unit.death_streak_count >= 10 then
-		--		GameRules:SendCustomMessage(killed_hero_name.." is beyond <font color='#FF8000'><b>GHOSTLIKE</b></font>, someone FEED them!!", 0, 0)
-		--	end
-		--end
+			-- If yes, reduce the count of nearby allies by one
+			if is_killer_present then
+				nearby_allies = nearby_allies - 1
+			end
 
-		--if killer.kill_streak then
-		--	killer:SetMaximumGoldBounty( killer:GetGoldBounty() + HERO_KILL_GOLD_PER_KILLSTREAK )
-		--	killer:SetMinimumGoldBounty( killer:GetGoldBounty() + HERO_KILL_GOLD_PER_KILLSTREAK )
-		--elseif killer.death_streak then
-		--	killer:SetMaximumGoldBounty( HERO_KILL_GOLD_BASE + killer:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
-		--	killer:SetMinimumGoldBounty( HERO_KILL_GOLD_BASE + killer:GetLevel() * HERO_KILL_GOLD_PER_LEVEL )
-		--end
+			-- Distribute assist gold accordingly
+			if nearby_allies == 1 then
+				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_2
+				for _,ally in pairs(allied_heroes) do
+					if ally ~= killer then
+						ally:EmitSound("General.Coins")
+						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
+						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
+					end
+				end
+				print("Assist bounty for 1 nearby hero: "..assist_gold)
+			elseif nearby_allies == 2 then
+				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
+				for _,ally in pairs(allied_heroes) do
+					if ally ~= killer then
+						ally:EmitSound("General.Coins")
+						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
+						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
+					end
+				end
+				print("Assist bounty for 2 nearby heroes: "..assist_gold)
+			elseif nearby_allies == 3 then
+				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
+				for _,ally in pairs(allied_heroes) do
+					if ally ~= killer then
+						ally:EmitSound("General.Coins")
+						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
+						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
+					end
+				end
+				print("Assist bounty for 3 nearby heres: "..assist_gold)
+			elseif nearby_allies >= 4 then
+				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
+				for _,ally in pairs(allied_heroes) do
+					if ally ~= killer then
+						ally:EmitSound("General.Coins")
+						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
+						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
+					end
+				end
+				print("Assist bounty for 4 nearby heres: "..assist_gold)
+			end
+		end
+
+		-- Reset killed hero's killstreak and update its deathstreak
+		killed_unit.kill_streak_count = 0
+		killed_unit.death_streak_count = killed_unit.death_streak_count + 1
+
+		-- Update killed hero's bounty
+		local killed_bounty = HERO_KILL_GOLD_BASE + killed_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killed_unit)
+		killed_bounty = math.max( killed_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
+		killed_unit:SetMaximumGoldBounty(killed_bounty)
+		killed_unit:SetMinimumGoldBounty(killed_bounty)
+
+		-- Check if the killer was a creep, tower, or fountain (to avoid GetPlayerID crashes)
+		local nonhero_killer = false
+		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
+			nonhero_killer = true
+		end
+
+		-- If the killer is player-controlled, remove its deathstreak and start its killstreak
+		if not nonhero_killer and killer:GetPlayerID() then
+			local killer_player = PlayerResource:GetPlayer(killer:GetPlayerID())
+			local killer_hero = killer_player:GetAssignedHero()
 			
+			-- Reset killer hero's deathstreak and update its killstreak
+			killer_hero.death_streak_count = 0
+			killer_hero.kill_streak_count = killer_hero.kill_streak_count + 1
 
-		-- Update the killer's kill and death streaks
-		--if killer:IsRealHero() then
-		--	killer.death_streak = false
-		--	killer.death_streak_count = 0
-		--	killer.kill_streak_count = killer.kill_streak_count + 1
-		--	if killer.kill_streak_count >= 2 then
-		--		killer.kill_streak = true
-		--	end
-		--end
+			-- Update killer's bounty
+			local killer_level = killer_hero:GetLevel()
+			local killer_bounty = HERO_KILL_GOLD_BASE + killer_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killer_hero)
+			killer_bounty = math.max( killer_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
+			killer_hero:SetMaximumGoldBounty(killer_bounty)
+			killer_hero:SetMinimumGoldBounty(killer_bounty)
+		end
 
-		-- Update the killed hero's kill and death streaks
-		--if killed_unit:IsRealHero() then
-		--	killed_unit.kill_streak = false
-		--	killed_unit.kill_streak_count = 0
-		--	killed_unit.death_streak_count = killed_unit.death_streak_count + 1
-		--	if killed_unit.death_streak_count >= 2 then
-		--		killed_unit.death_streak = true
-		--	end
-		--end
+		-- Killed hero deathstreak messages
+		local killed_hero_name = killed_unit:GetName()
+		local killed_player_name = PlayerResource:GetPlayerName(killed_unit:GetPlayerID())
+		local line_duration = 7
+
+		if killed_unit.death_streak_count >= 3 then
+			Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		end
+
+		if killed_unit.death_streak_count == 3 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 4 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 5 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 6 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 7 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 8 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count == 9 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		elseif killed_unit.death_streak_count >= 10 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		end
 	end
 
 end
