@@ -8,7 +8,7 @@
 
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
-ALLOW_SAME_HERO_SELECTION = true			-- Should we let people select the same hero as each other
+ALLOW_SAME_HERO_SELECTION = false			-- Should we let people select the same hero as each other
 
 HERO_SELECTION_TIME = 50.0					-- How long should we let people select their hero?
 PRE_GAME_TIME = 90.0						-- How long after people select their heroes should the horn blow and the game start?
@@ -163,7 +163,7 @@ HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multip
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
-IMBA_PICK_MODE_ALL_PICK = true												-- Activates Random OMG mode when true
+IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 
 IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
 

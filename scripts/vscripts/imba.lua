@@ -5,7 +5,7 @@
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 
 
-BAREBONES_DEBUG_SPEW = true
+BAREBONES_DEBUG_SPEW = false
 
 if GameMode == nil then
 	DebugPrint( '[IMBA] creating game mode' )

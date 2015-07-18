@@ -1,186 +1,183 @@
---[[	Author: Ractidous
-		Date: 27.01.2015.	]]
+--[[	Author: Ractidous & D2imba
+		Date: 15.07.2015.			]]
 
-function LaunchIcyBreath( keys )
+function DualBreath( keys )
 	local caster = keys.caster
+	local target = keys.target_points[1]
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local particle_breath = keys.particle_breath
+	local modifier_caster = keys.modifier_caster
+	local modifier_breath = keys.modifier_breath
+	local ability_just_used = keys.ability_just_used
+	local ability_to_switch = keys.ability_to_switch
 
-	local caster_pos = caster:GetAbsOrigin()
-	local target_pos = keys.target_points[1]
-	local direction = target_pos - caster_pos
-	direction = direction:Normalized()
+	-- Parameters
+	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
+	local spill_radius = ability:GetLevelSpecialValueFor("spill_radius", ability_level)
+	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+	local range = ability:GetLevelSpecialValueFor("range", ability_level)
 
-	ProjectileManager:CreateLinearProjectile( {
-		Ability				= ability,
-	--	EffectName			= "",
-		vSpawnOrigin		= caster_pos,
-		fDistance			= keys.distance,
-		fStartRadius		= keys.start_radius,
-		fEndRadius			= keys.end_radius,
-		Source				= caster,
-		bHasFrontalCone		= true,
-		bReplaceExisting	= false,
-		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_MECHANICAL,
-	--	fExpireTime			= ,
-		bDeleteOnHit		= false,
-		vVelocity			= direction * keys.speed,
-		bProvidesVision		= false,
-	--	iVisionRadius		= ,
-	--	iVisionTeamNumber	= caster:GetTeamNumber(),
-	} )
+	-- Path calculations
+	local initial_pos = caster:GetAbsOrigin()
+	local path_direction = ( target - initial_pos ):Normalized()
+	if ( target - initial_pos ):Length2D() > range then
+		target = initial_pos + path_direction * range
+	end
+	local path_distance = ( target - initial_pos ):Length2D()
 
-	local particle_name = keys.particle_name
-	local pfx = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
-	ParticleManager:SetParticleControl( pfx, 0, caster_pos )
-	ParticleManager:SetParticleControl( pfx, 1, direction * keys.speed * 1.333 )
-	ParticleManager:SetParticleControl( pfx, 3, Vector(0,0,0) )
-	ParticleManager:SetParticleControl( pfx, 9, caster_pos )
+	-- Initialize movement variables
+	local movement_tick = 0.03
+	local distance_from_start = 0
+	local searches_made = 0
+	local caster_pos = initial_pos
+	local caster_direction = caster:GetForwardVector()
+	local movement_step = path_direction * speed * movement_tick
 
-	caster:SetContextThink( DoUniqueString( "destroy_particle" ), function ()
-		ParticleManager:DestroyParticle( pfx, false )
-	end, keys.distance / keys.speed )
+	-- Set up animation
+	if modifier_breath == "modifier_imba_fire_breath" then
+		StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
+	else
+		StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_1, rate = 1.0})
+	end
 	
+	-- Start movement
+	Timers:CreateTimer(0, function()
+
+		-- Calculate distance since start
+		caster_pos = caster:GetAbsOrigin()
+		caster:SetForwardVector(caster_direction)
+		distance_from_start = ( caster_pos - initial_pos ):Length2D()
+
+		-- Check if Dual Breath should be stopped here
+		if distance_from_start < path_distance and not IsHardDisabled(caster) then
+
+			-- Check if an enemy search should be done
+			if distance_from_start >= ( searches_made * path_radius / 2 ) then
+				searches_made = searches_made + 1
+
+				-- Apply Breath modifier on enemies
+				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos + ( path_direction * path_radius ) / 2, nil, path_radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+				for _,enemy in pairs(enemies) do
+					ability:ApplyDataDrivenModifier(caster, enemy, modifier_breath, {})
+				end
+
+				-- Destroy trees
+				GridNav:DestroyTreesAroundPoint(caster_pos + ( path_direction * path_radius ) / 2, path_radius, false)
+
+				-- Fire particle
+				local breath_pfx = ParticleManager:CreateParticle(particle_breath, PATTACH_ABSORIGIN, caster)
+				ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos )
+				ParticleManager:SetParticleControl(breath_pfx, 1, path_direction * speed * 1.2 )
+				ParticleManager:SetParticleControl(breath_pfx, 3, Vector(0,0,0) )
+				ParticleManager:SetParticleControl(breath_pfx, 9, caster_pos )
+				Timers:CreateTimer(0.4, function()
+					ParticleManager:DestroyParticle(breath_pfx, false)
+				end)
+			end
+
+			-- Move forward
+			caster:SetAbsOrigin( caster_pos + movement_step )
+			return movement_tick
+		else
+
+			-- Apply Breath modifier on enemies in spill area
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos + ( path_direction * spill_radius / 2 ), nil, spill_radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+			for _,enemy in pairs(enemies) do
+				ability:ApplyDataDrivenModifier(caster, enemy, modifier_breath, {})
+			end
+
+			-- Destroy trees
+			GridNav:DestroyTreesAroundPoint(caster_pos + ( path_direction * spill_radius ) / 2, spill_radius, false)
+
+			caster:RemoveModifierByName(modifier_caster)
+			FindClearSpaceForUnit(caster, caster_pos, false)
+			EndAnimation(caster)
+
+			-- Switch breath abilities
+			caster:SwapAbilities(ability_just_used, ability_to_switch, false, true)
+		end
+	end)
 end
 
-function LaunchFieryBreath( keys )
+function DualBreathUpgrade( keys )
 	local caster = keys.caster
-	local fiery_ability = caster:FindAbilityByName( keys.fiery_ability_name )
-
-	local caster_pos = caster:GetAbsOrigin()
-	local target_pos = keys.target_points[1]
-	local direction = target_pos - caster_pos
-	direction = direction:Normalized()
-
-	ProjectileManager:CreateLinearProjectile( {
-		Ability				= fiery_ability,
-	--	EffectName			= "",
-		vSpawnOrigin		= caster_pos,
-		fDistance			= keys.distance,
-		fStartRadius		= keys.start_radius,
-		fEndRadius			= keys.end_radius,
-		Source				= caster,
-		bHasFrontalCone		= true,
-		bReplaceExisting	= false,
-		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_MECHANICAL,
-	--	fExpireTime			= ,
-		bDeleteOnHit		= false,
-		vVelocity			= direction * keys.speed,
-		bProvidesVision		= false,
-	--	iVisionRadius		= ,
-	--	iVisionTeamNumber	= caster:GetTeamNumber(),
-	} )
-
-	local particle_name = keys.particle_name
-	local pfx = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
-	ParticleManager:SetParticleControl( pfx, 0, caster_pos )
-	ParticleManager:SetParticleControl( pfx, 1, direction * keys.speed * 1.333 )
-	ParticleManager:SetParticleControl( pfx, 3, Vector(0,0,0) )
-	ParticleManager:SetParticleControl( pfx, 9, caster_pos )
-
-	caster:SetContextThink( DoUniqueString( "destroy_particle" ), function ()
-		ParticleManager:DestroyParticle( pfx, false )
-	end, keys.distance / keys.speed )
+	local ability_level = keys.ability:GetLevel()
+	local ability_ice = caster:FindAbilityByName(keys.ability_ice)
+	
+	ability_ice:SetLevel(ability_level)
 end
 
-function DualBreathInitialize( keys )
+function DualBreathDamage( keys )
 	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
-	local modifier = keys.modifier
-	local duration = ability:GetLevelSpecialValueFor("tooltip_duration", ability:GetLevel() - 1)
-
-	-- Resets the debuff's duration when a target is affected
-	ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = duration})
-	target.dual_breath_duration = duration
-end
-
-function DualBreathCountdown( keys )
-	local caster = keys.caster
 	local ability = keys.ability
-	local target = keys.target
-	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability:GetLevel() - 1)
-
-	local modifier = keys.modifier
+	local ability_level = ability:GetLevel() - 1
 	local modifier_macropyre = keys.modifier_macropyre
-	local macropyre_scepter = keys.macropyre_scepter
+	local modifier_macropyre_2 = keys.modifier_macropyre_2
+	local modifier_breath = keys.modifier_breath
 
-	-- Checks if the target is in Macropyre's area. If yes, renews the dual breath debuff.
-	if target:HasModifier(modifier_macropyre) or target:HasModifier(macropyre_scepter) then
-		ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = target.dual_breath_duration})
-	else
-		target.dual_breath_duration = target.dual_breath_duration - damage_interval
+	-- Parameters
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
+
+	-- Apply damage
+	damage = damage * damage_interval
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+	-- Refresh the debuff if on top of Macropyre
+	if target:HasModifier(modifier_macropyre) or target:HasModifier(modifier_macropyre_2) then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_breath, {})
 	end
 end
 
-function LiquidFireCooldown( keys )
+function LiquidFire( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
-	local modifier = "modifier_imba_liquid_fire_orb"
-
-	-- Start cooldown
-	ability:EndCooldown()
-	ability:StartCooldown( cooldown )
-
-	-- Disable orb modifier
-	caster:RemoveModifierByName( modifier )
-
-	-- Re-enable orb modifier after for the duration
-	ability:SetContextThink( DoUniqueString("activateLiquidFire"), function ()
-		-- Here's a magic
-		-- Reset the ability level in order to restore a passive modifier
-		ability.liquid_fire_forceEnableOrb = true
-		ability:SetLevel( ability:GetLevel() )	
-	end, cooldown + 0.05 )
-end
-
-function LiquidFireCheckOrb( keys )
-	local ability = keys.ability
-	local caster = keys.caster
-
-	if ability.liquid_fire_forceEnableOrb then
-		ability.liquid_fire_forceEnableOrb = nil
-		return
-	end
-
-	if ability:IsCooldownReady() then
-		return
-	end
-
-	caster:RemoveModifierByName( "modifier_imba_liquid_fire_orb" )
-end
-
-function LiquidFireInitialize( keys )
-	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
-	local modifier = keys.modifier
-	local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() - 1)
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_liquid_fire = keys.sound_liquid_fire
+	local particle_liquid_fire = keys.particle_liquid_fire
+	local modifier_liquid_fire = keys.modifier_liquid_fire
 
-	-- Resets the debuff's duration when a target is affected
-	ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = duration})
-	target.liquid_fire_duration = duration
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+
+	-- Play sound
+	target:EmitSound(sound_liquid_fire)
+
+	-- Play explosion particle
+	local fire_pfx = ParticleManager:CreateParticle( particle_liquid_fire, PATTACH_ABSORIGIN, target )
+	ParticleManager:SetParticleControl( fire_pfx, 0, target:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( fire_pfx, 1, Vector(radius * 2,0,0) )
+
+	-- Apply liquid fire modifier to enemies in the area
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_liquid_fire, {})
+	end
 end
 
-function LiquidFireCountdown( keys )
+function LiquidFireDamage( keys )
 	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
-	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability:GetLevel() - 1)
-
-	local modifier = keys.modifier
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_liquid_fire = keys.modifier_liquid_fire
 	local modifier_macropyre = keys.modifier_macropyre
-	local macropyre_scepter = keys.macropyre_scepter
+	local modifier_macropyre_2 = keys.modifier_macropyre_2
+	
+	-- Parameters
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
 
-	-- Checks if the target is in Macropyre's area. If yes, renews the liquid fire debuff.
-	if target:HasModifier(modifier_macropyre) or target:HasModifier(macropyre_scepter) then
-		ability:ApplyDataDrivenModifier(caster, target, modifier, {duration = target.liquid_fire_duration})
-	else
-		target.liquid_fire_duration = target.liquid_fire_duration - damage_interval
+	-- Apply damage
+	damage = damage * damage_interval
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+
+	-- Refresh the debuff if on top of Macropyre
+	if target:HasModifier(modifier_macropyre) or target:HasModifier(modifier_macropyre_2) then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_liquid_fire, {})
 	end
 end
 
@@ -189,87 +186,103 @@ function Macropyre( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local scepter = HasScepter(caster)
-
-	local path_length = ability:GetLevelSpecialValueFor("range", ability_level)
-	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
-	local ice_delay = ability:GetLevelSpecialValueFor("ice_delay", ability_level)
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-
 	local modifier = keys.modifier
 	local modifier_scepter = keys.modifier_scepter
 	local modifier_dummy = keys.modifier_dummy
-
-	local start_pos = caster:GetAbsOrigin()
-	local end_pos = start_pos + caster:GetForwardVector() * path_length
-
 	local fire_particle = keys.fire_particle
 	local ice_particle = keys.ice_particle
-	local ice_particle_2 = keys.ice_particle_2
+	local sound_fire = keys.sound_fire
+	local sound_ice = keys.sound_ice
+	local sound_fire_loop = keys.sound_fire_loop
 
-	-- Create fire particle effect
-	local pfx = ParticleManager:CreateParticle( fire_particle, PATTACH_ABSORIGIN, caster )
-	ParticleManager:SetParticleControl( pfx, 0, start_pos )
-	ParticleManager:SetParticleControl( pfx, 1, end_pos )
-	ParticleManager:SetParticleControl( pfx, 2, Vector( duration, 0, 0 ) )
-	ParticleManager:SetParticleControl( pfx, 3, start_pos )
+	-- Parameters
+	local path_length = ability:GetLevelSpecialValueFor("range", ability_level)
+	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
+	local trail_angle = ability:GetLevelSpecialValueFor("trail_angle", ability_level)
+	local trail_amount = ability:GetLevelSpecialValueFor("trail_amount", ability_level)
+	local formation_delay = ability:GetLevelSpecialValueFor("formation_delay", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
-	-- Create ice path particles (if the owner has Aghanim's Scepter)
+	-- Play fire sound, and ice sound if owner has Aghanim's Scepter
+	caster:EmitSound(sound_fire)
 	if scepter then
-		-- Start and end points
-		local start_pos_left = RotatePosition(start_pos, QAngle(0, 90, 0), start_pos + caster:GetForwardVector() * (path_radius - 150))
-		local start_pos_right = RotatePosition(start_pos, QAngle(0, -90, 0), start_pos + caster:GetForwardVector() * (path_radius - 150))
-		local end_pos_left = RotatePosition(end_pos, QAngle(0, 90, 0), end_pos + caster:GetForwardVector() * (path_radius - 150))
-		local end_pos_right = RotatePosition(end_pos, QAngle(0, -90, 0), end_pos + caster:GetForwardVector() * (path_radius - 150))
-
-		-- Left side
-		local pfx = ParticleManager:CreateParticle( ice_particle, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx, 0, start_pos_left )
-		ParticleManager:SetParticleControl( pfx, 1, end_pos_left )
-		ParticleManager:SetParticleControl( pfx, 2, start_pos_left )
-	
-		pfx = ParticleManager:CreateParticle( ice_particle_2, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx, 0, start_pos_left )
-		ParticleManager:SetParticleControl( pfx, 1, end_pos_left )
-		ParticleManager:SetParticleControl( pfx, 2, Vector( ice_delay + duration, 0, 0 ) )
-		ParticleManager:SetParticleControl( pfx, 9, start_pos_left )
-
-		-- Right side
-		local pfx = ParticleManager:CreateParticle( ice_particle, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx, 0, start_pos_right )
-		ParticleManager:SetParticleControl( pfx, 1, end_pos_right )
-		ParticleManager:SetParticleControl( pfx, 2, start_pos_right )
-	
-		pfx = ParticleManager:CreateParticle( ice_particle_2, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx, 0, start_pos_right )
-		ParticleManager:SetParticleControl( pfx, 1, end_pos_right )
-		ParticleManager:SetParticleControl( pfx, 2, Vector( ice_delay + duration, 0, 0 ) )
-		ParticleManager:SetParticleControl( pfx, 9, start_pos_right )
+		caster:EmitSound(sound_ice)
 	end
+	
+	-- Initialize effect geometry
+	local direction = caster:GetForwardVector()
+	local start_pos = caster:GetAbsOrigin() + direction * path_radius
+	local end_pos = start_pos
+	local trail_start = ( -1 ) * ( trail_amount - 1 ) / 2
+	local trail_end = ( trail_amount - 1 ) / 2
 
-	-- Generate dummy units
-	local num_units = math.floor( path_length / path_radius ) + 1
+	-- Create the visibility dummy
+	local dummy = CreateUnitByName("npc_dummy_unit", start_pos, false, nil, nil, caster:GetTeamNumber())
+	AddFOWViewer(DOTA_TEAM_BADGUYS, start_pos, 100, duration, false)
+	AddFOWViewer(DOTA_TEAM_GOODGUYS, start_pos, 100, duration, false)
 
-	for i=1, num_units do
-		local dummy_pos = start_pos + caster:GetForwardVector() * (i-1) * path_radius
+	-- Destroys trees around the target area
+	GridNav:DestroyTreesAroundPoint(start_pos, path_radius, false)
 
-		-- Destroys trees around the target area
-		GridNav:DestroyTreesAroundPoint(dummy_pos, path_radius, false)
+	-- Play the fire loop sound on the dummy, finishing it after duration
+	dummy:EmitSound(sound_fire_loop)
+	Timers:CreateTimer(duration, function()
+		dummy:StopSound(sound_fire_loop)
+		dummy:Destroy()
+	end)
+	
+	-- Start particle/dummy creation loop
+	for trail = trail_start, trail_end do
 
-		-- Creates debuffing dummy (3000 units above ground to prevent camp blocking)
-		local dummy = CreateUnitByName("npc_dummy_unit", dummy_pos, false, caster, caster, caster:GetTeamNumber())
-		dummy:SetAbsOrigin(dummy_pos + Vector(0, 0, 3000))
-		ability:ApplyDataDrivenModifier(caster, dummy, modifier_dummy, {} )
+		-- Calculate each trail's end position
+		end_pos = RotatePosition(start_pos, QAngle(0, trail * trail_angle, 0), start_pos + direction * path_length)
 
+		-- Create thinkers along the trail
+		for i = 0, math.floor( path_length / path_radius ) do
+
+			-- Calculate thinker position
+			local thinker_pos = start_pos + i * path_radius * ( end_pos - start_pos ):Normalized()
+
+			-- Destroys trees around the target area
+			GridNav:DestroyTreesAroundPoint(thinker_pos, path_radius, false)
+
+			-- Repeatedly search for enemies in the target area
+			local time_elapsed = 0
+			Timers:CreateTimer(0, function()
+				local enemies = FindUnitsInRadius(caster:GetTeamNumber(), thinker_pos, nil, path_radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+				
+				-- Applies debuff to enemies found
+				for _, enemy in pairs(enemies) do
+					if scepter then
+						ability:ApplyDataDrivenModifier(caster, enemy, modifier_scepter, {} )
+					else
+						ability:ApplyDataDrivenModifier(caster, enemy, modifier, {} )
+					end
+				end
+
+				-- Check if time is over
+				time_elapsed = time_elapsed + 0.1
+				if time_elapsed < duration then
+					return 0.1
+				end
+			end)
+		end
+
+		-- Draw the fire particles (blue fire if the owner has Aghanim's Scepter)
 		if scepter then
-			ability:ApplyDataDrivenModifier(caster, dummy, modifier_scepter, {} )
+			local ice_pfx = ParticleManager:CreateParticle( ice_particle, PATTACH_ABSORIGIN, dummy)
+			ParticleManager:SetParticleAlwaysSimulate(ice_pfx)
+			ParticleManager:SetParticleControl( ice_pfx, 0, start_pos )
+			ParticleManager:SetParticleControl( ice_pfx, 1, end_pos )
+			ParticleManager:SetParticleControl( ice_pfx, 2, Vector( duration, 0, 0 ) )
+			ParticleManager:SetParticleControl( ice_pfx, 3, start_pos )
 		else
-			ability:ApplyDataDrivenModifier(caster, dummy, modifier, {} )
+			local fire_pfx = ParticleManager:CreateParticle( fire_particle, PATTACH_ABSORIGIN, dummy)
+			ParticleManager:SetParticleAlwaysSimulate(fire_pfx)
+			ParticleManager:SetParticleControl( fire_pfx, 0, start_pos )
+			ParticleManager:SetParticleControl( fire_pfx, 1, end_pos )
+			ParticleManager:SetParticleControl( fire_pfx, 2, Vector( duration, 0, 0 ) )
+			ParticleManager:SetParticleControl( fire_pfx, 3, start_pos )
 		end
 	end
-end
-
-function MacropyreKillDummy( keys )
-	local target = keys.target
-
-	target:Destroy()
 end

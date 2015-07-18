@@ -1168,7 +1168,7 @@
 	}
 	
 	//=================================================================================================================
-	// Antimage's Blink
+	// Antimage: Blink
 	//=================================================================================================================
 	"antimage_blink"
 	{
@@ -1195,7 +1195,7 @@
 	}
 
 	//=================================================================================================================
-	// Axe's Counter Helix
+	// Axe: Counter Helix
 	//=================================================================================================================
 	"axe_counter_helix"
 	{
@@ -1226,7 +1226,7 @@
 	}
 
 	//=================================================================================================================
-	// Bounty Hunter's Jinada
+	// Bounty Hunter: Jinada
 	//=================================================================================================================
 	"bounty_hunter_jinada"
 	{
@@ -1253,7 +1253,162 @@
 	}
 
 	//=================================================================================================================
-	//  Earthshaker Fissure
+	//	Chaos Knight: Chaos Bolt
+	//=================================================================================================================
+	"chaos_knight_chaos_bolt"
+	{
+		"AbilityCastRange"				"600"
+
+		"AbilityCastPoint"				"0.3"
+		
+		"AbilityCooldown"				"10.0"
+
+		"AbilityManaCost"				"110"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chaos_bolt_speed"		"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_min"				"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_max"				"3 4 5 6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_min"			"7"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_max"			"300 350 400 450"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Chaos Knight: Reality Rift
+	//=================================================================================================================
+	"chaos_knight_reality_rift"
+	{
+		"AbilityCastRange"				"600 700 800 900"
+
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"16 12 8 4"
+
+		"AbilityManaCost"				"25"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"600 700 800 900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"75 100 125 150"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_duration"			"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Chaos Knight: Chaos Strike
+	//=================================================================================================================
+	"chaos_knight_chaos_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_damage"				"200 300 400 500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"10 9 8 7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Chaos Knight: Phantasm
+	//=================================================================================================================
+	"chaos_knight_phantasm"
+	{
+		"AbilityCooldown"								"140.0"
+
+		"AbilityManaCost"								"120 160 200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"images_count"							"3"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"extra_phantasm_chance_pct_tooltip"		"0"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"illusion_duration"						"42"
+			}	
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage"						"0"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"outgoing_damage_tooltip"				"100"
+			}	
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"incoming_damage"						"100 50 0"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"incoming_damage_tooltip"				"200 150 100"
+			}			
+			"08"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"invuln_duration"						"0.5"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"vision_radius"							"400"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	//	Earthshaker: Fissure
 	//=================================================================================================================
 	"earthshaker_fissure"
 	{
@@ -1292,7 +1447,7 @@
 	}
 
 	//=================================================================================================================
-	//  Earthshaker Totem
+	//  Earthshaker: Enchant Totem
 	//=================================================================================================================
 	"earthshaker_enchant_totem"
 	{
@@ -1313,7 +1468,7 @@
 	}
 
 	//=================================================================================================================
-	//  Earthshaker Aftershock
+	//  Earthshaker: Aftershock
 	//=================================================================================================================
 	"earthshaker_aftershock"
 	{
@@ -1337,7 +1492,7 @@
 	}
 	
 	//=================================================================================================================
-	//  Earthshaker Echo Slam
+	//	Earthshaker: Echo Slam
 	//=================================================================================================================
 	"earthshaker_echo_slam"
 	{
@@ -1499,7 +1654,7 @@
 	}
 
 	//=================================================================================================================
-	// Jakiro's Ice Path
+	// Jakiro: Ice Path
 	//=================================================================================================================
 	"jakiro_ice_path"
 	{
@@ -1539,7 +1694,7 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut Blade Fury
+	//  Juggernaut: Blade Fury
 	//=================================================================================================================
 	"juggernaut_blade_fury"
 	{
@@ -1566,7 +1721,7 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut Blade Dance
+	//  Juggernaut: Blade Dance
 	//=================================================================================================================
 	"juggernaut_blade_dance"
 	{
@@ -1586,7 +1741,7 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut Healing Ward
+	//  Juggernaut: Healing Ward
 	//=================================================================================================================
 	"juggernaut_healing_ward"
 	{
@@ -1624,7 +1779,7 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut Omni Slash
+	//  Juggernaut: Omni Slash
 	//=================================================================================================================
 	"juggernaut_omni_slash"
 	{
@@ -2358,6 +2513,197 @@
 	}
 
 	//=================================================================================================================
+	// Phantom Lancer: Spirit Lance
+	//=================================================================================================================
+	"phantom_lancer_spirit_lance"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"lance_speed"				"1000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed_pct"		"-10 -20 -30 -40"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"8.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"-80 -70 -60 -50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_damage"	"20 30 40 50"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"100"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"tooltip_illusion_total_damage_in_pct"	"200"
+			}			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fake_lance_distance"		"750"
+			}
+		}	
+	}
+
+	//=================================================================================================================
+	// Phantom Lancer: Doppelwalk
+	//=================================================================================================================
+	"phantom_lancer_doppelwalk"
+	{
+		"AbilityCastRange"					"700 800 900 1000"
+
+		"AbilityCooldown"					"20 16 12 8"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_1_damage_out_pct"	"-70"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_1_damage_in_pct"	"0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_2_damage_out_pct"	"-70"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_2_damage_in_pct"	"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"target_aoe"				"325"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"search_radius"				"1000"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"1"
+			}			
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phantom Lancer: Juxtapose
+	//=================================================================================================================
+	"phantom_lancer_juxtapose"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_illusions"				"7 11 15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_chance_pct"			"50 75 100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_proc_chance_pct"	"8 10 12"
+			}			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_duration"			"8 9 10"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_out_pct"	"-75"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_illusion_damage"	"25"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_damage_in_pct"	"300"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"tooltip_total_illusion_damage_in_pct"	"400"
+			}
+			"09"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"illusion_from_illusion_duration"		"4 6 8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Phantom Lancer: Phantom Rush / Phantom Edge
+	//=================================================================================================================
+	"phantom_lancer_phantom_edge"
+	{
+		"AbilityCooldown"				"16 8 4 2"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_distance"				"250"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_distance"				"900 1000 1100 1200"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_speed"				"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Phoenix: Icarus Dive
 	//=================================================================================================================
 	"phoenix_icarus_dive"
@@ -2644,7 +2990,7 @@
 	}
 
 	//=================================================================================================================
-	// Sand King Burrowstrike
+	// Sand King: Burrowstrike
 	//=================================================================================================================
 	"sandking_burrowstrike"
 	{
@@ -2687,7 +3033,7 @@
 	}
 	
 	//=================================================================================================================
-	// Sand King Sand Storm
+	// Sand King: Sand Storm
 	//=================================================================================================================
 	"sandking_sand_storm"
 	{
@@ -2721,7 +3067,7 @@
 	}
 	
 	//=================================================================================================================
-	// Sand King Caustic Finale
+	// Sand King: Caustic Finale
 	//=================================================================================================================
 	"sandking_caustic_finale"
 	{	
@@ -2749,7 +3095,7 @@
 	}
 
 	//=================================================================================================================
-	// Sand King Epicenter
+	// Sand King: Epicenter
 	//=================================================================================================================
 	"sandking_epicenter"
 	{
@@ -2805,11 +3151,565 @@
 	}
 
 	//=================================================================================================================
+	// Shadow Demon: Disruption
+	//=================================================================================================================
+	"shadow_demon_disruption"
+	{
+		"AbilityCooldown"									"25.0 20.0 15.0 10.0"
+
+		"AbilityCastPoint"									"0.2"
+
+		"AbilityManaCost"									"120"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"disruption_duration"						"2.5"
+			}
+			"02"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_duration"							"6.0 8.0 10.0 12.0"
+			}
+			"03"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_outgoing_damage"					"-50.0 -40.0 -30.0 -20.0"
+			}
+			"04"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_outgoing_tooltip"					"50.0 60.0 70.0 80.0"
+			}
+			"05"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_incoming_damage"					"50.0"
+			}
+			"06"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"tooltip_total_illusion_incoming_damage"	"150.0"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Demon: Soul Catcher
+	//=================================================================================================================
+	"shadow_demon_soul_catcher"
+	{
+		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+
+		"AbilityCastRange"				"600 700 800 900"
+		
+		"AbilityCastPoint"				"0.2"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_taken"	"30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350 300 250 200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_duration"		"12.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Demon: Shadow Poison
+	//=================================================================================================================
+	"shadow_demon_shadow_poison"
+	{
+		"AbilityCooldown"				"2.0"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityManaCost"				"25"
+
+		"AbilityDamage"					"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_damage"			"25 40 55 70"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_multiply_stacks"	"6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_stack_damage"	"50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"240"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1400"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_duration"		"10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Demon: Demonic Purge
+	//=================================================================================================================
+	"shadow_demon_demonic_purge"
+	{
+		"AbilityCooldown"				"50.0 45.0 40.0"
+
+		"AbilityDamage"					"250 375 500"
+
+		"AbilityManaCost"				"200 175 150"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_rate"				"5 3 2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tooltip_duration"		"5.0 "
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_root_duration"	"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"3 4 5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"30"
+			}
+			"06"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"charge_restore_time_tooltip_scepter"		"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Fiend: Shadowraze #1
+	//=================================================================================================================
+	"nevermore_shadowraze1"
+	{
+		"AbilityCooldown"				"9.0"
+
+		"AbilityCastPoint"				"0.55"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_radius"		"300"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_range"		"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_cooldown"	"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Fiend: Shadowraze #2
+	//=================================================================================================================
+	"nevermore_shadowraze2"
+	{
+		"AbilityCooldown"				"9.0"
+
+		"AbilityCastPoint"				"0.55"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_radius"		"325"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_range"		"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_cooldown"	"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Fiend: Shadowraze #3
+	//=================================================================================================================
+	"nevermore_shadowraze3"
+	{
+		"AbilityCooldown"				"9.0"
+
+		"AbilityCastPoint"				"0.55"
+
+		"AbilityDamage"					"120 200 280 360"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_radius"		"350"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_range"		"700"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shadowraze_cooldown"	"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Shadow Fiend: Necromastery
+	//=================================================================================================================
+	"nevermore_necromastery"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"necromastery_damage_per_soul"	"3"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"necromastery_max_souls"		"18 27 36 45"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"necromastery_soul_release"		"0.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"necromastery_souls_hero_bonus"	"17 26 35 44"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Shadow Fiend: Presence of the Dark Lord
+	//=================================================================================================================
+	"nevermore_dark_lord"
+	{
+		"AbilityCastRange"				"1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"presence_armor_reduction"		"-4 -6 -8 -10"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"presence_radius"				"1200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Shadow Fiend: Requiem of Souls
+	//=================================================================================================================
+	"nevermore_requiem"
+	{
+
+		"AbilityCastPoint"					"1.67"
+
+		"AbilityCooldown"					"90.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cast_time_tooltip"			"1.67"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_radius"			"1000 1100 1200"		
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_reduction_ms"		"-30 -40 -50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_reduction_damage"	"-50 -60 -70"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_reduction_tooltip"	"-50 -60 -70"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_slow_duration"		"6.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_reduction_radius"	"1000 1100 1200"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_soul_conversion"	"2"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_line_width_start"	"150"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_line_width_end"	"400 425 450"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"requiem_line_speed"		"700"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"soul_death_release"		"0.5"
+			}		
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Shaman: Ether Shock
+	//=================================================================================================================
+	"shadow_shaman_ether_shock"
+	{
+		"AbilityCastPoint"					"0.2"
+		
+		"AbilityCooldown"					"7.0"
+
+		"AbilityManaCost"					"85 100 115 130"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"250"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_radius"				"300 350 400 450"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"end_distance"				"600"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"targets"					"6 8 10 12"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"140 210 280 350"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Shadow Shaman: Voodoo
+	//=================================================================================================================
+	"shadow_shaman_voodoo"
+	{
+		"AbilityCooldown"				"12.0"
+
+		"AbilityManaCost"				"110"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"2.0 2.5 3.0 3.5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Shadow Shaman: Shackles
+	//=================================================================================================================
+	"shadow_shaman_shackles"
+	{
+		"AbilityChannelTime"			"5.0"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"16.0 15.0 14.0 13.0"
+
+		"AbilityDamage"					"40 50 60 70"
+
+		"AbilityManaCost"				"140"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"channel_time"			"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"total_damage"			"200 250 300 350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shadow Shaman: Mass Serpent Ward
+	//=================================================================================================================
+	"shadow_shaman_mass_serpent_ward"
+	{
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"5"
+
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_count"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"full_splash_radius"	"125"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mid_splash_radius"		"125"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_splash_radius"		"125"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_min"			"18 30 42"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_max"			"18 30 42"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_min_scepter"	"36 54 72"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_max_scepter"	"36 54 72"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Slark: Dark Pact
 	//=================================================================================================================
 	"slark_dark_pact"
 	{
-		"AbilityCastPoint"				"0.001"
 		"AbilityCastRange"				"425"
 
 		"AbilityCooldown"				"8.0 7.0 6.0 5.0"
@@ -2930,7 +3830,7 @@
 	//=================================================================================================================
 	"slark_shadow_dance"
 	{
-		"AbilityCooldown"				"60.0 45.0 30.0"
+		"AbilityCooldown"				"60.0 50.0 40.0"
 
 		"AbilityManaCost"				"110"		
 
@@ -3101,7 +4001,7 @@
 	}
 		
 	//=================================================================================================================
-	//  Storm Spirit Overload
+	//  Storm Spirit: Overload
 	//=================================================================================================================
 	"storm_spirit_overload"
 	{
@@ -3137,7 +4037,7 @@
 	}
 	
 	//=================================================================================================================
-	//  Storm Spirit Ball Lightning
+	//  Storm Spirit: Ball Lightning
 	//=================================================================================================================
 	"storm_spirit_ball_lightning"
 	{
@@ -3341,7 +4241,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_threshold"			"6 10 14 18"
+				"damage_threshold"			"10"
 			}
 			"04"
 			{
@@ -3503,6 +4403,154 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movement_speed_bonus_stage"		"-5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Terrorblade: Reflection
+	//=================================================================================================================
+	"terrorblade_reflection"
+	{
+		"AbilityCastRange"					"325 375 425 475"
+
+		"AbilityManaCost"					"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_duration"			"5.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_outgoing_damage"	"-50.0 -25.0 0.0 25.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_outgoing_tooltip"	"50.0 75.0 100.0 125.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_slow"					"60"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_slow_tooltip"		"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Terrorblade: Conjure Image
+	//=================================================================================================================
+	"terrorblade_conjure_image"
+	{
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"12.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_duration"							"36.0"
+			}
+			"02"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_outgoing_damage"					"-40.0"		
+			}
+			"03"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_outgoing_tooltip"					"60.0"
+			}
+			"04"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_incoming_damage"					"300.0 250.0 200.0 150.0"
+			}
+			"05"
+			{
+				"var_type"									"FIELD_FLOAT"
+				"illusion_incoming_damage_total_tooltip"	"400.0 350.0 300.0 250.0"
+			}		
+		}
+	}
+
+	//=================================================================================================================
+	// Terrorblade: Metamorphosis
+	//=================================================================================================================
+	"terrorblade_metamorphosis"
+	{
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"135.0 120.0 105.0 90.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"0.2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"1.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"472"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_attack_range"	"600"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"40 60 80 100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_loss"			"10 0 -10 -20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Terrorblade: Sunder
+	//=================================================================================================================
+	"terrorblade_sunder"
+	{
+		"AbilityCooldown"				"100.0 60.0 20.0"
+
+		"AbilityCastRange"				"400 450 500"
+
+		"AbilityCastPoint"				"0.15"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hit_point_minimum_pct"		"20 10 1"
 			}
 		}
 	}
@@ -3771,7 +4819,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengefulspirit Magic Missle
+	// Vengeful Spirit: Magic Missle
 	//=================================================================================================================
 	"vengefulspirit_magic_missile"
 	{
@@ -3800,7 +4848,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengefulspirit Command Aura
+	// Vengeful Spirit: Command Aura
 	//=================================================================================================================
 	"vengefulspirit_command_aura"
 	{
@@ -3822,7 +4870,7 @@
 	}
 	
 	//=================================================================================================================
-	// Vengefulspirit Wave of Terror
+	// Vengeful Spirit: Wave of Terror
 	//=================================================================================================================
 	"vengefulspirit_wave_of_terror"
 	{
@@ -3872,7 +4920,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengefulspirit Nether Swap
+	// Vengeful Spirit: Nether Swap
 	//=================================================================================================================
 	"vengefulspirit_nether_swap"
 	{

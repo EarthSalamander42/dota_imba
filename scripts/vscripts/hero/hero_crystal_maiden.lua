@@ -17,24 +17,24 @@ function CrystalNova( keys )
 	-- Creates flying vision area
 	ability:CreateVisibilityNode(target, vision_radius, duration)
 
+	-- Creates buffing/debuffing dummy
+	local dummy = CreateUnitByName("npc_dummy_blank", target, false, nil, nil, caster:GetTeamNumber() )
+	dummy:SetAbsOrigin(target)
+	ability:ApplyDataDrivenModifier(caster, dummy, good_aura_modifier, {} )
+	ability:ApplyDataDrivenModifier(caster, dummy, bad_aura_modifier, {} )
+
 	-- Creates the particle
-	local fxIndex = ParticleManager:CreateParticle( particle, PATTACH_CUSTOMORIGIN, caster )
+	local fxIndex = ParticleManager:CreateParticle( particle, PATTACH_CUSTOMORIGIN, dummy)
 	local radiusVector = (Vector (effect_radius, 0, 0))
 
 	ParticleManager:SetParticleControl(fxIndex, 0, target)
 	ParticleManager:SetParticleControl(fxIndex, 1, radiusVector)
 	ParticleManager:SetParticleControl(fxIndex, 5, radiusVector)
 
-	-- Creates buffing/debuffing dummy (3000 units above ground to prevent camp blocking)
-	local dummy = CreateUnitByName("npc_dummy_blank", target, false, caster, caster, caster:GetTeamNumber() )
-	dummy:SetAbsOrigin(target + Vector(0, 0, 3000))
-	ability:ApplyDataDrivenModifier(caster, dummy, good_aura_modifier, {} )
-	ability:ApplyDataDrivenModifier(caster, dummy, bad_aura_modifier, {} )
-
 	-- Destroys the dummy and particle when the effect expires
 	Timers:CreateTimer(duration, function()
 		if scepter then
-			Timers:CreateTimer(duration * 9, function()
+			Timers:CreateTimer(duration * 4, function()
 				dummy:Destroy()
 				ParticleManager:DestroyParticle(fxIndex, false)
 			end)
@@ -112,8 +112,8 @@ function FreezingFieldCast( keys )
 	caster.freezing_field_center = caster
 	local scepter = HasScepter(caster)
 	if scepter then
-		caster.freezing_field_center = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, caster, caster, caster:GetTeamNumber())
-		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		caster.freezing_field_center = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, nil, nil, caster:GetTeamNumber())
+		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
 
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, keys.target_points[1])
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
@@ -185,7 +185,7 @@ function FreezingFieldExplode( keys )
 	end
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
+	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
 	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 	
 	-- Fire sound at the center position

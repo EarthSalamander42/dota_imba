@@ -278,14 +278,14 @@ function GameMode:OnPlayerPickHero(keys)
 		local hero_name = hero:GetName()
 
 		-- Check if the hero was already picked in the same team
-		if PlayerResource:IsHeroSelected(hero_name) then
-			local all_heroes = HeroList:GetAllHeroes()
-			for _,picked_hero in pairs(all_heroes) do
-				if hero_name == picked_hero:GetName() and team == picked_hero:GetTeam() then
-					--player:MakeRandomHeroSelection()
-				end
-			end
-		end
+		--if PlayerResource:IsHeroSelected(hero_name) then
+		--	local all_heroes = HeroList:GetAllHeroes()
+		--	for _,picked_hero in pairs(all_heroes) do
+		--		if hero_name == picked_hero:GetName() and team == picked_hero:GetTeam() then
+		--			player:MakeRandomHeroSelection()
+		--		end
+		--	end
+		--end
 	end
 end
 
@@ -487,13 +487,13 @@ function GameMode:OnEntityKilled( keys )
 		killed_unit:SetMaximumGoldBounty(killed_bounty)
 		killed_unit:SetMinimumGoldBounty(killed_bounty)
 
-		-- Check if the killer was a creep, tower, or fountain (to avoid GetPlayerID crashes)
+		-- Check if the killer was a non-hero entity (to avoid GetPlayerID crashes)
 		local nonhero_killer = false
 		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
 			nonhero_killer = true
 		end
 
-		-- If the killer is player-controlled, remove its deathstreak and start its killstreak
+		-- If the killer is player-owned, remove its deathstreak and start its killstreak
 		if not nonhero_killer and killer:GetPlayerID() then
 			local killer_player = PlayerResource:GetPlayer(killer:GetPlayerID())
 			local killer_hero = killer_player:GetAssignedHero()

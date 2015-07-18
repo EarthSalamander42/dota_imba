@@ -251,3 +251,12 @@ function IsFountain( unit )
 	
 	return false
 end
+
+-- Returns true if the target is hard disabled
+function IsHardDisabled( unit )
+	if unit:IsStunned() or unit:IsHexed() or unit:IsNightmared() or unit:IsOutOfGame() or unit:HasModifier("modifier_axe_berserkers_call") then
+		return true
+	end
+
+	return false
+end
