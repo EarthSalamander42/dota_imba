@@ -384,7 +384,7 @@ function OnABoat( keys )
 
 	-- Apply the knockback modifier and deal impact damage
 	local knockback =
-	{	should_stun = 0,
+	{	should_stun = 1,
 		knockback_duration = duration,
 		duration = duration,
 		knockback_distance = distance,

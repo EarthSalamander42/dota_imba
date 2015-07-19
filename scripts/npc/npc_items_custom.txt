@@ -6518,7 +6518,7 @@
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70 65 60 55 50 45"
+		"AbilityCooldown"				"60 55 50 45 40 35"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7682,7 +7682,7 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 		
 				"OnDealDamage"
 				{
@@ -7803,12 +7803,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"10"
+				"bash_chance"			"35"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"200"
+				"bash_damage"			"100"
 			}
 			"05"
 			{

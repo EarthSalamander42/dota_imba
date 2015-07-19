@@ -159,6 +159,8 @@ HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
+PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as having abandoned the game (in seconds)
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
@@ -166,6 +168,9 @@ HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multip
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
 
 IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
+IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 4									-- Number of regular abilities in Random OMG mode
+IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 2									-- Number of ultimate abilities in Random OMG mode
+IMBA_RANDOM_OMG_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts in Rnadom OMG mode
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Stat collection

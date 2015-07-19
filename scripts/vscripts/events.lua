@@ -6,12 +6,150 @@ function GameMode:OnDisconnect(keys)
 	DebugPrint('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
 	DebugPrintTable(keys)
 
-	local name = keys.name
-	local networkid = keys.networkid
-	local reason = keys.reason
-	local userid = keys.userid
+	local player_name = keys.name
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player disconnect/abandon logic
+	-------------------------------------------------------------------------------------------------
+
+	-- If players haven't finished picking yet, do nothing
+	if not IMBA_STARTED_TRACKING_CONNECTIONS then
+		return nil
+	end
+
+	-- If the game has already been won, do nothing
+	--if ??? then
+	--	return nil
+	--end
+
+	-- Connection status detection delay
+	Timers:CreateTimer(1, function()
+	
+		-- Identify which player was disconnected
+		local player_id = -1
+		for id = 0, 9 do
+			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
+				player_id = id
+				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+			end
+		end
+
+		-- If no valid player was detected, do nothing
+		if player_id == (-1) then
+			print("no valid disconnecting player detected")
+			return nil
+		end
+
+		-- debug
+		for id = 0, 9 do
+			if self.players[id] then
+				print("Player "..id.." has stored connection state "..self.players[id].connection_state)
+			end
+		end
+		
+		-- Parameters
+		local team = PlayerResource:GetTeam(player_id)
+		local hero = self.heroes[player_id]
+		local hero_name = hero:GetName()
+		local full_abandon = false
+		local line_duration = 5
+		local remaining_connected_players
+
+		-- Set global variable tracking the time the player has been disconnected for
+		if not self.players[player_id].disconnected_time then
+			self.players[player_id].disconnected_time = 0
+		end
+		
+		self.players[player_id].is_disconnected = true
+
+		-- Radiant leaver logic
+		if team == DOTA_TEAM_GOODGUYS then
+			GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS - 1
+			remaining_connected_players = GOODGUYS_CONNECTED_PLAYERS
+
+			-- Full team has abandoned
+			if GOODGUYS_CONNECTED_PLAYERS == 0 then
+				full_abandon = true
+
+				-- Display message to the other team
+				Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"} })
+
+				-- End the game in 15 seconds if no one reconnects
+				Timers:CreateTimer(15, function()
+					if GOODGUYS_CONNECTED_PLAYERS == 0 then
+						SetGameWinner(DOTA_TEAM_BADGUYS)
+					end
+				end)
+			end
+
+		-- Dire leaver logic
+		elseif team == DOTA_TEAM_BADGUYS then
+			BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS - 1
+			remaining_connected_players = BADGUYS_CONNECTED_PLAYERS
+
+			-- Full team has abandoned
+			if BADGUYS_CONNECTED_PLAYERS == 0 then
+				full_abandon = true
+
+				-- Display message to the other team
+				Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"} })
+
+				-- End the game in 15 seconds if no one reconnects
+				Timers:CreateTimer(15, function()
+					if BADGUYS_CONNECTED_PLAYERS == 0 then
+						SetGameWinner(DOTA_TEAM_GOODGUYS)
+					end
+				end)
+			end
+		end
+
+		-- Some players on the abandoner's team are still connected
+		if not full_abandon then
+
+			-- Show team-only disconnect message
+			if not self.players[player_id].has_abandoned then
+				Notifications:BottomToTeam(team, {hero = hero_name, duration = line_duration})
+				Notifications:BottomToTeam(team, {text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+				Notifications:BottomToTeam(team, {text = "#imba_player_disconnect_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+			end
+
+			-- Grant control of the disconnected player's hero to its allies
+			for player_num = 1, remaining_connected_players do
+				local current_player_id = PlayerResource:GetNthPlayerIDOnTeam(team, player_num)
+				hero:SetControllableByPlayer(current_player_id, true)
+			end
+		end
+
+		-- If the player had already abandoned previously, run its abandon routine
+		if self.players[player_id].has_abandoned then
+			AbandonGame(hero, player_id)
+		end
+
+		-- Check for player abandon every second
+		Timers:CreateTimer(1, function()
+
+			-- If the player hasn't come back, update total disconnected time
+			if self.players[player_id].is_disconnected then
+				self.players[player_id].disconnected_time = self.players[player_id].disconnected_time + 1
+			end
+
+			-- If the player has been disconnected for over 3 minutes total, run its abandon routine
+			if self.players[player_id].disconnected_time >= PLAYER_ABANDON_TIME then
+				self.players[player_id].has_abandoned = true
+				AbandonGame(hero, player_id)
+
+				-- Show message to remaining players
+				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+			else
+				return 1
+			end
+		end)
+	end)
 
 end
+
 -- The overall game state has changed
 function GameMode:OnGameRulesStateChange(keys)
 	DebugPrint("[BAREBONES] GameRules State Changed")
@@ -117,6 +255,69 @@ end
 function GameMode:OnPlayerReconnect(keys)
 	DebugPrint( '[BAREBONES] OnPlayerReconnect' )
 	DebugPrintTable(keys) 
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player reconnect logic
+	-------------------------------------------------------------------------------------------------
+
+	-- If players haven't finished picking yet, do nothing
+	if not IMBA_STARTED_TRACKING_CONNECTIONS then
+		return nil
+	end
+
+	-- If the game has already been won, do nothing
+	--if ??? then
+	--	return nil
+	--end
+
+	local player_id = -1
+
+	-- Connection status detection delay
+	Timers:CreateTimer(1, function()
+
+		-- Identify which player just reconnected connected
+		for id = 0, 9 do
+			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
+				player_id = id
+				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+			end
+		end
+
+		-- debug
+		for id = 0, 9 do
+			if self.players[id] then
+				print("Player "..id.." has stored connection state "..self.players[id].connection_state)
+			end
+		end
+
+		-- If no valid connecting player was detected, do nothing
+		if player_id == (-1) then
+			return nil
+		end
+
+		-- Parameters
+		local player = PlayerResource:GetPlayer(player_id)
+		local player_name = PlayerResource:GetPlayerName(player_id)
+		local team = PlayerResource:GetTeam(player_id)
+		local hero = player:GetAssignedHero()
+		local hero_name = hero:GetName()
+
+		-- Update player and team connection status
+		self.players[player_id].is_disconnected = false
+		if team == DOTA_TEAM_GOODGUYS then
+			GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
+		elseif team == DOTA_TEAM_BADGUYS then
+			BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+		end
+
+		-- Show reconnection message to remaining players
+		local line_duration = 5
+
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+	end)
+
 end
 
 -- An item was purchased by a player
@@ -463,7 +664,7 @@ function GameMode:OnEntityKilled( keys )
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
 				end
-				print("Assist bounty for 3 nearby heres: "..assist_gold)
+				print("Assist bounty for 3 nearby heroes: "..assist_gold)
 			elseif nearby_allies >= 4 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
 				for _,ally in pairs(allied_heroes) do

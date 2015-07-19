@@ -22,6 +22,11 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 
+	-- Random OMG setup
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
+	end
+
 	-- This is multiteam configuration stuff
 	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
 		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)

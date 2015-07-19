@@ -72,6 +72,55 @@ end
 function GameMode:OnAllPlayersLoaded()
 	DebugPrint("[IMBA] All Players have loaded into the game")
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player globals initialization
+	-------------------------------------------------------------------------------------------------
+
+	self.players = {}
+	self.heroes = {}
+
+	-- Assign players to the table
+	for id = 0, 9 do
+		self.players[id] = PlayerResource:GetPlayer(id)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player connection status check
+	-------------------------------------------------------------------------------------------------
+
+	GOODGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
+	BADGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_BADGUYS)
+	print("Good guys connected: "..GOODGUYS_CONNECTED_PLAYERS)
+	print("Bad guys connected: "..BADGUYS_CONNECTED_PLAYERS)
+
+	-- Creates global variables which track player connection status
+	IMBA_STARTED_TRACKING_CONNECTIONS = true
+	for id = 0, 9 do
+		if self.players[id] then
+			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+		end
+	end
+
+	-- debug
+	for id = 0, 9 do
+		if self.players[id] then
+			print("Player "..id.." has connection state "..self.players[id].connection_state)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG pick setup
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
+		for id = 0, 9 do
+			if self.players[id] then
+				PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
+			end
+		end
+	end
+
 end
 
 --[[
@@ -88,8 +137,18 @@ function GameMode:OnHeroInGame(hero)
 	-- IMBA: First hero spawn initialization
 	-------------------------------------------------------------------------------------------------
 
-	-- Check if this function was already performed
+	-- Update the player's hero if it was picked or changed
 	local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+
+	if player and self.players[player:GetPlayerID()] and not self.heroes[player:GetPlayerID()] then
+		self.heroes[player:GetPlayerID()] = hero
+		print("Assigned hero "..hero:GetName().." to player "..player:GetPlayerID())
+	elseif player and self.players[player:GetPlayerID()] and self.heroes[player:GetPlayerID()] and ( self.heroes[player:GetPlayerID()]:GetName() ~= hero:GetName() ) then
+		self.heroes[player:GetPlayerID()] = hero
+		print("Reassigned hero "..hero:GetName().." to player "..player:GetPlayerID())
+	end
+
+	-- Check if this function was already performed
 	if not player then
 		return nil
 	elseif player.already_spawned then
@@ -105,7 +164,6 @@ function GameMode:OnHeroInGame(hero)
 
 	-- Set up initial gold
 	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
-	local has_repicked = PlayerResource:HasRepicked(hero:GetPlayerID())
 
 	if has_repicked then
 		hero:SetGold(HERO_INITIAL_REPICK_GOLD, false)
@@ -132,28 +190,91 @@ function GameMode:OnHeroInGame(hero)
 	local line_duration = 4
 	
 	-- First line
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {["font-size"] = "30px", color = "yellowgreen"} }	)
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_02", duration = line_duration, style = {["font-size"] = "30px", color = "orange"}, continue = true}	)
+	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"}	} )
+	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_02", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"}, continue = true}	)
 		
 	-- Second line
 	Timers:CreateTimer(line_duration, function()
 		--Notifications:ClearBottom(hero:GetPlayerID())
-		Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_03", duration = line_duration, style = {["font-size"] = "30px", color = "yellowgreen"} }	)
+		Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_03", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
 
 		-- Third line
 		Timers:CreateTimer(line_duration, function()
 			--Notifications:ClearBottom(hero:GetPlayerID())
-			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "yellowgreen"} }	)
+			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
 
 			-- Fourth line
 			Timers:CreateTimer(line_duration, function()
 				--Notifications:ClearBottom(hero:GetPlayerID())
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_05", duration = line_duration, style = {["font-size"] = "30px", color = "yellowgreen"} }	)
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_06", duration = line_duration, style = {["font-size"] = "36px", color = "orange"}, continue = true}	)
+				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_05", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
+				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_06", duration = line_duration, style = {["font-size"] = "36px", color = "Orange"}, continue = true}	)
 			end)
 		end)
 	end)
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG ability setup
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		
+		-- Remove default abilities
+		for i = 0, 11 do
+			local old_ability = hero:GetAbilityByIndex(i)
+			if old_ability then
+				hero:RemoveAbility(old_ability:GetAbilityName())
+			end
+		end
+
+		-- Add new regular abilities
+		for i = 1, IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT do
+			local randomed_ability
+			local ability_owner
+			randomed_ability, ability_owner = GetRandomNormalAbility()
+
+			if not hero:FindAbilityByName(randomed_ability) then
+				hero:AddAbility(randomed_ability)
+			end
+
+			PrecacheUnitByNameAsync(ability_owner, function(...) end)
+		end
+
+		-- Add new ultimate abilities
+		for i = 1, IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT do
+			local randomed_ultimate
+			local ultimate_owner
+			randomed_ultimate, ultimate_owner = GetRandomUltimateAbility()
+
+			if not hero:FindAbilityByName(randomed_ultimate) then
+				hero:AddAbility(randomed_ultimate)
+			end
+
+			PrecacheUnitByNameAsync(ultimate_owner, function(...) end)
+		end
+
+		-- Re-add attribute bonus
+		if hero:GetPrimaryAttribute() == 0 then
+			hero:AddAbility("attribute_bonus_str")
+		elseif hero:GetPrimaryAttribute() == 1 then
+			hero:AddAbility("attribute_bonus_agi")
+		elseif hero:GetPrimaryAttribute() == 2 then
+			hero:AddAbility("attribute_bonus_int")
+		end
+
+		-- Apply ability layout modifier
+		local layout_ability_name
+		if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 4 then
+			layout_ability_name = "random_omg_ability_layout_changer_4"
+		elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 5 then
+			layout_ability_name = "random_omg_ability_layout_changer_5"
+		elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 6 then
+			layout_ability_name = "random_omg_ability_layout_changer_6"
+		end
+
+		hero:AddAbility(layout_ability_name)
+		local layout_ability = hero:FindAbilityByName(layout_ability_name)
+		layout_ability:SetLevel(1)
+	end
 end
 
 --[[

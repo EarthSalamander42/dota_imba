@@ -218,8 +218,8 @@ function Macropyre( keys )
 
 	-- Create the visibility dummy
 	local dummy = CreateUnitByName("npc_dummy_unit", start_pos, false, nil, nil, caster:GetTeamNumber())
-	AddFOWViewer(DOTA_TEAM_BADGUYS, start_pos, 100, duration, false)
-	AddFOWViewer(DOTA_TEAM_GOODGUYS, start_pos, 100, duration, false)
+	dummy:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, duration)
+	dummy:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, duration)
 
 	-- Destroys trees around the target area
 	GridNav:DestroyTreesAroundPoint(start_pos, path_radius, false)

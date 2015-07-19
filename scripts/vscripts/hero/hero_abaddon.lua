@@ -2,6 +2,7 @@
 		Date: 17-3-2015		]]
 
 function DeathCoil( keys )
+
 	-- Variables
 	local caster = keys.caster
 	local target = keys.target
@@ -119,9 +120,7 @@ function AphoticShield( keys )
 		local ability_level = ability:GetLevel() - 1
 		local shield_modifier = keys.shield_modifier
 		local cast_sound = keys.cast_sound
-		local strength = caster:GetStrength()
-		local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level)
-		local max_damage_absorb = base_damage_absorb + strength
+		local max_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level)
 		local shield_size = target:GetModelRadius() * 0.7
 		local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
 		local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)

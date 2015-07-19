@@ -19,6 +19,8 @@ function CrystalNova( keys )
 
 	-- Creates buffing/debuffing dummy
 	local dummy = CreateUnitByName("npc_dummy_blank", target, false, nil, nil, caster:GetTeamNumber() )
+	dummy:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, duration)
+	dummy:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, duration)
 	dummy:SetAbsOrigin(target)
 	ability:ApplyDataDrivenModifier(caster, dummy, good_aura_modifier, {} )
 	ability:ApplyDataDrivenModifier(caster, dummy, bad_aura_modifier, {} )
