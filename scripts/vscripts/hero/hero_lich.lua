@@ -128,20 +128,30 @@ function ChainFrost( keys )
 
 	local particle_name = keys.particle_name
 
+	-- Track the number of bounces (lazy count)
+	if not caster.chain_frost_bounces then
+		caster.chain_frost_bounces = 1
+	elseif caster.chain_frost_bounces < 60 then
+		caster.chain_frost_bounces = caster.chain_frost_bounces + 1
+	end
+
 	-- Emit the sound, Creep or Hero depending on the type of the enemy hit
 	if target:IsRealHero() then
 		target:EmitSound("Hero_Lich.ChainFrostImpact.Hero")
-	else
+	elseif not caster.chain_frost_bounces or caster.chain_frost_bounces < 60 then
 		target:EmitSound("Hero_Lich.ChainFrostImpact.Creep")
 	end
+
+	-- Grant vision around the impact area for one second
+	ability:CreateVisibilityNode(target_pos, vision_radius, 1.0)
 
 	-- Control variables for the next bounce
 	local should_bounce = false
 	local hero_bounce = false
 
 	-- If valid targets are found, should_bounce is set to true, and the chain frost keeps going
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, jump_range, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, ability:GetAbilityTargetFlags(), FIND_CLOSEST, false )
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, jump_range, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, jump_range, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false )
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, jump_range, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false )
 
 	for _,v in pairs(heroes) do
 		if v ~= target then
@@ -151,7 +161,7 @@ function ChainFrost( keys )
 	end
 
 	for _,v in pairs(units) do
-		if v ~= target then
+		if v ~= target and not IsRoshan(v) then
 			should_bounce = true
 		end
 	end
@@ -177,12 +187,16 @@ function ChainFrost( keys )
 			Ability = ability,
 			EffectName = particle_name,
 			bDodgeable = false,
-			bProvidesVision = true,
+			bProvidesVision = false,
 			iMoveSpeed = projectile_speed,
-			iVisionRadius = vision_radius,
+		--	iVisionRadius = vision_radius,
 			iVisionTeamNumber = caster:GetTeamNumber(), -- Vision still belongs to the one that casted the ability
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
 		}
 		ProjectileManager:CreateTrackingProjectile( info )
+	else
+
+		-- Clear the bounce count
+		caster.chain_frost_bounces = nil
 	end
 end

@@ -1977,58 +1977,6 @@ end
 
 if not Physics.timers then Physics:start() end
 
-Physics:CreateColliderProfile("hoof_stomp_pit_out",
-	{
-		type = COLLIDER_SPHERE,
-		radius = 100,
-		recollideTime = 0,
-		skipFrames = 0,
-		moveSelf = false,
-		buffer = 0,
-		findClearSpace = true,
-		test = function(self, collider, collided)
-			if collided:GetUnitName() == "npc_dummy_centaur_pit_wall" then
-				return false
-			elseif collided:HasModifier("modifier_imba_centaur_stampede") then
-				return false
-			end
-			return not collided.is_inside_hoof_stomp_pit
-		end,
-		action = function(self, unit, v)
-			if self.moveSelf then
-				Physics:BlockInSphere(v, unit, self.radius + self.buffer, self.findClearSpace)
-			else
-				Physics:BlockInSphere(unit, v, self.radius + self.buffer, self.findClearSpace)
-			end
-		end
-	})
-
-Physics:CreateColliderProfile("hoof_stomp_pit_in",
-	{
-		type = COLLIDER_SPHERE,
-		radius = 100,
-		recollideTime = 0,
-		skipFrames = 0,
-		moveSelf = false,
-		buffer = 0,
-		findClearSpace = true,
-		test = function(self, collider, collided)
-			if collided:GetUnitName() == "npc_dummy_centaur_pit_wall" then
-				return false
-			elseif collided:HasModifier("modifier_imba_centaur_stampede") then
-				return false
-			end
-			return collided.is_inside_hoof_stomp_pit
-		end,
-		action = function(self, unit, v)
-			if self.moveSelf then
-				Physics:BlockOutSphere(v, unit, self.radius, self.buffer, self.findClearSpace)
-			else
-				Physics:BlockOutSphere(unit, v, self.radius, self.buffer, self.findClearSpace)
-			end
-		end
-	})
-
 Physics:CreateColliderProfile("blocker", 
 	{
 		type = COLLIDER_SPHERE,

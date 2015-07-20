@@ -66,7 +66,14 @@ function BattleHungerAntiRegen( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local modifier_stacks = keys.modifier_stacks
+	local modifier_enemy = keys.modifier_enemy
 
+	-- If the target is near its own fountain, end the debuff
+	if IsNearFriendlyClass(target, 1000, "ent_dota_fountain") then
+		target:RemoveModifierByName(modifier_enemy)
+	end
+
+	-- Else, prevent regeneration this tick
 	target:RemoveModifierByName(modifier_stacks)
 	local hp_regen = target:GetHealthRegen()
 	AddStacks(ability, caster, target, modifier_stacks, hp_regen * 10, true)

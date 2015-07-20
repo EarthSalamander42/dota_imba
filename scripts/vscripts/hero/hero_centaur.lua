@@ -5,156 +5,58 @@ function HoofStomp( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local caster_pos = caster:GetAbsOrigin()
+	local modifier_caster = keys.modifier_caster
+	local modifier_enemies = keys.modifier_enemies
+	local particle_pit = keys.particle_pit
+
+	-- Parameters
 	local pit_radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1)
-	local pit_width = ability:GetLevelSpecialValueFor("pit_width", ability:GetLevel() - 1)
 	local pit_duration = ability:GetLevelSpecialValueFor("pit_duration", ability:GetLevel() - 1)
+	local pit_center = caster:GetAbsOrigin()
+	local pit_duration_elapsed = 0
 
-	-- Creates a dummy to spawn the collider on
-	local dummy_out = CreateUnitByName("npc_dummy_unit", caster_pos, false, nil, nil, caster:GetTeamNumber())
-	local dummy_in = CreateUnitByName("npc_dummy_unit", caster_pos, false, nil, nil, caster:GetTeamNumber())
-	Physics:Unit(dummy_out)
-	Physics:Unit(dummy_in)
+	-- Fire the particle
+	local pit_fx = ParticleManager:CreateParticle(particle_pit, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(pit_fx, 0, pit_center)
 
-	-- Creates the pit's wall
-	local wall_angle = QAngle(0, 10, 0)
-	local base_wall_angle = wall_angle
-	local start_vector = caster_pos + caster:GetForwardVector() * (pit_radius + pit_width / 2)
+	-- Continuously prevent enemies inside the ring from leaving
+	Timers:CreateTimer(0, function()
 
-	local wallpiece_01 = CreateUnitByName("npc_dummy_centaur_pit_wall", start_vector, false, nil, nil, caster:GetTeamNumber())
-	local wallpiece_02 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_03 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_04 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_05 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_06 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_07 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_08 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_09 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_10 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_11 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_12 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_13 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_14 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_15 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_16 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_17 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_18 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_19 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_20 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_21 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_22 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_23 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_24 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_25 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_26 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_27 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_28 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_29 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_30 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_31 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_32 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_33 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_34 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_35 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-	wall_angle = RotateOrientation(wall_angle, base_wall_angle)
-	local wallpiece_36 = CreateUnitByName("npc_dummy_centaur_pit_wall", RotatePosition(caster_pos, wall_angle, start_vector), false, nil, nil, caster:GetTeamNumber())
-
-	-- Spawns colliders to prevent units from getting in/out
-	local collider_pit_out = dummy_out:AddColliderFromProfile("hoof_stomp_pit_out")
-	collider_pit_out.radius = pit_radius + pit_width
-
-	local collider_pit_in = dummy_in:AddColliderFromProfile("hoof_stomp_pit_in")
-	collider_pit_in.radius = pit_radius + pit_width
-	collider_pit_in.buffer = pit_width
-
-	-- Marks the units inside the pit so they are not pushed out of the collider
-	local units_inside_pit = FindUnitsInRadius(1, caster_pos, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
-
-	for _,v in pairs(units_inside_pit) do
-		v.is_inside_hoof_stomp_pit = true
-	end
-
-	-- destroys dummy units and wall pieces
-	Timers:CreateTimer(pit_duration, function()
-		Physics:RemoveCollider(collider_pit_out)
-		Physics:RemoveCollider(collider_pit_in)
-		dummy_out:StopPhysicsSimulation()
-		dummy_out:ForceKill(true)
-		dummy_in:StopPhysicsSimulation()
-		dummy_in:ForceKill(true)
-		wallpiece_01:Destroy()
-		wallpiece_02:Destroy()
-		wallpiece_03:Destroy()
-		wallpiece_04:Destroy()
-		wallpiece_05:Destroy()
-		wallpiece_06:Destroy()
-		wallpiece_07:Destroy()
-		wallpiece_08:Destroy()
-		wallpiece_09:Destroy()
-		wallpiece_10:Destroy()
-		wallpiece_11:Destroy()
-		wallpiece_12:Destroy()
-		wallpiece_13:Destroy()
-		wallpiece_14:Destroy()
-		wallpiece_15:Destroy()
-		wallpiece_16:Destroy()
-		wallpiece_17:Destroy()
-		wallpiece_18:Destroy()
-		wallpiece_19:Destroy()
-		wallpiece_20:Destroy()
-		wallpiece_21:Destroy()
-		wallpiece_22:Destroy()
-		wallpiece_23:Destroy()
-		wallpiece_24:Destroy()
-		wallpiece_25:Destroy()
-		wallpiece_26:Destroy()
-		wallpiece_27:Destroy()
-		wallpiece_28:Destroy()
-		wallpiece_29:Destroy()
-		wallpiece_30:Destroy()
-		wallpiece_31:Destroy()
-		wallpiece_32:Destroy()
-		wallpiece_33:Destroy()
-		wallpiece_34:Destroy()
-		wallpiece_35:Destroy()
-		wallpiece_36:Destroy()
-		for _,v in pairs(units_inside_pit) do
-			v.is_inside_hoof_stomp_pit = nil
+		-- Mark the enemies inside the pit to prevent them from leaving
+		local marked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(marked_enemies) do
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {})
 		end
-		end)
+
+		-- If an enemy previously marked is outside the ring, move it in
+		local all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(all_enemies) do
+			if enemy:HasModifier(modifier_enemies) and ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius then
+				enemy:SetAbsOrigin( pit_center + ( enemy:GetAbsOrigin() - pit_center ):Normalized() * pit_radius )
+			end
+		end
+
+		-- If the caster is outside the pit, remove the damage reduction modifier
+		if ( caster:GetAbsOrigin() - pit_center ):Length2D() > pit_radius then
+			caster:RemoveModifierByName(modifier_caster)
+		end
+
+		-- Check if the pit has ended
+		pit_duration_elapsed = pit_duration_elapsed + 0.05
+		if pit_duration_elapsed < pit_duration then
+			return 0.05
+		else
+
+			-- Destroy particle
+			ParticleManager:DestroyParticle(pit_fx, false)
+
+			-- Remove modifier from marked enemies
+			all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _, enemy in pairs(all_enemies) do
+				enemy:RemoveModifierByName(modifier_enemies)
+			end
+		end
+	end)
 end
 
 function DoubleEdge( keys )
@@ -162,43 +64,38 @@ function DoubleEdge( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_caster = keys.modifier_caster
+
+	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("edge_damage", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local str_percentage = ability:GetLevelSpecialValueFor("str_percentage", ability_level)
 	local target_pos = target:GetAbsOrigin()
-	local HP = caster:GetHealth()
-	local str = caster:GetStrength()
-	local magic_resist = caster:GetMagicalArmorValue()
-	local damage_type = ability:GetAbilityDamageType()
+	local caster_str = caster:GetStrength()
 
 	-- Draw the particle
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin()) -- Origin
-	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin()) -- Destination
-	ParticleManager:SetParticleControl(particle, 5, target:GetAbsOrigin()) -- Hit Glow
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle, 5, target:GetAbsOrigin())
 
-	-- Deal damage to enemies
-	local self_damage = damage - str * str_percentage / 100
-	damage = damage + str * str_percentage / 100
+	-- Calculate bonus damage
+	damage = damage + caster_str * str_percentage / 100
 
+	-- Find enemies to deal damage to
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-	for _,v in pairs(enemies) do
-		ApplyDamage({victim = v, attacker = caster, ability = ability, damage = damage, damage_type = damage_type})
+	for _,enemy in pairs(enemies) do
+		ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 
-	-- Calculate the self magic damage
-	if self_damage < 0 then
-		self_damage = 0
-	end
-	local true_damage = self_damage * (1 - magic_resist)
-	
-	-- If its lethal damage, set hp to 1, else do the full self damage
-	if HP <= true_damage then
-		caster:SetHealth(1)
-	else
-	-- Self Damage
-		ApplyDamage({victim = caster, attacker = caster, ability = ability, damage = self_damage, damage_type = damage_type})
-	end
+	-- Apply the deny prevention modifier before dealing self damage
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
+
+	-- Deal the self damage
+	ApplyDamage({victim = caster, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- Remove the deny prevention modifier
+	caster:RemoveModifierByName(modifier_caster)
 end
 
 function Return( keys )
@@ -207,100 +104,111 @@ function Return( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_prevent_return = keys.modifier_prevent_return
-	local caster_str = caster:GetStrength()
-	local str_percentage = ability:GetLevelSpecialValueFor("strength_pct", ability_level)
-	local min_damage = ability:GetLevelSpecialValueFor("minimum_damage", ability_level)
-	local damage_type = ability:GetAbilityDamageType()
-	local damage = caster_str * str_percentage / 100
 
-	-- Checks for damage below minimum
-	if damage < min_damage then
-		damage = min_damage
-	end
+	-- Parameters
+	local str_percentage = ability:GetLevelSpecialValueFor("strength_pct", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("cooldown", ability_level)
+
+	-- Calculate return damage
+	local damage = caster:GetStrength() * str_percentage / 100
 
 	-- Damages attacker if it hasn't taken return damage in the last second
 	if not attacker:HasModifier(modifier_prevent_return) then
-		ApplyDamage({victim = attacker, attacker = caster, damage = damage, damage_type = damage_type })
+		ApplyDamage({victim = attacker, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
 		
 		-- Applies "damaged by return" modifier to the attacker
-		ability:ApplyDataDrivenModifier(caster, attacker, modifier_prevent_return, {duration = "0.95"})
+		ability:ApplyDataDrivenModifier(caster, attacker, modifier_prevent_return, {duration = duration})
 	end
 end
 
-function Stampede( keys )
+function ReturnUpdate( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
-	local modifier_debuff = keys.modifier_debuff
 	local ability_level = ability:GetLevel() - 1
-	local duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local caster_str = caster:GetStrength()
-	local strength_damage = ability:GetLevelSpecialValueFor("strength_damage", ability_level) / 100
-	local damage_type = ability:GetAbilityDamageType()
-	local total_damage = damage + ( caster_str * strength_damage )
+	local modifier_stacks = keys.modifier_stacks
 
-	local scepter = HasScepter(caster)
-	local hit = false
+	-- Parameters
+	local block_base = ability:GetLevelSpecialValueFor("block_base", ability_level)
+	local block_str_percentage = ability:GetLevelSpecialValueFor("block_str_percentage", ability_level)
 
-	-- Ignore the target if its already on the table
-	local targets_hit = ability.targets_hit
-	for k,v in pairs(targets_hit) do
-		if v == target then
-			hit = true
-		end
-	end
+	-- Calculate amount of stacks to give
+	local total_block = block_base + caster:GetStrength() * block_str_percentage / 100
 
-	if not hit then
-		-- Damage
-		ApplyDamage({victim = target, attacker = caster, damage = total_damage, damage_type = damage_type})
-
-		-- Modifier
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = duration})
-
-		-- Add to the targets hit by this cast
-		table.insert(ability.targets_hit, target)
-		target.stampede_hit_count = 1
-	end
-
-	if hit and scepter then
-		-- Increase hit counter
-		target.stampede_hit_count = target.stampede_hit_count + 1
-
-		-- Reduced damage
-		ApplyDamage({victim = target, attacker = caster, damage = total_damage / target.stampede_hit_count, damage_type = damage_type})
-
-		-- Reduced duration stun
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = duration / 2})
-	end
-
-
+	-- Update amount of stacks
+	caster:RemoveModifierByName(modifier_stacks)
+	AddStacks(ability, caster, caster, modifier_stacks, total_block, true)
 end
 
 -- Emits the global sound and initializes a table to keep track of the units hit
 function StampedeStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local scepter_modifier = keys.scepter_modifier
+	local ability_level = ability:GetLevel() - 1
+	local modifier_stampede = keys.modifier_stampede
+	local modifier_scepter = keys.modifier_scepter
 	local scepter = HasScepter(caster)
 
-	-- If Centaur has scepter, apply the scepter modifier to all allies
+	-- Parameters
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	if scepter then
-		local units_to_buff = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
-		for k,v in pairs(units_to_buff) do
-			ability:ApplyDataDrivenModifier(caster, v, scepter_modifier, {})
+		duration = ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
+	end
+
+	-- Apply the modifier to all allied units
+	local allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	for _, ally in pairs(allies) do
+		ability:ApplyDataDrivenModifier(caster, ally, modifier_stampede, {duration = duration})
+		if scepter then
+			ability:ApplyDataDrivenModifier(caster, ally, modifier_scepter, {duration = duration})
 		end
 	end
 	
 	-- Plays the global sound
 	EmitGlobalSound("Hero_Centaur.Stampede.Cast")
 
-	-- Cleans the hit count table
-	if not targets_hit == nil then
-		for k,v in pairs(targets_hit) do
-			v.stampede_hit_count = 0
+	-- Initialize the hit table
+	if caster.stampede_targets_hit then
+		caster.stampede_targets_hit = nil
+	end
+
+	caster.stampede_targets_hit = {}
+end
+
+function Stampede( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_impact = keys.sound_impact
+
+	-- Parameters
+	local duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local str_percentage = ability:GetLevelSpecialValueFor("strength_damage", ability_level)
+
+	-- Damage calculation
+	local damage = caster:GetStrength() * str_percentage / 100
+	
+	-- Check if the target was already hit by this cast of Stampede
+	local hit = false
+	for _, unit in pairs(caster.stampede_targets_hit) do
+		if unit == target then
+			hit = true
 		end
 	end
 
-	ability.targets_hit = {}
+	-- If not, hit the target with Stampede
+	if not hit then
+
+		-- Damage
+		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+		-- Stun
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = duration})
+
+		-- Play sound
+		target:EmitSound(sound_impact)
+
+		-- Add to hit table
+		table.insert(caster.stampede_targets_hit, target)
+	end
 end

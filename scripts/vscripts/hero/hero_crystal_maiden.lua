@@ -52,16 +52,17 @@ function Frostbite( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local attacker = keys.attacker
-	local duration_hero = ability:GetLevelSpecialValueFor("duration", ability_level)
-	local duration_creep = ability:GetLevelSpecialValueFor("creep_duration", ability_level)
-	local cooldown_hero = ability:GetLevelSpecialValueFor("hero_cooldown", ability_level)
-	local cooldown_creep = ability:GetLevelSpecialValueFor("creep_cooldown", ability_level)
-	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
-
 	local modifier_root = keys.modifier_root
 	local modifier_damage = keys.modifier_damage
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
+
+	-- Parameters
+	local duration_hero = ability:GetLevelSpecialValueFor("duration", 0)
+	local duration_creep = ability:GetLevelSpecialValueFor("creep_duration", ability_level)
+	local cooldown = ability:GetLevelSpecialValueFor("hero_cooldown", ability_level)
+	local creep_chance = ability:GetLevelSpecialValueFor("creep_chance", ability_level)
+	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
 
 	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 	if attacker:GetTeam() ~= caster:GetTeam() and not attacker:IsMagicImmune() then
@@ -69,12 +70,12 @@ function Frostbite( keys )
 			ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_hero})
 			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_hero - damage_interval})
 			caster:RemoveModifierByName(modifier_passive)
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown_hero})
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown})
 		elseif not attacker:IsTower() then
-			ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_creep})
-			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_creep - damage_interval})
-			caster:RemoveModifierByName(modifier_passive)
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown_creep})
+			if RandomInt(1, 100) <= creep_chance then
+				ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_creep})
+				ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_creep - damage_interval})
+			end
 		end
 	end
 end

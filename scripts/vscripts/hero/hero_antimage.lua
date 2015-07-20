@@ -56,7 +56,45 @@ function ManaBreak( keys )
 	end
 end
 
-function ManaVoid(keys)
+function SpellShield( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.unit
+	local modifier_stacks = keys.modifier_stacks
+	local particle_stacks = keys.particle_stacks
+
+	-- Parameters
+	local scale_up = ability:GetLevelSpecialValueFor("scale_up", ability:GetLevel() - 1 )
+
+	-- Add damage/as stacks
+	AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+	local current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
+
+	-- Update the Spell Shield particle
+	if not caster.spell_shield_stacks_particle then
+		caster.spell_shield_stacks_particle = ParticleManager:CreateParticle(particle_stacks, PATTACH_OVERHEAD_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(caster.spell_shield_stacks_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(4, 0, 0))
+	else
+		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(current_stacks * 4, 0, 0))
+	end
+
+	-- Update model scale
+	caster:SetModelScale( math.min( 0.9 + scale_up * current_stacks, 1.1) )
+end
+
+function SpellShieldEnd( keys )
+	local caster = keys.caster
+
+	-- Kill the spell shield particle
+	ParticleManager:DestroyParticle(caster.spell_shield_stacks_particle, false)
+	caster.spell_shield_stacks_particle = nil
+
+	-- Update model scale
+	caster:SetModelScale(0.9)
+end
+
+function ManaVoid( keys )
 	local caster = keys.caster
 	local target = keys.target_entities[1]
 	local ability = keys.ability

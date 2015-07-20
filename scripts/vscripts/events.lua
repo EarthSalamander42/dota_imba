@@ -77,7 +77,7 @@ function GameMode:OnDisconnect(keys)
 				-- End the game in 15 seconds if no one reconnects
 				Timers:CreateTimer(15, function()
 					if GOODGUYS_CONNECTED_PLAYERS == 0 then
-						SetGameWinner(DOTA_TEAM_BADGUYS)
+						GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
 					end
 				end)
 			end
@@ -97,7 +97,7 @@ function GameMode:OnDisconnect(keys)
 				-- End the game in 15 seconds if no one reconnects
 				Timers:CreateTimer(15, function()
 					if BADGUYS_CONNECTED_PLAYERS == 0 then
-						SetGameWinner(DOTA_TEAM_GOODGUYS)
+						GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 					end
 				end)
 			end

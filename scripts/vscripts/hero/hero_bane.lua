@@ -6,31 +6,29 @@ function Enfeeble( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_stacks = keys.modifier_stacks
 
-	-- get target's attributes
-	local target_str = target:GetStrength()
-	local target_agi = target:GetAgility()
-	local target_int = target:GetIntellect()
-	
+	-- Parameters
 	local reduce_factor = ability:GetLevelSpecialValueFor("stat_reduction", ability_level) / 100
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
-	-- calculate reductions
-	local reduction_str = target_str * reduce_factor
-	local reduction_agi = target_agi * reduce_factor
-	local reduction_int = target_int * reduce_factor
+	-- Remove current stacks and enfeeble debuff
+	target:RemoveModifierByName(modifier_stacks)
 
-	-- apply reductions
-	target:ModifyStrength(reduction_str)
-	target:ModifyAgility(reduction_agi)
-	target:ModifyIntellect(reduction_int)
+	-- Calculate attribute reduction
+	local total_stats = target:GetStrength() + target:GetAgility() + target:GetIntellect()
+	local reduction_stacks = math.floor( total_stats * reduce_factor / 3 )
 
-	-- restore regular attribute values after the duration elapses
-	Timers:CreateTimer(duration, function()
-		target:ModifyStrength(-reduction_str)
-		target:ModifyAgility(-reduction_agi)
-		target:ModifyIntellect(-reduction_int)
-	end)
+	-- Apply stacks
+	AddStacks(ability, caster, target, modifier_stacks, reduction_stacks, true)
+end
+
+function EnfeebleEnd( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local modifier_stacks = keys.modifier_stacks
+
+	-- Remove current stacks of attribute reduction
+	target:RemoveModifierByName(modifier_stacks)
 end
 
 function BrainSapManaDrain( keys )
@@ -47,26 +45,16 @@ end
 
 function BrainSapSpellCast( keys )
 	local caster = keys.caster
-	local target = keys.target
+	local target = keys.unit
 	local ability = keys.ability
-	local casted_ability = caster:GetCurrentActiveAbility()
-	local casted_ability_index = casted_ability:GetAbilityIndex()
-	local no_mana_sound = keys.no_mana_sound
 	local ability_level = ability:GetLevel() - 1
 
-	-- calculate adjusted spell mana cost
-	local spell_cost = casted_ability:GetManaCost(casted_ability_index)
-	local caster_mana = caster:GetMana()
-	local mana_multiplier = ability:GetLevelSpecialValueFor("mana_multiplier", ability_level) / 100
-	local true_mana_cost = (mana_multiplier + 1) * spell_cost
+	-- Parameters
+	local mana_percent = ability:GetLevelSpecialValueFor("mana_percent", ability_level)
+	local mana_to_spend = target:GetMaxMana() * mana_percent / 100
 
-	-- if the caster has not enough mana according to the increased mana cost, prevent casting. If he has, spend the extra mana
-	--if caster_mana < true_mana_cost then
-	--	EmitSoundOn(no_mana_sound, caster)
-	--	caster:Stop()	
-	--else
-		caster:SpendMana(true_mana_cost - spell_cost, casted_ability)
-	--end
+	-- Reduce the target's mana
+	target:ReduceMana(mana_to_spend)
 end
 
 function FiendsGripManaDrain( keys )
@@ -200,35 +188,21 @@ end
 function NightmareEnd( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local nightmare = keys.nightmare
-	local nightmare_end = keys.nightmare_end
-	local nightmare_modifier = keys.nightmare_modifier
-	local ability_nightmare = keys.ability
 	local loop_sound = keys.loop_sound
+	local nightmare_name = keys.nightmare
+	local nightmare_end_name = keys.nightmare_end
+	local ability_nightmare = keys.ability
 
 	-- Stops playing sound
 	StopSoundEvent(loop_sound, target)
 
-	-- Verifies if nightmared targets still exist
-	local all_units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
-	local nightmares_remaining = false
-	for _,unit in pairs(all_units) do
-		if unit:HasModifier(nightmare_modifier) then
-			nightmares_remaining = true
+	-- If this is the caster, toggles Nightmare End off
+	if caster == target then
+		local ability_nightmare_end = caster:FindAbilityByName(nightmare_end_name)
+		if ability_nightmare_end:GetToggleState() then
+			ability_nightmare_end:ToggleAbility()
 		end
-	end
-
-	-- Toggles Nightmare End off if no nightmared units exist
-	if not nightmares_remaining then
-		for _,unit in pairs(all_units) do
-			if unit:GetUnitName() == "npc_dota_hero_bane" then
-				local ability_nightmare_end = unit:FindAbilityByName(nightmare_end)
-				if ability_nightmare_end:GetToggleState() then
-					ability_nightmare_end:ToggleAbility()
-				end
-				unit:SwapAbilities(nightmare, nightmare_end, true, false)
-			end
-		end
+		caster:SwapAbilities(nightmare_name, nightmare_end_name, true, false)
 	end
 end
 
@@ -237,27 +211,20 @@ function NightmareStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local invul_modifier = keys.invul_modifier
+	local nightmare_name = keys.nightmare
+	local nightmare_end_name = keys.nightmare_end
 	local invul_duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() - 1)
 
-	-- If it is the caster then grant Bane invulnerability for Nightmare's duration
 	if target == caster then
+
+		-- Apply invulnerability for the whole duration
 		ability:ApplyDataDrivenModifier(caster, caster, invul_modifier, {duration = invul_duration})
+
+		-- Swaps abilities
+		caster:SwapAbilities(nightmare_name, nightmare_end_name, false, true)
+
+		-- Upgrade Nightmare End to level 1
+		local nightmare_end_ability = caster:FindAbilityByName(nightmare_end_name)
+		nightmare_end_ability:SetLevel(1)
 	end
-end
-
-function NightmareSwap( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local cooldown = ability:GetCooldown(ability:GetLevel() - 1)
-
-	-- Ability names
-	local nightmare = keys.nightmare
-	local nightmare_end = keys.nightmare_end
-
-	-- Swaps abilities
-	caster:SwapAbilities(nightmare, nightmare_end, false, true)
-
-	-- Upgrade Nightmare End to level 1
-	local level_ability = caster:FindAbilityByName(nightmare_end)
-	level_ability:SetLevel(1)
 end

@@ -140,7 +140,7 @@
 	{
 		"override_hero"				"npc_dota_hero_centaur"
  
-		"ModelScale" 				".90"
+		"ModelScale" 				".94"
 		
 		"AttributeBaseStrength"		"28"
 		"AttributeStrengthGain"		"4.0"

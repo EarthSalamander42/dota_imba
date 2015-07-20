@@ -113,7 +113,6 @@ function GameMode:OnAllPlayersLoaded()
 	-------------------------------------------------------------------------------------------------
 
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
 		for id = 0, 9 do
 			if self.players[id] then
 				PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
