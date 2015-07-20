@@ -16,7 +16,7 @@ POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboa
 TREE_REGROW_TIME = 300.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
 
 GOLD_PER_TICK = 5							-- How much gold should players get per tick?
-GOLD_TICK_TIME = 3.0							-- How long should we wait in seconds between gold ticks?
+GOLD_TICK_TIME = 3.0						-- How long should we wait in seconds between gold ticks?
 
 RECOMMENDED_BUILDS_DISABLED = true			-- Should we disable the recommened builds for heroes
 CAMERA_DISTANCE_OVERRIDE = 1134.0			-- How far out should we allow the camera to go?  1134 is the default in Dota
@@ -116,11 +116,6 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
 
-CREEP_BOUNTY_BONUS = 40														-- Amount of bonus gold/XP granted by creeps and passive gold (in %)
-HERO_BOUNTY_BONUS = 40														-- Amount of bonus gold/XP granted by heroes (in %)
-
-GOLD_TICK_TIME = GOLD_TICK_TIME / ( ( 100 + CREEP_BOUNTY_BONUS ) / 100 )	-- Gold per tick adjusted with the bounty bonus
-
 HERO_KILL_GOLD_BASE = 100													-- Hero gold bounty base value
 HERO_KILL_GOLD_PER_LEVEL = 9												-- Hero gold bounty increase per level
 
@@ -152,12 +147,9 @@ HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback pr
 HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
 
 HERO_BUYBACK_COST_SCALING = 30												-- Cost multiplier when buybacking in quick sucession (in %)
-HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
-
-HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
 PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as having abandoned the game (in seconds)
 
@@ -165,12 +157,19 @@ PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as h
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
-IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true
+IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true (default mode)
 
 IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
 IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 4									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 2									-- Number of ultimate abilities in Random OMG mode
-IMBA_RANDOM_OMG_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts in Rnadom OMG mode
+IMBA_RANDOM_OMG_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts in Random OMG mode
+
+CREEP_BOUNTY_BONUS = 30														-- Amount of bonus gold/XP granted by creeps and passive gold (in %)
+HERO_BOUNTY_BONUS = 30														-- Amount of bonus gold/XP granted by heroes (in %)
+
+HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
+
+HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Stat collection

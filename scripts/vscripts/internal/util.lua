@@ -672,7 +672,7 @@ function GetRandomUltimateAbility()
 		"npc_dota_hero_furion",
 		"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_phoenix",
-		"npc_imba_hero_sand_king",
+		"npc_dota_hero_sand_king",
 		"npc_dota_hero_slark",
 		"npc_dota_hero_storm_spirit",
 		"npc_dota_hero_sven",

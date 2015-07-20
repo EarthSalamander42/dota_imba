@@ -2,6 +2,7 @@
 -- It can be used to pre-initialize any values/tables that will be needed later
 
 function GameMode:_InitGameMode()
+
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled( ENABLE_HERO_RESPAWN )
 	GameRules:SetUseUniversalShopMode( UNIVERSAL_SHOP_MODE )
@@ -22,10 +23,8 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 
-	-- Random OMG setup
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
-	end
+	-- Register a listener for the game mode configuration
+	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
 
 	-- This is multiteam configuration stuff
 	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
@@ -129,6 +128,7 @@ mode = nil
 -- This function is called as the first player loads and sets up the GameMode parameters
 function GameMode:_CaptureGameMode()
 	if mode == nil then
+
 		-- Set GameMode parameters
 		mode = GameRules:GetGameModeEntity()        
 		mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
@@ -171,4 +171,73 @@ function GameMode:_CaptureGameMode()
 
 		self:OnFirstPlayerLoaded()
 	end 
+end
+
+-- This function captures the game mode options when they are set
+function OnSetGameMode( eventSourceIndex, args )
+	
+	local player_id = args.PlayerID
+	local player = PlayerResource:GetPlayer(player_id)
+	local is_host = GameRules:PlayerHasCustomGameHostPrivileges(player)
+	local mode_info = args.modes
+
+	-- If the player who sent the game options is not the host, do nothing
+	if not is_host then
+		return nil
+	end
+
+	-- If nothing was captured from the game options, do nothing
+	if not mode_info then
+		return nil
+	end
+
+	-- If the game options were already chosen, do nothing
+	if GAME_OPTIONS_SET then
+		return nil
+	end
+
+	-- Game mode information
+	if (mode_info.game_mode == "random_omg") then
+		IMBA_ABILITY_MODE_RANDOM_OMG = true
+		print("Random OMG mode activated!")
+	end
+
+	-- Gold/XP bounty information
+	HERO_BOUNTY_BONUS = tonumber(mode_info.hero_bounty)
+	CREEP_BOUNTY_BONUS = tonumber(mode_info.creep_bounty)
+	print("hero bounty: "..HERO_BOUNTY_BONUS)
+	print("creep bounty: "..CREEP_BOUNTY_BONUS)
+
+	-- Respawn time information
+	if tonumber(mode_info.respawn_half) == 1 then
+		HERO_RESPAWN_TIME_MULTIPLIER = 50
+	elseif tonumber(mode_info.respawn_zero) == 1 then
+		HERO_RESPAWN_TIME_MULTIPLIER = 0
+	end
+	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
+
+	-- Buyback cost information
+	if tonumber(mode_info.buyback_double) == 1 then
+		HERO_BUYBACK_COST_MULTIPLIER = 200
+	elseif tonumber(mode_info.buyback_none) == 1 then
+		HERO_BUYBACK_COST_MULTIPLIER = 99999
+	end
+	print("buyback cost multiplier: "..HERO_BUYBACK_COST_MULTIPLIER)
+	
+	-- Set the game options as being chosen
+	GAME_OPTIONS_SET = true
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Gamemode setup logic
+	-------------------------------------------------------------------------------------------------
+	
+	-- Random OMG setup
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
+	end
+
+	-- Passive gold adjustment
+	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( ( 100 + CREEP_BOUNTY_BONUS ) / 100 )
+	GameRules:SetGoldPerTick( adjusted_gold_per_tick )
+
 end

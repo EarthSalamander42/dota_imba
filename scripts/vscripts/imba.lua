@@ -90,21 +90,12 @@ function GameMode:OnAllPlayersLoaded()
 
 	GOODGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
 	BADGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_BADGUYS)
-	print("Good guys connected: "..GOODGUYS_CONNECTED_PLAYERS)
-	print("Bad guys connected: "..BADGUYS_CONNECTED_PLAYERS)
 
 	-- Creates global variables which track player connection status
 	IMBA_STARTED_TRACKING_CONNECTIONS = true
 	for id = 0, 9 do
 		if self.players[id] then
 			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-		end
-	end
-
-	-- debug
-	for id = 0, 9 do
-		if self.players[id] then
-			print("Player "..id.." has connection state "..self.players[id].connection_state)
 		end
 	end
 
@@ -120,6 +111,48 @@ function GameMode:OnAllPlayersLoaded()
 		end
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Selected game mode confirmation messages
+	-------------------------------------------------------------------------------------------------
+	
+	-- If no options were chosen, use the default ones
+	if not GAME_OPTIONS_SET then
+		Say(nil, "Host did not select any game options, using the default ones.", false)
+	end
+
+	-- Game mode
+	local game_mode = "ALL PICK"
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		game_mode = "RANDOM OMG"
+	end
+
+	-- Bounties
+	local hero_bounty = 100 + HERO_BOUNTY_BONUS
+	hero_bounty = "<font color='#FF7800'>"..hero_bounty.."%</font>"
+	local creep_bounty = 100 + CREEP_BOUNTY_BONUS
+	creep_bounty = "<font color='#FF7800'>"..creep_bounty.."%</font>"
+
+	-- Respawn
+	local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
+	if respawn_time == 100 then
+		respawn_time = "<font color='#FF7800'>Normal</font> respawn time, "
+	elseif respawn_time == 50 then
+		respawn_time = "<font color='#FF7800'>Half</font> respawn time, "
+	elseif respawn_time == 0 then
+		respawn_time = "<font color='#FF7800'>Zero</font> respawn time, "
+	end
+
+	-- Buyback
+	local buyback_cost = HERO_BUYBACK_COST_MULTIPLIER
+	if buyback_cost == 100 then
+		buyback_cost = "<font color='#FF7800'>Normal</font> buyback cost."
+	elseif buyback_cost == 200 then
+		buyback_cost = "<font color='#FF7800'>Double</font> buyback cost."
+	elseif buyback_cost == 99999 then
+		buyback_cost = "<font color='#FF7800'>No buyback</font>."
+	end
+	
+	Say(nil, "Game mode: <font color='#FF7800'>"..game_mode.."</font>, "..hero_bounty.." hero bounty, "..creep_bounty.." creep bounty, "..respawn_time..buyback_cost, false)
 end
 
 --[[
@@ -141,10 +174,8 @@ function GameMode:OnHeroInGame(hero)
 
 	if player and self.players[player:GetPlayerID()] and not self.heroes[player:GetPlayerID()] then
 		self.heroes[player:GetPlayerID()] = hero
-		print("Assigned hero "..hero:GetName().." to player "..player:GetPlayerID())
 	elseif player and self.players[player:GetPlayerID()] and self.heroes[player:GetPlayerID()] and ( self.heroes[player:GetPlayerID()]:GetName() ~= hero:GetName() ) then
 		self.heroes[player:GetPlayerID()] = hero
-		print("Reassigned hero "..hero:GetName().." to player "..player:GetPlayerID())
 	end
 
 	-- Check if this function was already performed
@@ -189,24 +220,21 @@ function GameMode:OnHeroInGame(hero)
 	local line_duration = 4
 	
 	-- First line
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"}	} )
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_02", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"}, continue = true}	)
+	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"}	} )
+	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true}	)
 		
 	-- Second line
 	Timers:CreateTimer(line_duration, function()
-		--Notifications:ClearBottom(hero:GetPlayerID())
-		Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_03", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
+		Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
 
 		-- Third line
 		Timers:CreateTimer(line_duration, function()
-			--Notifications:ClearBottom(hero:GetPlayerID())
-			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
+			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {color = "DodgerBlue"} }	)
 
 			-- Fourth line
 			Timers:CreateTimer(line_duration, function()
-				--Notifications:ClearBottom(hero:GetPlayerID())
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_05", duration = line_duration, style = {["font-size"] = "30px", color = "DodgerBlue"} }	)
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_06", duration = line_duration, style = {["font-size"] = "36px", color = "Orange"}, continue = true}	)
+				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_05", duration = line_duration, style = {color = "DodgerBlue"} }	)
+				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_06", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"}, continue = true}	)
 			end)
 		end)
 	end)

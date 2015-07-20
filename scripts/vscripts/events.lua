@@ -36,15 +36,7 @@ function GameMode:OnDisconnect(keys)
 
 		-- If no valid player was detected, do nothing
 		if player_id == (-1) then
-			print("no valid disconnecting player detected")
 			return nil
-		end
-
-		-- debug
-		for id = 0, 9 do
-			if self.players[id] then
-				print("Player "..id.." has stored connection state "..self.players[id].connection_state)
-			end
 		end
 		
 		-- Parameters
@@ -72,7 +64,7 @@ function GameMode:OnDisconnect(keys)
 				full_abandon = true
 
 				-- Display message to the other team
-				Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"} })
+				Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
 
 				-- End the game in 15 seconds if no one reconnects
 				Timers:CreateTimer(15, function()
@@ -92,7 +84,7 @@ function GameMode:OnDisconnect(keys)
 				full_abandon = true
 
 				-- Display message to the other team
-				Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"} })
+				Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
 
 				-- End the game in 15 seconds if no one reconnects
 				Timers:CreateTimer(15, function()
@@ -109,8 +101,8 @@ function GameMode:OnDisconnect(keys)
 			-- Show team-only disconnect message
 			if not self.players[player_id].has_abandoned then
 				Notifications:BottomToTeam(team, {hero = hero_name, duration = line_duration})
-				Notifications:BottomToTeam(team, {text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
-				Notifications:BottomToTeam(team, {text = "#imba_player_disconnect_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+				Notifications:BottomToTeam(team, {text = player_name.." ", duration = line_duration, continue = true})
+				Notifications:BottomToTeam(team, {text = "#imba_player_disconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 			end
 
 			-- Grant control of the disconnected player's hero to its allies
@@ -140,8 +132,8 @@ function GameMode:OnDisconnect(keys)
 
 				-- Show message to remaining players
 				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 			else
 				return 1
 			end
@@ -283,13 +275,6 @@ function GameMode:OnPlayerReconnect(keys)
 			end
 		end
 
-		-- debug
-		for id = 0, 9 do
-			if self.players[id] then
-				print("Player "..id.." has stored connection state "..self.players[id].connection_state)
-			end
-		end
-
 		-- If no valid connecting player was detected, do nothing
 		if player_id == (-1) then
 			return nil
@@ -314,8 +299,8 @@ function GameMode:OnPlayerReconnect(keys)
 		local line_duration = 5
 
 		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
-		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {["font-size"] = "25px", color = "DodgerBlue"}, continue = true})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 	end)
 
 end
@@ -606,7 +591,6 @@ function GameMode:OnEntityKilled( keys )
 		-- Nearby allied heroes gold gain
 		local allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		local assist_gold = killed_unit:GetGoldBounty()
-		print("Initial assist bounty: "..assist_gold)
 
 		-- If no allied hero was near the kill, distribute gold evenly to all of the team's heroes
 		if #allied_heroes == 0 then
@@ -617,7 +601,6 @@ function GameMode:OnEntityKilled( keys )
 				SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 				ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 			end
-			print("Granted bounty to all allied heroes: "..assist_gold)
 		else
 			local is_killer_present = false
 			local nearby_allies = #allied_heroes
@@ -644,7 +627,6 @@ function GameMode:OnEntityKilled( keys )
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
 				end
-				print("Assist bounty for 1 nearby hero: "..assist_gold)
 			elseif nearby_allies == 2 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
 				for _,ally in pairs(allied_heroes) do
@@ -654,7 +636,6 @@ function GameMode:OnEntityKilled( keys )
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
 				end
-				print("Assist bounty for 2 nearby heroes: "..assist_gold)
 			elseif nearby_allies == 3 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
 				for _,ally in pairs(allied_heroes) do
@@ -664,7 +645,6 @@ function GameMode:OnEntityKilled( keys )
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
 				end
-				print("Assist bounty for 3 nearby heroes: "..assist_gold)
 			elseif nearby_allies >= 4 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
 				for _,ally in pairs(allied_heroes) do
@@ -674,7 +654,6 @@ function GameMode:OnEntityKilled( keys )
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
 				end
-				print("Assist bounty for 4 nearby heres: "..assist_gold)
 			end
 		end
 
@@ -718,25 +697,25 @@ function GameMode:OnEntityKilled( keys )
 
 		if killed_unit.death_streak_count >= 3 then
 			Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, continue = true})
 		end
 
 		if killed_unit.death_streak_count == 3 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 4 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 5 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 6 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 7 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 8 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count == 9 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count >= 10 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, style = {["font-size"] = "25px"}, continue = true})
+			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
 		end
 	end
 
