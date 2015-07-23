@@ -79,35 +79,113 @@ function GameMode:OnAllPlayersLoaded()
 	self.players = {}
 	self.heroes = {}
 
+	IMBA_STARTED_TRACKING_CONNECTIONS = true
+
+	GOODGUYS_CONNECTED_PLAYERS = 0
+	BADGUYS_CONNECTED_PLAYERS = 0
+
 	-- Assign players to the table
 	for id = 0, 9 do
-		self.players[id] = PlayerResource:GetPlayer(id)
+		Timers:CreateTimer(0, function()
+			self.players[id] = PlayerResource:GetPlayer(id)
+			
+			if self.players[id] then
+
+				-- Initialize connection state
+				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+
+				-- Increment amount of players on this team by one
+				if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
+					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
+				elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
+					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+				end
+			else
+
+				-- If the player never connected, assign it a special string
+				if PlayerResource:GetConnectionState(id) == 1 then
+					self.players[id] = "empty_player_slot"
+
+				-- If not, keep trying
+				else
+					return 0.5
+				end
+			end
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player connection status check
-	-------------------------------------------------------------------------------------------------
-
-	GOODGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_GOODGUYS)
-	BADGUYS_CONNECTED_PLAYERS = PlayerResource:GetPlayerCountForTeam(DOTA_TEAM_BADGUYS)
-
-	-- Creates global variables which track player connection status
-	IMBA_STARTED_TRACKING_CONNECTIONS = true
-	for id = 0, 9 do
-		if self.players[id] then
-			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG pick setup
+	-- IMBA: Random OMG setup
 	-------------------------------------------------------------------------------------------------
 
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
+
+		-- Pick setup
 		for id = 0, 9 do
-			if self.players[id] then
-				PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
+			Timers:CreateTimer(0, function()
+				if self.players[id] and self.players[id] ~= "empty_player_slot" then
+					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
+					PlayerResource:SetHasRepicked(id)
+					PlayerResource:SetHasRandomed(id)
+				elseif not self.players[id] then
+					return 0.5
+				end
+			end)
+		end
+
+		-- Illusion skill adjustment
+		Timers:CreateTimer(0, function()
+			local illusions_on_world = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,illusion in pairs(illusions_on_world) do
+
+				-- Check if this illusion has already been adjusted
+				if illusion:IsIllusion() and not illusion.illusion_skills_adjusted then
+					local player_id = illusion:GetPlayerID()
+					local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
+
+					-- Remove previously existing abilities
+					for i = 0, 15 do
+						local old_ability = illusion:GetAbilityByIndex(i)
+						if old_ability then
+							illusion:RemoveAbility(old_ability:GetAbilityName())
+						end
+					end
+
+					-- Add and level owner's abilities
+					for i = 0, 15 do
+						if hero.random_omg_abilities[i] then
+							illusion:AddAbility(hero.random_omg_abilities[i])
+							local ability = illusion:FindAbilityByName(hero.random_omg_abilities[i])
+							local ability_level = hero:FindAbilityByName(hero.random_omg_abilities[i]):GetLevel()
+							ability:SetLevel(ability_level)
+						end
+					end
+
+					-- Mark this illusion as already adjusted
+					illusion.illusion_skills_adjusted = true
+				end
 			end
+			return 0.1
+		end)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: All Random setup
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_PICK_MODE_ALL_RANDOM then
+
+		-- Pick setup
+		for id = 0, 9 do
+			Timers:CreateTimer(0, function()
+				if self.players[id] and self.players[id] ~= "empty_player_slot" then
+					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
+					PlayerResource:SetHasRepicked(id)
+					PlayerResource:SetHasRandomed(id)
+				elseif not self.players[id] then
+					return 0.5
+				end
+			end)
 		end
 	end
 
@@ -121,38 +199,63 @@ function GameMode:OnAllPlayersLoaded()
 	end
 
 	-- Game mode
-	local game_mode = "ALL PICK"
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		game_mode = "RANDOM OMG"
+	local game_mode = "<font color='#FF7800'>ALL PICK</font>"
+	if IMBA_PICK_MODE_ALL_RANDOM then
+		game_mode = "<font color='#FF7800'>ALL RANDOM</font>"
+	elseif IMBA_ABILITY_MODE_RANDOM_OMG then
+		game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates"
+		if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+			game_mode = game_mode..", skills are randomed on every respawn"
+		end
+	end
+
+	-- Same hero
+	local same_hero = ""
+	if ALLOW_SAME_HERO_SELECTION then
+		same_hero = ", same hero allowed"
 	end
 
 	-- Bounties
-	local hero_bounty = 100 + HERO_BOUNTY_BONUS
-	hero_bounty = "<font color='#FF7800'>"..hero_bounty.."%</font>"
-	local creep_bounty = 100 + CREEP_BOUNTY_BONUS
-	creep_bounty = "<font color='#FF7800'>"..creep_bounty.."%</font>"
+	local gold_bounty = 100 + CREEP_GOLD_BONUS
+	gold_bounty = "<font color='#FF7800'>"..gold_bounty.."%</font>"
+	local XP_bounty = 100 + CREEP_XP_BONUS
+	XP_bounty = "<font color='#FF7800'>"..XP_bounty.."%</font>"
 
 	-- Respawn
 	local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
 	if respawn_time == 100 then
-		respawn_time = "<font color='#FF7800'>Normal</font> respawn time, "
+		respawn_time = "<font color='#FF7800'>normal</font> respawn time, "
 	elseif respawn_time == 50 then
-		respawn_time = "<font color='#FF7800'>Half</font> respawn time, "
+		respawn_time = "<font color='#FF7800'>half</font> respawn time, "
 	elseif respawn_time == 0 then
-		respawn_time = "<font color='#FF7800'>Zero</font> respawn time, "
+		respawn_time = "<font color='#FF7800'>zero</font> respawn time, "
 	end
 
 	-- Buyback
 	local buyback_cost = HERO_BUYBACK_COST_MULTIPLIER
 	if buyback_cost == 100 then
-		buyback_cost = "<font color='#FF7800'>Normal</font> buyback cost."
+		buyback_cost = "<font color='#FF7800'>normal</font> buyback cost."
 	elseif buyback_cost == 200 then
-		buyback_cost = "<font color='#FF7800'>Double</font> buyback cost."
+		buyback_cost = "<font color='#FF7800'>double</font> buyback cost."
 	elseif buyback_cost == 99999 then
-		buyback_cost = "<font color='#FF7800'>No buyback</font>."
+		buyback_cost = "<font color='#FF7800'>no buyback</font>."
+	end
+
+	-- Kills to end the game
+	local kills_to_end = ""
+	if END_GAME_ON_KILLS then
+		kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills, or the Ancient falls."
+	end
+
+	-- Level cap
+	local level_cap = ""
+	if USE_CUSTOM_HERO_LEVELS then
+		level_cap = " Heroes can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
 	end
 	
-	Say(nil, "Game mode: <font color='#FF7800'>"..game_mode.."</font>, "..hero_bounty.." hero bounty, "..creep_bounty.." creep bounty, "..respawn_time..buyback_cost, false)
+	Say(nil, game_mode..same_hero, false)
+	Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
+	Say(nil, kills_to_end..level_cap, false)
 end
 
 --[[
@@ -172,9 +275,9 @@ function GameMode:OnHeroInGame(hero)
 	-- Update the player's hero if it was picked or changed
 	local player = PlayerResource:GetPlayer(hero:GetPlayerID())
 
-	if player and self.players[player:GetPlayerID()] and not self.heroes[player:GetPlayerID()] then
+	if player and self.players[player:GetPlayerID()] and self.players[player:GetPlayerID()] ~= "empty_player_slot" and not self.heroes[player:GetPlayerID()] then
 		self.heroes[player:GetPlayerID()] = hero
-	elseif player and self.players[player:GetPlayerID()] and self.heroes[player:GetPlayerID()] and ( self.heroes[player:GetPlayerID()]:GetName() ~= hero:GetName() ) then
+	elseif player and self.players[player:GetPlayerID()] and self.players[player:GetPlayerID()] ~= "empty_player_slot" and self.heroes[player:GetPlayerID()] and ( self.heroes[player:GetPlayerID()]:GetName() ~= hero:GetName() ) then
 		self.heroes[player:GetPlayerID()] = hero
 	end
 
@@ -194,6 +297,7 @@ function GameMode:OnHeroInGame(hero)
 
 	-- Set up initial gold
 	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
+	local has_repicked = PlayerResource:HasRepicked(hero:GetPlayerID())
 
 	if has_repicked then
 		hero:SetGold(HERO_INITIAL_REPICK_GOLD, false)
@@ -203,15 +307,34 @@ function GameMode:OnHeroInGame(hero)
 		hero:SetGold(HERO_INITIAL_GOLD, false)
 	end
 
-	-- Set up initial hero kill bounty
-	local hero_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+
+		-- Set initial gold for the mode 
+		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
+	end
+
+	if IMBA_PICK_MODE_ALL_RANDOM then
+
+		-- Set initial gold for the mode 
+		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
+	end
+
+	-- Set up initial hero kill gold bounty
+	local gold_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
 
 	-- Multiply bounty by the lobby options
-	hero_bounty = hero_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100
+	gold_bounty = gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100
 
 	-- Update the hero's bounty
-	hero:SetMinimumGoldBounty(hero_bounty)
-	hero:SetMaximumGoldBounty(hero_bounty)
+	hero:SetMinimumGoldBounty(gold_bounty)
+	hero:SetMaximumGoldBounty(gold_bounty)
+
+	-- Set up initial hero kill XP bounty
+	local xp_bounty = HERO_KILL_XP_CONSTANT_1
+
+	-- Multiply bounty by the lobby options
+	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
+	hero:SetDeathXP(xp_bounty)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player greeting and explanations
@@ -244,64 +367,13 @@ function GameMode:OnHeroInGame(hero)
 	-------------------------------------------------------------------------------------------------
 
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		
-		-- Remove default abilities
-		for i = 0, 11 do
-			local old_ability = hero:GetAbilityByIndex(i)
-			if old_ability then
-				hero:RemoveAbility(old_ability:GetAbilityName())
-			end
-		end
 
-		-- Add new regular abilities
-		for i = 1, IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT do
-			local randomed_ability
-			local ability_owner
-			randomed_ability, ability_owner = GetRandomNormalAbility()
-
-			if not hero:FindAbilityByName(randomed_ability) then
-				hero:AddAbility(randomed_ability)
-			end
-
-			PrecacheUnitByNameAsync(ability_owner, function(...) end)
-		end
-
-		-- Add new ultimate abilities
-		for i = 1, IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT do
-			local randomed_ultimate
-			local ultimate_owner
-			randomed_ultimate, ultimate_owner = GetRandomUltimateAbility()
-
-			if not hero:FindAbilityByName(randomed_ultimate) then
-				hero:AddAbility(randomed_ultimate)
-			end
-
-			PrecacheUnitByNameAsync(ultimate_owner, function(...) end)
-		end
-
-		-- Re-add attribute bonus
-		if hero:GetPrimaryAttribute() == 0 then
-			hero:AddAbility("attribute_bonus_str")
-		elseif hero:GetPrimaryAttribute() == 1 then
-			hero:AddAbility("attribute_bonus_agi")
-		elseif hero:GetPrimaryAttribute() == 2 then
-			hero:AddAbility("attribute_bonus_int")
-		end
-
-		-- Apply ability layout modifier
-		local layout_ability_name
-		if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 4 then
-			layout_ability_name = "random_omg_ability_layout_changer_4"
-		elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 5 then
-			layout_ability_name = "random_omg_ability_layout_changer_5"
-		elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 6 then
-			layout_ability_name = "random_omg_ability_layout_changer_6"
-		end
-
-		hero:AddAbility(layout_ability_name)
-		local layout_ability = hero:FindAbilityByName(layout_ability_name)
-		layout_ability:SetLevel(1)
+		-- Artifically delay skill selection and precaching to space it out over time
+		Timers:CreateTimer(player:GetPlayerID() * 0.1, function()
+			ApplyAllRandomOmgAbilities(hero)
+		end)
 	end
+
 end
 
 --[[

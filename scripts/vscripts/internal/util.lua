@@ -252,7 +252,13 @@ end
 
 -- Returns the killstreak/deathstreak bonus gold for this hero
 function GetKillstreakGold( hero )
+	local base_bounty = HERO_KILL_GOLD_BASE + hero:GetLevel() * HERO_KILL_GOLD_PER_LEVEL
 	local gold = ( hero.kill_streak_count ^ KILLSTREAK_EXP_FACTOR ) * HERO_KILL_GOLD_PER_KILLSTREAK - hero.death_streak_count * HERO_KILL_GOLD_PER_DEATHSTREAK
+	
+	-- Limits to maximum and minimum kill/deathstreak values
+	gold = math.max(gold, (-1) * base_bounty * HERO_KILL_GOLD_DEATHSTREAK_CAP / 100 )
+	gold = math.min(gold, base_bounty * ( HERO_KILL_GOLD_KILLSTREAK_CAP - 100 ) / 100)
+
 	return gold
 end
 
@@ -296,6 +302,7 @@ function AbandonGame( hero, player_id )
 			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 			hero:AddNewModifier(hero, nil, "modifier_rooted", {})
 			hero:AddNewModifier(hero, nil, "modifier_stunned", {})
+			hero:AddNewModifier(hero, nil, "modifier_obsidian_destroyer_astral_imprisonment_prison", {})
 
 			-- Keep the hero rooted and invulnerable for as long as the player remains disconnected
 			Timers:CreateTimer(0, function()
@@ -306,6 +313,7 @@ function AbandonGame( hero, player_id )
 					hero:RemoveModifierByName("modifier_invulnerable")
 					hero:RemoveModifierByName("modifier_rooted")
 					hero:RemoveModifierByName("modifier_stunned")
+					hero:RemoveModifierByName("modifier_obsidian_destroyer_astral_imprisonment_prison")
 				end
 			end)
 
@@ -319,34 +327,35 @@ function AbandonGame( hero, player_id )
 	Timers:CreateTimer(0, function()
 
 		-- Calculates if there is enough gold to be shared without loss
-		local current_gold = PlayerResource:GetGold(player_id)
-		local connected_players_on_team
+		--local current_gold = PlayerResource:GetGold(player_id)
+		--local connected_players_on_team
 
-		if team == DOTA_TEAM_GOODGUYS then
-			connected_players_on_team = GOODGUYS_CONNECTED_PLAYERS
-		elseif team == DOTA_TEAM_BADGUYS then
-			connected_players_on_team = BADGUYS_CONNECTED_PLAYERS
-		end
+		--if team == DOTA_TEAM_GOODGUYS then
+		--	connected_players_on_team = GOODGUYS_CONNECTED_PLAYERS
+		--elseif team == DOTA_TEAM_BADGUYS then
+		--	connected_players_on_team = BADGUYS_CONNECTED_PLAYERS
+		--end
 
-		if current_gold >= connected_players_on_team then
+		--if current_gold >= connected_players_on_team then
 
 			-- Calculates how much gold will be given
-			local gold_to_share = math.floor( current_gold / connected_players_on_team )
+		--	local gold_to_share = math.floor( current_gold / connected_players_on_team )
 			
 			-- Distributes gold between the other players on the abandoner's team
-			PlayerResource:SetGold(player_id, current_gold - gold_to_share * connected_players_on_team, false)
-			for id = 0, 9 do
-				local current_player = PlayerResource:GetPlayer(id)
-				if PlayerResource:GetPlayer(id) and ( id ~= player_id ) and ( team == PlayerResource:GetTeam(id) ) then
-					PlayerResource:ModifyGold(id, gold_to_share, false, DOTA_ModifyGold_AbandonedRedistribute)
-				end
-			end
-		end
+		--	PlayerResource:SpendGold(player_id, gold_to_share * connected_players_on_team, DOTA_ModifyGold_AbandonedRedistribute)
+			--PlayerResource:SetGold(player_id, current_gold - gold_to_share * connected_players_on_team, true)
+		--	for id = 0, 9 do
+		--		local current_player = PlayerResource:GetPlayer(id)
+		--		if PlayerResource:GetPlayer(id) and ( id ~= player_id ) and ( team == PlayerResource:GetTeam(id) ) then
+		--			PlayerResource:ModifyGold(id, gold_to_share, false, DOTA_ModifyGold_AbandonedRedistribute)
+		--		end
+		--	end
+		--end
 
 		-- If the player is still disconnected, keep checking
-		if GameMode.players[player_id].is_disconnected then
-			return 1
-		end
+		--if GameMode.players[player_id].is_disconnected then
+		--	return 1
+		--end
 	end)
 end
 
@@ -402,7 +411,6 @@ function GetRandomNormalAbility()
 		"slark_dark_pact",
 		"slark_pounce",
 		"slark_essence_shift",
-		"sniper_shrapnel",
 		"storm_spirit_static_remnant",
 		"storm_spirit_electric_vortex",
 		"storm_spirit_overload",
@@ -433,7 +441,6 @@ function GetRandomNormalAbility()
 		"antimage_blink",
 		"imba_axe_berserkers_call",
 		"imba_axe_battle_hunger",
-		"axe_counter_helix",
 		"imba_bane_enfeeble",
 		"imba_bane_brain_sap",
 		"imba_bounty_hunter_shuriken_toss",
@@ -532,7 +539,6 @@ function GetRandomNormalAbility()
 		"npc_dota_hero_slark",
 		"npc_dota_hero_slark",
 		"npc_dota_hero_slark",
-		"npc_dota_hero_sniper",
 		"npc_dota_hero_storm_spirit",
 		"npc_dota_hero_storm_spirit",
 		"npc_dota_hero_storm_spirit",
@@ -561,7 +567,6 @@ function GetRandomNormalAbility()
 		"npc_dota_hero_antimage",
 		"npc_dota_hero_antimage",
 		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
 		"npc_dota_hero_axe",
 		"npc_dota_hero_axe",
 		"npc_dota_hero_bane",
@@ -628,7 +633,6 @@ function GetRandomUltimateAbility()
 		"juggernaut_omni_slash",
 		"lion_finger_of_death",
 		"medusa_stone_gaze",
-		"naga_siren_song_of_the_siren",
 		"furion_wrath_of_nature",
 		"phantom_lancer_juxtapose",
 		"phoenix_supernova",
@@ -668,7 +672,6 @@ function GetRandomUltimateAbility()
 		"npc_dota_hero_juggernaut",
 		"npc_dota_hero_lion",
 		"npc_dota_hero_medusa",
-		"npc_dota_hero_naga_siren",
 		"npc_dota_hero_furion",
 		"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_phoenix",
@@ -702,4 +705,306 @@ function GetRandomUltimateAbility()
 
 	local random_int = RandomInt(1, #legal_ultimates)
 	return legal_ultimates[random_int], ultimate_owners[random_int]
+end
+
+-- Grants a given hero an appropriate amount of Random OMG abilities
+function ApplyAllRandomOmgAbilities( hero )
+
+	-- Check if the high level power-up ability is present
+	local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+	local powerup_stacks
+	if ability_powerup then
+		powerup_stacks = hero:GetModifierStackCount("modifier_imba_unlimited_level_powerup", hero)
+		hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
+		ability_powerup = true
+	end
+
+	-- Remove default abilities
+	for i = 0, 15 do
+		local old_ability = hero:GetAbilityByIndex(i)
+		if old_ability then
+			hero:RemoveAbility(old_ability:GetAbilityName())
+		end
+	end
+
+	-- Creates the table to store ability information for that hero
+	if not hero.random_omg_abilities then
+		hero.random_omg_abilities = {}
+	end
+
+	-- Initialize the precache list if necessary
+	if not GameMode.precached_hero_list then
+		GameMode.precached_hero_list = {}
+		for id = 0, 9 do
+			if GameMode.players[id] and GameMode.players[id] ~= "empty_player_slot" then
+				table.insert(GameMode.precached_hero_list, GameMode.heroes[id]:GetName())
+			end
+		end
+	end
+
+	-- Add new regular abilities
+	local i = 1
+	while i <= IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT do
+
+		-- Randoms an ability from the list of legal random omg abilities
+		local randomed_ability
+		local ability_owner
+		randomed_ability, ability_owner = GetRandomNormalAbility()
+
+		-- Checks for duplicate abilities
+		if not hero:FindAbilityByName(randomed_ability) then
+
+			-- Add the ability
+			hero:AddAbility(randomed_ability)
+
+			-- Check if this hero has been precached before
+			local is_precached = false
+			for j = 1, #GameMode.precached_hero_list do
+				if GameMode.precached_hero_list[j] == ability_owner then
+					is_precached = true
+				end
+			end
+
+			-- If not, do so and add it to the precached heroes list
+			if not is_precached then
+				PrecacheUnitByNameAsync(ability_owner, function(...) end)
+				table.insert(GameMode.precached_hero_list, ability_owner)
+			end
+
+			-- Store it for later reference
+			hero.random_omg_abilities[i] = randomed_ability
+			i = i + 1
+		end
+	end
+
+	-- Add new ultimate abilities
+	while i <= IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT do
+
+		-- Randoms an ability from the list of legal random omg ultimates
+		local randomed_ultimate
+		local ultimate_owner
+		randomed_ultimate, ultimate_owner = GetRandomUltimateAbility()
+
+		-- Checks for duplicate abilities
+		if not hero:FindAbilityByName(randomed_ultimate) then
+
+			-- Add the ultimate
+			hero:AddAbility(randomed_ultimate)
+
+			-- Check if this hero has been precached before
+			local is_precached = false
+			for j = 1, #GameMode.precached_hero_list do
+				if GameMode.precached_hero_list[j] == ultimate_owner then
+					is_precached = true
+				end
+			end
+
+			-- If not, do so and add it to the precached heroes list
+			if not is_precached then
+				PrecacheUnitByNameAsync(ultimate_owner, function(...) end)
+				table.insert(GameMode.precached_hero_list, ultimate_owner)
+			end
+
+			-- Store it for later reference
+			hero.random_omg_abilities[i] = randomed_ultimate
+			i = i + 1
+		end
+	end
+
+	-- Figure out which attribute bonus to add
+	local ability_start_string = ""
+	local ability_end_string = ""
+
+	-- Choose number of abilities
+	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 3 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
+		ability_end_string = "_random_omg_3a2u"
+	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
+		ability_end_string = "_random_omg_4a1u"
+	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 5 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
+		ability_end_string = "_random_omg_5a1u"
+	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
+		ability_end_string = "_random_omg_4a2u"
+	end
+
+	-- Choose attribute
+	if hero:GetPrimaryAttribute() == 0 then
+		ability_start_string = "attribute_bonus_str"
+	elseif hero:GetPrimaryAttribute() == 1 then
+		ability_start_string = "attribute_bonus_agi"
+	elseif hero:GetPrimaryAttribute() == 2 then
+		ability_start_string = "attribute_bonus_int"
+	end
+
+	-- Re-add attribute bonus and store it for reference
+	hero:AddAbility(ability_start_string..ability_end_string)
+	hero.random_omg_abilities[i] = ability_start_string..ability_end_string
+	i = i + 1
+
+	-- Apply ability layout modifier
+	local layout_ability_name
+	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 4 then
+		layout_ability_name = "random_omg_ability_layout_changer_4"
+	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 5 then
+		layout_ability_name = "random_omg_ability_layout_changer_5"
+	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 6 then
+		layout_ability_name = "random_omg_ability_layout_changer_6"
+	end
+
+	hero:AddAbility(layout_ability_name)
+	local layout_ability = hero:FindAbilityByName(layout_ability_name)
+	layout_ability:SetLevel(1)
+	hero.random_omg_abilities[i] = layout_ability_name
+
+	-- Apply high level powerup ability, if previously existing
+	if ability_powerup then
+		hero:AddAbility("imba_unlimited_level_powerup")
+		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		ability_powerup:SetLevel(1)
+		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", powerup_stacks, true)
+	end
+
+end
+
+-- Randoms a hero not in the forbidden Random OMG hero pool
+function PickValidHeroRandomOMG()
+
+	local valid_heroes = {
+		"npc_dota_hero_abaddon",
+		"npc_dota_hero_alchemist",
+		"npc_dota_hero_ancient_apparition",
+		"npc_dota_hero_antimage",
+		"npc_dota_hero_axe",
+		"npc_dota_hero_bane",
+		"npc_dota_hero_bounty_hunter",
+		"npc_dota_hero_centaur",
+		"npc_dota_hero_chaos_knight",
+		"npc_dota_hero_crystal_maiden",
+		"npc_dota_hero_dazzle",
+		"npc_dota_hero_drow_ranger",
+		"npc_dota_hero_earthshaker",
+		"npc_dota_hero_jakiro",
+		"npc_dota_hero_juggernaut",
+		"npc_dota_hero_kunkka",
+		"npc_dota_hero_lich",
+		"npc_dota_hero_lina",
+		"npc_dota_hero_lion",
+		"npc_dota_hero_medusa",
+		"npc_dota_hero_mirana",
+		"npc_dota_hero_naga_siren",
+		"npc_dota_hero_furion",
+		"npc_dota_hero_necrolyte",
+		"npc_dota_hero_obsidian_destroyer",
+		"npc_dota_hero_omniknight",
+		"npc_dota_hero_phantom_assassin",
+		"npc_dota_hero_phantom_lancer",
+		"npc_dota_hero_phoenix",
+		"npc_dota_hero_queenofpain",
+		"npc_dota_hero_sand_king",
+		"npc_dota_hero_shadow_demon",
+		"npc_dota_hero_nevermore",
+		"npc_dota_hero_slark",
+		"npc_dota_hero_sniper",
+		"npc_dota_hero_storm_spirit",
+		"npc_dota_hero_sven",
+		"npc_dota_hero_templar_assassin",
+		"npc_dota_hero_terrorblade",
+		"npc_dota_hero_tinker",
+		"npc_dota_hero_ursa",
+		"npc_dota_hero_vengefulspirit",
+		"npc_dota_hero_venomancer",
+		"npc_dota_hero_wisp"
+	}
+
+	return valid_heroes[RandomInt(1, #valid_heroes)]
+end
+
+-- Checks if a hero is a valid pick in Random OMG
+function IsValidPickRandomOMG( hero )
+
+	local hero_name = hero:GetName()
+
+	local valid_heroes = {
+		"npc_dota_hero_abaddon",
+		"npc_dota_hero_alchemist",
+		"npc_dota_hero_ancient_apparition",
+		"npc_dota_hero_antimage",
+		"npc_dota_hero_axe",
+		"npc_dota_hero_bane",
+		"npc_dota_hero_bounty_hunter",
+		"npc_dota_hero_centaur",
+		"npc_dota_hero_chaos_knight",
+		"npc_dota_hero_crystal_maiden",
+		"npc_dota_hero_dazzle",
+		"npc_dota_hero_drow_ranger",
+		"npc_dota_hero_earthshaker",
+		"npc_dota_hero_jakiro",
+		"npc_dota_hero_juggernaut",
+		"npc_dota_hero_kunkka",
+		"npc_dota_hero_lich",
+		"npc_dota_hero_lina",
+		"npc_dota_hero_lion",
+		"npc_dota_hero_medusa",
+		"npc_dota_hero_mirana",
+		"npc_dota_hero_naga_siren",
+		"npc_dota_hero_furion",
+		"npc_dota_hero_necrolyte",
+		"npc_dota_hero_obsidian_destroyer",
+		"npc_dota_hero_omniknight",
+		"npc_dota_hero_phantom_assassin",
+		"npc_dota_hero_phantom_lancer",
+		"npc_dota_hero_phoenix",
+		"npc_dota_hero_queenofpain",
+		"npc_dota_hero_sand_king",
+		"npc_dota_hero_shadow_demon",
+		"npc_dota_hero_nevermore",
+		"npc_dota_hero_slark",
+		"npc_dota_hero_sniper",
+		"npc_dota_hero_storm_spirit",
+		"npc_dota_hero_sven",
+		"npc_dota_hero_templar_assassin",
+		"npc_dota_hero_terrorblade",
+		"npc_dota_hero_tinker",
+		"npc_dota_hero_ursa",
+		"npc_dota_hero_vengefulspirit",
+		"npc_dota_hero_venomancer",
+		"npc_dota_hero_wisp"
+	}
+
+	for i = 1, #valid_heroes do
+		if valid_heroes[i] == hero_name then
+			return true
+		end
+	end
+
+	return false
+end
+
+-- Removes undesired permanent modifiers in Random OMG mode
+function RemovePermanentModifiersRandomOMG( hero )
+	hero:RemoveModifierByName("modifier_imba_tidebringer_cooldown")
+	hero:RemoveModifierByName("modifier_imba_hunter_in_the_night")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_scepter_check")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_scepter")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_scepter_cooldown")
+	hero:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
+	hero:RemoveModifierByName("modifier_imba_heartstopper_aura")
+	hero:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
+	hero:RemoveModifierByName("modifier_imba_brilliance_aura")
+	hero:RemoveModifierByName("modifier_imba_trueshot_aura_owner_hero")
+	hero:RemoveModifierByName("modifier_imba_trueshot_aura_owner_creep")
+	hero:RemoveModifierByName("modifier_imba_frost_nova_aura")
+	hero:RemoveModifierByName("modifier_imba_moonlight_scepter_aura")
+	hero:RemoveModifierByName("modifier_imba_sadist_aura")
+	hero:RemoveModifierByName("modifier_imba_impale_aura")
+	hero:RemoveModifierByName("modifier_imba_essence_aura")
+	hero:RemoveModifierByName("modifier_imba_degen_aura")
+	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
+	hero:RemoveModifierByName("modifier_borrowed_time")
+	hero:RemoveModifierByName("attribute_bonus_str")
+	hero:RemoveModifierByName("attribute_bonus_agi")
+	hero:RemoveModifierByName("attribute_bonus_int")
+	hero:RemoveModifierByName("modifier_imba_hook_sharp_stack")
+	hero:RemoveModifierByName("modifier_imba_hook_light_stack")
+	hero:RemoveModifierByName("modifier_sven_gods_strength")
+	hero:RemoveModifierByName("modifier_imba_blur")
 end

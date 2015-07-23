@@ -19,6 +19,7 @@ function GameMode:_InitGameMode()
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
+	GameRules:EnableCustomGameSetupAutoLaunch( START_GAME_AUTOMATICALLY )
 
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
@@ -180,6 +181,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	local player = PlayerResource:GetPlayer(player_id)
 	local is_host = GameRules:PlayerHasCustomGameHostPrivileges(player)
 	local mode_info = args.modes
+	local game_mode_imba = GameRules:GetGameModeEntity()    
 
 	-- If the player who sent the game options is not the host, do nothing
 	if not is_host then
@@ -196,30 +198,112 @@ function OnSetGameMode( eventSourceIndex, args )
 		return nil
 	end
 
-	-- Game mode information
-	if (mode_info.game_mode == "random_omg") then
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Pick mode selection
+	-------------------------------------------------------------------------------------------------
+
+	-- Retrieve information
+	if tonumber(mode_info.random_omg) == 1 then
 		IMBA_ABILITY_MODE_RANDOM_OMG = true
 		print("Random OMG mode activated!")
+	elseif tonumber(mode_info.all_random) == 1 then
+		IMBA_PICK_MODE_ALL_RANDOM = true
+		print("All Random mode activated!")
 	end
 
-	-- Gold/XP bounty information
-	HERO_BOUNTY_BONUS = tonumber(mode_info.hero_bounty)
-	CREEP_BOUNTY_BONUS = tonumber(mode_info.creep_bounty)
-	print("hero bounty: "..HERO_BOUNTY_BONUS)
-	print("creep bounty: "..CREEP_BOUNTY_BONUS)
+	-- Enable same hero mode
+	if tonumber(mode_info.allow_same_hero) == 1 then
+		ALLOW_SAME_HERO_SELECTION = true
+		GameRules:SetSameHeroSelectionEnabled( ALLOW_SAME_HERO_SELECTION )
+		print("Same-hero selection enabled!")
+	end
+
+	-- Pick wait time setup
+	if IMBA_ABILITY_MODE_RANDOM_OMG or IMBA_PICK_MODE_ALL_RANDOM then
+		GameRules:SetHeroSelectionTime( IMBA_ALL_RANDOM_HERO_SELECTION_TIME )
+	end
+
+	-- Set game end on kills
+	if tonumber(mode_info.number_of_kills) > 0 then
+		END_GAME_ON_KILLS = true
+		KILLS_TO_END_GAME_FOR_TEAM = tonumber(mode_info.number_of_kills)
+		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Additional Random OMG setup
+	-------------------------------------------------------------------------------------------------
+
+	-- Enable skill randomization on respawn
+	if tonumber(mode_info.randomize_every_spawn) == 1 then
+		IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = true
+		print("Skill randomization on respawn enabled!")
+	else
+		IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = false
+	end
+
+	-- Detect amount of abilities/ultimates to learn each time
+	if mode_info.number_of_abilities == "3a2u" then
+		IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3
+		IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 2
+		print("Random OMG: 3 abilities, 2 ultimates")
+	elseif mode_info.number_of_abilities == "4a1u" then
+		IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 4
+		IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1
+		print("Random OMG: 4 abilities, 1 ultimates")
+	elseif mode_info.number_of_abilities == "4a2u" then
+		IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 4
+		IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 2
+		print("Random OMG: 5 abilities, 2 ultimates")
+	elseif mode_info.number_of_abilities == "5a1u" then
+		IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 5
+		IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1
+		print("Random OMG: 5 abilities, 1 ultimates")
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Gold/XP bounties setup
+	-------------------------------------------------------------------------------------------------
+
+	-- Gold bounties information
+	CREEP_GOLD_BONUS = tonumber(mode_info.gold_bounty)
+	HERO_GOLD_BONUS = tonumber(mode_info.gold_bounty)
+	print("gold bounty increased by: "..HERO_GOLD_BONUS)
+
+	-- XP bounties information
+	CREEP_XP_BONUS = tonumber(mode_info.xp_bounty)
+	HERO_XP_BONUS = tonumber(mode_info.xp_bounty)
+	print("xp bounty increased by: "..HERO_XP_BONUS)
+
+	-- Passive gold adjustment
+	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
+	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Hero levels and respawn setup
+	-------------------------------------------------------------------------------------------------
+
+	-- Enable higher level cap
+	if tonumber(mode_info.level_cap) > 25 then
+		USE_CUSTOM_HERO_LEVELS = true
+		MAX_LEVEL = tonumber(mode_info.level_cap)
+		game_mode_imba:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
+		game_mode_imba:SetCustomHeroMaxLevel ( MAX_LEVEL )
+		print("Heroes can level up to level "..MAX_LEVEL)
+	end
 
 	-- Respawn time information
-	if tonumber(mode_info.respawn_half) == 1 then
+	if mode_info.respawn == "respawn_half" then
 		HERO_RESPAWN_TIME_MULTIPLIER = 50
-	elseif tonumber(mode_info.respawn_zero) == 1 then
+	elseif mode_info.respawn == "respawn_zero" then
 		HERO_RESPAWN_TIME_MULTIPLIER = 0
 	end
 	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
 
 	-- Buyback cost information
-	if tonumber(mode_info.buyback_double) == 1 then
+	if mode_info.buyback == "buyback_double" then
 		HERO_BUYBACK_COST_MULTIPLIER = 200
-	elseif tonumber(mode_info.buyback_none) == 1 then
+	elseif mode_info.buyback == "buyback_none" then
 		HERO_BUYBACK_COST_MULTIPLIER = 99999
 	end
 	print("buyback cost multiplier: "..HERO_BUYBACK_COST_MULTIPLIER)
@@ -227,17 +311,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true
 
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Gamemode setup logic
-	-------------------------------------------------------------------------------------------------
-	
-	-- Random OMG setup
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		GameRules:SetHeroSelectionTime( IMBA_RANDOM_OMG_HERO_SELECTION_TIME )
-	end
-
-	-- Passive gold adjustment
-	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( ( 100 + CREEP_BOUNTY_BONUS ) / 100 )
-	GameRules:SetGoldPerTick( adjusted_gold_per_tick )
+	-- Finish mode setup and start the game
+	GameRules:FinishCustomGameSetup()
 
 end

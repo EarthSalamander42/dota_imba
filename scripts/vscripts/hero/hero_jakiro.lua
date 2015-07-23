@@ -103,9 +103,18 @@ end
 function DualBreathUpgrade( keys )
 	local caster = keys.caster
 	local ability_level = keys.ability:GetLevel()
-	local ability_ice = caster:FindAbilityByName(keys.ability_ice)
-	
-	ability_ice:SetLevel(ability_level)
+	local ability_other = caster:FindAbilityByName(keys.ability_other)
+
+	-- Update variable which tracks this ability's level
+	if not caster.dual_breath_level then
+		caster.dual_breath_level = 1
+	elseif caster.dual_breath_level == ability_level then
+		return nil
+	else
+		caster.dual_breath_level = ability_level
+	end
+
+	ability_other:SetLevel(caster.dual_breath_level)
 end
 
 function DualBreathDamage( keys )

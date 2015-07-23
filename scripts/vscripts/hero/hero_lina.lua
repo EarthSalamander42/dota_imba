@@ -177,6 +177,13 @@ end
 function FierySoul( keys )
 	local caster = keys.caster
 	local ability = caster:FindAbilityByName("imba_lina_fiery_soul")
+
+	-- If Fiery Soul is not leveled, do nothing
+	if not ability then
+		return nil
+	end
+
+	-- Parameters
 	local max_stacks = ability:GetLevelSpecialValueFor("fiery_soul_max_stacks", ability:GetLevel() - 1 )
 	local modifier = "modifier_imba_fiery_soul"
 

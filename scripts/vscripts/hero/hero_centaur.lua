@@ -114,10 +114,11 @@ function Return( keys )
 
 	-- Damages attacker if it hasn't taken return damage in the last second
 	if not attacker:HasModifier(modifier_prevent_return) then
-		ApplyDamage({victim = attacker, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
-		
 		-- Applies "damaged by return" modifier to the attacker
 		ability:ApplyDataDrivenModifier(caster, attacker, modifier_prevent_return, {duration = duration})
+
+		-- Deals damage
+		ApplyDamage({victim = attacker, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
 	end
 end
 

@@ -31,6 +31,7 @@ function GameMode:OnDisconnect(keys)
 			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
 				player_id = id
 				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+				break
 			end
 		end
 
@@ -172,6 +173,24 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG on-respawn skill randomization
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+		if npc:IsRealHero() then
+
+			-- Randomize abilities
+			ApplyAllRandomOmgAbilities(npc)
+
+			-- Clean-up undesired permanent modifiers
+			RemovePermanentModifiersRandomOMG(npc)
+
+			-- Grant unspent skill points equal to the hero's level
+			npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback setup (part 2)
 	-------------------------------------------------------------------------------------------------
 
@@ -211,9 +230,9 @@ function GameMode:OnNPCSpawned(keys)
 		local min_bounty = npc:GetMinimumGoldBounty()
 		local xp_bounty = npc:GetDeathXP()
 
-		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
-		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
-		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_BOUNTY_BONUS / 100 ) ) )
+		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
+		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 	end
 
 end
@@ -267,11 +286,12 @@ function GameMode:OnPlayerReconnect(keys)
 	-- Connection status detection delay
 	Timers:CreateTimer(1, function()
 
-		-- Identify which player just reconnected connected
+		-- Identify which player just reconnected
 		for id = 0, 9 do
 			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
 				player_id = id
 				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+				break
 			end
 		end
 
@@ -378,15 +398,48 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- IMBA: Update hero bounty on level up
 	-------------------------------------------------------------------------------------------------
 
-	-- Calculate new base bounty
+	-- Calculate new base bounties
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
-	local hero_bounty = HERO_KILL_GOLD_BASE + hero_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(hero)
 
-	-- Adjust bounty with the game options multiplier
-	hero_bounty = math.max( hero_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
-	hero:SetMaximumGoldBounty(hero_bounty)
-	hero:SetMinimumGoldBounty(hero_bounty)
+	-- Gold bounty
+	local gold_bounty = HERO_KILL_GOLD_BASE + hero_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(hero)
+
+	-- XP bounty
+	local xp_bounty
+	if hero_level <= 5 then
+		xp_bounty = HERO_KILL_XP_CONSTANT_1 + ( hero_level - 1 ) * HERO_KILL_XP_CONSTANT_2
+	else
+		xp_bounty = ( hero_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
+	end
+
+	-- Adjust bounties with the game options multiplier
+	gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
+	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
+	hero:SetDeathXP(xp_bounty)
+	hero:SetMaximumGoldBounty(gold_bounty)
+	hero:SetMinimumGoldBounty(gold_bounty)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Unlimited level logic
+	-------------------------------------------------------------------------------------------------
+
+	if USE_CUSTOM_HERO_LEVELS and hero_level > 25 then
+
+		-- Prevent the hero from gaining further ability points after level 25
+		hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+
+		-- If the generic powerup isn't present, apply it
+		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		if not ability_powerup then
+			hero:AddAbility("imba_unlimited_level_powerup")
+			ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+			ability_powerup:SetLevel(1)
+		end
+
+		-- Increase the amount of stacks of the high level power-up
+		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", 1, true)
+	end
 
 end
 
@@ -507,14 +560,29 @@ function GameMode:OnEntityKilled( keys )
 	local damagebits = keys.damagebits -- This might always be 0 and therefore useless
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: End game on kills logic
+	-------------------------------------------------------------------------------------------------
+
+	if END_GAME_ON_KILLS then
+		local radiant_kills = PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS)
+		local dire_kills = PlayerResource:GetTeamKills(DOTA_TEAM_BADGUYS)
+
+		if radiant_kills >= KILLS_TO_END_GAME_FOR_TEAM then
+			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+		elseif dire_kills >= KILLS_TO_END_GAME_FOR_TEAM then
+			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
 	
 	if killed_unit:IsRealHero() and PlayerResource:GetPlayer(killed_unit:GetPlayerID()) then
 		
-		-- Calculate base respawn timer
+		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = killed_unit:GetLevel()
-		local respawn_time = HERO_RESPAWN_TIME_BASE + hero_level * HERO_RESPAWN_TIME_PER_LEVEL
+		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
 
 		-- Multiply respawn timer by the lobby options
 		respawn_time = respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100
@@ -585,7 +653,7 @@ function GameMode:OnEntityKilled( keys )
 		-- Killed hero gold loss
 		local killed_level = killed_unit:GetLevel()
 		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
-		killed_gold_loss = -1 * killed_gold_loss * ( 100 + HERO_BOUNTY_BONUS ) / 100
+		killed_gold_loss = -1 * killed_gold_loss * ( 100 + HERO_GOLD_BONUS ) / 100
 		killed_unit:ModifyGold(killed_gold_loss, false, DOTA_ModifyGold_Death)
 
 		-- Nearby allied heroes gold gain
@@ -663,7 +731,7 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Update killed hero's bounty
 		local killed_bounty = HERO_KILL_GOLD_BASE + killed_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killed_unit)
-		killed_bounty = math.max( killed_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
+		killed_bounty = math.max( killed_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
 		killed_unit:SetMaximumGoldBounty(killed_bounty)
 		killed_unit:SetMinimumGoldBounty(killed_bounty)
 
@@ -685,7 +753,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Update killer's bounty
 			local killer_level = killer_hero:GetLevel()
 			local killer_bounty = HERO_KILL_GOLD_BASE + killer_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killer_hero)
-			killer_bounty = math.max( killer_bounty * ( 100 + HERO_BOUNTY_BONUS ) / 100, 0)
+			killer_bounty = math.max( killer_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
 			killer_hero:SetMaximumGoldBounty(killer_bounty)
 			killer_hero:SetMinimumGoldBounty(killer_bounty)
 		end

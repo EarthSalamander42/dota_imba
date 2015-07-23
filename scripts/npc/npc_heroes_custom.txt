@@ -140,7 +140,7 @@
 	{
 		"override_hero"				"npc_dota_hero_centaur"
  
-		"ModelScale" 				".94"
+		"ModelScale" 				".92"
 		
 		"AttributeBaseStrength"		"28"
 		"AttributeStrengthGain"		"4.0"
@@ -902,7 +902,7 @@
 		//"Ability2"					"imba_ursa_overpower"
 		//"Ability3"					"imba_ursa_fury_swipes"
 		//"Ability4"					"ursa_enrage"
-		"Ability5"					"attribute_bonus_agi"
+		"Ability7"					"attribute_bonus_agi"
 	}
 
 	//=================================================================================================================

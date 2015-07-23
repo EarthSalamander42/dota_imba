@@ -6,9 +6,10 @@
 -- Barebones basics
 -------------------------------------------------------------------------------------------------
 
+START_GAME_AUTOMATICALLY = false			-- Should the game start automatically
+
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
-ALLOW_SAME_HERO_SELECTION = false			-- Should we let people select the same hero as each other
 
 HERO_SELECTION_TIME = 50.0					-- How long should we let people select their hero?
 PRE_GAME_TIME = 90.0						-- How long after people select their heroes should the horn blow and the game start?
@@ -44,19 +45,7 @@ ENABLE_TOWER_BACKDOOR_PROTECTION = true		-- Should we enable backdoor protection
 REMOVE_ILLUSIONS_ON_DEATH = false			-- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players get gold?
 
-END_GAME_ON_KILLS = false					-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 5				-- How many kills for a team should signify an end of game?
-
-USE_CUSTOM_HERO_LEVELS = false				-- Should we allow heroes to have custom levels?
-MAX_LEVEL = 25								-- What level should we let heroes get to?
-USE_CUSTOM_XP_VALUES = false				-- Should we use custom XP values to level up heroes, or the default Dota numbers?
-
--- Fill this table up with the required XP per level if you want to change it
---XP_PER_LEVEL_TABLE = {}
-
---for i=1,MAX_LEVEL do
---	XP_PER_LEVEL_TABLE[i] = (i-1) * 100
---end
+USE_CUSTOM_XP_VALUES = true					-- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
@@ -120,13 +109,16 @@ HERO_KILL_GOLD_BASE = 100													-- Hero gold bounty base value
 HERO_KILL_GOLD_PER_LEVEL = 9												-- Hero gold bounty increase per level
 
 HERO_KILL_GOLD_PER_KILLSTREAK = 60											-- Amount of gold awarded per killstreak
-HERO_KILL_GOLD_PER_DEATHSTREAK = 60											-- Amount of gold reduced from the hero's bounty on a deathstreak
+HERO_KILL_GOLD_PER_DEATHSTREAK = 50											-- Amount of gold reduced from the hero's bounty on a deathstreak
+
+HERO_KILL_GOLD_KILLSTREAK_CAP = 1000										-- Maximum percentage of its bounty a hero can grant
+HERO_KILL_GOLD_DEATHSTREAK_CAP = 50											-- Minimum percentage of its bounty a hero can grant
 
 HERO_DEATH_GOLD_LOSS_PER_LEVEL = 30											-- Amount of gold lost on death per level
 
-HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK = 20									-- Amount of gold prevented from being lost on death per deathstreak (in %)
+HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK = 10									-- Amount of gold prevented from being lost on death per deathstreak (in %)
 
-KILLSTREAK_EXP_FACTOR = 1.35												-- Killstreak gold formula exponent
+KILLSTREAK_EXP_FACTOR = 1.2													-- Killstreak gold formula exponent
 
 HERO_ASSIST_RADIUS = 1300													-- Radius around the killed hero where allies will gain assist gold and experience
 
@@ -134,6 +126,9 @@ HERO_ASSIST_BOUNTY_FACTOR_2 = 0.60											-- Factor to multiply the assist bo
 HERO_ASSIST_BOUNTY_FACTOR_3 = 0.40											-- Factor to multiply the assist bounty by when 3 heroes are involved
 HERO_ASSIST_BOUNTY_FACTOR_4 = 0.30											-- Factor to multiply the assist bounty by when 4 heroes are involved
 HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bounty by when 5 heroes are involved
+
+HERO_KILL_XP_CONSTANT_1 = 100												-- XP formula up to level 5 is constant I + (level - 1) * constant II
+HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is the level 5 value + (level - 5) * constant II
 
 HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
 HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the start of the game on repicking their hero
@@ -157,19 +152,54 @@ PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as h
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
+END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
+KILLS_TO_END_GAME_FOR_TEAM = 20												-- How many kills for a team should signify an end of game?
+
 IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true (default mode)
+ALLOW_SAME_HERO_SELECTION = false											-- Allows people to select the same hero as each other if true
+
+IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
+IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
-IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 4									-- Number of regular abilities in Random OMG mode
-IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 2									-- Number of ultimate abilities in Random OMG mode
-IMBA_RANDOM_OMG_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts in Random OMG mode
+IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3									-- Number of regular abilities in Random OMG mode
+IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
+IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = true							-- Randomizes skills every time you die in Random OMG
 
-CREEP_BOUNTY_BONUS = 30														-- Amount of bonus gold/XP granted by creeps and passive gold (in %)
-HERO_BOUNTY_BONUS = 30														-- Amount of bonus gold/XP granted by heroes (in %)
+CREEP_GOLD_BONUS = 30														-- Amount of bonus gold granted by creeps and passive gold (in %)
+HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in %)
+
+CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
+HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
 HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
+
+USE_CUSTOM_HERO_LEVELS = false												-- Should we allow heroes to have custom levels?
+MAX_LEVEL = 25																-- What level should we let heroes get to?
+
+-- XP per level table (only active if custom hero levels are enabled) 
+XP_PER_LEVEL_TABLE = {}
+
+XP_PER_LEVEL_TABLE[1] = 0
+
+for i = 2, 5 do
+	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+end
+
+XP_PER_LEVEL_TABLE[6] = 2000
+XP_PER_LEVEL_TABLE[7] = 2600
+XP_PER_LEVEL_TABLE[8] = 3200
+XP_PER_LEVEL_TABLE[9] = 4400
+XP_PER_LEVEL_TABLE[10] = 5400
+XP_PER_LEVEL_TABLE[11] = 6000
+XP_PER_LEVEL_TABLE[12] = 8200
+XP_PER_LEVEL_TABLE[13] = 9000
+
+for i = 14, 100 do
+	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+end
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Stat collection

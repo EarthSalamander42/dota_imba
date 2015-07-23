@@ -1367,7 +1367,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"extra_phantasm_chance_pct_tooltip"		"0"
+				"extra_phantasm_chance_pct_tooltip"		"50"
 			}
 			"03"
 			{
@@ -4741,7 +4741,7 @@
 	{
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"1.0"
 		"AbilityDuration"				"30.0"
 
 		"AbilityManaCost"				"125 100 75 50"

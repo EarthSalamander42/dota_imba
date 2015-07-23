@@ -9335,22 +9335,45 @@
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg"		"300"
+				"proc_speed"			"1200"
 			}
-			"15"
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg_tooltip"		"400"
+				"ScriptFile"			"items/item_yasha.lua"
+				"Function"				"YashaProjectileHit"
 			}
-			"16"
+
+			"ActOnTargets"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg"		"-50"
-			}
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg_tooltip"		"35"
+				"Target"
+				{
+					"Center"  				"TARGET"
+					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				}
+			
+				"Action"
+				{
+					"FireSound"
+					{
+						"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+						"Target"			"TARGET"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_item_imba_sange_and_yasha_proc_effect"
+						"Duration"			"%proc_duration"
+						"Target"			"TARGET"
+					}
+				}
 			}
 		}
 		
@@ -9399,64 +9422,13 @@
 						
 						"OnSuccess"
 						{
-							"ActOnTargets"
-							{
-								"Target"
-								{
-									"Center"  				"TARGET"
-									"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							
-								"Action"    
-								{
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-										"Target"			"TARGET"
-									}
-
-									"ApplyModifier"
-									{
-										"ModifierName"		"modifier_item_imba_sange_and_yasha_proc_effect"
-										"Duration"			"%proc_duration"
-										"Target"			"TARGET"
-									}
-								}
-							}
-
-							"FireSound"
-							{
-								"EffectName"				"Hero_PhantomLancer.Doppelganger.Appear"
-								"Target"					"CASTER"
-							}
-
-							"FireEffect"
-							{
-								"EffectName"				"particles/items2_fx/butterfly_active.vpcf"
-								"EffectAttachType"			"attach_origin"
-								
-								"ControlPointEntities"
-								{
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-								}
-							}
-
 							"RunScript"
 							{
 								"ScriptFile"				"items/item_sange_and_yasha.lua"
-								"Function"					"YashaIllusion"
+								"Function"					"YashaProc"
 
-								"modifier_stacks"			"modifier_item_imba_sange_and_yasha_stack"
-								"modifier_yasha"			"modifier_item_imba_yasha_proc"
-								"modifier_yasha_2"			"modifier_item_imba_azura_and_yasha_proc"
-								"modifier_yasha_3"			"modifier_item_imba_sange_and_yasha_proc"
-								"modifier_yasha_4"			"modifier_item_imba_sange_and_azura_and_yasha_proc"
-								"modifier_yasha_5"			"modifier_item_imba_manta_proc"
-								"modifier_yasha_6"			"modifier_item_imba_sange_and_azura_proc"
+								"particle_projectile"		"particles/item/yasha/yasha_projectile.vpcf"
+								"sound_projectile"			"Hero_PhantomLancer.Doppelganger.Appear"
 							}
 						}
 					}
@@ -10363,6 +10335,7 @@
 		"precache"
 		{
 			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+			"particle"					"particles/item/yasha/yasha_projectile.vpcf"
 		}
 
 		// Special	
@@ -10411,28 +10384,19 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"3.0"
-			}
-			"10"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg"		"300"
+				"proc_speed"			"1200"
 			}
-			"11"
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg_tooltip"		"400"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg"		"-50"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg_tooltip"		"35"
+				"ScriptFile"			"items/item_yasha.lua"
+				"Function"				"YashaProjectileHit"
 			}
 		}
 		
@@ -10479,37 +10443,13 @@
 
 						"OnSuccess"
 						{
-							"FireSound"
-							{
-								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
-								"Target"			"CASTER"
-							}
-
-							"FireEffect"
-							{
-								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
-								"EffectAttachType"	"attach_origin"
-								
-								"ControlPointEntities"
-								{
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-								}
-							}
-
 							"RunScript"
 							{
 								"ScriptFile"			"items/item_yasha.lua"
-								"Function"				"YashaIllusion"
+								"Function"				"YashaProc"
 
-								"modifier_stacks"		"modifier_item_imba_yasha_stacks"
-								"modifier_yasha"		"modifier_item_imba_yasha_proc"
-								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
-								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
-								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
-								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
-								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
+								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
 							}
 						}
 					}
@@ -12150,7 +12090,7 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"			"modifier_item_imba_sange_disarm"
+				"ModifierName"			"modifier_item_imba_halberd_disarm"
 				"Duration"				"%disarm_melee"
 				"Target"
 				{
@@ -12163,7 +12103,7 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"			"modifier_item_imba_sange_disarm"
+				"ModifierName"			"modifier_item_imba_halberd_disarm"
 				"Duration"				"%disarm_range"
 				"Target"
 				{
@@ -12193,11 +12133,22 @@
 				}
 			}
 
-			"modifier_item_imba_sange_effects"
+			"modifier_item_imba_halberd_effects"
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"internal/util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_item_imba_halberd_effects"
+					}
+				}
 
 				"OnAttackLanded"
 				{
@@ -12221,7 +12172,7 @@
 
 							"ApplyModifier"
 							{
-								"ModifierName"		"modifier_item_imba_sange_disarm"
+								"ModifierName"		"modifier_item_imba_halberd_disarm"
 								"Duration"			"%disarm_passive"
 								"Target"
 								{
@@ -12236,13 +12187,46 @@
 
 					"RunScript"
 					{
-						"ScriptFile"				"items/item_sange.lua"
+						"ScriptFile"				"items/item_halberd.lua"
 						"Function"					"Maim"
 
-						"modifier_maim"				"modifier_item_imba_sange_maim"
+						"modifier_maim"				"modifier_item_imba_halberd_maim"
 						"sound_maim"				"DOTA_Item.Maim"
 					}
 				}	
+			}
+
+			"modifier_item_imba_halberd_disarm"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"EffectName"			"particles/items2_fx/heavens_halberd.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_item_imba_halberd_maim"
+			{
+				"IsDebuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+
+				"Duration"				"%maim_duration"
+
+				"EffectName"			"particles/items2_fx/sange_maim.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1" 
+				}
 			}
 		}
 	}
@@ -13035,22 +13019,52 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg"		"300"
+				"proc_speed"			"1200"
 			}
-			"14"
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg_tooltip"		"400"
+				"ScriptFile"			"items/item_yasha.lua"
+				"Function"				"YashaProjectileHit"
 			}
-			"15"
+
+			"ActOnTargets"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg"		"-50"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg_tooltip"		"35"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				}
+			
+				"Action"    
+				{
+					"FireEffect"
+					{
+						"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"DOTA_Item.DiffusalBlade.Target"
+						"Target" 			"TARGET"
+					}
+
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%proc_damage"
+					}
+				}
 			}
 		}
 		
@@ -13098,71 +13112,13 @@
 						
 						"OnSuccess"
 						{
-							"ActOnTargets"
-							{
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							
-								"Action"    
-								{
-									"FireEffect"
-									{
-										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
-										"EffectAttachType"	"follow_origin"
-										"Target"			"TARGET"
-									}
-
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.DiffusalBlade.Target"
-										"Target" 			"TARGET"
-									}
-
-									"Damage"
-									{
-										"Target"			"TARGET"
-										"Type"				"DAMAGE_TYPE_MAGICAL"
-										"Damage"			"%proc_damage"
-									}
-								}
-							}
-
-							"FireSound"
-							{
-								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
-								"Target"			"CASTER"
-							}
-
-							"FireEffect"
-							{
-								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
-								"EffectAttachType"	"attach_origin"
-								
-								"ControlPointEntities"
-								{
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-								}
-							}
-
 							"RunScript"
 							{
 								"ScriptFile"			"items/item_azura_and_yasha.lua"
-								"Function"				"YashaIllusion"
+								"Function"				"YashaProc"
 
-								"modifier_stacks"		"modifier_item_imba_azura_and_yasha_stack"
-								"modifier_yasha"		"modifier_item_imba_yasha_proc"
-								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
-								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
-								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
-								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
-								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
+								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
 							}
 						}
 					}
@@ -13375,22 +13331,65 @@
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg"		"300"
+				"proc_speed"			"1200"
 			}
-			"17"
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_incoming_dmg_tooltip"		"400"
+				"ScriptFile"			"items/item_yasha.lua"
+				"Function"				"YashaProjectileHit"
 			}
-			"18"
+
+			"ActOnTargets"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg"		"-50"
-			}
-			"19"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"illu_outgoing_dmg_tooltip"		"35"
+				"Target"
+				{
+					"Center"	"TARGET"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+				}
+			
+				"Action"
+				{
+					"FireEffect"
+					{
+						"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
+						"Target" 			"TARGET"
+					}
+
+					"FireSound"
+					{
+						"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
+						"Target"			"TARGET"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
+						"Duration"			"%proc_duration"
+						"Target"			"TARGET"
+					}
+
+					"Damage"
+					{
+						"Target"			"TARGET"
+						"Type"				"DAMAGE_TYPE_MAGICAL"
+						"Damage"			"%proc_damage"
+					}
+				}
 			}
 		}
 		
@@ -13440,84 +13439,13 @@
 						
 						"OnSuccess"
 						{
-							"ActOnTargets"
-							{
-								"Target"
-								{
-									"Center"	"TARGET"
-									"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							
-								"Action"    
-								{
-									"FireEffect"
-									{
-										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
-										"EffectAttachType"	"follow_origin"
-										"Target"			"TARGET"
-									}
-
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
-										"Target" 			"TARGET"
-									}
-
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-										"Target"			"TARGET"
-									}
-
-									"ApplyModifier"
-									{
-										"ModifierName"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
-										"Duration"			"%proc_duration"
-										"Target"			"TARGET"
-									}
-
-									"Damage"
-									{
-										"Target"			"TARGET"
-										"Type"				"DAMAGE_TYPE_MAGICAL"
-										"Damage"			"%proc_damage"
-									}
-								}
-							}
-
-							"FireSound"
-							{
-								"EffectName"		"Hero_PhantomLancer.Doppelganger.Appear"
-								"Target"			"CASTER"
-							}
-
-							"FireEffect"
-							{
-								"EffectName"		"particles/items2_fx/butterfly_active.vpcf"
-								"EffectAttachType"	"attach_origin"
-								
-								"ControlPointEntities"
-								{
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-									"CASTER"	"follow_origin"
-								}
-							}
-
 							"RunScript"
 							{
 								"ScriptFile"			"items/item_sange_and_azura_and_yasha.lua"
-								"Function"				"YashaIllusion"
+								"Function"				"YashaProc"
 
-								"modifier_stacks"		"modifier_item_imba_sange_and_azura_and_yasha_stack"
-								"modifier_yasha"		"modifier_item_imba_yasha_proc"
-								"modifier_yasha_2"		"modifier_item_imba_azura_and_yasha_proc"
-								"modifier_yasha_3"		"modifier_item_imba_sange_and_yasha_proc"
-								"modifier_yasha_4"		"modifier_item_imba_sange_and_azura_and_yasha_proc"
-								"modifier_yasha_5"		"modifier_item_imba_manta_proc"
-								"modifier_yasha_6"		"modifier_item_imba_sange_and_azura_proc"
+								"particle_projectile"	"particles/item/sange_and_azura_and_yasha/triumvirate_projectile.vpcf"
+								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
 							}
 						}
 					}

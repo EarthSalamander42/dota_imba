@@ -31,23 +31,13 @@ function Yasha( keys )
 	end
 end
 
-function YashaIllusion( keys )
+function YashaProc( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_stacks = keys.modifier_stacks
-	local modifier_yasha = keys.modifier_yasha
-	local modifier_yasha_2 = keys.modifier_yasha_2
-	local modifier_yasha_3 = keys.modifier_yasha_3
-	local modifier_yasha_4 = keys.modifier_yasha_4
-	local modifier_yasha_5 = keys.modifier_yasha_5
-	local modifier_yasha_6 = keys.modifier_yasha_6
-
-	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	end
+	local particle_projectile = keys.particle_projectile
+	local sound_projectile = keys.sound_projectile
 
 	-- If a higher-priority illusion generation buff is present, do nothing
 	if caster:HasModifier("modifier_item_imba_azura_and_yasha_proc") or caster:HasModifier("modifier_item_imba_sange_and_yasha_proc") or caster:HasModifier("modifier_item_imba_sange_and_azura_and_yasha_proc") then
@@ -55,73 +45,33 @@ function YashaIllusion( keys )
 	end
 
 	-- Parameters
-	local illusion_duration = ability:GetLevelSpecialValueFor("proc_duration", ability_level)
-	local illusion_incoming_dmg = ability:GetLevelSpecialValueFor("illu_incoming_dmg", ability_level)
-	local illusion_outgoing_dmg = ability:GetLevelSpecialValueFor("illu_outgoing_dmg", ability_level)
-	local player = caster:GetPlayerID()
-	local hero_name = caster:GetUnitName()
-	local illusion_pos = caster:GetAbsOrigin() + RandomVector(100)
+	local proc_speed = ability:GetLevelSpecialValueFor("proc_speed", ability_level)
 
-	-- Spawn the illusion
-	local illusion = CreateUnitByName(hero_name, illusion_pos, true, caster, nil, caster:GetTeamNumber())
+	-- Play sound
+	caster:EmitSound(sound_projectile)
 
-	-- Without MakeIllusion the unit counts as a hero, e.g. if it dies to neutrals it says killed by neutrals, it respawns, etc.
-	illusion:SetPlayerID(player)
-	illusion:MakeIllusion()
-	ability:ApplyDataDrivenModifier(caster, illusion, "modifier_item_imba_yasha_illusion_effect", {})
-
-	-- Set the unit as an illusion
-	-- modifier_illusion controls many illusion properties like +green damage not adding to the unit damage, not being able to cast spells and the team-only blue particle 
-	illusion:AddNewModifier(caster, ability, "modifier_illusion", {duration = illusion_duration, outgoing_damage = illusion_outgoing_dmg, incoming_damage = illusion_incoming_dmg })
-
-	-- Set the illusion's HP the same as the caster's
-	illusion:SetHealth(caster:GetHealth())
-	
- 	-- Level up the illusion to the caster's level
-	local caster_level = caster:GetLevel()
-	for i = 1, caster_level - 1 do
-		illusion:HeroLevelUp(false)
-	end
-
-	-- Recreate the items of the caster
-	for item_slot = 0,5 do
-		local item = caster:GetItemInSlot(item_slot)
-		if item ~= nil then
-			local item_name = item:GetName()
-			local new_item = CreateItem(item_name, illusion, illusion)
-			illusion:AddItem(new_item)
-		end
-	end
-
-	-- Add the current amount of Battle Rhythm stacks to the illusion
-	if caster:HasModifier(modifier_stacks) then
-		local current_stacks = caster:GetModifierStackCount(modifier_stacks, ability)
-		AddStacks(ability, caster, illusion, modifier_stacks, current_stacks, true)
-	end
-
-	-- Removes the yasha modifier, to prevent illusions spawning new illusions
-	illusion:RemoveModifierByName(modifier_yasha)
-	illusion:RemoveModifierByName(modifier_yasha_2)
-	illusion:RemoveModifierByName(modifier_yasha_3)
-	illusion:RemoveModifierByName(modifier_yasha_4)
-	illusion:RemoveModifierByName(modifier_yasha_5)
-	illusion:RemoveModifierByName(modifier_yasha_6)
-
-	-- Make the illusion attack the current target immediately
-	illusion:SetForceAttackTarget(target)
-
-	-- Set the skill points to 0
-	illusion:SetAbilityPoints(0)
+	-- Spawn a homing projectile which flies toward the target
+	local yasha_projectile = {
+		Target = target,
+		Source = caster,
+		Ability = ability,
+		EffectName = particle_projectile,
+		bDodgeable = false,
+		bProvidesVision = false,
+		iMoveSpeed = proc_speed,
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
+	ProjectileManager:CreateTrackingProjectile(yasha_projectile)
 end
 
-function IllusionKillBounty( keys )
+function YashaProjectileHit( keys )
 	local caster = keys.caster
-	local unit = keys.unit
+	local target = keys.target
+	local ability = keys.ability
 
-	if not unit:IsHero() then
-		local bounty = unit:GetGoldBounty()
-		caster:ModifyGold(bounty, false, DOTA_ModifyGold_CreepKill)
-		unit:EmitSound("General.Coins")
-		SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, unit, bounty, nil)
-	end
+	-- Calculate damage
+	local damage = caster:GetAttackDamage()
+
+	-- Apply damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end

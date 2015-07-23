@@ -187,6 +187,10 @@ function Track( keys )
 	bonus_gold_self = bonus_gold_self + target_level * bonus_gold_self_per_lvl
 	bonus_gold = bonus_gold + target_level * bonus_gold_per_lvl
 
+	-- Multiplies bonus gold value by the hero bounty and deathstreak multipliers
+	bonus_gold_self = bonus_gold_self * ( 1 + HERO_GOLD_BONUS / 100) * math.max(0, 1 - target.death_streak_count * HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK / 100)
+	bonus_gold = bonus_gold * ( 1 + HERO_GOLD_BONUS / 100) * math.max(0, 1 - target.death_streak_count * HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK / 100)
+
 	-- Finds all valid friendly heroes within the bonus gold radius
 	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , targetLocation, nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, 0, 0, false)
 
@@ -201,6 +205,7 @@ function Track( keys )
 
 	-- Checks if the target is alive when the modifier is destroyed
 	if not target:IsAlive() then
+
 		-- If the Track debuff is Scepter-upgraded, decreases target's unreliable gold
 		if modifier == track_scepter_modifier then
 			gold_to_steal = (-1) * gold_to_steal
