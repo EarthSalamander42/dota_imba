@@ -710,6 +710,11 @@ end
 -- Grants a given hero an appropriate amount of Random OMG abilities
 function ApplyAllRandomOmgAbilities( hero )
 
+	-- If there's no valid hero, do nothing
+	if not hero then
+		return nil
+	end
+
 	-- Check if the high level power-up ability is present
 	local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 	local powerup_stacks
@@ -733,13 +738,8 @@ function ApplyAllRandomOmgAbilities( hero )
 	end
 
 	-- Initialize the precache list if necessary
-	if not GameMode.precached_hero_list then
-		GameMode.precached_hero_list = {}
-		for id = 0, 9 do
-			if GameMode.players[id] and GameMode.players[id] ~= "empty_player_slot" then
-				table.insert(GameMode.precached_hero_list, GameMode.heroes[id]:GetName())
-			end
-		end
+	if not PRECACHED_HERO_LIST then
+		PRECACHED_HERO_LIST = {}
 	end
 
 	-- Add new regular abilities
@@ -759,16 +759,16 @@ function ApplyAllRandomOmgAbilities( hero )
 
 			-- Check if this hero has been precached before
 			local is_precached = false
-			for j = 1, #GameMode.precached_hero_list do
-				if GameMode.precached_hero_list[j] == ability_owner then
+			for j = 1, #PRECACHED_HERO_LIST do
+				if PRECACHED_HERO_LIST[j] == ability_owner then
 					is_precached = true
 				end
 			end
 
 			-- If not, do so and add it to the precached heroes list
 			if not is_precached then
-				PrecacheUnitByNameAsync(ability_owner, function(...) end)
-				table.insert(GameMode.precached_hero_list, ability_owner)
+				PrecacheUnitWithQueue(ability_owner)
+				table.insert(PRECACHED_HERO_LIST, ability_owner)
 			end
 
 			-- Store it for later reference
@@ -778,7 +778,7 @@ function ApplyAllRandomOmgAbilities( hero )
 	end
 
 	-- Add new ultimate abilities
-	while i <= IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT do
+	while i <= ( IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT ) do
 
 		-- Randoms an ability from the list of legal random omg ultimates
 		local randomed_ultimate
@@ -793,8 +793,8 @@ function ApplyAllRandomOmgAbilities( hero )
 
 			-- Check if this hero has been precached before
 			local is_precached = false
-			for j = 1, #GameMode.precached_hero_list do
-				if GameMode.precached_hero_list[j] == ultimate_owner then
+			for j = 1, #PRECACHED_HERO_LIST do
+				if PRECACHED_HERO_LIST[j] == ultimate_owner then
 					is_precached = true
 				end
 			end
@@ -802,7 +802,7 @@ function ApplyAllRandomOmgAbilities( hero )
 			-- If not, do so and add it to the precached heroes list
 			if not is_precached then
 				PrecacheUnitByNameAsync(ultimate_owner, function(...) end)
-				table.insert(GameMode.precached_hero_list, ultimate_owner)
+				table.insert(PRECACHED_HERO_LIST, ultimate_owner)
 			end
 
 			-- Store it for later reference
@@ -1007,4 +1007,30 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_hook_light_stack")
 	hero:RemoveModifierByName("modifier_sven_gods_strength")
 	hero:RemoveModifierByName("modifier_imba_blur")
+	hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
+	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
+	hero:RemoveModifierByName("modifier_imba_flesh_heap_stacks")
 end
+
+-- Precaches an unit, or, if something else is being precached, enters it into the precache queue
+function PrecacheUnitWithQueue( unit_name )
+	
+	Timers:CreateTimer(0, function()
+
+		-- If something else is being precached, wait one second
+		if UNIT_BEING_PRECACHED then
+			return 1
+
+		-- Otherwise, start precaching and block other calls from doing so
+		else
+			UNIT_BEING_PRECACHED = true
+			PrecacheUnitByNameAsync(unit_name, function(...) end)
+
+			-- Release the queue after one second
+			Timers:CreateTimer(1, function()
+				UNIT_BEING_PRECACHED = false
+			end)
+		end
+	end)
+end
+	
