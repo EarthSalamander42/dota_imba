@@ -48,7 +48,7 @@ function ArcaneOrbRestoreMana( keys )
 	local ability = caster:FindAbilityByName(keys.ability_name)
 
 	-- Check if Essence Aura is learned
-	if ability:GetLevel() == 0 then
+	if not ability or ability:GetLevel() == 0 then
 		return
 	end
 

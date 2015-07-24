@@ -3155,11 +3155,13 @@
 	//=================================================================================================================
 	"shadow_demon_disruption"
 	{
-		"AbilityCooldown"									"25.0 20.0 15.0 10.0"
+		"AbilityCooldown"									"15.0 12.5 10.0 7.5"
 
 		"AbilityCastPoint"									"0.2"
 
-		"AbilityManaCost"									"120"
+		"AbilityCastRange"									"800"
+
+		"AbilityManaCost"									"120 110 100 90"
 
 		"AbilitySpecial"
 		{
@@ -3171,7 +3173,7 @@
 			"02"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"illusion_duration"							"6.0 8.0 10.0 12.0"
+				"illusion_duration"							"5.0 6.0 7.0 8.0"
 			}
 			"03"
 			{
@@ -3203,7 +3205,7 @@
 	{
 		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
 
-		"AbilityCastRange"				"600 700 800 900"
+		"AbilityCastRange"				"600 750 900 1050"
 		
 		"AbilityCastPoint"				"0.2"
 

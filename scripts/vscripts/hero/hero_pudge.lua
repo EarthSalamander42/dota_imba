@@ -118,6 +118,10 @@ function MeatHook( keys )
 	hook_dummy:AddNewModifier(caster, nil, "modifier_phased", {})
 	ability:ApplyDataDrivenModifier(caster, hook_dummy, modifier_dummy, {})
 	hook_dummy:SetForwardVector(caster:GetForwardVector())
+
+	-- Make the hook always visible to both teams
+	caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, hook_range / hook_speed)
+	caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, hook_range / hook_speed)
 	
 	-- Attach the Hook particle
 	local hook_pfx = ParticleManager:CreateParticle(particle_hook, PATTACH_RENDERORIGIN_FOLLOW, caster)

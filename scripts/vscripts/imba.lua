@@ -311,6 +311,9 @@ function GameMode:OnHeroInGame(hero)
 
 		-- Set initial gold for the mode 
 		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
+
+		-- Randomize abilities
+		ApplyAllRandomOmgAbilities(hero)
 	end
 
 	if IMBA_PICK_MODE_ALL_RANDOM then
@@ -361,18 +364,6 @@ function GameMode:OnHeroInGame(hero)
 			end)
 		end)
 	end)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG ability setup
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-
-		-- Artifically delay skill selection and precaching to space it out over time
-		Timers:CreateTimer(player:GetPlayerID() * 0.1, function()
-			ApplyAllRandomOmgAbilities(hero)
-		end)
-	end
 
 end
 

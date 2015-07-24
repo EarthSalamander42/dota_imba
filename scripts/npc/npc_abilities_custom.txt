@@ -9049,7 +9049,17 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"220 330 440"			
+		"AbilityManaCost"				"220 330 440"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
+			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
+			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9127,16 +9137,6 @@
 			}
 		}
 		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-			"particle"						"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
-			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
-			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
-		}
-		
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -9144,7 +9144,7 @@
 				"ScriptFile"				"hero/hero_jakiro.lua"
 				"Function"					"Macropyre"
 				
-				"fire_particle"				"particles/units/heroes/hero_jakiro/jakiro_macropyre.vpcf"
+				"fire_particle"				"particles/hero/jakiro/jakiro_macropyre.vpcf"
 				"ice_particle"				"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
 				"modifier"					"modifier_imba_macropyre"
 				"modifier_scepter"			"modifier_imba_macropyre_scepter"
