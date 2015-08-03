@@ -3079,7 +3079,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"15"
+				"vampiric_aura"			"20"
 			}
 			"03"
 			{
@@ -3146,15 +3146,19 @@
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"			"%damage_aura"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"					"%hp_regen_aura"
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"1.2"  //This is hardcoded due to an obscure engine bug.
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"1.1"  //This is hardcoded due to an obscure engine bug.
 				}
 
-				"OnDealDamage"
+				"OnAttackLanded"
 				{
-					"Lifesteal"
+					"RunScript"
 					{
-						"Target"			"ATTACKER"
-						"LifestealPercent"	"%vampiric_aura"
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirOffering"
+
+						"damage"			"%attack_damage"
+						"particle_hero"		"particles/generic_gameplay/generic_lifesteal.vpcf"
+						"particle_creeps"	"particles/generic_gameplay/generic_lifesteal_lanecreeps.vpcf"
 					}
 				}
 			}		
@@ -3195,7 +3199,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vampiric_aura"			"15"
+				"hero_lifesteal"		"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_lifesteal"		"5"
 			}
 			"03"
 			{
@@ -3278,15 +3287,19 @@
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"			"%damage_aura"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE"				"%armor_aura"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"					"%hp_regen_aura"
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"1.2"  //This is hardcoded due to an obscure engine bug.
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"						"1.25"  //This is hardcoded due to an obscure engine bug.
 				}
 
 				"OnDealDamage"
 				{
-					"Lifesteal"
+					"RunScript"
 					{
-						"Target"			"ATTACKER"
-						"LifestealPercent"	"%vampiric_aura"
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirBlood"
+
+						"damage"			"%attack_damage"
+						"particle_hero"		"particles/item/vladmir/vladmir_blood_lifesteal.vpcf"
+						"particle_creeps"	"particles/item/vladmir/vladmir_offering_lifesteal_creeps.vpcf"
 					}
 				}
 
@@ -7593,7 +7606,7 @@
 	//=================================================================================================================
 	// Recipe: Rapier
 	//=================================================================================================================
-	"item_recipe_imba_rapier"
+	"item_recipe_imba_rapier_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -7608,23 +7621,221 @@
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_rapier"
+		"ItemResult"					"item_imba_rapier_1"
 		"ItemRequirements"
 		{
 			"01"						"item_imba_relic;item_imba_demon_edge"
 		}
 	}
+
+	"item_recipe_imba_rapier_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2137"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_2"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_1;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2138"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_3"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_2;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2139"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_4"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_3;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2140"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_5"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_4;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2141"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_6"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_5;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2142"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_7"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_6;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2143"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_8"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_7;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2144"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_9"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_8;item_imba_rapier_1"
+		}
+	}
+
+	"item_recipe_imba_rapier_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2145"
+		"BaseClass"						"item_datadriven"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_rapier_10"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_rapier_9;item_imba_rapier_1"
+		}
+	}
 	
 	//=================================================================================================================
-	// Rapier
+	// Rapier I
 	//=================================================================================================================
-	"item_imba_rapier"
+	"item_imba_rapier_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2065"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_rapier"
+		"AbilityTextureName" 			"item_imba_rapier_1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
@@ -7640,11 +7851,10 @@
 		"ItemDroppable" 				"0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
 		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemInitialCharges"			"1"
-		"ItemDisplayCharges"			"1"
-		"ItemStackable"					"1"
+		"ItemStackable"					"0"
 		"ItemRequiresCharges"			"0"
-		
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -7661,26 +7871,29 @@
 			}
 		}
 
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnEquip"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_rapier.lua"
-				"Function"				"RapierPickup"
-			}
-		}
-
 		"Modifiers"
 		{
 			"modifier_item_imba_rapier"
 			{
+				"Passive"				"1"
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
 		
 				"OnDealDamage"
 				{
@@ -7693,11 +7906,6 @@
 					}
 				}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 	"%damage"
-				}
-
 				"OnCreated"
 				{
 					"RunScript"
@@ -7705,7 +7913,7 @@
 						"ScriptFile"	"internal/util.lua"
 						"Function"		"IllusionPassiveRemover"
 
-						"modifier"		"modifier_item_imba_rapier"
+						"modifier"		"modifier_item_imba_rapier_damage"
 					}
 				}
 			}
@@ -7726,7 +7934,7 @@
 					}
 				}
 
-				"ThinkInterval"  		"0.1"
+				"ThinkInterval"			"0.1"
 
 				"OnIntervalThink"
 				{
@@ -7739,7 +7947,1378 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Rapier II
+	//=================================================================================================================
+	"item_imba_rapier_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2146"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"12400"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"200"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier III
+	//=================================================================================================================
+	"item_imba_rapier_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2147"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_3"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"18600"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"300"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier IV
+	//=================================================================================================================
+	"item_imba_rapier_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2148"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_4"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"24800"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"400"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier V
+	//=================================================================================================================
+	"item_imba_rapier_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2149"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"31000"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"500"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier VI
+	//=================================================================================================================
+	"item_imba_rapier_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2150"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_6"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"37200"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"600"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier VII
+	//=================================================================================================================
+	"item_imba_rapier_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2151"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_7"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"43400"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"700"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier VIII
+	//=================================================================================================================
+	"item_imba_rapier_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2152"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_8"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"49600"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"800"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier IX
+	//=================================================================================================================
+	"item_imba_rapier_9"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2153"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_9"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"55800"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"900"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier X
+	//=================================================================================================================
+	"item_imba_rapier_10"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2154"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_10"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"62000"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"divine rapier"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+		"ItemContributesToNetWorthWhenDropped"	"0"
+		"ItemStackable"					"0"
+		"ItemRequiresCharges"			"0"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amplify"		"1000"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
+				}
+			}
+
+			"modifier_item_imba_rapier_damage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDamage"
+
+						"damage"		"%attack_damage"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_rapier_damage"
+					}
+				}
+			}
+
+			"modifier_item_imba_rapier_drop"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"RapierDrop"
+					}
+				}
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_rapier.lua"
+						"Function"		"AegisCheck"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rapier Ground Dummies
+	//=================================================================================================================
+	"item_imba_rapier_1_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2155"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"1"
+			}
+		}
+	}
+
+	"item_imba_rapier_2_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2156"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"2"
+			}
+		}
+	}
+
+	"item_imba_rapier_3_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2157"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_3"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"3"
+			}
+		}
+	}
+
+	"item_imba_rapier_4_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2158"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_4"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"4"
+			}
+		}
+	}
 	
+	"item_imba_rapier_5_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2159"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"5"
+			}
+		}
+	}
+
+	"item_imba_rapier_6_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2160"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_6"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"6"
+			}
+		}
+	}
+
+	"item_imba_rapier_7_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2161"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_7"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"7"
+			}
+		}
+	}
+
+	"item_imba_rapier_8_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2162"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_8"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"8"
+			}
+		}
+	}
+
+	"item_imba_rapier_9_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2163"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_9"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"9"
+			}
+		}
+	}
+
+	"item_imba_rapier_10_dummy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2164"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_rapier_10"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"Model"							"models/props_gameplay/divine_rapier.mdl"
+
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_rapier.lua"
+				"Function"				"RapierPickUp"
+
+				"rapier_level"			"10"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Recipe: Monkey King Bar
 	//=================================================================================================================
@@ -14400,5 +15979,5 @@
 		}
 	}
 
-	//next free ID: 2137
+	//next free ID: 2165
 }

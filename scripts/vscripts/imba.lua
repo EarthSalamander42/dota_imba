@@ -365,6 +365,12 @@ function GameMode:OnHeroInGame(hero)
 		end)
 	end)
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Initialize innate hero abilities
+	-------------------------------------------------------------------------------------------------
+
+	InitializeInnateAbilities(hero)
+
 end
 
 --[[

@@ -80,6 +80,18 @@ function Heartstopper( keys )
 	end
 end
 
+function HeartstopperUpdate( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_aura = keys.modifier_aura
+
+	-- Remove the old modifier
+	caster:RemoveModifierByName(modifier_aura)
+
+	-- Re-apply an updated version of it
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
+end
+
 function HeartstopperEnd( keys )
 	local caster = keys.caster
 	local ability = keys.ability

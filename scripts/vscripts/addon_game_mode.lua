@@ -20,6 +20,7 @@ function Precache( context )
 	-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
 	PrecacheResource("particle", "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", context)
 	PrecacheResource("particle_folder", "particles/hero", context)
+	PrecacheResource("particle_folder", "particles/generic_gameplay", context)
 	PrecacheResource("particle_folder", "particles/item", context)
 	PrecacheResource("particle_folder", "particles/items_fx/", context)
 	PrecacheResource("particle_folder", "particles/items2_fx/", context)

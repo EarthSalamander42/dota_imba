@@ -205,7 +205,7 @@ function FierySoulActivate( keys )
 
 	-- If not at maximum number of stacks, do nothing
 	if caster:GetModifierStackCount("modifier_imba_fiery_soul", ability) < max_stacks then
-		return
+		return nil
 	end
 
 	-- Play the sound
@@ -221,10 +221,6 @@ function FierySoulActivate( keys )
 	local blazing_soul = keys.blazing_soul
 	local laguna_blade = keys.laguna_blade
 	local laguna_blade_fiery = keys.laguna_blade_fiery
-	if scepter then
-		laguna_blade = keys.laguna_scepter
-		laguna_blade_fiery = keys.laguna_scepter_fiery
-	end
 
 	-- Remove the fiery soul stacks and grant blazing soul
 	caster:RemoveModifierByName("modifier_imba_fiery_soul")
@@ -260,10 +256,6 @@ function FierySoulEnd( keys )
 	local blazing_soul = keys.blazing_soul
 	local laguna_blade = keys.laguna_blade
 	local laguna_blade_fiery = keys.laguna_blade_fiery
-	if scepter then
-		laguna_blade = keys.laguna_scepter
-		laguna_blade_fiery = keys.laguna_scepter_fiery
-	end
 
 	-- Remove the blazing soul buff
 	caster:RemoveModifierByName("modifier_imba_fiery_soul_active")
@@ -318,40 +310,20 @@ function LagunaBladeProjectile( keys )
 	} )
 end
 
-function LagunaBladeGetScepterCheck( keys )
-	local caster = keys.caster
-	local normal_name = keys.normal_name
-	local scepter_name = keys.scepter_name
-	local scepter = HasScepter(caster)
-
-	if scepter then
-		caster:RemoveModifierByName("modifier_imba_laguna_blade_scepter_check")
-		SwitchAbilities(caster, scepter_name, normal_name, true, true)
-	end
-end
-
-function LagunaBladeDropScepterCheck( keys )
-	local caster = keys.caster
-	local normal_name = keys.normal_name
-	local scepter_name = keys.scepter_name
-	local scepter = HasScepter(caster)
-
-	if not scepter then
-		caster:RemoveModifierByName("modifier_imba_laguna_blade_scepter_check")
-		SwitchAbilities(caster, normal_name, scepter_name, true, true)
-	end
-end
-
-function LagunaBladeScepterDamage( keys )
+function LagunaBladeDamage( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
+	local scepter = HasScepter(caster)
 
 	local int = caster:GetIntellect()
 	local int_multiplier = ability:GetLevelSpecialValueFor("int_multiplier_scepter", ability:GetLevel() - 1 )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1 )
 
-	damage = damage + int * int_multiplier
-
-	ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	if scepter then
+		damage = damage + int * int_multiplier
+		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+	else
+		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	end
 end

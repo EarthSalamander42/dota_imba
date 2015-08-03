@@ -61,6 +61,43 @@ function Headshot( keys )
 	end
 end
 
+function HeadshotKnockback( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local distance_pct = ability:GetLevelSpecialValueFor("far_knockback", ability_level)
+	local speed = ability:GetLevelSpecialValueFor("knockback_speed", ability_level)
+
+	-- Knockback geometry calculations
+	local caster_pos = caster:GetAbsOrigin()
+	local caster_range = caster:GetAttackRange()
+	local target_pos = target:GetAbsOrigin()
+	local knockback_pos = caster_pos + ( target_pos - caster_pos ):Normalized() * caster_range
+	local knockback_distance = ( knockback_pos - target_pos ):Length2D() * distance_pct / 100
+	if ( target_pos - caster_pos ):Length2D() > caster_range then
+		knockback_distance = 50
+	end
+
+	-- Knockback
+	local headshot_knockback =	{
+		should_stun = 1,
+		knockback_duration = math.min( knockback_distance / speed, 0.3),
+		duration = math.min( knockback_distance / speed, 0.3),
+		knockback_distance = knockback_distance,
+		knockback_height = knockback_distance * 0.3,
+		center_x = caster_pos.x,
+		center_y = caster_pos.y,
+		center_z = caster_pos.z
+	}
+
+	target:RemoveModifierByName("modifier_knockback")
+	target:AddNewModifier(caster, ability, "modifier_knockback", headshot_knockback)
+
+end
+
 function TakeAimNear( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -111,31 +148,34 @@ end
 
 function TakeAimUpgrade( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-
-	-- Parameters
-	local near_skill_name = keys.near_skill_name
-	local normal_skill_name = keys.normal_skill_name
-	local far_skill_name = keys.far_skill_name
+	local ability_level = keys.ability:GetLevel()
+	local ability_near = caster:FindAbilityByName(keys.near_skill)
+	local ability_normal = caster:FindAbilityByName(keys.normal_skill)
+	local ability_far = caster:FindAbilityByName(keys.far_skill)
 	local modifier_near = keys.modifier_near
 	local modifier_normal = keys.modifier_normal
 	local modifier_far = keys.modifier_far
 
-	-- Fetch the ability's current level
-	local ability_level = ability:GetLevel()
+	-- Update variable which tracks this ability's level
+	if not caster.take_aim_level then
+		caster.take_aim_level = 1
+	elseif caster.take_aim_level == ability_level then
+		return nil
+	else
+		caster.take_aim_level = ability_level
+	end
 
-	-- Upgrade the other two abilities to the current level
-	local ability_normal = caster:FindAbilityByName(normal_skill_name)
-	local ability_far = caster:FindAbilityByName(far_skill_name)
-	ability_normal:SetLevel(ability_level)
-	ability_far:SetLevel(ability_level)
+	-- Level up abilities
+	ability_near:SetLevel(caster.take_aim_level)
+	ability_normal:SetLevel(caster.take_aim_level)
+	ability_far:SetLevel(caster.take_aim_level)
 
 	-- Update the respective modifiers
 	if caster:HasModifier(modifier_near) then
 		caster:RemoveModifierByName(modifier_near)
 		caster:RemoveModifierByName(modifier_normal)
 		caster:RemoveModifierByName(modifier_far)
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_near, {})
+		ability_near:ApplyDataDrivenModifier(caster, caster, modifier_near, {})
 	elseif caster:HasModifier(modifier_far) then
 		caster:RemoveModifierByName(modifier_near)
 		caster:RemoveModifierByName(modifier_normal)
@@ -280,29 +320,43 @@ function AssassinateHit( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local scepter = HasScepter(caster)
-	local blind_modifier = keys.blind_modifier
+	local modifier_slow = keys.modifier_slow
 
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
 	-- Scepter damage and debuff
 	if scepter then
+
+		-- Scepter parameters
 		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
-		ability:ApplyDataDrivenModifier(caster, target, blind_modifier, {})
-		local knockback_distance = ability:GetLevelSpecialValueFor("knockback_scepter", ability_level)
-		local knockback_table =
-		{
+		local knockback_speed = ability:GetLevelSpecialValueFor("knockback_speed_scepter", ability_level)
+
+		-- Knockback geometry calculations
+		local caster_pos = caster:GetAbsOrigin()
+		local caster_range = caster:GetAttackRange()
+		local target_pos = target:GetAbsOrigin()
+		local knockback_pos = caster_pos + ( target_pos - caster_pos ):Normalized() * caster_range
+		local knockback_distance = ( knockback_pos - target_pos ):Length2D()
+		if ( target_pos - caster_pos ):Length2D() > caster_range then
+			knockback_distance = 50
+		end
+		
+		local assassinate_knockback =	{
 			should_stun = 1,
-			knockback_duration = 0.2,
-			duration = 0.2,
+			knockback_duration = math.min( knockback_distance / knockback_speed, 0.6),
+			duration = math.min( knockback_distance / knockback_speed, 0.6),
 			knockback_distance = knockback_distance,
-			knockback_height = 120,
-			center_x = caster:GetAbsOrigin().x,
-			center_y = caster:GetAbsOrigin().y,
-			center_z = caster:GetAbsOrigin().z
+			knockback_height = knockback_distance * 0.3,
+			center_x = caster_pos.x,
+			center_y = caster_pos.y,
+			center_z = caster_pos.z
 		}
+
+		-- Apply knockback and slow modifiers
 		target:RemoveModifierByName("modifier_knockback")
-		target:AddNewModifier( caster, ability, "modifier_knockback", knockback_table )
+		target:AddNewModifier(caster, ability, "modifier_knockback", assassinate_knockback )
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
 	end
 
 	-- Apply damage

@@ -13,7 +13,7 @@ function Starfall( keys )
 	local hit_particle = keys.hit_particle
 
 	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("secondary_radius", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local max_count = ability:GetLevelSpecialValueFor("secondary_count", ability_level)
 	local pulse_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
 	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)

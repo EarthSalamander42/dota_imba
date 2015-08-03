@@ -3,6 +3,53 @@
 
 function Impale ( keys )
 	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local particle_projectile = keys.particle_projectile
+
+	-- Parameters
+	local width = ability:GetLevelSpecialValueFor("width", ability_level)
+	local length = ability:GetLevelSpecialValueFor("length", ability_level)
+	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+
+	-- Adjust parameters if burrow buff is present
+	if caster:HasModifier("modifier_nyx_assassin_burrow") then
+		length = length * 1.5
+		speed = speed * 1.5
+	end
+
+	-- Play sound
+	caster:EmitSound(sound_cast)
+
+	-- Launch projectile
+	local impale_projectile = {
+		Ability				= ability,
+		EffectName			= particle_projectile,
+		vSpawnOrigin		= caster:GetAbsOrigin(),
+		fDistance			= length,
+		fStartRadius		= width,
+		fEndRadius			= width,
+		Source				= caster,
+		bHasFrontalCone		= false,
+		bReplaceExisting	= false,
+		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
+	--	iUnitTargetFlags	= ,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
+	--	fExpireTime			= ,
+		bDeleteOnHit		= false,
+		vVelocity			= caster:GetForwardVector() * speed,
+		bProvidesVision		= false,
+	--	iVisionRadius		= ,
+	--	iVisionTeamNumber	= caster:GetTeamNumber(),
+	}
+
+	ProjectileManager:CreateLinearProjectile(impale_projectile)
+
+end
+
+function ImpaleDamage ( keys )
+	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -20,6 +67,7 @@ function Impale ( keys )
 
 	-- Wait for the target to land, in [damage_delay] time
 	Timers:CreateTimer(damage_delay, function()
+
 		-- Calculates damage to repeat and total damage
 		local damage_to_repeat = target.impale_damage_taken * damage_pct / 100
 
@@ -49,6 +97,24 @@ function ImpaleDamageCounter( keys )
 	Timers:CreateTimer(damage_duration, function()
 		target.impale_damage_taken = target.impale_damage_taken - damage
 	end)
+end
+
+function SpikedCarapace( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_stun = keys.modifier_stun
+
+	-- Parameters
+	local stun_radius = ability:GetLevelSpecialValueFor("burrow_stun_range", ability_level)
+
+	-- If burrow buff is present, stun nearby enemies
+	if caster:HasModifier("modifier_nyx_assassin_burrow") then
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(nearby_enemies) do
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_stun, {})
+		end
+	end
 end
 
 function SpikedCarapaceReflect( keys )
@@ -86,18 +152,36 @@ function Vendetta( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local modifier_vendetta = keys.modifier_vendetta
+
+	-- Duration
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+
+	-- If burrowed, unburrow first
+	if caster:HasModifier("modifier_nyx_assassin_burrow") then
+		local unburrow_ability = caster:FindAbilityByName("nyx_assassin_unburrow")
+		caster:CastAbilityImmediately(unburrow_ability, caster:GetPlayerID())
+	end
+
+	-- Play cast sound
+	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
+
+	-- Apply Vendetta and invisibility modifiers
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_vendetta, {})
+	caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = duration})
+end
+
+function VendettaStrike( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
 	local modifier = keys.modifier
 	local stack_modifier = keys.stack_modifier
 	local particle_name = keys.particle_name
 	local attack_sound = keys.attack_sound
 	local base_damage = ability:GetLevelSpecialValueFor("bonus_damage", ability:GetLevel() - 1 )
-	local scepter = HasScepter(caster)
-
-	-- If the user has Aghanim's Scepter, shorten the cooldown
-	if scepter then
-		local scepter_cooldown = ability:GetLevelSpecialValueFor("cooldown_scepter", ability:GetLevel() - 1 )
-		ability:StartCooldown(scepter_cooldown)
-	end
 
 	-- Initialize the variable if it doesn't exist
 	if not caster.vendetta_stored_damage then
@@ -150,6 +234,6 @@ function VendettaDamageCount( keys )
 		if not caster:HasModifier(stack_modifier) then
 			ability:ApplyDataDrivenModifier(caster, caster, stack_modifier, {})
 		end
-		caster:SetModifierStackCount(stack_modifier, ability, caster.vendetta_stored_damage)
+		caster:SetModifierStackCount(stack_modifier, ability, math.floor( caster.vendetta_stored_damage / 10 ) )
 	end
 end

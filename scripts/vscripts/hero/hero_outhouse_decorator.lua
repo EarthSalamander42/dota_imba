@@ -8,6 +8,7 @@ function ArcaneOrb( keys )
 	local target = keys.target
 	local int_gain_modifier = keys.int_gain_modifier
 	local int_loss_modifier = keys.int_loss_modifier
+	local modifier_dummy = keys.modifier_dummy
 
 	-- Parameters
 	local summon_damage = ability:GetLevelSpecialValueFor("illusion_damage", ability_level)
@@ -20,16 +21,28 @@ function ArcaneOrb( keys )
 	if target:IsRealHero() then
 
 		-- Calculate the intelligence to be stolen
-		local target_int_pct = math.floor( target:GetIntellect() * int_steal_pct / 100 )
+		local target_int = target:GetIntellect()
+		local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
 		if target_int_pct > int_steal then
 			int_steal = target_int_pct
 		end
 
-		-- Add the appropriate number of stacks to the caster and the target
+		-- Add the appropriate number of stacks to the caster
 		AddStacks(ability, caster, caster, int_gain_modifier, int_steal, true)
-		AddStacks(ability, caster, target, int_loss_modifier, int_steal, true)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
+
+		-- Prevent the target from going under 1 int
+		if target_int <= int_steal then
+			int_steal = target_int - 1
+		end
+
+		-- Add the appropriate number of stacks to the enemy
+		AddStacks(ability, caster, target, int_loss_modifier, int_steal, true)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
+
+		-- Force update the target's mana
+		target:RemoveModifierByName(modifier_dummy)
+		ability:ApplyDataDrivenModifier(caster, target, modifier_dummy, {})
 	end
 
 	-- Calculate and deals damage
@@ -49,7 +62,7 @@ function ArcaneOrbRestoreMana( keys )
 
 	-- Check if Essence Aura is learned
 	if not ability or ability:GetLevel() == 0 then
-		return
+		return nil
 	end
 
 	-- Parameters
@@ -88,17 +101,25 @@ function AstralImprisonment( keys )
 	if target:GetTeam() ~= caster:GetTeam() then
 
 		-- Calculate the intelligence to be stolen
-		local target_int_pct = math.floor( target:GetIntellect() * int_steal_pct / 100 )
+		local target_int = target:GetIntellect()
+		local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
 		if target_int_pct > int_steal then
 			int_steal = target_int_pct
 		end
 
-		-- Add the appropriate number of stacks to the caster and the target
+		-- Add the appropriate number of stacks to the caster
 		AddStacks(int_steal_ability, caster, caster, int_gain_modifier, int_steal, true)
-		AddStacks(int_steal_ability, caster, target, int_loss_modifier, int_steal, true)
 		ability:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
-		ability:ApplyDataDrivenModifier(caster, target, int_loss_modifier, {duration = int_steal_duration})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
+
+		-- Prevent the target from going under 1 int
+		if target_int <= int_steal then
+			int_steal = target_int - 1
+		end
+
+		-- Add the appropriate number of stacks to the enemy
+		AddStacks(int_steal_ability, caster, target, int_loss_modifier, int_steal, true)
+		ability:ApplyDataDrivenModifier(caster, target, int_loss_modifier, {duration = int_steal_duration})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
 	end
 
@@ -118,32 +139,46 @@ function AstralImprisonmentEnd( keys )
 	-- Redraw the target's model
 	target:RemoveNoDraw()
 
-	-- Deal 1 pure damage to enemies (prevents blinks)
+	-- Deal minor pure damage to enemies (prevents blinks)
 	if target:GetTeam() ~= caster:GetTeam() then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 1, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = caster:GetIntellect(), damage_type = DAMAGE_TYPE_PURE})
 	end
 end
 
 function RestoreMana( keys )
+	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local cast_ability = keys.event_ability
 	local essence_particle = keys.essence_particle
 	local essence_sound = keys.essence_sound
+	local modifier_int = keys.modifier_int
 
 	-- Parameters
-	local restore_amount = ability:GetLevelSpecialValueFor("restore_amount", ability:GetLevel() - 1 )
+	local restore_amount = ability:GetLevelSpecialValueFor("restore_amount", ability_level)
+	local mana_absorb = ability:GetLevelSpecialValueFor("mana_absorb", ability_level)
 	local mana_restore = target:GetMaxMana() * restore_amount / 100
 
-	-- Check which ability is being cast
-	--local casted_ability = target:GetCurrentActiveAbility()
-	--print(target:GetName().." is using "..casted_ability:GetName())
+	-- If the ability just cast uses mana, restore mana accordingly
+	if cast_ability and cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) > 0 then
 
-	-- Restores mana
-	target:GiveMana(mana_restore)
+		-- Restores mana
+		target:GiveMana(mana_restore)
 
-	-- Plays sound and effect
-	local essence_fx = ParticleManager:CreateParticle(essence_particle, PATTACH_ABSORIGIN_FOLLOW, target)
-	target:EmitSound("essence_sound")
+		-- Plays sound and effect
+		local essence_fx = ParticleManager:CreateParticle(essence_particle, PATTACH_ABSORIGIN_FOLLOW, target)
+		target:EmitSound("essence_sound")
+
+		-- Buff the caster if the spell was cast by an ally
+		local ability_arcane_orb = caster:FindAbilityByName("imba_obsidian_destroyer_arcane_orb")
+		if target ~= caster and ability_arcane_orb then
+			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
+			local stack_amount = math.floor( mana_cost * mana_absorb / 100 )
+			AddStacks(ability_arcane_orb, caster, caster, modifier_int, stack_amount, true)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, stack_amount, nil)
+		end
+	end
 end
 
 function EssenceAuraMana( keys )
@@ -170,13 +205,17 @@ function SanityEclipse( keys )
 	local dmg_multiplier = ability:GetLevelSpecialValueFor("damage_multiplier", ability_level)
 	local mana_burn_pct = ability:GetLevelSpecialValueFor("mana_burn_pct", ability_level)
 	local ability_astral = caster:FindAbilityByName(keys.astral_name)
+	local ability_astral_level = ability_astral:GetLevel() - 1
 	local astral_modifier = keys.astral_modifier
+	local particle_mana_burn = keys.particle_mana_burn
+	local particle_damage = keys.particle_damage
 	local caster_int = caster:GetIntellect()
 	local scepter = HasScepter(caster)
 
 	-- Find the enemies to be affected
 	local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	
+	-- If the caster has scepter, apply Astral Imprisonment to all targets
 	if scepter and ability_astral:GetLevel() ~= 0 then
 		
 		-- Astral Imprisonment Parameters
@@ -185,9 +224,10 @@ function SanityEclipse( keys )
 		local int_steal_ability = caster:FindAbilityByName(ability_name)
 		local int_gain_modifier = keys.int_gain_modifier
 		local int_loss_modifier = keys.int_loss_modifier
-		local int_steal = ability_astral:GetLevelSpecialValueFor("int_gain", ability_astral:GetLevel() - 1)
-		local int_steal_pct = ability_astral:GetLevelSpecialValueFor("int_steal_pct", ability_astral:GetLevel() - 1)
-		local int_steal_duration = ability_astral:GetLevelSpecialValueFor("int_gain_duration", ability_astral:GetLevel() - 1)
+		local int_steal = ability_astral:GetLevelSpecialValueFor("int_gain", ability_astral_level)
+		local int_steal_pct = ability_astral:GetLevelSpecialValueFor("int_steal_pct", ability_astral_level)
+		local int_steal_duration = ability_astral:GetLevelSpecialValueFor("int_gain_duration", ability_astral_level)
+		local total_int_steal = 0
 
 		-- Affect each valid enemy
 		for _,enemy in pairs(enemies) do
@@ -196,58 +236,70 @@ function SanityEclipse( keys )
 			end
 
 			-- Calculate the intelligence to be stolen
-			local target_int_pct = math.floor( enemy:GetIntellect() * int_steal_pct / 100 )
+			local target_int = enemy:GetIntellect()
+			local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
 			local this_target_int_steal = int_steal
 			if target_int_pct > int_steal then
 				this_target_int_steal = target_int_pct
 			end
 
-			-- Adds the appropriate number of stacks to the caster and the target
+			-- Add the appropriate number of stacks to the caster
 			AddStacks(int_steal_ability, caster, caster, int_gain_modifier, this_target_int_steal, true)
-			AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
 			ability_astral:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
-			ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, int_steal, nil)
+			total_int_steal = total_int_steal + this_target_int_steal
 
+			-- Prevent the target from going under 1 int
+			if target_int <= int_steal then
+				this_target_int_steal = target_int - 1
+			end
+
+			-- Add the appropriate number of stacks to the target
+			AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
+			ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, this_target_int_steal, nil)
 
 			-- Play sound, remove the target's model, and apply the Astral Imprisonment debuff
 			enemy:EmitSound(astral_sound)
 			enemy:AddNoDraw()
 			ability_astral:ApplyDataDrivenModifier(caster, enemy, astral_modifier, {})
 		end
+
+		-- Show total int gained by the caster
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, total_int_steal, nil)
 	end
 
-	-- Deals damage to enemies in the area
+	-- Deal damage to enemies in the area
 	for _,enemy in pairs(enemies) do
 
-		-- Calculates damage
+		-- Calculate damage
 		local target_int = enemy:GetIntellect()
 		local damage = (caster_int - target_int) * dmg_multiplier
 		if caster_int <= target_int then
 			damage = 0
 		end
 
-		-- If the target is affected by Astral Imprisonment, checks if the damage would be enough to kill it
+		-- If the target is affected by Astral Imprisonment and the damage is enough, remove it
 		if enemy:HasModifier(astral_modifier) then
-			local actual_damage = damage * ( 1 - enemy:GetMagicalArmorValue() )
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
-
-			-- If the damage is enough, ends Astral Imprisonment and kills the target
-			if enemy:GetHealth() <= actual_damage then
+			if enemy:GetHealth() <= damage then
 				enemy:RemoveModifierByName(astral_modifier)
-				enemy:Kill(ability, caster)
+				TrueKill(caster, enemy, ability)
 			else
-				enemy:SetHealth( enemy:GetHealth() - actual_damage )
+				enemy:SetHealth(enemy:GetHealth() - damage)
 			end
-		else
-			-- Deals damage
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 		end
+		
+		-- Deal damage
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 
-		-- Burns 75% of the enemy's current mana
+		-- Burn 75% of the enemy's current mana
 		local enemy_mana = enemy:GetMana()
-		enemy:SetMana( enemy_mana * (1 - mana_burn_pct / 100 ) )
+		enemy:SetMana( enemy_mana * ( 1 - mana_burn_pct / 100 ) )
+
+		-- Fire mana burn and damage particles
+		local mana_burn_pfx = ParticleManager:CreateParticle(particle_mana_burn, PATTACH_RENDERORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(mana_burn_pfx, 0, enemy:GetAbsOrigin())
+		local damage_pfx = ParticleManager:CreateParticle(particle_damage, PATTACH_RENDERORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(damage_pfx, 0, enemy:GetAbsOrigin())
 	end
 end

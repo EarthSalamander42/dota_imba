@@ -103,6 +103,7 @@ function Darkness( keys )
 
 	-- Time variables
 	local time_elapsed = 0
+
 	-- Calculating what time of the day will it be after Darkness ends
 	local start_time_of_day = GameRules:GetTimeOfDay()
 	local end_time_of_day = start_time_of_day + duration / 480 --
@@ -132,6 +133,29 @@ function Darkness( keys )
 	end)
 end
 
+function DarknessLimitBreak( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Removes movement speed cap
+	if not caster:HasModifier("modifier_bloodseeker_thirst") then
+		caster:AddNewModifier(caster, ability, "modifier_bloodseeker_thirst", {})
+	end
+
+	-- Simulate attack speed cap removal
+	RemoveAttackSpeedCap(caster)
+end
+
+function DarknessLimitBreakEnd( keys )
+	local caster = keys.caster
+
+	-- Returns movement speed cap
+	caster:RemoveModifierByName("modifier_bloodseeker_thirst")
+
+	-- Return attack speed cap
+	ReturnAttackSpeedCap(caster)
+end
+
 function ReduceVision( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -144,7 +168,7 @@ function ReduceVision( keys )
 	end
 
 	-- Saves the target's original vision range
-	target.original_vision = target:GetBaseNightTimeVisionRange()
+	target.darkness_original_vision = target:GetBaseNightTimeVisionRange()
 
 	target:SetNightTimeVisionRange(vision_radius)
 end
@@ -152,5 +176,5 @@ end
 function RevertVision( keys )
 	local target = keys.target
 
-	target:SetNightTimeVisionRange(target.original_vision)
+	target:SetNightTimeVisionRange(target.darkness_original_vision)
 end

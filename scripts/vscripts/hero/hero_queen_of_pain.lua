@@ -44,11 +44,6 @@ function Blink(keys)
 		radius = ability_scream:GetLevelSpecialValueFor("area_of_effect", ability_scream_level - 1)
 	end
 
-	local player = keys.attacker.playerName
-	if player == "Hewdraw" then
-		range = 5000
-	end
-
 	if difference:Length2D() > range then
 		point = casterPos + (point - casterPos):Normalized() * range
 	end
@@ -125,6 +120,30 @@ function BlinkScream(keys)
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = scream_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	ability_scream:ApplyDataDrivenModifier(caster, target, modifier_confusion, {duration = confused_duration})
 end
+
+function Torment( keys )
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level)
+
+	-- If a hero was damaged, reduce all ability cooldowns
+	if target:IsRealHero() then
+		for i = 0, 15 do
+			local current_ability = caster:GetAbilityByIndex(i)
+			if current_ability then
+				local cooldown_remaining = current_ability:GetCooldownTimeRemaining()
+				current_ability:EndCooldown()
+				if cooldown_remaining > cooldown_reduction then
+					current_ability:StartCooldown( cooldown_remaining - cooldown_reduction )
+				end
+			end
+		end
+	end
+end	
 
 function Daze( keys )
 	local unit = keys.unit

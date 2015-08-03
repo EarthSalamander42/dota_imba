@@ -400,9 +400,6 @@ function GetRandomNormalAbility()
 		"sandking_caustic_finale",
 		"shadow_demon_disruption",
 		"shadow_demon_soul_catcher",
-		"nevermore_shadowraze1",
-		"nevermore_shadowraze2",
-		"nevermore_shadowraze3",
 		"nevermore_necromastery",
 		"nevermore_dark_lord",
 		"shadow_shaman_ether_shock",
@@ -528,9 +525,6 @@ function GetRandomNormalAbility()
 		"npc_dota_hero_sand_king",
 		"npc_dota_hero_shadow_demon",
 		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_nevermore",
 		"npc_dota_hero_nevermore",
 		"npc_dota_hero_nevermore",
 		"npc_dota_hero_shadow_shaman",
@@ -1033,4 +1027,50 @@ function PrecacheUnitWithQueue( unit_name )
 		end
 	end)
 end
-	
+
+-- Simulates attack speed cap removal to a single unit through BAT manipulation
+function RemoveAttackSpeedCap( unit )
+
+	-- Fetch original BAT if necessary
+	if not unit.as_cap_removal_original_bat then
+		unit.as_cap_removal_original_bat = unit:GetBaseAttackTime()
+	end
+
+	-- Get current attack speed
+	local current_as = unit:GetAttackSpeed() * 100
+
+	-- Should we reduce BAT?
+	if current_as > MAXIMUM_ATTACK_SPEED then
+		local new_bat = MAXIMUM_ATTACK_SPEED / current_as * unit.as_cap_removal_original_bat
+		unit:SetBaseAttackTime(new_bat)
+	end
+end
+
+-- Returns a unit's attack speed cap
+function ReturnAttackSpeedCap( unit )
+
+	-- Return to original BAT
+	unit:SetBaseAttackTime(unit.as_cap_removal_original_bat)
+
+	-- Clean-up
+	unit.as_cap_removal_original_bat = nil
+end
+
+-- Initializes heroes' innate abilities
+function InitializeInnateAbilities( hero )
+
+	-- List of innate abilities
+	local innate_abilities = {
+		"imba_queenofpain_delightful_torment"
+	}
+
+	-- Cycle through any innate abilities found, then upgrade them
+	for i = 1, #innate_abilities do
+		local current_ability = hero:FindAbilityByName(innate_abilities[i])
+		if current_ability then
+			current_ability:SetLevel(1)
+		end
+	end
+end
+			
+

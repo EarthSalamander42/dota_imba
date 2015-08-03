@@ -1,17 +1,39 @@
---[[ Author: Hewdraw ]]
+--[[	Authors: Hewdraw & Firetoad
+		Last edited 25.07.2015		]]
 
-function PoisonTouchStun( keys )
+function PoisonTouch( keys )
 	local caster = keys.caster
-	local target = keys.target
+	local target = keys.unit
 	local ability = keys.ability
-
 	local ability_level = ability:GetLevel() - 1
-	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local should_stun = ability:GetLevelSpecialValueFor(keys.Slow, ability_level)
+	local modifier_slow_stack = keys.modifier_slow_stack
+	local modifier_stun = keys.modifier_stun
 
-	if should_stun == 0 then
+	-- Parameters
+	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local stacks_to_stun = ability:GetLevelSpecialValueFor("stacks_to_stun", ability_level)
+
+	-- Add a stack of slow if appropriate
+	if not target:HasModifier(modifier_stun) then
+		AddStacks(ability, caster, target, modifier_slow_stack, 1, true)
+	end
+
+	-- Fetch current amount of slow stacks
+	local current_stacks = target:GetModifierStackCount(modifier_slow_stack, caster)
+
+	-- Decide if the target should be stunned
+	if current_stacks >= stacks_to_stun then
+		target:RemoveModifierByName(modifier_slow_stack)
+		ability:ApplyDataDrivenModifier(caster, target, modifier_stun, {})
 		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 	end
+end
+
+function PoisonTouchEnd( keys )
+	local target = keys.target
+	local modifier_slow_stack = keys.modifier_slow_stack
+
+	target:RemoveModifierByName(modifier_slow_stack)
 end
 
 function ShallowGravePassive( keys )

@@ -12,8 +12,13 @@ function ManaBreak( keys )
 		return nil
 	end
 
-	-- Plays the sound
-	target:EmitSound("Hero_Antimage.ManaBreak")
+	-- Play the sound to Anti-Mage's team
+	EmitSoundOnLocationForAllies(target:GetAbsOrigin(), "Hero_Antimage.ManaBreak", caster)
+
+	-- If Anti-Mage is visible to the target's team, play the sound for them
+	if target:CanEntityBeSeenByMyTeam(caster) then
+		EmitSoundOnLocationForAllies(target:GetAbsOrigin(), "Hero_Antimage.ManaBreak", target)
+	end
 
 	-- Plays the particle
 	local manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
@@ -26,13 +31,13 @@ function ManaBreak( keys )
 	end
 
 	-- Parameters
-	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level) * illusion_factor
-	local current_mana_percent = ability:GetLevelSpecialValueFor('current_mana_percent', ability_level) * illusion_factor
+	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level)
+	local maximum_mana_burn = ability:GetLevelSpecialValueFor('maximum_mana_burn', ability_level) * illusion_factor
 	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) * illusion_factor
 	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level)
 	local target_current_mana = target:GetMana()
 	local target_max_mana = target:GetMaxMana()
-	local mana_to_burn = ( max_mana_percent * target_max_mana + current_mana_percent * target_current_mana ) / 100
+	local mana_to_burn = math.min( max_mana_percent * target_max_mana / 100, maximum_mana_burn)
 	local mana_is_low
 
 	-- Burns mana
@@ -59,24 +64,57 @@ end
 function SpellShield( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local target = keys.unit
+	local cast_ability = keys.event_ability
 	local modifier_stacks = keys.modifier_stacks
 	local particle_stacks = keys.particle_stacks
 
+	-- If there is not casted ability, do nothing
+	if not cast_ability then
+		return nil
+	end
+
 	-- Parameters
-	local scale_up = ability:GetLevelSpecialValueFor("scale_up", ability:GetLevel() - 1 )
+	local mana_per_stack = ability:GetLevelSpecialValueFor("mana_per_stack", ability_level)
+	local mana_to_purge = ability:GetLevelSpecialValueFor("mana_to_purge", ability_level)
+	local scale_up = ability:GetLevelSpecialValueFor("scale_up", ability_level)
+
+	-- If total mana spent variable doesn't exist, create it
+	if not caster.spell_shield_mana_spent then
+		caster.spell_shield_mana_spent = 0
+	end
+
+	-- Increase count of mana spent around the caster
+	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
+	caster.spell_shield_mana_spent = caster.spell_shield_mana_spent + mana_spent
+
+	-- If the mana spent around the caster exceeds the threshold, purge all debuffs
+	if caster.spell_shield_mana_spent >= mana_to_purge then
+		caster.spell_shield_mana_spent = caster.spell_shield_mana_spent - mana_to_purge
+
+		-- Repeatedly purge for the next 0.3 seconds
+		local i = 0
+		Timers:CreateTimer(0, function()
+			caster:Purge(false, true, false, true, false)
+			i = i + 1
+			if i <= 3 then
+				return 0.1
+			end
+		end)
+	end
 
 	-- Add damage/as stacks
-	AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+	AddStacks(ability, caster, caster, modifier_stacks, math.floor( mana_spent / mana_per_stack ), true)
 	local current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
 
 	-- Update the Spell Shield particle
 	if not caster.spell_shield_stacks_particle then
 		caster.spell_shield_stacks_particle = ParticleManager:CreateParticle(particle_stacks, PATTACH_OVERHEAD_FOLLOW, caster)
 		ParticleManager:SetParticleControlEnt(caster.spell_shield_stacks_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(4, 0, 0))
+		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(math.floor(current_stacks / 8), 0, 0))
 	else
-		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(current_stacks * 4, 0, 0))
+		ParticleManager:SetParticleControl(caster.spell_shield_stacks_particle, 1, Vector(math.floor(current_stacks / 8), 0, 0))
 	end
 
 	-- Update model scale
@@ -89,6 +127,9 @@ function SpellShieldEnd( keys )
 	-- Kill the spell shield particle
 	ParticleManager:DestroyParticle(caster.spell_shield_stacks_particle, false)
 	caster.spell_shield_stacks_particle = nil
+
+	-- Reset mana spent counter
+	caster.spell_shield_mana_spent = nil
 
 	-- Update model scale
 	caster:SetModelScale(0.9)

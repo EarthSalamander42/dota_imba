@@ -1,5 +1,5 @@
---[[ 	Author: Hewdraw
-		Date: 05.05.2015	]]
+--[[	Authors: Hewdraw & Firetoad
+		Date: 05.05.2015			]]
 
 function TorrentBubble( keys )
 	local caster = keys.caster
@@ -10,23 +10,18 @@ function TorrentBubble( keys )
 	-- Sound and particle
 	local particle_name = keys.particle_name
 	local sound_name = keys.sound_name
+
+	-- Plays the particle for the caster's team
+	local bubbles_pfx = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_ABSORIGIN, caster, caster:GetTeam())
+	ParticleManager:SetParticleControl(bubbles_pfx, 0, target )
+
+	-- Plays the sound for the caster's team
+	EmitSoundOnLocationForAllies(target, sound_name, caster)
 	
-	-- Retrieves a list with all heroes in the game
-	local all_heroes = HeroList:GetAllHeroes()
-	
-	-- Draws the particle and plays the sound only for the caster's allies
-	for k, v in pairs(all_heroes) do
-		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local bubbles_fx = ParticleManager:CreateParticleForPlayer(particle_name, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl(bubbles_fx, 0, target )
-			EmitSoundOnClient(sound_name, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			
-			-- Destroy particle after delay
-			Timers:CreateTimer(delay, function()
-				ParticleManager:DestroyParticle(bubbles_fx, false)
-			end)
-		end
-	end
+	-- Destroy particle after delay
+	Timers:CreateTimer(delay, function()
+		ParticleManager:DestroyParticle(bubbles_pfx, false)
+	end)
 end
 
 function Torrent( keys )
@@ -43,8 +38,7 @@ function Torrent( keys )
 	local delay = ability:GetLevelSpecialValueFor("delay", ability_level)
 	local height = ability:GetLevelSpecialValueFor("torrent_height", ability_level)
 	local max_ticks = ability:GetLevelSpecialValueFor("tick_count", ability_level)
-	local high_tide_damage = ability:GetLevelSpecialValueFor("high_tide_damage", ability_level)
-	local high_tide_radius = ability:GetLevelSpecialValueFor("high_tide_radius", ability_level)
+	local tsunami_damage = ability:GetLevelSpecialValueFor("tsunami_damage", ability_level)
 
 	-- Modifiers and effects
 	local particle_name = keys.particle_name
@@ -56,9 +50,11 @@ function Torrent( keys )
 	local modifier_phase = keys.modifier_phase
 
 	-- Modifies parameters according to the current Tidebringer buff
-	if caster:HasModifier(modifier_high_tide) or caster:HasModifier(modifier_tsunami) then
-		radius = radius + high_tide_radius
-		damage = damage + high_tide_damage
+	if caster:HasModifier(modifier_high_tide) then
+		modifier_slow = keys.modifier_high_tide_slow
+	end
+	if caster:HasModifier(modifier_tsunami) then
+		damage = damage + tsunami_damage
 	end
 	if caster:HasModifier(modifier_wave_break) then
 		delay = 0
@@ -67,10 +63,10 @@ function Torrent( keys )
 	-- Calculates the damage to deal per tick
 	local tick_interval = duration / max_ticks
 	local damage_tick = damage / (2 * max_ticks)
-	local current_ticks = 0
 
 	-- After [delay], applies damage, knockback, and draws the particle
 	Timers:CreateTimer(delay, function()
+
 		-- Finds affected enemies
 		local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
 		
@@ -79,8 +75,10 @@ function Torrent( keys )
 		ParticleManager:SetParticleControl(torrent_fx, 0, target)
 		
 		for _,enemy in pairs(enemies) do
+
 			-- Deals the initial damage
 			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage / 2, damage_type = ability:GetAbilityDamageType()})
+			local current_ticks = 0
 			
 			-- Calculates the knockback position (for Tsunami)
 			local torrent_border = ( enemy:GetAbsOrigin() - target ):Normalized() * ( radius + 100 )
@@ -131,22 +129,13 @@ function TidebringerCooldown( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 
-	-- Modifiers
+	-- Parameters
 	local modifier_name = keys.modifier_name
-	local modifier_tsunami = keys.modifier_tsunami
-	local modifier_wave_break = keys.modifier_wave_break
-	local modifier_high_tide = keys.modifier_high_tide
-	local modifier_low_tide = keys.modifier_low_tide
-
-	-- Logical checks
+	local modifier_tidebringer = keys.modifier_tidebringer
 	local cooldown = ability:GetCooldownTimeRemaining()
-	local tsunami = caster:HasModifier(modifier_tsunami)
-	local wave_break = caster:HasModifier(modifier_wave_break)
-	local high_tide = caster:HasModifier(modifier_high_tide)
-	local low_tide = caster:HasModifier(modifier_low_tide)
 
 	-- If the skill has finished its cooldown and no modifiers are present, apply one at random when able
-	if cooldown == 0 and not tsunami and not high_tide and not low_tide and not wave_break and not caster:IsOutOfGame() and not caster:IsInvulnerable() then
+	if cooldown == 0 and not caster:HasModifier(modifier_name) and not caster:HasModifier(modifier_tidebringer) and not caster:IsOutOfGame() and not caster:IsInvulnerable() then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
 	end
 end
@@ -159,15 +148,22 @@ function TidebringerStartCooldown( keys )
 
 	-- Modifiers
 	local modifier_tsunami = keys.modifier_tsunami
+	local modifier_wave_break = keys.modifier_wave_break
 	local modifier_high_tide = keys.modifier_high_tide
 	local modifier_low_tide = keys.modifier_low_tide
 
-	-- If the target was a non-structure enemy, start the cooldown
+	-- If the target was an enemy, start the cooldown
 	if target:GetTeam() ~= caster:GetTeam() then
 		caster:RemoveModifierByName(modifier_tsunami)
 		caster:RemoveModifierByName(modifier_high_tide)
 		caster:RemoveModifierByName(modifier_low_tide)
-		ability:StartCooldown(cooldown)
+
+		-- If the caster has the Wave Break buff, do not start the cooldown
+		if caster:HasModifier(modifier_wave_break) then
+			caster:RemoveModifierByName(modifier_wave_break)
+		else
+			ability:StartCooldown(cooldown)
+		end
 	end
 end
 
@@ -176,6 +172,11 @@ function TidebringerTsunami( keys )
 	local ability = keys.ability
 	local target = keys.target
 	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
+
+	-- If the target being hit is from the same team, do nothing
+	if target:GetTeam() == caster:GetTeam() then
+		return nil
+	end
 
 	-- Particles and modifiers
 	local particle_name = keys.particle_name
@@ -300,18 +301,13 @@ function GhostShip( keys )
 	caster.ghostship_crash_pos = crash_pos
 
 	-- Show visual crash point effect to allies only
-	local all_heroes = HeroList:GetAllHeroes()
-	for k, v in pairs(all_heroes) do
-		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local crash_fx = ParticleManager:CreateParticleForPlayer(particle_name, PATTACH_ABSORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl(crash_fx, 0, crash_pos)
-			
-			-- Destroy particle after the crash
-			Timers:CreateTimer(crash_delay, function()
-					ParticleManager:DestroyParticle(crash_fx, false)
-			end)
-		end
-	end
+	local crash_pfx = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_ABSORIGIN, caster, caster:GetTeam())
+	ParticleManager:SetParticleControl(crash_pfx, 0, crash_pos )
+
+	-- Destroy particle after the crash
+	Timers:CreateTimer(crash_delay, function()
+		ParticleManager:DestroyParticle(crash_pfx, false)
+	end)
 
 	-- Spawn the boat projectile
 	local boat_projectile = {

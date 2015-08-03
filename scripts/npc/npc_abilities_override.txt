@@ -1000,7 +1000,7 @@
 		"AbilityCastRange"				"700"
 
 		"AbilityCooldown"				"8.0"
-		"AbilityDuration"				"4.0"
+		"AbilityDuration"				"3.5"
 
 		"AbilityManaCost"				"120"
 
@@ -1172,7 +1172,7 @@
 	//=================================================================================================================
 	"antimage_blink"
 	{
-		"AbilityCastPoint"				"0.3 0.25 0.2 0.15"
+		"AbilityCastPoint"				"0.4 0.35 0.3 0.25"
 		
 		"AbilityManaCost"				"0"
 
@@ -1237,7 +1237,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_multiplier"		"160 190 220 250"
+				"crit_multiplier"		"170 205 240 275"
 			}
 			"02"
 			{
@@ -1730,12 +1730,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_mult"		"200 220 240 260"
+				"blade_dance_crit_mult"		"250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_chance"	"25 30 35 40"
+				"blade_dance_crit_chance"	"20 25 30 35"
 			}
 		}
 	}
@@ -2443,7 +2443,7 @@
 	//=================================================================================================================
 	"nyx_assassin_mana_burn"
 	{
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.3"
 
 		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
@@ -2488,23 +2488,28 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"burrow_delay"		"0.7"
-			}		
+			}
 			"05"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"impale_burn_range_increase_pct_tooltip"	"50"
+			}	
+			"06"
 			{
 				"var_type"									"FIELD_INTEGER"
 				"mana_burn_burrow_range_tooltip"			"1200"
 			}
-			"06"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"impale_burrow_range_tooltip"				"1000"
-			}
 			"07"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"impale_burrow_cooldown_tooltip"			"9"
+				"impale_burrow_range_tooltip"				"1350"
 			}
 			"08"
+			{
+				"var_type"									"FIELD_INTEGER"
+				"impale_burrow_cooldown_tooltip"			"10"
+			}
+			"09"
 			{
 				"var_type"									"FIELD_INTEGER"
 				"carapace_burrow_range_tooltip"				"425"
@@ -3330,7 +3335,7 @@
 	{
 		"AbilityCooldown"				"9.0"
 
-		"AbilityCastPoint"				"0.55"
+		"AbilityCastPoint"				"0.5"
 
 		"AbilityDamage"					"120 200 280 360"
 
@@ -3363,7 +3368,7 @@
 	{
 		"AbilityCooldown"				"9.0"
 
-		"AbilityCastPoint"				"0.55"
+		"AbilityCastPoint"				"0.5"
 
 		"AbilityDamage"					"120 200 280 360"
 
@@ -3394,7 +3399,7 @@
 	{
 		"AbilityCooldown"				"9.0"
 
-		"AbilityCastPoint"				"0.55"
+		"AbilityCastPoint"				"0.5"
 
 		"AbilityDamage"					"120 200 280 360"
 
@@ -3428,12 +3433,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_damage_per_soul"	"3"
+				"necromastery_damage_per_soul"	"2 3 4 5"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_max_souls"		"18 27 36 45"
+				"necromastery_max_souls"		"36"
 			}
 			"03"
 			{
@@ -3443,7 +3448,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_souls_hero_bonus"	"17 26 35 44"
+				"necromastery_souls_hero_bonus"	"36"
 			}
 		}
 	}
@@ -3479,6 +3484,8 @@
 		"AbilityCastPoint"					"1.67"
 
 		"AbilityCooldown"					"90.0"
+
+		"AbilityDamage"						"60 90 120"
 
 		"AbilitySpecial"
 		{
@@ -3520,7 +3527,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"requiem_soul_conversion"	"2"
+				"requiem_soul_conversion"	"1"
 			}
 			"09"
 			{
@@ -3812,7 +3819,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_gain"				"3 4 5 6"
+				"agi_gain"				"3 3 4 5"
 			}
 			"02"
 			{
@@ -3929,7 +3936,7 @@
 	//=================================================================================================================
 	"storm_spirit_static_remnant"
 	{
-		"AbilityCooldown"				"3.25 3.0 2.75 2.5"
+		"AbilityCooldown"				"3.5 3.25 3.0 2.75"
 		"AbilityDuration"				"30.0"
 
 		"AbilityManaCost"				"70"
@@ -4043,7 +4050,7 @@
 	//=================================================================================================================
 	"storm_spirit_ball_lightning"
 	{
-		"AbilityCastPoint"				"0.25"
+		"AbilityCastPoint"				"0.3"
 
 		"AbilityDamage"					"8 12 16"
 		
@@ -4693,7 +4700,9 @@
 	"tinker_rearm"
 	{
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"2.0 1.0 0.1"
+		"AbilityChannelTime"			"0.01"
+
+		"AbilityCooldown"				"2.0 1.0 0.5"
 
 		"AbilityManaCost"				"100 200 300"
 
@@ -4701,8 +4710,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"channel_tooltip"			"2 1 0.1"
+				"var_type"				"FIELD_FLOAT"
+				"channel_tooltip"		"0.01"
 			}
 		}
 	}
@@ -4821,7 +4830,7 @@
 	}
 
 	//=================================================================================================================
-	// Vengeful Spirit: Magic Missle
+	// Vengeful Spirit: Magic Missile
 	//=================================================================================================================
 	"vengefulspirit_magic_missile"
 	{
@@ -4963,7 +4972,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"12.0 15.0 18.0 21.0"
+				"duration"				"18.0"
 			}
 			"02"
 			{
@@ -4973,7 +4982,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"30 40 50 60"
+				"tick_damage"			"30 45 60 75"
 			}
 			"04"
 			{
@@ -5083,7 +5092,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"40 65 90"
+				"damage"					"50 75 100"
 			}
 			"05"
 			{
@@ -5098,7 +5107,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"60 90 120"
+				"damage_scepter"			"70 100 130"
 			}
 			"08"
 			{

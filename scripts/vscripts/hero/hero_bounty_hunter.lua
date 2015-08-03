@@ -63,9 +63,6 @@ function ShurikenTossImpact( keys )
 	local chain_particle = keys.chain_particle
 
 	if target:IsAlive() then
-		
-		-- Enable physics.lua library functions on the target
-		Physics:Unit(target)
 
 		-- Delete previously spawned chain if it still exists
 		if target.shuriken_particle then
@@ -91,31 +88,26 @@ function ShurikenTossChain( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local chain_range = ability:GetLevelSpecialValueFor("chain_range", ability_level)
-	local pull_strength = ability:GetLevelSpecialValueFor("pull_strength", ability_level)
+	local pull_strength = ability:GetLevelSpecialValueFor("pull_strength_tooltip", ability_level)
 
-	-- retrieves the target's distance from the impact point
+	-- Retrieve the target's distance from the impact point
 	local target_position = target:GetAbsOrigin()
 	local center_vector = target.shuriken_position - target_position
 	local len = center_vector:Length2D()
+	local tick_rate = 0.05
 
-	-- pushes the target towards the impact point with a strength proportional to its distance from it
-	local velocity_vector = center_vector:Normalized() * len / chain_range * pull_strength
-	target:AddPhysicsVelocity (velocity_vector)	
+	-- Push the target towards the impact point with a strength proportional to its distance from it
+	local pull_distance = center_vector:Normalized() * len / chain_range * pull_strength * tick_rate
+	FindClearSpaceForUnit(target, target_position + pull_distance, false)
 end
 
 function ShurikenTossChainEnd( keys )
 	local target = keys.target
 	local target_loc = target:GetAbsOrigin()
-	
-	-- Disable physics.lua library functions on the target
-	target:StopPhysicsSimulation()
 
 	-- Destroy the shuriken toss chain and dummy unit
-	ParticleManager:DestroyParticle(target.shuriken_particle,true)
+	ParticleManager:DestroyParticle(target.shuriken_particle, true)
 	target.shuriken_toss_dummy:Destroy()
-
-	-- Find a legal position to the attached units to prevent them getting stuck
-	FindClearSpaceForUnit(target, target_loc, false)
 end
 
 function WindWalk( keys )

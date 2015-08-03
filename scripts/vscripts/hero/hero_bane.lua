@@ -48,13 +48,28 @@ function BrainSapSpellCast( keys )
 	local target = keys.unit
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local cast_ability = keys.event_ability
+	local sound_manaburn = keys.sound_manaburn
+	local particle_manaburn = keys.particle_manaburn
 
 	-- Parameters
 	local mana_percent = ability:GetLevelSpecialValueFor("mana_percent", ability_level)
 	local mana_to_spend = target:GetMaxMana() * mana_percent / 100
 
-	-- Reduce the target's mana
-	target:ReduceMana(mana_to_spend)
+	-- If the spell uses mana, reduce target's mana by the specified %
+	if cast_ability and cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) > 0 then
+		target:ReduceMana(mana_to_spend)
+
+		-- Show how much extra mana was spent
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_spend, nil)
+
+		-- Play mana burn particle
+		local manaburn_pfx = ParticleManager:CreateParticle(particle_manaburn, PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin() )
+
+		-- Play mana burn sound
+		target:EmitSound(sound_manaburn)
+	end
 end
 
 function FiendsGripManaDrain( keys )

@@ -545,7 +545,6 @@
 
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
-		//"Ability4"					"imba_nyx_assassin_burrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 		"Ability7"					"attribute_bonus_int"				
 	}
@@ -560,7 +559,7 @@
 		"AttributeBaseIntelligence"	"30"
 		"AttributeIntelligenceGain"	"4.0"
 
-		"AttackRange"				"525"
+		"AttackRange"				"600"
 
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
@@ -669,11 +668,14 @@
 
 		"AttributeAgilityGain"		"2.5"
 
+		"AbilityLayout"				"5"
+
 		"Ability1"					"imba_queenofpain_shadow_strike"
 		"Ability2"					"imba_queenofpain_blink"
 		"Ability3"					"imba_queenofpain_scream_of_pain"
-		"Ability4"					"imba_queenofpain_sonic_wave"
-		"Ability5"					"attribute_bonus_int"				
+		"Ability4"					"imba_queenofpain_delightful_torment"
+		"Ability5"					"imba_queenofpain_sonic_wave"
+		"Ability6"					"attribute_bonus_int"				
 	}
 
 	//=================================================================================================================
