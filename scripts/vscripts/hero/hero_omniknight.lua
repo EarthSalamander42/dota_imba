@@ -63,7 +63,8 @@ function PurificationDeath( keys )
 	local caster_pos = caster:GetAbsOrigin()
 
 	-- Check if fatal damage was dealt
-	if caster:GetHealth() == 1 then
+	if caster:GetHealth() <= 2 then
+
 		-- Heal and apply the strong purge
 		caster:Heal(heal, caster)
 		caster:Purge(false, true, false, true, false)

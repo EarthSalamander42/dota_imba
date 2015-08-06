@@ -411,9 +411,9 @@ function GetRandomNormalAbility()
 		"storm_spirit_static_remnant",
 		"storm_spirit_electric_vortex",
 		"storm_spirit_overload",
-		"sven_storm_bolt",
-		"sven_great_cleave",
-		"sven_warcry",
+		"imba_sven_storm_bolt",
+		"imba_sven_great_cleave",
+		"imba_sven_warcry",
 		"templar_assassin_refraction",
 		"templar_assassin_meld",
 		"templar_assassin_psi_blades",
@@ -633,7 +633,7 @@ function GetRandomUltimateAbility()
 		"sandking_epicenter",
 		"slark_shadow_dance",
 		"storm_spirit_ball_lightning",
-		"sven_gods_strength",
+		"imba_sven_gods_strength",
 		"terrorblade_sunder",
 		"tinker_rearm",
 		"ursa_enrage",
@@ -999,7 +999,11 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("attribute_bonus_int")
 	hero:RemoveModifierByName("modifier_imba_hook_sharp_stack")
 	hero:RemoveModifierByName("modifier_imba_hook_light_stack")
-	hero:RemoveModifierByName("modifier_sven_gods_strength")
+	hero:RemoveModifierByName("modifier_imba_god_strength")
+	hero:RemoveModifierByName("modifier_imba_god_strength_aura")
+	hero:RemoveModifierByName("modifier_imba_god_strength_aura_scepter")
+	hero:RemoveModifierByName("modifier_imba_warcry_passive_aura")
+	hero:RemoveModifierByName("modifier_imba_great_cleave")
 	hero:RemoveModifierByName("modifier_imba_blur")
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")

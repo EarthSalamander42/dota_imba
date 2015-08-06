@@ -7869,6 +7869,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"100"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
+			}
 		}
 
 		"Modifiers"
@@ -7964,6 +7974,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"12400"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -7990,6 +8001,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8086,6 +8107,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"18600"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8112,6 +8134,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8208,6 +8240,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"24800"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8234,6 +8267,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8330,6 +8373,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"31000"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8356,6 +8400,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8452,6 +8506,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"37200"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8478,6 +8533,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8574,6 +8639,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"43400"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8600,6 +8666,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"700"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8696,6 +8772,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"49600"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8722,6 +8799,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"800"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8818,6 +8905,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"55800"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8844,6 +8932,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"900"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -8940,6 +9038,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"62000"
+		"ItemPurchasable"				"0"
 		"ItemShopTags"					"damage"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"divine rapier"
@@ -8966,6 +9065,16 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amplify"		"1000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_start"	"1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance_taper_end"	"3000"
 			}
 		}
 
@@ -9060,6 +9169,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9087,6 +9197,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9114,6 +9225,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9141,6 +9253,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9168,6 +9281,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9195,6 +9309,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9222,6 +9337,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9249,6 +9365,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9276,6 +9393,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9303,6 +9421,7 @@
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 		"ItemCastOnPickup"				"1"
 		
 		// Special	
@@ -9680,7 +9799,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"50"
+				"proc_chance"			"35"
 			}
 		}
 

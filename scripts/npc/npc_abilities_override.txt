@@ -4102,133 +4102,6 @@
 	}
 
 	//=================================================================================================================
-	// Sven: Storm Bolt
-	//=================================================================================================================
-	"sven_storm_bolt"
-	{
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"10.0"
-
-		"AbilityDamage"					"120 200 280 360"
-
-		"AbilityManaCost"				"100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bolt_stun_duration"	"2.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bolt_aoe"				"275 325 375 425"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"600"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sven: Great Cleave
-	//=================================================================================================================
-	"sven_great_cleave"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"great_cleave_radius"	"400.0"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"great_cleave_damage"	"55 70 85 100"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sven: Warcry
-	//=================================================================================================================
-	"sven_warcry"
-	{
-		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
-		"AbilityDuration"				"8.0"
-	
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"warcry_armor"		"10 15 20 25"		
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"warcry_movespeed"	"12 14 16 18"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"warcry_radius"		"1200"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"duration_tooltip"	"8"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sven: God's Strength
-	//=================================================================================================================
-	"sven_gods_strength"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"70.0 60.0 50.0"
-		"AbilityDuration"				"30.0"
-	
-		"AbilityManaCost"				"50 75 100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"gods_strength_damage"		"150 250 350"		
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"scepter_aoe"		"1200"		
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"gods_strength_damage_scepter"	"80 120 160"		
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Templar Assassin: Refraction
 	//=================================================================================================================
 	"templar_assassin_refraction"
@@ -4700,9 +4573,7 @@
 	"tinker_rearm"
 	{
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"0.01"
-
-		"AbilityCooldown"				"2.0 1.0 0.5"
+		"AbilityChannelTime"			"2.0 1.0 0.01"
 
 		"AbilityManaCost"				"100 200 300"
 
@@ -4711,7 +4582,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"channel_tooltip"		"0.01"
+				"channel_tooltip"		"2.0 1.0 0.01"
 			}
 		}
 	}

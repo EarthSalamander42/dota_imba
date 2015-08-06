@@ -171,27 +171,60 @@ function RestoreMana( keys )
 		target:EmitSound("essence_sound")
 
 		-- Buff the caster if the spell was cast by an ally
-		local ability_arcane_orb = caster:FindAbilityByName("imba_obsidian_destroyer_arcane_orb")
-		if target ~= caster and ability_arcane_orb then
+		if target ~= caster then
 			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
 			local stack_amount = math.floor( mana_cost * mana_absorb / 100 )
-			AddStacks(ability_arcane_orb, caster, caster, modifier_int, stack_amount, true)
+
+			-- Apply the hidden modifiers which actually increase int
+			for i = 1, stack_amount do
+				ability:ApplyDataDrivenModifier(caster, caster, modifier_int, {})
+			end
+
+			-- Keep track of the amount of modifiers
+			if not caster.essence_aura_bonus_int then
+				caster.essence_aura_bonus_int = stack_amount
+			else
+				caster.essence_aura_bonus_int = caster.essence_aura_bonus_int + stack_amount
+			end
+
+			-- Display overhead int gain message
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, stack_amount, nil)
 		end
 	end
 end
 
-function EssenceAuraMana( keys )
+function EssenceAuraEnd( keys )
+	local caster = keys.caster
+
+	caster.essence_aura_bonus_int = caster.essence_aura_bonus_int - 1
+
+	if caster.essence_aura_bonus_int == 0 then
+		caster.essence_aura_bonus_int = nil
+	end
+end
+
+function EssenceAuraUpdate( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local caster_int = caster:GetIntellect()
-	local modifier = "modifier_essence_aura_mana"
-	local modifier_dummy = "modifier_essence_aura_mana_dummy"
+	local modifier_mana = keys.modifier_mana
+	local modifier_dummy = keys.modifier_dummy
+	local modifier_stacks = keys.modifier_stacks
 
-	caster:SetModifierStackCount(modifier, caster, caster_int)
+	caster:SetModifierStackCount(modifier_mana, caster, caster_int)
 
 	caster:RemoveModifierByName(modifier_dummy)
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
+
+	-- Update the bonus int modifier count
+	if caster.essence_aura_bonus_int then
+		local current_stack_count = caster:GetModifierStackCount(modifier_stacks, caster)
+		if caster.essence_aura_bonus_int > current_stack_count then
+			AddStacks(ability, caster, caster, modifier_stacks, caster.essence_aura_bonus_int - current_stack_count, true)
+		elseif caster.essence_aura_bonus_int < current_stack_count then
+			caster:SetModifierStackCount(modifier_stacks, caster, caster.essence_aura_bonus_int)
+		end
+	end
 end
 
 function SanityEclipse( keys )

@@ -9,7 +9,6 @@ function RapierPickUp( keys )
 	if not caster.rapier_picked_up then
 		rapier_level = keys.rapier_level
 	end
-	print("picked-up rapier_level: "..rapier_level)
 
 	-- Double pick-up safety variable
 	caster.rapier_picked_up = true
@@ -26,14 +25,12 @@ function RapierPickUp( keys )
 				caster:RemoveItem(item)
 				item = nil
 				rapier_level = rapier_level + j
-				print("found level "..j.." rapier")
 			end
 		end
 	end
 
 	-- Cap rapier level at 10
 	rapier_level = math.min(rapier_level, 10)
-	print("final rapier_level: "..rapier_level)
 
 	-- Remove this item
 	caster:RemoveItem(ability)
@@ -47,10 +44,23 @@ function RapierDamage( keys )
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local damage = keys.damage
 
 	-- Parameters
-	local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability:GetLevel() - 1) / 100
+	local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level) / 100
+	local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+	local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
+
+	-- Scale damage bonus according to distance
+	local distance = ( target:GetAbsOrigin() - caster:GetAbsOrigin() ):Length2D()
+	local distance_taper = 1
+	if distance > distance_taper_start and distance < distance_taper_end then
+		distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
+	elseif distance >= distance_taper_end then
+		distance_taper = 0.3
+	end
+	damage_amplify = damage_amplify * distance_taper
 
 	-- Deal extra damage
 	caster:RemoveModifierByName("modifier_item_imba_rapier_damage")

@@ -586,7 +586,7 @@ function GameMode:OnEntityKilled( keys )
 		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
 
 		-- Multiply respawn timer by the lobby options
-		respawn_time = respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100
+		respawn_time = math.min( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
 
 		-- Fetch increased respawn timer due to Reaper's Scythe on this death
 		if killed_unit.scythe_added_respawn then
