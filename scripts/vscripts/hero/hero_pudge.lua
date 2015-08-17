@@ -171,6 +171,7 @@ function MeatHook( keys )
 			else
 				ability:ApplyDataDrivenModifier(caster, target, modifier_target_enemy, {})
 				ApplyDamage({attacker = caster, victim = target, ability = ability, damage = hook_damage, damage_type = DAMAGE_TYPE_PURE})
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, hook_damage, nil)
 			end
 
 			-- Play the hit sound and particle
@@ -289,8 +290,10 @@ function HookUpgrade( keys )
 	local ability_light = caster:FindAbilityByName(keys.ability_light)
 
 	-- Level up sharp and light hook abilities
-	ability_sharp:SetLevel(ability_level)
-	ability_light:SetLevel(ability_level)
+	if ability_sharp and ability_light then
+		ability_sharp:SetLevel(ability_level)
+		ability_light:SetLevel(ability_level)
+	end
 end
 
 function HookStacksUpdater( keys )
@@ -560,6 +563,11 @@ function Dismember( keys )
 	local strength_damage = ability:GetLevelSpecialValueFor("strength_damage", ability_level)
 	local caster_str = caster:GetStrength()
 
+	-- Flag the target as such
+	if not caster.dismember_target then
+		caster.dismember_target = target
+	end
+
 	-- Calculate damage/heal
 	local damage = dismember_damage + caster_str * strength_damage / 100
 
@@ -570,4 +578,17 @@ function Dismember( keys )
 
 	-- Play the particle
 	local blood_pfx = ParticleManager:CreateParticle(particle_target, PATTACH_ABSORIGIN, target)
+end
+
+function DismemberEnd( keys )
+	local caster = keys.caster
+	local modifier_dismember = keys.modifier_dismember
+
+	-- Remove dismember modifier from the target
+	if caster.dismember_target then
+		caster.dismember_target:RemoveModifierByName(modifier_dismember)
+
+		-- Reset dismember target
+		caster.dismember_target = nil
+	end
 end

@@ -32,9 +32,9 @@ function ManaBreak( keys )
 
 	-- Parameters
 	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level)
-	local maximum_mana_burn = ability:GetLevelSpecialValueFor('maximum_mana_burn', ability_level) * illusion_factor
-	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) * illusion_factor
-	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level)
+	local maximum_mana_burn = ability:GetLevelSpecialValueFor('maximum_mana_burn', ability_level) * illusion_factor * FRANTIC_MULTIPLIER
+	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) * illusion_factor / FRANTIC_MULTIPLIER
+	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level) / FRANTIC_MULTIPLIER
 	local target_current_mana = target:GetMana()
 	local target_max_mana = target:GetMaxMana()
 	local mana_to_burn = math.min( max_mana_percent * target_max_mana / 100, maximum_mana_burn)
@@ -86,7 +86,7 @@ function SpellShield( keys )
 	end
 
 	-- Increase count of mana spent around the caster
-	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
+	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
 	caster.spell_shield_mana_spent = caster.spell_shield_mana_spent + mana_spent
 
 	-- If the mana spent around the caster exceeds the threshold, purge all debuffs
@@ -137,24 +137,27 @@ end
 
 function ManaVoid( keys )
 	local caster = keys.caster
-	local target = keys.target_entities[1]
+	local target = keys.target
 	local ability = keys.ability
 	local targetLocation = target:GetAbsOrigin()
-	local damagePerMana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability:GetLevel() -1)
+	local damagePerMana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability:GetLevel() -1) / FRANTIC_MULTIPLIER
 	local radius = ability:GetLevelSpecialValueFor('mana_void_aoe_radius', ability:GetLevel() -1)
 	local scepter = HasScepter(caster)
 	local manaBurn = 0
+	local maxManaBurn = 0
 
-	if scepter == true then
+	if scepter then
 		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct_scepter', ability:GetLevel() -1) / 100
+		maxManaBurn = ability:GetLevelSpecialValueFor('max_mana_burn_scepter', ability:GetLevel() -1) * FRANTIC_MULTIPLIER
 	else
 		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct', ability:GetLevel() -1) / 100
+		maxManaBurn = ability:GetLevelSpecialValueFor('max_mana_burn', ability:GetLevel() -1) * FRANTIC_MULTIPLIER
 	end
 
 	local damage = 0
 	local targetMana = target:GetMana()
 	local targetMaxMana = target:GetMaxMana()
-	local manaToBurn = manaBurn * targetMaxMana
+	local manaToBurn = math.min( manaBurn * targetMaxMana, maxManaBurn) 
 
 	if targetMana < manaToBurn then
 		target:SetMana(0)
@@ -176,7 +179,7 @@ function ManaVoid( keys )
 	for _,v in ipairs(unitsToDamage) do
 		damageTable.victim = v
 		ApplyDamage(damageTable)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, v, damageToDeal, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, v, target:GetMaxMana() - target:GetMana(), nil)
 	end
 
 	ScreenShake(target:GetOrigin(), 10, 0.1, 1, 500, 0, true)

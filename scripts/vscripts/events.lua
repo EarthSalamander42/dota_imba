@@ -165,6 +165,33 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Aegis clean-up
+	-------------------------------------------------------------------------------------------------
+	if npc.has_aegis then
+
+		-- Remove Aegis ownership flag
+		npc.has_aegis = nil
+		npc:RemoveModifierByName("modifier_item_imba_aegis")
+
+		-- Update kill bounty
+		local npc_level = npc:GetLevel()
+		local gold_bounty = HERO_KILL_GOLD_BASE + npc_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(npc)
+		local xp_bounty
+		if npc_level <= 5 then
+			xp_bounty = HERO_KILL_XP_CONSTANT_1 + ( npc_level - 1 ) * HERO_KILL_XP_CONSTANT_2
+		else
+			xp_bounty = ( npc_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
+		end
+
+		-- Adjust bounties with the game options multiplier
+		gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
+		xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
+		npc:SetDeathXP(xp_bounty)
+		npc:SetMaximumGoldBounty(gold_bounty)
+		npc:SetMinimumGoldBounty(gold_bounty)
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Reaper's Scythe buyback prevention clean-up
 	-------------------------------------------------------------------------------------------------
 
@@ -173,31 +200,12 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG on-respawn skill randomization
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
-		if npc:IsRealHero() then
-
-			-- Randomize abilities
-			ApplyAllRandomOmgAbilities(npc)
-			print("randoming OMG abilities for "..npc:GetName())
-
-			-- Clean-up undesired permanent modifiers
-			RemovePermanentModifiersRandomOMG(npc)
-
-			-- Grant unspent skill points equal to the hero's level
-			npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback setup (part 2)
 	-------------------------------------------------------------------------------------------------
 
 	-- Check if the spawned unit has the buyback penalty modifier
 	Timers:CreateTimer(0.1, function()
-		if npc:HasModifier("modifier_buyback_gold_penalty") then
+		if not npc:IsNull() and npc:HasModifier("modifier_buyback_gold_penalty") then
 
 			-- Update the quick sucession buyback cost increase variable
 			if npc.quick_sucession_buybacks then
@@ -223,17 +231,33 @@ function GameMode:OnNPCSpawned(keys)
 	end)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Generic creep bounty adjustment
+	-- IMBA: Creep bounty/stats adjustment
 	-------------------------------------------------------------------------------------------------
 
 	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
+
+		-- Fetch base bounties
 		local max_bounty = npc:GetMaximumGoldBounty()
 		local min_bounty = npc:GetMinimumGoldBounty()
 		local xp_bounty = npc:GetDeathXP()
 
+		-- Adjust bounties based on game time
+		local game_time = math.max( ( GameRules:GetGameTime() - HERO_SELECTION_TIME - PRE_GAME_TIME ) / 60, 0)
+		max_bounty = max_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
+		min_bounty = min_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
+		xp_bounty = xp_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
+
+		-- Adjust bounties according to game options
 		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
 		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+
+		-- Add passive buff to non-neutrals
+		if not string.find(npc:GetName(), "neutral") then
+			npc:AddAbility("imba_creep_buffs")
+			local creep_ability = npc:FindAbilityByName("imba_creep_buffs")
+			creep_ability:SetLevel(1)
+		end
 	end
 
 end
@@ -421,11 +445,18 @@ function GameMode:OnPlayerLevelUp(keys)
 	hero:SetMaximumGoldBounty(gold_bounty)
 	hero:SetMinimumGoldBounty(gold_bounty)
 
+	-- If the hero owns the Aegis, nullify its bounty
+	if hero.has_aegis then
+		hero:SetDeathXP(0)
+		hero:SetMaximumGoldBounty(0)
+		hero:SetMinimumGoldBounty(0)
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Unlimited level logic
 	-------------------------------------------------------------------------------------------------
 
-	if USE_CUSTOM_HERO_LEVELS and hero_level > 25 then
+	if hero_level > 25 then
 
 		-- Prevent the hero from gaining further ability points after level 25
 		hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
@@ -546,7 +577,6 @@ function GameMode:OnEntityKilled( keys )
 	DebugPrintTable( keys )
 
 	GameMode:_OnEntityKilled( keys )
-	
 
 	-- The Unit that was Killed
 	local killed_unit = EntIndexToHScript( keys.entindex_killed )
@@ -576,6 +606,25 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG on-death skill randomization
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+		if killed_unit:IsRealHero() then
+
+			-- Randomize abilities
+			ApplyAllRandomOmgAbilities(killed_unit)
+			print("randoming OMG abilities for "..killed_unit:GetName())
+
+			-- Clean-up undesired permanent modifiers
+			RemovePermanentModifiersRandomOMG(killed_unit)
+
+			-- Grant unspent skill points equal to the hero's level
+			killed_unit:SetAbilityPoints( math.min(killed_unit:GetLevel(), 25) )
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
 	
@@ -586,7 +635,7 @@ function GameMode:OnEntityKilled( keys )
 		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
 
 		-- Multiply respawn timer by the lobby options
-		respawn_time = math.min( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
+		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
 
 		-- Fetch increased respawn timer due to Reaper's Scythe on this death
 		if killed_unit.scythe_added_respawn then
@@ -606,6 +655,12 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
+
+		-- If the owner has an aegis, disregard everything
+		if killed_unit.has_aegis then
+			killed_unit:SetTimeUntilRespawn(3)
+			killed_unit:SetRespawnPosition(killed_unit:GetAbsOrigin())
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -646,6 +701,11 @@ function GameMode:OnEntityKilled( keys )
 
 	if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
 		non_neutral_killer = true
+	end
+
+	-- If the killed unit owns the Aegis, do nothing
+	if killed_unit.has_aegis then
+		return nil
 	end
 	
 	-- Check if killed unit is a hero, and killer/killed belong to different teams
@@ -757,6 +817,12 @@ function GameMode:OnEntityKilled( keys )
 			killer_bounty = math.max( killer_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
 			killer_hero:SetMaximumGoldBounty(killer_bounty)
 			killer_hero:SetMinimumGoldBounty(killer_bounty)
+
+			-- If the killer owns the Aegis, nullify its bounty
+			if killer_hero.has_aegis then
+				killer_hero:SetMaximumGoldBounty(0)
+				killer_hero:SetMinimumGoldBounty(0)
+			end
 		end
 
 		-- Killed hero deathstreak messages
@@ -790,8 +856,7 @@ function GameMode:OnEntityKilled( keys )
 
 end
 
--- This function is called 1 to 2 times as the player connects initially but before they 
--- have completely connected
+-- This function is called 1 to 2 times as the player connects initially but before they have completely connected
 function GameMode:PlayerConnect(keys)
 	DebugPrint('[BAREBONES] PlayerConnect')
 	DebugPrintTable(keys)
@@ -818,6 +883,45 @@ function GameMode:OnIllusionsCreated(keys)
 	DebugPrintTable(keys)
 
 	local originalEntity = EntIndexToHScript(keys.original_entindex)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG illusion ability adjustment
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+
+		-- Find all Illusions
+		local illusions_on_world = Entities:FindAllByName(originalEntity:GetName())
+		for k,illusion in pairs(illusions_on_world) do
+
+			-- Check if this illusion has already been adjusted
+			if illusion:IsIllusion() and not illusion.illusion_skills_adjusted then
+				local player_id = illusion:GetPlayerID()
+				local hero = originalEntity
+
+				-- Remove previously existing abilities
+				for i = 0, 15 do
+					local old_ability = illusion:GetAbilityByIndex(i)
+					if old_ability then
+						illusion:RemoveAbility(old_ability:GetAbilityName())
+					end
+				end
+
+				-- Add and level owner's abilities
+				for i = 0, 15 do
+					if hero.random_omg_abilities[i] then
+						illusion:AddAbility(hero.random_omg_abilities[i])
+						local ability = illusion:FindAbilityByName(hero.random_omg_abilities[i])
+						local ability_level = hero:FindAbilityByName(hero.random_omg_abilities[i]):GetLevel()
+						ability:SetLevel(ability_level)
+					end
+				end
+
+				-- Mark this illusion as already adjusted
+				illusion.illusion_skills_adjusted = true
+			end
+		end
+	end
 end
 
 -- This function is called whenever an item is combined to create a new item

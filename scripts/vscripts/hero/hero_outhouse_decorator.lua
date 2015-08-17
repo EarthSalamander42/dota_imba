@@ -45,8 +45,8 @@ function ArcaneOrb( keys )
 		ability:ApplyDataDrivenModifier(caster, target, modifier_dummy, {})
 	end
 
-	-- Calculate and deals damage
-	local bonus_damage = caster:GetMaxMana() * mana_damage_pct
+	-- Calculate and deal damage
+	local bonus_damage = caster:GetMaxMana() * mana_damage_pct / FRANTIC_MULTIPLIER
 
 	if target:IsIllusion() or target:IsSummoned() then
 		bonus_damage = bonus_damage  + summon_damage
@@ -158,7 +158,9 @@ function RestoreMana( keys )
 	-- Parameters
 	local restore_amount = ability:GetLevelSpecialValueFor("restore_amount", ability_level)
 	local mana_absorb = ability:GetLevelSpecialValueFor("mana_absorb", ability_level)
+	local max_int_pct = ability:GetLevelSpecialValueFor("max_int_pct", ability_level)
 	local mana_restore = target:GetMaxMana() * restore_amount / 100
+	local max_stacks = math.floor( caster:GetBaseIntellect() * max_int_pct / 100 )
 
 	-- If the ability just cast uses mana, restore mana accordingly
 	if cast_ability and cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) > 0 then
@@ -172,8 +174,18 @@ function RestoreMana( keys )
 
 		-- Buff the caster if the spell was cast by an ally
 		if target ~= caster then
-			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
+			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
 			local stack_amount = math.floor( mana_cost * mana_absorb / 100 )
+
+			-- Initialize stack amount global if necessary
+			if not caster.essence_aura_bonus_int then
+				caster.essence_aura_bonus_int = 0
+			end
+
+			-- Prevent stack amount from going over the cap
+			if ( caster.essence_aura_bonus_int + stack_amount ) > max_stacks then
+				stack_amount = math.max( max_stacks - caster.essence_aura_bonus_int, 0)
+			end
 
 			-- Apply the hidden modifiers which actually increase int
 			for i = 1, stack_amount do
@@ -181,11 +193,7 @@ function RestoreMana( keys )
 			end
 
 			-- Keep track of the amount of modifiers
-			if not caster.essence_aura_bonus_int then
-				caster.essence_aura_bonus_int = stack_amount
-			else
-				caster.essence_aura_bonus_int = caster.essence_aura_bonus_int + stack_amount
-			end
+			caster.essence_aura_bonus_int = caster.essence_aura_bonus_int + stack_amount
 
 			-- Display overhead int gain message
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, stack_amount, nil)

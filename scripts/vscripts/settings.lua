@@ -63,43 +63,13 @@ MAXIMUM_ATTACK_SPEED = 600					-- What should we use for the maximum attack spee
 MINIMUM_ATTACK_SPEED = 20					-- What should we use for the minimum attack speed?
 
 											-- NOTE: You always need at least 2 non-bounty (non-regen while broken) type runes to be able to spawn or your game will crash!
-ENABLED_RUNES = {}									-- Which runes should be enabled to spawn in our game mode?
+ENABLED_RUNES = {}							-- Which runes should be enabled to spawn in our game mode?
 ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
 ENABLED_RUNES[DOTA_RUNE_HASTE] = true
 ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
 ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
 ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true		-- Regen runes are currently not spawning as of the writing of this comment
 ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
-
-MAX_NUMBER_OF_TEAMS = 2								-- How many potential teams can be in this game mode?
-USE_CUSTOM_TEAM_COLORS = false						-- Should we use custom team colors?
-USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false			-- Should we use custom team colors to color the players/minimap?
-
-TEAM_COLORS = {}									-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
-TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }	-- Teal
-TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	-- Yellow
-TEAM_COLORS[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }	-- Pink
-TEAM_COLORS[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }	-- Orange
-TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }	-- Blue
-TEAM_COLORS[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	-- Green
-TEAM_COLORS[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }	-- Brown
-TEAM_COLORS[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	-- Cyan
-TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	-- Olive
-TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	-- Purple
-
-USE_AUTOMATIC_PLAYERS_PER_TEAM = true				-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
-
-CUSTOM_TEAM_PLAYER_COUNT = {}						-- If we're not automatically setting the number of players per team, use this table
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_4] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_5] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_7] = 0
-CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
@@ -130,10 +100,6 @@ HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bo
 HERO_KILL_XP_CONSTANT_1 = 100												-- XP formula up to level 5 is constant I + (level - 1) * constant II
 HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is the level 5 value + (level - 5) * constant II
 
-HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
-HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the start of the game on repicking their hero
-HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the start of the game on randoming their hero
-
 HERO_BUYBACK_BASE_COST = 100												-- Base cost to buyback
 HERO_BUYBACK_COST_PER_LEVEL = 25											-- Level-based buyback cost
 HERO_BUYBACK_COST_PER_MINUTE = 15											-- Time-based buyback cost
@@ -148,20 +114,77 @@ HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
 
 PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as having abandoned the game (in seconds)
 
+TOWER_MINIMUM_GOLD = 180													-- Tower minimum gold bounty
+TOWER_MAXIMUM_GOLD = 220													-- Tower maximum gold bounty
+TOWER_EXPERIENCE = 400														-- Tower experience bounty
+
+MELEE_RAX_MINIMUM_GOLD = 180												-- Melee barracks minimum gold bounty
+MELEE_RAX_MAXIMUM_GOLD = 200												-- Melee barracks maximum gold bounty
+MELEE_RAX_EXPERIENCE = 400													-- Melee barracks experience bounty
+
+RANGED_RAX_MINIMUM_GOLD = 100												-- Ranged barracks minimum gold bounty
+RANGED_RAX_MAXIMUM_GOLD = 120												-- Ranged barracks maximum gold bounty
+RANGED_RAX_EXPERIENCE = 200													-- Ranged barracks experience bounty
+
+ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
+AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
+
+-------------------------------------------------------------------------------------------------
+-- IMBA: map-based settings
+-------------------------------------------------------------------------------------------------
+
+MAX_NUMBER_OF_TEAMS = 2														-- How many potential teams can be in this game mode?
+USE_CUSTOM_TEAM_COLORS = false												-- Should we use custom team colors?
+USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team colors to color the players/minimap?
+
+TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
+TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
+TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
+TEAM_COLORS[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }							-- Pink
+TEAM_COLORS[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }							-- Orange
+TEAM_COLORS[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }							-- Blue
+TEAM_COLORS[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }							-- Green
+TEAM_COLORS[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }							-- Brown
+TEAM_COLORS[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }							-- Cyan
+TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }							-- Olive
+TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }							-- Purple
+
+USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
+
+CUSTOM_TEAM_PLAYER_COUNT = {}
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 5
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 5
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_1] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_2] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_3] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_4] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_5] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_7] = 0
+CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
+
+if GetMapName() == "imba_all_pick" then
+	IMBA_PICK_MODE_ALL_PICK = true
+elseif GetMapName() == "imba_10_v_10" then
+	IMBA_PICK_MODE_ALL_PICK = true
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
+elseif GetMapName() == "imba_random_omg" then
+	IMBA_ABILITY_MODE_RANDOM_OMG = true
+end
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 20												-- How many kills for a team should signify an end of game?
-
-IMBA_PICK_MODE_ALL_PICK = true												-- Activates All Pick mode when true (default mode)
+KILLS_TO_END_GAME_FOR_TEAM = 20												-- How many kills for a team should signify the end of the game?
+			
 ALLOW_SAME_HERO_SELECTION = false											-- Allows people to select the same hero as each other if true
 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts when all heroes are randomed
 
-IMBA_ABILITY_MODE_RANDOM_OMG = false										-- Activates Random OMG mode when true
 IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
 IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = true							-- Randomizes skills every time you die in Random OMG
@@ -172,12 +195,23 @@ HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in 
 CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
 HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
+CREEP_POWER_RAMP_UP_FACTOR = 1												-- Creep power increase multiplier factor
+CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 7											-- Creep bounty increase (in %) based on game time
+
+FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
+
 HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
-USE_CUSTOM_HERO_LEVELS = false												-- Should we allow heroes to have custom levels?
-MAX_LEVEL = 25																-- What level should we let heroes get to?
+HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
+HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the start of the game on repicking their hero
+HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the start of the game on randoming their hero
+
+HERO_STARTING_LEVEL = 1														-- User-defined starting level
+
+USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
+MAX_LEVEL = 35																-- What level should we let heroes get to?
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
@@ -202,10 +236,8 @@ for i = 14, 100 do
 end
 
 -------------------------------------------------------------------------------------------------
--- IMBA: Stat collection
+-- IMBA: Keyvalue tables
 -------------------------------------------------------------------------------------------------
---if not BAREBONES_DEBUG_SPEW then
---  statcollection.addStats({
---    modID = "3c618932c8379fe1284bc14438f76c89"
---  })
---end
+
+RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
+RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")

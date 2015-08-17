@@ -11,7 +11,9 @@
 		"Ability2"					"imba_abaddon_aphotic_shield"
 		"Ability3"					"imba_abaddon_frostmourne"
 		"Ability4"					"imba_abaddon_borrowed_time"
-		"Ability5"					"attribute_bonus_str"																		
+		"Ability5"					"attribute_bonus_str"		
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -26,7 +28,9 @@
 		//"Ability3"					"imba_alchemist_goblins_greed"
 		//"Ability4"					"imba_alchemist_chemical_rage"
 		"Ability5"					"attribute_bonus_str"
-		//"Ability6"					"imba_alchemist_unstable_concoction_throw"																		
+		//"Ability6"					"imba_alchemist_unstable_concoction_throw"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -60,7 +64,9 @@
 
 		"AttributeBaseAgility"		"28"
 
-		"MovementSpeed"				"325"																		
+		"MovementSpeed"				"325"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -81,7 +87,9 @@
 		"AttributeStrengthGain"		"2.8"
 		"AttributeAgilityGain"		"2.6"
 
-		"ArmorPhysical"				"0"									
+		"ArmorPhysical"				"0"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -125,12 +133,12 @@
 		"Ability5"					"imba_bounty_hunter_track"
 		"Ability6"					"attribute_bonus_agi"
 
-		"AttributeIntelligenceGain"	"2.0"
+		"AttackDamageMin"			"31"
+		"AttackDamageMax"			"35"
 
-		"AttackDamageMin"			"29"
-		"AttackDamageMax"			"33"
+		"AttributeBaseAgility"		"27"
 
-		"AttributeBaseAgility"		"24"
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -149,7 +157,9 @@
 		"Ability2"					"imba_centaur_double_edge"
 		"Ability3"					"imba_centaur_return"
 		"Ability4"					"imba_centaur_stampede"
-		"Ability5"					"attribute_bonus_str"	
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -169,6 +179,8 @@
 		//"Ability3"					"imba_chaos_knight_chaos_strike"
 		//"Ability4"					"imba_chaos_knight_phantasm"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -218,7 +230,9 @@
 		//"Ability4"					"doom_bringer_empty1"			
 		//"Ability5"					"doom_bringer_empty2"			
 		//"Ability6"					"doom_bringer_doom"				
-		"Ability7"					"attribute_bonus_str"														
+		"Ability7"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -263,7 +277,9 @@
 		//"Ability2"				"imba_earthshaker_enchant_totem"
 		//"Ability3"				"imba_earthshaker_aftershock"
 		//"Ability4"				"imba_earthshaker_echo_slam"
-		"Ability5"					"attribute_bonus_str"													
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -279,7 +295,9 @@
 		//"Ability2"					"faceless_void_backtrack"					
 		//"Ability3"					"faceless_void_time_lock"					
 		//"Ability4"					"faceless_void_chronosphere"				
-		"Ability5"					"attribute_bonus_agi"													
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -320,7 +338,9 @@
 		//"Ability2"					"imba_juggernaut_healing_ward"
 		//"Ability3"					"imba_juggernaut_blade_dance"
 		//"Ability4"					"imba_juggernaut_omni_slash"
-		"Ability5"					"attribute_bonus_agi"																	
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -335,8 +355,9 @@
 		"Ability3"					"imba_kunkka_x_marks_the_spot"
 		"Ability4"					"imba_kunkka_ghostship"		
 		"Ability5"					"attribute_bonus_str"
-		"Ability6"					"imba_kunkka_return"				
-		
+		"Ability6"					"imba_kunkka_return"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -469,6 +490,8 @@
 		//"Ability4"				"imba_naga_siren_song_of_the_siren"
 		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
 		"Ability6"				"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -507,7 +530,7 @@
 		"Ability2"					"imba_necrolyte_heartstopper_aura"
 		"Ability3"					"imba_necrolyte_sadist"
 		"Ability4"					"imba_necrolyte_reapers_scythe"
-		"Ability5"					"attribute_bonus_int"				
+		"Ability5"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -529,6 +552,8 @@
 		"Ability3"					"imba_night_stalker_hunter_in_the_night"
 		"Ability4"					"imba_night_stalker_darkness"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -546,7 +571,9 @@
 		"Ability1"					"imba_nyx_assassin_impale"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
 		"Ability6"					"imba_nyx_assassin_vendetta"
-		"Ability7"					"attribute_bonus_int"				
+		"Ability7"					"attribute_bonus_int"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -565,7 +592,7 @@
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
 		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
-		"Ability5"					"attribute_bonus_int"				
+		"Ability5"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -579,7 +606,9 @@
 		"Ability2"					"imba_omniknight_repel"
 		"Ability3"					"imba_omniknight_degen_aura"
 		"Ability4"					"imba_omniknight_guardian_angel"
-		"Ability5"					"attribute_bonus_str"				
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -595,7 +624,9 @@
 		"Ability2"					"imba_phantom_assassin_phantom_strike"
 		"Ability3"					"imba_phantom_assassin_blur"
 		"Ability4"					"imba_phantom_assassin_coup_de_grace"
-		"Ability5"					"attribute_bonus_agi"				
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -610,6 +641,8 @@
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
 		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -652,7 +685,9 @@
 		"Ability4"					"imba_pudge_sharp_hook"
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
-		"Ability7"					"attribute_bonus_str"				
+		"Ability7"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -690,6 +725,8 @@
 	//	"Ability3"					"imba_sandking_caustic_finale"
 	//	"Ability4"					"imba_sandking_epicenter"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -757,7 +794,9 @@
 		//"Ability2"					"imba_slark_pounce"
 		//"Ability3"					"imba_slark_essence_shift"
 		//"Ability4"					"imba_slark_shadow_dance"
-		"Ability5"					"attribute_bonus_agi"																	
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -838,6 +877,8 @@
 		"Ability3"					"imba_sven_warcry"
 		"Ability4"					"imba_sven_gods_strength"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -905,6 +946,8 @@
 		//"Ability3"					"imba_ursa_fury_swipes"
 		//"Ability4"					"ursa_enrage"
 		"Ability7"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -963,6 +1006,8 @@
 	//	"Ability3"					"imba_skeleton_king_mortal_strike"
 	//	"Ability4"					"imba_skeleton_king_reincarnation"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -983,7 +1028,6 @@
 		"Ability8"					"attribute_bonus_str"
 	//	"Ability9"					"imba_wisp_spirits_in"
 	//	"Ability10"					"imba_wisp_spirits_out"
-
 	}
 
 }

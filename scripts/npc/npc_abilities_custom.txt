@@ -879,6 +879,1264 @@
 	}
 
 	//=================================================================================================================
+	// Frantic mode buff
+	//=================================================================================================================
+	"imba_frantic_buff"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"rubick_empty1"
+		"MaxLevel"						"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_imba_frantic_base"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.2"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/npc_upgrades.lua"
+						"Function"			"FranticUpdate"
+
+						"modifier_mana"		"modifier_imba_frantic_mana"
+						"modifier_dummy"	"modifier_imba_frantic_mana_dummy"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/npc_upgrades.lua"
+						"Function"			"Frantic"
+
+						"modifier_cd"		"modifier_imba_frantic_cooldown"
+						"modifier_mana"		"modifier_imba_frantic_mana"
+					}
+				}
+			}
+
+			"modifier_imba_frantic_cooldown"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"		"1"
+				}
+			}
+
+			"modifier_imba_frantic_mana"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"				"1"
+				}
+			}
+
+			"modifier_imba_frantic_mana_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"				"1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower passive buffs
+	//=================================================================================================================
+	"imba_tower_buffs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"regen_per_minute"						"0.8"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_per_minute"						"3"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.5"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_per_minute"							"4"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_buffs_base"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"							"10.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"Upgrade"
+
+						"modifier_stack"				"modifier_imba_tower_buffs_stack"
+					}
+				}
+			}
+
+			"modifier_imba_tower_buffs_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rax passive buffs
+	//=================================================================================================================
+	"imba_rax_buffs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_per_minute"						"1"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_rax_buffs_base"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"							"10.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"Upgrade"
+
+						"modifier_stack"				"modifier_imba_rax_buffs_stack"
+					}
+				}
+			}
+
+			"modifier_imba_rax_buffs_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Creep passive buffs
+	//=================================================================================================================
+	"imba_creep_buffs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_per_minute"						"0.5"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_per_minute"						"2"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.4"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_per_minute"							"3"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_creep_buffs_base"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"Upgrade"
+
+						"modifier_stack"				"modifier_imba_creep_buffs_stack"
+					}
+				}
+			}
+
+			"modifier_imba_creep_buffs_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Bash (normal)
+	//=================================================================================================================
+	"imba_roshan_bash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"							"roshan_bash"
+		"MaxLevel"										"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"5.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"debuff_duration"						"4"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_damage"							"60"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"stacking_damage"						"8"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_reduction"						"-4"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"bash_duration"							"1.5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_bash"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanBash"
+
+						"modifier_debuff"				"modifier_imba_roshan_bash_debuff"
+						"sound_bash"					"RoshanDT.Bash"
+					}
+				}
+			}
+
+			"modifier_imba_roshan_bash_debuff"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsDebuff"								"1"
+				"IsPurgable"							"0"
+
+				"Duration"								"%debuff_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Slam (normal)
+	//=================================================================================================================
+	"imba_roshan_slam"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"							"roshan_slam"
+		"MaxLevel"										"1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"9.0"
+		"AbilityCastPoint"								"0.3"
+		"AbilityCastAnimation"							"ACT_DOTA_CAST_ABILITY_3"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slam_radius"							"375"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_damage"							"90"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"dmg_per_minute"						"15"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_reduction"						"-6"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow"									"-50"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"debuff_duration"						"4"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"hero/neutral_roshan.lua"
+				"Function"								"RoshanSlam"
+
+				"modifier_debuff"						"modifier_imba_roshan_slam"
+				"sound_cast"							"Roshan.Slam"
+				"particle_slam"							"particles/neutral_fx/roshan_slam.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_slam"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsDebuff"								"1"
+				"IsPurgable"							"1"
+
+				"Duration"								"%debuff_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_reduction" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Summon Roshlings (normal)
+	//=================================================================================================================
+	"imba_roshan_summon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"							"roshan_spell_block"
+		"MaxLevel"										"1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"90.0"
+		"AbilityCastPoint"								"0.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"summon_duration"						"60"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"summon_amount"							"2"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"SpawnUnit"
+			{
+				"UnitName"								"npc_imba_roshling"
+				"Target" 								"CASTER"
+				"Duration"								"%summon_duration"
+				"UnitCount"								"%summon_amount"
+				"UnitLimit"								"4"
+				"SpawnRadius"							"250"
+				
+				"OnSpawn"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"					"modifier_kill"
+						"Target"						"TARGET"
+						"Duration"						"%summon_duration"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanSummon"
+
+						"sound_summon"					"DOTA_Item.Necronomicon.Activate"
+						"ability_bash"					"imba_roshling_bash"
+						"ability_aura"					"imba_roshling_aura"
+						"ability_passives"				"imba_roshling_immortal_strength"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Roshling bash
+	//=================================================================================================================
+	"imba_roshling_bash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"							"roshan_bash"
+		"MaxLevel"										"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"								"6.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"debuff_duration"						"4"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_damage"							"20"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"stacking_damage"						"2"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_reduction"						"-4"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"bash_duration"							"1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshling_bash"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanBash"
+
+						"modifier_debuff"				"modifier_imba_roshling_bash_debuff"
+						"sound_bash"					"RoshanDT.Bash"
+					}
+				}
+			}
+
+			"modifier_imba_roshling_bash_debuff"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsDebuff"								"1"
+				"IsPurgable"							"0"
+
+				"Duration"								"%debuff_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Roshling aura
+	//=================================================================================================================
+	"imba_roshling_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityTextureName"							"roshan_spell_block"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"dmg_bonus"								"50"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_bonus"							"5"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_bonus"							"25"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"radius"								"500"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshling_aura"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"Aura"									"modifier_imba_roshling_aura_effect"
+				"Aura_Radius"							"%radius"
+				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"							"DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"					"0"
+			}
+
+			"modifier_imba_roshling_aura_effect"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%dmg_bonus"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_bonus"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshling passive buffs
+	//=================================================================================================================
+	"imba_roshling_immortal_strength"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_per_minute"						"2"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_per_minute"						"2"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.25"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_bonus"								"20"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshling_immortal_strength"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"							"60.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanUpgrade"
+
+						"modifier_stack"				"modifier_imba_roshling_immortal_strength_stack"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanUpgrade"
+
+						"modifier_stack"				"modifier_imba_roshling_immortal_strength_stack"
+					}
+				}
+		
+				"Properties"
+				{
+				    "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus" 
+				}
+			}
+
+			"modifier_imba_roshling_immortal_strength_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+				    "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Rage of the Immortal (normal)
+	//=================================================================================================================
+	"imba_roshan_rage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"							"imba_roshan_rage"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"hp_threshold"							"10"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_bonus"								"10"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"armor_bonus"							"1"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_rage"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"							"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanRage"
+
+						"modifier_stack"				"modifier_imba_roshan_rage_stack"
+					}
+				}
+			}
+
+			"modifier_imba_roshan_rage_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"0"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_bonus" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Fury of the Immortal
+	//=================================================================================================================
+	"imba_roshan_fury"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"							"imba_roshan_fury"
+		"MaxLevel"										"1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"								"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"								"600"
+		"AbilityCastRangeBuffer"						"3000"
+		"AbilityCooldown"								"30.0"
+		"AbilityCastPoint"								"1.5"
+		"AbilityCastAnimation"							"ACT_DOTA_CAST_ABILITY_1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"width"									"375"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"length"								"1600"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"speed"									"2000"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_damage"							"300"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"dmg_per_minute"						"25"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"debuff_duration"						"2.5"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"							"RoshanDT.Scream"
+				"Target"								"CASTER"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"hero/neutral_roshan.lua"
+				"Function"								"RoshanFury"
+
+				"sound_cast"							"Hero_Invoker.DeafeningBlast"
+				"particle_fury"							"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"		"0"
+			"RunScript"
+			{
+				"ScriptFile"							"hero/neutral_roshan.lua"
+				"Function"								"RoshanFuryHit"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: Strength of the Immortal (normal passive buffs)
+	//=================================================================================================================
+	"imba_roshan_immortal_strength"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"base_hp_regen"							"20"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_per_minute"						"3"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"damage_per_minute"						"3"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.2"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_bonus"								"20"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"purge_interval"						"1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_immortal_strength"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"ThinkInterval"							"60.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanUpgrade"
+
+						"modifier_stack"				"modifier_imba_roshan_immortal_strength_stack"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanUpgrade"
+
+						"modifier_stack"				"modifier_imba_roshan_immortal_strength_stack"
+					}
+				}
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanDeath"
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%base_hp_regen"
+				    "MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus" 
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_roshan_immortal_strength_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+				    "MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
+				    "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute" 
+				}
+			}
+
+			"modifier_imba_roshan_immortal_strength_purge"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+		
+				"ThinkInterval"							"%purge_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanPurge"
+					}
+				}
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanIllusionPurge"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Roshan: AI controller (normal)
+	//=================================================================================================================
+	"imba_roshan_ai"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slam_radius"							"350"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slam_targets"							"3"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"roshling_pct"							"0.6"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"fury_pct"								"0.3"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"leash_radius"							"1200"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"leash_margin"							"50"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"leash_time"							"6"
+			}
+			"08"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"think_interval"						"0.5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_ai"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanAI"
+
+						"ability_slam"					"imba_roshan_slam"
+						"ability_roshling"				"imba_roshan_summon"
+						"ability_fury"					"imba_roshan_fury"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/neutral_roshan.lua"
+						"Function"						"RoshanAI"
+
+						"ability_slam"					"imba_roshan_slam"
+						"ability_roshling"				"imba_roshan_summon"
+						"ability_fury"					"imba_roshan_fury"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// War Veteran buff
 	//=================================================================================================================
 	"imba_unlimited_level_powerup"
@@ -1933,7 +3191,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"		
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"		
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"antimage_mana_void"
 		"AOERadius"						"%mana_void_aoe_radius"
@@ -1943,6 +3201,8 @@
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
+			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_ti_5.vpcf"
+			"particle"					"particles/econ/items/antimage/antimage_weapon_basher_ti5/antimage_manavoid_basher_cast.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
@@ -1966,33 +3226,38 @@
 			"01"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"mana_void_damage_per_mana"			"0.8 1.05 1.3"
+				"mana_void_damage_per_mana"			"0.6 0.8 1.0"
 			}
-		
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"mana_void_ministun"				"0.5"
+				"mana_void_ministun"				"0.3"
 			}
-		
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"mana_void_aoe_radius"				"500"
 			}
-
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"mana_void_mana_burn_pct"			"25 30 35"
 			}
-
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"mana_void_mana_burn_pct_scepter"	"50 60 70"
 			}
-
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_mana_burn"						"250 375 500"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_mana_burn_scepter"				"500 750 1000"
+			}
 		}
 
 		"OnAbilityPhaseStart"
@@ -3283,7 +4548,13 @@
 			"RemoveModifier"
 			{
 				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-				"Target"				"CASTER"
+				"Target"
+				{
+					"Center"			"CASTER"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"				"DOTA_UNIT_TARGET_HERO"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				}
 			}
 
 			"RunScript"
@@ -3303,7 +4574,13 @@
 			"RemoveModifier"
 			{
 				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-				"Target"				"CASTER"
+				"Target"
+				{
+					"Center"			"CASTER"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"				"DOTA_UNIT_TARGET_HERO"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				}
 			}
 
 			"RunScript"
@@ -3498,8 +4775,8 @@
 				"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShurikenToss"
 
-				"track_modifier"			"modifier_imba_track_aura"
-				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"track_modifier"			"modifier_imba_track"
+				"track_scepter_modifier"	"modifier_imba_track_scepter"
 				"shuriken_particle"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
 			}
 
@@ -3759,11 +5036,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
+		"AbilityTextureName"			"bounty_hunter_track"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"bounty_hunter_track"	
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -3785,7 +5064,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"8.0 6.0 4.0"
+		"AbilityCooldown"				"4.0"
 		"AbilityManaCost"				"25"
 			
 		// Special
@@ -3810,22 +5089,22 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self"				"150 210 270"
+				"bonus_gold_self"				"200 275 350"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self_per_lvl"		"12 16 20"
+				"bonus_gold_self_per_lvl"		"20"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold"					"40 80 120"
+				"bonus_gold"					"50 100 150"
 			}
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_per_lvl"			"4 8 12"
+				"bonus_gold_per_lvl"			"10"
 			}
 			"08"
 			{
@@ -3853,8 +5132,8 @@
 		{
 			"LevelUpAbility"
 			{
-				"Target" 					"CASTER"
-				"AbilityName"				"imba_bounty_hunter_shadow_jaunt"
+				"Target"						"CASTER"
+				"AbilityName"					"imba_bounty_hunter_shadow_jaunt"
 			}
 		}
 
@@ -3862,143 +5141,70 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"hero/hero_bounty_hunter.lua"
-				"Function"					"TrackCast"
+				"ScriptFile"					"hero/hero_bounty_hunter.lua"
+				"Function"						"TrackCast"
 
-				"modifier_track"			"modifier_imba_track"
-				"modifier_track_scepter"	"modifier_imba_track_scepter"
-				"aura_track"				"modifier_imba_track_aura"
-				"aura_track_scepter"		"modifier_imba_track_aura_scepter"
+				"modifier_track"				"modifier_imba_track"
+				"modifier_track_scepter"		"modifier_imba_track_scepter"
+				"modifier_track_aura"			"modifier_imba_track_aura"
+				"sound_track"					"Hero_BountyHunter.Target"
 			}
 
 			"FireEffect"
 			{
-				"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
-	   			"EffectAttachType"			"start_at_customorigin"	
+				"EffectName"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
+	   			"EffectAttachType"				"start_at_customorigin"	
 
 				"ControlPointEntities"
 				{
-				    "CASTER" 				"attach_attack1"
-				    "TARGET" 				"attach_hitloc"
+				    "CASTER" 					"attach_attack1"
+				    "TARGET" 					"attach_hitloc"
 				}	
-			}
-			
-			"FireSound"
-			{
-				"EffectName"				"Hero_BountyHunter.Target"
-				"Target"					"TARGET"
 			}
 		}	
 
 		"Modifiers"
-		{
+		{	
 			"modifier_imba_track_aura"
 			{
-				"Duration"				"%duration"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-				"IsHidden"				"0"
+				"Passive"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
 
-				"Aura" 					"modifier_imba_track_speed"
-				"Aura_Radius" 			"%aura_radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"	"1"	
+				"Duration"						"%duration"
 
-				"ThinkInterval"  		"0.5"
-
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_imba_track_reveal"
-						"Target" 		"TARGET"
-					}	
-
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_imba_track_reveal"
-						"Target" 		"TARGET"
-						"Duration"		"0.5"
-					}
-				}	
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}	
-
-			"modifier_imba_track_aura_scepter"
-			{
-				"Duration"				"%duration"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Aura" 					"modifier_imba_track_speed"
-				"Aura_Radius" 			"%aura_radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"	"1"	
-
-				"ThinkInterval"  		"0.5"
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_imba_track_reveal"
-						"Target" 		"TARGET"
-					}	
-
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_imba_track_reveal"
-						"Target" 		"TARGET"
-						"Duration"		"0.5"
-					}
-				}	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%bonus_damage_scepter"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"						"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}	
+				"Aura"							"modifier_imba_track_speed"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"			"1"
+			}
 
 			"modifier_imba_track_speed"
 			{
-				"EffectName"						"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
-				"EffectAttachType"					"follow_origin"	
+				"Passive"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+				"IsHidden"						"0"
+
+				"EffectName"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+				"EffectAttachType"				"follow_origin"	
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_move_speed_pct"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_move_speed_pct"
 				}
-			}	
+			}
 
 			"modifier_imba_track_reveal"
 			{
-				"IsHidden"							"1"
-				"IsPurgable"						"0"
+				"Passive"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
 
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_bounty_hunter.lua"
-						"Function"					"TrackParticle"
-
-						"particle_1"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-						"particle_2"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-					}
-				}
+				"Duration"						"0.25"
 
 				"States"
 				{
@@ -4008,57 +5214,160 @@
 
 			"modifier_imba_track"
 			{
-				"Duration"							"%duration"
-				"IsDebuff"							"1"
-				"IsHidden"							"1"
-				"IsPurgable"						"1"
+				"Passive"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+				"IsHidden"						"0"
+
+				"Duration"						"%duration"
+
+				"ThinkInterval"					"0.25"
+				
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"			"modifier_imba_track_reveal"
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types"				"DOTA_UNIT_TARGET_HERO"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"			"modifier_imba_track_reveal"
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types"				"DOTA_UNIT_TARGET_HERO"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"TrackParticle"
+
+						"particle_trail"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+						"particle_shield"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+					}
+				}
 
 				"OnDestroy"
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"hero/hero_bounty_hunter.lua"
-						"Function"					"Track"
-						"Target"
-						{
-							"Center"				"TARGET"
-							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"TrackParticleEnd"
 
-						"modifier"					"modifier_imba_track"
-						"track_modifier"			"modifier_imba_track"
-						"track_scepter_modifier"	"modifier_imba_track_scepter"
-						"track_aura"				"modifier_imba_track_aura"
-						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+						"modifier_track_aura"	"modifier_imba_track_aura"
 					}
+				}
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"Track"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_DISABLED"
 				}
 			}
 
 			"modifier_imba_track_scepter"
 			{
-				"Duration"							"%duration"
-				"IsDebuff"							"1"
-				"IsHidden"							"1"
-				"IsPurgable"						"0"
+				"Passive"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
+
+				"Duration"						"%duration"
+
+				"ThinkInterval"					"0.25"
+				
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"			"modifier_imba_track_reveal"
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types"				"DOTA_UNIT_TARGET_HERO"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}	
+
+					"ApplyModifier"
+					{
+						"ModifierName"			"modifier_imba_track_reveal"
+						"Target"
+						{
+							"Center"			"TARGET"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+							"Types"				"DOTA_UNIT_TARGET_HERO"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"TrackParticle"
+
+						"particle_trail"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
+						"particle_shield"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
+					}
+				}
 
 				"OnDestroy"
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"hero/hero_bounty_hunter.lua"
-						"Function"					"Track"
-						"Target"
-						{
-							"Center"				"TARGET"
-							"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"TrackParticleEnd"
 
-						"modifier"					"modifier_imba_track_scepter"
-						"track_modifier"			"modifier_imba_track"
-						"track_scepter_modifier"	"modifier_imba_track_scepter"
-						"track_aura"				"modifier_imba_track_aura"
-						"track_scepter_aura"		"modifier_imba_track_aura_scepter"
+						"modifier_track_aura"	"modifier_imba_track_aura"
 					}
+				}
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_bounty_hunter.lua"
+						"Function"				"Track"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%bonus_damage_scepter"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_DISABLED"
 				}
 			}
 		}
@@ -4072,25 +5381,20 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"imba_bounty_hunter_shadow_jaunt"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"MaxLevel"						"3"
+		"FightRecapLevel"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
-		 {
-		  	"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
-		  	"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
-		 }
-		
-		// Unit Targeting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		{
+		  	"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+		}
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -4098,10 +5402,6 @@
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"12 10 8"
 		"AbilityManaCost"				"0"	
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.1"	// just a mini stun
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4121,19 +5421,10 @@
 				"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShadowJaunt"
 
-				"track_modifier"			"modifier_imba_track_aura"
-				"track_scepter_modifier"	"modifier_imba_track_aura_scepter"
+				"modifier_track"			"modifier_imba_track"
+				"modifier_track_scepter"	"modifier_imba_track_scepter"
 				"ability_jinada"			"bounty_hunter_jinada"
-				"blink_sound"				"Hero_Riki.Blink_Strike"
-
-				"Target"
-				{
-					"Center"  				"TARGET"
-
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"sound_cast"				"Hero_Riki.Blink_Strike"
 			}
 		}
 	}	
@@ -6165,7 +7456,7 @@
 				"Passive"								"0"
 				"IsDebuff"								"1"
 				"IsHidden"								"0"
-				"IsPurgable"							"0"
+				"IsPurgable"							"1"
 
 				"Duration"								"%slow_duration"
 
@@ -6314,6 +7605,11 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
+				"passive_cooldown"						"60.0"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
 				"passive_cooldown_scepter"				"15.0"
 			}
 		}
@@ -6329,13 +7625,14 @@
 
 		"Modifiers"
 		{
-			"modifier_imba_shallow_grave_scepter_check"
+			"modifier_imba_shallow_grave_passive_check"
 			{
 				"Passive"								"1"
 				"IsHidden"								"1"
+				"IsBuff"								"1"
 				"IsPurgable"							"0"
 
-				"ThinkInterval"  						"0.1"
+				"ThinkInterval"							"0.1"
 
 				"OnIntervalThink"
 				{
@@ -6345,8 +7642,8 @@
 						"Function"						"ShallowGravePassive"
 						"Target"						"CASTER"
 
-						"modifier_passive"				"modifier_imba_shallow_grave_scepter"
-						"modifier_cooldown"				"modifier_imba_shallow_grave_scepter_cooldown"
+						"modifier_passive"				"modifier_imba_shallow_grave_passive"
+						"modifier_cooldown"				"modifier_imba_shallow_grave_passive_cooldown"
 					}
 				}
 
@@ -6357,14 +7654,16 @@
 						"ScriptFile"					"internal/util.lua"
 						"Function"						"IllusionPassiveRemover"
 
-						"modifier"						"modifier_imba_shallow_grave_scepter_check"
+						"modifier"						"modifier_imba_shallow_grave_passive_check"
 					}
 				}
 			}
 
 			"modifier_imba_shallow_grave"
 			{
+				"Passive"								"0"
 				"IsBuff"								"1"
+				"IsHidden"								"0"
 				"IsPurgable"							"0"
 				"Duration"								"%duration_tooltip"
 
@@ -6405,11 +7704,16 @@
 				}
 			}
 
-			"modifier_imba_shallow_grave_scepter"
+			"modifier_imba_shallow_grave_passive"
 			{
+				"Passive"								"0"
+				"IsBuff"								"1"
 				"IsHidden"								"0"
 				"IsPurgable"							"0"
+
 				"TextureName"							"dazzle_nothl_protection"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"OnTakeDamage"
 				{
@@ -6419,8 +7723,8 @@
 						"Function"						"ShallowGraveDamageCheck"
 
 						"modifier_grave"				"modifier_imba_shallow_grave"
-						"modifier_passive"				"modifier_imba_shallow_grave_scepter"
-						"modifier_cooldown"				"modifier_imba_shallow_grave_scepter_cooldown"
+						"modifier_passive"				"modifier_imba_shallow_grave_passive"
+						"modifier_cooldown"				"modifier_imba_shallow_grave_passive_cooldown"
 					}
 				}
 
@@ -6430,21 +7734,21 @@
 				}
 			}
 
-			"modifier_imba_shallow_grave_scepter_cooldown"
+			"modifier_imba_shallow_grave_passive_cooldown"
 			{
 				"IsHidden"								"0"
 				"IsDebuff"								"1"
 				"IsPurgable"							"0"
 				"TextureName"							"dazzle_shallow_grave_cooldown"
 
-				"Duration"								"%passive_cooldown_scepter"
+				"Attributes"							"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"OnDestroy"
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_imba_shallow_grave_scepter_check"
-						"Target" 		"CASTER"
+						"ModifierName"					"modifier_imba_shallow_grave_passive_check"
+						"Target"						"CASTER"
 					}
 				}
 			}
@@ -9979,7 +11283,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"	
 		"AoERadius"						"250"	
 
@@ -10029,12 +11333,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"7 8 9 10"
+				"proc_chance"			"5 7 9 11"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_aoe"				"400 500 600 700"
+				"aura_aoe"				"700"
 			}
 			"09"
 			{
@@ -11597,7 +12901,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 900 1100"
+		"AbilityCastRange"				"700 850 1000"
 		"AbilityCastPoint"				"0.35"	
 
 		// Time		
@@ -11620,7 +12924,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"700"
+				"cast_range"				"700 850 1000"
 			}
 			"03"
 			{
@@ -11731,7 +13035,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 900 1100"
+		"AbilityCastRange"				"700 850 1000"
 		"AbilityCastPoint"				"0.25"	
 
 		// Time		
@@ -11754,7 +13058,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"700"
+				"cast_range"				"700 850 1000"
 			}
 			"03"
 			{
@@ -12603,11 +13907,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.5 5.0 4.5 4.0"
+		"AbilityCooldown"				"1.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 145 165 185"
+		"AbilityManaCost"				"20 30 40 50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12621,32 +13925,37 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 180 240 300"
+				"damage"				"30 45 60 75"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"90 120 150 180"
+				"heal"					"30 35 40 45"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"25"
+				"stack_power"			"10"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"6.0"
+				"var_type"				"FIELD_INTEGER"
+				"amp_power"				"-10"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"500"
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"3.5"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_cap"				"3 4 5 6"
+				"projectile_speed"		"600"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_cap"				"5 10 15 20"
 			}
 		}
 
@@ -12739,6 +14048,11 @@
 				"IsPurgable"		"0"
 
 				"Duration"			"%stack_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%amp_power"
+				}
 			}
 		}
 	}
@@ -12941,7 +14255,7 @@
 				"Aura"          		"modifier_imba_sadist_debuff"
 				"Aura_Radius"   		"%death_radius"
 				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"Aura_ApplyToCaster" 	"0"
 
@@ -13461,12 +14775,12 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_movement_speed_pct_night"	"24 28 32 36"
+				"bonus_movement_speed_pct_night"	"20 25 30 35"
 			}
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"bonus_attack_speed_night"			"50 70 90 110"
+				"bonus_attack_speed_night"			"45 60 75 90"
 			}
 			"03"
 			{
@@ -13476,12 +14790,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stacking_attack_speed"				"15"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"stacking_night_vision"				"50"
+				"stacking_attack_speed"				"20"
 			}
 		}
 
@@ -13567,7 +14876,6 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_move_speed"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_attack_speed"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 			"%stacking_night_vision"
 				}
 			}
 		}
@@ -14592,6 +15900,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"int_duration"			"12.0"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_int_pct"			"50"
+			}
 		}
 
 		"Modifiers"
@@ -14739,7 +16052,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"175 250 325"
+		"AbilityManaCost"						"200 350 500"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15694,8 +17007,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"silence_duration"		"2"
+				"var_type"				"FIELD_FLOAT"
+				"silence_duration"		"1.5"
 			}
 			"05"
 			{
@@ -15785,6 +17098,7 @@
 			"modifier_imba_stifling_dagger_slow"
 			{
 				"IsDebuff"				"1"
+				"IsPurgable"			"1"
 
 				"Duration"				"%slow_duration"
 
@@ -15807,6 +17121,7 @@
 			{
 				"IsDebuff"				"1"
 				"IsHidden"				"1"
+				"IsPurgable"			"1"
 
 				"Duration"				"%silence_duration"
 
@@ -15909,6 +17224,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_width"			"125"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proc_rate"					"100"
 			}
 		}
 
@@ -16160,7 +17480,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_increase"				"2 4 6"
+				"crit_increase"				"3 4 5"
 			}
 			"04"
 			{
@@ -17141,7 +18461,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"				"2.95"
+		"AbilityChannelTime"				"3.0"
 		"AbilityCooldown"					"30.0 25.0 20.0"
 
 		// Cost
@@ -17153,12 +18473,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dismember_damage"			"75 125 175"
+				"dismember_damage"			"60 100 140"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"strength_damage"			"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_duration"				"3.0"
 			}
 		}
 
@@ -17193,31 +18518,23 @@
 
 		"OnChannelInterrupted"
 		{
-			"RemoveModifier"
+			"RunScript"
 			{
-				"ModifierName"				"modifier_imba_dismember"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"DismemberEnd"
+
+				"modifier_dismember"		"modifier_imba_dismember"
 			}
 		}
 
 		"OnChannelFinish"
 		{
-			"RemoveModifier"
+			"RunScript"
 			{
-				"ModifierName"				"modifier_imba_dismember"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
+				"ScriptFile"				"hero/hero_pudge.lua"
+				"Function"					"DismemberEnd"
+
+				"modifier_dismember"		"modifier_imba_dismember"
 			}
 		}
 
@@ -17229,6 +18546,8 @@
 				"IsDebuff"					"1"
 				"IsHidden"					"0"
 				"IsPurgable"				"0"
+
+				"Duration"					"%max_duration"
 
 				"ThinkInterval"				"1.0"
 
@@ -17295,7 +18614,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
-		"AbilityDuration"				"15.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17459,9 +18777,10 @@
 
 			"modifier_imba_shadow_strike_base_slow"
 			{
-				"Duration"							"%AbilityDuration"
 				"IsDebuff"							"1"
 				"IsPurgable"						"1"
+
+				"Duration"							"%duration_tooltip"
 
 				"EffectName"						"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
 				"EffectAttachType"					"follow_chest"
@@ -17495,9 +18814,11 @@
 
 			"modifier_imba_shadow_strike_stacking_slow"
 			{
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
+				"IsHidden"							"1"
+				"IsDebuff"							"1"
+				"IsPurgable"						"1"
+
+				"Duration"							"%duration_tooltip"
 
 				"Properties"
 				{
@@ -19210,7 +20531,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"storm_bolt_damage"				"100 200 300"		
+				"storm_bolt_damage"				"100 150 200"		
 			}
 			"05"
 			{

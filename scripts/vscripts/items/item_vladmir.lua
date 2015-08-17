@@ -15,7 +15,7 @@ function VladmirOffering( keys )
 	local lifesteal_pct = ability:GetLevelSpecialValueFor("vampiric_aura", ability_level)
 
 	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() then
+	if target:IsBuilding() or target:IsTower() or target == attacker then
 		return nil
 	end
 
@@ -53,7 +53,7 @@ function VladmirBlood( keys )
 	local creep_lifesteal = ability:GetLevelSpecialValueFor("creep_lifesteal", ability_level)
 
 	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() then
+	if target:IsBuilding() or target:IsTower() or target == attacker then
 		return nil
 	end
 

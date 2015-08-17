@@ -33,9 +33,16 @@ function Midas( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local sound_cast = keys.sound_cast
 
-	if caster:GetUnitName() == "npc_dota_hero_tinker" then
-		return nil
+	-- If the caster has Rearm, do nothing
+	for i = 0, 15 do
+		local ability_rearm = caster:GetAbilityByIndex(i)
+		if ability_rearm and ability_rearm:GetName() == "tinker_rearm" then
+			Notifications:Bottom(caster:GetPlayerID(), {text = "#imba_midas_forbidden", duration = 7.0, style = {color = "Red"}	} )
+			ability:StartCooldown(1)
+			return nil
+		end
 	end
 
 	-- Parameters and calculations
@@ -48,7 +55,7 @@ function Midas( keys )
 	bonus_gold = bonus_gold * ( 100 + CREEP_GOLD_BONUS ) / 100
 
 	-- Play sound and show gold gain message to the owner
-	target:EmitSound("DOTA_Item.Hand_Of_Midas")
+	target:EmitSound(sound_cast)
 	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
 
 	-- Draw the midas gold conversion particle
@@ -61,6 +68,5 @@ function Midas( keys )
 	target:SetMaximumGoldBounty(0)
 	target:Kill(ability, caster)
 	caster:AddExperience(bonus_xp, false, false)
-	print("granted bonus xp: "..bonus_xp)
 	caster:ModifyGold(bonus_gold, true, 0)
 end

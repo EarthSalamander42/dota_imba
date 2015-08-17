@@ -39,7 +39,7 @@
 	//"item_gem"					"REMOVE"
 	"item_cloak"					"REMOVE"
 	"item_talisman_of_evasion"		"REMOVE"
-	//"item_cheese"					"REMOVE"
+	"item_cheese"					"REMOVE"
 	"item_magic_stick"				"REMOVE"
 	"item_recipe_magic_wand"		"REMOVE"
 	"item_magic_wand"				"REMOVE"
@@ -134,7 +134,7 @@
 	"item_heart"					"REMOVE"
 	"item_recipe_black_king_bar"	"REMOVE"
 	"item_black_king_bar"			"REMOVE"
-	//"item_aegis"					"REMOVE"
+	"item_aegis"					"REMOVE"
 	"item_recipe_shivas_guard"		"REMOVE"
 	"item_shivas_guard"				"REMOVE"
 	"item_recipe_bloodstone"		"REMOVE"
@@ -168,7 +168,7 @@
 	"item_lesser_crit"				"REMOVE"
 	"item_recipe_armlet"			"REMOVE"
 	"item_armlet"					"REMOVE"
-	"item_recipe_invis_sword"		"REMOVE"
+	//"item_recipe_invis_sword"		"REMOVE"
 	"item_invis_sword"				"REMOVE"
 	"item_recipe_sange_and_yasha"	"REMOVE"
 	"item_sange_and_yasha"			"REMOVE"
@@ -359,62 +359,13 @@
 	}
 
 	//=================================================================================================================
-	// Cheese
-	//=================================================================================================================
-	"item_cheese"
-	{
-		"AbilityCooldown"				"10.0"
-		
-		"ItemCost"						"3000"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_restore"		"10000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_restore"			"5000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Aegis of Immortality
-	//=================================================================================================================
-	"item_aegis"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"reincarnate_time"						"3.0"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"disappear_time"						"480.0"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"disappear_time_minutes_tooltip"		"8"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Gem
 	//=================================================================================================================
 	"item_gem"
 	{
 		"ItemCost"						"600"
 
-		"ItemStockTime"					"300.0"
+		"ItemStockTime"					"240.0"
 
 		"AbilitySpecial"
 		{

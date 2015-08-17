@@ -1,5 +1,5 @@
 --[[	Author: Hewdraw
-		Date:	22.06.2015	]]
+		Date: 22.06.2015	]]
 
 function ShadowStrike( keys )
 	local caster = keys.caster

@@ -37,7 +37,7 @@ function BrainSapManaDrain( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
-	local mana_to_steal = ability:GetLevelSpecialValueFor("mana_steal_amt", ability_level)
+	local mana_to_steal = ability:GetLevelSpecialValueFor("mana_steal_amt", ability_level) * FRANTIC_MULTIPLIER
 
 	target:ReduceMana(mana_to_steal)
 	caster:GiveMana(mana_to_steal)
@@ -151,7 +151,7 @@ function FiendsGripScepter( keys )
 			local direction = (caster_location - target_location):Normalized()
 			local forward_vector = v:GetForwardVector()
 			local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-			if angle <= vision_cone/2 then
+			if angle <= ( vision_cone / 2 ) and v:CanEntityBeSeenByMyTeam(caster) then
 				ability:ApplyDataDrivenModifier(caster, v, modifier, {})
 			end
 		end

@@ -128,10 +128,15 @@ function LightStrikeArray( keys )
 	local step = (target_pos - caster_pos):Normalized() * radius
 	local blast_count = 0
 
+	-- Create a (visible) dummy at the initial cast point
+	local visibility_dummy = CreateUnitByName("npc_dummy_unit", blast_pos, false, caster, caster, caster:GetTeamNumber())
+	visibility_dummy:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, main_delay + blast_amount * secondary_delay)
+	visibility_dummy:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, main_delay + blast_amount * secondary_delay)
+
 	-- Creates the pre-cast particles
 	for i = 1, blast_amount do
 		local light_pos = GetGroundPosition(target_pos + step * (i-1), caster)
-		local pre_fx = ParticleManager:CreateParticle(pre_particle, PATTACH_CUSTOMORIGIN, caster)
+		local pre_fx = ParticleManager:CreateParticle(pre_particle, PATTACH_CUSTOMORIGIN, visibility_dummy)
 		ParticleManager:SetParticleControl(pre_fx, 0, light_pos)
 		ParticleManager:SetParticleControl(pre_fx, 1, Vector(radius, 0, 0))
 		ParticleManager:SetParticleControl(pre_fx, 3, Vector(0, 0, 0))
@@ -147,7 +152,7 @@ function LightStrikeArray( keys )
 		blast_pos = GetGroundPosition(target_pos + step * blast_count, caster)
 
 		-- Creates the blast particle
-		local blast_fx = ParticleManager:CreateParticle(blast_particle, PATTACH_ABSORIGIN, caster)
+		local blast_fx = ParticleManager:CreateParticle(blast_particle, PATTACH_ABSORIGIN, visibility_dummy)
 		ParticleManager:SetParticleControl(blast_fx, 0, blast_pos)
 		ParticleManager:SetParticleControl(blast_fx, 1, Vector(radius, 0, 0))
 		ParticleManager:SetParticleControl(blast_fx, 3, Vector(0, 0, 0))
@@ -171,6 +176,9 @@ function LightStrikeArray( keys )
 		if blast_count < blast_amount then
 			return secondary_delay
 		end
+
+		-- Destroy visibility dummy
+		visibility_dummy:Destroy()
 	end)
 end
 

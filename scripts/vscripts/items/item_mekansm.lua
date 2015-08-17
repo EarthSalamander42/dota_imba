@@ -4,6 +4,7 @@
 	Called when Mekansm is cast.  Heals nearby units if they have not been healed by a Mekansm recently.
 	Additional parameters: keys.heal_amount and keys.heal_radius
 ================================================================================================================= ]]
+
 function Mekansm( keys )	
 	local caster = keys.caster
 	local ability = keys.ability
@@ -11,7 +12,6 @@ function Mekansm( keys )
 	local heal_radius = keys.heal_radius
 	local modifier_armor = keys.modifier_armor
 	local modifier_hot = keys.modifier_hot
-	local modifier_debuff = keys.modifier_debuff
 
 	caster:EmitSound("DOTA_Item.Mekansm.Activate")
 	ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -21,14 +21,11 @@ function Mekansm( keys )
 		
 	--Restore health and play a particle effect for every found ally.
 	for i, nearby_ally in ipairs(nearby_allied_units) do
-		if not nearby_ally:HasModifier(modifier_debuff) then
-			nearby_ally:Heal(heal_amount, caster)
-			nearby_ally:EmitSound("DOTA_Item.Mekansm.Target")
-			ParticleManager:CreateParticle("particles/items2_fx/mekanism_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, nearby_ally)
+		nearby_ally:Heal(heal_amount, caster)
+		nearby_ally:EmitSound("DOTA_Item.Mekansm.Target")
+		ParticleManager:CreateParticle("particles/items2_fx/mekanism_recipient.vpcf", PATTACH_ABSORIGIN_FOLLOW, nearby_ally)
 
-			ability:ApplyDataDrivenModifier(caster, nearby_ally, modifier_hot, nil)
-			ability:ApplyDataDrivenModifier(caster, nearby_ally, modifier_armor, nil)
-			ability:ApplyDataDrivenModifier(caster, nearby_ally, modifier_debuff, nil)	
-		end
+		ability:ApplyDataDrivenModifier(caster, nearby_ally, modifier_hot, nil)
+		ability:ApplyDataDrivenModifier(caster, nearby_ally, modifier_armor, nil)
 	end
 end

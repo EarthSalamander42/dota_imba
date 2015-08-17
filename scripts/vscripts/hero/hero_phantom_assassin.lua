@@ -29,7 +29,7 @@ function StiflingDaggerCrit( keys )
 	if scepter and RandomInt(1, 100) <= kill_chance then
 		target:EmitSound(sound_crit)
 		TrueKill(caster, target, crit_ability)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, 999999, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 		return nil
 	end
 
@@ -85,6 +85,7 @@ function PhantomStrike( keys )
 	local target_pos = target:GetAbsOrigin()
 	local direction = ( target_pos - caster_pos ):Normalized()
 	local distance = ( target_pos - caster_pos ):Length2D()
+	target_pos = caster_pos + direction * ( distance + 50 )
 
 	-- Launch a projectile to detect enemies in the blink path
 	local blink_projectile = {
@@ -115,6 +116,7 @@ function PhantomStrike( keys )
 
 	-- Blink
 	FindClearSpaceForUnit(caster, target_pos, true)
+	caster:SetForwardVector( (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized() )
 
 	-- Fire blink particle
 	local blink_pfx = ParticleManager:CreateParticle(particle_end, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -133,18 +135,25 @@ end
 
 function PhantomStrikeHit( keys )
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
-	local ability_crit = caster:FindAbilityByName(keys.ability_crit)
-	local ability_level = ability_crit:GetLevel() - 1
 	local modifier_crit = keys.modifier_crit
 	local modifier_stacks = keys.modifier_stacks
 	local sound_kill = keys.sound_kill
 	local scepter = HasScepter(caster)
+	local ability_crit = caster:FindAbilityByName(keys.ability_crit)
+	local ability_level
+	if ability_crit then
+		ability_level = ability_crit:GetLevel() - 1
+	end
+
+	-- Parameters
+	local proc_rate = ability:GetLevelSpecialValueFor("proc_rate", ability:GetLevel() - 1 )
 
 	-- If coup de grace is learned, roll for crits and instant kills
 	if ability_crit then
 
-		-- Parameters
+		-- Crit parameters
 		local crit_chance = ability_crit:GetLevelSpecialValueFor("crit_chance", ability_level)
 		local crit_increase = ability_crit:GetLevelSpecialValueFor("crit_increase", ability_level)
 		local kill_chance = ability_crit:GetLevelSpecialValueFor("crit_chance_scepter", ability_level)
@@ -166,7 +175,7 @@ function PhantomStrikeHit( keys )
 		if scepter and RandomInt(1, 100) <= kill_chance then
 			target:EmitSound(sound_kill)
 			TrueKill(caster, target, ability_crit)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, 999999, nil)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 			return nil
 		end
 
@@ -176,8 +185,13 @@ function PhantomStrikeHit( keys )
 		end
 	end
 
-	-- Deal damage equal to one attack
-	caster:PerformAttack(target, true, true, true, true)
+	-- Attack, with a chance to calculate on-hit procs
+	if RandomInt(1, 100) <= proc_rate then
+		caster:PerformAttack(target, true, true, true, true)
+	else
+		caster:PerformAttack(target, true, false, true, true)
+	end
+	
 end
 
 function Blur( keys )
@@ -253,5 +267,5 @@ function CoupDeGraceKill( keys )
 	local ability = keys.ability
 
 	TrueKill(caster, target, ability)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, 999999, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 end

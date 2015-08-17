@@ -77,6 +77,20 @@ COLOR_ORANGE = '\x1B'
 COLOR_LRED = '\x1C'
 COLOR_GOLD = '\x1D'
 
+-- Returns a random value from a non-array table
+function RandomFromTable(table)
+	local array = {}
+	local n = 0
+	for _,v in pairs(table) do
+		array[#array+1] = v
+		n = n + 1
+	end
+
+	if n == 0 then return nil end
+
+	return array[RandomInt(1,n)]
+end
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: custom utility functions
 -------------------------------------------------------------------------------------------------
@@ -99,11 +113,8 @@ end
 
 -- Checks if a hero is wielding an Aegis of the immortal
 function HasAegis(hero)
-	for i=0,5 do
-		local item = hero:GetItemInSlot(i)
-		if item and item:GetAbilityName() == "item_aegis" then
-			return true
-		end
+	if hero.has_aegis then
+		return true
 	end
 	return false
 end
@@ -198,7 +209,7 @@ end
 
 -- Checks if a given unit is Roshan
 function IsRoshan(unit)
-	if unit:GetName() == "npc_dota_roshan" then
+	if unit:GetName() == "npc_imba_roshan" then
 		return true
 	else
 		return false
@@ -362,343 +373,17 @@ end
 -- Picks a legal non-ultimate ability in Random OMG mode
 function GetRandomNormalAbility()
 
-	local legal_abilities = {
-		"alchemist_acid_spray",
-		"alchemist_goblins_greed",
-		"ancient_apparition_cold_feet",
-		"ancient_apparition_ice_vortex",
-		"ancient_apparition_chilling_touch",
-		"chaos_knight_chaos_bolt",
-		"chaos_knight_reality_rift",
-		"chaos_knight_chaos_strike",
-		"earthshaker_fissure",
-		"earthshaker_enchant_totem",
-		"earthshaker_aftershock",
-		"faceless_void_time_walk",
-		"faceless_void_backtrack",
-		"faceless_void_time_lock",
-		"juggernaut_blade_fury",
-		"juggernaut_blade_dance",
-		"juggernaut_healing_ward",
-		"lion_impale",
-		"lion_voodoo",
-		"lion_mana_drain",
-		"medusa_split_shot",
-		"medusa_mystic_snake",
-		"medusa_mana_shield",
-		"naga_siren_mirror_image",
-		"naga_siren_ensnare",
-		"naga_siren_rip_tide",
-		"furion_sprout",
-		"furion_teleportation",
-		"furion_force_of_nature",
-		"phantom_lancer_spirit_lance",
-		"phantom_lancer_doppelwalk",
-		"phantom_lancer_phantom_edge",
-		"sandking_burrowstrike",
-		"sandking_sand_storm",
-		"sandking_caustic_finale",
-		"shadow_demon_disruption",
-		"shadow_demon_soul_catcher",
-		"nevermore_necromastery",
-		"nevermore_dark_lord",
-		"shadow_shaman_ether_shock",
-		"shadow_shaman_voodoo",
-		"shadow_shaman_shackles",
-		"slark_dark_pact",
-		"slark_pounce",
-		"slark_essence_shift",
-		"storm_spirit_static_remnant",
-		"storm_spirit_electric_vortex",
-		"storm_spirit_overload",
-		"imba_sven_storm_bolt",
-		"imba_sven_great_cleave",
-		"imba_sven_warcry",
-		"templar_assassin_refraction",
-		"templar_assassin_meld",
-		"templar_assassin_psi_blades",
-		"terrorblade_reflection",
-		"terrorblade_metamorphosis",
-		"tinker_laser",
-		"tinker_heat_seeking_missile",
-		"tinker_march_of_the_machines",
-		"ursa_earthshock",
-		"ursa_overpower",
-		"ursa_fury_swipes",
-		"vengefulspirit_magic_missile",
-		"vengefulspirit_command_aura",
-		"vengefulspirit_wave_of_terror",
-		"venomancer_venomous_gale",
-		"venomancer_poison_sting",
-		"venomancer_plague_ward",
-		"wisp_overcharge",
-		"imba_abaddon_frostmourne",
-		"imba_antimage_mana_break",
-		"imba_antimage_spell_shield",
-		"antimage_blink",
-		"imba_axe_berserkers_call",
-		"imba_axe_battle_hunger",
-		"imba_bane_enfeeble",
-		"imba_bane_brain_sap",
-		"imba_bounty_hunter_shuriken_toss",
-		"imba_bounty_hunter_wind_walk",
-		"bounty_hunter_jinada",
-		"imba_centaur_hoof_stomp",
-		"imba_centaur_double_edge",
-		"imba_centaur_return",
-		"imba_crystal_maiden_crystal_nova",
-		"imba_crystal_maiden_frostbite",
-		"imba_crystal_maiden_brilliance_aura",
-		"imba_dazzle_poison_touch",
-		"imba_dazzle_shallow_grave",
-		"imba_dazzle_shadow_wave",
-		"imba_drow_ranger_gust",
-		"imba_drow_ranger_trueshot",
-		"imba_jakiro_liquid_fire",
-		"jakiro_ice_path",
-		"imba_kunkka_tidebringer",
-		"imba_lich_frost_nova",
-		"imba_lich_frost_armor",
-		"imba_lich_dark_ritual",
-		"imba_lina_light_strike_array",
-		"imba_mirana_starfall",
-		"imba_mirana_arrow",
-		"imba_mirana_leap",
-		"imba_necrolyte_death_pulse",
-		"imba_necrolyte_heartstopper_aura",
-		"imba_necrolyte_sadist",
-		"imba_night_stalker_void",
-		"imba_night_stalker_crippling_fear",
-		"imba_night_stalker_hunter_in_the_night",
-		"imba_nyx_assassin_impale",
-		"imba_nyx_assassin_spiked_carapace",
-		"nyx_assassin_mana_burn",
-		"imba_obsidian_destroyer_arcane_orb",
-		"imba_obsidian_destroyer_essence_aura",
-		"imba_omniknight_purification",
-		"imba_omniknight_repel",
-		"imba_omniknight_degen_aura",
-		"imba_phantom_assassin_phantom_strike",
-		"imba_phantom_assassin_blur",
-		"imba_queenofpain_shadow_strike",
-		"imba_queenofpain_scream_of_pain",
-		"imba_pudge_meat_hook",
-		"imba_pudge_rot",
-		"imba_pudge_flesh_heap"
-	}
-
-	local ability_owners = {
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_ancient_apparition",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_naga_siren",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_nevermore",
-		"npc_dota_hero_shadow_shaman",
-		"npc_dota_hero_shadow_shaman",
-		"npc_dota_hero_shadow_shaman",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_templar_assassin",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_wisp",
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_bounty_hunter",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_drow_ranger",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_night_stalker",
-		"npc_dota_hero_night_stalker",
-		"npc_dota_hero_night_stalker",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_obsidian_destroyer",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_omniknight",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_queenofpain",
-		"npc_dota_hero_pudge",
-		"npc_dota_hero_pudge",
-		"npc_dota_hero_pudge"
-	}
-
-	local random_int = RandomInt(1, #legal_abilities)
-	return legal_abilities[random_int], ability_owners[random_int]
+	local ability = RandomFromTable(RANDOM_OMG_ABILITIES)
+	
+	return ability.ability_name, ability.owner_hero
 end
 
 -- Picks a legal ultimate ability in Random OMG mode
 function GetRandomUltimateAbility()
 
-	local legal_ultimates = {
-		"alchemist_chemical_rage",
-		"chaos_knight_phantasm",
-		"earthshaker_echo_slam",
-		"faceless_void_chronosphere",
-		"juggernaut_omni_slash",
-		"lion_finger_of_death",
-		"medusa_stone_gaze",
-		"furion_wrath_of_nature",
-		"phantom_lancer_juxtapose",
-		"phoenix_supernova",
-		"sandking_epicenter",
-		"slark_shadow_dance",
-		"storm_spirit_ball_lightning",
-		"imba_sven_gods_strength",
-		"terrorblade_sunder",
-		"tinker_rearm",
-		"ursa_enrage",
-		"vengefulspirit_nether_swap",
-		"venomancer_poison_nova",
-		"imba_abaddon_borrowed_time",
-		"imba_antimage_mana_void",
-		"imba_axe_culling_blade",
-		"imba_bane_fiends_grip",
-		"imba_centaur_stampede",
-		"imba_crystal_maiden_freezing_field",
-		"imba_dazzle_weave",
-		"imba_jakiro_macropyre",
-		"imba_kunkka_ghostship",
-		"imba_lich_chain_frost",
-		"imba_lina_laguna_blade",
-		"imba_mirana_invis",
-		"imba_necrolyte_reapers_scythe",
-		"imba_nyx_assassin_vendetta",
-		"imba_phantom_assassin_coup_de_grace",
-		"imba_sniper_assassinate",
-		"imba_pudge_dismember"
-	}
+	local ability = RandomFromTable(RANDOM_OMG_ULTIMATES)
 
-	local ultimate_owners = {
-		"npc_dota_hero_alchemist",
-		"npc_dota_hero_chaos_knight",
-		"npc_dota_hero_earthshaker",
-		"npc_dota_hero_faceless_void",
-		"npc_dota_hero_juggernaut",
-		"npc_dota_hero_lion",
-		"npc_dota_hero_medusa",
-		"npc_dota_hero_furion",
-		"npc_dota_hero_phantom_lancer",
-		"npc_dota_hero_phoenix",
-		"npc_dota_hero_sand_king",
-		"npc_dota_hero_slark",
-		"npc_dota_hero_storm_spirit",
-		"npc_dota_hero_sven",
-		"npc_dota_hero_terrorblade",
-		"npc_dota_hero_tinker",
-		"npc_dota_hero_ursa",
-		"npc_dota_hero_vengefulspirit",
-		"npc_dota_hero_venomancer",
-		"npc_dota_hero_abaddon",
-		"npc_dota_hero_antimage",
-		"npc_dota_hero_axe",
-		"npc_dota_hero_bane",
-		"npc_dota_hero_centaur",
-		"npc_dota_hero_crystal_maiden",
-		"npc_dota_hero_dazzle",
-		"npc_dota_hero_jakiro",
-		"npc_dota_hero_kunkka",
-		"npc_dota_hero_lich",
-		"npc_dota_hero_lina",
-		"npc_dota_hero_mirana",
-		"npc_dota_hero_necrolyte",
-		"npc_dota_hero_nyx_assassin",
-		"npc_dota_hero_phantom_assassin",
-		"npc_dota_hero_sniper",
-		"npc_dota_hero_pudge"
-	}
-
-	local random_int = RandomInt(1, #legal_ultimates)
-	return legal_ultimates[random_int], ultimate_owners[random_int]
+	return ability.ability_name, ability.owner_hero
 end
 
 -- Grants a given hero an appropriate amount of Random OMG abilities
@@ -717,6 +402,9 @@ function ApplyAllRandomOmgAbilities( hero )
 		hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
 		ability_powerup = true
 	end
+
+	-- Check if the frantic mode ability is present
+	local ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
 
 	-- Remove default abilities
 	for i = 0, 15 do
@@ -855,6 +543,13 @@ function ApplyAllRandomOmgAbilities( hero )
 		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		ability_powerup:SetLevel(1)
 		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", powerup_stacks, true)
+	end
+
+	-- Apply frantic mode ability, if previously existing
+	if ability_frantic then
+		hero:AddAbility("imba_frantic_buff")
+		ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
+		ability_frantic:SetLevel(1)
 	end
 
 end
@@ -1005,9 +700,13 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_warcry_passive_aura")
 	hero:RemoveModifierByName("modifier_imba_great_cleave")
 	hero:RemoveModifierByName("modifier_imba_blur")
-	hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_stacks")
+	hero:RemoveModifierByName("modifier_medusa_split_shot")
+
+	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
+		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
+	end
 end
 
 -- Precaches an unit, or, if something else is being precached, enters it into the precache queue
@@ -1077,4 +776,87 @@ function InitializeInnateAbilities( hero )
 	end
 end
 			
+-- Break (remove passive skills from) a target
+function PassiveBreak( unit, duration )
 
+	-- Check if the target already has break status
+	if unit.break_duration_left then
+		
+		-- Increase remaining break duration if appropriate
+		if duration > unit.break_duration_left then
+			unit.break_duration_left = duration
+		end
+
+		-- Break and do nothing more
+		return nil
+	end
+
+	-- Initialize break globals
+	unit.break_duration_left = duration
+	unit.break_learn_levels = {}
+
+	local passive_detected = false
+
+	-- AM exceptions
+	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
+	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_active")
+
+	-- Set all passive abilities' levels to zero
+	for i = 0, 15 do
+		local ability = unit:GetAbilityByIndex(i)
+		if ability and ( ability:IsPassive() or ability:GetName() == "imba_antimage_spell_shield" ) and ability:GetLevel() > 0 then
+			passive_detected = true
+			unit.break_learn_levels[i] = ability:GetLevel()
+			ability:SetHidden(true)
+			ability:SetLevel(0)
+		end
+	end
+
+	-- If at least one passive was broken, count down the duration
+	if passive_detected then
+		Timers:CreateTimer(0.1, function()
+
+			-- Update duration left
+			unit.break_duration_left = unit.break_duration_left - 0.1
+
+			-- Restore ability levels if duration has elapsed
+			if unit.break_duration_left <= 0 then
+				for i = 0, 15 do
+					if unit.break_learn_levels[i] and unit.break_learn_levels[i] > 0 then
+						local ability = unit:GetAbilityByIndex(i)
+						ability:SetLevel(unit.break_learn_levels[i])
+						ability:SetHidden(false)
+					end
+				end
+				unit.break_duration_left = nil
+				unit.break_learn_levels = nil
+			else
+				return 0.1
+			end
+		end)
+	end
+end
+
+-- End an ongoing Break condition
+function PassiveBreakEnd( unit )
+	unit.break_duration_left = 0
+end
+
+-- Check if an ability should proc magic stick/wand
+function StickProcCheck( ability )
+
+	local ability_name = ability:GetName()
+
+	local forbidden_skills = {
+		"storm_spirit_ball_lightning",
+		"tinker_rearm"
+	}
+
+	for i = 1, #forbidden_skills do
+		if ability_name == forbidden_skills[i] then
+			return false
+		end
+	end
+
+	return true
+end

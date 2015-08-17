@@ -28,27 +28,14 @@ function GameMode:_InitGameMode()
 	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
 
 	-- This is multiteam configuration stuff
-	if USE_AUTOMATIC_PLAYERS_PER_TEAM then
-		local num = math.floor(10 / MAX_NUMBER_OF_TEAMS)
-		local count = 0
-		for team,number in pairs(TEAM_COLORS) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, num)
-			end
-			count = count + 1
+	local count = 0
+	for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
+		if count >= MAX_NUMBER_OF_TEAMS then
+			GameRules:SetCustomGameTeamMaxPlayers(team, 0)
+		else
+			GameRules:SetCustomGameTeamMaxPlayers(team, number)
 		end
-	else
-		local count = 0
-		for team,number in pairs(CUSTOM_TEAM_PLAYER_COUNT) do
-			if count >= MAX_NUMBER_OF_TEAMS then
-				GameRules:SetCustomGameTeamMaxPlayers(team, 0)
-			else
-				GameRules:SetCustomGameTeamMaxPlayers(team, number)
-			end
-			count = count + 1
-		end
+		count = count + 1
 	end
 
 	if USE_CUSTOM_TEAM_COLORS then
@@ -203,10 +190,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 
 	-- Retrieve information
-	if tonumber(mode_info.random_omg) == 1 then
-		IMBA_ABILITY_MODE_RANDOM_OMG = true
-		print("Random OMG mode activated!")
-	elseif tonumber(mode_info.all_random) == 1 then
+	if tonumber(mode_info.all_random) == 1 then
 		IMBA_PICK_MODE_ALL_RANDOM = true
 		print("All Random mode activated!")
 	end
@@ -229,6 +213,10 @@ function OnSetGameMode( eventSourceIndex, args )
 		KILLS_TO_END_GAME_FOR_TEAM = tonumber(mode_info.number_of_kills)
 		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
 	end
+
+	-- Set frantic mode multiplier
+	FRANTIC_MULTIPLIER = tonumber(mode_info.frantic_mode)
+	print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Additional Random OMG setup
@@ -262,8 +250,28 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Gold/XP bounties setup
+	-- IMBA: Gold/bounties setup
 	-------------------------------------------------------------------------------------------------
+
+	-- Starting gold information
+	if mode_info.gold_start == "1500" then
+		HERO_INITIAL_GOLD = 1500
+		HERO_INITIAL_REPICK_GOLD = 1200
+		HERO_INITIAL_RANDOM_GOLD = 2000
+	elseif mode_info.gold_start == "4000" then
+		HERO_INITIAL_GOLD = 4000
+		HERO_INITIAL_REPICK_GOLD = 3300
+		HERO_INITIAL_RANDOM_GOLD = 5000
+	elseif mode_info.gold_start == "10000" then
+		HERO_INITIAL_GOLD = 10000
+		HERO_INITIAL_REPICK_GOLD = 8500
+		HERO_INITIAL_RANDOM_GOLD = 12000
+	elseif mode_info.gold_start == "50000" then
+		HERO_INITIAL_GOLD = 50000
+		HERO_INITIAL_REPICK_GOLD = 45000
+		HERO_INITIAL_RANDOM_GOLD = 55000
+	end
+	print("hero starting gold: "..HERO_INITIAL_GOLD)
 
 	-- Gold bounties information
 	CREEP_GOLD_BONUS = tonumber(mode_info.gold_bounty)
@@ -279,9 +287,17 @@ function OnSetGameMode( eventSourceIndex, args )
 	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
 	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
 
+	-- Creep growth ramp speed
+	CREEP_POWER_RAMP_UP_FACTOR = tonumber(mode_info.creep_power)
+	print("Creep growth ramp multiplier:"..CREEP_POWER_RAMP_UP_FACTOR)
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero levels and respawn setup
 	-------------------------------------------------------------------------------------------------
+
+	-- Enable higher starting level
+	HERO_STARTING_LEVEL = tonumber(mode_info.level_start)
+	print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
 
 	-- Enable higher level cap
 	if tonumber(mode_info.level_cap) > 25 then

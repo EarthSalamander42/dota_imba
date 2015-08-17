@@ -117,7 +117,7 @@ function Trueshot( keys )
 	end
 
 	-- Apply stacks equal to the bonus damage only if the target is ranged
-	if target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK then
+	if target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK or target == caster then
 		AddStacks(ability, caster, target, modifier_stack, damage, true)
 	end
 end

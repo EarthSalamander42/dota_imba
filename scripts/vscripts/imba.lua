@@ -63,12 +63,28 @@ end
 ]]
 function GameMode:OnFirstPlayerLoaded()
 	DebugPrint("[IMBA] First Player has loaded")
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Roshan initialization
+	-------------------------------------------------------------------------------------------------
+
+	local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+end
+
+-- Multiplies bounty rune experience and gold according to the gamemode multiplier
+function GameMode:FilterBountyRunePickup( filter_table )
+	filter_table["gold_bounty"] = ( 100 + CREEP_GOLD_BONUS ) / 100 * filter_table["gold_bounty"]
+	filter_table["xp_bounty"] = ( 100 + CREEP_XP_BONUS ) / 100 * filter_table["xp_bounty"]
+	return true
 end
 
 --[[
 	This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
 	It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
 ]]
+
 function GameMode:OnAllPlayersLoaded()
 	DebugPrint("[IMBA] All Players have loaded into the game")
 
@@ -85,7 +101,7 @@ function GameMode:OnAllPlayersLoaded()
 	BADGUYS_CONNECTED_PLAYERS = 0
 
 	-- Assign players to the table
-	for id = 0, 9 do
+	for id = 0, 19 do
 		Timers:CreateTimer(0, function()
 			self.players[id] = PlayerResource:GetPlayer(id)
 			
@@ -132,41 +148,6 @@ function GameMode:OnAllPlayersLoaded()
 				end
 			end)
 		end
-
-		-- Illusion skill adjustment
-		Timers:CreateTimer(0, function()
-			local illusions_on_world = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,illusion in pairs(illusions_on_world) do
-
-				-- Check if this illusion has already been adjusted
-				if illusion:IsIllusion() and not illusion.illusion_skills_adjusted then
-					local player_id = illusion:GetPlayerID()
-					local hero = PlayerResource:GetPlayer(player_id):GetAssignedHero()
-
-					-- Remove previously existing abilities
-					for i = 0, 15 do
-						local old_ability = illusion:GetAbilityByIndex(i)
-						if old_ability then
-							illusion:RemoveAbility(old_ability:GetAbilityName())
-						end
-					end
-
-					-- Add and level owner's abilities
-					for i = 0, 15 do
-						if hero.random_omg_abilities[i] then
-							illusion:AddAbility(hero.random_omg_abilities[i])
-							local ability = illusion:FindAbilityByName(hero.random_omg_abilities[i])
-							local ability_level = hero:FindAbilityByName(hero.random_omg_abilities[i]):GetLevel()
-							ability:SetLevel(ability_level)
-						end
-					end
-
-					-- Mark this illusion as already adjusted
-					illusion.illusion_skills_adjusted = true
-				end
-			end
-			return 0.1
-		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -188,6 +169,12 @@ function GameMode:OnAllPlayersLoaded()
 			end)
 		end
 	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Bounty Rune xp/gold adjustment
+	-------------------------------------------------------------------------------------------------
+
+	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "FilterBountyRunePickup"), self )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Selected game mode confirmation messages
@@ -241,21 +228,109 @@ function GameMode:OnAllPlayersLoaded()
 		buyback_cost = "<font color='#FF7800'>no buyback</font>."
 	end
 
+	-- Starting gold & level
+	local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
+
+	-- Creep power ramp
+	local creep_power = "Creeps and structures will gain power "
+	if CREEP_POWER_RAMP_UP_FACTOR == 1 then
+		creep_power = creep_power.."at <font color='#FF7800'>normal</font> speed."
+	elseif CREEP_POWER_RAMP_UP_FACTOR == 2 then
+		creep_power = creep_power.."<font color='#FF7800'>quicker</font> than normal."
+	elseif CREEP_POWER_RAMP_UP_FACTOR == 4 then
+		creep_power = creep_power.."at <font color='#FF7800'>extreme</font> speed."
+	end
+
+	-- Frantic mode
+	local frantic_mode = ""
+	if FRANTIC_MULTIPLIER > 1 then
+		frantic_mode = " <font color='#FF7800'>Frantic mode</font> is activated - cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
+	end
+
 	-- Kills to end the game
 	local kills_to_end = ""
 	if END_GAME_ON_KILLS then
 		kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills, or the Ancient falls."
 	end
-
-	-- Level cap
-	local level_cap = ""
-	if USE_CUSTOM_HERO_LEVELS then
-		level_cap = " Heroes can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
-	end
 	
 	Say(nil, game_mode..same_hero, false)
 	Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
-	Say(nil, kills_to_end..level_cap, false)
+	Say(nil, start_status, false)
+	Say(nil, creep_power..frantic_mode, false)
+	Say(nil, kills_to_end, false)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Structure bounty/stats setup
+	-------------------------------------------------------------------------------------------------
+
+	-- Find all buildings on the map
+	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	
+	-- Iterate through each one
+	for _, building in pairs(buildings) do
+		
+		-- Parameters
+		local building_name = building:GetName()
+		local special_building = true
+		local max_bounty = building:GetMaximumGoldBounty()
+		local min_bounty = building:GetMinimumGoldBounty()
+		local xp_bounty = building:GetDeathXP()
+
+		-- Identify the building type
+		if string.find(building_name, "tower") then
+
+			-- Set up base bounties
+			min_bounty = TOWER_MINIMUM_GOLD
+			max_bounty = TOWER_MAXIMUM_GOLD
+			xp_bounty = TOWER_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_tower_buffs")
+			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
+			tower_ability:SetLevel(1)
+
+		elseif string.find(building_name, "rax_melee") then
+
+			-- Set up base bounties
+			min_bounty = MELEE_RAX_MINIMUM_GOLD
+			max_bounty = MELEE_RAX_MAXIMUM_GOLD
+			xp_bounty = MELEE_RAX_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_rax_buffs")
+			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
+			rax_ability:SetLevel(1)
+
+		elseif string.find(building_name, "rax_range") then
+
+			-- Set up base bounties
+			min_bounty = RANGED_RAX_MINIMUM_GOLD
+			max_bounty = RANGED_RAX_MAXIMUM_GOLD
+			xp_bounty = RANGED_RAX_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_rax_buffs")
+			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
+			rax_ability:SetLevel(1)
+
+		else
+
+			-- Flag this building as non-tower, non-rax
+			special_building = false
+		end
+		
+		-- Update XP bounties
+		building:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
+
+		-- Update gold bounties
+		if special_building then
+			building:SetMaximumGoldBounty( math.floor( max_bounty * CREEP_GOLD_BONUS / 100 ) )
+			building:SetMinimumGoldBounty( math.floor( min_bounty * CREEP_GOLD_BONUS / 100 ) )
+		else
+			building:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+			building:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+		end
+	end
 end
 
 --[[
@@ -294,6 +369,22 @@ function GameMode:OnHeroInGame(hero)
 	-- Create kill and death streak globals
 	hero.kill_streak_count = 0
 	hero.death_streak_count = 0
+
+	-- Add frantic mode passive buff
+	if FRANTIC_MULTIPLIER > 1 then
+		hero:AddAbility("imba_frantic_buff")
+		ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
+		ability_frantic:SetLevel(1)
+	end
+
+	-- Set up initial level
+	if HERO_STARTING_LEVEL > 1 then
+		Timers:CreateTimer(1, function()
+			for i = 2, HERO_STARTING_LEVEL do
+				hero:HeroLevelUp(false)
+			end
+		end)
+	end
 
 	-- Set up initial gold
 	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())

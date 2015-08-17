@@ -23,6 +23,8 @@ function Maim( keys )
 
 	-- If a lower-priority maim debuff is present, remove it
 	target:RemoveModifierByName("modifier_item_imba_sange_maim")
+	target:RemoveModifierByName("modifier_item_imba_halberd_maim")
+	target:RemoveModifierByName("modifier_item_imba_silver_edge_maim")
 
 	-- Parameters
 	local maim_base = ability:GetLevelSpecialValueFor("maim_base", ability_level)

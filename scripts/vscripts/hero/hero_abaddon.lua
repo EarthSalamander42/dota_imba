@@ -380,7 +380,7 @@ function BorrowedTimeHeal( keys )
 			unit:Heal(damage / #allies, caster)
 		end
 	else
-		caster:Heal(damage*2, caster)
+		caster:Heal(damage * 2, caster)
 	end
 end
 
@@ -416,8 +416,8 @@ function BorrowedTimeAllies( keys )
 	local attacker = keys.attacker
 	local redirect = ability:GetLevelSpecialValueFor("redirect", ability:GetLevel() - 1 )
 
-	-- If this unit is an illusion, do nothing
-	if unit:IsIllusion() then
+	-- If this unit is an illusion or currently has Borrowed Time active, do nothing
+	if unit:IsIllusion() or unit:HasModifier("modifier_borrowed_time") then
 		return nil
 	end
 

@@ -1,5 +1,5 @@
 --[[	Author: Firetoad
-		Date:	09.07.2015	]]
+		Date: 09.07.2015	]]
 
 function Headshot( keys )
 	local caster = keys.caster

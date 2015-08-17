@@ -41,9 +41,8 @@ function ShallowGravePassive( keys )
 	local ability = keys.ability
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
-	local scepter = caster:HasScepter()
 
-	if scepter and not caster:HasModifier(modifier_cooldown) then
+	if not caster:HasModifier(modifier_cooldown) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_passive, {})
 	else
 		caster:RemoveModifierByName(modifier_passive)
@@ -53,15 +52,24 @@ end
 function ShallowGraveDamageCheck( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local modifier_grave = keys.modifier_grave
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
+	
+	-- Parameters
+	local passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown", ability_level)
 
+	-- Change cooldown duration if caster has a scepter
+	if HasScepter(caster) then
+		passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown_scepter", ability_level)
+	end
+
+	-- Check caster's health
 	local health = caster:GetHealth()
-
 	if health == 1 and not caster:HasModifier(modifier_grave) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_grave, {})
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = passive_cooldown})
 		caster:RemoveModifierByName(modifier_passive)
 	end
 end
@@ -81,8 +89,6 @@ function ShallowGraveDamageStorage( keys )
 
 	if health <= 1 then
 		unit.grave_damage = unit.grave_damage + damage
-		print("stored "..damage.." damage on "..unit:GetName())
-		print("TOTAL: "..unit.grave_damage)
 	end
 end
 
@@ -98,7 +104,6 @@ function ShallowGraveHeal( keys )
 
 	-- heal the target after shallow grave ends
 	unit:Heal(unit.grave_damage, caster)
-	print("healed "..unit:GetName().."for "..unit.grave_damage)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, unit, unit.grave_damage, nil)
 	unit.grave_damage = nil
 end

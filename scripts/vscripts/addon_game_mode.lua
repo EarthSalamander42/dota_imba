@@ -18,22 +18,41 @@ function Precache( context )
 
 	-- Particles can be precached individually or by folder
 	-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
+
+	-- Items
 	PrecacheResource("particle", "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_target.vpcf", context)
+	PrecacheResource("particle", "particles/item/silver_edge/silver_edge_break.vpcf", context)
+	PrecacheResource("particle", "particles/item/silver_edge/silver_edge_ring.vpcf", context)
+	PrecacheResource("particle", "particles/item/silver_edge/silver_edge.vpcf", context)
+	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_active.vpcf", context)
+	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_hit.vpcf", context)
+	PrecacheResource("particle", "particles/item/pipe_of_insight/pipe_of_insight.vpcf", context)
+
+	-- Roshan
+	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)
+	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)
+
+	-- Stuff
 	PrecacheResource("particle_folder", "particles/hero", context)
 	PrecacheResource("particle_folder", "particles/generic_gameplay", context)
 	PrecacheResource("particle_folder", "particles/item", context)
-	PrecacheResource("particle_folder", "particles/items_fx/", context)
-	PrecacheResource("particle_folder", "particles/items2_fx/", context)
+	PrecacheResource("particle_folder", "particles/items_fx", context)
+	PrecacheResource("particle_folder", "particles/items2_fx", context)
+	PrecacheResource("particle_folder", "particles/items3_fx", context)
 
 	-- Models can also be precached by folder or individually
 	PrecacheResource("model_folder", "models/development", context)
-	PrecacheModel("models/props_gameplay/sheep.vmdl", context)
+	PrecacheResource("model_folder", "models/creeps", context)
+	PrecacheResource("model_folder", "models/props_gameplay", context)
 
   	-- Sounds can precached here like anything else
-  	PrecacheResource("soundfile", "sounds/items/item_handofmidas.vsnd", context)
-  	PrecacheResource("soundfile", "sounds/items/item_mekansm.vsnd", context)
-  	PrecacheResource("soundfile", "sounds/items/pipe.vsnd", context)
+  	PrecacheResource("soundfile", "sounds/weapons/creep/roshan/slam.vsnd", context)
+  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_items.vsndevts", context)
+  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts", context)
+  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
+  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)												
 
 	-- Entire items can be precached by name
 	-- Abilities can also be precached in this way despite the name

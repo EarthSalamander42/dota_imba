@@ -17,7 +17,7 @@ function Maim( keys )
 	end
 
 	-- If a higher-priority maim debuff is present, do nothing
-	if target:HasModifier("modifier_item_imba_sange_and_yasha_maim_stacks") or target:HasModifier("modifier_item_imba_sange_and_azura_stack") or target:HasModifier("modifier_item_imba_sange_and_azura_and_yasha_maim_stack") or caster:HasModifier("modifier_item_imba_halberd_effects") then
+	if target:HasModifier("modifier_item_imba_sange_and_yasha_maim_stacks") or target:HasModifier("modifier_item_imba_sange_and_azura_stack") or target:HasModifier("modifier_item_imba_sange_and_azura_and_yasha_maim_stack") or caster:HasModifier("modifier_item_imba_halberd_effects") or caster:HasModifier("modifier_item_imba_silver_edge_proc") then
 		return nil
 	end
 

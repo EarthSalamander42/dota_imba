@@ -74,7 +74,7 @@ function ImpaleDamage ( keys )
 		-- Applies damage and plays landing sound
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_to_repeat, damage_type = DAMAGE_TYPE_PURE})
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage + damage_to_repeat, nil)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage + damage_to_repeat, nil)
 		target:EmitSound(land_sound)
 	end)
 end
@@ -183,6 +183,12 @@ function VendettaStrike( keys )
 	local attack_sound = keys.attack_sound
 	local base_damage = ability:GetLevelSpecialValueFor("bonus_damage", ability:GetLevel() - 1 )
 
+	-- If the target is a structure, do nothing
+	if target:IsBuilding() or target:IsTower() then
+		caster:RemoveModifierByName(modifier)
+		return nil
+	end
+
 	-- Initialize the variable if it doesn't exist
 	if not caster.vendetta_stored_damage then
 		caster.vendetta_stored_damage = 0
@@ -202,8 +208,9 @@ function VendettaStrike( keys )
 
 	-- Apply damage	
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage + stored_damage, damage_type = ability:GetAbilityDamageType()})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, base_damage + stored_damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, base_damage + stored_damage, nil)
 	
+	-- Remove the Vendetta buff
 	caster:RemoveModifierByName(modifier)
 end
 

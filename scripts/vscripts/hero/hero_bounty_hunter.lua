@@ -133,38 +133,74 @@ function TrackCast( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local modifier_track = keys.modifier_track
-	local modifier_track_scepter = keys.modifier_track_scepter
-	local aura_track = keys.aura_track
-	local aura_track_scepter = keys.aura_track_scepter
 	local scepter = HasScepter(caster)
 
-	-- Applies the relevant modifier depending on the presence of aghanim's scepter or not
-	if scepter == true then
-		target:RemoveModifierByName( modifier_track )
-		ability:ApplyDataDrivenModifier(caster, target, aura_track_scepter, {} )
+	-- Modifiers and effects
+	local modifier_track = keys.modifier_track
+	local modifier_track_scepter = keys.modifier_track_scepter
+	local modifier_track_aura = keys.modifier_track_aura
+	local sound_track = keys.sound_track
+
+	-- Play sound to caster's allies
+	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_track, caster)
+
+	-- If the caster is visible to the target's team, play the sound for them
+	if target:CanEntityBeSeenByMyTeam(caster) then
+		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_track, target)
+	end
+
+	-- Updates track modifier according to caster's scepter ownership
+	if scepter then
+		target:RemoveModifierByName(modifier_track)
 		ability:ApplyDataDrivenModifier(caster, target, modifier_track_scepter, {} )
 	else
-		target:RemoveModifierByName( modifier_track_scepter )
-		ability:ApplyDataDrivenModifier(caster, target, aura_track, {} )
+		target:RemoveModifierByName(modifier_track_scepter)
 		ability:ApplyDataDrivenModifier(caster, target, modifier_track, {} )
 	end
+
+	-- Apply aura modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_track_aura, {})
+end
+
+function TrackParticle( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local particle_trail = keys.particle_trail
+	local particle_shield = keys.particle_shield
+
+	-- Draws the particles only to the caster's allies
+	target.track_trail_pfx = ParticleManager:CreateParticleForTeam(particle_trail, PATTACH_ABSORIGIN_FOLLOW, target, caster:GetTeam())
+	ParticleManager:SetParticleControl(target.track_trail_pfx, 0, target:GetAbsOrigin())
+
+	target.track_shield_pfx = ParticleManager:CreateParticleForTeam(particle_shield, PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
+	ParticleManager:SetParticleControl(target.track_shield_pfx, 0, target:GetAbsOrigin())
+end
+
+function TrackParticleEnd( keys )
+	local target = keys.target
+	local modifier_track_aura = keys.modifier_track_aura
+
+	-- Remove Aura modifier
+	target:RemoveModifierByName(modifier_track_aura)
+
+	-- Destroy track particles
+	ParticleManager:DestroyParticle(target.track_trail_pfx, false)
+	ParticleManager:DestroyParticle(target.track_shield_pfx, false)
 end
 
 function Track( keys )
 	local caster = keys.caster
-	local target = keys.target
-	local targetLocation = target:GetAbsOrigin() 
+	local target = keys.unit
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier = keys.modifier
-	local track_modifier = keys.track_modifier
-	local track_scepter_modifier = keys.track_scepter_modifier
-	local track_aura = keys.track_aura
-	local track_scepter_aura = keys.track_scepter_aura
-	local gold_steal = ability:GetLevelSpecialValueFor("gold_steal_scepter", ability_level)
+	local scepter = HasScepter(caster)
+
+	-- Parameters
+	local gold_to_steal = ability:GetLevelSpecialValueFor("gold_steal_scepter", ability_level)
 	local bonus_gold_self = ability:GetLevelSpecialValueFor("bonus_gold_self", ability_level)
+	local bonus_gold_self_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_self_per_lvl", ability_level)
 	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability_level)
+	local bonus_gold_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_per_lvl", ability_level)
 	local bonus_gold_radius = ability:GetLevelSpecialValueFor("bonus_gold_radius", ability_level)
 
 	-- If the target is an illusion, do nothing
@@ -172,77 +208,48 @@ function Track( keys )
 		return nil
 	end
 
-	-- Calculates bonus gold based on the target's level
-	local bonus_gold_self_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_self_per_lvl", ability_level)
-	local bonus_gold_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_per_lvl", ability_level)
+	-- Calculate total bonus gold
 	local target_level = target:GetLevel()
-	bonus_gold_self = bonus_gold_self + target_level * bonus_gold_self_per_lvl
-	bonus_gold = bonus_gold + target_level * bonus_gold_per_lvl
+	bonus_gold_self = bonus_gold_self + ( target_level - 1 ) * bonus_gold_self_per_lvl
+	bonus_gold = bonus_gold + ( target_level - 1 ) * bonus_gold_per_lvl
 
-	-- Multiplies bonus gold value by the hero bounty and deathstreak multipliers
-	bonus_gold_self = bonus_gold_self * ( 1 + HERO_GOLD_BONUS / 100) * math.max(0, 1 - target.death_streak_count * HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK / 100)
-	bonus_gold = bonus_gold * ( 1 + HERO_GOLD_BONUS / 100) * math.max(0, 1 - target.death_streak_count * HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK / 100)
+	-- Multiply gold bounties according to the game options
+	bonus_gold_self = bonus_gold_self * ( 1 + HERO_GOLD_BONUS / 100 )
+	bonus_gold = bonus_gold * ( 1 + HERO_GOLD_BONUS / 100 )
 
-	-- Finds all valid friendly heroes within the bonus gold radius
-	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , targetLocation, nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, 0, 0, false)
+	-- Decrease the extra gold by up to 50% if the target is on a deathstreak
+	bonus_gold_self = bonus_gold_self * ( 1 - math.min(target.death_streak_count, 5) * 0.1 )
+	bonus_gold = bonus_gold * ( 1 - math.min(target.death_streak_count, 5) * 0.1 )
 
-	-- Checks if the Track debuff is Scepter-upgraded; if true, calculates unreliable gold to steal from the target and distribute to all nearby allies.
-	local gold_to_steal = math.floor( PlayerResource:GetUnreliableGold(target:GetPlayerID()) * gold_steal / 100 )
-	local ally_count = #bonus_gold_targets
+	-- Find all valid friendly heroes within the bonus gold radius
+	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , target:GetAbsOrigin(), nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 
-	if modifier == track_scepter_modifier then
-		bonus_gold = bonus_gold + math.floor(gold_to_steal / ally_count)
-		bonus_gold_self = bonus_gold_self + math.floor(gold_to_steal / ally_count)
+	-- If the caster owns an Aghanim's Scepter, steal unreliable gold from the target
+	if scepter then
+
+		-- Fetch amount of gold to be stolen
+		gold_to_steal = PlayerResource:GetUnreliableGold(target:GetPlayerID()) * gold_to_steal / 100
+
+		-- Update target's gold
+		target:ModifyGold( (-1) * gold_to_steal, false, DOTA_ModifyGold_Death)
+
+		-- Divide stolen gold among nearby allies
+		gold_to_steal = math.floor( gold_to_steal / #bonus_gold_targets )
+
+		-- Update bonus gold
+		bonus_gold_self = bonus_gold_self + gold_to_steal
+		bonus_gold = bonus_gold + gold_to_steal
 	end
 
-	-- Checks if the target is alive when the modifier is destroyed
-	if not target:IsAlive() then
+	-- Grant bonus gold to the caster
+	caster:ModifyGold(bonus_gold_self, true, 0)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, caster, bonus_gold_self, nil)
 
-		-- If the Track debuff is Scepter-upgraded, decreases target's unreliable gold
-		if modifier == track_scepter_modifier then
-			gold_to_steal = (-1) * gold_to_steal
-			target:ModifyGold(gold_to_steal, false, 0)
-		end
-
-		-- Gives gold to the caster
-		caster:ModifyGold(bonus_gold_self, true, 0)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, caster, bonus_gold_self, nil)
-
-		-- Gives gold to allies in the nearby area
-		for i,v in ipairs(bonus_gold_targets) do
-			if not (v == caster) then
-				v:ModifyGold(bonus_gold, true, 0)
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, v, bonus_gold, nil)
-			end
-		end
-	end
-
-	-- Remove the track aura from the target
-	-- NOTE: Trying to do this in KV is not possible it seems
-	target:RemoveModifierByName( track_aura ) 
-	target:RemoveModifierByName( track_scepter_aura ) 
-end
-
-function TrackParticle( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local particle_1 = keys.particle_1
-	local particle_2 = keys.particle_2
-
-	-- Draws the particle for Gondar's allies only
-	local all_heroes = HeroList:GetAllHeroes()
-	for k, v in pairs(all_heroes) do
-		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
-			local track_fx_1 = ParticleManager:CreateParticleForPlayer(particle_1, PATTACH_ABSORIGIN_FOLLOW, target, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl(track_fx_1, 0, target:GetAbsOrigin() )
-			local track_fx_2 = ParticleManager:CreateParticleForPlayer(particle_2, PATTACH_OVERHEAD_FOLLOW, target, PlayerResource:GetPlayer( v:GetPlayerID() ) )
-			ParticleManager:SetParticleControl(track_fx_2, 0, target:GetAbsOrigin() )
-
-			-- Destroys the particle after a set time
-			Timers:CreateTimer(0.5, function()
-				ParticleManager:DestroyParticle(track_fx_1, true)
-				ParticleManager:DestroyParticle(track_fx_2, true)
-			end)
+	-- Give gold to allies in the nearby area
+	for _,ally in pairs(bonus_gold_targets) do
+		if ally ~= caster then
+			ally:ModifyGold(bonus_gold, true, 0)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, ally, bonus_gold, nil)
 		end
 	end
 end
@@ -251,18 +258,29 @@ function ShadowJaunt( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local ability_jinada = caster:FindAbilityByName(keys.ability_jinada)
-	local blink_sound = keys.blink_sound
-	local track_modifier = keys.track_modifier
-	local track_scepter_modifier = keys.track_scepter_modifier
-	local target_loc = target:GetAbsOrigin()
+	local modifier_track = keys.modifier_track
+	local modifier_track_scepter = keys.modifier_track_scepter
+	local sound_cast = keys.sound_cast
 
-	-- if the target is tracked, jumps to it and procs Jinada; otherwise, nothing happens.
-	if target:HasModifier(track_modifier) or target:HasModifier(track_scepter_modifier) then
-		EmitSoundOn(blink_sound, caster)
-		ability_jinada:EndCooldown()		
-		FindClearSpaceForUnit(caster, target_loc, false)
+	-- Blink geometry
+	local caster_pos = caster:GetAbsOrigin()
+	local target_pos = target:GetAbsOrigin()
+	local direction = ( target_pos - caster_pos ):Normalized()
+	target_pos = target_pos + direction * 50
+
+	-- If the target is tracked, blink to it and proc Jinada.
+	if target:HasModifier(modifier_track) or target:HasModifier(modifier_track_scepter) then
+
+		-- Play sound
+		caster:EmitSound(sound_cast)
+
+		-- Blink
+		FindClearSpaceForUnit(caster, target_pos, false)
+		caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized() )
+		
+		-- Refresh Jinada and attack
+		ability_jinada:EndCooldown()
 		caster:SetAttacking(target)
 	else
 		ability:EndCooldown()

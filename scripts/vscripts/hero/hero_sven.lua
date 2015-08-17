@@ -1,4 +1,4 @@
---[[	Author: D2imba
+--[[	Author: Firetoad
 		Date: 04.08.2015	]]
 
 function StormBoltLaunch( keys )

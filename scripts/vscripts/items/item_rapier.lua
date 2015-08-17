@@ -37,7 +37,6 @@ function RapierPickUp( keys )
 
 	-- Create appropriate level rapier
 	caster:AddItem(CreateItem("item_imba_rapier_"..rapier_level, caster, caster))
-
 end
 
 function RapierDamage( keys )
@@ -66,20 +65,6 @@ function RapierDamage( keys )
 	caster:RemoveModifierByName("modifier_item_imba_rapier_damage")
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * damage_amplify, damage_type = DAMAGE_TYPE_PURE})
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_item_imba_rapier_damage", {})
-end
-
-function AegisCheck( keys )
-	local caster = keys.caster
-
-	if not caster.has_aegis then
-		caster.has_aegis = false
-	end
-
-	if HasAegis(caster) then
-		caster.has_aegis = true
-	else
-		caster.has_aegis = false
-	end
 end
 
 function RapierDrop( keys )

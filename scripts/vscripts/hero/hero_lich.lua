@@ -67,7 +67,7 @@ function DarkRitual( keys )
 	-- Mana to give	
 	local target_health = target:GetMaxHealth()
 	local rate = ability:GetLevelSpecialValueFor("health_conversion", ability:GetLevel() - 1 ) * 0.01
-	local mana_gain = target_health * rate
+	local mana_gain = target_health * rate * FRANTIC_MULTIPLIER
 	
 	-- Heroes to share XP
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, xp_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false )
@@ -83,7 +83,7 @@ function DarkRitual( keys )
 	local current_mana = caster:GetMana()
 	local max_mana = caster:GetMana()
 	if max_mana - current_mana < mana_gain then
-		caster:Heal(mana_gain - (max_mana - current_mana), caster)
+		caster:Heal( ( mana_gain - (max_mana - current_mana) ) / FRANTIC_MULTIPLIER, caster)
 	end
 
 	-- Purple particle with eye

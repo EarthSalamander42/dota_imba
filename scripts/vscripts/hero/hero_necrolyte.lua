@@ -33,13 +33,12 @@ function DeathPulse( keys )
 			AddStacks(ability, caster, target, stack_buff, 0, true)
 		end
 	else
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		if target:HasModifier(stack_debuff) then
 			stack_count = target:GetModifierStackCount(stack_debuff, ability)
 		else
 			stack_count = 0
 		end
-		damage = damage * (1 + stack_power * stack_count / 100)
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		if stack_count < stack_cap then
 			AddStacks(ability, caster, target, stack_debuff, 1, true)
 		else

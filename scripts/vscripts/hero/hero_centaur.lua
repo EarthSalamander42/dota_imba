@@ -26,12 +26,13 @@ function HoofStomp( keys )
 		local marked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(marked_enemies) do
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {})
+			enemy.hoof_pit_owner = caster
 		end
 
 		-- If an enemy previously marked is outside the ring, move it in
 		local all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(all_enemies) do
-			if enemy:HasModifier(modifier_enemies) and ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius then
+			if enemy:HasModifier(modifier_enemies) and ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius and enemy.hoof_pit_owner == caster then
 				FindClearSpaceForUnit(enemy, pit_center + ( enemy:GetAbsOrigin() - pit_center ):Normalized() * pit_radius, true)
 			end
 		end
@@ -54,6 +55,7 @@ function HoofStomp( keys )
 			all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 			for _, enemy in pairs(all_enemies) do
 				enemy:RemoveModifierByName(modifier_enemies)
+				enemy.hoof_pit_owner = nil
 			end
 		end
 	end)
