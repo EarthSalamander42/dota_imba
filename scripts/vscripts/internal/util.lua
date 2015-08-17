@@ -577,6 +577,7 @@ function PickValidHeroRandomOMG()
 		"npc_dota_hero_lich",
 		"npc_dota_hero_lina",
 		"npc_dota_hero_lion",
+		"npc_dota_hero_luna",
 		"npc_dota_hero_medusa",
 		"npc_dota_hero_mirana",
 		"npc_dota_hero_naga_siren",
@@ -632,6 +633,7 @@ function IsValidPickRandomOMG( hero )
 		"npc_dota_hero_lich",
 		"npc_dota_hero_lina",
 		"npc_dota_hero_lion",
+		"npc_dota_hero_luna",
 		"npc_dota_hero_medusa",
 		"npc_dota_hero_mirana",
 		"npc_dota_hero_naga_siren",
@@ -703,6 +705,13 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_aura")
 	hero:RemoveModifierByName("modifier_imba_flesh_heap_stacks")
 	hero:RemoveModifierByName("modifier_medusa_split_shot")
+	hero:RemoveModifierByName("modifier_luna_lunar_blessing")
+	hero:RemoveModifierByName("modifier_luna_lunar_blessing_aura")
+	hero:RemoveModifierByName("modifier_luna_moon_glaive")
+	hero:RemoveModifierByName("modifier_dragon_knight_dragon")
+	hero:RemoveModifierByName("modifier_dragon_knight_dragon_blood")
+	hero:RemoveModifierByName("modifier_zuus_static_field")
+	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")

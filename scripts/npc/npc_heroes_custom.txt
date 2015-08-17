@@ -236,6 +236,28 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Dragon Knight
+	//=================================================================================================================
+	"npc_imba_hero_dragon_knight"
+	{
+		"override_hero"				"npc_dota_hero_dragon_knight"
+
+		"ArmorPhysical"				"2"
+
+		"MagicalResistance"			"35"
+
+		"AttributeBaseStrength"		"23"
+
+		//"Ability1"				"imba_dragon_knight_breathe_fire"
+		//"Ability2"				"imba_dragon_knight_dragon_tail"
+		//"Ability3"				"imba_dragon_knight_dragon_blood"
+		//"Ability4"				"imba_dragon_knight_elder_dragon_form"
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Drow Ranger
 	//=================================================================================================================
     "npc_imba_hero_drow_ranger"
@@ -421,13 +443,15 @@
 
 		"AttackRate"				"1.6"
 
-		"AttackRange"				"475"
+		"AttackRange"				"480"
+
+		"MovementSpeed"				"335"
 
 		//"Ability1"					"imba_luna_lucent_beam"
 		//"Ability2"					"imba_luna_moon_glaive"
 		//"Ability3"					"imba_luna_lunar_blessing"
 		//"Ability4"					"imba_luna_eclipse"
-		"Ability5"					"attribute_bonus_agi"																	
+		"Ability5"					"attribute_bonus_agi"
 	}
 
 	//=================================================================================================================
@@ -662,6 +686,25 @@
 		//"Ability8"					"imba_phoenix_sun_ray_stop"
 		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
 		"Ability10"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
+	// HERO: Puck
+	//=================================================================================================================
+	"npc_imba_hero_puck"
+	{
+		"override_hero"				"npc_dota_hero_puck"
+
+		"AttackDamageMin"			"25"
+
+		"MovementTurnRate"			"0.4"
+
+		//"Ability1"				"imba_puck_illusory_orb"
+		//"Ability2"				"imba_puck_waning_rift"
+		//"Ability3"				"imba_puck_phase_shift"
+		//"Ability4"				"imba_puck_ethereal_jaunt"
+		//"Ability5"				"imba_puck_dream_coil"
+		"Ability6"				"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -1030,4 +1073,37 @@
 	//	"Ability10"					"imba_wisp_spirits_out"
 	}
 
+	//=================================================================================================================
+	// HERO: Witch Doctor
+	//=================================================================================================================
+	"npc_imba_hero_witch_doctor"
+	{
+		"override_hero"				"npc_dota_hero_witch_doctor"
+
+		//"Ability1"					"imba_witch_doctor_paralyzing_cask"
+		//"Ability2"					"imba_witch_doctor_voodoo_restoration"
+		//"Ability3"					"imba_witch_doctor_maledict"
+		//"Ability4"					"imba_witch_doctor_death_ward"
+		"Ability5"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
+	// HERO: Zeus
+	//=================================================================================================================
+	"npc_imba_hero_zuus"
+	{
+		"override_hero"				"npc_dota_hero_zuus"
+
+		"AttackRate"				"1.5"
+
+		"AttackAnimationPoint"		"0.5"
+
+		"AttackRange"				"500"
+
+		//"Ability1"					"imba_zuus_arc_lightning"
+		//"Ability2"					"imba_zuus_lightning_bolt"
+		//"Ability3"					"imba_zuus_static_field"
+		//"Ability4"					"imba_zuus_thundergods_wrath"
+		"Ability5"					"attribute_bonus_int"
+	}
 }

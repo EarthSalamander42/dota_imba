@@ -1211,6 +1211,59 @@
 	}
 
 	//=================================================================================================================
+	// Fountain buffs
+	//=================================================================================================================
+	"imba_fountain_buffs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"as_bonus"								"60"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"range_bonus"							"100"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_fountain_buffs"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range_bonus"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus" 
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Roshan: Bash (normal)
 	//=================================================================================================================
 	"imba_roshan_bash"
@@ -1927,7 +1980,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.2"
+				"armor_per_minute"						"0.25"
 			}
 			"05"
 			{
@@ -16287,7 +16340,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -17228,7 +17281,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_rate"					"100"
+				"proc_rate"					"50"
 			}
 		}
 

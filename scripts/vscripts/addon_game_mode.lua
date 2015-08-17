@@ -28,6 +28,9 @@ function Precache( context )
 	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_active.vpcf", context)
 	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_hit.vpcf", context)
 	PrecacheResource("particle", "particles/item/pipe_of_insight/pipe_of_insight.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_spirit_breaker/spirit_breaker_loadout.vpcf", context)
 
 	-- Roshan
 	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)
@@ -52,7 +55,7 @@ function Precache( context )
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
-  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)												
+  	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
 
 	-- Entire items can be precached by name
 	-- Abilities can also be precached in this way despite the name

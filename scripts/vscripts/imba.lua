@@ -313,6 +313,19 @@ function GameMode:OnAllPlayersLoaded()
 			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
 			rax_ability:SetLevel(1)
 
+		elseif string.find(building_name, "fountain") then
+
+			-- Add fountain passive abilities
+			building:AddAbility("imba_fountain_buffs")
+			building:AddAbility("ursa_fury_swipes")
+			building:AddAbility("spirit_breaker_greater_bash")
+			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
+			local swipes_ability = building:FindAbilityByName("ursa_fury_swipes")
+			local bash_ability = building:FindAbilityByName("spirit_breaker_greater_bash")
+			fountain_ability:SetLevel(1)
+			swipes_ability:SetLevel(2)
+			bash_ability:SetLevel(4)
+
 		else
 
 			-- Flag this building as non-tower, non-rax
