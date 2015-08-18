@@ -209,7 +209,7 @@ end
 
 -- Checks if a given unit is Roshan
 function IsRoshan(unit)
-	if unit:GetName() == "npc_imba_roshan" then
+	if unit:GetName() == "npc_imba_roshan" or unit:GetName() == "npc_dota_roshan" then
 		return true
 	else
 		return false
@@ -858,7 +858,8 @@ function StickProcCheck( ability )
 
 	local forbidden_skills = {
 		"storm_spirit_ball_lightning",
-		"tinker_rearm"
+		"tinker_rearm",
+		"witch_doctor_voodoo_restoration"
 	}
 
 	for i = 1, #forbidden_skills do

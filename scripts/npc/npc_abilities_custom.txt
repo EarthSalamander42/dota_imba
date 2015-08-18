@@ -994,7 +994,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"regen_per_minute"						"0.8"
+				"regen_per_minute"						"0.25"
 			}
 			"02"
 			{
@@ -1008,8 +1008,8 @@
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"as_per_minute"							"4"
+				"var_type"								"FIELD_FLOAT"
+				"as_per_minute"							"2.5"
 			}
 		}
 
@@ -1076,8 +1076,8 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"regen_per_minute"						"1"
+				"var_type"								"FIELD_FLOAT"
+				"regen_per_minute"						"1.5"
 			}
 			"02"
 			{
@@ -1130,6 +1130,77 @@
 	}
 
 	//=================================================================================================================
+	// Ancient passive buffs
+	//=================================================================================================================
+	"imba_ancient_buffs"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_datadriven"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"							"rubick_empty1"
+		"MaxLevel"										"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"regen_per_minute"						"3"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"armor_per_minute"						"0.6"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_ancient_buffs_base"
+			{
+				"Passive"								"1"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"							"10.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"Upgrade"
+
+						"modifier_stack"				"modifier_imba_ancient_buffs_stack"
+					}
+				}
+			}
+
+			"modifier_imba_ancient_buffs_stack"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Creep passive buffs
 	//=================================================================================================================
 	"imba_creep_buffs"
@@ -1148,22 +1219,22 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"regen_per_minute"						"0.5"
+				"regen_per_minute"						"1"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_per_minute"						"2"
+				"damage_per_minute"						"9"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.4"
+				"armor_per_minute"						"0.25"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"as_per_minute"							"3"
+				"var_type"								"FIELD_FLOAT"
+				"as_per_minute"							"2.5"
 			}
 		}
 
@@ -1202,7 +1273,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_per_minute"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
 				}
@@ -1229,12 +1300,32 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"60"
+				"as_bonus"								"100"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"range_bonus"							"100"
+				"range_bonus"							"200"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bash_radius"							"1400"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"bash_duration"							"0.3"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bash_distance"							"300"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"bash_height"							"50"
 			}
 		}
 
@@ -1249,6 +1340,18 @@
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"FountainBash"
+
+						"particle_bash"					"particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf"
+						"sound_bash"					"Hero_Spirit_Breaker.GreaterBash.Creep"
+					}
+				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range_bonus"
@@ -1258,6 +1361,8 @@
 				"States"
 				{
 					"MODIFIER_STATE_CANNOT_MISS"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -17375,7 +17480,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_evasion"				"24 36 48 60"
+				"bonus_evasion"				"20 30 40 50"
 			}
 			"02"
 			{
@@ -17390,12 +17495,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_evasion"				"15"
+				"stack_evasion"				"10"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_ms"					"5"
+				"stack_ms"					"3"
 			}
 			"06"
 			{
@@ -17533,7 +17638,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_increase"				"3 4 5"
+				"crit_increase"				"2"
 			}
 			"04"
 			{

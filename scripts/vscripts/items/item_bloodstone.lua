@@ -31,20 +31,32 @@ end
 function GainChargesOnKill( keys )
 	local caster = keys.caster
 	local item = keys.ability
+	local item_level = item:GetLevel() - 1
 	local target = keys.target
 	local assist_modifier = keys.assist_modifier
 
+	-- Parameters
+	local max_charges = item:GetLevelSpecialValueFor("max_charges", item_level)
+
 	if target:GetTeam() ~= caster:GetTeam() and not target:HasModifier(assist_modifier) then
 		local current_charges = item:GetCurrentCharges()
-		item:SetCurrentCharges( current_charges + 1 )
+		if current_charges < max_charges then
+			item:SetCurrentCharges( current_charges + 1 )
+		end
 	end
 end
 
 function GainChargesOnAssist( keys )
 	local item = keys.ability
+	local item_level = item:GetLevel() - 1
+
+	-- Parameters
+	local max_charges = item:GetLevelSpecialValueFor("max_charges", item_level)
 
 	local current_charges = item:GetCurrentCharges()
-	item:SetCurrentCharges( current_charges + 1 )
+	if current_charges < max_charges then
+		item:SetCurrentCharges( current_charges + 1 )
+	end
 end
 
 function LoseCharges( keys )
@@ -98,5 +110,4 @@ function RespawnTimeReset( keys )
 	local caster = keys.caster
 
 	caster.bloodstone_respawn_reduction = nil
-	print("reset")
 end

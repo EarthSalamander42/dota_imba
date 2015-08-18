@@ -6867,17 +6867,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_radius"			"1400"
+				"blast_radius"			"1000"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_speed"			"700"
+				"blast_speed"			"500"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_damage"			"250"
+				"blast_damage"			"240"
 			}
 			"08"
 			{
@@ -7000,6 +7000,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_mana_per_charge"		"100"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charges"				"30"
 			}
 		}
 
@@ -7160,6 +7165,8 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"1"
 				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"OnDeath"
 				{
@@ -8204,7 +8211,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"200"
+				"damage_amplify"		"150"
 			}
 			"03"
 			{
@@ -8326,7 +8333,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"300"
+				"damage_amplify"		"200"
 			}
 			"03"
 			{
@@ -8448,7 +8455,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"400"
+				"damage_amplify"		"250"
 			}
 			"03"
 			{
@@ -8570,7 +8577,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"500"
+				"damage_amplify"		"300"
 			}
 			"03"
 			{
@@ -8692,7 +8699,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"600"
+				"damage_amplify"		"350"
 			}
 			"03"
 			{
@@ -8814,7 +8821,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"700"
+				"damage_amplify"		"400"
 			}
 			"03"
 			{
@@ -8936,7 +8943,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"800"
+				"damage_amplify"		"450"
 			}
 			"03"
 			{
@@ -9058,7 +9065,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"900"
+				"damage_amplify"		"500"
 			}
 			"03"
 			{
@@ -9180,7 +9187,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"1000"
+				"damage_amplify"		"550"
 			}
 			"03"
 			{

@@ -46,6 +46,11 @@ function RapierDamage( keys )
 	local ability_level = ability:GetLevel() - 1
 	local damage = keys.damage
 
+	-- If the target is Roshan or a building, do nothing
+	if target:IsBuilding() or IsRoshan(target) then
+		return nil
+	end
+
 	-- Parameters
 	local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level) / 100
 	local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)

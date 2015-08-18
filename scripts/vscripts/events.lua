@@ -242,7 +242,7 @@ function GameMode:OnNPCSpawned(keys)
 		local xp_bounty = npc:GetDeathXP()
 
 		-- Adjust bounties based on game time
-		local game_time = math.max( ( GameRules:GetGameTime() - HERO_SELECTION_TIME - PRE_GAME_TIME ) / 60, 0)
+		local game_time = GAME_TIME_ELAPSED / 60
 		max_bounty = max_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
 		min_bounty = min_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
 		xp_bounty = xp_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
@@ -681,7 +681,7 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Calculate regular buyback cost and 
 		local hero_level = killed_unit:GetLevel()
-		local game_time = GameRules:GetGameTime() / 60
+		local game_time = GAME_TIME_ELAPSED / 60
 
 		local buyback_cost = ( HERO_BUYBACK_BASE_COST + hero_level * HERO_BUYBACK_COST_PER_LEVEL + game_time * HERO_BUYBACK_COST_PER_MINUTE ) * buyback_cost_multiplier
 		local buyback_penalty_duration = HERO_BUYBACK_RESET_TIME_PER_LEVEL * hero_level + HERO_BUYBACK_RESET_TIME_PER_MINUTE * game_time

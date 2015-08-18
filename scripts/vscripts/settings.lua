@@ -129,6 +129,8 @@ RANGED_RAX_EXPERIENCE = 200													-- Ranged barracks experience bounty
 ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
 
+GAME_TIME_ELAPSED = 0														-- Initializes game time tracker
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -196,7 +198,7 @@ CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
 HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
 CREEP_POWER_RAMP_UP_FACTOR = 1												-- Creep power increase multiplier factor
-CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 7											-- Creep bounty increase (in %) based on game time
+CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) based on game time
 
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 

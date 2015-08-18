@@ -20,7 +20,7 @@ function RoshanBash( keys )
 	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
 
 	-- Calculate total damage
-	local game_time = GameRules:GetGameTime() / 60
+	local game_time = GAME_TIME_ELAPSED / 60
 	local total_damage = base_damage + stacking_damage * game_time
 
 	-- Start ability cooldown
@@ -54,7 +54,7 @@ function RoshanSlam( keys )
 	local caster_pos = caster:GetAbsOrigin()
 
 	-- Calculate total damage
-	local game_time = GameRules:GetGameTime() / 60
+	local game_time = GAME_TIME_ELAPSED / 60
 	local total_damage = base_damage + dmg_per_minute * game_time
 
 	-- Play sound
@@ -157,7 +157,7 @@ function RoshanFuryHit( keys )
 	local debuff_duration = ability:GetLevelSpecialValueFor("debuff_duration", ability_level)
 
 	-- Calculate total damage
-	local game_time = GameRules:GetGameTime() / 60
+	local game_time = GAME_TIME_ELAPSED / 60
 	local total_damage = base_damage + dmg_per_minute * game_time
 
 	-- Deal damage
@@ -211,7 +211,7 @@ function RoshanUpgrade( keys )
 	local modifier_stack = keys.modifier_stack
 
 	-- Calculate total buff stacks
-	local total_stacks = math.floor( GameRules:GetGameTime() / 60 )
+	local total_stacks = GAME_TIME_ELAPSED / 60
 
 	-- Update the stacks buff
 	caster:RemoveModifierByName(modifier_stack)

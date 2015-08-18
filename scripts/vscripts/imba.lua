@@ -260,7 +260,7 @@ function GameMode:OnAllPlayersLoaded()
 	Say(nil, kills_to_end, false)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Structure bounty/stats setup
+	-- IMBA: Fountain abilities setup
 	-------------------------------------------------------------------------------------------------
 
 	-- Find all buildings on the map
@@ -271,77 +271,18 @@ function GameMode:OnAllPlayersLoaded()
 		
 		-- Parameters
 		local building_name = building:GetName()
-		local special_building = true
-		local max_bounty = building:GetMaximumGoldBounty()
-		local min_bounty = building:GetMinimumGoldBounty()
-		local xp_bounty = building:GetDeathXP()
 
-		-- Identify the building type
-		if string.find(building_name, "tower") then
-
-			-- Set up base bounties
-			min_bounty = TOWER_MINIMUM_GOLD
-			max_bounty = TOWER_MAXIMUM_GOLD
-			xp_bounty = TOWER_EXPERIENCE
-
-			-- Add passive buff
-			building:AddAbility("imba_tower_buffs")
-			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
-			tower_ability:SetLevel(1)
-
-		elseif string.find(building_name, "rax_melee") then
-
-			-- Set up base bounties
-			min_bounty = MELEE_RAX_MINIMUM_GOLD
-			max_bounty = MELEE_RAX_MAXIMUM_GOLD
-			xp_bounty = MELEE_RAX_EXPERIENCE
-
-			-- Add passive buff
-			building:AddAbility("imba_rax_buffs")
-			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
-			rax_ability:SetLevel(1)
-
-		elseif string.find(building_name, "rax_range") then
-
-			-- Set up base bounties
-			min_bounty = RANGED_RAX_MINIMUM_GOLD
-			max_bounty = RANGED_RAX_MAXIMUM_GOLD
-			xp_bounty = RANGED_RAX_EXPERIENCE
-
-			-- Add passive buff
-			building:AddAbility("imba_rax_buffs")
-			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
-			rax_ability:SetLevel(1)
-
-		elseif string.find(building_name, "fountain") then
+		-- Identify the fountains
+		if string.find(building_name, "fountain") then
 
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
 			building:AddAbility("ursa_fury_swipes")
-			building:AddAbility("spirit_breaker_greater_bash")
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
 			local swipes_ability = building:FindAbilityByName("ursa_fury_swipes")
-			local bash_ability = building:FindAbilityByName("spirit_breaker_greater_bash")
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(2)
-			bash_ability:SetLevel(4)
 
-		else
-
-			-- Flag this building as non-tower, non-rax
-			special_building = false
-		end
-		
-		-- Update XP bounties
-		building:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
-
-		-- Update gold bounties
-		if special_building then
-			building:SetMaximumGoldBounty( math.floor( max_bounty * CREEP_GOLD_BONUS / 100 ) )
-			building:SetMinimumGoldBounty( math.floor( min_bounty * CREEP_GOLD_BONUS / 100 ) )
-		else
-			building:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
-			building:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 		end
 	end
 end
@@ -393,9 +334,7 @@ function GameMode:OnHeroInGame(hero)
 	-- Set up initial level
 	if HERO_STARTING_LEVEL > 1 then
 		Timers:CreateTimer(1, function()
-			for i = 2, HERO_STARTING_LEVEL do
-				hero:HeroLevelUp(false)
-			end
+			hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
 		end)
 	end
 
@@ -484,6 +423,97 @@ end
 ]]
 function GameMode:OnGameInProgress()
 	DebugPrint("[IMBA] The game has officially begun")
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Game time tracker
+	-------------------------------------------------------------------------------------------------
+	
+	Timers:CreateTimer(5, function()
+		GAME_TIME_ELAPSED = GAME_TIME_ELAPSED + 5
+		return 5
+	end)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Structure bounty/stats setup
+	-------------------------------------------------------------------------------------------------
+
+	-- Find all buildings on the map
+	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	
+	-- Iterate through each one
+	for _, building in pairs(buildings) do
+		
+		-- Parameters
+		local building_name = building:GetName()
+		local special_building = true
+		local max_bounty = building:GetMaximumGoldBounty()
+		local min_bounty = building:GetMinimumGoldBounty()
+		local xp_bounty = building:GetDeathXP()
+
+		-- Identify the building type
+		if string.find(building_name, "tower") then
+
+			-- Set up base bounties
+			min_bounty = TOWER_MINIMUM_GOLD
+			max_bounty = TOWER_MAXIMUM_GOLD
+			xp_bounty = TOWER_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_tower_buffs")
+			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
+			tower_ability:SetLevel(1)
+
+		elseif string.find(building_name, "rax_melee") then
+
+			-- Set up base bounties
+			min_bounty = MELEE_RAX_MINIMUM_GOLD
+			max_bounty = MELEE_RAX_MAXIMUM_GOLD
+			xp_bounty = MELEE_RAX_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_rax_buffs")
+			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
+			rax_ability:SetLevel(1)
+
+		elseif string.find(building_name, "rax_range") then
+
+			-- Set up base bounties
+			min_bounty = RANGED_RAX_MINIMUM_GOLD
+			max_bounty = RANGED_RAX_MAXIMUM_GOLD
+			xp_bounty = RANGED_RAX_EXPERIENCE
+
+			-- Add passive buff
+			building:AddAbility("imba_rax_buffs")
+			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
+			rax_ability:SetLevel(1)
+
+		elseif string.find(building_name, "fort") then
+
+			-- Add passive buff
+			building:AddAbility("imba_ancient_buffs")
+			local ancient_ability = building:FindAbilityByName("imba_ancient_buffs")
+			ancient_ability:SetLevel(1)
+
+		elseif string.find(building_name, "fountain") then
+			-- Do nothing (fountain was already modified previously)
+		else
+
+			-- Flag this building as non-tower, non-rax
+			special_building = false
+		end
+		
+		-- Update XP bounties
+		building:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
+
+		-- Update gold bounties
+		if special_building then
+			building:SetMaximumGoldBounty( math.floor( max_bounty * CREEP_GOLD_BONUS / 100 ) )
+			building:SetMinimumGoldBounty( math.floor( min_bounty * CREEP_GOLD_BONUS / 100 ) )
+		else
+			building:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+			building:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
+		end
+	end
 
 end
 
