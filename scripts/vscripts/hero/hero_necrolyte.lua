@@ -1,12 +1,106 @@
 --[[ 	Author: D2imba
 		Date: 27.04.2015	]]
-		
+
 function DeathPulse( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local particle_ally = keys.particle_ally
+	local particle_enemy = keys.particle_enemy
+	local modifier_caster = keys.modifier_caster
+	local mana_cost = keys.mana_cost
+
+	-- Parameters
+	local area_of_effect = ability:GetLevelSpecialValueFor("area_of_effect", ability_level)
+	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
+
+	-- If the caster doesn't have enough mana, toggle the skill off
+	if caster:GetMana() < mana_cost then
+		return nil
+
+	-- Else, spend mana and move on
+	else
+		caster:SpendMana(mana_cost, ability)
+	end
+
+	-- Play sound
+	caster:EmitSound(sound_cast)
+
+	-- Apply caster modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
+
+	-- Create projectile for nearby units
+	local nearby_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, area_of_effect, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+	for _,unit in pairs(nearby_units) do
+		if unit:GetTeam() == caster:GetTeam() then
+
+			-- Allied projectile parameters
+			local projectile = {
+				Target = unit,
+				Source = caster,
+				Ability = ability,
+				EffectName = particle_ally,
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = projectile_speed,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+			}
+
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(projectile)
+		else
+
+			-- Enemy projectile parameters
+			local projectile = {
+				Target = unit,
+				Source = caster,
+				Ability = ability,
+				EffectName = particle_enemy,
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = projectile_speed,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+			}
+
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(projectile)
+		end
+	end
+end
+
+function DeathPulseEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_caster = keys.modifier_caster
+
+	-- Parameters
+	local cast_cooldown = ability:GetLevelSpecialValueFor("cast_cooldown", ability_level) / FRANTIC_MULTIPLIER
+
+	-- Remove caster modifier
+	caster:RemoveModifierByName(modifier_caster)
+
+	-- Put the skill on cooldown
+	ability:StartCooldown(cast_cooldown)
+end
+
+		
+function DeathPulseHit( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
 	local stack_buff = keys.stack_buff
 	local stack_debuff = keys.stack_debuff
+
+	-- If the ability is gone (Random OMG), do nothing
+	if not ability then
+		return nil
+	end
 
 	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1

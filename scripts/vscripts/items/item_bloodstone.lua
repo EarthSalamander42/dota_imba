@@ -36,11 +36,13 @@ function GainChargesOnKill( keys )
 	local assist_modifier = keys.assist_modifier
 
 	-- Parameters
-	local max_charges = item:GetLevelSpecialValueFor("max_charges", item_level)
+	local overcharge_start = item:GetLevelSpecialValueFor("overcharge_start", item_level)
+	local overcharge_chance = item:GetLevelSpecialValueFor("overcharge_chance", item_level)
+	local current_charges = item:GetCurrentCharges()
+	overcharge_chance = math.max( ( current_charges - overcharge_start ) * overcharge_chance, 0)
 
 	if target:GetTeam() ~= caster:GetTeam() and not target:HasModifier(assist_modifier) then
-		local current_charges = item:GetCurrentCharges()
-		if current_charges < max_charges then
+		if RandomInt(1, 100) > overcharge_chance then
 			item:SetCurrentCharges( current_charges + 1 )
 		end
 	end
@@ -51,10 +53,12 @@ function GainChargesOnAssist( keys )
 	local item_level = item:GetLevel() - 1
 
 	-- Parameters
-	local max_charges = item:GetLevelSpecialValueFor("max_charges", item_level)
-
+	local overcharge_start = item:GetLevelSpecialValueFor("overcharge_start", item_level)
+	local overcharge_chance = item:GetLevelSpecialValueFor("overcharge_chance", item_level)
 	local current_charges = item:GetCurrentCharges()
-	if current_charges < max_charges then
+	overcharge_chance = math.max( ( current_charges - overcharge_start ) * overcharge_chance, 0)
+
+	if RandomInt(1, 100) > overcharge_chance then
 		item:SetCurrentCharges( current_charges + 1 )
 	end
 end

@@ -5071,7 +5071,7 @@
 	"tinker_rearm"
 	{
 		"AbilityCastPoint"				"0.0"
-		"AbilityChannelTime"			"2.0 1.0 0.2"
+		"AbilityChannelTime"			"2.0 1.0 0.3"
 
 		"AbilityManaCost"				"100 200 300"
 
@@ -5080,7 +5080,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"channel_tooltip"		"2.0 1.0 0.2"
+				"channel_tooltip"		"2.0 1.0 0.3"
 			}
 		}
 	}

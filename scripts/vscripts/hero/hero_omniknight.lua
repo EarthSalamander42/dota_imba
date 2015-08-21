@@ -21,9 +21,11 @@ function Purification( keys )
 	local target_particle = keys.target_particle
 
 	-- Parameters
-	local heal = ability:GetLevelSpecialValueFor("heal", ability_level)
+	local heal_min = ability:GetLevelSpecialValueFor("heal_min", ability_level)
+	local heal_pct = ability:GetLevelSpecialValueFor("heal_pct", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local target_pos = target:GetAbsOrigin()
+	local heal = math.max( heal_min, target:GetMaxHealth() * heal_pct / 100 )
 
 	-- Heal and apply the strong purge on the target
 	target:Heal(heal, caster)
@@ -41,7 +43,7 @@ function Purification( keys )
 	-- Damage nearby enemies
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
 	for _,enemy in pairs(targets) do
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal, damage_type = DAMAGE_TYPE_PURE})
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal_min, damage_type = DAMAGE_TYPE_PURE})
 	end
 end
 
@@ -56,11 +58,13 @@ function PurificationDeath( keys )
 	local target_particle = keys.target_particle
 
 	-- Parameters
-	local heal = ability:GetLevelSpecialValueFor("heal", ability_level)
+	local heal_min = ability:GetLevelSpecialValueFor("heal_min", ability_level)
+	local heal_pct = ability:GetLevelSpecialValueFor("heal_pct", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local passive_modifier = keys.passive_modifier
 	local cooldown_modifier = keys.cooldown_modifier
 	local caster_pos = caster:GetAbsOrigin()
+	local heal = math.max( heal_min, caster:GetMaxHealth() * heal_pct / 100 )
 
 	-- Check if fatal damage was dealt
 	if caster:GetHealth() <= 2 then
@@ -81,7 +85,7 @@ function PurificationDeath( keys )
 		-- Damage nearby enemies
 		local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
 		for _,enemy in pairs(targets) do
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal, damage_type = DAMAGE_TYPE_PURE})
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal_min, damage_type = DAMAGE_TYPE_PURE})
 		end
 
 		-- Remove the passive modifier and apply the cooldown one

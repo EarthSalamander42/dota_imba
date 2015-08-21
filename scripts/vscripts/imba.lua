@@ -101,33 +101,32 @@ function GameMode:OnAllPlayersLoaded()
 	BADGUYS_CONNECTED_PLAYERS = 0
 
 	-- Assign players to the table
-	for id = 0, 19 do
-		Timers:CreateTimer(0, function()
-			self.players[id] = PlayerResource:GetPlayer(id)
-			
-			if self.players[id] then
+	for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
+		print("attempting to fetch connection status for player"..id)
+		self.players[id] = PlayerResource:GetPlayer(id)
+		
+		if self.players[id] then
 
-				-- Initialize connection state
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+			-- Initialize connection state
+			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+			print("initialized connection for player "..id..": "..self.players[id].connection_state)
 
-				-- Increment amount of players on this team by one
-				if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-				elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
-					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-				end
-			else
-
-				-- If the player never connected, assign it a special string
-				if PlayerResource:GetConnectionState(id) == 1 then
-					self.players[id] = "empty_player_slot"
-
-				-- If not, keep trying
-				else
-					return 0.5
-				end
+			-- Increment amount of players on this team by one
+			if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
+				GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
+				print("goodguys team now has "..GOODGUYS_CONNECTED_PLAYERS.." players")
+			elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
+				BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+				print("badguys team now has "..BADGUYS_CONNECTED_PLAYERS.." players")
 			end
-		end)
+		else
+
+			-- If the player never connected, assign it a special string
+			if PlayerResource:GetConnectionState(id) == 1 then
+				self.players[id] = "empty_player_slot"
+				print("player "..id.." never connected")
+			end
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -137,13 +136,16 @@ function GameMode:OnAllPlayersLoaded()
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
 
 		-- Pick setup
-		for id = 0, 9 do
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
 			Timers:CreateTimer(0, function()
+				--print("attempting to random a hero for player "..id)
 				if self.players[id] and self.players[id] ~= "empty_player_slot" then
 					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
 					PlayerResource:SetHasRepicked(id)
 					PlayerResource:SetHasRandomed(id)
+					--print("succesfully randomed a hero for player "..id)
 				elseif not self.players[id] then
+					--print("player "..id.." still hasn't randomed a hero")
 					return 0.5
 				end
 			end)
@@ -157,7 +159,7 @@ function GameMode:OnAllPlayersLoaded()
 	if IMBA_PICK_MODE_ALL_RANDOM then
 
 		-- Pick setup
-		for id = 0, 9 do
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
 			Timers:CreateTimer(0, function()
 				if self.players[id] and self.players[id] ~= "empty_player_slot" then
 					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()

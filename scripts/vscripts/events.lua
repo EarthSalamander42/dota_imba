@@ -24,123 +24,85 @@ function GameMode:OnDisconnect(keys)
 
 	-- Connection status detection delay
 	Timers:CreateTimer(1, function()
+
+		local disconnected_this_time = {}
 	
-		-- Identify which player was disconnected
-		local player_id = -1
-		for id = 0, 9 do
+		-- Update players' connection status
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
 			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				player_id = id
 				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				break
+				print("player "..id.."has just disconnected, with connection state "..self.players[id].connection_state)
+				if self.players[id].connection_state == 3 then
+					self.players[id].is_disconnected = true
+					print("set up player "..id.." as disconnected")
+					disconnected_this_time[id] = true
+				end
 			end
 		end
 
-		-- If no valid player was detected, do nothing
-		if player_id == (-1) then
-			return nil
-		end
-		
-		-- Parameters
-		local team = PlayerResource:GetTeam(player_id)
-		local hero = self.heroes[player_id]
-		local hero_name = hero:GetName()
-		local full_abandon = false
-		local line_duration = 5
-		local remaining_connected_players
+		-- Iterate through each recently disconnected player
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
+			if self.players[id] and self.players[id].is_disconnected and disconnected_this_time[id] then
 
-		-- Set global variable tracking the time the player has been disconnected for
-		if not self.players[player_id].disconnected_time then
-			self.players[player_id].disconnected_time = 0
-		end
-		
-		self.players[player_id].is_disconnected = true
+				-- Parameters
+				local team = PlayerResource:GetTeam(id)
+				local hero = self.heroes[id]
+				local hero_name = hero:GetName()
+				local player_name = PlayerResource:GetPlayerName(id)
+				local full_abandon = false
+				local line_duration = 7
+				local remaining_connected_players
 
-		-- Radiant leaver logic
-		if team == DOTA_TEAM_GOODGUYS then
-			GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS - 1
-			remaining_connected_players = GOODGUYS_CONNECTED_PLAYERS
-
-			-- Full team has abandoned
-			if GOODGUYS_CONNECTED_PLAYERS == 0 then
-				full_abandon = true
-
-				-- Display message to the other team
-				Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-				-- End the game in 15 seconds if no one reconnects
-				Timers:CreateTimer(15, function()
-					if GOODGUYS_CONNECTED_PLAYERS == 0 then
-						GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-					end
-				end)
-			end
-
-		-- Dire leaver logic
-		elseif team == DOTA_TEAM_BADGUYS then
-			BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS - 1
-			remaining_connected_players = BADGUYS_CONNECTED_PLAYERS
-
-			-- Full team has abandoned
-			if BADGUYS_CONNECTED_PLAYERS == 0 then
-				full_abandon = true
-
-				-- Display message to the other team
-				Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-				-- End the game in 15 seconds if no one reconnects
-				Timers:CreateTimer(15, function()
-					if BADGUYS_CONNECTED_PLAYERS == 0 then
-						GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-					end
-				end)
-			end
-		end
-
-		-- Some players on the abandoner's team are still connected
-		if not full_abandon then
-
-			-- Show team-only disconnect message
-			if not self.players[player_id].has_abandoned then
-				Notifications:BottomToTeam(team, {hero = hero_name, duration = line_duration})
-				Notifications:BottomToTeam(team, {text = player_name.." ", duration = line_duration, continue = true})
-				Notifications:BottomToTeam(team, {text = "#imba_player_disconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-			end
-
-			-- Grant control of the disconnected player's hero to its allies
-			for player_num = 1, remaining_connected_players do
-				local current_player_id = PlayerResource:GetNthPlayerIDOnTeam(team, player_num)
-				hero:SetControllableByPlayer(current_player_id, true)
-			end
-		end
-
-		-- If the player had already abandoned previously, run its abandon routine
-		if self.players[player_id].has_abandoned then
-			AbandonGame(hero, player_id)
-		end
-
-		-- Check for player abandon every second
-		Timers:CreateTimer(1, function()
-
-			-- If the player hasn't come back, update total disconnected time
-			if self.players[player_id].is_disconnected then
-				self.players[player_id].disconnected_time = self.players[player_id].disconnected_time + 1
-			end
-
-			-- If the player has been disconnected for over 3 minutes total, run its abandon routine
-			if self.players[player_id].disconnected_time >= PLAYER_ABANDON_TIME then
-				self.players[player_id].has_abandoned = true
-				AbandonGame(hero, player_id)
-
-				-- Show message to remaining players
+				-- Show disconnect message
 				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-			else
-				return 1
-			end
-		end)
-	end)
 
+				-- Radiant abandon logic
+				if team == DOTA_TEAM_GOODGUYS then
+					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS - 1
+					remaining_connected_players = GOODGUYS_CONNECTED_PLAYERS
+					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Radiant")
+
+				-- Dire abandon logic
+				elseif team == DOTA_TEAM_BADGUYS then
+					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS - 1
+					remaining_connected_players = BADGUYS_CONNECTED_PLAYERS
+					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Dire")
+				end
+			end
+		end
+
+		-- Full radiant team has abandoned
+		if GOODGUYS_CONNECTED_PLAYERS == 0 then
+			full_abandon = true
+
+			-- Display message to the other team
+			Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+
+			-- End the game in 15 seconds if no one reconnects
+			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
+				if GOODGUYS_CONNECTED_PLAYERS == 0 then
+					GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+				end
+			--end)
+		end
+
+		-- Full dire team has abandoned
+		if BADGUYS_CONNECTED_PLAYERS == 0 then
+			full_abandon = true
+
+			-- Display message to the other team
+			Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+
+			-- End the game in 15 seconds if no one reconnects
+			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
+				if BADGUYS_CONNECTED_PLAYERS == 0 then
+					GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+				end
+			--end)
+		end
+	end)
 end
 
 -- The overall game state has changed
@@ -306,46 +268,76 @@ function GameMode:OnPlayerReconnect(keys)
 	--	return nil
 	--end
 
-	local player_id = -1
-
 	-- Connection status detection delay
 	Timers:CreateTimer(1, function()
 
-		-- Identify which player just reconnected
-		for id = 0, 9 do
-			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				player_id = id
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				break
+		-- Attempt to detect players who were ignored on the initial load
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
+			if not self.players[id] then
+				print("attempting to fetch connection status for player"..id)
+				self.players[id] = PlayerResource:GetPlayer(id)
+				
+				if self.players[id] then
+
+					-- Initialize connection state
+					self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+					print("initialized connection for player "..id..": "..self.players[id].connection_state)
+
+					-- Increment amount of players on this team by one
+					if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
+						GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
+						print("goodguys team now has "..GOODGUYS_CONNECTED_PLAYERS.." players")
+					elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
+						BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+						print("badguys team now has "..BADGUYS_CONNECTED_PLAYERS.." players")
+					end
+				end
 			end
 		end
 
-		-- If no valid connecting player was detected, do nothing
-		if player_id == (-1) then
-			return nil
+		local reconnected_this_time = {}
+
+		-- Update players' connection status
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
+			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
+				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
+				print("player "..id.."has just reconnected, with connection state "..self.players[id].connection_state)
+				if self.players[id].connection_state == 2 then
+					self.players[id].is_disconnected = nil
+					print("set up player "..id.." as reconnected")
+					reconnected_this_time[id] = true
+				end
+			end
 		end
 
-		-- Parameters
-		local player = PlayerResource:GetPlayer(player_id)
-		local player_name = PlayerResource:GetPlayerName(player_id)
-		local team = PlayerResource:GetTeam(player_id)
-		local hero = player:GetAssignedHero()
-		local hero_name = hero:GetName()
+		-- Iterate through each recently reconnected player
+		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
+			if self.players[id] and not self.players[id].is_disconnected and reconnected_this_time[id] then
 
-		-- Update player and team connection status
-		self.players[player_id].is_disconnected = false
-		if team == DOTA_TEAM_GOODGUYS then
-			GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-		elseif team == DOTA_TEAM_BADGUYS then
-			BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+				-- Parameters
+				local player = PlayerResource:GetPlayer(id)
+				local player_name = PlayerResource:GetPlayerName(id)
+				local team = PlayerResource:GetTeam(id)
+				local hero = player:GetAssignedHero()
+				local hero_name = hero:GetName()
+
+				-- Show reconnection message to remaining players
+				local line_duration = 5
+
+				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+				-- Update team connection status
+				if team == DOTA_TEAM_GOODGUYS then
+					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
+					print(hero_name.." has reconnected, "..GOODGUYS_CONNECTED_PLAYERS.." players remaining on Radiant")
+				elseif team == DOTA_TEAM_BADGUYS then
+					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
+					print(hero_name.." has reconnected, "..BADGUYS_CONNECTED_PLAYERS.." players remaining on Dire")
+				end
+			end
 		end
-
-		-- Show reconnection message to remaining players
-		local line_duration = 5
-
-		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 	end)
 
 end
@@ -851,6 +843,38 @@ function GameMode:OnEntityKilled( keys )
 			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
 		elseif killed_unit.death_streak_count >= 10 then
 			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+		end
+
+		-- Global comeback gold calculation
+		local all_heroes = HeroList:GetAllHeroes()
+		local killer_team_networth = 0
+		local killed_team_networth = 0
+
+		for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
+			if self.players[id] and not self.players[id].is_disconnected then
+				local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
+				local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+				if hero:GetTeam() == killer:GetTeam() then
+					killer_team_networth = killer_team_networth + hero_networth
+				else
+					killed_team_networth = killed_team_networth + hero_networth
+				end
+			end
+		end
+
+		if killer_team_networth < killed_team_networth then
+			local networth_difference = math.max( killed_team_networth - killer_team_networth, 0)
+			local welfare_gold = networth_difference * ( HERO_GLOBAL_BOUNTY_FACTOR / 100 ) / PlayerResource:GetPlayerCountForTeam(killer:GetTeam())
+			for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
+				if self.players[id] and not self.players[id].is_disconnected then
+					local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
+					if hero:GetTeam() == killer:GetTeam() then
+						hero:ModifyGold(welfare_gold, true, DOTA_ModifyGold_HeroKill)
+						SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, hero, welfare_gold, nil)
+						print("granted "..hero:GetName().." "..welfare_gold.." welfare gold")
+					end
+				end
+			end
 		end
 	end
 

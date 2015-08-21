@@ -345,7 +345,7 @@ function BorrowedTimeActivate( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local threshold = ability:GetLevelSpecialValueFor( "hp_threshold" , ability:GetLevel() - 1  )
-	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
+	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
 	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
 	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
 	local scepter = HasScepter(caster)

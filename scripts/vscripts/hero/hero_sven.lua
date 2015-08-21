@@ -290,8 +290,7 @@ function GodStrength( keys )
 
 	-- Parameters
 	local sound_cast = keys.sound_cast
-	local sound_be_a_man_1 = keys.sound_be_a_man_1
-	local sound_be_a_man_2 = keys.sound_be_a_man_2
+	local sound_be_a_man = keys.sound_be_a_man
 	local particle_caster = keys.particle_caster
 	local modifier_caster = keys.modifier_caster
 	local modifier_aura = keys.modifier_aura
@@ -303,11 +302,7 @@ function GodStrength( keys )
 
 	-- Become a man
 	Timers:CreateTimer(2, function()
-		if RandomInt(1,100) <= 50 then
-			EmitGlobalSound(sound_be_a_man_1)
-		else
-			EmitGlobalSound(sound_be_a_man_2)
-		end
+	EmitGlobalSound(sound_be_a_man)
 	end)
 
 	-- Randomly play a cast line

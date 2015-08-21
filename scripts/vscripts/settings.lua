@@ -97,6 +97,8 @@ HERO_ASSIST_BOUNTY_FACTOR_3 = 0.40											-- Factor to multiply the assist bo
 HERO_ASSIST_BOUNTY_FACTOR_4 = 0.30											-- Factor to multiply the assist bounty by when 4 heroes are involved
 HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bounty by when 5 heroes are involved
 
+HERO_GLOBAL_BOUNTY_FACTOR = 15												-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
+
 HERO_KILL_XP_CONSTANT_1 = 100												-- XP formula up to level 5 is constant I + (level - 1) * constant II
 HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is the level 5 value + (level - 5) * constant II
 
@@ -112,7 +114,7 @@ HERO_BUYBACK_COST_SCALING = 30												-- Cost multiplier when buybacking in 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
 
-PLAYER_ABANDON_TIME = 180													-- Time for a player to be considered as having abandoned the game (in seconds)
+FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 TOWER_MINIMUM_GOLD = 180													-- Tower minimum gold bounty
 TOWER_MAXIMUM_GOLD = 220													-- Tower maximum gold bounty
@@ -136,6 +138,7 @@ GAME_TIME_ELAPSED = 0														-- Initializes game time tracker
 -------------------------------------------------------------------------------------------------
 
 MAX_NUMBER_OF_TEAMS = 2														-- How many potential teams can be in this game mode?
+IMBA_PLAYERS_ON_GAME = 10													-- Number of players in the game
 USE_CUSTOM_TEAM_COLORS = false												-- Should we use custom team colors?
 USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team colors to color the players/minimap?
 
@@ -169,6 +172,7 @@ if GetMapName() == "imba_all_pick" then
 	IMBA_PICK_MODE_ALL_PICK = true
 elseif GetMapName() == "imba_10_v_10" then
 	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 elseif GetMapName() == "imba_random_omg" then

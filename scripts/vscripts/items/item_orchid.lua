@@ -13,12 +13,24 @@ function OrchidCrit( keys )
 	-- Parameters
 	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
 	local crit_damage = ability:GetLevelSpecialValueFor("crit_damage", ability_level)
+	local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+	local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
 	local bonus_damage = math.max( damage * ( crit_damage - 100 ) / 100, 0)
 
 	-- If there's no valid target, do nothing
 	if target:IsBuilding() or target:IsTower() or target == caster or target:HasModifier(modifier_prevent) then
 		return nil
 	end
+
+	-- Scale damage bonus according to distance
+	local distance = ( target:GetAbsOrigin() - caster:GetAbsOrigin() ):Length2D()
+	local distance_taper = 1
+	if distance > distance_taper_start and distance < distance_taper_end then
+		distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
+	elseif distance >= distance_taper_end then
+		distance_taper = 0.3
+	end
+	bonus_damage = bonus_damage * distance_taper
 
 	-- Roll for crit chance
 	if RandomInt(1, 100) <= crit_chance then

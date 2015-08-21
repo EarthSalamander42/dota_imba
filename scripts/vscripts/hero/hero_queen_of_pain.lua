@@ -73,11 +73,10 @@ function Blink(keys)
 		end
 	end
 
-	Timers:CreateTimer(0.01, function()
-		FindClearSpaceForUnit(caster, point, false)
+	FindClearSpaceForUnit(caster, point, false)
+	ProjectileManager:ProjectileDodge(caster)
 
-		ProjectileManager:ProjectileDodge(caster)
-
+	Timers:CreateTimer(0.05, function()
 		if ability_scream_level ~= 0 then
 			local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(enemies) do
@@ -128,7 +127,7 @@ function Torment( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level)
+	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level) * 10 / IMBA_PLAYERS_ON_GAME
 
 	-- If a hero was damaged, reduce all ability cooldowns
 	if target:IsRealHero() then

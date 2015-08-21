@@ -67,7 +67,7 @@ function GuardianGreavesAuto( keys )
 	local heal_threshold = ability:GetLevelSpecialValueFor("heal_threshold", ability_level)
 
 	-- If owner's HP is below the threshold, auto-cast Mend
-	if caster:GetHealth() <= heal_threshold and ability:IsCooldownReady() then
+	if not caster:IsIllusion() and caster:GetHealth() <= heal_threshold and ability:IsCooldownReady() then
 	 	ability:StartCooldown(ability:GetCooldown(ability_level))
 	 	GuardianGreaves(keys)
 	end

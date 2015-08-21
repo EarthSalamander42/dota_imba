@@ -226,6 +226,7 @@ function TrueKill(caster, target, ability)
 	target:Kill(ability, caster)
 
 	-- Removes the relevant modifiers
+	target:RemoveModifierByName("modifier_invulnerable")
 	target:RemoveModifierByName("modifier_imba_shallow_grave")
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
@@ -289,85 +290,6 @@ function IsHardDisabled( unit )
 	end
 
 	return false
-end
-
--- Handles a player's abandoned state
-function AbandonGame( hero, player_id )
-	local team = PlayerResource:GetTeam(player_id)
-	local fountain_pos = Vector(0, 0, 0)
-	
-	-- Retrieves the position the player should move to
-	if team == DOTA_TEAM_GOODGUYS then
-		fountain_pos = Vector(-7456, -6938, 400)
-	elseif team == DOTA_TEAM_BADGUYS then
-		fountain_pos = Vector(7412, 6750, 649)
-	end
-
-	-- Start moving the player's hero to the fountain
-	Timers:CreateTimer(0, function()
-		hero:MoveToPosition(fountain_pos)
-
-		-- If the hero is close enough to the fountain, make it rooted and invulnerable
-		if IsNearFriendlyClass(hero, 300, "ent_dota_fountain") then
-			local fountain_pos = hero:GetAbsOrigin()
-			hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
-			hero:AddNewModifier(hero, nil, "modifier_rooted", {})
-			hero:AddNewModifier(hero, nil, "modifier_stunned", {})
-			hero:AddNewModifier(hero, nil, "modifier_obsidian_destroyer_astral_imprisonment_prison", {})
-
-			-- Keep the hero rooted and invulnerable for as long as the player remains disconnected
-			Timers:CreateTimer(0, function()
-				if GameMode.players[player_id].is_disconnected then
-					hero:SetAbsOrigin(fountain_pos)
-					return 1
-				else
-					hero:RemoveModifierByName("modifier_invulnerable")
-					hero:RemoveModifierByName("modifier_rooted")
-					hero:RemoveModifierByName("modifier_stunned")
-					hero:RemoveModifierByName("modifier_obsidian_destroyer_astral_imprisonment_prison")
-				end
-			end)
-
-		-- Otherwise, if the player is still disconnected, keep moving towards it
-		elseif GameMode.players[player_id].is_disconnected then
-			return 0.1
-		end
-	end)
-
-	-- Distribute any gold the player gains to its teammates
-	Timers:CreateTimer(0, function()
-
-		-- Calculates if there is enough gold to be shared without loss
-		--local current_gold = PlayerResource:GetGold(player_id)
-		--local connected_players_on_team
-
-		--if team == DOTA_TEAM_GOODGUYS then
-		--	connected_players_on_team = GOODGUYS_CONNECTED_PLAYERS
-		--elseif team == DOTA_TEAM_BADGUYS then
-		--	connected_players_on_team = BADGUYS_CONNECTED_PLAYERS
-		--end
-
-		--if current_gold >= connected_players_on_team then
-
-			-- Calculates how much gold will be given
-		--	local gold_to_share = math.floor( current_gold / connected_players_on_team )
-			
-			-- Distributes gold between the other players on the abandoner's team
-		--	PlayerResource:SpendGold(player_id, gold_to_share * connected_players_on_team, DOTA_ModifyGold_AbandonedRedistribute)
-			--PlayerResource:SetGold(player_id, current_gold - gold_to_share * connected_players_on_team, true)
-		--	for id = 0, 9 do
-		--		local current_player = PlayerResource:GetPlayer(id)
-		--		if PlayerResource:GetPlayer(id) and ( id ~= player_id ) and ( team == PlayerResource:GetTeam(id) ) then
-		--			PlayerResource:ModifyGold(id, gold_to_share, false, DOTA_ModifyGold_AbandonedRedistribute)
-		--		end
-		--	end
-		--end
-
-		-- If the player is still disconnected, keep checking
-		--if GameMode.players[player_id].is_disconnected then
-		--	return 1
-		--end
-	end)
 end
 
 -- Picks a legal non-ultimate ability in Random OMG mode
@@ -712,6 +634,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_dragon_knight_dragon_blood")
 	hero:RemoveModifierByName("modifier_zuus_static_field")
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -816,7 +739,6 @@ function PassiveBreak( unit, duration )
 		if ability and ( ability:IsPassive() or ability:GetName() == "imba_antimage_spell_shield" ) and ability:GetLevel() > 0 then
 			passive_detected = true
 			unit.break_learn_levels[i] = ability:GetLevel()
-			ability:SetHidden(true)
 			ability:SetLevel(0)
 		end
 	end
@@ -830,11 +752,14 @@ function PassiveBreak( unit, duration )
 
 			-- Restore ability levels if duration has elapsed
 			if unit.break_duration_left <= 0 then
-				for i = 0, 15 do
-					if unit.break_learn_levels[i] and unit.break_learn_levels[i] > 0 then
-						local ability = unit:GetAbilityByIndex(i)
-						ability:SetLevel(unit.break_learn_levels[i])
-						ability:SetHidden(false)
+				if not ( not unit:IsAlive() and IMBA_ABILITY_MODE_RANDOM_OMG ) then
+					for i = 0, 15 do
+						if unit.break_learn_levels[i] and unit.break_learn_levels[i] > 0 then
+							local ability = unit:GetAbilityByIndex(i)
+							local excess_levels = ability:GetLevel()
+							unit:SetAbilityPoints( unit:GetAbilityPoints() + excess_levels )
+							ability:SetLevel(unit.break_learn_levels[i])
+						end
 					end
 				end
 				unit.break_duration_left = nil

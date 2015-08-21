@@ -4300,6 +4300,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"crit_damage"				"200"
 			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_taper_start"		"1500"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_taper_end"		"3000"
+			}
 		}
 
 		"OnSpellStart"
@@ -7004,7 +7014,12 @@
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_charges"				"30"
+				"overcharge_start"			"15"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"overcharge_chance"			"5"
 			}
 		}
 

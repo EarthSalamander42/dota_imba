@@ -4,10 +4,11 @@
 function RapierPickUp( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-
-	local rapier_level = 0
-	if not caster.rapier_picked_up then
-		rapier_level = keys.rapier_level
+	local rapier_level = keys.rapier_level
+	
+	-- If a rapier was already picked up, do nothing
+	if caster.rapier_picked_up then
+		return nil
 	end
 
 	-- Double pick-up safety variable
@@ -36,7 +37,13 @@ function RapierPickUp( keys )
 	caster:RemoveItem(ability)
 
 	-- Create appropriate level rapier
-	caster:AddItem(CreateItem("item_imba_rapier_"..rapier_level, caster, caster))
+	if caster:HasAnyAvailableInventorySpace() then
+		caster:AddItem(CreateItem("item_imba_rapier_"..rapier_level, caster, caster))
+	else
+		local drop = CreateItem("item_imba_rapier_"..rapier_level.."_dummy", nil, nil)
+		CreateItemOnPositionSync(caster:GetAbsOrigin(), drop)
+		drop:LaunchLoot(false, 250, 0.5, caster:GetAbsOrigin())
+	end
 end
 
 function RapierDamage( keys )

@@ -14041,7 +14041,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
@@ -14054,6 +14054,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
 		}
@@ -14115,62 +14116,41 @@
 				"var_type"				"FIELD_INTEGER"
 				"stack_cap"				"5 10 15 20"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_cooldown"			"1.0"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_mana_cost"		"20 30 40 50"
+			}
 		}
 
-		"OnSpellStart"
+		"OnToggleOn"
 		{
-			"FireSound"
+			"RunScript"
 			{
-				"EffectName"			"Hero_Necrolyte.DeathPulse"
+				"ScriptFile"			"hero/hero_necrolyte.lua"
+				"Function"				"DeathPulse"
+
+				"sound_cast"			"Hero_Necrolyte.DeathPulse"
+				"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+				"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+				"modifier_caster"		"modifier_imba_death_pulse_caster"
+				"mana_cost"				"0"
 			}
+		}
 
-			"ActOnTargets"
+		"OnToggleOff"
+		{
+			"RunScript"
 			{
-				"Target"
-	            {
-	                "Center"			"CASTER"
-	                "Radius"			"%area_of_effect"
-	                "Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY" 
-	                "Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	                "Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-	            }
+				"ScriptFile"			"hero/hero_necrolyte.lua"
+				"Function"				"DeathPulseEnd"
 
-	            "Action"
-	            {
-	            	"TrackingProjectile"
-					{
-					    "Target"			"TARGET"
-					    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
-					    "Dodgeable"			"0"
-					    "ProvidesVision"	"0"
-					    "MoveSpeed"			"%projectile_speed"
-					    "SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
-					}
-	            }
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-	            {
-	                "Center"				"CASTER"
-	                "Radius"				"%area_of_effect"
-	                "Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
-	                "Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-	            }
-
-	            "Action"
-	            {
-	            	"TrackingProjectile"
-					{
-					    "Target"			"TARGET"
-					    "EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
-					    "Dodgeable"			"0"
-					    "ProvidesVision"	"0"
-					    "MoveSpeed"			"%projectile_speed"
-					    "SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
-					}
-	            }
+				"modifier_caster"		"modifier_imba_death_pulse_caster"
 			}
 		}
 
@@ -14178,16 +14158,41 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"hero/hero_necrolyte.lua"
-				"Function"		"DeathPulse"
+				"ScriptFile"			"hero/hero_necrolyte.lua"
+				"Function"				"DeathPulseHit"
 
-				"stack_buff"	"modifier_imba_death_pulse_buff_stack"
-				"stack_debuff"	"modifier_imba_death_pulse_debuff_stack"
+				"stack_buff"			"modifier_imba_death_pulse_buff_stack"
+				"stack_debuff"			"modifier_imba_death_pulse_debuff_stack"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_imba_death_pulse_caster"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"ThinkInterval"		"%cast_cooldown"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_necrolyte.lua"
+						"Function"				"DeathPulse"
+
+						"sound_cast"			"Imba.NecroDeathPulseRepeat"
+						"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
+						"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
+						"modifier_caster"		"modifier_imba_death_pulse_caster"
+						"mana_cost"				"%cast_mana_cost"
+					}
+				}
+			}
+
 			"modifier_imba_death_pulse_buff_stack"
 			{
 				"Passive"			"0"
@@ -16331,14 +16336,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"90 180 270 360"
+				"heal_min"				"90 180 270 360"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"heal_pct"				"10 15 20 25"
 			}
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_tooltip"		"90 180 270 360"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"375"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"passive_cooldown"		"25.0 20.0 15.0 10.0"
@@ -18286,7 +18301,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stack_magic_resist"				"4"
+				"stack_magic_resist"				"2.5"
 			}
 			"05"
 			{
@@ -20731,8 +20746,7 @@
 				"Function"						"GodStrength"
 
 				"sound_cast"					"Hero_Sven.GodsStrength"
-				"sound_be_a_man_1"				"Imba.SvenBeAMan1"
-				"sound_be_a_man_2"				"Imba.SvenBeAMan2"
+				"sound_be_a_man"				"Imba.SvenBeAMan"
 				"particle_caster"				"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
 				"modifier_caster"				"modifier_imba_god_strength"
 				"modifier_aura"					"modifier_imba_god_strength_aura"
