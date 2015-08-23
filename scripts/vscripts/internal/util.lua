@@ -491,6 +491,7 @@ function PickValidHeroRandomOMG()
 		"npc_dota_hero_chaos_knight",
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
+		"npc_dota_hero_dragon_knight",
 		"npc_dota_hero_drow_ranger",
 		"npc_dota_hero_earthshaker",
 		"npc_dota_hero_jakiro",
@@ -510,6 +511,7 @@ function PickValidHeroRandomOMG()
 		"npc_dota_hero_phantom_assassin",
 		"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_phoenix",
+		"npc_dota_hero_puck",
 		"npc_dota_hero_queenofpain",
 		"npc_dota_hero_sand_king",
 		"npc_dota_hero_shadow_demon",
@@ -524,7 +526,9 @@ function PickValidHeroRandomOMG()
 		"npc_dota_hero_ursa",
 		"npc_dota_hero_vengefulspirit",
 		"npc_dota_hero_venomancer",
-		"npc_dota_hero_wisp"
+		"npc_dota_hero_wisp",
+		"npc_dota_hero_witch_doctor",
+		"npc_dota_hero_zuus"
 	}
 
 	return valid_heroes[RandomInt(1, #valid_heroes)]
@@ -547,6 +551,7 @@ function IsValidPickRandomOMG( hero )
 		"npc_dota_hero_chaos_knight",
 		"npc_dota_hero_crystal_maiden",
 		"npc_dota_hero_dazzle",
+		"npc_dota_hero_dragon_knight",
 		"npc_dota_hero_drow_ranger",
 		"npc_dota_hero_earthshaker",
 		"npc_dota_hero_jakiro",
@@ -566,6 +571,7 @@ function IsValidPickRandomOMG( hero )
 		"npc_dota_hero_phantom_assassin",
 		"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_phoenix",
+		"npc_dota_hero_puck",
 		"npc_dota_hero_queenofpain",
 		"npc_dota_hero_sand_king",
 		"npc_dota_hero_shadow_demon",
@@ -580,7 +586,9 @@ function IsValidPickRandomOMG( hero )
 		"npc_dota_hero_ursa",
 		"npc_dota_hero_vengefulspirit",
 		"npc_dota_hero_venomancer",
-		"npc_dota_hero_wisp"
+		"npc_dota_hero_wisp",
+		"npc_dota_hero_witch_doctor",
+		"npc_dota_hero_zuus"
 	}
 
 	for i = 1, #valid_heroes do

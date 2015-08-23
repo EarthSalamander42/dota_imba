@@ -31,8 +31,6 @@ function FountainBash( keys )
 	local bash_radius = ability:GetLevelSpecialValueFor("bash_radius", ability_level)
 	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
 	local bash_distance = ability:GetLevelSpecialValueFor("bash_distance", ability_level)
-	bash_radius = 1800
-	bash_distance = 200
 	local bash_height = ability:GetLevelSpecialValueFor("bash_height", ability_level)
 	local fountain_loc = caster:GetAbsOrigin()
 

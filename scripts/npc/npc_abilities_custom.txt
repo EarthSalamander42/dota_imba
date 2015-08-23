@@ -1310,7 +1310,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bash_radius"							"1400"
+				"bash_radius"							"1800"
 			}
 			"04"
 			{
@@ -1320,7 +1320,7 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bash_distance"							"300"
+				"bash_distance"							"200"
 			}
 			"06"
 			{
@@ -7763,12 +7763,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"passive_cooldown"						"60.0"
+				"passive_cooldown"						"120.0 100.0 80.0 60.0"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"passive_cooldown_scepter"				"15.0"
+				"passive_cooldown_scepter"				"30.0 25.0 20.0 15.0"
 			}
 		}
 
@@ -17137,7 +17137,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-			"particle"					"particles/generic_gameplay/generic_silence.vpcf"
+			"particle"					"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
 		}
 
@@ -17181,7 +17181,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"silence_duration"		"1.5"
+				"disarm_duration"		"1.5"
 			}
 			"05"
 			{
@@ -17249,7 +17249,7 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"			"modifier_imba_stifling_dagger_silence"
+				"ModifierName"			"modifier_imba_stifling_dagger_disarm"
 				"Target"				"TARGET"
 			}
 
@@ -17290,20 +17290,20 @@
 				}
 			}
 
-			"modifier_imba_stifling_dagger_silence"
+			"modifier_imba_stifling_dagger_disarm"
 			{
 				"IsDebuff"				"1"
 				"IsHidden"				"1"
 				"IsPurgable"			"1"
 
-				"Duration"				"%silence_duration"
+				"Duration"				"%disarm_duration"
 
-				"EffectName"			"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectName"			"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
 				"EffectAttachType"		"follow_overhead"
 
 				"States"
 				{
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 

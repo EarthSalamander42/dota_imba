@@ -215,8 +215,10 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Set frantic mode multiplier
-	FRANTIC_MULTIPLIER = tonumber(mode_info.frantic_mode)
-	print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
+	if tonumber(mode_info.frantic_mode) > 1 then
+		FRANTIC_MULTIPLIER = tonumber(mode_info.frantic_mode)
+		print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Additional Random OMG setup
@@ -254,22 +256,18 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 
 	-- Starting gold information
-	if mode_info.gold_start == "1500" then
-		HERO_INITIAL_GOLD = 1500
-		HERO_INITIAL_REPICK_GOLD = 1200
-		HERO_INITIAL_RANDOM_GOLD = 2000
-	elseif mode_info.gold_start == "4000" then
-		HERO_INITIAL_GOLD = 4000
-		HERO_INITIAL_REPICK_GOLD = 3300
-		HERO_INITIAL_RANDOM_GOLD = 5000
-	elseif mode_info.gold_start == "10000" then
-		HERO_INITIAL_GOLD = 10000
-		HERO_INITIAL_REPICK_GOLD = 8500
-		HERO_INITIAL_RANDOM_GOLD = 12000
-	elseif mode_info.gold_start == "50000" then
-		HERO_INITIAL_GOLD = 50000
-		HERO_INITIAL_REPICK_GOLD = 45000
-		HERO_INITIAL_RANDOM_GOLD = 55000
+	if mode_info.gold_start == "2000" then
+		HERO_INITIAL_GOLD = 2000
+		HERO_INITIAL_REPICK_GOLD = 1500
+		HERO_INITIAL_RANDOM_GOLD = 2500
+	elseif mode_info.gold_start == "6000" then
+		HERO_INITIAL_GOLD = 6000
+		HERO_INITIAL_REPICK_GOLD = 5000
+		HERO_INITIAL_RANDOM_GOLD = 7000
+	elseif mode_info.gold_start == "15000" then
+		HERO_INITIAL_GOLD = 15000
+		HERO_INITIAL_REPICK_GOLD = 12500
+		HERO_INITIAL_RANDOM_GOLD = 17500
 	end
 	print("hero starting gold: "..HERO_INITIAL_GOLD)
 
@@ -296,17 +294,15 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 
 	-- Enable higher starting level
-	HERO_STARTING_LEVEL = tonumber(mode_info.level_start)
+	HERO_STARTING_LEVEL = tonumber(mode_info.xp_start)
 	print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
 
-	-- Enable higher level cap
-	if tonumber(mode_info.level_cap) > 25 then
-		USE_CUSTOM_HERO_LEVELS = true
-		MAX_LEVEL = tonumber(mode_info.level_cap)
-		game_mode_imba:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
-		game_mode_imba:SetCustomHeroMaxLevel ( MAX_LEVEL )
-		print("Heroes can level up to level "..MAX_LEVEL)
-	end
+	-- Set up level cap
+	USE_CUSTOM_HERO_LEVELS = true
+	MAX_LEVEL = tonumber(mode_info.level_cap)
+	game_mode_imba:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
+	game_mode_imba:SetCustomHeroMaxLevel ( MAX_LEVEL )
+	print("Heroes can level up to level "..MAX_LEVEL)
 
 	-- Respawn time information
 	if mode_info.respawn == "respawn_half" then

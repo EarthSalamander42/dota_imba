@@ -388,7 +388,7 @@ function GameMode:OnHeroInGame(hero)
 	-- IMBA: Player greeting and explanations
 	-------------------------------------------------------------------------------------------------
 
-	local line_duration = 4
+	local line_duration = 5
 	
 	-- First line
 	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"}	} )
@@ -400,13 +400,7 @@ function GameMode:OnHeroInGame(hero)
 
 		-- Third line
 		Timers:CreateTimer(line_duration, function()
-			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {color = "DodgerBlue"} }	)
-
-			-- Fourth line
-			Timers:CreateTimer(line_duration, function()
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_05", duration = line_duration, style = {color = "DodgerBlue"} }	)
-				Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_06", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"}, continue = true}	)
-			end)
+			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
 		end)
 	end)
 

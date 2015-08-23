@@ -168,9 +168,9 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_6] = 0
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_7] = 0
 CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
-if GetMapName() == "imba_all_pick" then
+if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
-elseif GetMapName() == "imba_10_v_10" then
+elseif GetMapName() == "imba_custom" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10

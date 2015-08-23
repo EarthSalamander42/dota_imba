@@ -3,6 +3,7 @@
 
 function PoisonTouch( keys )
 	local caster = keys.caster
+	local attacker = keys.attacker
 	local target = keys.unit
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -14,7 +15,7 @@ function PoisonTouch( keys )
 	local stacks_to_stun = ability:GetLevelSpecialValueFor("stacks_to_stun", ability_level)
 
 	-- Add a stack of slow if appropriate
-	if not target:HasModifier(modifier_stun) then
+	if attacker:GetTeam() ~= target:GetTeam() and not target:HasModifier(modifier_stun) then
 		AddStacks(ability, caster, target, modifier_slow_stack, 1, true)
 	end
 
@@ -56,18 +57,19 @@ function ShallowGraveDamageCheck( keys )
 	local modifier_grave = keys.modifier_grave
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown", ability_level)
 
-	-- Change cooldown duration if caster has a scepter
-	if HasScepter(caster) then
+	-- Changes duration if scepter is present
+	if scepter then
 		passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown_scepter", ability_level)
 	end
 
 	-- Check caster's health
 	local health = caster:GetHealth()
-	if health == 1 and not caster:HasModifier(modifier_grave) then
+	if health == 1 and not caster:HasModifier(modifier_grave) and ( scepter or ability:IsCooldownReady() ) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_grave, {})
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = passive_cooldown})
 		caster:RemoveModifierByName(modifier_passive)
