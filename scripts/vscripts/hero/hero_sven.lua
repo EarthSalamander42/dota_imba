@@ -300,10 +300,12 @@ function GodStrength( keys )
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
-	-- Become a man
-	Timers:CreateTimer(2, function()
-	EmitGlobalSound(sound_be_a_man)
-	end)
+	-- Become a man... 30% of the time
+	if RandomInt(1, 100) <= 30 then
+		Timers:CreateTimer(2, function()
+			EmitGlobalSound(sound_be_a_man)
+		end)
+	end
 
 	-- Randomly play a cast line
 	caster:EmitSound("sven_sven_ability_godstrength_0"..RandomInt(1,2))

@@ -4,7 +4,6 @@
 -- Set this to true if you want to see a complete debug output of all events/processes done by barebones
 -- You can also change the cvar 'barebones_spew' at any time to 1 or 0 for output/no output
 
-
 BAREBONES_DEBUG_SPEW = false
 
 if GameMode == nil then
@@ -32,6 +31,11 @@ require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
+-- storage API
+require('libraries/json')
+require('libraries/storage')
+
+Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
 
 --[[
 	This function should be used to set up Async precache calls at the beginning of the gameplay.
@@ -111,6 +115,13 @@ function GameMode:OnAllPlayersLoaded()
 			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
 			print("initialized connection for player "..id..": "..self.players[id].connection_state)
 
+			-- Assign appropriate player color
+			if IMBA_PLAYERS_ON_GAME == 10 and id > 4 then
+				PlayerResource:SetCustomPlayerColor(id+5, PLAYER_COLORS[id+5][1], PLAYER_COLORS[id+5][2], PLAYER_COLORS[id+5][3])
+			else
+				PlayerResource:SetCustomPlayerColor(id, PLAYER_COLORS[id][1], PLAYER_COLORS[id][2], PLAYER_COLORS[id][3])
+			end
+
 			-- Increment amount of players on this team by one
 			if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
 				GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
@@ -126,6 +137,7 @@ function GameMode:OnAllPlayersLoaded()
 				self.players[id] = "empty_player_slot"
 				print("player "..id.." never connected")
 			end
+
 		end
 	end
 

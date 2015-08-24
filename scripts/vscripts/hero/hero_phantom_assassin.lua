@@ -185,12 +185,8 @@ function PhantomStrikeHit( keys )
 		end
 	end
 
-	-- Attack, with a chance to calculate on-hit procs
-	if RandomInt(1, 100) <= proc_rate then
-		caster:PerformAttack(target, true, true, true, true)
-	else
-		caster:PerformAttack(target, true, false, true, true)
-	end
+	-- Attack (does not calculate on-hit procs)
+	caster:PerformAttack(target, true, false, true, true)
 	
 end
 

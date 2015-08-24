@@ -7,6 +7,14 @@ function AegisPickup( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_aegis = keys.modifier_aegis
 
+	-- Display aegis pickup message for all players
+	if not caster.has_aegis then
+		local line_duration = 7
+		Notifications:BottomToAll({hero = caster:GetName(), duration = line_duration})
+		Notifications:BottomToAll({text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+	end
+
 	-- Flag caster as an aegis holder
 	caster.has_aegis = true
 
@@ -26,8 +34,12 @@ function AegisHeal( keys )
 	-- Play sound
 	caster:EmitSound(sound_heal)
 
+	-- Heal
 	caster:Heal(caster:GetMaxHealth(), caster)
 	caster:GiveMana(caster:GetMaxMana())
+
+	-- Remove this item
+	caster:RemoveItem(ability)
 end
 
 function AegisActivate( keys )

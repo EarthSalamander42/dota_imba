@@ -60,6 +60,14 @@ function Precache( context )
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
 
+  	-- Rapier sounds
+  	--PrecacheResource("sound", "sounds/vo/announcer_dlc_bastion/announcer_event_store_rapier.vsnd", context)
+  	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_one.vsnd", context)
+  	--PrecacheResource("sound", "sounds/vo/announcer_dlc_stanleyparable/announcer_purchase_divinerapier_02.vsnd", context)
+  	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_two.vsnd", context)
+  	--PrecacheResource("sound", "sounds/physics/items/weapon_drop_common_02.vsnd", context)
+  	--PrecacheResource("sound", "sounds/ui/inventory/metalblade_equip_01.vsnd", context)
+
 	-- Entire items can be precached by name
 	-- Abilities can also be precached in this way despite the name
 	--PrecacheItemByNameSync("example_ability", context)

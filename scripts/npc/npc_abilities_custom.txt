@@ -1735,7 +1735,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"dmg_bonus"								"50"
+				"dmg_bonus"								"25"
 			}
 			"02"
 			{
@@ -1745,7 +1745,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"regen_bonus"							"25"
+				"regen_bonus"							"30"
 			}
 			"04"
 			{
@@ -4764,6 +4764,8 @@
 				"OverrideAnimation" 	"ACT_DOTA_FLAIL"	
 
 				"ThinkInterval"			"%fiends_grip_tick_interval"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"OnIntervalThink"
 				{
@@ -17397,11 +17399,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"projectile_width"			"125"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"proc_rate"					"50"
 			}
 		}
 

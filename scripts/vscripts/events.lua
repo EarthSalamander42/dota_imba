@@ -113,7 +113,15 @@ function GameMode:OnGameRulesStateChange(keys)
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnGameRulesStateChange(keys)
 
-	local newState = GameRules:State_Get()
+	local new_state = GameRules:State_Get()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player-based stat collection
+	-------------------------------------------------------------------------------------------------
+
+	--if new_state == DOTA_GAMERULES_STATE_POST_GAME then
+		
+	--end
 end
 
 -- An NPC has spawned somewhere in game.  This includes heroes
@@ -282,6 +290,13 @@ function GameMode:OnPlayerReconnect(keys)
 					-- Initialize connection state
 					self.players[id].connection_state = PlayerResource:GetConnectionState(id)
 					print("initialized connection for player "..id..": "..self.players[id].connection_state)
+
+					-- Assign appropriate player color
+					if IMBA_PLAYERS_ON_GAME == 10 and id > 4 then
+						PlayerResource:SetCustomPlayerColor(id+5, PLAYER_COLORS[id+5][1], PLAYER_COLORS[id+5][2], PLAYER_COLORS[id+5][3])
+					else
+						PlayerResource:SetCustomPlayerColor(id, PLAYER_COLORS[id][1], PLAYER_COLORS[id][2], PLAYER_COLORS[id][3])
+					end
 
 					-- Increment amount of players on this team by one
 					if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
@@ -570,7 +585,7 @@ function GameMode:OnEntityKilled( keys )
 
 	GameMode:_OnEntityKilled( keys )
 
-	-- The Unit that was Killed
+	-- The Unit that was killed
 	local killed_unit = EntIndexToHScript( keys.entindex_killed )
 
 	-- The Killing entity

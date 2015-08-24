@@ -154,6 +154,28 @@ TEAM_COLORS[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }							-- Cyan
 TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }							-- Olive
 TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }							-- Purple
 
+PLAYER_COLORS = {}															-- Stores individual player colors
+PLAYER_COLORS[0] = { 64, 128, 208 }
+PLAYER_COLORS[1]  = { 88, 224, 160 }
+PLAYER_COLORS[2] = { 160, 0, 160 }
+PLAYER_COLORS[3] = { 208, 208, 8 }
+PLAYER_COLORS[4] = { 224, 96, 0 }
+PLAYER_COLORS[5] = { 0, 252, 64 }
+PLAYER_COLORS[6] = { 56, 0, 116 }
+PLAYER_COLORS[7] = { 252, 0, 128 }
+PLAYER_COLORS[8] = { 244, 124, 0 }
+PLAYER_COLORS[9] = { 120, 120, 0 }
+PLAYER_COLORS[10] = { 220, 116, 168 }
+PLAYER_COLORS[11]  = { 116, 128, 48 }
+PLAYER_COLORS[12] = { 88, 188, 228 }
+PLAYER_COLORS[13] = { 0, 112, 28 }
+PLAYER_COLORS[14] = { 136, 84, 0 }
+PLAYER_COLORS[15] = { 244, 124, 244 }
+PLAYER_COLORS[16] = { 240, 0, 0 }
+PLAYER_COLORS[17] = { 248, 128, 0 }
+PLAYER_COLORS[18] = { 224, 184, 24 }
+PLAYER_COLORS[19] = { 160, 255, 96 }
+
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 
 CUSTOM_TEAM_PLAYER_COUNT = {}
@@ -170,13 +192,15 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
+elseif GetMapName() == "imba_random_omg" then
+	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
+	IMBA_PICK_MODE_ALL_PICK = true
+elseif GetMapName() == "imba_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
-elseif GetMapName() == "imba_random_omg" then
-	IMBA_ABILITY_MODE_RANDOM_OMG = true
 end
 
 -------------------------------------------------------------------------------------------------

@@ -3818,6 +3818,8 @@
 
 		"AbilityDamage"					"120 200 280 360"
 
+		"AbilityManaCost"				"50"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -3848,6 +3850,8 @@
 		"AbilityCastPoint"				"0.5"
 
 		"AbilityDamage"					"120 200 280 360"
+
+		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
 		{
@@ -3884,7 +3888,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_max_souls"		"36"
+				"necromastery_max_souls"		"40"
 			}
 			"03"
 			{
@@ -3894,7 +3898,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_souls_hero_bonus"	"36"
+				"necromastery_souls_hero_bonus"	"40"
 			}
 		}
 	}
@@ -3911,7 +3915,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"presence_armor_reduction"		"-4 -6 -8 -10"
+				"presence_armor_reduction"		"-6 -8 -10 -12"
 			}
 			"02"
 			{

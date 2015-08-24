@@ -6,6 +6,14 @@ function ButterflyEffect( keys )
 	-- Finds all valid units on the map
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
-	-- Singles out a random unit from the list above and attacks it
-	caster:PerformAttack(enemies[RandomInt(1, #enemies)], true, true, true, true)
+	-- Single out a random enemy
+	local enemy = enemies[RandomInt(1, #enemies)]
+
+	-- Ignore the attack if a courier was found
+	if enemy:GetName() == "npc_dota_courier" then
+		return nil
+	end
+
+	-- Perform an attack on the singled out enemy
+	caster:PerformAttack(enemy, true, true, true, true)
 end
