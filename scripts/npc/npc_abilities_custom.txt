@@ -1044,7 +1044,6 @@
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
@@ -20956,6 +20955,17 @@
 				"IsHidden"					"1"
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_land_mines_caster"
+					}
+				}
 		
 				"OnAttackLanded"
 				{

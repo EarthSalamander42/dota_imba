@@ -691,7 +691,7 @@ function GameMode:OnEntityKilled( keys )
 			local player_id = caster:GetPlayerID()
 
 			-- Create the mine at the specified place
-			local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+			local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
 			land_mine:SetControllableByPlayer(player_id, true)
 
 			-- Root the mine in place
@@ -703,7 +703,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Create a second mine if the owner has Aghanim's Scepter
 			local land_mine_2
 			if scepter then
-				land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+				land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
 				land_mine_2:SetControllableByPlayer(player_id, true)
 				land_mine_2:AddNewModifier(land_mine_2, ability_land_mine, "modifier_rooted", {})
 				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_2, modifier_state, {})
@@ -738,17 +738,26 @@ function GameMode:OnEntityKilled( keys )
 			-- Parameters
 			local activation_delay = ability_stasis_trap:GetLevelSpecialValueFor("activation_delay", ability_level)
 			local player_id = caster:GetPlayerID()
+			local trap_loc_1 = caster:GetAbsOrigin() + RandomVector(100)
+			local trap_loc_2 = caster:GetAbsOrigin() + RandomVector(100)
 
 			-- Play the spawn animation
 			local trap_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(trap_pfx, 0, caster:GetAbsOrigin())
-			ParticleManager:SetParticleControl(trap_pfx, 1, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(trap_pfx, 0, trap_loc_1)
+			ParticleManager:SetParticleControl(trap_pfx, 1, trap_loc_1)
+
+			-- Play the spawn animation for the scepter extra mine, if appropriate
+			if scepter then
+				local trap_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
+				ParticleManager:SetParticleControl(trap_pfx_2, 0, trap_loc_2)
+				ParticleManager:SetParticleControl(trap_pfx_2, 1, trap_loc_2)
+			end
 
 			-- Wait for the activation delay
 			Timers:CreateTimer(activation_delay, function()
 
 				-- Create the mine at the specified place
-				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_1, false, caster, caster, caster:GetTeam())
 				stasis_trap:SetControllableByPlayer(player_id, true)
 
 				-- Root the mine in place
@@ -766,7 +775,7 @@ function GameMode:OnEntityKilled( keys )
 				-- Create a second mine if the owner has Aghanim's Scepter
 				local stasis_trap_2
 				if scepter then
-					stasis_trap_2 = CreateUnitByName("npc_imba_techies_stasis_trap", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+					stasis_trap_2 = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_2, false, caster, caster, caster:GetTeam())
 					stasis_trap_2:SetControllableByPlayer(player_id, true)
 					stasis_trap_2:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
 					ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap_2, "modifier_imba_stasis_trap_state", {})
@@ -783,7 +792,7 @@ function GameMode:OnEntityKilled( keys )
 		if ability_remote_mine and ability_remote_mine:GetLevel() > 0 then
 
 			-- Create mine
-			local remote_mine = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin(), false, killed_unit, killed_unit, killed_unit:GetTeam())
+			local remote_mine = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin() + RandomVector(100), false, killed_unit, killed_unit, killed_unit:GetTeam())
 			remote_mine:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
 			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
 			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})
@@ -794,7 +803,7 @@ function GameMode:OnEntityKilled( keys )
 
 			-- Second mine (scepter)
 			if scepter then
-				local remote_mine_2 = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin(), false, killed_unit, killed_unit, killed_unit:GetTeam())
+				local remote_mine_2 = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin() + RandomVector(100), false, killed_unit, killed_unit, killed_unit:GetTeam())
 				remote_mine_2:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
 				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
 				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})

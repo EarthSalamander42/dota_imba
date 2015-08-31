@@ -49,7 +49,7 @@ function LandMineThrow( keys )
 	local step_duration = 0.03
 
 	-- Verify proc condition
-	if RandomInt(1, 100) > throw_chance and target:IsAlive() and target:GetTeam() ~= caster:GetTeam() then
+	if RandomInt(1, 100) > throw_chance or not target:IsAlive() or target:GetTeam() == caster:GetTeam() then
 		return nil
 	end
 
