@@ -66,7 +66,7 @@ function Frostbite( keys )
 
 	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 	if attacker:GetTeam() ~= caster:GetTeam() and not attacker:IsMagicImmune() then
-		if attacker:IsHero() or attacker:IsAncient() then
+		if attacker:IsHero() or IsRoshan(attacker) then
 			ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_hero})
 			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_hero - damage_interval})
 			caster:RemoveModifierByName(modifier_passive)

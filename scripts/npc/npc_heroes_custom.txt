@@ -925,6 +925,33 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Techies
+	//=================================================================================================================
+	"npc_imba_hero_techies"
+	{
+		"override_hero"				"npc_dota_hero_techies"
+
+		"ArmorPhysical"				"6"
+
+		"AttackDamageMin"			"1"
+		"AttackDamageMax"			"3"
+
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"750"
+
+		"AttributeBaseIntelligence"	"28"
+		"AttributeIntelligenceGain"	"3.0"
+
+		"Ability1"					"imba_techies_land_mines"
+		"Ability2"					"imba_techies_stasis_trap"
+		//"Ability3"					"imba_techies_suicide"
+		//"Ability4"					"imba_techies_focused_detonate"
+		"Ability5"					"imba_techies_minefield_sign"
+		//"Ability6"					"imba_techies_remote_mines"
+		"Ability7"					"attribute_bonus_int"
+	}
+
+	//=================================================================================================================
 	// HERO: Templar Assassin
 	//=================================================================================================================
 	"npc_imba_hero_templar_assassin"

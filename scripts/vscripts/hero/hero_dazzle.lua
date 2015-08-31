@@ -69,7 +69,7 @@ function ShallowGraveDamageCheck( keys )
 
 	-- Check caster's health
 	local health = caster:GetHealth()
-	if health == 1 and not caster:HasModifier(modifier_grave) and ( scepter or ability:IsCooldownReady() ) then
+	if health == 1 and not caster:HasModifier(modifier_grave) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_grave, {})
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = passive_cooldown})
 		caster:RemoveModifierByName(modifier_passive)

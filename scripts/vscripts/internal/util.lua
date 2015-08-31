@@ -283,6 +283,24 @@ function IsFountain( unit )
 	return false
 end
 
+-- Returns if this unit is a player-owned summon or not
+function IsPlayerOwnedSummon( unit )
+
+	local summon_names = {
+		"npc_dota_techies_mines"
+	}
+
+	local unit_name = unit:GetName()
+
+	for i = 1, #summon_names do
+		if unit_name == summon_names[i] then
+			return true
+		end
+	end
+	
+	return false
+end
+
 -- Returns true if the target is hard disabled
 function IsHardDisabled( unit )
 	if unit:IsStunned() or unit:IsHexed() or unit:IsNightmared() or unit:IsOutOfGame() or unit:HasModifier("modifier_axe_berserkers_call") then
@@ -643,6 +661,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_zuus_static_field")
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
+	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -704,7 +723,8 @@ function InitializeInnateAbilities( hero )
 
 	-- List of innate abilities
 	local innate_abilities = {
-		"imba_queenofpain_delightful_torment"
+		"imba_queenofpain_delightful_torment",
+		"imba_techies_minefield_sign"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them

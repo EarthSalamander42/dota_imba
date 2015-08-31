@@ -135,6 +135,45 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: War Veteran stack updater
+	-------------------------------------------------------------------------------------------------
+	
+	-- Attempt to find War Veteran ability 
+	local ability_powerup = npc:FindAbilityByName("imba_unlimited_level_powerup")
+
+	if ability_powerup then
+
+		-- Fetch hero level and current amount of stacks
+		local correct_amount = math.max( npc:GetLevel() - 25, 0)
+		local power_stacks = npc:GetModifierStackCount("modifier_imba_unlimited_level_powerup", ability_powerup)
+
+		-- If the number of stacks is not correct, fix it
+		if power_stacks < correct_amount then
+			AddStacks(ability_powerup, npc, npc, "modifier_imba_unlimited_level_powerup", ( correct_amount - power_stacks ), true)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Remote Mines adjustment
+	-------------------------------------------------------------------------------------------------
+
+	Timers:CreateTimer(1.5, function()
+		if npc:HasModifier("modifier_techies_remote_mine") then
+
+			-- Add extra abilities
+			npc:AddAbility("imba_techies_minefield_teleport")
+			npc:AddAbility("imba_techies_remote_auto_creep")
+			npc:AddAbility("imba_techies_remote_auto_hero")
+			local minefield_teleport = npc:FindAbilityByName("imba_techies_minefield_teleport")
+			local auto_creep = npc:FindAbilityByName("imba_techies_remote_auto_creep")
+			local auto_hero = npc:FindAbilityByName("imba_techies_remote_auto_hero")
+			minefield_teleport:SetLevel(1)
+			auto_creep:SetLevel(1)
+			auto_hero:SetLevel(1)
+		end
+	end)
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Aegis clean-up
 	-------------------------------------------------------------------------------------------------
 	if npc.has_aegis then
@@ -595,8 +634,6 @@ function GameMode:OnEntityKilled( keys )
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
-	local damagebits = keys.damagebits -- This might always be 0 and therefore useless
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: End game on kills logic
 	-------------------------------------------------------------------------------------------------
@@ -632,6 +669,144 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Suicide Squad, Attack! Mines
+	-------------------------------------------------------------------------------------------------
+
+	-- Check if suicide is leveled
+	local ability_suicide = killed_unit:FindAbilityByName("techies_suicide")
+	if ability_suicide and ability_suicide:GetLevel() > 0 then
+
+		-- Aghanim's Scepter doubles the number of mines dropped
+		local scepter = HasScepter(killed_unit)
+			
+		-- Land mine
+		local ability_land_mine = killed_unit:FindAbilityByName("imba_techies_land_mines")
+		if ability_land_mine and ability_land_mine:GetLevel() > 0 then
+			local caster = killed_unit				
+			local ability_level = ability_land_mine:GetLevel() - 1
+			local modifier_state = "modifier_imba_land_mines_state"
+			
+			-- Parameters
+			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
+			local player_id = caster:GetPlayerID()
+
+			-- Create the mine at the specified place
+			local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+			land_mine:SetControllableByPlayer(player_id, true)
+
+			-- Root the mine in place
+			land_mine:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
+
+			-- Make the mine have no unit collision or health bar
+			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
+
+			-- Create a second mine if the owner has Aghanim's Scepter
+			local land_mine_2
+			if scepter then
+				land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+				land_mine_2:SetControllableByPlayer(player_id, true)
+				land_mine_2:AddNewModifier(land_mine_2, ability_land_mine, "modifier_rooted", {})
+				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_2, modifier_state, {})
+			end
+
+			-- Wait for the activation delay
+			Timers:CreateTimer(activation_time, function()
+				
+				-- Grant the mine the appropriately leveled abilities
+				local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
+				local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+				mine_passive:SetLevel(ability_level + 1)
+				mine_teleport:SetLevel(1)
+
+				-- Grant the second mine the appropriately leveled abilities if appropriate
+				if scepter then
+					mine_passive = land_mine_2:FindAbilityByName("imba_techies_land_mine_passive")
+					mine_teleport = land_mine_2:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_passive:SetLevel(ability_level + 1)
+					mine_teleport:SetLevel(1)
+				end
+			end)
+		end
+
+		-- Stasis Trap
+		local ability_stasis_trap = killed_unit:FindAbilityByName("imba_techies_stasis_trap")
+		if ability_stasis_trap and ability_stasis_trap:GetLevel() > 0 then
+
+			local caster = killed_unit
+			local ability_level = ability_stasis_trap:GetLevel() - 1
+			
+			-- Parameters
+			local activation_delay = ability_stasis_trap:GetLevelSpecialValueFor("activation_delay", ability_level)
+			local player_id = caster:GetPlayerID()
+
+			-- Play the spawn animation
+			local trap_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(trap_pfx, 0, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(trap_pfx, 1, caster:GetAbsOrigin())
+
+			-- Wait for the activation delay
+			Timers:CreateTimer(activation_delay, function()
+
+				-- Create the mine at the specified place
+				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+				stasis_trap:SetControllableByPlayer(player_id, true)
+
+				-- Root the mine in place
+				stasis_trap:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
+
+				-- Make the mine have no unit collision or health bar
+				ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap, "modifier_imba_stasis_trap_state", {})
+					
+				-- Grant the mine the appropriately leveled abilities
+				local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
+				local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
+				trap_passive:SetLevel(ability_level + 1)
+				trap_teleport:SetLevel(1)
+
+				-- Create a second mine if the owner has Aghanim's Scepter
+				local stasis_trap_2
+				if scepter then
+					stasis_trap_2 = CreateUnitByName("npc_imba_techies_stasis_trap", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+					stasis_trap_2:SetControllableByPlayer(player_id, true)
+					stasis_trap_2:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
+					ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap_2, "modifier_imba_stasis_trap_state", {})
+					local trap_passive = stasis_trap_2:FindAbilityByName("imba_techies_stasis_trap_passive")
+					local trap_teleport = stasis_trap_2:FindAbilityByName("imba_techies_minefield_teleport")
+					trap_passive:SetLevel(ability_level + 1)
+					trap_teleport:SetLevel(1)
+				end
+			end)
+		end
+
+		-- Remote Mine
+		local ability_remote_mine = killed_unit:FindAbilityByName("techies_remote_mines")
+		if ability_remote_mine and ability_remote_mine:GetLevel() > 0 then
+
+			-- Create mine
+			local remote_mine = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin(), false, killed_unit, killed_unit, killed_unit:GetTeam())
+			remote_mine:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
+			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
+			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})
+
+			-- Adjust abilities
+			local remote_self_detonate = remote_mine:FindAbilityByName("techies_remote_mines_self_detonate")
+			remote_self_detonate:SetLevel(ability_remote_mine:GetLevel())
+
+			-- Second mine (scepter)
+			if scepter then
+				local remote_mine_2 = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin(), false, killed_unit, killed_unit, killed_unit:GetTeam())
+				remote_mine_2:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
+				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
+				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})
+
+				-- Adjust abilities
+				remote_self_detonate = remote_mine_2:FindAbilityByName("techies_remote_mines_self_detonate")
+				remote_self_detonate:SetLevel(ability_remote_mine:GetLevel())
+			end
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
 	
@@ -643,6 +818,12 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Multiply respawn timer by the lobby options
 		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
+
+		-- Decrease respawn timer due to Techies' Suicide Squad, Attack!
+		if killed_unit:HasModifier("modifier_techies_suicide_respawn_time") then
+			killed_unit:RemoveModifierByName("modifier_techies_suicide_respawn_time")
+			respawn_time = math.max( respawn_time * 0.5)
+		end
 
 		-- Fetch increased respawn timer due to Reaper's Scythe on this death
 		if killed_unit.scythe_added_respawn then
@@ -807,6 +988,11 @@ function GameMode:OnEntityKilled( keys )
 		local nonhero_killer = false
 		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
 			nonhero_killer = true
+		end
+
+		-- If the killer was a player-owned summon, make its owner the killer
+		if IsPlayerOwnedSummon(killer) then
+			killer = killer:GetOwnerEntity()
 		end
 
 		-- If the killer is player-owned, remove its deathstreak and start its killstreak

@@ -104,7 +104,6 @@ function FiendsGripStopChannel( keys )
 
 	local enemies_affected = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 	local channel_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
-	print("hey listen")
 
 	if channel_time * 2 > max_duration then
 		for _,v in pairs(enemies_affected) do

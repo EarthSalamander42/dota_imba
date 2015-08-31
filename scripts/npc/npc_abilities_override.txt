@@ -1955,7 +1955,7 @@
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"omni_slash_jumps_scepter"		"10 30 100"
+				"omni_slash_jumps_scepter"		"10 25 50"
 			}
 			"06"
 			{
@@ -4599,6 +4599,146 @@
 			{
 				"var_type"									"FIELD_FLOAT"
 				"blocker_duration"							"5"		
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Techies: Suicide Squad, Attack!
+	//=================================================================================================================
+	"techies_suicide"
+	{
+		"AbilityCastRange"				"250"
+
+		"AbilityCooldown"				"160 140 120 100"
+
+		"AbilityManaCost"				"100 125 150 175"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"small_radius"				"300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"big_radius"				"550"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"550 750 950 1150"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"partial_damage"			"275 350 425 500"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"respawn_time_percentage"	"0.5"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"respawn_time_percentage_tooltip"	"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Techies: Remote Mines
+	//=================================================================================================================
+	"techies_remote_mines"
+	{
+		"AbilityCastRange"				"550 625 700"
+		"AbilityCastPoint"				"1.4"
+		
+		"AbilityCooldown"				"10.0 9.0 8.0"
+	
+		"AbilityManaCost"				"180 240 300"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_mines"					"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"300 450 600"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
+			}		
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6000"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"activation_time"			"0.5"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"550 625 700"
+			}				
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"450 600 750"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_scepter"			"550"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"700 800 900"
+			}			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_radius"				"600"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"3.0"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"model_scale"				"5 20 35"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Techies: Remote Mine Self Detonate
+	//=================================================================================================================
+	"techies_remote_mines_self_detonate"
+	{
+		"MaxLevel"						"3"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
 			}
 		}
 	}
