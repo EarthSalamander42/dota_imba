@@ -109,7 +109,7 @@ HERO_BUYBACK_COST_PER_MINUTE = 15											-- Time-based buyback cost
 HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback price to reset, per hero level
 HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
 
-HERO_BUYBACK_COST_SCALING = 30												-- Cost multiplier when buybacking in quick sucession (in %)
+HERO_BUYBACK_COST_SCALING = 100												-- Cost multiplier when buybacking in quick sucession (in %)
 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level

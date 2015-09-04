@@ -13,7 +13,7 @@ function Upgrade( keys )
 	total_stacks = math.floor(total_stacks * CREEP_POWER_RAMP_UP_FACTOR)
 
 	-- Cap the stacks
-	total_stacks = math.min(total_stacks, 100)
+	total_stacks = math.min(total_stacks, 30)
 
 	-- Update the stacks buff
 	caster:RemoveModifierByName(modifier_stack)

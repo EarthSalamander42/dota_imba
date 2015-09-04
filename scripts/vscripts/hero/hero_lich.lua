@@ -76,15 +76,15 @@ function DarkRitual( keys )
 	local XP = target:GetDeathXP()
 	local split_XP = XP / #heroes
 
-	-- Grants the caster mana
-	caster:GiveMana(mana_gain)
-
 	-- If the caster's mana is full, grant the excess mana as healing
 	local current_mana = caster:GetMana()
 	local max_mana = caster:GetMana()
 	if max_mana - current_mana < mana_gain then
 		caster:Heal( ( mana_gain - (max_mana - current_mana) ) / FRANTIC_MULTIPLIER, caster)
 	end
+
+	-- Grants the caster mana
+	caster:GiveMana(mana_gain)
 
 	-- Purple particle with eye
 	local particleName = "particles/msg_fx/msg_xp.vpcf"

@@ -1359,6 +1359,129 @@
 	}
 
 	//=================================================================================================================
+	//	Disruptor: Thunder Strike
+	//=================================================================================================================
+	"disruptor_thunder_strike"
+	{
+		"AbilityDuration"				"5.0 6.0 7.0 8.0"
+
+		"AbilityDamage"					"30 35 40 45"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"275"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"strikes"					"6 7 8 9"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"strike_interval"			"1.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0 6.0 7.0 8.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor: Glimpse
+	//=================================================================================================================
+	"disruptor_glimpse"
+	{
+		"AbilityCooldown"				"60.0 46.0 32.0 18.0"
+
+		"AbilityCastRange"				"25000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"backtrack_time"			"4.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range"				"25000"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Disruptor: Kinetic Field
+	//=================================================================================================================
+	"disruptor_kinetic_field"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"325"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"formation_time"			"1.0 0.8 0.6 0.4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.5 4.0 4.5 5.0"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Disruptor: Static Storm
+	//=================================================================================================================
+	"disruptor_static_storm"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450 500 550"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pulses"					"20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_max"				"200 280 360"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"7.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pulses_scepter"			"28"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	//	Dragon Knight: Breathe Fire
 	//=================================================================================================================
 	"dragon_knight_breathe_fire"
@@ -1663,6 +1786,208 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"echo_slam_echo_damage"			"50 70 90"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: Searing Chains
+	//=================================================================================================================
+	"ember_spirit_searing_chains"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"1.5 2.0 2.5 3.0"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"400"
+			}	
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"chains_damage"					"70 80 90 100"
+			}				
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"total_damage_tooltip"			"105 160 225 300"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_interval"					"1.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unit_count"					"2 3 4 5"
+			}				
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: Sleight of Fist
+	//=================================================================================================================
+	"ember_spirit_sleight_of_fist"
+	{
+		"AbilityCooldown"					"16.0 12.0 8.0 4.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"375 450 525 600"
+			}
+			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_hero_damage"			"40 60 80 100"
+			}
+						
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"attack_interval"			"0.2"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"creep_damage_penalty"		"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: Flame Guard
+	//=================================================================================================================
+	"ember_spirit_flame_guard"
+	{
+		"AbilityCooldown"				"1.0"
+
+		"AbilityManaCost"				"75"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"20.0"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"400"
+			}	
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"absorb_amount"					"200 300 400 500"
+			}				
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_interval"					"0.2"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_second"				"30 40 50 60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: Fire Remnant
+	//=================================================================================================================
+	"ember_spirit_fire_remnant"
+	{
+		"AbilityCastRange"				"2000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_multiplier"		"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"25.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 150 200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"50.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ember Spirit: Activate Fire Remnant
+	//=================================================================================================================
+	"ember_spirit_activate_fire_remnant"
+	{
+		"AbilityManaCost"				"125 100 75"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_multiplier"		"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"charge_restore_time"	"25.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 150 200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1300"
 			}
 		}
 	}
@@ -3416,187 +3741,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"coil_stun_duration_scepter"	"3.0 3.75 4.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sand King: Burrowstrike
-	//=================================================================================================================
-	"sandking_burrowstrike"
-	{
-		"AbilityCastRange"				"550 700 850 1000"
-	
-		"AbilityCooldown"				"9.0"
-
-		"AbilityManaCost"				"110"
-		
-		"AbilityDamage"					"120 200 280 360"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"burrow_width"		"225"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"burrow_duration"	"2.17"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"burrow_speed"		"3000"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"burrow_anim_time"	"0.4"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"tooltip_range"		"550 700 850 1000"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sand King: Sand Storm
-	//=================================================================================================================
-	"sandking_sand_storm"
-	{
-		"AbilityDuration"				"80.0"
-
-		"AbilityCooldown"				"18.0 14.0 10.0 6.0"
-		"AbilityChannelTime"			"80.0"
-
-		"AbilityDamage"					"50 80 110 140"
-
-		"AbilityManaCost"				"0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"sand_storm_invis_delay"	"1.5 1.8 2.1 2.4"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"sand_storm_radius"		"525 600 675 750"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"AbilityDuration"		"80.0"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Sand King: Caustic Finale
-	//=================================================================================================================
-	"sandking_caustic_finale"
-	{	
-		"AbilityDuration"				"9.0"
-		"AbilityDamage"					"120 180 240 300"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"caustic_finale_radius"		"600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"caustic_finale_damage"		"120 180 240 300"
-			}
-			"03"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"caustic_finale_damage_expire_tooltip"		"50 80 110 140"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"caustic_finale_damage_reduced"	"40"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"caustic_finale_duration"	"9"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"caustic_finale_slow"		"-20"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"caustic_finale_slow_duration"		"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sand King: Epicenter
-	//=================================================================================================================
-	"sandking_epicenter"
-	{
-		"AbilityCooldown"				"100.0"
-		"AbilityDuration"				"3.0"
-		"AbilityChannelTime"			"2.0"
-
-		"AbilityManaCost"				"175 200 225"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_radius"	"650 700 750 800 850 900 950 1000 1050 1100 1150 1200"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_pulses"	"6 8 10"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_damage"	"150 175 200"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_slow"	"-40"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_slow_as"	"-60"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_slow_duration_tooltip"	"3"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"epicenter_pulses_scepter"	"8 10 12"
-			}
-			"08"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"epicenter_cooldown_scepter"	"60.0"
 			}
 		}
 	}
@@ -5957,17 +6101,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"80 120 150"
+				"damage"					"90 120 150"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bounces"					"1 2 4"
+				"bounces"					"1 1 1"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"100 160 220"
+				"damage_scepter"			"90 120 150"
 			}
 			"04"
 			{

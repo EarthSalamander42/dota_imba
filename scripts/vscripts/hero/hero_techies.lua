@@ -555,8 +555,12 @@ function RemoteMineAutoCreep( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local auto_hero_ability = mine:FindAbilityByName("imba_techies_remote_auto_hero")
+	local modifier_unselect = keys.modifier_unselect
 
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+
+	-- Make this mine unselectable briefly to remove it from the current unit selection
+	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
 
 	mine.auto_creep_exploding = true
 	mine.auto_hero_exploding = nil
@@ -582,8 +586,12 @@ function RemoteMineAutoHero( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local auto_creep_ability = mine:FindAbilityByName("imba_techies_remote_auto_creep")
+	local modifier_unselect = keys.modifier_unselect
 
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+
+	-- Make this mine unselectable briefly to remove it from the current unit selection
+	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
 
 	mine.auto_hero_exploding = true
 	mine.auto_creep_exploding = nil
@@ -645,10 +653,11 @@ function MinefieldSign( keys )
 
 	-- If too close to a building, do nothing and refresh cooldown
 	local nearby_buildings = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, 550, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-	if #nearby_buildings > 0 then
+	if #nearby_buildings > 0 or IsNearEnemyClass(caster, 2000, "ent_dota_fountain") then
 		ability:EndCooldown()
 		return nil
 	end
+
 	-- Create the sign at the specified place
 	if caster.minefield_sign then
 		caster.minefield_sign:Destroy()
