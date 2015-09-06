@@ -120,6 +120,7 @@ function SandStorm( keys )
 
 	-- Make the caster invisible
 	caster:AddNewModifier(caster, ability, "modifier_invisible", {})
+	caster:AddNewModifier(caster, ability, "modifier_phased", {})
 
 	-- Play channeling animation
 	StartAnimation(caster, {duration = 80, activity = ACT_DOTA_OVERRIDE_ABILITY_2, rate = 1.0})
@@ -162,6 +163,7 @@ function SandStorm( keys )
 			sandstorm_dummy:Destroy()
 			ParticleManager:DestroyParticle(sandstorm_pfx, false)
 			caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = invis_duration})
+			caster:RemoveModifierByName("modifier_phased")
 			EndAnimation(caster)
 		end
 	end)
@@ -221,6 +223,7 @@ function CausticFinale( keys )
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local creep_damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
 	local initial_slow = ability:GetLevelSpecialValueFor("initial_slow", ability_level)
 	local stacking_slow = ability:GetLevelSpecialValueFor("stacking_slow", ability_level)
 	local target_pos = target:GetAbsOrigin()
@@ -236,16 +239,22 @@ function CausticFinale( keys )
 	-- Fire particles
 	local pulse_pfx_1 = ParticleManager:CreateParticle(particle_1, PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(pulse_pfx_1, 0, target_pos + Vector(0,0,100))
-	local pulse_pfx_2 = ParticleManager:CreateParticle(particle_2, PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControl(pulse_pfx_2, 0, target_pos)
-	ParticleManager:SetParticleControl(pulse_pfx_2, 1, Vector(radius * 2, 0, 500))
+	Timers:CreateTimer(0.1, function()
+		local pulse_pfx_2 = ParticleManager:CreateParticle(particle_2, PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControl(pulse_pfx_2, 0, target_pos)
+		ParticleManager:SetParticleControl(pulse_pfx_2, 1, Vector(radius * 2, 0, 425))
+	end)
 
 	-- Find and iterate through nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 
 		-- Damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		if enemy:IsHero() then
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		else
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = creep_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		end
 
 		-- Slow
 		if enemy:HasModifier(modifier_slow) then
@@ -268,9 +277,10 @@ function EpicenterChannel( keys )
 
 	-- Play channeling animation
 	StartAnimation(caster, {duration = 2, activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
-	Timers:CreateTimer(2, function()
+	Timers:CreateTimer(2.1, function()
 		if ability:IsChanneling() then
 			StartAnimation(caster, {duration = 2, activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
+			print("hey! listen!")
 		end
 	end)
 

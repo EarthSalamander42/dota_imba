@@ -165,8 +165,11 @@ function Leap( keys )
 	local max_time = ability:GetLevelSpecialValueFor("leap_time", ability_level)
 	local root_modifier = keys.root_modifier
 
-	-- Clears any current command, grants temporary invulnerability
+	-- Clears any current command
 	caster:Stop()
+
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(caster)
 
 	-- Physics
 	local direction = (target_pos - caster_pos):Normalized()

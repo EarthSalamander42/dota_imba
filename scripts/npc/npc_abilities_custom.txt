@@ -1223,7 +1223,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.25"
+				"armor_per_minute"						"0.8"
 			}
 			"04"
 			{
@@ -3523,7 +3523,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
-			"particle"					"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+			"particle"					"particles/econ/items/axe/axe_helm_shoutmask/axe_beserkers_call_owner_shoutmask.vpcf"
 			"particle"					"particles/status_fx/status_effect_beserkers_call.vpcf"
 		}
 
@@ -3564,25 +3564,18 @@
 				"ModifierName"			"modifier_axe_berserkers_call_armor"
 				"Duration"				"%duration"
 				"Target"				"CASTER"
-				"AttachEffect"
-				{
-					"EffectName"			"particles\econ\items\axe\axe_helm_shoutmask\axe_beserkers_call_buff_shout_mask.vpcf"
-					"Target"				"CASTER"
-					"EffectAttachType"		"follow_origin"
-					"Duration"				"%duration"
-				}
 			}
 
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
+				"EffectName"			"particles/econ/items/axe/axe_helm_shoutmask/axe_beserkers_call_owner_shoutmask.vpcf"
+				"EffectAttachType"		"follow_origin"
 
-				"ControlPointEntities"
+				"ControlPoints"
 				{
-					"CASTER"		"follow_origin"
-					"CASTER"		"follow_origin"
-					"CASTER"		"follow_origin"
+					"01"	"0 0 0"
+					"02"	"%radius 0 0"
+					"03"	"0 0 0"
 				}
 			}
 
@@ -13630,11 +13623,6 @@
 				"var_type"				"FIELD_FLOAT"
 				"leap_time"				"0.5"
 			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"disjoint_duration"		"0.1"
-			}
 		}	
 
 		"OnSpellStart"
@@ -13652,13 +13640,6 @@
 
 				"Target"				"POINT"
 				"root_modifier"			"modifier_imba_leap_self_root"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_invisible"
-				"Target"				"CASTER"
-				"Duration"				"%disjoint_duration"
 			}
 
 			"ActOnTargets"
@@ -19943,7 +19924,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 275 375"
+		"AbilityManaCost"				"175 200 225"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -21976,12 +21957,12 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"200"
+				"max_damage"			"80 120 160 200"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown"				"7.0"
+				"cooldown"				"13 11 9 7"
 			}
 		}
 		
@@ -22013,10 +21994,10 @@
 		{
 			"modifier_imba_sand_storm"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
 			}
 		}
 	}
@@ -22042,8 +22023,8 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-			"particle"						"particles/units/heroes/hero_sandking/sandking_epicenter_tell_gnd_hit.vpcf"
-			"particle"						"particles/units/heroes/hero_sandking/sandking_epicenter_pulse.vpcf"
+			"particle"						"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
+			"particle"						"particles/hero/sand_king/sandking_caustic_dust.vpcf"
 		}
 		
 		// Special
@@ -22058,29 +22039,34 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"15 20 25 30"
+				"damage"					"16 24 32 40"
 			}
 			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"creep_damage"				"40 60 80 100"
+			}
+			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"debuff_duration"			"7.0"
 			}
-			"04"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"initial_slow"				"10"
 			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stacking_slow"				"2"
 			}
-			"06"
+			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"slow_duration"				"2.5"
 			}
-			"07"
+			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"prevent_time"				"0.49"
@@ -22169,8 +22155,8 @@
 
 						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
 						"modifier_slow"		"modifier_imba_caustic_finale_slow"
-						"particle_1"		"particles/units/heroes/hero_sandking/sandking_epicenter_tell_gnd_hit.vpcf"
-						"particle_2"		"particles/units/heroes/hero_sandking/sandking_epicenter_pulse.vpcf"
+						"particle_1"		"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
+						"particle_2"		"particles/hero/sand_king/sandking_caustic_dust.vpcf"
 					}
 				}
 			}

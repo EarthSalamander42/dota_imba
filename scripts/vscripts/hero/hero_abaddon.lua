@@ -193,8 +193,14 @@ end
 
 function AphoticShieldAbsorb( keys )
 	local damage = keys.DamageTaken
+	local attacker = keys.attacker
 	local unit = keys.unit
 	local ability = keys.ability
+
+	-- If the attacker is the unit, do nothing
+	if attacker == unit then
+		return nil
+	end
 	
 	-- Track how much damage was already absorbed by the shield
 	local shield_remaining = unit.AphoticShieldRemaining

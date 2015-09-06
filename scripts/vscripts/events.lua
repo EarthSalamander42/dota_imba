@@ -135,6 +135,25 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG on-respawn skill randomization
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+		if npc:IsRealHero() then
+			
+			-- Randomize abilities
+			ApplyAllRandomOmgAbilities(npc)
+			print("randoming OMG abilities for "..npc:GetName())
+
+			-- Clean-up undesired permanent modifiers
+			RemovePermanentModifiersRandomOMG(npc)
+
+			-- Grant unspent skill points equal to the hero's level
+			npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: War Veteran stack updater
 	-------------------------------------------------------------------------------------------------
 	
@@ -646,25 +665,6 @@ function GameMode:OnEntityKilled( keys )
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 		elseif dire_kills >= KILLS_TO_END_GAME_FOR_TEAM then
 			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG on-death skill randomization
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
-		if killed_unit:IsRealHero() then
-
-			-- Randomize abilities
-			ApplyAllRandomOmgAbilities(killed_unit)
-			print("randoming OMG abilities for "..killed_unit:GetName())
-
-			-- Clean-up undesired permanent modifiers
-			RemovePermanentModifiersRandomOMG(killed_unit)
-
-			-- Grant unspent skill points equal to the hero's level
-			killed_unit:SetAbilityPoints( math.min(killed_unit:GetLevel(), 25) )
 		end
 	end
 

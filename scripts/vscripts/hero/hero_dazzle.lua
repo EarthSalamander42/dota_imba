@@ -10,6 +10,11 @@ function PoisonTouch( keys )
 	local modifier_slow_stack = keys.modifier_slow_stack
 	local modifier_stun = keys.modifier_stun
 
+	-- If the ability was unlearned, do nothing
+	if not ability then
+		return nil
+	end
+
 	-- Parameters
 	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 	local stacks_to_stun = ability:GetLevelSpecialValueFor("stacks_to_stun", ability_level)
@@ -79,7 +84,6 @@ end
 function ShallowGraveDamageStorage( keys )
 	local caster = keys.caster
 	local unit = keys.unit
-	local ability = keys.ability
 
 	local health = unit:GetHealth()
 	local damage = keys.DamageTaken
@@ -97,7 +101,6 @@ end
 function ShallowGraveHeal( keys )
 	local caster = keys.caster
 	local unit = keys.target
-	local ability = keys.ability
 
 	-- create unit.grave_damage if it doesn't exist
 	if not unit.grave_damage then

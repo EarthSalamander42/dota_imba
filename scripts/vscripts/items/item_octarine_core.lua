@@ -61,7 +61,7 @@ function OctarineBlast( keys )
 	-- Blast geometry
 	local blast_duration = 0.75 * 0.75
 	local blast_speed = blast_radius / blast_duration
-	local step_time = 0.1
+	local step_time = 0.15
 	local current_time = 0
 	local current_radius = 0
 	local targets_hit = {}

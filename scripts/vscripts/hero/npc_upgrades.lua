@@ -9,11 +9,11 @@ function Upgrade( keys )
 	-- Calculate total buff stacks
 	local total_stacks = GAME_TIME_ELAPSED / 60
 
-	-- Increase amount of stacks according to game speed
-	total_stacks = math.floor(total_stacks * CREEP_POWER_RAMP_UP_FACTOR)
-
 	-- Cap the stacks
 	total_stacks = math.min(total_stacks, 30)
+
+	-- Increase amount of stacks according to game speed
+	total_stacks = math.floor(total_stacks * CREEP_POWER_RAMP_UP_FACTOR)
 
 	-- Update the stacks buff
 	caster:RemoveModifierByName(modifier_stack)

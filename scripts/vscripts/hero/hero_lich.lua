@@ -11,10 +11,15 @@ function FrostNova( keys )
 	local sound = keys.sound
 	local ability_level = ability:GetLevel() - 1
 
+	-- If the ability was unlearned, do nothing
+	if not ability then
+		return nil
+	end
+
+	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local aoe_damage = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
-
 	local target_pos = target:GetAbsOrigin()
 
 	-- Adds a stack of the aura modifier
@@ -114,12 +119,18 @@ function ChainFrost( keys )
 	local ability_level = ability:GetLevel() - 1
 	local scepter = HasScepter(caster)
 
-	local target_pos = target:GetAbsOrigin()
-	local bounce_target = target
+	-- If ability is unlearned, do nothing
+	if not ability then
+		caster.chain_frost_bounces = nil
+		return nil
+	end
 
+	-- Parameters
 	local jump_range = ability:GetLevelSpecialValueFor("jump_range", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
+	local target_pos = target:GetAbsOrigin()
+	local bounce_target = target
 
 	if scepter then
 		jump_range = ability:GetLevelSpecialValueFor("jump_range_scepter", ability_level)

@@ -311,7 +311,6 @@ function Assassinate( keys )
 	}
 
 	ProjectileManager:CreateTrackingProjectile(assassinate_projectile)
-
 end
 
 function AssassinateHit( keys )
@@ -364,6 +363,9 @@ function AssassinateHit( keys )
 
 	-- Grant short-lived vision
 	ability:CreateVisibilityNode(target:GetAbsOrigin(), 500, 1.0)
+
+	-- Ministun
+	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = 0.1})
 
 	-- Fire particle
 	local hit_fx = ParticleManager:CreateParticle("particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_guided_missile_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
