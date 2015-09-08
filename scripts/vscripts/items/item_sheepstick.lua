@@ -17,7 +17,7 @@ function Sheepstick( keys )
 		target:ForceKill(true)
 	else
 		-- Applies sheepstick modifiers
-		target:AddNewModifier(target, ability, "modifier_sheepstick_debuff", {duration = duration})
+		target:AddNewModifier(caster, ability, "modifier_sheepstick_debuff", {duration = duration})
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 
 		-- Applies Break

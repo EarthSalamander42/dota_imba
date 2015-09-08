@@ -187,7 +187,6 @@ function PhantomStrikeHit( keys )
 
 	-- Attack (does not calculate on-hit procs)
 	caster:PerformAttack(target, true, false, true, true)
-	
 end
 
 function Blur( keys )

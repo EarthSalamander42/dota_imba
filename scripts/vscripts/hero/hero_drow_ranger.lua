@@ -133,7 +133,6 @@ function Marksmanship( keys )
 	-- Modifier names
 	local modifier_regular = keys.modifier_effect
 	local modifier_scepter = keys.modifier_scepter
-	local modifier_invis = "modifier_invisible"
 
 	-- Effect logic
 	local scepter = HasScepter(caster)
@@ -168,13 +167,17 @@ function Marksmanship( keys )
 		if not caster:HasModifier(modifier_effect) then
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
 		end
-		if scepter and tree_nearby and not caster:IsAttacking() then
-			caster:AddNewModifier(caster, ability, modifier_invis, {})
+		if scepter and tree_nearby and not caster:IsAttacking() and not caster.shadow_blade_active then
+			caster:AddNewModifier(caster, ability, "modifier_invisible", {})
 		else
-			caster:RemoveModifierByName(modifier_invis)
+			if not caster.shadow_blade_active then
+				caster:RemoveModifierByName("modifier_invisible")
+			end
 		end
 	else
 		caster:RemoveModifierByName(modifier_effect)
-		caster:RemoveModifierByName(modifier_invis)
+		if not caster.shadow_blade_active then
+			caster:RemoveModifierByName("modifier_invisible")
+		end
 	end
 end

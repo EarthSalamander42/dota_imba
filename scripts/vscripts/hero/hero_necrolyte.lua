@@ -17,6 +17,7 @@ function DeathPulse( keys )
 
 	-- If the caster doesn't have enough mana, toggle the skill off
 	if caster:GetMana() < mana_cost then
+		ability:ToggleAbility()
 		return nil
 
 	-- Else, spend mana and move on

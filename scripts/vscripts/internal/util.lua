@@ -326,6 +326,18 @@ function GetRandomUltimateAbility()
 	return ability.ability_name, ability.owner_hero
 end
 
+-- Picks a random tower ability of level less than or equal to [level]
+function GetRandomTowerAbility( level )
+
+	local ability = RandomFromTable(TOWER_ABILITIES)
+
+	while ability.level > level do
+		ability = RandomFromTable(TOWER_ABILITIES)
+	end
+
+	return ability.ability_name
+end
+
 -- Grants a given hero an appropriate amount of Random OMG abilities
 function ApplyAllRandomOmgAbilities( hero )
 
@@ -662,6 +674,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
+	hero:RemoveModifierByName("modifier_riki_blinkstrike")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -812,7 +825,8 @@ function StickProcCheck( ability )
 	local forbidden_skills = {
 		"storm_spirit_ball_lightning",
 		"tinker_rearm",
-		"witch_doctor_voodoo_restoration"
+		"witch_doctor_voodoo_restoration",
+		"imba_necrolyte_death_pulse"
 	}
 
 	for i = 1, #forbidden_skills do

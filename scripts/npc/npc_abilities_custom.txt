@@ -34,66 +34,10 @@
 			}
 		}
 	}
-  
-    "reflex_empty1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"reflex_empty2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"reflex_empty3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"reflex_empty4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"reflex_empty5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
-	
-	"reflex_empty6"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"0"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-	}
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[ATTR]		ATTRIBUTE BONUSES
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
 	// Attribute Bonus (STR)
@@ -229,6 +173,10 @@
 			}
 		}
 	}
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[ROMG]		RANDOM OMG STUFF
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
 	// Attribute Bonus (STR) - Random OMG 3a2u
@@ -975,6 +923,10 @@
 		}
 	}
 
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[BUFF]		PASSIVE UPGRADES
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 	//=================================================================================================================
 	// Tower passive buffs
 	//=================================================================================================================
@@ -993,15 +945,10 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_per_minute"						"2"
-			}
-			"02"
-			{
 				"var_type"								"FIELD_FLOAT"
 				"armor_per_minute"						"0.4"
 			}
-			"03"
+			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"as_per_minute"							"2"
@@ -1044,7 +991,6 @@
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
 				}
@@ -1361,6 +1307,10 @@
 			}
 		}
 	}
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[ROSH]		ROSHAN STUFF
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
 	// Roshan: Bash (normal)
@@ -2288,6 +2238,808 @@
 		}
 	}
 
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[TOWR]		TOWER ABILITIES
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+	//=================================================================================================================
+	// Tower ability: Laser
+	//=================================================================================================================
+	"imba_tower_laser"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"tinker_laser"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"-1000"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"laser_damage"					"100"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_laser"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"LaserProjectile"
+
+						"projectile_laser"		"particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"LaserHit"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Multishot
+	//=================================================================================================================
+	"imba_tower_multishot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"sniper_shrapnel_muh_keen_gun"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"-50"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_multishot"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"Multishot"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%damage_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Hex Aura
+	//=================================================================================================================
+	"imba_tower_hex_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"shadow_shaman_voodoo"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hex_interval"					"1.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hex_duration"					"1.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_hex_aura"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"ThinkInterval"					"%hex_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"HexAura"
+
+						"modifier_slow"			"modifier_imba_tower_hex_aura_slow"
+					}
+				}
+			}
+
+			"modifier_imba_tower_hex_aura_slow"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
+				"Duration"						"%hex_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 	"-9999"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Mana Burn
+	//=================================================================================================================
+	"imba_tower_mana_burn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"antimage_mana_break"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mana_burn"						"50"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_mana_burn"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"ManaBurn"
+
+						"particle_burn"			"particles/generic_gameplay/generic_manaburn.vpcf"
+						"sound_burn"			"Hero_Antimage.ManaBreak"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Mana Flare
+	//=================================================================================================================
+	"imba_tower_mana_flare"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"mana_flare"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"burn_interval"					"1.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"burn_pct"						"5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_mana_flare"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"ThinkInterval"					"%burn_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"ManaFlare"
+
+						"particle_burn"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+						"sound_burn"			"Hero_NyxAssassin.ManaBurn.Target"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Permabash
+	//=================================================================================================================
+	"imba_tower_permabash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"faceless_void_time_lock"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance"					"50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bash_duration"					"0.75"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_permabash"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"				"%bash_chance"
+
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"hero/tower_abilities.lua"
+								"Function"		"Permabash"
+
+								"sound_bash"	"Hero_FacelessVoid.TimeLockImpact"
+								"modifier_bash"	"modifier_imba_tower_permabash_bash"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_imba_tower_permabash_bash"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
+				"Duration"						"%bash_duration"
+
+				"StatusEffectName"				"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"			"1"
+
+				"States"
+				{
+					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Grievous Wounds
+	//=================================================================================================================
+	"imba_tower_grievous_wounds"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"ursa_fury_swipes"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_increase"				"30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"debuff_duration"				"5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_grievous_wounds"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"GrievousWounds"
+
+						"modifier_debuff"		"modifier_imba_tower_grievous_wounds_debuff"
+						"particle_hit"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+					}
+				}
+			}
+
+			"modifier_imba_tower_grievous_wounds_debuff"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%debuff_duration"
+
+				"EffectName"					"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+				"EffectAttachType"				"follow_overhead"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Machinegun
+	//=================================================================================================================
+	"imba_tower_machinegun"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"gyrocopter_skyhigh_flak_cannon"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"-50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_as"						"100"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_machinegun"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%damage_reduction"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Essence Drain
+	//=================================================================================================================
+	"imba_tower_essence_drain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"slark_essence_shift"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"drain_per_hit"					"1"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"drain_duration"				"10"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_essence_drain"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"EssenceDrain"
+
+						"modifier_str"			"modifier_imba_tower_essence_drain_str_stacks"
+						"modifier_agi"			"modifier_imba_tower_essence_drain_agi_stacks"
+						"modifier_int"			"modifier_imba_tower_essence_drain_int_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_tower_essence_drain_str_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%drain_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-1"
+				}
+			}
+
+			"modifier_imba_tower_essence_drain_agi_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%drain_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-1"
+				}
+			}
+
+			"modifier_imba_tower_essence_drain_int_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%drain_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Fervor
+	//=================================================================================================================
+	"imba_tower_fervor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"troll_warlord_fervor"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stack_as"						"15"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"10"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stack_duration"				"2.5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_fervor"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"Fervor"
+
+						"modifier_fervor"		"modifier_imba_tower_fervor_buff"
+					}
+				}
+			}
+
+			"modifier_imba_tower_fervor_buff"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%stack_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stack_as"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Berserk
+	//=================================================================================================================
+	"imba_tower_berserk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"huskar_berserkers_blood"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stack_as"						"6"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_per_stack"					"4"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_berserk"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"ThinkInterval"					"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"Berserk"
+
+						"modifier_berserk"		"modifier_imba_tower_berserk_buff"
+					}
+				}
+			}
+
+			"modifier_imba_tower_berserk_buff"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stack_as"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Thorns
+	//=================================================================================================================
+	"imba_tower_thorns"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"tower_thorns"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_hit"				"30"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_thorns"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttacked"
+				{
+					"Damage"
+					{
+						"Type"					"DAMAGE_TYPE_PHYSICAL"
+						"Damage"				"%damage_per_hit"
+						"Target"
+						{
+							"Center"			"ATTACKER"
+							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+						}
+					}
+
+					"FireEffect"
+					{
+						"EffectName"			"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+						"EffectAttachType"		"attach_hitloc"
+						"Target"				"CASTER"
+
+						"ControlPointEntities"
+						{
+							"CASTER"			"attach_hitloc"
+							"ATTACKER"			"attach_hitloc"
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Multihit
+	//=================================================================================================================
+	"imba_tower_multihit"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"windrunner_focusfire"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_attacks"					"1"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"delay"							"0.15"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_multihit"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"Multihit"
+					}
+				}
+			}
+		}
+	}
+
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	//	[HERO]		HERO ABILITIES
+	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 	//=================================================================================================================
 	// War Veteran buff
 	//=================================================================================================================
@@ -2537,7 +3289,7 @@
 		"BaseClass"										"ability_datadriven"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"						"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_NO"
 		"FightRecapLevel"								"1"
@@ -3991,7 +4743,7 @@
 		"BaseClass"							"ability_datadriven"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"bane_enfeeble"	
@@ -4086,7 +4838,9 @@
 						"ScriptFile"		"hero/hero_bane.lua"
 						"Function"			"Enfeeble"
 
-						"modifier_stacks"	"modifier_imba_bane_enfeeble_stacks"
+						"modifier_str"		"modifier_imba_bane_enfeeble_str_stacks"
+						"modifier_agi"		"modifier_imba_bane_enfeeble_agi_stacks"
+						"modifier_int"		"modifier_imba_bane_enfeeble_int_stacks"
 					}
 				}
 
@@ -4097,7 +4851,9 @@
 						"ScriptFile"		"hero/hero_bane.lua"
 						"Function"			"EnfeebleEnd"
 
-						"modifier_stacks"	"modifier_imba_bane_enfeeble_stacks"
+						"modifier_str"		"modifier_imba_bane_enfeeble_str_stacks"
+						"modifier_agi"		"modifier_imba_bane_enfeeble_agi_stacks"
+						"modifier_int"		"modifier_imba_bane_enfeeble_int_stacks"
 					}
 				}
 
@@ -4107,7 +4863,7 @@
 				}
 			}
 
-			"modifier_imba_bane_enfeeble_stacks"
+			"modifier_imba_bane_enfeeble_str_stacks"
 			{
 				"Passive"					"0"
 				"IsHidden"					"1"
@@ -4117,7 +4873,31 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-1"
+				}
+			}
+
+			"modifier_imba_bane_enfeeble_agi_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-1"
+				}
+			}
+
+			"modifier_imba_bane_enfeeble_int_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
 				}
 			}
@@ -5904,7 +6684,7 @@
 					"FireEffect"
 					{
 						"EffectName"		"particles/units/heroes/hero_centaur/centaur_return.vpcf"
-						"EffectAttachType"  "attach_hitloc"
+						"EffectAttachType"	"attach_hitloc"
 						"Target" 			"CASTER"
 
 						"ControlPointEntities"
@@ -9612,7 +10392,6 @@
 
 						"modifier_effect"		"modifier_imba_marksmanship_effect"
 						"modifier_scepter"		"modifier_imba_marksmanship_effect_scepter"
-						"modifier_invis"		"modifier_imba_marksmanship_invis"
 					}
 				}
 
@@ -15837,17 +16616,6 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
 				}
 			}
-
-			"modifier_imba_arcane_orb_mana_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
-				}
-			}
 		}
 	}
 
@@ -16136,17 +16904,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_BONUS"	"%bonus_mana"
-				}
-			}
-
-			"modifier_imba_essence_aura_mana_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
 				}
 			}
 		}

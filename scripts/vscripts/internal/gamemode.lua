@@ -290,6 +290,18 @@ function OnSetGameMode( eventSourceIndex, args )
 	print("Creep growth ramp multiplier:"..CREEP_POWER_RAMP_UP_FACTOR)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Creeps and buildings setup
+	-------------------------------------------------------------------------------------------------
+	
+	-- Enable skill randomization on respawn
+	if tonumber(mode_info.tower_abilities) == 1 then
+		TOWER_ABILITY_MODE = true
+		print("Random tower abilities enabled!")
+	else
+		TOWER_ABILITY_MODE = false
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero levels and respawn setup
 	-------------------------------------------------------------------------------------------------
 

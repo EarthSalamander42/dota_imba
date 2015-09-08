@@ -132,7 +132,7 @@ function SandStorm( keys )
 	Timers:CreateTimer(0, function()
 
 		-- If the ability is still being channeled, continue
-		if ability:IsChanneling() then
+		if ability and ability:IsChanneling() then
 
 			current_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
 

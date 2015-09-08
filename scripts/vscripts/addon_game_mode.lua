@@ -38,9 +38,18 @@ function Precache( context )
 	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf", context)
 	PrecacheResource("particle", "particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf", context)
 
+	-- Towers
+	PrecacheResource("particle", "particles/units/heroes/hero_tinker/tinker_base_attack.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf", context)
+	PrecacheResource("particle", "particles/units/heroes/hero_centaur/centaur_return.vpcf", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts", context)
+
 	-- Stuff
 	PrecacheResource("particle_folder", "particles/hero", context)
 	PrecacheResource("particle_folder", "particles/generic_gameplay", context)
+	PrecacheResource("particle_folder", "particles/status_fx/", context)
 	PrecacheResource("particle_folder", "particles/item", context)
 	PrecacheResource("particle_folder", "particles/items_fx", context)
 	PrecacheResource("particle_folder", "particles/items2_fx", context)

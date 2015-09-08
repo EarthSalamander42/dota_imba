@@ -6,29 +6,60 @@ function Enfeeble( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_stacks = keys.modifier_stacks
+	local modifier_str = keys.modifier_str
+	local modifier_agi = keys.modifier_agi
+	local modifier_int = keys.modifier_int
 
 	-- Parameters
 	local reduce_factor = ability:GetLevelSpecialValueFor("stat_reduction", ability_level) / 100
 
 	-- Remove current stacks and enfeeble debuff
-	target:RemoveModifierByName(modifier_stacks)
+	target:RemoveModifierByName(modifier_str)
+	target:RemoveModifierByName(modifier_agi)
+	target:RemoveModifierByName(modifier_int)
 
 	-- Calculate attribute reduction
-	local total_stats = target:GetStrength() + target:GetAgility() + target:GetIntellect()
-	local reduction_stacks = math.floor( total_stats * reduce_factor / 3 )
+	local target_str = target:GetStrength()
+	local target_agi = target:GetAgility()
+	local target_int = target:GetIntellect()
+	local total_stacks = math.floor( ( target_str + target_agi + target_int ) * reduce_factor )
+	
+	-- Reduce Intelligence to a minimum of 1 (prevents making the target manaless for the rest of the match)
+	if math.floor(total_stacks / 3) < target_int then
+		AddStacks(ability, caster, target, modifier_int, math.floor(total_stacks / 3), true)
+		total_stacks = total_stacks - math.floor(total_stacks / 3)
+	else
+		AddStacks(ability, caster, target, modifier_int, target_int - 1, true)
+		total_stacks = total_stacks - (target_int - 1)
+	end
+	
+	-- Reduce Strength to a minimum of 1 (prevents making the target a "zombie" for the rest of the match)
+	if math.floor(total_stacks / 2) < target_str then
+		AddStacks(ability, caster, target, modifier_str, math.floor(total_stacks / 2), true)
+		total_stacks = total_stacks - math.floor(total_stacks / 2)
+	else
+		AddStacks(ability, caster, target, modifier_str, target_str - 1, true)
+		total_stacks = total_stacks - (target_str - 1)
+	end
 
-	-- Apply stacks
-	AddStacks(ability, caster, target, modifier_stacks, reduction_stacks, true)
+	-- Reduce Agility (no minimum value)
+	AddStacks(ability, caster, target, modifier_agi, total_stacks, true)
+	
+	-- Update the target's stats
+	target:CalculateStatBonus()
 end
 
 function EnfeebleEnd( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local modifier_stacks = keys.modifier_stacks
+	local modifier_str = keys.modifier_str
+	local modifier_agi = keys.modifier_agi
+	local modifier_int = keys.modifier_int
 
 	-- Remove current stacks of attribute reduction
-	target:RemoveModifierByName(modifier_stacks)
+	target:RemoveModifierByName(modifier_str)
+	target:RemoveModifierByName(modifier_agi)
+	target:RemoveModifierByName(modifier_int)
 end
 
 function BrainSapManaDrain( keys )

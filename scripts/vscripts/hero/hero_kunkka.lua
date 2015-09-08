@@ -70,10 +70,7 @@ function Torrent( keys )
 		-- Finds affected enemies
 		local enemies = FindUnitsInRadius(caster:GetTeam(), target, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
 		
-		-- Draws the particle
-		local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(torrent_fx, 0, target)
-		
+		-- Iterate through affected enemies
 		for _,enemy in pairs(enemies) do
 
 			-- Deals the initial damage
@@ -121,7 +118,15 @@ function Torrent( keys )
 		ability:CreateVisibilityNode(target, radius, vision_duration)
 		local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
 		EmitSoundOn(sound_name, dummy)
-		dummy:Destroy()
+
+		-- Draws the particle
+		local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, dummy)
+		ParticleManager:SetParticleControl(torrent_fx, 0, target)
+
+		-- Destroy the dummy
+		Timers:CreateTimer(duration, function()
+			dummy:Destroy()
+		end)
 	end)
 end
 

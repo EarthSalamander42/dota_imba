@@ -143,7 +143,6 @@ function GameMode:OnNPCSpawned(keys)
 			
 			-- Randomize abilities
 			ApplyAllRandomOmgAbilities(npc)
-			print("randoming OMG abilities for "..npc:GetName())
 
 			-- Clean-up undesired permanent modifiers
 			RemovePermanentModifiersRandomOMG(npc)

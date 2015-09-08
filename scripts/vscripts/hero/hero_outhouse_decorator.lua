@@ -8,7 +8,6 @@ function ArcaneOrb( keys )
 	local target = keys.target
 	local int_gain_modifier = keys.int_gain_modifier
 	local int_loss_modifier = keys.int_loss_modifier
-	local modifier_dummy = keys.modifier_dummy
 
 	-- Parameters
 	local summon_damage = ability:GetLevelSpecialValueFor("illusion_damage", ability_level)
@@ -40,9 +39,9 @@ function ArcaneOrb( keys )
 		AddStacks(ability, caster, target, int_loss_modifier, int_steal, true)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
 
-		-- Force update the target's mana
-		target:RemoveModifierByName(modifier_dummy)
-		ability:ApplyDataDrivenModifier(caster, target, modifier_dummy, {})
+		-- Force update the caster and target's mana
+		caster:CalculateStatBonus()
+		target:CalculateStatBonus()
 	end
 
 	-- Calculate and deal damage
@@ -121,6 +120,10 @@ function AstralImprisonment( keys )
 		AddStacks(int_steal_ability, caster, target, int_loss_modifier, int_steal, true)
 		ability:ApplyDataDrivenModifier(caster, target, int_loss_modifier, {duration = int_steal_duration})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, int_steal, nil)
+
+		-- Force update the caster and target's mana
+		caster:CalculateStatBonus()
+		target:CalculateStatBonus()
 	end
 
 	-- Remove the target's model from the game
@@ -197,6 +200,9 @@ function RestoreMana( keys )
 
 			-- Display overhead int gain message
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, stack_amount, nil)
+
+			-- Force update the caster's mana
+			caster:CalculateStatBonus()
 		end
 	end
 end
@@ -216,13 +222,9 @@ function EssenceAuraUpdate( keys )
 	local ability = keys.ability
 	local caster_int = caster:GetIntellect()
 	local modifier_mana = keys.modifier_mana
-	local modifier_dummy = keys.modifier_dummy
 	local modifier_stacks = keys.modifier_stacks
 
 	caster:SetModifierStackCount(modifier_mana, caster, caster_int)
-
-	caster:RemoveModifierByName(modifier_dummy)
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
 
 	-- Update the bonus int modifier count
 	if caster.essence_aura_bonus_int then
@@ -233,6 +235,9 @@ function EssenceAuraUpdate( keys )
 			caster:SetModifierStackCount(modifier_stacks, caster, caster.essence_aura_bonus_int)
 		end
 	end
+
+	-- Force update the caster's mana
+	caster:CalculateStatBonus()
 end
 
 function SanityEclipse( keys )

@@ -5725,7 +5725,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -5750,7 +5750,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -5833,7 +5833,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -5865,7 +5865,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -6003,7 +6003,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -6028,7 +6028,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -6120,7 +6120,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -6152,7 +6152,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -6287,7 +6287,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -6312,7 +6312,7 @@
 				"Target" 				"CASTER"
 				"Duration"				"%summon_duration"
 				"UnitCount"				"1"
-				"UnitLimit"				"1"
+				"UnitLimit"				"20"
 				"SpawnRadius"			"150"
 				"OnSpawn"
 				{
@@ -6413,7 +6413,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -6445,7 +6445,7 @@
 										}
 										"Duration"				"%summon_duration"
 										"UnitCount"				"1"
-										"UnitLimit"				"10"
+										"UnitLimit"				"20"
 										"SpawnRadius"			"10"
 										"OnSpawn"
 										{
@@ -11042,6 +11042,12 @@
 							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
 						}
 					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_shadow_blade.lua"
+						"Function"			"ShadowBladeInvisCancel"
+					}
 				}
 
 				"OnTakeDamage"
@@ -11530,6 +11536,12 @@
 							"Types"					"DOTA_UNIT_TARGET_HERO"
 							"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
 						}
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"				"items/item_silver_edge.lua"
+						"Function"					"SilverEdgeInvisCancel"
 					}
 				}
 

@@ -261,6 +261,12 @@ function GameMode:OnAllPlayersLoaded()
 		frantic_mode = " <font color='#FF7800'>Frantic mode</font> is activated - cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
 	end
 
+	-- Tower abilities
+	local tower_abilities = ""
+	if TOWER_ABILITY_MODE then
+		tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
+	end
+
 	-- Kills to end the game
 	local kills_to_end = ""
 	if END_GAME_ON_KILLS then
@@ -271,6 +277,7 @@ function GameMode:OnAllPlayersLoaded()
 	Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
 	Say(nil, start_status, false)
 	Say(nil, creep_power..frantic_mode, false)
+	Say(nil, tower_abilities, false)
 	Say(nil, kills_to_end, false)
 
 	-------------------------------------------------------------------------------------------------
@@ -521,6 +528,114 @@ function GameMode:OnGameInProgress()
 			building:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 			building:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Tower abilities setup
+	-------------------------------------------------------------------------------------------------
+
+	if TOWER_ABILITY_MODE then
+		
+		-- Safelane towers
+		for i = 1, 3 do
+			
+			-- Find safelane towers
+			local radiant_tower_loc = Entities:FindByName(nil, "radiant_safe_tower_t"..i):GetAbsOrigin()
+			local dire_tower_loc = Entities:FindByName(nil, "dire_safe_tower_t"..i):GetAbsOrigin()
+			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			radiant_tower = radiant_tower[1]
+			dire_tower = dire_tower[1]
+
+			-- Random an ability from the list
+			local ability_name = GetRandomTowerAbility(i)
+
+			-- Add and level up the ability
+			radiant_tower:AddAbility(ability_name)
+			dire_tower:AddAbility(ability_name)
+			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
+			local dire_ability = dire_tower:FindAbilityByName(ability_name)
+			radiant_ability:SetLevel(1)
+			dire_ability:SetLevel(1)
+		end
+
+		-- Mid towers
+		for i = 1, 3 do
+			
+			-- Find mid towers
+			local radiant_tower_loc = Entities:FindByName(nil, "radiant_mid_tower_t"..i):GetAbsOrigin()
+			local dire_tower_loc = Entities:FindByName(nil, "dire_mid_tower_t"..i):GetAbsOrigin()
+			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			radiant_tower = radiant_tower[1]
+			dire_tower = dire_tower[1]
+
+			-- Random an ability from the list
+			local ability_name = GetRandomTowerAbility(i)
+
+			-- Add and level up the ability
+			radiant_tower:AddAbility(ability_name)
+			dire_tower:AddAbility(ability_name)
+			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
+			local dire_ability = dire_tower:FindAbilityByName(ability_name)
+			radiant_ability:SetLevel(1)
+			dire_ability:SetLevel(1)
+		end
+
+		-- Hardlane towers
+		for i = 1, 3 do
+			
+			-- Find hardlane towers
+			local radiant_tower_loc = Entities:FindByName(nil, "radiant_hard_tower_t"..i):GetAbsOrigin()
+			local dire_tower_loc = Entities:FindByName(nil, "dire_hard_tower_t"..i):GetAbsOrigin()
+			local radiant_tower = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+			radiant_tower = radiant_tower[1]
+			dire_tower = dire_tower[1]
+
+			-- Random an ability from the list
+			local ability_name = GetRandomTowerAbility(i)
+
+			-- Add and level up the ability
+			radiant_tower:AddAbility(ability_name)
+			dire_tower:AddAbility(ability_name)
+			local radiant_ability = radiant_tower:FindAbilityByName(ability_name)
+			local dire_ability = dire_tower:FindAbilityByName(ability_name)
+			radiant_ability:SetLevel(1)
+			dire_ability:SetLevel(1)
+		end
+
+		-- Tier 4s
+		local radiant_left_t4_loc = Entities:FindByName(nil, "radiant_left_tower_t4"):GetAbsOrigin()
+		local radiant_right_t4_loc = Entities:FindByName(nil, "radiant_right_tower_t4"):GetAbsOrigin()
+		local dire_left_t4_loc = Entities:FindByName(nil, "dire_left_tower_t4"):GetAbsOrigin()
+		local dire_right_t4_loc = Entities:FindByName(nil, "dire_right_tower_t4"):GetAbsOrigin()
+		local radiant_left_t4 = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_left_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		local radiant_right_t4 = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, radiant_right_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		local dire_left_t4 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_left_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		local dire_right_t4 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_right_t4_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+		radiant_left_t4 = radiant_left_t4[1]
+		radiant_right_t4 = radiant_right_t4[1]
+		dire_left_t4 = dire_left_t4[1]
+		dire_right_t4 = dire_right_t4[1]
+
+		-- Random two abilities from the list
+		local left_ability_name = GetRandomTowerAbility(4)
+		local right_ability_name = GetRandomTowerAbility(4)
+
+		-- Add and level up the abilities
+		radiant_left_t4:AddAbility(left_ability_name)
+		dire_left_t4:AddAbility(left_ability_name)
+		radiant_right_t4:AddAbility(right_ability_name)
+		dire_right_t4:AddAbility(right_ability_name)
+		local radiant_left_ability = radiant_left_t4:FindAbilityByName(left_ability_name)
+		local dire_left_ability = dire_left_t4:FindAbilityByName(left_ability_name)
+		local radiant_right_ability = radiant_right_t4:FindAbilityByName(right_ability_name)
+		local dire_right_ability = dire_right_t4:FindAbilityByName(right_ability_name)
+		radiant_left_ability:SetLevel(1)
+		dire_left_ability:SetLevel(1)
+		radiant_right_ability:SetLevel(1)
+		dire_right_ability:SetLevel(1)
 	end
 
 end

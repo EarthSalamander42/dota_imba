@@ -228,6 +228,8 @@ HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 CREEP_POWER_RAMP_UP_FACTOR = 1												-- Creep power increase multiplier factor
 CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) based on game time
 
+TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
+
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 
 HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
@@ -269,5 +271,6 @@ end
 -- IMBA: Keyvalue tables
 -------------------------------------------------------------------------------------------------
 
+TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
 RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
 RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")
