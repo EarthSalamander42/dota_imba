@@ -203,7 +203,7 @@ function MeatHook( keys )
 		local direction = ( caster_loc - hook_loc )
 
 		-- Stop the extending sound and start playing the return sound
-		StopSoundEvent(sound_extend, caster)
+		caster:StopSound(sound_extend)
 		caster:EmitSound(sound_retract)
 
 		-- Remove the caster's self-stun
@@ -247,7 +247,7 @@ function MeatHook( keys )
 				ParticleManager:DestroyParticle(hook_pfx, false)
 
 				-- Stop playing the reeling sound
-				StopSoundEvent(sound_retract, caster)
+				caster:StopSound(sound_retract)
 				caster:EmitSound(sound_retract_stop)
 
 				-- Give back the caster's hook
@@ -402,18 +402,18 @@ function Rot( keys )
 	local stack_damage = ability:GetLevelSpecialValueFor("stack_damage", ability_level)
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local stack_radius = ability:GetLevelSpecialValueFor("stack_radius", ability_level)
-	local max_radius = ability:GetLevelSpecialValueFor("max_radius", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local rot_tick = ability:GetLevelSpecialValueFor("rot_tick", ability_level)
 
 	-- Retrieve flesh heap stacks
 	local heap_stacks = 0
 	if caster:HasModifier(modifier_heap) then
-		heap_stacks = caster:GetModifierStackCount(modifier_heap, caster)
+		heap_stacks = math.min(caster:GetModifierStackCount(modifier_heap, caster), max_stacks)
 	end
 
 	-- Calculate damage and radius
 	local damage = base_damage * ( ( 100 + heap_stacks * stack_damage ) * rot_tick ) / 100
-	local radius = math.min( base_radius + stack_radius * heap_stacks , max_radius)
+	local radius = base_radius + stack_radius * heap_stacks
 
 	-- Damage the caster
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -436,16 +436,16 @@ function RotParticle( keys )
 	-- Parameters
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local stack_radius = ability:GetLevelSpecialValueFor("stack_radius", ability_level)
-	local max_radius = ability:GetLevelSpecialValueFor("max_radius", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Retrieve flesh heap stacks
 	local heap_stacks = 0
 	if caster:HasModifier(modifier_heap) then
-		heap_stacks = caster:GetModifierStackCount(modifier_heap, caster)
+		heap_stacks = math.min(caster:GetModifierStackCount(modifier_heap, caster), max_stacks)
 	end
 
 	-- Calculate radius
-	local radius = math.min( base_radius + stack_radius * heap_stacks , max_radius)
+	local radius = base_radius + stack_radius * heap_stacks
 
 	-- Draw the particle
 	caster.rot_fx = ParticleManager:CreateParticle(rot_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -482,6 +482,7 @@ function FleshHeapUpgrade( keys )
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local stack_amount
 
 	-- If Heap is already learned, fetch the current amount of stacks
@@ -500,20 +501,23 @@ function FleshHeapUpgrade( keys )
 	
 	-- Remove both modifiers in order to update their bonuses
 	caster:RemoveModifierByName(modifier_stacks)
-	for i = 1, stack_amount do
+	while caster:HasModifier(modifier_bonus) do
 		caster:RemoveModifierByName(modifier_bonus)
 	end
 
 	-- Add stacks of the real (hidden) bonus modifier
-	for i = 1, stack_amount do
+	for i = 1, math.min(stack_amount, max_stacks) do
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
 	end
 
 	-- Add stacks of the fake modifier
 	AddStacks(ability, caster, caster, modifier_stacks, stack_amount, true)
 
+	-- Update stats
+	caster:CalculateStatBonus()
+
 	-- Make pudge GROW
-	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.8) )
+	caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.75) )
 end
 
 function FleshHeap( keys )
@@ -535,19 +539,25 @@ function HeapUpdater( keys )
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
 
 	-- If the amount of stacks has increased, update it
 	if caster.heap_stacks > stack_amount then
 
 		-- Add a stack of the real (hidden) bonus modifier
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
+		if caster.heap_stacks <= max_stacks then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
+		end
 
 		-- Add a stack of the fake modifier
 		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
 
+		-- Update stats
+		caster:CalculateStatBonus()
+
 		-- Make pudge GROW
-		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.8) )
+		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.75) )
 	end
 end
 

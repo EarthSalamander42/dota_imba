@@ -132,7 +132,7 @@ function AphoticShield( keys )
 		caster:SetModifierStackCount(stacks_modifier, caster, charges_on_cast - 1 )
 
 		-- Play sound, apply modifier
-		EmitSoundOn(cast_sound, target)
+		target:EmitSound(cast_sound)
 		target:RemoveModifierByName(shield_modifier)
 		ability:ApplyDataDrivenModifier(caster, target, shield_modifier, {})
 

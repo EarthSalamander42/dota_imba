@@ -946,7 +946,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.4"
+				"armor_per_minute"						"0.34"
 			}
 			"02"
 			{
@@ -1017,12 +1017,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"regen_per_minute"						"1.5"
+				"regen_per_minute"						"1.0"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.5"
+				"armor_per_minute"						"0.34"
 			}
 		}
 
@@ -1093,7 +1093,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.6"
+				"armor_per_minute"						"0.5"
 			}
 		}
 
@@ -1141,7 +1141,7 @@
 	}
 
 	//=================================================================================================================
-	// Creep passive buffs
+	// Creep damage buff
 	//=================================================================================================================
 	"imba_creep_buffs"
 	{
@@ -1159,22 +1159,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"regen_per_minute"						"1"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_per_minute"						"7"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.8"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"as_per_minute"							"2"
+				"structure_damage_per_minute"			"10"
 			}
 		}
 
@@ -1189,33 +1174,13 @@
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"OnCreated"
+				"OnAttackLanded"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"Upgrade"
-
-						"modifier_stack"				"modifier_imba_creep_buffs_stack"
+						"Function"						"CreepStructureDamage"
 					}
-				}
-			}
-
-			"modifier_imba_creep_buffs_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
 				}
 			}
 		}
@@ -2376,7 +2341,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hex_duration"					"1.0"
+				"hex_duration"					"0.5"
 			}
 		}
 
@@ -4676,7 +4641,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"caster_health_percent_scepter"	"15"
 			}
-
 		}	
 
 		"OnSpellStart"
@@ -7642,12 +7606,6 @@
 		
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"Target"								"CASTER"
-				"EffectName"							"hero_Crystal.freezingField.wind"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"							"hero/hero_crystal_maiden.lua"
@@ -8010,12 +7968,6 @@
 		
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"Target"								"POINT"
-				"EffectName"							"hero_Crystal.freezingField.wind"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"							"hero/hero_crystal_maiden.lua"
@@ -11034,7 +10986,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow_scepter"			"-30 -35 -40"
+				"move_slow_scepter"			"-30"
 			}
 			"04"
 			{
@@ -11049,7 +11001,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1200 1700 2200"					
+				"range"						"1200 1650 2100"					
 			}		
 			"07"
 			{
@@ -11063,30 +11015,25 @@
 			}
 			"09"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"formation_delay"			"0.2"
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_damage"			"100 150 200"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage"			"100 150 200"
+				"tooltip_damage_scepter"	"150 200 250"
 			}
 			"11"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage_scepter"	"150 200 250"
+				"var_type"					"FIELD_FLOAT"
+				"trail_angle"				"10 9 8"
 			}
 			"12"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"10 9 7"
+				"var_type"					"FIELD_INTEGER"
+				"trail_amount"				"7 7 7"
 			}
 			"13"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"7 7 9"
-			}
-			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stickyness"				"1.0"
@@ -18362,7 +18309,9 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
+			"particle"					"particles/hero/phantom_assassin/screen_blood_splatter.vpcf"
 		}
 
 		// Special
@@ -18496,6 +18445,8 @@
 					{
 						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"CoupDeGraceKill"
+
+						"sound_kill"		"Hero_PhantomAssassin.CoupDeGrace"
 					}
 
 					"FireEffect"
@@ -18507,18 +18458,6 @@
 						{
 							"TARGET"		"follow_origin"
 							"TARGET"		"follow_origin"
-						}
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_PhantomAssassin.CoupDeGrace"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						}
 					}
 				}
@@ -18876,12 +18815,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_damage"			"6"
+				"stack_damage"			"5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_radius"			"15"
+				"stack_radius"			"10"
 			}
 			"07"
 			{
@@ -18891,7 +18830,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"550"
+				"max_stacks"			"30"
 			}
 		}
 
@@ -19034,8 +18973,13 @@
 			}
 			"05"
 			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_scale_up"					"2.5"
+			}
+			"06"
+			{
 				"var_type"							"FIELD_INTEGER"
-				"stack_scale_up"					"5"
+				"max_stacks"						"30"
 			}
 		}
 
@@ -19109,7 +19053,6 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stack_str"
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%stack_magic_resist"
 				}
 			}
@@ -19122,6 +19065,11 @@
 				"IsPurgable"			"0"
 
 				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stack_str"
+				}
 			}
 
 			"modifier_imba_flesh_heap_death_detector"
@@ -21653,7 +21601,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"throw_chance"				"15"
+				"throw_chance"				"9 11 13 15"
 			}
 			"06"
 			{
@@ -23352,6 +23300,78 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker's Rearm
+	//=================================================================================================================
+	"imba_tinker_rearm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityTextureName"			"tinker_rearm"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"3.0 2.0 1.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 250 350"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_tooltip"		"3 2 1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"2.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"hero/hero_tinker.lua"
+				"Function"			"Rearm"
+
+				"particle_rearm"	"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+				"sound_cast"		"Hero_Tinker.Rearm"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_rearm_stack"
+			{
+				"Passive"			"0"
+				"IsBuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"0"
 			}
 		}
 	}

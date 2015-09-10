@@ -117,11 +117,18 @@ function FreezingFieldCast( keys )
 	if scepter then
 		caster.freezing_field_center = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, nil, nil, caster:GetTeamNumber())
 		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
-
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, keys.target_points[1])
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
+	else
+		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
+		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
 	end
+
+	-- Plays wind sound
+	caster.freezing_field_center:EmitSound("hero_Crystal.freezingField.wind")
 
 	-- Grants the slowing aura to the center unit
 	ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_aura, {})
@@ -186,13 +193,19 @@ function FreezingFieldExplode( keys )
 	for _,v in pairs( units ) do
 		ApplyDamage({victim = v, attacker = caster, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	end
+
+	-- Create particle/sound dummy unit
+	local explosion_dummy = CreateUnitByName("npc_dummy_unit", attackPoint, false, nil, nil, caster:GetTeamNumber())
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
+	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, explosion_dummy)
 	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
 	
 	-- Fire sound at the center position
-	StartSoundEvent(sound_name, caster.freezing_field_center)
+	explosion_dummy:EmitSound(sound_name)
+
+	-- Destroy dummy
+	explosion_dummy:Destroy()
 end
 
 function FreezingFieldEnd( keys )
@@ -206,11 +219,13 @@ function FreezingFieldEnd( keys )
 	local modifier_SW = keys.modifier_SW
 	local modifier_SE = keys.modifier_SE
 
+	-- Stop playing sound
+	caster.freezing_field_center:StopSound("hero_Crystal.freezingField.wind")
+
 	-- Removes auras and modifiers
 	if scepter then
 		caster.freezing_field_center:Destroy()
 		caster:RemoveModifierByName(modifier_caster)
-		ParticleManager:DestroyParticle(caster.freezing_field_particle, false)
 	else
 		caster:RemoveModifierByName(modifier_aura)
 		caster:RemoveModifierByName(modifier_NE)
@@ -218,6 +233,9 @@ function FreezingFieldEnd( keys )
 		caster:RemoveModifierByName(modifier_SW)
 		caster:RemoveModifierByName(modifier_SE)
 	end
+
+	-- Destroy center particle
+	ParticleManager:DestroyParticle(caster.freezing_field_particle, false)
 
 	-- Resets the center position
 	caster.freezing_field_center = nil

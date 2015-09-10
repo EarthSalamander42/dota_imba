@@ -226,6 +226,7 @@ CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
 HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
 CREEP_POWER_RAMP_UP_FACTOR = 1												-- Creep power increase multiplier factor
+CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) based on game time
 
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?

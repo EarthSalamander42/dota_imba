@@ -27,9 +27,18 @@ function StiflingDaggerCrit( keys )
 
 	-- Roll for scepter instant kill
 	if scepter and RandomInt(1, 100) <= kill_chance then
-		target:EmitSound(sound_crit)
 		TrueKill(caster, target, crit_ability)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
+
+		-- Play screen blood particle
+		local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+
+		-- Play fatality message
+		Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+		-- Play global sounds
+		EmitGlobalSound(sound_crit)
+		EmitGlobalSound("Imba.PhantomAssassinFatality")
 		return nil
 	end
 
@@ -49,8 +58,10 @@ function StiflingDaggerCrit( keys )
 		-- Deal bonus damage
 		if target:IsHero() then
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage * (crit_bonus - 100) / 100 * hero_dmg_pct / 100 , damage_type = DAMAGE_TYPE_PURE})
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, base_damage * crit_bonus / 100 * hero_dmg_pct / 100, nil)
 		else
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage * (crit_bonus - 100) / 100 , damage_type = DAMAGE_TYPE_PURE})
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, base_damage * crit_bonus / 100, nil)
 		end
 	end
 end
@@ -173,9 +184,18 @@ function PhantomStrikeHit( keys )
 
 		-- Roll for kill chance if the caster has a scepter
 		if scepter and RandomInt(1, 100) <= kill_chance then
-			target:EmitSound(sound_kill)
 			TrueKill(caster, target, ability_crit)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
+
+			-- Play screen blood particle
+			local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+
+			-- Play fatality message
+			Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+			-- Play global sounds
+			EmitGlobalSound(sound_kill)
+			EmitGlobalSound("Imba.PhantomAssassinFatality")
 			return nil
 		end
 
@@ -186,7 +206,7 @@ function PhantomStrikeHit( keys )
 	end
 
 	-- Attack (does not calculate on-hit procs)
-	caster:PerformAttack(target, true, false, true, true)
+	caster:PerformAttack(target, true, true, true, true)
 end
 
 function Blur( keys )
@@ -260,7 +280,18 @@ function CoupDeGraceKill( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local sound_kill = keys.sound_kill
 
 	TrueKill(caster, target, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
+
+	-- Play screen blood particle
+	local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+
+	-- Play fatality message
+	Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+	-- Play global sounds
+	EmitGlobalSound(sound_kill)
+	EmitGlobalSound("Imba.PhantomAssassinFatality")
 end

@@ -9,15 +9,32 @@ function Upgrade( keys )
 	-- Calculate total buff stacks
 	local total_stacks = GAME_TIME_ELAPSED / 60
 
-	-- Cap the stacks
-	total_stacks = math.min(total_stacks, 30)
-
 	-- Increase amount of stacks according to game speed
-	total_stacks = math.floor(total_stacks * CREEP_POWER_RAMP_UP_FACTOR)
+	total_stacks = total_stacks * CREEP_POWER_RAMP_UP_FACTOR
+
+	-- Cap the stacks
+	total_stacks = math.min(total_stacks, CREEP_POWER_MAX_UPGRADES)
 
 	-- Update the stacks buff
 	caster:RemoveModifierByName(modifier_stack)
 	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
+end
+
+function CreepStructureDamage( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local bonus_damage = ability:GetLevelSpecialValueFor("structure_damage_per_minute", ability_level)
+	local game_time = math.min( GAME_TIME_ELAPSED / 60, CREEP_POWER_MAX_UPGRADES)
+	local total_damage = caster:GetAttackDamage() * bonus_damage * game_time / 100
+
+	-- Deal bonus damage
+	if target:IsBuilding() or target:IsTower() or target:IsHero() then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	end
 end
 
 function FountainBash( keys )

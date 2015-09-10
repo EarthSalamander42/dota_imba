@@ -1027,7 +1027,7 @@
 	//	"Ability1"					"imba_tinker_laser"
 	//	"Ability2"					"imba_tinker_heat_seeking_missile"
 	//	"Ability3"					"imba_tinker_march_of_the_machines"
-	//	"Ability4"					"imba_tinker_rearm"
+		"Ability4"					"imba_tinker_rearm"
 		"Ability5"					"attribute_bonus_int"
 	}
 

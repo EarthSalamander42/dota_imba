@@ -12,13 +12,8 @@ function ManaBreak( keys )
 		return nil
 	end
 
-	-- Play the sound to Anti-Mage's team
-	EmitSoundOnLocationForAllies(target:GetAbsOrigin(), "Hero_Antimage.ManaBreak", caster)
-
-	-- If Anti-Mage is visible to the target's team, play the sound for them
-	if target:CanEntityBeSeenByMyTeam(caster) then
-		EmitSoundOnLocationForAllies(target:GetAbsOrigin(), "Hero_Antimage.ManaBreak", target)
-	end
+	-- Play sound
+	caster:EmitSound("Hero_Antimage.ManaBreak")
 
 	-- Plays the particle
 	local manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)

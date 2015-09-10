@@ -106,7 +106,7 @@ function SandStorm( keys )
 	local sandstorm_dummy = CreateUnitByName("npc_dummy_unit", caster_pos, false, nil, nil, caster:GetTeamNumber())
 
 	-- Play sounds
-	EmitSoundOnLocationWithCaster(caster_pos, sound_cast, sandstorm_dummy)
+	sandstorm_dummy:EmitSound(sound_cast)
 	if RandomInt(1,100) <= 30 then
 		sandstorm_dummy:EmitSound(sound_darude)
 	else
@@ -280,12 +280,11 @@ function EpicenterChannel( keys )
 	Timers:CreateTimer(2.1, function()
 		if ability:IsChanneling() then
 			StartAnimation(caster, {duration = 2, activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
-			print("hey! listen!")
 		end
 	end)
 
 	-- Play cast sounds for the caster's team
-	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), sound_cast, caster)
+	caster:EmitSound(sound_cast)
 	caster:EmitSound(sound_darude)
 
 	-- Store channeling start time

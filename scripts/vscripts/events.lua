@@ -185,9 +185,14 @@ function GameMode:OnNPCSpawned(keys)
 			local minefield_teleport = npc:FindAbilityByName("imba_techies_minefield_teleport")
 			local auto_creep = npc:FindAbilityByName("imba_techies_remote_auto_creep")
 			local auto_hero = npc:FindAbilityByName("imba_techies_remote_auto_hero")
-			minefield_teleport:SetLevel(1)
 			auto_creep:SetLevel(1)
 			auto_hero:SetLevel(1)
+
+			-- Enable minefield teleport if the caster has a scepter
+			local scepter = HasScepter(npc:GetOwnerEntity())
+			if scepter then
+				minefield_teleport:SetLevel(1)
+			end
 		end
 	end)
 
@@ -713,15 +718,15 @@ function GameMode:OnEntityKilled( keys )
 				
 				-- Grant the mine the appropriately leveled abilities
 				local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-				local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
 				mine_passive:SetLevel(ability_level + 1)
-				mine_teleport:SetLevel(1)
 
 				-- Grant the second mine the appropriately leveled abilities if appropriate
 				if scepter then
 					mine_passive = land_mine_2:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_teleport = land_mine_2:FindAbilityByName("imba_techies_minefield_teleport")
 					mine_passive:SetLevel(ability_level + 1)
+					local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_teleport:SetLevel(1)
+					mine_teleport = land_mine_2:FindAbilityByName("imba_techies_minefield_teleport")
 					mine_teleport:SetLevel(1)
 				end
 			end)
@@ -767,9 +772,7 @@ function GameMode:OnEntityKilled( keys )
 					
 				-- Grant the mine the appropriately leveled abilities
 				local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
-				local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
 				trap_passive:SetLevel(ability_level + 1)
-				trap_teleport:SetLevel(1)
 
 				-- Create a second mine if the owner has Aghanim's Scepter
 				local stasis_trap_2
@@ -779,8 +782,10 @@ function GameMode:OnEntityKilled( keys )
 					stasis_trap_2:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
 					ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap_2, "modifier_imba_stasis_trap_state", {})
 					local trap_passive = stasis_trap_2:FindAbilityByName("imba_techies_stasis_trap_passive")
-					local trap_teleport = stasis_trap_2:FindAbilityByName("imba_techies_minefield_teleport")
 					trap_passive:SetLevel(ability_level + 1)
+					local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
+					trap_teleport:SetLevel(1)
+					local trap_teleport = stasis_trap_2:FindAbilityByName("imba_techies_minefield_teleport")
 					trap_teleport:SetLevel(1)
 				end
 			end)

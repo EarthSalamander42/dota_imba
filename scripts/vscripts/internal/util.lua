@@ -635,8 +635,9 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_tidebringer_cooldown")
 	hero:RemoveModifierByName("modifier_imba_hunter_in_the_night")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_cooldown")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_check")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_cooldown")
+	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 	hero:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
 	hero:RemoveModifierByName("modifier_imba_heartstopper_aura")
 	hero:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
@@ -656,6 +657,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("attribute_bonus_int")
 	hero:RemoveModifierByName("modifier_imba_hook_sharp_stack")
 	hero:RemoveModifierByName("modifier_imba_hook_light_stack")
+	hero:RemoveModifierByName("modifier_imba_hook_caster")
 	hero:RemoveModifierByName("modifier_imba_god_strength")
 	hero:RemoveModifierByName("modifier_imba_god_strength_aura")
 	hero:RemoveModifierByName("modifier_imba_god_strength_aura_scepter")
@@ -672,7 +674,6 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_dragon_knight_dragon_blood")
 	hero:RemoveModifierByName("modifier_zuus_static_field")
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
 	hero:RemoveModifierByName("modifier_riki_blinkstrike")
 
@@ -824,7 +825,6 @@ function StickProcCheck( ability )
 
 	local forbidden_skills = {
 		"storm_spirit_ball_lightning",
-		"tinker_rearm",
 		"witch_doctor_voodoo_restoration",
 		"imba_necrolyte_death_pulse"
 	}

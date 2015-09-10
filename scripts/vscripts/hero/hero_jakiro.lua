@@ -209,7 +209,6 @@ function Macropyre( keys )
 	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
 	local trail_angle = ability:GetLevelSpecialValueFor("trail_angle", ability_level)
 	local trail_amount = ability:GetLevelSpecialValueFor("trail_amount", ability_level)
-	local formation_delay = ability:GetLevelSpecialValueFor("formation_delay", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
 	-- Play fire sound, and ice sound if owner has Aghanim's Scepter
@@ -270,9 +269,9 @@ function Macropyre( keys )
 				end
 
 				-- Check if time is over
-				time_elapsed = time_elapsed + 0.1
+				time_elapsed = time_elapsed + 0.5
 				if time_elapsed < duration then
-					return 0.1
+					return 0.5
 				end
 			end)
 		end

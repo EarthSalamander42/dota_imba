@@ -142,12 +142,7 @@ function TrackCast( keys )
 	local sound_track = keys.sound_track
 
 	-- Play sound to caster's allies
-	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_track, caster)
-
-	-- If the caster is visible to the target's team, play the sound for them
-	if target:CanEntityBeSeenByMyTeam(caster) then
-		EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_track, target)
-	end
+	caster:EmitSound(sound_track)
 
 	-- Updates track modifier according to caster's scepter ownership
 	if scepter then
@@ -228,7 +223,7 @@ function Track( keys )
 	if scepter then
 
 		-- Fetch amount of gold to be stolen
-		gold_to_steal = PlayerResource:GetUnreliableGold(target:GetPlayerID()) * gold_to_steal / 100
+		gold_to_steal = math.max( PlayerResource:GetUnreliableGold(target:GetPlayerID()), 0) * gold_to_steal / 100
 
 		-- Update target's gold
 		target:ModifyGold( (-1) * gold_to_steal, false, DOTA_ModifyGold_Death)

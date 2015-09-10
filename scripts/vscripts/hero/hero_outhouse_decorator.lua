@@ -137,7 +137,7 @@ function AstralImprisonmentEnd( keys )
 	local target = keys.target
 
 	-- Stop the looping sound when the modifier ends
-	StopSoundEvent(sound_name, target)
+	target:StopSound(sound_name)
 
 	-- Redraw the target's model
 	target:RemoveNoDraw()

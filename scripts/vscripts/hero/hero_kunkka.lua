@@ -117,7 +117,7 @@ function Torrent( keys )
 		-- Creates the post-ability vision node and sound effect
 		ability:CreateVisibilityNode(target, radius, vision_duration)
 		local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
-		EmitSoundOn(sound_name, dummy)
+		dummy:EmitSound(sound_name)
 
 		-- Draws the particle
 		local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, dummy)
@@ -339,7 +339,7 @@ function GhostShip( keys )
 		
 		-- Fire sound on crash point
 		local dummy = CreateUnitByName("npc_dummy_unit", crash_pos, false, caster, caster, caster:GetTeamNumber() )
-		EmitSoundOn(crash_sound, dummy)
+		dummy:EmitSound(crash_sound)
 		dummy:Destroy()
 		
 		-- Stun and damage enemies

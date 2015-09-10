@@ -7,6 +7,7 @@ function LandMinePlant( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_state = keys.modifier_state
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
@@ -27,9 +28,11 @@ function LandMinePlant( keys )
 		
 		-- Grant the mine the appropriately leveled abilities
 		local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-		local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
 		mine_passive:SetLevel(ability_level + 1)
-		mine_teleport:SetLevel(1)
+		if scepter then
+			local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+			mine_teleport:SetLevel(1)
+		end
 	end)
 end
 
@@ -40,6 +43,7 @@ function LandMineThrow( keys )
 	local ability_level = ability:GetLevel() - 1
 	local throw_sound = keys.throw_sound
 	local modifier_state = keys.modifier_state
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
@@ -85,9 +89,11 @@ function LandMineThrow( keys )
 				
 				-- Grant the mine the appropriately leveled abilities
 				local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-				local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
 				mine_passive:SetLevel(ability_level + 1)
-				mine_teleport:SetLevel(1)
+				if scepter then
+					local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_teleport:SetLevel(1)
+				end
 			end)
 
 		-- If not, update position and keep going
@@ -220,6 +226,7 @@ function StasisTrapPlant( keys )
 	local modifier_creep = keys.modifier_creep
 	local particle_cast = keys.particle_cast
 	local particle_creep = keys.particle_creep
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local activation_delay = ability:GetLevelSpecialValueFor("activation_delay", ability_level)
@@ -278,9 +285,11 @@ function StasisTrapPlant( keys )
 			
 		-- Grant the mine the appropriately leveled abilities
 		local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
-		local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
 		trap_passive:SetLevel(ability_level + 1)
-		trap_teleport:SetLevel(1)
+		if scepter then
+			local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
+			trap_teleport:SetLevel(1)
+		end
 	end)
 end
 

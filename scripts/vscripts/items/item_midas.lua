@@ -35,16 +35,6 @@ function Midas( keys )
 	local ability = keys.ability
 	local sound_cast = keys.sound_cast
 
-	-- If the caster has Rearm, do nothing
-	for i = 0, 15 do
-		local ability_rearm = caster:GetAbilityByIndex(i)
-		if ability_rearm and ability_rearm:GetName() == "tinker_rearm" then
-			Notifications:Bottom(caster:GetPlayerID(), {text = "#imba_midas_forbidden", duration = 7.0, style = {color = "Red"}	} )
-			ability:StartCooldown(1)
-			return nil
-		end
-	end
-
 	-- Parameters and calculations
 	local creep_XP = target:GetDeathXP()
 	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability:GetLevel() - 1)

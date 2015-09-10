@@ -166,7 +166,7 @@ function Vendetta( keys )
 	end
 
 	-- Play cast sound
-	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
+	caster:EmitSound(sound_cast)
 
 	-- Apply Vendetta and invisibility modifiers
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_vendetta, {})
