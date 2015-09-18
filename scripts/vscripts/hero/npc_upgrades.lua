@@ -27,14 +27,26 @@ function CreepStructureDamage( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local bonus_damage = ability:GetLevelSpecialValueFor("structure_damage_per_minute", ability_level)
+	local building_damage = ability:GetLevelSpecialValueFor("structure_damage_per_minute", ability_level)
+	local hero_damage = ability:GetLevelSpecialValueFor("hero_damage_per_minute", ability_level)
 	local game_time = math.min( GAME_TIME_ELAPSED / 60, CREEP_POWER_MAX_UPGRADES)
-	local total_damage = caster:GetAttackDamage() * bonus_damage * game_time / 100
 
 	-- Deal bonus damage
-	if target:IsBuilding() or target:IsTower() or target:IsHero() then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	if target:IsBuilding() or target:IsTower() then
+		local bonus_damage = caster:GetAttackDamage() * building_damage * game_time / 100
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	elseif target:IsHero() then
+		local bonus_damage = caster:GetAttackDamage() * hero_damage * game_time / 100
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
+end
+
+function FountainParticle( keys )
+	local caster = keys.caster
+	local particle_danger = keys.particle_danger
+
+	local danger_pfx = ParticleManager:CreateParticle(particle_danger, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(danger_pfx, 0, caster:GetAbsOrigin())
 end
 
 function FountainBash( keys )

@@ -80,8 +80,8 @@ function RapierDamage( keys )
 	local ability_level = ability:GetLevel() - 1
 	local damage = keys.damage
 
-	-- If the target is Roshan or a building, do nothing
-	if target:IsBuilding() or IsRoshan(target) then
+	-- If the target is Roshan, a building, or an ally, do nothing
+	if target:IsBuilding() or IsRoshan(target) or target:GetTeam() == caster:GetTeam() then
 		return nil
 	end
 

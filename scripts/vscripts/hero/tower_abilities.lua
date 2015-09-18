@@ -1,6 +1,122 @@
 --[[	Author: Firetoad
 		Date: 06.09.2015	]]
 
+function Upgrade( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local owner = caster:GetOwnerEntity()
+	local player = caster:GetPlayerOwner()
+	local player_id = caster:GetPlayerOwnerID()
+
+	local abilities = {}
+
+	-- Limit amount of abilities on lower tier towers
+	local maximum_abilities = math.min(caster.tower_tier, 3)
+
+	-- Increase upgrade cost based on tower tier
+	local new_ability_cost = TOWER_ABILITY_COST_PER_TIER * caster.tower_tier
+
+	-- Fetch tower abilities
+	for i = 0, 15 do
+		local current_ability = caster:GetAbilityByIndex(i)
+		if current_ability and current_ability:GetName() ~= "imba_tower_upgrade" and current_ability:GetName() ~= "backdoor_protection" and current_ability:GetName() ~= "backdoor_protection_in_base" then
+			abilities[#abilities+1] = current_ability
+		end
+	end
+
+	-- If all abilities are maxed, return error message and do nothing
+	if #abilities == maximum_abilities and abilities[maximum_abilities]:GetLevel() == 3 then
+		Notifications:Bottom(player_id, {text = "#tower_abilities_maxed", duration = 5.0})
+		caster:SetOwner(nil)
+		return nil
+	end
+
+	-- Iterate through abilities to identify the upgradable one
+	for i = 1,3 do
+
+		-- If this ability is not maxed, try to upgrade it
+		if abilities[i] and abilities[i]:GetLevel() < 3 then
+
+			-- Fetch upgrade cost
+			local upgrade_cost = GetTowerAbilityUpgradeCost(abilities[i]:GetName(), abilities[i]:GetLevel())
+
+			-- If the player has enough money, upgrade this ability
+			if PlayerResource:GetGold(player_id) >= upgrade_cost then
+
+				-- Emit purchase confirmation sound
+				EmitSoundOnClient("General.Buy", player)
+				EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "General.Buy", caster)
+
+				-- Pay upgrade cost
+				owner:SpendGold(upgrade_cost, DOTA_ModifyGold_PurchaseItem)
+
+				-- Upgrade ability
+				abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
+
+				-- Increase tower size
+				caster:SetModelScale(caster:GetModelScale() + 0.03)
+
+			-- Else, display error message/sound and exit
+			else
+				EmitSoundOnClient("General.Cancel", player)
+				Notifications:Bottom(player_id, {text = "#tower_abilities_no_money", duration = 5.0})
+				Notifications:Bottom(player_id, {text = upgrade_cost, duration = 5.0, style = {color = "Orange"}, continue = true})
+			end
+
+			caster:SetOwner(nil)
+			return nil
+
+		-- If this ability is maxed and the last one, then add a new one
+		elseif abilities[i] and abilities[i]:GetLevel() == 3 and #abilities == i then
+
+			-- If the player has enough money, add a new, random ability
+			if PlayerResource:GetGold(player_id) >= new_ability_cost then
+
+				-- Emit purchase confirmation sound
+				EmitSoundOnClient("General.Buy", player)
+				EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), "General.Buy", caster)
+
+				-- Pay upgrade cost
+				owner:SpendGold(new_ability_cost, DOTA_ModifyGold_PurchaseItem)
+
+				-- Add a random new ability
+				local duplicate_ability
+				local new_ability
+
+				-- Prevent duplicates
+				repeat
+					duplicate_ability = false
+					new_ability = GetRandomTowerAbility(caster.tower_tier)
+					for _,test_ability in pairs(abilities) do
+						if test_ability:GetName() == new_ability then
+							duplicate_ability = true
+						end
+					end
+				until not duplicate_ability
+
+				-- Level up the ability
+				caster:AddAbility(new_ability)
+				new_ability = caster:FindAbilityByName(new_ability)
+				new_ability:SetLevel(1)
+
+				-- Increase tower size
+				caster:SetModelScale(caster:GetModelScale() + 0.08)
+
+			-- Else, display error message/sound and exit
+			else
+				EmitSoundOnClient("General.Cancel", player)
+				Notifications:Bottom(player_id, {text = "#tower_abilities_no_money", duration = 5.0})
+				Notifications:Bottom(player_id, {text = new_ability_cost, duration = 5.0, style = {color = "Orange"}, continue = true})
+			end
+
+			caster:SetOwner(nil)
+			return nil
+		end
+	end
+
+	caster:SetOwner(nil)
+end
+
 function LaserProjectile( keys )
 	local caster = keys.caster
 	local projectile_laser = keys.projectile_laser
@@ -13,16 +129,35 @@ function LaserHit( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_blind = keys.modifier_blind
+	local particle_blind = keys.particle_blind
+	local sound_impact = keys.sound_impact
 
 	-- Parameters
 	local laser_damage = ability:GetLevelSpecialValueFor("laser_damage", ability_level)
+	local blind_chance = ability:GetLevelSpecialValueFor("blind_chance", ability_level)
+	local blind_aoe = ability:GetLevelSpecialValueFor("blind_aoe", ability_level)
+
+	-- Emit sound
+	target:EmitSound(sound_impact)
 
 	-- Calculate damage
-	local tower_damage = RandomInt(caster:GetBaseDamageMin(), caster:GetBaseDamageMax())
-	local damage = tower_damage * laser_damage / 100
+	local damage = caster:GetAttackDamage() * laser_damage / 100
 
 	-- Apply damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+
+	-- If the ability is level 2, debuff the target
+	if ability_level == 1 then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_blind, {})
+
+	-- If the ability is level 3, debuff all nearby targets
+	elseif ability_level >= 2 then
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, blind_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(targets) do
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_blind, {})
+		end
+	end
 end
 
 function Multishot( keys )
@@ -39,7 +174,7 @@ function Multishot( keys )
 	-- Attack each nearby enemy once
 	for _,enemy in pairs(enemies) do
 		if enemy ~= target then
-			caster:PerformAttack(enemy, true, false, true, true)
+			caster:PerformAttack(enemy, true, true, true, true)
 		end
 	end
 end
@@ -53,24 +188,27 @@ function HexAura( keys )
 
 	-- Parameters
 	local hex_duration = ability:GetLevelSpecialValueFor("hex_duration", ability_level)
+	local hex_amount = ability:GetLevelSpecialValueFor("hex_amount", ability_level)
 	local tower_range = caster:GetAttackRange() + 128
 
 	-- Find nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, tower_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 
-	-- Single out one enemy from the group
-	local chosen_enemy = enemies[RandomInt(1, #enemies)]
-
 	-- Choose a random hero to be the modifier owner (having a non-hero hex modifier owner crashes the game)
 	local hero = HeroList:GetHero(0)
 
-	-- Hex the chosen enemy
-	if chosen_enemy then
-		if chosen_enemy:IsIllusion() then
-			chosen_enemy:ForceKill(true)
-		else
-			chosen_enemy:AddNewModifier(hero, ability, "modifier_sheepstick_debuff", {duration = hex_duration})
-			ability:ApplyDataDrivenModifier(caster, chosen_enemy, modifier_slow, {})
+	-- Hex enemies
+	for i = 1,hex_amount do
+		local chosen_enemy = enemies[i]
+
+		-- Hex the chosen enemy
+		if chosen_enemy then
+			if chosen_enemy:IsIllusion() then
+				chosen_enemy:ForceKill(true)
+			else
+				chosen_enemy:AddNewModifier(hero, ability, "modifier_sheepstick_debuff", {duration = hex_duration})
+				ability:ApplyDataDrivenModifier(caster, chosen_enemy, modifier_slow, {})
+			end
 		end
 	end
 end
@@ -278,7 +416,110 @@ function Multihit( keys )
 	-- Perform bonus attacks
 	for i = 1, bonus_attacks do
 		Timers:CreateTimer(delay * i, function()
-			caster:PerformAttack(target, true, false, true, true)
+			caster:PerformAttack(target, true, true, true, true)
 		end)
 	end
+end
+
+function SpellShield( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()
+	local particle_purge = keys.particle_purge
+	local sound_purge = keys.sound_purge
+
+	-- Parameters
+	local tower_range = caster:GetAttackRange() + 128
+
+	-- Find nearby allies
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, tower_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	-- Play sound
+	if #allies > 0 then
+		caster:EmitSound(sound_purge)
+	end
+	
+	-- Iterate through nearby allies
+	for _,ally in pairs(allies) do
+
+		-- Purge debuffs according to the ability's level
+		if ability_level < 3 then
+			ally:Purge(false, true, false, false, false)
+		else
+			ally:Purge(false, true, false, true, false)
+		end
+
+		-- Play particle
+		local purge_pfx = ParticleManager:CreateParticle(particle_purge, PATTACH_ABSORIGIN_FOLLOW, ally)
+		ParticleManager:SetParticleControl(purge_pfx, 0, ally:GetAbsOrigin())
+	end
+end
+
+function PlagueParticle( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local particle_plague = keys.particle_plague
+
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("area_of_effect", ability_level)
+
+	-- Play particle
+	plague_pfx = ParticleManager:CreateParticle(particle_plague, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(plague_pfx, 0, caster:GetAbsOrigin() )
+	ParticleManager:SetParticleControl(plague_pfx, 1, Vector(radius,0,0) )
+end
+
+function AegisUpdate( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Parameters
+	local bonus_health = ability:GetLevelSpecialValueFor("bonus_health", 0)
+
+	-- Update health
+	caster:SetBaseMaxHealth(caster:GetBaseMaxHealth() + bonus_health)
+	caster:SetMaxHealth(caster:GetMaxHealth() + bonus_health)
+	caster:SetHealth(caster:GetHealth() + bonus_health)
+
+	-- Increase tower size
+	caster:SetModelScale(caster:GetModelScale() + 0.02)
+end
+
+function SelfRepair( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_regen = keys.modifier_regen
+
+	-- If the ability is level 3, do nothing
+	if ability_level == 2 then
+		return nil
+	end
+
+	-- Parameters
+	local regen_delay = ability:GetLevelSpecialValueFor("regen_delay", ability_level)
+	
+	-- Remove this modifier
+	caster:RemoveModifierByName(modifier_regen)
+
+	-- Destroy particle
+	ParticleManager:DestroyParticle(caster.self_regen_pfx, false)
+
+	-- Apply this modifier again after [regen_delay]
+	Timers:CreateTimer(regen_delay, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_regen, {})
+	end)
+end
+
+function SelfRepairParticle( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local particle_regen = keys.particle_regen
+
+	-- Create particle
+	caster.self_regen_pfx = ParticleManager:CreateParticle(particle_regen, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(caster.self_regen_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster.self_regen_pfx, 1, caster:GetAbsOrigin())
 end

@@ -8,5 +8,6 @@ function MoonShardActive( keys )
 	local modifier = keys.modifier
 	
 	AddStacks(ability, caster, target, modifier, 1, true)
+	target:EmitSound("Item.MoonShard.Consume")
 	caster:RemoveItem(ability)
 end

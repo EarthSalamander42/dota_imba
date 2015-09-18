@@ -2237,7 +2237,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"ThinkInterval"  		"1.0"
+				"ThinkInterval"			"1.0"
 
 				"OnIntervalThink"
 				{	
@@ -2246,7 +2246,18 @@
 						"ScriptFile"	"items/item_midas.lua"
 						"Function"		"MidasPassiveGold"
 					}
-				}				
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_hand_of_midas"
+					}
+				}
 			}
 
 			"modifier_item_imba_hand_of_midas_as"
@@ -6842,7 +6853,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"150"
 		"ItemCost"						"4700"
 		"ItemShopTags"					"int;armor;hard_to_tag"
 		"ItemQuality"					"epic"
@@ -6872,12 +6883,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_attack_speed"		"-70"
+				"aura_attack_speed"		"-80"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_radius"			"1000"
+				"blast_radius"			"900"
 			}
 			"06"
 			{
@@ -6887,7 +6898,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blast_damage"			"240"
+				"blast_damage"			"200"
 			}
 			"08"
 			{
@@ -7019,7 +7030,7 @@
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"overcharge_chance"			"5"
+				"overcharge_chance"			"7"
 			}
 		}
 
@@ -11632,6 +11643,8 @@
 				"IsHidden"							"1"
 				"IsBuff"							"1"
 				"IsPurgable"						"0"
+
+				"Duration"							"%invis_duration"
 
 				"Attributes"						"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
@@ -16466,12 +16479,6 @@
 
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"EffectName"			"Item.MoonShard.Consume"
-				"Target" 				"TARGET"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"items/item_moon_shard.lua"
@@ -16643,7 +16650,7 @@
 		"ID"							"2121"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_octarine_core"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 
@@ -16651,6 +16658,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"5900"
 		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"AbilityCooldown"				"1.0"
+		"AbilitySharedCooldown"			"octarine"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"mana;mb;octarine core"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -16709,6 +16718,18 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dmg_per_mana"			"30"
+			}
+		}
+
+		"OnSpellStart"  // Toggle Magus' Presence off
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_octarine_core.lua"
+				"Function"				"OctarineToggle"
+
+				"new_item"				"item_imba_octarine_core_off"
+				"sound_toggle"			"Item.DropGemWorld"
 			}
 		}
 
@@ -16771,6 +16792,168 @@
 						"particle_blast"		"particles/item/octarine_core/octarine_core_active.vpcf"
 						"particle_hit"			"particles/item/octarine_core/octarine_core_hit.vpcf"
 						"sound_hit"				"Hero_Zuus.StaticField"
+					}
+				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"			"%bonus_cooldown"
+				}
+			}
+
+			"modifier_item_imba_octarine_core_prevent_lifesteal"
+			{
+				"Passive"				"0"
+				"IsDebuff"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"0.01"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Octarine Core (inactive)
+	//=================================================================================================================
+	"item_imba_octarine_core_off"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2173"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_octarine_core_off"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5900"
+		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"AbilityCooldown"				"1.0"
+		"AbilitySharedCooldown"			"octarine"
+		"ItemPurchasable"				"0"
+		"ItemSellable"					"0"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"mana;mb;octarine core"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intelligence"	"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"550"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"8"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"175"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cooldown"		"25"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_lifesteal"		"30"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_lifesteal"		"8"
+			}	
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blast_radius"			"900"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_per_mana"			"30"
+			}
+		}
+
+		"OnSpellStart"  // Toggle Magus' Presence on
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_octarine_core.lua"
+				"Function"				"OctarineToggle"
+
+				"new_item"				"item_imba_octarine_core"
+				"sound_toggle"			"Item.PickUpGemWorld"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_octarine_core"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
+				}
+			}
+
+			"modifier_item_imba_octarine_core_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_octarine_core.lua"
+						"Function"				"OctarineLifesteal"
+
+						"damage"				"%attack_damage"
+						"particle_lifesteal"	"particles/items3_fx/octarine_core_lifesteal.vpcf"
+						"modifier_prevent"		"modifier_item_imba_octarine_core_prevent_lifesteal"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_octarine_core.lua"
+						"Function"				"OctarineAttack"
+
+						"damage"				"%attack_damage"
+						"modifier_prevent"		"modifier_item_imba_octarine_core_prevent_lifesteal"
 					}
 				}
 				
@@ -17317,5 +17500,5 @@
 		}
 	}
 
-	//next free ID: 2173
+	//next free ID: 2174
 }

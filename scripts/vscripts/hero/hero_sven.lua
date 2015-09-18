@@ -303,7 +303,7 @@ function GodStrength( keys )
 	-- Become a man... 30% of the time
 	if RandomInt(1, 100) <= 30 then
 		Timers:CreateTimer(2, function()
-			EmitGlobalSound(sound_be_a_man)
+			caster:EmitSound(sound_be_a_man)
 		end)
 	end
 

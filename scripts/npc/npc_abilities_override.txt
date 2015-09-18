@@ -288,7 +288,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"1000"
+				"maximum_distance"		"800"
 			}
 			"03"
 			{
@@ -2000,9 +2000,9 @@
 		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.35 0.30 0.25 0.20"
 
-		"AbilityCooldown"				"15.0 13.0 11.0 9.0"
+		"AbilityCooldown"				"19.0 16.0 13.0 10.0"
 
-		"AbilityManaCost"				"90"
+		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -2019,7 +2019,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5 3.0 3.5 4.0"
+				"duration"				"3.0"
 			}
 			"04"
 			{
@@ -2075,47 +2075,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"25 50 75 100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Faceless Void: Chronosphere
-	//=================================================================================================================
-	"faceless_void_chronosphere"
-	{
-		"AbilityCastRange"				"600"
-
-		"AbilityCooldown"				"2.0"
-
-		"AbilityManaCost"				"110 120 130"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"240 270 300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 2.25 2.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"2.0 2.5 3.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"0.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"450"
 			}
 		}
 	}
@@ -5224,136 +5183,6 @@
 	}
 
 	//=================================================================================================================
-	// Tinker: Laser
-	//=================================================================================================================
-	"tinker_laser"
-	{
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"10.0"
-
-		"AbilityDamage"					"120 200 280 360"
-
-		"AbilityManaCost"				"90 100 110 120"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"miss_rate"				"100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_hero"			"3.0 3.5 4.0 4.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_creep"		"10.0"
-			}			
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"900"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"900"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tinker: Heat Seeking Missile
-	//=================================================================================================================
-	"tinker_heat_seeking_missile"
-	{
-		"AbilityCooldown"				"15.0"
-
-		"AbilityDamage"					"160 240 320 400"
-
-		"AbilitySpecial"
-		{ 
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"3000"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"targets"			"1 2 3 4"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tinker: March of the Machines
-	//=================================================================================================================
-	"tinker_march_of_the_machines"
-	{
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"30.0"
-
-		"AbilityManaCost"				"140"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"950 1100 1250 1400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"50"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"splash_radius"			"150"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"450 475 500 525"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"machines_per_sec"		"25 30 35 40"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"distance"				"2500"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"distance_scepter"		"4000"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Ursa: Earthshock
 	//=================================================================================================================
 	"ursa_earthshock"
@@ -6262,6 +6091,8 @@
 	//=================================================================================================================
 	"backdoor_protection"
 	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -6287,6 +6118,8 @@
 	//=================================================================================================================
 	"backdoor_protection_in_base"
 	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		
 		"AbilitySpecial"
 		{
 			"01"
@@ -7105,12 +6938,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"visibility_threshold_pct"	"30 40 50 60"
+				"visibility_threshold_pct"	"30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"invis_threshold_pct"		"30 40 50 60"
+				"invis_threshold_pct"		"30"
 			}
 			"03"
 			{

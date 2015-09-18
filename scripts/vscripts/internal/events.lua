@@ -4,33 +4,10 @@ function GameMode:_OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
 		self.bSeenWaitForPlayers = true
 	elseif newState == DOTA_GAMERULES_STATE_INIT then
-		Timers:RemoveTimer("alljointimer")
+		--Timers:RemoveTimer("alljointimer")
 	elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		local et = 6
-		if self.bSeenWaitForPlayers then
-			et = .01
-		end
-		Timers:CreateTimer("alljointimer", {
-			useGameTime = true,
-			endTime = et,
-			callback = function()
-				if PlayerResource:HaveAllPlayersJoined() then
-					GameMode:PostLoadPrecache()
-					GameMode:OnAllPlayersLoaded()
-
-					 if USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS then
-						for i=0,9 do
-							if PlayerResource:IsValidPlayer(i) then
-								local color = TEAM_COLORS[PlayerResource:GetTeam(i)]
-								PlayerResource:SetCustomPlayerColor(i, color[1], color[2], color[3])
-							end
-						end
-					end
-					return 
-				end
-				return 1
-			end
-			})
+		GameMode:PostLoadPrecache()
+    	GameMode:OnAllPlayersLoaded()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		GameMode:OnGameInProgress()
 	end

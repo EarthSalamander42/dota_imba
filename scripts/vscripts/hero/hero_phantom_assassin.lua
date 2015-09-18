@@ -30,16 +30,20 @@ function StiflingDaggerCrit( keys )
 		TrueKill(caster, target, crit_ability)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
-		-- Play screen blood particle
-		local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+		-- Global effect when killing a real hero
+		if target:IsRealHero() then
 
-		-- Play fatality message
-		Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+			-- Play screen blood particle
+			local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 
-		-- Play global sounds
-		EmitGlobalSound(sound_crit)
-		EmitGlobalSound("Imba.PhantomAssassinFatality")
-		return nil
+			-- Play fatality message
+			Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+			-- Play global sounds
+			EmitGlobalSound(sound_crit)
+			EmitGlobalSound("Imba.PhantomAssassinFatality")
+			return nil
+		end
 	end
 
 	-- Calculate actual chance to crit
@@ -187,16 +191,20 @@ function PhantomStrikeHit( keys )
 			TrueKill(caster, target, ability_crit)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
-			-- Play screen blood particle
-			local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+			-- Global effect when killing a real hero
+			if target:IsRealHero() then
 
-			-- Play fatality message
-			Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+				-- Play screen blood particle
+				local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 
-			-- Play global sounds
-			EmitGlobalSound(sound_kill)
-			EmitGlobalSound("Imba.PhantomAssassinFatality")
-			return nil
+				-- Play fatality message
+				Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+
+				-- Play global sounds
+				EmitGlobalSound(sound_kill)
+				EmitGlobalSound("Imba.PhantomAssassinFatality")
+				return nil
+			end
 		end
 
 		-- Roll for normal crit chance
@@ -285,13 +293,16 @@ function CoupDeGraceKill( keys )
 	TrueKill(caster, target, ability)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
-	-- Play screen blood particle
-	local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
+	-- Global effect when killing a real hero
+	if target:IsRealHero() then
+		-- Play screen blood particle
+		local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 
-	-- Play fatality message
-	Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
+		-- Play fatality message
+		Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
 
-	-- Play global sounds
-	EmitGlobalSound(sound_kill)
-	EmitGlobalSound("Imba.PhantomAssassinFatality")
+		-- Play global sounds
+		EmitGlobalSound(sound_kill)
+		EmitGlobalSound("Imba.PhantomAssassinFatality")
+	end
 end

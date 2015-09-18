@@ -477,40 +477,44 @@ function FleshHeapUpgrade( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_bonus = keys.modifier_bonus
+	local modifier_resist = keys.modifier_resist
 	local modifier_stacks = keys.modifier_stacks
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local stack_amount
+	local resist_amount
 
 	-- If Heap is already learned, fetch the current amount of stacks
 	if caster.heap_stacks then
 		stack_amount = caster.heap_stacks
+		resist_amount = caster.heap_resist_stacks
 
 	-- Else, fetch kills/assists up to this point of the game (lazy way to make Heap retroactive)
 	else
 		local assists = caster:GetAssists()
 		local kills = caster:GetKills()	
 		stack_amount = kills + assists
+		resist_amount = math.min(stack_amount, max_stacks)
 
-		-- Define the global variable which keeps track of heap stacks
+		-- Define the global variables which keep track of heap stacks
 		caster.heap_stacks = stack_amount
+		caster.heap_resist_stacks = resist_amount
 	end
 	
 	-- Remove both modifiers in order to update their bonuses
 	caster:RemoveModifierByName(modifier_stacks)
-	while caster:HasModifier(modifier_bonus) do
-		caster:RemoveModifierByName(modifier_bonus)
+	while caster:HasModifier(modifier_resist) do
+		caster:RemoveModifierByName(modifier_resist)
 	end
 
-	-- Add stacks of the real (hidden) bonus modifier
-	for i = 1, math.min(stack_amount, max_stacks) do
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
+	-- Add stacks of the capped (magic resist) modifier
+	for i = 1, resist_amount do
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
 	end
 
-	-- Add stacks of the fake modifier
+	-- Add stacks of the uncapped modifier
 	AddStacks(ability, caster, caster, modifier_stacks, stack_amount, true)
 
 	-- Update stats
@@ -522,9 +526,20 @@ end
 
 function FleshHeap( keys )
 	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+
+	-- Prevent resist stacks from resetting if the skill is unlearned
+	if ability_level == 0 then
+		max_stacks = caster.heap_resist_stacks + 1
+	end
 
 	-- Update the global heap stacks variable
 	caster.heap_stacks = caster.heap_stacks + 1
+	caster.heap_resist_stacks = math.min(caster.heap_resist_stacks + 1, max_stacks)
 
 	-- Play pudge's voice reaction
 	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))
@@ -534,30 +549,36 @@ function HeapUpdater( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_bonus = keys.modifier_bonus
+	local modifier_resist = keys.modifier_resist
 	local modifier_stacks = keys.modifier_stacks
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
+	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
 
-	-- If the amount of stacks has increased, update it
-	if caster.heap_stacks > stack_amount then
+	-- If the amount of strength stacks has increased, update it
+	if caster.heap_stacks > stack_amount and caster:IsAlive() then
+		local stacks_missing = caster.heap_stacks - stack_amount
 
-		-- Add a stack of the real (hidden) bonus modifier
-		if caster.heap_stacks <= max_stacks then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_bonus, {})
-		end
-
-		-- Add a stack of the fake modifier
-		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+		-- Add the appropriate amount of strength stacks
+		AddStacks(ability, caster, caster, modifier_stacks, stacks_missing, true)
 
 		-- Update stats
 		caster:CalculateStatBonus()
 
 		-- Make pudge GROW
 		caster:SetModelScale( math.min( 1 + stack_scale_up * stack_amount / 100, 1.75) )
+	end
+
+	-- If the amount of resist stacks has increased, update it
+	if caster.heap_resist_stacks > #resist_amount and caster:IsAlive() then
+		local stacks_missing = caster.heap_resist_stacks - #resist_amount
+
+		-- Add the appropriate amount of resist stacks
+		for i = 1, stacks_missing do
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_resist, {})
+		end
 	end
 end
 

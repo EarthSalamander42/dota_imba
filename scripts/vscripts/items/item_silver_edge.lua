@@ -188,7 +188,7 @@ function SilverEdgePhaseCooldownEnd( keys )
 	local modifier_phase = keys.modifier_phase
 
 	-- Check if the caster still has the invisibility modifier
-	if caster:HasModifier(modifier_invis) then
+	if caster:HasModifier(modifier_invis) and caster:IsAlive() then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_phase, {})
 	end
 end

@@ -326,16 +326,32 @@ function GetRandomUltimateAbility()
 	return ability.ability_name, ability.owner_hero
 end
 
--- Picks a random tower ability of level less than or equal to [level]
+-- Picks a random tower ability of level in the interval [level - 1, level]
 function GetRandomTowerAbility( level )
 
 	local ability = RandomFromTable(TOWER_ABILITIES)
 
-	while ability.level > level do
-		ability = RandomFromTable(TOWER_ABILITIES)
+	if level == 4 then
+		while ability.level < 2 do
+			ability = RandomFromTable(TOWER_ABILITIES)
+		end
+	else
+		while ability.level > level or ability.level < ( level - 1) do
+			ability = RandomFromTable(TOWER_ABILITIES)
+		end
 	end
 
 	return ability.ability_name
+end
+
+-- Returns the upgrade cost to a specific tower ability
+function GetTowerAbilityUpgradeCost(ability_name, level)
+
+	if level == 1 then
+		return TOWER_ABILITIES[ability_name].cost1
+	elseif level == 2 then
+		return TOWER_ABILITIES[ability_name].cost2
+	end
 end
 
 -- Grants a given hero an appropriate amount of Random OMG abilities
@@ -676,6 +692,9 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
 	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
 	hero:RemoveModifierByName("modifier_riki_blinkstrike")
+	hero:RemoveModifierByName("modifier_imba_purification_passive")
+	hero:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
+	hero:RemoveModifierByName("modifier_imba_double_edge_prevent_deny")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")

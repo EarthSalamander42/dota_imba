@@ -346,10 +346,10 @@
 
 		"AttackRate"				"1.5"
 
-		//"Ability1"					"faceless_void_time_walk"					
-		//"Ability2"					"faceless_void_backtrack"					
-		//"Ability3"					"faceless_void_time_lock"					
-		//"Ability4"					"faceless_void_chronosphere"				
+		//"Ability1"					"imba_faceless_void_time_walk"					
+		//"Ability2"					"imba_faceless_void_backtrack"					
+		//"Ability3"					"imba_faceless_void_time_lock"					
+		"Ability4"					"imba_faceless_void_chronosphere"				
 		"Ability5"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
@@ -1024,9 +1024,9 @@
 	{
 		"override_hero"				"npc_dota_hero_tinker"
 
-	//	"Ability1"					"imba_tinker_laser"
-	//	"Ability2"					"imba_tinker_heat_seeking_missile"
-	//	"Ability3"					"imba_tinker_march_of_the_machines"
+		"Ability1"					"imba_tinker_laser"
+		"Ability2"					"imba_tinker_heat_seeking_missile"
+		"Ability3"					"imba_tinker_march_of_the_machines"
 		"Ability4"					"imba_tinker_rearm"
 		"Ability5"					"attribute_bonus_int"
 	}

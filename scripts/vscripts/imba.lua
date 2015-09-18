@@ -84,6 +84,30 @@ function GameMode:FilterBountyRunePickup( filter_table )
 	return true
 end
 
+-- Order filter function
+function GameMode:FilterExecuteOrder( filter_table )
+
+	local units = filter_table["units"]
+	local unit = EntIndexToHScript(units["0"])
+
+	-- Identifies which player is interacting with tower ability upgrades
+	if filter_table['order_type'] == DOTA_UNIT_ORDER_CAST_NO_TARGET then
+		local order_player 	= PlayerResource:GetPlayer(filter_table['issuer_player_id_const'])
+		local ability = EntIndexToHScript( filter_table['entindex_ability'] )
+		if ability:GetName() == "imba_tower_upgrade" then
+			unit:SetOwner(order_player:GetAssignedHero())
+			return true
+		end
+	end
+
+	-- Ignore all other orders to towers
+	if string.find(unit:GetName(), "tower") then
+		return false
+	end
+
+	return true
+end
+
 --[[
 	This function is called once and only once after all players have loaded into the game, right as the hero selection time begins.
 	It can be used to initialize non-hero player state or adjust the hero selection (i.e. force random etc)
@@ -106,7 +130,6 @@ function GameMode:OnAllPlayersLoaded()
 
 	-- Assign players to the table
 	for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-		print("attempting to fetch connection status for player"..id)
 		self.players[id] = PlayerResource:GetPlayer(id)
 		
 		if self.players[id] then
@@ -189,6 +212,7 @@ function GameMode:OnAllPlayersLoaded()
 	-------------------------------------------------------------------------------------------------
 
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "FilterBountyRunePickup"), self )
+	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "FilterExecuteOrder"), self )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Selected game mode confirmation messages
@@ -264,7 +288,11 @@ function GameMode:OnAllPlayersLoaded()
 	-- Tower abilities
 	local tower_abilities = ""
 	if TOWER_ABILITY_MODE then
-		tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
+		if TOWER_UPGRADE_MODE then
+			tower_abilities = "Towers will gain <font color='#FF7800'>upgradable random abilities</font>."
+		else
+			tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
+		end
 	end
 
 	-- Kills to end the game
@@ -298,12 +326,11 @@ function GameMode:OnAllPlayersLoaded()
 
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("ursa_fury_swipes")
+			building:AddAbility("imba_tower_grievous_wounds")
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("ursa_fury_swipes")
+			local swipes_ability = building:FindAbilityByName("imba_tower_grievous_wounds")
 			fountain_ability:SetLevel(1)
-			swipes_ability:SetLevel(2)
-
+			swipes_ability:SetLevel(1)
 		end
 	end
 end
@@ -473,10 +500,23 @@ function GameMode:OnGameInProgress()
 			max_bounty = TOWER_MAXIMUM_GOLD
 			xp_bounty = TOWER_EXPERIENCE
 
-			-- Add passive buff
-			building:AddAbility("imba_tower_buffs")
-			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
-			tower_ability:SetLevel(1)
+			if TOWER_UPGRADE_MODE then
+
+				-- Add the tower-upgrading ability
+				local upgrade_ability = "imba_tower_upgrade"
+				building:AddAbility(upgrade_ability)
+				upgrade_ability = building:FindAbilityByName(upgrade_ability)
+				upgrade_ability:SetLevel(1)
+
+				-- Set the tower as controllable by each team's players
+				local all_heroes = HeroList:GetAllHeroes()
+				for _,hero in pairs(all_heroes) do
+					if hero:GetTeam() == building:GetTeam() then
+						building:SetControllableByPlayer(hero:GetPlayerID(), true)
+						break
+					end
+				end
+			end
 
 		elseif string.find(building_name, "rax_melee") then
 
@@ -485,22 +525,12 @@ function GameMode:OnGameInProgress()
 			max_bounty = MELEE_RAX_MAXIMUM_GOLD
 			xp_bounty = MELEE_RAX_EXPERIENCE
 
-			-- Add passive buff
-			building:AddAbility("imba_rax_buffs")
-			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
-			rax_ability:SetLevel(1)
-
 		elseif string.find(building_name, "rax_range") then
 
 			-- Set up base bounties
 			min_bounty = RANGED_RAX_MINIMUM_GOLD
 			max_bounty = RANGED_RAX_MAXIMUM_GOLD
 			xp_bounty = RANGED_RAX_EXPERIENCE
-
-			-- Add passive buff
-			building:AddAbility("imba_rax_buffs")
-			local rax_ability = building:FindAbilityByName("imba_rax_buffs")
-			rax_ability:SetLevel(1)
 
 		elseif string.find(building_name, "fort") then
 
@@ -547,6 +577,10 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Store the towers' tier
+			radiant_tower.tower_tier = i
+			dire_tower.tower_tier = i
+
 			-- Random an ability from the list
 			local ability_name = GetRandomTowerAbility(i)
 
@@ -570,6 +604,10 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Store the towers' tier
+			radiant_tower.tower_tier = i
+			dire_tower.tower_tier = i
+
 			-- Random an ability from the list
 			local ability_name = GetRandomTowerAbility(i)
 
@@ -592,6 +630,10 @@ function GameMode:OnGameInProgress()
 			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
+
+			-- Store the towers' tier
+			radiant_tower.tower_tier = i
+			dire_tower.tower_tier = i
 
 			-- Random an ability from the list
 			local ability_name = GetRandomTowerAbility(i)
@@ -618,6 +660,12 @@ function GameMode:OnGameInProgress()
 		radiant_right_t4 = radiant_right_t4[1]
 		dire_left_t4 = dire_left_t4[1]
 		dire_right_t4 = dire_right_t4[1]
+
+		-- Store the towers' tier
+		radiant_left_t4.tower_tier = 4
+		radiant_right_t4.tower_tier = 4
+		dire_left_t4.tower_tier = 4
+		dire_right_t4.tower_tier = 4
 
 		-- Random two abilities from the list
 		local left_ability_name = GetRandomTowerAbility(4)

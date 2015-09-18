@@ -230,6 +230,8 @@ CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure up
 CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) based on game time
 
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
+TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
+TOWER_ABILITY_COST_PER_TIER = 500											-- Cost to add a new random ability to a tower (per tier)
 
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 

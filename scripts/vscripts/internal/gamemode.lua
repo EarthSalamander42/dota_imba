@@ -294,7 +294,11 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 	
 	-- Enable skill randomization on respawn
-	if tonumber(mode_info.tower_abilities) == 1 then
+	if tonumber(mode_info.tower_upgrades) == 1 then
+		TOWER_ABILITY_MODE = true
+		TOWER_UPGRADE_MODE = true
+		print("Upgradable tower abilities enabled!")
+	elseif tonumber(mode_info.tower_abilities) == 1 then
 		TOWER_ABILITY_MODE = true
 		print("Random tower abilities enabled!")
 	else

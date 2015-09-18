@@ -928,148 +928,6 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Tower passive buffs
-	//=================================================================================================================
-	"imba_tower_buffs"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.34"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"as_per_minute"							"2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_buffs_base"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"							"10.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"Upgrade"
-
-						"modifier_stack"				"modifier_imba_tower_buffs_stack"
-					}
-				}
-			}
-
-			"modifier_imba_tower_buffs_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_per_minute" 
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Rax passive buffs
-	//=================================================================================================================
-	"imba_rax_buffs"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"regen_per_minute"						"1.0"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.34"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_rax_buffs_base"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"ThinkInterval"							"10.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"Upgrade"
-
-						"modifier_stack"				"modifier_imba_rax_buffs_stack"
-					}
-				}
-			}
-
-			"modifier_imba_rax_buffs_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Ancient passive buffs
 	//=================================================================================================================
 	"imba_ancient_buffs"
@@ -1159,7 +1017,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"structure_damage_per_minute"			"10"
+				"structure_damage_per_minute"			"8"
+			}
+			"02"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"hero_damage_per_minute"				"6"
 			}
 		}
 
@@ -1215,7 +1078,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bash_radius"							"1800"
+				"bash_radius"							"1700"
 			}
 			"04"
 			{
@@ -1244,6 +1107,19 @@
 				"IsPurgable"							"0"
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"							"0.9"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"FountainParticle"
+
+						"particle_danger"				"particles/ambient/fountain_danger_circle.vpcf"
+					}
+				}
 
 				"OnAttackLanded"
 				{
@@ -2208,6 +2084,43 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
+	// Tower upgrade ability
+	//=================================================================================================================
+	"imba_tower_upgrade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"					"attribute_bonus"
+		"MaxLevel"								"1"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"						"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"						"0.2"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"						"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"hero/tower_abilities.lua"
+				"Function"						"Upgrade"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tower ability: Laser
 	//=================================================================================================================
 	"imba_tower_laser"
@@ -2217,7 +2130,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"tinker_laser"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2232,6 +2146,26 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"laser_damage"					"100"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"blind_chance"					"0 50 50"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"blind_aoe"						"0 0 350"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"blind_duration"				"2.5"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"800 1200"
 			}
 		}
 
@@ -2259,12 +2193,34 @@
 					{
 						"ScriptFile"			"hero/tower_abilities.lua"
 						"Function"				"LaserHit"
+
+						"modifier_blind"		"modifier_imba_tower_laser_blind"
+						"particle_blind"		"particles/units/heroes/hero_tinker/laser_cutter_sparks_k.vpcf"
+						"sound_impact"			"Hero_Tinker.LaserImpact"
 					}
 				}
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_reduction"
+				}
+			}
+
+			"modifier_imba_tower_laser_blind"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
+				"Duration"						"%blind_duration"
+
+				"EffectName"					"particles/ambient/tower_laser_blind.vpcf"
+				"EffectAttachType"				"follow_overhead"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"				"%blind_chance"
 				}
 			}
 		}
@@ -2280,7 +2236,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"sniper_shrapnel_muh_keen_gun"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2289,7 +2246,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-50"
+				"damage_reduction"				"-70 -30 0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range"					"0 0 150"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"1000 1500"
 			}
 		}
 
@@ -2312,6 +2279,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%damage_reduction"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
 				}
 			}
 		}
@@ -2327,7 +2295,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"shadow_shaman_voodoo"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2336,12 +2305,22 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hex_interval"					"1.0"
+				"hex_interval"					"1.5"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"hex_duration"					"0.5"
+				"hex_duration"					"0.7"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hex_amount"					"1 2 3"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"900 1350"
 			}
 		}
 
@@ -2393,7 +2372,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"antimage_mana_break"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2402,7 +2382,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_burn"						"50"
+				"mana_burn"						"50 75 100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"400 600"
 			}
 		}
 
@@ -2438,7 +2423,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"mana_flare"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2447,12 +2433,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"burn_interval"					"1.0"
+				"burn_interval"					"1.5"
 			}
 			"02"
 			{
+				"var_type"						"FIELD_FLOAT"
+				"burn_pct"						"6 9 12"
+			}
+			"03"
+			{
 				"var_type"						"FIELD_INTEGER"
-				"burn_pct"						"5"
+				"upgrade_cost"					"600 900"
 			}
 		}
 
@@ -2490,7 +2481,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"faceless_void_time_lock"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2499,12 +2491,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bash_chance"					"50"
+				"bash_chance"					"40 70 100"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"bash_duration"					"0.75"
+				"bash_duration"					"0.6"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"500 750"
 			}
 		}
 
@@ -2566,7 +2563,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"ursa_fury_swipes"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2575,12 +2573,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_increase"				"30"
+				"damage_increase"				"30 45 60"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"debuff_duration"				"5"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"500 750"
 			}
 		}
 
@@ -2629,7 +2632,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"gyrocopter_skyhigh_flak_cannon"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2643,7 +2647,12 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_as"						"100"
+				"bonus_as"						"100 175 250"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"500 750"
 			}
 		}
 
@@ -2673,7 +2682,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"slark_essence_shift"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2682,12 +2692,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"drain_per_hit"					"1"
+				"drain_per_hit"					"1 2 3"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"drain_duration"				"10"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"400 600"
 			}
 		}
 
@@ -2769,7 +2784,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"troll_warlord_fervor"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2778,17 +2794,22 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"stack_as"						"15"
+				"stack_as"						"15 20 25"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"10"
+				"max_stacks"					"8 9 10"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"stack_duration"				"2.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"400 600"
 			}
 		}
 
@@ -2838,7 +2859,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"huskar_berserkers_blood"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2847,12 +2869,22 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"stack_as"						"6"
+				"stack_as"						"4 6 8"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
+				"stack_dmg"						"2 3 4"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
 				"hp_per_stack"					"4"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"600 800"
 			}
 		}
 
@@ -2887,6 +2919,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stack_as"
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%stack_dmg"
 				}
 			}
 		}
@@ -2902,7 +2935,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"tower_thorns"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2911,7 +2945,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_hit"				"30"
+				"damage_per_hit"				"30 45 60"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"400 600"
 			}
 		}
 
@@ -2964,7 +3003,8 @@
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"					"windrunner_focusfire"
-		"MaxLevel"								"1"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2973,12 +3013,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_attacks"					"1"
+				"bonus_attacks"					"1 2 3"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"delay"							"0.15"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"700 1050"
 			}
 		}
 
@@ -2996,6 +3041,340 @@
 						"ScriptFile"			"hero/tower_abilities.lua"
 						"Function"				"Multihit"
 					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Spell Shield
+	//=================================================================================================================
+	"imba_tower_spell_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"antimage_spell_shield"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_resistance"				"100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_resistance_aura"			"10 20 30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"purge_interval"				"5 4 3"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"800"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"800 1200"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_spell_shield"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"ThinkInterval"					"%purge_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"SpellShield"
+
+						"particle_purge"		"particles/generic_gameplay/generic_purge.vpcf"
+						"sound_purge"			"Hero_Warlock.ShadowWordCastGood" 
+					}
+				}
+
+				"Aura"							"modifier_imba_tower_spell_shield_aura"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster"			"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_tower_spell_shield_aura"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance_aura"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Plague
+	//=================================================================================================================
+	"imba_tower_plague"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"tower_rot"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_second"				"30 40 50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow"							"-10 -15 -20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"area_of_effect"				"625"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_tick"				"15 20 25"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_rate"						"0.5"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"700 1050"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_plague"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"Aura"							"modifier_imba_tower_plague_aura"
+				"Aura_Radius"					"%area_of_effect"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
+				"Aura_ApplyToCaster"			"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"PlagueParticle"
+
+						"particle_plague"		"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+					}
+				}	
+			}
+
+			"modifier_imba_tower_plague_aura"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
+
+				"ThinkInterval"					"%tick_rate"
+
+				"OnIntervalThink"
+				{
+					"Damage"
+					{
+						"Target"				"TARGET"
+						"Type"					"DAMAGE_TYPE_MAGICAL"
+						"Damage"				"%damage_per_tick"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Aegis
+	//=================================================================================================================
+	"imba_tower_aegis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"modifier_invulnerable"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"4 8 12"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health"					"400 800 1200"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"700 1050"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"					"hero/tower_abilities.lua"
+				"Function"						"AegisUpdate"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_aegis"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tower ability: Self Repair
+	//=================================================================================================================
+	"imba_tower_self_repair"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"treant_living_armor"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_regen"						"5 10 10"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"regen_delay"					"3 3 0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"upgrade_cost"					"400 600"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_tower_self_repair"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"SelfRepairParticle"
+
+						"particle_regen"		"particles/units/heroes/hero_treant/treant_livingarmor.vpcf"
+					}
+
+					"FireSound"
+					{
+						"EffectName"			"Hero_Treant.LivingArmor.Target"
+						"Target"				"CASTER"
+					}
+				}	
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"SelfRepair"
+
+						"modifier_regen"		"modifier_imba_tower_self_repair"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%hp_regen"
 				}
 			}
 		}
@@ -10948,7 +11327,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200 1700 2200"
+		"AbilityCastRange"				"1200 1650 2100"
 		"AbilityCastPoint"				"0.5"	
 
 		// Time		
@@ -16115,7 +16494,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
@@ -16126,7 +16505,7 @@
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"21 18 15 12"
-		"AbilityCastPoint"				"0"
+		"AbilityCastPoint"				"0.01"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16361,11 +16740,14 @@
 				}
 
 				"OnAbilityExecuted"
-				{
-					"RemoveModifier"
+				{	
+					"RunScript"
 					{
-						"ModifierName"		"modifier_imba_vendetta"
-						"Target" 			"CASTER"
+						"ScriptFile"		"hero/hero_nyx_assassin.lua"
+						"Function"			"VendettaCast"
+
+						"modifier_vendetta"	"modifier_imba_vendetta"
+						"ability_carapace"	"imba_nyx_assassin_spiked_carapace"
 					}
 				}
 			
@@ -16788,6 +17170,17 @@
 						"modifier_mana"		"modifier_imba_essence_aura_mana"
 						"modifier_dummy"	"modifier_imba_essence_aura_mana_dummy"
 						"modifier_stacks"	"modifier_imba_essence_aura_int_gain_stacks"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_essence_aura"
 					}
 				}
 			}
@@ -17391,6 +17784,17 @@
 				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 				"Aura_Flags"   			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"internal/util.lua"
+						"Function"						"IllusionPassiveRemover"
+
+						"modifier"						"modifier_imba_degen_aura"
+					}
+				}
 			}
 
 			"modifier_imba_degen_aura_effect"
@@ -18428,6 +18832,17 @@
 				"IsHidden"					"1"
 				"IsPurgable"				"0"
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_coup_de_grace_kill"
+					}
+				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_bonus"
@@ -18990,7 +19405,7 @@
 				"ScriptFile"						"hero/hero_pudge.lua"
 				"Function"							"FleshHeapUpgrade"
 
-				"modifier_bonus"					"modifier_imba_flesh_heap_bonus"
+				"modifier_resist"					"modifier_imba_flesh_heap_resist"
 				"modifier_stacks"					"modifier_imba_flesh_heap_stacks"
 			}
 		}
@@ -19036,13 +19451,13 @@
 						"ScriptFile"				"hero/hero_pudge.lua"
 						"Function"					"HeapUpdater"
 
-						"modifier_bonus"			"modifier_imba_flesh_heap_bonus"
+						"modifier_resist"			"modifier_imba_flesh_heap_resist"
 						"modifier_stacks"			"modifier_imba_flesh_heap_stacks"
 					}
 				}
 			}
 
-			"modifier_imba_flesh_heap_bonus"
+			"modifier_imba_flesh_heap_resist"
 			{
 				"Passive"				"0"
 				"IsHidden"				"1"
@@ -23305,6 +23720,454 @@
 	}
 
 	//=================================================================================================================
+	// Tinker's Laser
+	//=================================================================================================================
+	"imba_tinker_laser"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"tinker_laser"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"575 650 725 800"
+		"AbilityCastPoint"				"0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 120 140 160"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_duration"			"3.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 175 250 325"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blind_aoe"				"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blind_amount"			"100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_reduction"		"-1800"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_damage"			"50"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"0.25"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range_scepter"	"600"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_tinker.lua"
+				"Function"				"Laser"
+
+				"ability_rearm"			"imba_tinker_rearm"
+				"particle_laser"		"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
+				"sound_cast"			"Hero_Tinker.Laser"
+				"sound_impact"			"Hero_Tinker.LaserImpact"
+				"modifier_blind"		"modifier_imba_laser_blind"
+				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
+				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_laser_blind"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+
+				"EffectName"			"particles/ambient/tower_laser_blind.vpcf"
+				"EffectAttachType"		"follow_overhead"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_amount"
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_reduction"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker's Heat-Seeking Missiles
+	//=================================================================================================================
+	"imba_tinker_heat_seeking_missile"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"tinker_heat_seeking_missile"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"2500"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 140 160 180"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{ 
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_range"			"2500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_count"			"2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_count"			"1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 200 275 350"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"900"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_tinker.lua"
+				"Function"				"Missile"
+
+				"ability_rearm"			"imba_tinker_rearm"
+				"particle_missile"		"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
+				"particle_dud"			"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
+				"sound_cast"			"Hero_Tinker.Heat-Seeking_Missile"
+				"sound_dud"				"Hero_Tinker.Heat-Seeking_Missile_Dud"
+				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
+				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"FireEffect"
+			{
+				"Target"				"TARGET"
+				"EffectName"			"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
+				"ControlPointEntities"
+				{
+					"TARGET"			"attach_origin"
+				}
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Hero_Tinker.Heat-Seeking_Missile.Impact"
+				"Target"				"TARGET"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_imba_heat_seeking_missile_vision"
+				"Target"				"TARGET"
+			}
+		
+			"Damage"
+			{
+				"Target"				"TARGET"
+				"Damage"				"%damage"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_heat_seeking_missile_vision"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+
+				"Duration"				"%vision_duration"
+		
+				"States"
+				{
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker's March of the Machines
+	//=================================================================================================================
+	"imba_tinker_march_of_the_machines"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"tinker_march_of_the_machines"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"35.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"130 150 170 190"
+
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+			"model"						"models/heroes/tinker/mom.vmdl"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawner_width"			"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawner_amount"		"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_radius"			"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_length"			"1200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"collision_radius"		"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"32 48 64 80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attacks_to_kill"		"3"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_spawns"			"30"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"400"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"spawn_interval"		"0.3"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_scepter"		"250"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"250"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"Target"				"CASTER"
+				"EffectName"			"Hero_Tinker.March_of_the_Machines.Cast"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_tinker.lua"
+				"Function"				"March"
+				"Target"				"POINT"
+
+				"ability_rearm"			"imba_tinker_rearm"
+				"sound_cast"			"Hero_Tinker.March_of_the_Machines"
+				"modifier_machine"		"modifier_imba_march_of_the_machines"
+				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
+				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+			
+			"Damage"
+			{
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_march_of_the_machines"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"			"%spawn_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_tinker.lua"
+						"Function"				"MarchSpawn"
+
+						"particle_machine"		"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+					}
+				}
+		
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_tinker.lua"
+						"Function"				"MarchDamage"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+				    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+				    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tinker's Rearm
 	//=================================================================================================================
 	"imba_tinker_rearm"
@@ -23318,7 +24181,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastPoint"				"0.5 0.4 0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -23348,7 +24211,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"2.5"
+				"stack_duration"		"3.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_penalty"			"-2.0"
 			}
 		}
 		
@@ -23356,11 +24224,13 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_tinker.lua"
-				"Function"			"Rearm"
+				"ScriptFile"			"hero/hero_tinker.lua"
+				"Function"				"Rearm"
 
-				"particle_rearm"	"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
-				"sound_cast"		"Hero_Tinker.Rearm"
+				"particle_rearm"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+				"sound_cast"			"Hero_Tinker.Rearm"
+				"modifier_stack"		"modifier_imba_rearm_stack"
+				"modifier_mana"			"modifier_imba_rearm_mana_penalty"
 			}
 		}
 		
@@ -23368,10 +24238,221 @@
 		{
 			"modifier_imba_rearm_stack"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsHidden"			"0"
-				"IsPurgable"		"0"
+				"Passive"				"0"
+				"IsBuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+
+				"Duration"				"%stack_duration"
+
+				"ThinkInterval"			"0.2"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_tinker.lua"
+						"Function"				"RearmStacksCheck"
+
+						"modifier_stack"		"modifier_imba_rearm_stack"
+						"modifier_mana"			"modifier_imba_rearm_mana_penalty"
+					}
+				}
+			}
+
+			"modifier_imba_rearm_mana_penalty"
+			{
+				"Passive"				"0"
+				"IsDebuff"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%stack_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_penalty"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Faceless Void's Chronosphere
+	//=================================================================================================================
+	"imba_faceless_void_chronosphere"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"faceless_void_chronosphere"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110.0 100.0 90.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_radius"			"425 450 475"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_duration"			"4.0 4.5 5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_radius"			"50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extra_duration"		"0.2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_interval"			"0.1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linger_duration"		"0.2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"60 90 120"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_scepter"			"-80"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_faceless_void.lua"
+				"Function"				"Chronosphere"
+
+				"sound_cast"			"Hero_FacelessVoid.Chronosphere"
+				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+				"modifier_caster"		"modifier_imba_chronosphere_caster"
+				"modifier_enemy"		"modifier_imba_chronosphere_enemy"
+				"modifier_ally"			"modifier_imba_chronosphere_ally_scepter"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_chronosphere_caster"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%linger_duration"
+
+				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_faceless_void.lua"
+						"Function"		"ChronoBuffEnd"
+					}
+
+					"DestroyTrees"
+					{
+						"Target"		"TARGET"
+						"Radius"		"200"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"1000"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"					"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_chronosphere_enemy"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FROZEN"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
+				}
+			}
+
+			"modifier_imba_chronosphere_ally_scepter"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%linger_duration"
+
+				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+				"StatusEffectPriority"	"1"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"			"%slow_scepter"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_scepter"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-300"
+				}
 			}
 		}
 	}

@@ -1,6 +1,19 @@
 --[[	Author: d2imba
 		Date:	15.08.2015	]]
 
+function OctarineToggle( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local new_item = keys.new_item
+	local sound_toggle = keys.sound_toggle
+
+	-- Toggle Octarine Core on or off
+	SwapToItem(caster, ability, new_item)
+
+	-- Play sound only to the caster
+	caster:EmitSound(sound_toggle)
+end
+
 function OctarineLifesteal( keys )
 	local caster = keys.caster
 	local target = keys.unit

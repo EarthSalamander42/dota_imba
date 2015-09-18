@@ -209,6 +209,7 @@ function NightmareDamage( keys )
 
 	-- Check if the damage would be lethal.
 	if target_health <= damage then
+		
 		-- If that's the case, deal pure damage.
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	else

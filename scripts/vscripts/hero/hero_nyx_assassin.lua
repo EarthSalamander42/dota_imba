@@ -148,6 +148,26 @@ function SpikedCarapaceReflect( keys )
 	end
 end
 
+function VendettaCast( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_vendetta = keys.modifier_vendetta
+	local ability_carapace = keys.ability_carapace
+	local current_ability = caster:GetCurrentActiveAbility()
+
+	-- If the current ability being cast is Spiked Carapace, re-apply invisibility
+	if current_ability and current_ability:GetName() == ability_carapace then
+		local vendetta_modifier = caster:FindModifierByName(modifier_vendetta)
+		local remaining_duration = vendetta_modifier:GetRemainingTime()
+
+		Timers:CreateTimer(0.01, function()
+			caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = remaining_duration})
+		end)
+	else
+		caster:RemoveModifierByName(modifier_vendetta)
+	end
+end
+
 function Vendetta( keys )
 	local caster = keys.caster
 	local target = keys.target
