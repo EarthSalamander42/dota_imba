@@ -113,6 +113,7 @@
 		//"item"		"item_imba_lotus_orb"
 		"item"		"item_imba_orchid"
 		"item"		"item_ultimate_scepter"
+		"item"		"item_imba_ethereal_blade"
 		"item"		"item_imba_refresher"
 		"item"		"item_imba_sheepstick"
 		"item"		"item_imba_octarine_core"
@@ -143,7 +144,6 @@
 		"item"		"item_imba_shadow_blade"
 		"item"		"item_imba_basher"
 		"item"		"item_imba_bfury"
-		"item"		"item_imba_ethereal_blade"
 		"item"		"item_imba_silver_edge"
 		"item"		"item_imba_radiance"
 		"item"		"item_imba_monkey_king_bar"
@@ -151,6 +151,7 @@
 		"item"		"item_imba_butterfly"
 		"item"		"item_imba_rapier_1"
 		"item"		"item_imba_abyssal_blade"
+		"item"		"item_imba_starfury"
 	}
 		
 	// Level 4 - Orange / Orb / Artifacts				

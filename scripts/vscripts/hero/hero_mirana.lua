@@ -134,7 +134,7 @@ function LaunchArrow( keys )
 					arrow_stun_duration = arrow_max_stun
 				end
 
-				unit:AddNewModifier(caster, nil, "modifier_stunned", {duration = arrow_stun_duration})
+				unit:AddNewModifier(caster, ability, "modifier_stunned", {duration = arrow_stun_duration})
 
 				-- Damage
 				local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000

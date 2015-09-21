@@ -28,6 +28,9 @@ function Precache( context )
 	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_active.vpcf", context)
 	PrecacheResource("particle", "particles/item/octarine_core/octarine_core_hit.vpcf", context)
 	PrecacheResource("particle", "particles/item/pipe_of_insight/pipe_of_insight.vpcf", context)
+	PrecacheResource("particle", "particles/item/jingu_bang/jingu_bang_pulverize.vpcf", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_brewmaster.vsndevts", context)
+	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts", context)
 
 	-- Roshan
 	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)

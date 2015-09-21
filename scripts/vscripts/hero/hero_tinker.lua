@@ -275,8 +275,8 @@ function MarchSpawn( keys )
 	local ability_level = ability:GetLevel() - 1
 	local particle_machine = keys.particle_machine
 
-	-- If the ability was unlearned, destroy the spawner
-	if not ability then
+	-- If the ability was unlearned, or the spawner is near the enemy fountain, destroy it
+	if not ability or IsNearEnemyClass(spawner, 1360, "ent_dota_fountain")then
 		spawner:Destroy()
 		return nil
 	end

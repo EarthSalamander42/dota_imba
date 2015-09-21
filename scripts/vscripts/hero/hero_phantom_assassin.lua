@@ -144,7 +144,12 @@ function PhantomStrike( keys )
 
 	-- If cast on an enemy, immediately start attacking it
 	if caster:GetTeam() ~= target:GetTeam() then
+		caster.phantom_strike_target = target
 		caster:SetAttacking(target)
+		caster:SetForceAttackTarget(target)
+		Timers:CreateTimer(0.01, function()
+			caster:SetForceAttackTarget(nil)
+		end)
 	end
 end
 
@@ -213,8 +218,14 @@ function PhantomStrikeHit( keys )
 		end
 	end
 
-	-- Attack (does not calculate on-hit procs)
-	caster:PerformAttack(target, true, true, true, true)
+	-- Attack (calculates on-hit procs)
+	if target ~= caster.phantom_strike_target then
+		local initial_pos = caster:GetAbsOrigin()
+		local target_pos = target:GetAbsOrigin()
+		caster:SetAbsOrigin(target_pos)
+		caster:PerformAttack(target, true, true, true, true)
+		caster:SetAbsOrigin(initial_pos)
+	end
 end
 
 function Blur( keys )

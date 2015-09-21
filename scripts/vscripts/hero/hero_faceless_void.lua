@@ -3,6 +3,7 @@
 
 function Chronosphere( keys )
 	local caster = keys.caster
+	local chrono_center = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
@@ -22,9 +23,8 @@ function Chronosphere( keys )
 	-- Calculate Chronosphere parameters
 	local mana_cost = ability:GetManaCost(-1)
 	local caster_mana = caster:GetMana()
-	local total_radius = base_radius + extra_radius * caster_mana / mana_cost
-	local total_duration = base_duration + extra_duration * caster_mana / mana_cost
-	local chrono_center = caster:GetAbsOrigin()
+	local total_radius = base_radius + extra_radius * caster_mana / mana_cost / FRANTIC_MULTIPLIER
+	local total_duration = base_duration + extra_duration * caster_mana / mana_cost / FRANTIC_MULTIPLIER
 
 	-- Spend mana
 	caster:SpendMana(caster:GetMana(), ability)
@@ -64,7 +64,7 @@ function Chronosphere( keys )
 		if elapsed_duration < total_duration then
 			return tick_interval
 		else
-			ParticleManager:DestroyParticle(chrono_pfx, true)
+			ParticleManager:DestroyParticle(chrono_pfx, false)
 		end
 		
 	end)

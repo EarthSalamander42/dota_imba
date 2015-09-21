@@ -4618,7 +4618,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1200"	
+		"ItemCost"						"1100"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -4856,7 +4856,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"22.0"
+		"AbilityCooldown"				"24.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"1"
@@ -4864,8 +4864,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"2515"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"2415"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 1"
@@ -4895,12 +4895,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"420"
+				"damage"				"400"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"800"
+				"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -4918,9 +4918,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"850"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"19.0"
+		"AbilityCooldown"				"21.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"2"
@@ -4928,8 +4928,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"3715"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"3515"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 2"
@@ -4959,12 +4959,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"540"
+				"damage"				"500"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"850"
+				"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -4982,9 +4982,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"16.0"
+		"AbilityCooldown"				"18.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"3"
@@ -4992,8 +4992,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"4915"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"4615"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 3"
@@ -5023,12 +5023,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"660"
+				"damage"				"600"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"900"
+				"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -5046,9 +5046,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"950"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"13.0"
+		"AbilityCooldown"				"15.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"4"
@@ -5056,8 +5056,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"6115"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"5715"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 4"
@@ -5087,12 +5087,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"780"
+				"damage"				"700"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"950"
+				"range_tooltip"			"1000"
 			}
 		}
 	}
@@ -5112,7 +5112,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"5"
@@ -5120,8 +5120,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"7315"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"6815"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 5"
@@ -5151,7 +5151,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"800"
 			}
 			"05"
 			{
@@ -5166,17 +5166,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1222"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"item_datadriven"	
+		"AbilityTextureName" 			"item_imba_dagon_6"												
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"6"
@@ -5184,8 +5185,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160"
-		"ItemCost"						"8515"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"7915"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 6"
@@ -5215,12 +5216,64 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1100"
+				"range_tooltip"			"1000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect_real"	"34"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"200"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"400"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_count"			"2"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_dagon_6"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect_real"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_all_stats"
+				    "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
+				}
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_dagon.lua"
+				"Function"				"Dagon"
+
+				"sound_cast"			"DOTA_Item.Dagon.Activate"
+				"sound_hit"				"DOTA_Item.Dagon5.Target"
+				"particle_hit"			"particles/items_fx/dagon.vpcf"
 			}
 		}
 	}
@@ -5230,17 +5283,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1223"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"item_datadriven"	
+		"AbilityTextureName" 			"item_imba_dagon_7"												
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"7"
@@ -5248,8 +5302,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"145"
-		"ItemCost"						"9715"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"9015"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 7"
@@ -5279,12 +5333,64 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1200"
+				"range_tooltip"			"1000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect_real"	"37"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"275"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"450"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_count"			"2"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_dagon_7"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect_real"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_all_stats"
+				    "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
+				}
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_dagon.lua"
+				"Function"				"Dagon"
+
+				"sound_cast"			"DOTA_Item.Dagon.Activate"
+				"sound_hit"				"DOTA_Item.Dagon5.Target"
+				"particle_hit"			"particles/econ/events/ti4/dagon_ti4.vpcf"
 			}
 		}
 	}
@@ -5294,17 +5400,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1224"	
-		"BaseClass"						"item_dagon_5"													
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"item_datadriven"	
+		"AbilityTextureName" 			"item_imba_dagon_8"												
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1300"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"7.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"8"
@@ -5312,8 +5419,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130"
-		"ItemCost"						"10915"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"10115"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 8"
@@ -5343,12 +5450,64 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900"
+				"damage"				"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1300"
+				"range_tooltip"			"1000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect_real"	"40"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"350"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"500"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_count"			"3"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_dagon_8"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect_real"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_all_stats"
+				    "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
+				}
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_dagon.lua"
+				"Function"				"Dagon"
+
+				"sound_cast"			"DOTA_Item.Dagon.Activate"
+				"sound_hit"				"DOTA_Item.Dagon5.Target"
+				"particle_hit"			"particles/econ/events/ti5/dagon_ti5.vpcf"
 			}
 		}
 	}
@@ -5358,18 +5517,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2042"	
-		"BaseClass"						"item_datadriven"													
+		"BaseClass"						"item_datadriven"	
+		"AbilityTextureName" 			"item_imba_dagon_9"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName" 			"item_imba_dagon_9"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"6.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"9"
@@ -5377,8 +5536,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"115"
-		"ItemCost"						"12115"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"11215"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 9"
@@ -5408,17 +5567,32 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"950"
+				"damage"				"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1400"
+				"range_tooltip"			"1000"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_intellect_real"	"43"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"425"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"550"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_count"			"3"
 			}
 		}
 
@@ -5426,10 +5600,10 @@
 		{
 			"modifier_item_imba_dagon_9"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
+				"Passive"				"1"
+				"IsHidden"				"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5445,10 +5619,12 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"items/item_dagon.lua"
-				"Function"		"Dagon9SpellStart"
+				"ScriptFile"			"items/item_dagon.lua"
+				"Function"				"Dagon"
 
-				"Damage"		"%damage"
+				"sound_cast"			"DOTA_Item.Dagon.Activate"
+				"sound_hit"				"DOTA_Item.Dagon5.Target"
+				"particle_hit"			"particles/econ/events/ti5/dagon_lvl2_ti5.vpcf"
 			}
 		}
 	}
@@ -5458,18 +5634,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2043"	
-		"BaseClass"						"item_datadriven"													
+		"BaseClass"						"item_datadriven"	
+		"AbilityTextureName" 			"item_imba_dagon_10"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName" 			"item_imba_dagon_10"
 		"FightRecapLevel"				"2"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"12.0"
 		"AbilitySharedCooldown"			"dagon"
 		"MaxUpgradeLevel"				"10"
 		"ItemBaseLevel"					"10"
@@ -5477,8 +5653,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"13315"
+		"AbilityManaCost"				"180"
+		"ItemCost"						"12315"
 		"ItemShopTags"					"damage;int;str;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"dagon 10"
@@ -5505,17 +5681,32 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"1000"
+				"damage"				"800"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range_tooltip"			"1500"
+				"range_tooltip"			"1000"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_intellect_real"	"46"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_damage"			"500"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"600"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_count"			"4"
 			}
 		}
 
@@ -5523,10 +5714,10 @@
 		{
 			"modifier_item_imba_dagon_10"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
+				"Passive"				"1"
+				"IsHidden"				"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 		
 				"Properties"
 				{
@@ -5542,10 +5733,12 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"items/item_dagon.lua"
-				"Function"		"Dagon10SpellStart"
+				"ScriptFile"			"items/item_dagon.lua"
+				"Function"				"Dagon"
 
-				"Damage"		"%damage"
+				"sound_cast"			"DOTA_Item.Dagon.Activate"
+				"sound_hit"				"DOTA_Item.Dagon5.Target"
+				"particle_hit"			"particles/item/dagon/dagon_green.vpcf"
 			}
 		}
 	}
@@ -5810,6 +6003,17 @@
 				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"Aura_ApplyToCaster" 	"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_necronomicon_aura"
+					}
+				}
 			}
 
 			"modifier_item_imba_necronomicon_debuff"
@@ -6095,6 +6299,17 @@
 					{
 						"ModifierName"	"modifier_item_imba_necronomicon_1_aura"
 						"Target" 		"CASTER"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_necronomicon_2_aura"
 					}
 				}
 			}
@@ -6388,6 +6603,17 @@
 					{
 						"ModifierName"	"modifier_item_imba_necronomicon_2_aura"
 						"Target" 		"CASTER"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_item_imba_necronomicon_3_aura"
 					}
 				}
 			}
@@ -9597,7 +9823,7 @@
 		"ItemResult"					"item_imba_monkey_king_bar"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_demon_edge;item_imba_javelin;item_imba_javelin"
+			"01"						"item_imba_jingu_bang;item_imba_javelin;item_imba_demon_edge"
 		}
 	}
 	
@@ -9609,17 +9835,19 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1135"
-		"BaseClass"						"item_monkey_king_bar"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_monkey_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5400"
+		"ItemCost"						"5275"
 		"ItemShopTags"					"damage;attack_speed;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"mkb;monkey king bar"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -9627,27 +9855,134 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"125"
+				"bonus_damage"			"110"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"30"
+				"bonus_as"				"40"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"35"
+				"bonus_range"			"200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"100"
+				"pulverize_chance"		"35"
 			}
 			"05"
 			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_radius"		"125"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_length"		"400"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_damage"		"100"
+			}
+			"08"
+			{
 				"var_type"				"FIELD_FLOAT"
-				"bash_stun"				"0.1"
+				"pulverize_stun"		"0.01"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"0"
+
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_mkb.lua"
+				"Function"					"MonkeyKingBarHit"
+
+				"particle_hit"				"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_mkb"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_item_imba_mkb_unique"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_mkb.lua"
+						"Function"			"MonkeyKingBarPassive"
+
+						"modifier_ranged"	"modifier_item_imba_mkb_ranged"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_mkb.lua"
+						"Function"			"MonkeyKingBarProc"
+
+						"sound_hit"			"Hero_Brewmaster.ThunderClap"
+						"sound_bash"		"DOTA_Item.MKB.Minibash"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_item_imba_mkb_ranged"
+						"Target"			"CASTER"
+					}
+				}
+			}
+
+			"modifier_item_imba_mkb_ranged"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%bonus_range"
+				}
 			}
 		}
 	}
@@ -17500,5 +17835,462 @@
 		}
 	}
 
-	//next free ID: 2174
+	//=================================================================================================================
+	// Recipe: Jingu Bang
+	//=================================================================================================================
+	"item_recipe_imba_jingu_bang"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2174"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_jingu_bang"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_quarterstaff;item_imba_gloves"
+		}
+	}
+
+	//=================================================================================================================
+	// Jingu Bang
+	//=================================================================================================================
+	"item_imba_jingu_bang"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2175"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_jingu_bang"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1375"
+		"ItemShopTags"					"damage;ias"
+		"ItemQuality"					"common"
+		"ItemAliases"					"jingu"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_chance"		"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_radius"		"125"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pulverize_length"		"400"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"0"
+
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_jingu_bang.lua"
+				"Function"					"JinguBangHit"
+
+				"particle_hit"				"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_jingu_bang"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"ThinkInterval"				"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_jingu_bang.lua"
+						"Function"			"JinguBangPassive"
+
+						"modifier_ranged"	"modifier_item_imba_jingu_bang_ranged"
+						"modifier_melee"	"modifier_item_imba_jingu_bang_melee"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_item_imba_jingu_bang_ranged"
+						"Target" 			"CASTER"
+					}
+
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_item_imba_jingu_bang_melee"
+						"Target" 			"CASTER"
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
+				}
+			}
+
+			"modifier_item_imba_jingu_bang_ranged"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%bonus_range"
+				}
+			}
+
+			"modifier_item_imba_jingu_bang_melee"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_jingu_bang.lua"
+						"Function"			"JinguBangProc"
+
+						"sound_hit"			"Hero_Brewmaster.ThunderClap"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Rusty Old Shotgun
+	//=================================================================================================================
+	"item_recipe_imba_shotgun"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2176"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_shotgun"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_blade_of_alacrity;item_imba_blade_of_alacrity;item_imba_quarterstaff"
+		}
+	}
+
+	//=================================================================================================================
+	// Rusty Old Shotgun
+	//=================================================================================================================
+	"item_imba_shotgun"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2177"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_shotgun"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2875"
+		"ItemShopTags"					"damage;ias;agi"
+		"ItemQuality"					"common"
+		"ItemAliases"					"shotgun"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"28"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"40"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_targets"			"1"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_shotgun"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_agi"
+				}
+			}
+
+			"modifier_item_imba_shotgun_unique"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_shotgun.lua"
+						"Function"			"Shotgun"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Starfury
+	//=================================================================================================================
+	"item_recipe_imba_starfury"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2178"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_starfury"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_shotgun;item_imba_demon_edge;item_imba_eagle"
+		}
+	}
+
+	//=================================================================================================================
+	// Starfury
+	//=================================================================================================================
+	"item_imba_starfury"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2179"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_starfury"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8475"
+		"ItemShopTags"					"damage;ias;agi"
+		"ItemQuality"					"common"
+		"ItemAliases"					"shotgun"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"90"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"70"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"10"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_targets"			"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_bonus"			"20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"3.0"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_starfury"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_agi"
+				}
+			}
+
+			"modifier_item_imba_starfury_unique"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_shotgun.lua"
+						"Function"			"Starfury"
+
+						"sound_proc"		"Ability.StarfallImpact"
+						"modifier_dummy"	"modifier_item_imba_starfury_buff_dummy"
+						"modifier_buff"		"modifier_item_imba_starfury_buff"
+					}
+				}
+			}
+
+			"modifier_item_imba_starfury_buff_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%proc_duration"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_shotgun.lua"
+						"Function"			"StarfuryBuff"
+
+						"modifier_buff"		"modifier_item_imba_starfury_buff"
+					}
+				}
+			}
+
+			"modifier_item_imba_starfury_buff"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%proc_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"1"
+				}
+			}
+		}
+	}
+
+	//next free ID: 2180
 }

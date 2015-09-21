@@ -65,7 +65,7 @@ function SpellShield( keys )
 	local modifier_stacks = keys.modifier_stacks
 	local particle_stacks = keys.particle_stacks
 
-	-- If there is not casted ability, do nothing
+	-- If there isn't a casted ability, do nothing
 	if not cast_ability then
 		return nil
 	end
@@ -74,6 +74,7 @@ function SpellShield( keys )
 	local mana_per_stack = ability:GetLevelSpecialValueFor("mana_per_stack", ability_level)
 	local mana_to_purge = ability:GetLevelSpecialValueFor("mana_to_purge", ability_level)
 	local scale_up = ability:GetLevelSpecialValueFor("scale_up", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- If total mana spent variable doesn't exist, create it
 	if not caster.spell_shield_mana_spent then
@@ -99,9 +100,15 @@ function SpellShield( keys )
 		end)
 	end
 
-	-- Add damage/as stacks
-	AddStacks(ability, caster, caster, modifier_stacks, math.floor( mana_spent / mana_per_stack ), true)
+	-- Add damage stacks
 	local current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
+	local stacks_to_add = math.floor( mana_spent / mana_per_stack )
+	if (stacks_to_add + current_stacks) <= max_stacks then
+		AddStacks(ability, caster, caster, modifier_stacks, stacks_to_add, true)
+	else
+		AddStacks(ability, caster, caster, modifier_stacks, max_stacks - current_stacks, true)
+	end
+	current_stacks = caster:GetModifierStackCount(modifier_stacks, caster)
 
 	-- Update the Spell Shield particle
 	if not caster.spell_shield_stacks_particle then
@@ -143,7 +150,6 @@ function ManaVoid( keys )
 
 	if scepter then
 		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct_scepter', ability:GetLevel() -1) / 100
-		maxManaBurn = ability:GetLevelSpecialValueFor('max_mana_burn_scepter', ability:GetLevel() -1) * FRANTIC_MULTIPLIER
 	else
 		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct', ability:GetLevel() -1) / 100
 		maxManaBurn = ability:GetLevelSpecialValueFor('max_mana_burn', ability:GetLevel() -1) * FRANTIC_MULTIPLIER
@@ -152,7 +158,12 @@ function ManaVoid( keys )
 	local damage = 0
 	local targetMana = target:GetMana()
 	local targetMaxMana = target:GetMaxMana()
-	local manaToBurn = math.min( manaBurn * targetMaxMana, maxManaBurn) 
+	local manaToBurn = 0
+	if scepter then
+		manaToBurn = manaBurn * targetMaxMana
+	else
+		manaToBurn = math.min( manaBurn * targetMaxMana, maxManaBurn)
+	end
 
 	if targetMana < manaToBurn then
 		target:SetMana(0)

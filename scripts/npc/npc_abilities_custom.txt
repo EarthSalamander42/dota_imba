@@ -4305,15 +4305,20 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"mana_per_stack"		"10"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_to_purge"			"600"
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"100"
 			}
 			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_to_purge"			"600"
+			}
+			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scale_up"				"0.004"
@@ -4494,17 +4499,12 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"mana_void_mana_burn_pct_scepter"	"50 60 70"
+				"mana_void_mana_burn_pct_scepter"	"30 40 50"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"max_mana_burn"						"250 375 500"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"max_mana_burn_scepter"				"500 750 1000"
 			}
 		}
 
@@ -24175,17 +24175,17 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"			"tinker_rearm"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5 0.4 0.3"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3.0 2.0 1.0"
+		"AbilityCooldown"				"2.5 1.5 0.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24285,7 +24285,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
@@ -24302,7 +24302,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -24365,6 +24365,7 @@
 			{
 				"ScriptFile"			"hero/hero_faceless_void.lua"
 				"Function"				"Chronosphere"
+				"Target"				"POINT"
 
 				"sound_cast"			"Hero_FacelessVoid.Chronosphere"
 				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"

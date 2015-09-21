@@ -138,7 +138,14 @@ function LandMineThink( keys )
 		end
 
 		-- If any enemy is inside the small blast range, explode
-		if #near_units > 0 then
+		local should_explode = false
+		for _,unit in pairs(near_units) do
+			print(unit:GetName())
+			if unit:GetName() ~= "npc_dota_courier" then
+				should_explode = true
+			end
+		end
+		if should_explode then
 			caster:ForceKill(false)
 		else
 			return think_interval
