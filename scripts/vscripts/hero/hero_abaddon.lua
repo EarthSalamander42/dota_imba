@@ -239,9 +239,8 @@ function EndShieldParticle( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local strength = caster.GetStrength(caster)
 	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
-	local max_damage_absorb = base_damage_absorb + strength
+	local max_damage_absorb = base_damage_absorb
 	local damageType = DAMAGE_TYPE_MAGICAL
 	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
 

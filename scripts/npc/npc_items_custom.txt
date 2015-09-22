@@ -9865,7 +9865,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"200"
+				"bonus_range"			"150"
 			}
 			"04"
 			{
@@ -17899,7 +17899,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"100"
+				"bonus_range"			"75"
 			}
 			"04"
 			{
@@ -18080,7 +18080,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"40"
+				"proc_chance"			"35"
 			}
 			"05"
 			{
@@ -18200,7 +18200,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_targets"			"2"
+				"extra_targets"			"1"
 			}
 			"06"
 			{

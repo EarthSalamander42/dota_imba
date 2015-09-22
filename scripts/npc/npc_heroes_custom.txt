@@ -80,6 +80,7 @@
 
 		"Ability1"					"imba_axe_berserkers_call"
 		"Ability2"					"imba_axe_battle_hunger"
+		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 		"Ability5"					"attribute_bonus_str"
 

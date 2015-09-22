@@ -1123,7 +1123,7 @@
 	//=================================================================================================================
 	"antimage_blink"
 	{
-		"AbilityCastPoint"				"0.4 0.35 0.3 0.25"
+		"AbilityCastPoint"				"0.35"
 		
 		"AbilityManaCost"				"0"
 
@@ -1134,44 +1134,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blink_range"			"1400"
+				"blink_range"			"1350"
 			}
 			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"min_blink_range"		"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Axe: Counter Helix
-	//=================================================================================================================
-	"axe_counter_helix"
-	{
-		"AbilityCooldown"				"0.0"
-
-		"AbilityDamage"					"50 80 110 140"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"50"
-			}
-			
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown"					"0.0"
 			}
 		}
 	}

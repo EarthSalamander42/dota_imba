@@ -67,6 +67,11 @@ function HeadshotKnockback( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
+	-- If the target is magic immune, do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
+
 	-- Parameters
 	local distance_pct = ability:GetLevelSpecialValueFor("far_knockback", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("knockback_speed", ability_level)
