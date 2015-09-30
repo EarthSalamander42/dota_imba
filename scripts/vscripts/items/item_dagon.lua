@@ -15,6 +15,7 @@ function Dagon( keys )
 	local bounce_damage = ability:GetLevelSpecialValueFor("bounce_damage", ability_level)
 	local bounce_range = ability:GetLevelSpecialValueFor("bounce_range", ability_level)
 	local bounce_count = ability:GetLevelSpecialValueFor("bounce_count", ability_level)
+	local bounce_delay = 0.1
 	local current_source = caster
 	local targets_hit = {}
 
@@ -40,7 +41,7 @@ function Dagon( keys )
 	current_source = target
 
 	-- Start bounce loop
-	while bounce_count > 0 do
+	Timers:CreateTimer(bounce_delay, function()
 
 		-- Find nearby enemies
 		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_source:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
@@ -78,6 +79,12 @@ function Dagon( keys )
 				break
 			end
 		end
+
+		-- Keep bouncing if appropriate
 		bounce_count = bounce_count - 1
-	end
+		if bounce_count > 0 then
+			return bounce_delay
+		end
+	end)
+
 end

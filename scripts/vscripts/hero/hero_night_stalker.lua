@@ -138,8 +138,8 @@ function DarknessLimitBreak( keys )
 	local ability = keys.ability
 
 	-- Removes movement speed cap
-	if not caster:HasModifier("modifier_bloodseeker_thirst") then
-		caster:AddNewModifier(caster, ability, "modifier_bloodseeker_thirst", {})
+	if not caster:HasModifier("modifier_imba_speed_limit_break") then
+		caster:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})
 	end
 
 	-- Simulate attack speed cap removal
@@ -150,7 +150,7 @@ function DarknessLimitBreakEnd( keys )
 	local caster = keys.caster
 
 	-- Returns movement speed cap
-	caster:RemoveModifierByName("modifier_bloodseeker_thirst")
+	caster:RemoveModifierByName("modifier_imba_speed_limit_break")
 
 	-- Return attack speed cap
 	ReturnAttackSpeedCap(caster)

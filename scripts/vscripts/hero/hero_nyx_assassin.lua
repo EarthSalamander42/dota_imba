@@ -15,8 +15,8 @@ function Impale ( keys )
 
 	-- Adjust parameters if burrow buff is present
 	if caster:HasModifier("modifier_nyx_assassin_burrow") then
-		length = length * 1.5
-		speed = speed * 1.5
+		length = length * 1.75
+		speed = speed * 1.75
 	end
 
 	-- Play sound

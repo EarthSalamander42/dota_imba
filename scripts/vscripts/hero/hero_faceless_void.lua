@@ -51,7 +51,7 @@ function Chronosphere( keys )
 		for _,unit in pairs(units) do
 			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_caster, {})
-				unit:AddNewModifier(caster, ability, "modifier_bloodseeker_thirst", {})	
+				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})	
 			elseif scepter and unit:GetTeam() == caster:GetTeam() then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_ally, {})
 			elseif not unit:HasModifier(modifier_enemy) then
@@ -72,5 +72,5 @@ end
 
 function ChronoBuffEnd( keys )
 	local caster = keys.caster
-	caster:RemoveModifierByName("modifier_bloodseeker_thirst")
+	caster:RemoveModifierByName("modifier_imba_speed_limit_break")
 end

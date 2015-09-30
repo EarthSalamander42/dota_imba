@@ -69,7 +69,6 @@ function LoseCharges( keys )
 	local item_level = item:GetLevel() - 1
 
 	-- Parameters
-	local exp_modifier = keys.exp_modifier
 	local on_death_charge_loss = item:GetLevelSpecialValueFor("on_death_loss", item_level)
 	local effect_radius = item:GetLevelSpecialValueFor("effect_radius", item_level)
 	local heal_on_death_base = item:GetLevelSpecialValueFor("heal_on_death_base", item_level)
@@ -87,27 +86,6 @@ function LoseCharges( keys )
 	for _,ally in pairs(allies) do
 		ally:Heal(total_heal, caster)
 	end
-
-	-- Vision
-	item:CreateVisibilityNode(caster:GetAbsOrigin(), effect_radius, caster:GetRespawnTime())
-
-	-- Gain experience and grant vision on the area while dead
-	local bloodstone_exp_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber() )
-	item:ApplyDataDrivenModifier(caster, bloodstone_exp_dummy, exp_modifier, {})
-	Timers:CreateTimer(0.1, function()
-		if not caster:IsAlive() then
-			return 0.1
-		else
-			bloodstone_exp_dummy:Destroy()
-		end
-	end)
-end
-
-function GainExp( keys )
-	local caster = keys.caster
-	local unit = keys.unit
-
-	caster:AddExperience(unit:GetDeathXP(), 0, false, true)
 end
 
 function RespawnTimeReset( keys )

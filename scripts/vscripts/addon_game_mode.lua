@@ -19,6 +19,9 @@ function Precache( context )
 	-- Particles can be precached individually or by folder
 	-- It it likely that precaching a single particle system will precache all of its children, but this may not be guaranteed
 
+	-- Lua modifiers activation
+	LinkLuaModifier("modifier_imba_speed_limit_break", "modifier/modifier_imba_speed_limit_break.lua", LUA_MODIFIER_MOTION_NONE )
+
 	-- Items
 	PrecacheResource("particle", "particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf", context)
 	PrecacheResource("particle", "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_target.vpcf", context)

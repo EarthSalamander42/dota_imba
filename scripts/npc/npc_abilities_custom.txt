@@ -16395,12 +16395,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"13.0 11.0 9.0 7.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16435,7 +16435,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"length"				"900"
+				"length"				"800"
 			}
 			"04"
 			{
@@ -20182,9 +20182,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
-			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
-			"particle"			"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
+			"particle"					"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
+			"particle"					"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
 		}
 
 		// Casting

@@ -52,9 +52,13 @@ function AegisActivate( keys )
 
 	-- Parameters
 	local respawn_delay = ability:GetLevelSpecialValueFor("reincarnate_time", ability_level)
+	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 
 	-- Play sound
 	caster:EmitSound(sound_aegis)
+
+	-- Create visibility node
+	ability:CreateVisibilityNode(caster:GetAbsOrigin(), vision_radius, respawn_delay)
 
 	-- Play initial particle
 	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_ABSORIGIN, caster)
