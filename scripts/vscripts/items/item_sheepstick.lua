@@ -20,9 +20,6 @@ function Sheepstick( keys )
 		target:AddNewModifier(caster, ability, "modifier_sheepstick_debuff", {duration = duration})
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 
-		-- Applies Break
-		PassiveBreak(target, duration)
-
 		-- Removes magic resistance and armor for the duration
 		local magical_armor = target:GetMagicalArmorValue()
 		magical_armor = math.max( math.min(magical_armor, 0.8), 0)

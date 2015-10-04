@@ -338,9 +338,9 @@ function SanityEclipse( keys )
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, enemy, damage, nil)
 
-		-- Burn 75% of the enemy's current mana
-		local enemy_mana = enemy:GetMana()
-		enemy:SetMana( enemy_mana * ( 1 - mana_burn_pct / 100 ) )
+		-- Burn part of the enemy's maximum mana
+		local enemy_mana = enemy:GetMaxMana()
+		enemy:ReduceMana(enemy_mana * mana_burn_pct / 100)
 
 		-- Fire mana burn and damage particles
 		local mana_burn_pfx = ParticleManager:CreateParticle(particle_mana_burn, PATTACH_RENDERORIGIN_FOLLOW, enemy)

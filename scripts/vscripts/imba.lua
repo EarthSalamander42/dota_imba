@@ -215,100 +215,6 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "FilterExecuteOrder"), self )
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Selected game mode confirmation messages
-	-------------------------------------------------------------------------------------------------
-	
-	-- If no options were chosen, use the default ones
-	if not GAME_OPTIONS_SET then
-		Say(nil, "Host did not select any game options, using the default ones.", false)
-	end
-
-	-- Game mode
-	local game_mode = "<font color='#FF7800'>ALL PICK</font>"
-	if IMBA_PICK_MODE_ALL_RANDOM then
-		game_mode = "<font color='#FF7800'>ALL RANDOM</font>"
-	elseif IMBA_ABILITY_MODE_RANDOM_OMG then
-		game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates"
-		if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
-			game_mode = game_mode..", skills are randomed on every respawn"
-		end
-	end
-
-	-- Same hero
-	local same_hero = ""
-	if ALLOW_SAME_HERO_SELECTION then
-		same_hero = ", same hero allowed"
-	end
-
-	-- Bounties
-	local gold_bounty = 100 + CREEP_GOLD_BONUS
-	gold_bounty = "<font color='#FF7800'>"..gold_bounty.."%</font>"
-	local XP_bounty = 100 + CREEP_XP_BONUS
-	XP_bounty = "<font color='#FF7800'>"..XP_bounty.."%</font>"
-
-	-- Respawn
-	local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
-	if respawn_time == 100 then
-		respawn_time = "<font color='#FF7800'>normal</font> respawn time, "
-	elseif respawn_time == 50 then
-		respawn_time = "<font color='#FF7800'>half</font> respawn time, "
-	elseif respawn_time == 0 then
-		respawn_time = "<font color='#FF7800'>zero</font> respawn time, "
-	end
-
-	-- Buyback
-	local buyback_cost = HERO_BUYBACK_COST_MULTIPLIER
-	if buyback_cost == 100 then
-		buyback_cost = "<font color='#FF7800'>normal</font> buyback cost."
-	elseif buyback_cost == 200 then
-		buyback_cost = "<font color='#FF7800'>double</font> buyback cost."
-	elseif buyback_cost == 99999 then
-		buyback_cost = "<font color='#FF7800'>no buyback</font>."
-	end
-
-	-- Starting gold & level
-	local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
-
-	-- Creep power ramp
-	local creep_power = "Creeps and structures will gain power "
-	if CREEP_POWER_RAMP_UP_FACTOR == 1 then
-		creep_power = creep_power.."at <font color='#FF7800'>normal</font> speed."
-	elseif CREEP_POWER_RAMP_UP_FACTOR == 2 then
-		creep_power = creep_power.."<font color='#FF7800'>quicker</font> than normal."
-	elseif CREEP_POWER_RAMP_UP_FACTOR == 4 then
-		creep_power = creep_power.."at <font color='#FF7800'>extreme</font> speed."
-	end
-
-	-- Frantic mode
-	local frantic_mode = ""
-	if FRANTIC_MULTIPLIER > 1 then
-		frantic_mode = " <font color='#FF7800'>Frantic mode</font> is activated - cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
-	end
-
-	-- Tower abilities
-	local tower_abilities = ""
-	if TOWER_ABILITY_MODE then
-		if TOWER_UPGRADE_MODE then
-			tower_abilities = "Towers will gain <font color='#FF7800'>upgradable random abilities</font>."
-		else
-			tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
-		end
-	end
-
-	-- Kills to end the game
-	local kills_to_end = ""
-	if END_GAME_ON_KILLS then
-		kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills, or the Ancient falls."
-	end
-	
-	Say(nil, game_mode..same_hero, false)
-	Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
-	Say(nil, start_status, false)
-	Say(nil, creep_power..frantic_mode, false)
-	Say(nil, tower_abilities, false)
-	Say(nil, kills_to_end, false)
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
 	-------------------------------------------------------------------------------------------------
 
@@ -333,6 +239,104 @@ function GameMode:OnAllPlayersLoaded()
 			swipes_ability:SetLevel(1)
 		end
 	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Selected game mode confirmation messages
+	-------------------------------------------------------------------------------------------------
+
+	-- Delay the message a bit so it shows up during hero picks
+	Timers:CreateTimer(3, function()
+
+		-- If no options were chosen, use the default ones
+		if not GAME_OPTIONS_SET then
+			Say(nil, "Host did not select any game options, using the default ones.", false)
+		end
+
+		-- Game mode
+		local game_mode = "<font color='#FF7800'>ALL PICK</font>"
+		if IMBA_PICK_MODE_ALL_RANDOM then
+			game_mode = "<font color='#FF7800'>ALL RANDOM</font>"
+		elseif IMBA_ABILITY_MODE_RANDOM_OMG then
+			game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates"
+			if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+				game_mode = game_mode..", skills are randomed on every respawn"
+			end
+		end
+
+		-- Same hero
+		local same_hero = ""
+		if ALLOW_SAME_HERO_SELECTION then
+			same_hero = ", same hero allowed"
+		end
+
+		-- Bounties
+		local gold_bounty = 100 + CREEP_GOLD_BONUS
+		gold_bounty = "<font color='#FF7800'>"..gold_bounty.."%</font>"
+		local XP_bounty = 100 + CREEP_XP_BONUS
+		XP_bounty = "<font color='#FF7800'>"..XP_bounty.."%</font>"
+
+		-- Respawn
+		local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
+		if respawn_time == 100 then
+			respawn_time = "<font color='#FF7800'>normal</font> respawn time, "
+		elseif respawn_time == 50 then
+			respawn_time = "<font color='#FF7800'>half</font> respawn time, "
+		elseif respawn_time == 0 then
+			respawn_time = "<font color='#FF7800'>zero</font> respawn time, "
+		end
+
+		-- Buyback
+		local buyback_cost = HERO_BUYBACK_COST_MULTIPLIER
+		if buyback_cost == 100 then
+			buyback_cost = "<font color='#FF7800'>normal</font> buyback cost."
+		elseif buyback_cost == 200 then
+			buyback_cost = "<font color='#FF7800'>double</font> buyback cost."
+		elseif buyback_cost == 99999 then
+			buyback_cost = "<font color='#FF7800'>no buyback</font>."
+		end
+
+		-- Starting gold & level
+		local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
+
+		-- Creep power ramp
+		local creep_power = "Creeps and structures will gain power "
+		if CREEP_POWER_RAMP_UP_FACTOR == 1 then
+			creep_power = creep_power.."at <font color='#FF7800'>normal</font> speed."
+		elseif CREEP_POWER_RAMP_UP_FACTOR == 2 then
+			creep_power = creep_power.."<font color='#FF7800'>quicker</font> than normal."
+		elseif CREEP_POWER_RAMP_UP_FACTOR == 4 then
+			creep_power = creep_power.."at <font color='#FF7800'>extreme</font> speed."
+		end
+
+		-- Frantic mode
+		local frantic_mode = ""
+		if FRANTIC_MULTIPLIER > 1 then
+			frantic_mode = " <font color='#FF7800'>Frantic mode</font> is activated - cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
+		end
+
+		-- Tower abilities
+		local tower_abilities = ""
+		if TOWER_ABILITY_MODE then
+			if TOWER_UPGRADE_MODE then
+				tower_abilities = "Towers will gain <font color='#FF7800'>upgradable random abilities</font>."
+			else
+				tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
+			end
+		end
+
+		-- Kills to end the game
+		local kills_to_end = ""
+		if END_GAME_ON_KILLS then
+			kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills, or the Ancient falls."
+		end
+		
+		Say(nil, game_mode..same_hero, false)
+		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
+		Say(nil, start_status, false)
+		Say(nil, creep_power..frantic_mode, false)
+		Say(nil, tower_abilities, false)
+		Say(nil, kills_to_end, false)
+	end)
 end
 
 --[[
@@ -499,24 +503,6 @@ function GameMode:OnGameInProgress()
 			min_bounty = TOWER_MINIMUM_GOLD
 			max_bounty = TOWER_MAXIMUM_GOLD
 			xp_bounty = TOWER_EXPERIENCE
-
-			if TOWER_UPGRADE_MODE then
-
-				-- Add the tower-upgrading ability
-				local upgrade_ability = "imba_tower_upgrade"
-				building:AddAbility(upgrade_ability)
-				upgrade_ability = building:FindAbilityByName(upgrade_ability)
-				upgrade_ability:SetLevel(1)
-
-				-- Set the tower as controllable by each team's players
-				local all_heroes = HeroList:GetAllHeroes()
-				for _,hero in pairs(all_heroes) do
-					if hero:GetTeam() == building:GetTeam() then
-						building:SetControllableByPlayer(hero:GetPlayerID(), true)
-						break
-					end
-				end
-			end
 
 		elseif string.find(building_name, "rax_melee") then
 

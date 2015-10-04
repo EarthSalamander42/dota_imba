@@ -140,7 +140,6 @@ function LandMineThink( keys )
 		-- If any enemy is inside the small blast range, explode
 		local should_explode = false
 		for _,unit in pairs(near_units) do
-			print(unit:GetName())
 			if unit:GetName() ~= "npc_dota_courier" then
 				should_explode = true
 			end
@@ -573,7 +572,7 @@ function RemoteMineAutoCreep( keys )
 	local auto_hero_ability = mine:FindAbilityByName("imba_techies_remote_auto_hero")
 	local modifier_unselect = keys.modifier_unselect
 
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
 
 	-- Make this mine unselectable briefly to remove it from the current unit selection
 	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
@@ -604,7 +603,7 @@ function RemoteMineAutoHero( keys )
 	local auto_creep_ability = mine:FindAbilityByName("imba_techies_remote_auto_creep")
 	local modifier_unselect = keys.modifier_unselect
 
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
 
 	-- Make this mine unselectable briefly to remove it from the current unit selection
 	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
@@ -619,7 +618,8 @@ function RemoteMineAutoHero( keys )
 	Timers:CreateTimer(0, function()
 		local nearby_enemies = FindUnitsInRadius(mine:GetTeamNumber(), mine:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		if #nearby_enemies > 0 then
-			mine:ForceKill(false)
+			local self_detonate = mine:FindAbilityByName("techies_remote_mines_self_detonate")
+			mine:CastAbilityImmediately(self_detonate, mine:GetOwnerEntity():GetPlayerID())
 			mine.auto_hero_exploding = nil
 		end
 		if mine.auto_hero_exploding then

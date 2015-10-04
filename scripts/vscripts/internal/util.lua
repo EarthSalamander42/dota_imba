@@ -757,7 +757,9 @@ function InitializeInnateAbilities( hero )
 	-- List of innate abilities
 	local innate_abilities = {
 		"imba_queenofpain_delightful_torment",
-		"imba_techies_minefield_sign"
+		"imba_techies_minefield_sign",
+		"imba_vengeful_rancor",
+		"imba_venomancer_toxicity"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -855,4 +857,61 @@ function StickProcCheck( ability )
 	end
 
 	return true
+end
+
+-- Upgrades a tower's abilities
+function UpgradeTower( tower )
+
+	local abilities = {}
+
+	-- Fetch tower abilities
+	for i = 0, 15 do
+		local current_ability = tower:GetAbilityByIndex(i)
+		if current_ability and current_ability:GetName() ~= "backdoor_protection" and current_ability:GetName() ~= "backdoor_protection_in_base" then
+			abilities[#abilities+1] = current_ability
+		end
+	end
+
+	-- Iterate through abilities to identify the upgradable one
+	for i = 1,3 do
+
+		-- If this ability is not maxed, try to upgrade it
+		if abilities[i] and abilities[i]:GetLevel() < 3 then
+
+			-- Upgrade ability
+			abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
+
+			-- Increase tower size
+			tower:SetModelScale(tower:GetModelScale() + 0.03)
+
+			return nil
+
+		-- If this ability is maxed and the last one, then add a new one
+		elseif abilities[i] and abilities[i]:GetLevel() == 3 and #abilities == i then
+
+			-- Add a random new ability
+			local duplicate_ability
+			local new_ability
+
+			-- Prevent duplicates
+			repeat
+				duplicate_ability = false
+				new_ability = GetRandomTowerAbility(tower.tower_tier)
+				for _,test_ability in pairs(abilities) do
+					if test_ability:GetName() == new_ability then
+						duplicate_ability = true
+					end
+				end
+			until not duplicate_ability
+
+			-- Level up the ability
+			tower:AddAbility(new_ability)
+			new_ability = tower:FindAbilityByName(new_ability)
+			new_ability:SetLevel(1)
+
+			-- Increase tower size
+			tower:SetModelScale(tower:GetModelScale() + 0.08)
+			return nil
+		end
+	end
 end

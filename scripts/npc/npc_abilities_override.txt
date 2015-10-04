@@ -2467,7 +2467,7 @@
 		"AbilityCastPoint"				"0.5"
 		"AbilityCastRange"				"2500"
 
-		"AbilityCooldown"				"160.0 150.0 140.0"
+		"AbilityCooldown"				"140.0"
 
 		"AbilityManaCost"				"150 200 250"
 		
@@ -2631,8 +2631,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_per_mana"		"2.4 3.6 4.8 6.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_mana"		"2 3 4 5"
 			}
 			"02"
 			{
@@ -5321,293 +5321,6 @@
 	}
 
 	//=================================================================================================================
-	// Vengeful Spirit: Magic Missile
-	//=================================================================================================================
-	"vengefulspirit_magic_missile"
-	{
-		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"10.0 9.0 8.0 7.0"
-
-		"AbilityDamage"					"120 200 280 360"
-
-		"AbilityManaCost"				"110"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"magic_missile_speed"	"1400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"magic_missile_stun"	"1.7 1.8 1.9 2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Vengeful Spirit: Command Aura
-	//=================================================================================================================
-	"vengefulspirit_command_aura"
-	{
-		"AbilityCastRange"			"1200"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage_pct"	"25 40 55 70"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"aura_radius"		"1200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Vengeful Spirit: Wave of Terror
-	//=================================================================================================================
-	"vengefulspirit_wave_of_terror"
-	{
-		"AbilityCastRange"				"3000"
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"14.0"
-		"AbilityDuration"				"16.0"
-
-		"AbilityDamage"					"60 90 120 150"
-
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"wave_speed"		"3000.0"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"wave_width"		"300"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"armor_reduction"	"-4 -6 -8 -10"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"tooltip_duration"	"16.0"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"vision_aoe"		"700"
-			}
-			"06"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"vision_duration"	"6.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Vengeful Spirit: Nether Swap
-	//=================================================================================================================
-	"vengefulspirit_nether_swap"
-	{
-		"AbilityCastRange"				"1000 1500 2000"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"10.0"
-
-		"AbilityManaCost"				"40"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_range"					"1000 1500 2000"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"nether_swap_cooldown_scepter"	"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Venomancer: Venomous Gale
-	//=================================================================================================================
-	"venomancer_venomous_gale"
-	{
-		"AbilityCastRange"				"900"
-		
-		"AbilityManaCost"				"100"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"18.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"strike_damage"			"100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"30 45 60 75"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"3.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-60"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"225"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Venomancer: Poison Sting
-	//=================================================================================================================
-	"venomancer_poison_sting"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"8 16 24 32"
-			}
-			"03"
-			{				
-				"var_type"				"FIELD_INTEGER"		
-				"movement_speed"		"-12 -14 -16 -18"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Venomancer: Plague Ward
-	//=================================================================================================================
-	"venomancer_plague_ward"
-	{
-		"AbilityCastRange"				"1000"
-
-		"AbilityCooldown"				"2.5"
-		
-		"AbilityManaCost"				"8"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"60.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_hp_tooltip"		"75 200 325 450"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_damage_tooltip"	"10 19 29 38"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Venomancer: Poison Nova
-	//=================================================================================================================
-	"venomancer_poison_nova"
-	{
-		"AbilityCooldown"				"70.0"
-
-		"AbilityManaCost"				"150 200 250"		
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"start_radius"				"100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"16.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 80 110"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"40.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"16.0"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"75 120 165"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"800"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Wisp: Tether
 	//=================================================================================================================
 	"wisp_tether"
@@ -6901,6 +6614,51 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"mana_regen"			"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Thunder Lizard: Wardrums Aura
+	//=================================================================================================================
+	"big_thunder_lizard_wardrums_aura"
+	{
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_bonus"			"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Black Dragon: Dragonhide Aura
+	//=================================================================================================================
+	"black_dragon_dragonhide_aura"
+	{
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"3"
 			}
 			"02"
 			{

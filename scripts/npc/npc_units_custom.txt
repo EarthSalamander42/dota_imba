@@ -327,9 +327,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"25"
-		"BountyGoldMin"				"8"
-		"BountyGoldMax"				"12"
+		"BountyXP"					"0"
+		"BountyGoldMin"				"10"
+		"BountyGoldMax"				"10"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -339,7 +339,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"100"
+		"StatusHealth"				"1"
 		"StatusHealthRegen"			"0.0"
 		
 		// Vision
@@ -541,7 +541,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"250"
+		"MovementSpeed"				"320"
 		"MovementTurnRate"			"0"
 	
 		// Bounty
@@ -563,6 +563,170 @@
 		"VisionNighttimeRange"		"300"
 
 		//Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"0"
+	}
+
+	//=================================================================================
+	// Venomancer: Plague Ward
+	//=================================================================================
+	"npc_imba_venomancer_plague_ward"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_venomancer_plagueward"
+		"Model"						"models/heroes/venomancer/venomancer_ward.vmdl"
+		"SoundSet"					"Hero_VenomancerWard"
+		"Level"						"1"
+		"ModelScale" 				"0.8"
+		"SelectionGroup"			"Venomancer_Wards"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"18"
+		"AttackDamageMax"			"18"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"600"
+		"AttackRange"				"600"
+		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_plague_ward_projectile.vpcf"
+		"ProjectileSpeed"			"1900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"ProjectileCollisionSize"	"12"
+		"HealthBarOffset"			"170"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"1.0"
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"15"
+		"BountyGoldMin"				"8"
+		"BountyGoldMax"				"8"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+
+		//	Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"0"
+	}
+
+	//=================================================================================
+	// Venomancer: Scourge Ward
+	//=================================================================================
+	"npc_imba_venomancer_scourge_ward"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_venomancer_plagueward"
+		"Model"						"models/items/venomancer/deathbringer_ward/deathbringer_ward.vmdl"
+		"SoundSet"					"Hero_VenomancerWard"
+		"Level"						"1"
+		"ModelScale" 				"1.25"
+		"SelectionGroup"			"Venomancer_Wards"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"30"
+		"AttackDamageMax"			"30"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.5"
+		"AttackAnimationPoint"		"0.3"
+		"AttackAcquisitionRange"	"750"
+		"AttackRange"				"750"
+		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_plague_ward_projectile.vpcf"
+		"ProjectileSpeed"			"1900"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"ProjectileCollisionSize"	"20"
+		"HealthBarOffset"			"170"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"1.0"
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"30"
+		"BountyGoldMin"				"16"
+		"BountyGoldMax"				"16"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"4"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+
+		//	Inventory
 		//----------------------------------------------------------------
 		"HasInventory"				"0"
 	}
@@ -595,7 +759,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"
-		"MagicalResistance"			"50"
+		"MagicalResistance"			"80"
 
 		// Attack
 		//----------------------------------------------------------------

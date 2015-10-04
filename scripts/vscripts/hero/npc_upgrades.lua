@@ -20,6 +20,27 @@ function Upgrade( keys )
 	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
 end
 
+function AncientArmor( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_stack = keys.modifier_stack
+
+	-- Parameters
+	local total_armor = ability:GetLevelSpecialValueFor("total_armor", ability_level)
+	local enemy_range = ability:GetLevelSpecialValueFor("enemy_range", ability_level)
+	local enemy_count = IMBA_PLAYERS_ON_GAME / 2
+
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, enemy_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+
+	-- Calculate total bonus armor
+	local total_stacks = total_armor - ( total_armor / enemy_count ) * #enemies
+
+	-- Update stacks
+	caster:SetModifierStackCount(modifier_stack, caster, total_stacks)
+end
+
 function CreepStructureDamage( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -30,6 +51,13 @@ function CreepStructureDamage( keys )
 	local building_damage = ability:GetLevelSpecialValueFor("structure_damage_per_minute", ability_level)
 	local hero_damage = ability:GetLevelSpecialValueFor("hero_damage_per_minute", ability_level)
 	local game_time = math.min( GAME_TIME_ELAPSED / 60, CREEP_POWER_MAX_UPGRADES)
+
+	-- Super/mega creep building damage increase
+	if string.find(caster:GetUnitName(), "mega") then
+		building_damage = ability:GetLevelSpecialValueFor("mega_creep_structure_bonus", ability_level)
+	elseif string.find(caster:GetUnitName(), "upgraded") then
+		building_damage = ability:GetLevelSpecialValueFor("super_creep_structure_bonus", ability_level)
+	end
 
 	-- Deal bonus damage
 	if target:IsBuilding() or target:IsTower() then

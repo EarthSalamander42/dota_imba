@@ -104,7 +104,7 @@ HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is
 
 HERO_BUYBACK_BASE_COST = 100												-- Base cost to buyback
 HERO_BUYBACK_COST_PER_LEVEL = 25											-- Level-based buyback cost
-HERO_BUYBACK_COST_PER_MINUTE = 15											-- Time-based buyback cost
+HERO_BUYBACK_COST_PER_MINUTE = 20											-- Time-based buyback cost
 
 HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback price to reset, per hero level
 HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
@@ -132,6 +132,8 @@ ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
 
 GAME_TIME_ELAPSED = 0														-- Initializes game time tracker
+
+VENGEFUL_RANCOR = false														-- Tracks if Vengeful Spirit's "Rancor" ability is in the game
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
@@ -231,7 +233,6 @@ CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) ba
 
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
 TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
-TOWER_ABILITY_COST_PER_TIER = 500											-- Cost to add a new random ability to a tower (per tier)
 
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 

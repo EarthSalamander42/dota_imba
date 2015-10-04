@@ -263,6 +263,14 @@ function GameMode:OnNPCSpawned(keys)
 	end)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Negative Vengeance Aura removal
+	-------------------------------------------------------------------------------------------------
+	if npc.vengeance_aura_target then
+		npc.vengeance_aura_target:RemoveModifierByName("modifier_imba_command_aura_negative_aura")
+		npc.vengeance_aura_target = nil
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creep bounty/stats adjustment
 	-------------------------------------------------------------------------------------------------
 
@@ -683,7 +691,7 @@ function GameMode:OnEntityKilled( keys )
 		-- Aghanim's Scepter doubles the number of mines dropped
 		local scepter = HasScepter(killed_unit)
 			
-		-- Land mine
+		-- Land mines
 		local ability_land_mine = killed_unit:FindAbilityByName("imba_techies_land_mines")
 		if ability_land_mine and ability_land_mine:GetLevel() > 0 then
 			local caster = killed_unit				
@@ -694,39 +702,56 @@ function GameMode:OnEntityKilled( keys )
 			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
 			local player_id = caster:GetPlayerID()
 
-			-- Create the mine at the specified place
-			local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-			land_mine:SetControllableByPlayer(player_id, true)
+			-- Create the mines at the specified place
+			local land_mine_1 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
+			local land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
+			land_mine_1:SetControllableByPlayer(player_id, true)
+			land_mine_2:SetControllableByPlayer(player_id, true)
 
-			-- Root the mine in place
-			land_mine:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
+			-- Root the mines in place
+			land_mine_1:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
+			land_mine_2:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
 
-			-- Make the mine have no unit collision or health bar
-			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
+			-- Make the mines have no unit collision or health bar
+			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_1, modifier_state, {})
+			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_2, modifier_state, {})
 
-			-- Create a second mine if the owner has Aghanim's Scepter
-			local land_mine_2
+			-- Create two more mines if the owner has Aghanim's Scepter
+			local land_mine_3
+			local land_mine_4
 			if scepter then
-				land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-				land_mine_2:SetControllableByPlayer(player_id, true)
-				land_mine_2:AddNewModifier(land_mine_2, ability_land_mine, "modifier_rooted", {})
-				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_2, modifier_state, {})
+				land_mine_3 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
+				land_mine_4 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
+				land_mine_3:SetControllableByPlayer(player_id, true)
+				land_mine_4:SetControllableByPlayer(player_id, true)
+				land_mine_3:AddNewModifier(land_mine_3, ability_land_mine, "modifier_rooted", {})
+				land_mine_4:AddNewModifier(land_mine_4, ability_land_mine, "modifier_rooted", {})
+				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_3, modifier_state, {})
+				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_4, modifier_state, {})
 			end
 
 			-- Wait for the activation delay
 			Timers:CreateTimer(activation_time, function()
 				
-				-- Grant the mine the appropriately leveled abilities
-				local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-				mine_passive:SetLevel(ability_level + 1)
+				-- Grant the mines the appropriately leveled abilities
+				local mine_passive_1 = land_mine_1:FindAbilityByName("imba_techies_land_mine_passive")
+				local mine_passive_2 = land_mine_2:FindAbilityByName("imba_techies_land_mine_passive")
+				mine_passive_1:SetLevel(ability_level + 1)
+				mine_passive_2:SetLevel(ability_level + 1)
 
 				-- Grant the second mine the appropriately leveled abilities if appropriate
 				if scepter then
-					mine_passive = land_mine_2:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_passive:SetLevel(ability_level + 1)
-					local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_passive_1 = land_mine_3:FindAbilityByName("imba_techies_land_mine_passive")
+					mine_passive_2 = land_mine_4:FindAbilityByName("imba_techies_land_mine_passive")
+					mine_passive_1:SetLevel(ability_level + 1)
+					mine_passive_2:SetLevel(ability_level + 1)
+					local mine_teleport = land_mine_1:FindAbilityByName("imba_techies_minefield_teleport")
 					mine_teleport:SetLevel(1)
 					mine_teleport = land_mine_2:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_teleport:SetLevel(1)
+					mine_teleport = land_mine_3:FindAbilityByName("imba_techies_minefield_teleport")
+					mine_teleport:SetLevel(1)
+					mine_teleport = land_mine_4:FindAbilityByName("imba_techies_minefield_teleport")
 					mine_teleport:SetLevel(1)
 				end
 			end)
@@ -912,6 +937,11 @@ function GameMode:OnEntityKilled( keys )
 	-- Check if killed unit is a hero, and killer/killed belong to different teams
 	if killed_unit:IsRealHero() and killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
 
+		-- Killed hero Rancor clean-up
+		if VENGEFUL_RANCOR then
+			killed_unit:RemoveModifierByName("modifier_imba_rancor")
+		end
+
 		-- Killed hero gold loss
 		local killed_level = killed_unit:GetLevel()
 		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
@@ -1001,6 +1031,29 @@ function GameMode:OnEntityKilled( keys )
 		local nonhero_killer = false
 		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
 			nonhero_killer = true
+
+			-- Vengeful Spirit Rancor logic
+			if VENGEFUL_RANCOR and killer:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
+				local eligible_rancor_targets = FindUnitsInRadius(killed_unit:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+				if eligible_rancor_targets[1] then
+					local rancor_stacks = 1
+
+					-- Double stacks if the killed unit was Venge
+					if killed_unit == VENGEFUL_RANCOR_CASTER then
+						rancor_stacks = rancor_stacks * 2
+					end
+
+					-- Double stacks if Venge has a scepter
+					if VENGEFUL_RANCOR_SCEPTER then
+						rancor_stacks = rancor_stacks * 2
+					end
+
+					-- Add stacks and play particle effect
+					AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
+					local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
+					ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
+				end
+			end
 		end
 
 		-- If the killer was a player-owned summon, make its owner the killer
@@ -1028,6 +1081,33 @@ function GameMode:OnEntityKilled( keys )
 			if killer_hero.has_aegis then
 				killer_hero:SetMaximumGoldBounty(0)
 				killer_hero:SetMinimumGoldBounty(0)
+			end
+
+			-- Killer Rancor logic
+			if VENGEFUL_RANCOR and killer_hero:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
+				local rancor_stacks = 1
+
+				-- Double stacks if the killed unit was Venge
+				if killed_unit == VENGEFUL_RANCOR_CASTER then
+					rancor_stacks = rancor_stacks * 2
+				end
+
+				-- Double stacks if Venge has a scepter
+				if VENGEFUL_RANCOR_SCEPTER then
+					rancor_stacks = rancor_stacks * 2
+				end
+
+				-- Add stacks and play particle effect
+				AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, killer_hero, "modifier_imba_rancor", rancor_stacks, true)
+				local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, killer_hero)
+				ParticleManager:SetParticleControl(rancor_pfx, 0, killer_hero:GetAbsOrigin())
+			end
+
+			-- Vengeance Aura logic
+			local vengeance_aura_ability = killed_unit:FindAbilityByName("imba_vengeful_command_aura")
+			if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
+				vengeance_aura_ability:ApplyDataDrivenModifier(killed_unit, killer_hero, "modifier_imba_command_aura_negative_aura", {})
+				killed_unit.vengeance_aura_target = killer_hero
 			end
 		end
 
@@ -1085,7 +1165,6 @@ function GameMode:OnEntityKilled( keys )
 					if hero:GetTeam() == killer:GetTeam() then
 						hero:ModifyGold(welfare_gold, true, DOTA_ModifyGold_HeroKill)
 						SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, hero, welfare_gold, nil)
-						print("granted "..hero:GetName().." "..welfare_gold.." welfare gold")
 					end
 				end
 			end
@@ -1195,7 +1274,33 @@ function GameMode:OnTowerKill(keys)
 
 	local gold = keys.gold
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-	local team = keys.teamnumber
+	local tower_team = keys.teamnumber
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Attack of the Ancients tower upgrade logic
+	-------------------------------------------------------------------------------------------------
+
+	if TOWER_UPGRADE_MODE then
+		-- Find all radiant towers on the map
+		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+
+		-- Upgrade each tower
+		for _, tower in pairs(towers) do
+			if tower.tower_tier then
+				UpgradeTower(tower)
+			end
+		end
+
+		-- Display upgrade message and play ominous sound
+		if tower_team == DOTA_TEAM_GOODGUYS then
+			Notifications:BottomToAll({text = "#tower_abilities_radiant_upgrade", duration = 7, style = {color = "DodgerBlue"}})
+			EmitGlobalSound("powerup_01")
+		else
+			Notifications:BottomToAll({text = "#tower_abilities_dire_upgrade", duration = 7, style = {color = "DodgerBlue"}})
+			EmitGlobalSound("powerup_02")
+		end
+	end
+	
 end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup 

@@ -1,73 +1,41 @@
 --[[	Authors: D2imba and Pizzalol
 		Date: 23.05.2015				]]
 
-function StiflingDaggerCrit( keys )
+function StiflingDaggerHit( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local crit_ability = caster:FindAbilityByName(keys.crit_ability_name)
-	local crit_ability_level = crit_ability:GetLevel() - 1
+	local ability_crit = caster:FindAbilityByName(keys.ability_crit)
+	local modifier_crit = keys.modifier_crit
+	local modifier_stacks = keys.modifier_stacks
+	local modifier_kill = keys.modifier_kill
 	local scepter = HasScepter(caster)
 
-	-- If Coup de Grace is not leveled up, does nothing
-	if not crit_ability or crit_ability_level < 0 then
-		return nil
-	end
+	-- If coup de grace is learned, roll for crits and instant kills
+	if ability_crit and ability_crit:GetLevel() > 0 then
 
-	-- Parameters
-	local crit_chance = crit_ability:GetLevelSpecialValueFor("crit_chance", crit_ability_level)
-	local crit_bonus = crit_ability:GetLevelSpecialValueFor("crit_bonus", crit_ability_level)
-	local kill_chance = crit_ability:GetLevelSpecialValueFor("crit_chance_scepter", ability_level)
-	local hero_dmg_pct = ability:GetLevelSpecialValueFor("hero_dmg_pct", ability_level)
-	local base_damage = ability:GetAbilityDamage()
-	local modifier_crit = keys.modifier_crit
-	local modifier_blood_fx = keys.modifier_blood_fx
-	local sound_crit = keys.sound_crit
+		-- Crit parameters
+		local ability_level = ability_crit:GetLevel() - 1
+		local crit_chance = ability_crit:GetLevelSpecialValueFor("crit_chance", ability_level)
+		local crit_increase = ability_crit:GetLevelSpecialValueFor("crit_increase", ability_level)
+		local kill_chance = ability_crit:GetLevelSpecialValueFor("crit_chance_scepter", ability_level)
 
-	-- Roll for scepter instant kill
-	if scepter and RandomInt(1, 100) <= kill_chance then
-		TrueKill(caster, target, crit_ability)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
+		-- Calculate actual crit chance
+		crit_chance = crit_chance + crit_increase * caster:GetModifierStackCount(modifier_stacks, caster)
 
-		-- Global effect when killing a real hero
-		if target:IsRealHero() then
-
-			-- Play screen blood particle
-			local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
-
-			-- Play fatality message
-			Notifications:BottomToAll({text = "#coup_de_grace_fatality", duration = 4.0, style = {["font-size"] = "50px", color = "Red"} })
-
-			-- Play global sounds
-			EmitGlobalSound(sound_crit)
-			EmitGlobalSound("Imba.PhantomAssassinFatality")
-			return nil
+		-- Roll for crits
+		if scepter and RandomInt(1,100) < kill_chance then
+			ability_crit:ApplyDataDrivenModifier(caster, caster, modifier_kill, {})
+		elseif RandomInt(1,100) < crit_chance then
+			ability_crit:ApplyDataDrivenModifier(caster, caster, modifier_crit, {})
 		end
 	end
 
-	-- Calculate actual chance to crit
-	local actual_crit_chance = crit_chance
-	if caster:HasModifier(modifier_crit) then
-		actual_crit_chance = caster:GetModifierStackCount(modifier_crit, crit_ability)
-	end
-
-	-- RNGESUS HEAR MY PRAYER
-	if RandomInt(1, 100) <= actual_crit_chance then
-
-		-- Crit! Fire particle and sound
-		ability:ApplyDataDrivenModifier(caster, target, modifier_blood_fx, {})
-		target:EmitSound(sound_crit)
-
-		-- Deal bonus damage
-		if target:IsHero() then
-			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage * (crit_bonus - 100) / 100 * hero_dmg_pct / 100 , damage_type = DAMAGE_TYPE_PURE})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, base_damage * crit_bonus / 100 * hero_dmg_pct / 100, nil)
-		else
-			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage * (crit_bonus - 100) / 100 , damage_type = DAMAGE_TYPE_PURE})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, base_damage * crit_bonus / 100, nil)
-		end
-	end
+	-- Attack (calculates on-hit procs)
+	local initial_pos = caster:GetAbsOrigin()
+	local target_pos = target:GetAbsOrigin()
+	caster:SetAbsOrigin(target_pos)
+	caster:PerformAttack(target, true, true, true, true)
+	caster:SetAbsOrigin(initial_pos)
 end
 
 function PhantomStrike( keys )
@@ -166,9 +134,6 @@ function PhantomStrikeHit( keys )
 	if ability_crit then
 		ability_level = ability_crit:GetLevel() - 1
 	end
-
-	-- Parameters
-	local proc_rate = ability:GetLevelSpecialValueFor("proc_rate", ability:GetLevel() - 1 )
 
 	-- If coup de grace is learned, roll for crits and instant kills
 	if ability_crit then

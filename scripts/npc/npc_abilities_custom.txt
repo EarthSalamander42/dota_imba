@@ -935,8 +935,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"							"backdoor_protection"
 		"MaxLevel"										"1"
 
 		// Special
@@ -945,13 +945,13 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"regen_per_minute"						"3"
+				"var_type"								"FIELD_INTEGER"
+				"total_armor"							"60"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.5"
+				"var_type"								"FIELD_INTEGER"
+				"enemy_range"							"1500"
 			}
 		}
 
@@ -966,14 +966,14 @@
 
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"ThinkInterval"							"10.0"
+				"ThinkInterval"							"0.5"
 
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/npc_upgrades.lua"
-						"Function"						"Upgrade"
+						"Function"						"AncientArmor"
 
 						"modifier_stack"				"modifier_imba_ancient_buffs_stack"
 					}
@@ -982,7 +982,7 @@
 
 			"modifier_imba_ancient_buffs_stack"
 			{
-				"Passive"								"0"
+				"Passive"								"1"
 				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
@@ -991,8 +991,7 @@
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"1"
 				}
 			}
 		}
@@ -1023,6 +1022,16 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"hero_damage_per_minute"				"6"
+			}
+			"03"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"super_creep_structure_bonus"			"12"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"mega_creep_structure_bonus"			"16"
 			}
 		}
 
@@ -2082,43 +2091,6 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//	[TOWR]		TOWER ABILITIES
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-	//=================================================================================================================
-	// Tower upgrade ability
-	//=================================================================================================================
-	"imba_tower_upgrade"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"					"attribute_bonus"
-		"MaxLevel"								"1"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"						"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"0.2"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/tower_abilities.lua"
-				"Function"						"Upgrade"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Tower ability: Laser
@@ -3469,7 +3441,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"5.0"
+		"AbilityCooldown"								"4.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4063,7 +4035,7 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.30"
+				"redirect"								"0.40"
 			}
 			"05"
 			{
@@ -4073,7 +4045,7 @@
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"redirect_property"						"-30"
+				"redirect_property"						"-40"
 			}
 		}
 
@@ -5180,7 +5152,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"25.0"
+		"AbilityCooldown"					"8.0"
 		"AbilityDuration"					"20.0"	
 
 		// Cost
@@ -5499,13 +5471,19 @@
 	            	}
 	            }
 
-	            "States"
-	            {
-		           	"MODIFIER_STATE_NIGHTMARED"     		"MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_STUNNED"        		"MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-		            "MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"		
-	            }
+				"States"
+				{
+					"MODIFIER_STATE_NIGHTMARED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"-5000"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"-5000"
+				}
 
 	            "Aura"          			"modifier_imba_bane_nightmare_debuff"
 	            "Aura_Radius"   			"%aura_radius"
@@ -5626,7 +5604,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 125 150 175"	
+		"AbilityManaCost"				"70 100 130 160"	
 
 		"AbilitySpecial"
 		{
@@ -6077,38 +6055,38 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"160 240 320 400"
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"150 225 300 375"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1500"
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1500"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"3000"
+				"var_type"					"FIELD_INTEGER"
+				"bounce_radius"				"3000"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mini_stun"				"0.1"
+				"var_type"					"FIELD_FLOAT"
+				"mini_stun"					"0.1"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"chain_range"			"400"
+				"var_type"					"FIELD_INTEGER"
+				"chain_range"				"400"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"chain_duration"		"3.0"
+				"var_type"					"FIELD_FLOAT"
+				"chain_duration"			"3.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_strength_tooltip"	"275 350 425 500"
+				"var_type"					"FIELD_INTEGER"
+				"pull_strength_tooltip"		"275 350 425 500"
 			}
 		}	
 
@@ -6261,7 +6239,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_speed"				"10 15 20 25"
+				"move_speed"				"5 10 15 20"
 			}
 		}
 
@@ -6418,7 +6396,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1500"
+				"aura_radius"					"1200"
 			}
 			"02"
 			{
@@ -6428,12 +6406,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_radius"				"1500"
+				"bonus_gold_radius"				"1200"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self"				"200 275 350"
+				"bonus_gold_self"				"175 225 275"
 			}
 			"05"
 			{
@@ -6443,7 +6421,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold"					"50 100 150"
+				"bonus_gold"					"30 70 110"
 			}
 			"07"
 			{
@@ -6452,13 +6430,13 @@
 			}
 			"08"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"40.0 50.0 60.0"
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"30 35 40"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip"			"1500"
+				"cast_range_tooltip"			"1200"
 			}
 			"10"
 			{
@@ -6742,7 +6720,7 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500 2000 2500"
+		"AbilityCastRange"				"1200 1500 1800"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"12 10 8"
 		"AbilityManaCost"				"0"	
@@ -6754,7 +6732,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1500 2000 2500"
+				"range"					"1200 1500 1800"
 			}
 		}	
 
@@ -7354,7 +7332,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"15.0 14.0 13.0 12.0"
+		"AbilityCooldown"						"13.0 12.0 11.0 10.0"
 		
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
@@ -7401,7 +7379,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_per_tick"				"15"
+				"damage_per_tick"				"10 15 20 25"
 			}
 			"08"
 			{
@@ -7665,7 +7643,7 @@
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"creep_chance"							"15"
+				"creep_chance"							"20"
 			}
 		}
 		
@@ -7968,6 +7946,19 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"								"200 400 600"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"soundfile"									"soundevents/imba_soundevents.vsndevts"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -8045,18 +8036,6 @@
 			}
 		}
 		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-		}
-		
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -8112,15 +8091,32 @@
 				"Duration"								"%frostbite_duration"
 			}
 		}
-		
-		"OnChannelFinish"
-		{	
+
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
+				"Function"								"FreezingFieldStopSound"
+
+				"modifier_aura"							"modifier_imba_freezing_field_aura"
+				"modifier_caster"						"modifier_imba_freezing_field_caster"
+				"modifier_NE"							"modifier_imba_freezing_field_northeast"
+				"modifier_NW"							"modifier_imba_freezing_field_northwest"
+				"modifier_SW"							"modifier_imba_freezing_field_southwest"
+				"modifier_SE"							"modifier_imba_freezing_field_southeast"
+			}
+		}
+
+		"OnChannelSucceeded"
+		{
 			"RunScript"
 			{
 				"ScriptFile"							"hero/hero_crystal_maiden.lua"
 				"Function"								"FreezingFieldEnd"
 
-				"modifier_aura"							"modifier_imba_freezing_field_caster"
+				"modifier_aura"							"modifier_imba_freezing_field_aura"
+				"modifier_caster"						"modifier_imba_freezing_field_caster"
 				"modifier_NE"							"modifier_imba_freezing_field_northeast"
 				"modifier_NW"							"modifier_imba_freezing_field_northwest"
 				"modifier_SW"							"modifier_imba_freezing_field_southwest"
@@ -8326,9 +8322,18 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"								"200 400 600"
 
-		// Stats
+		// Precache
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"					"0.35"	// Primarily about the damage
+		"precache"
+		{
+			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"soundfile"									"soundevents/imba_soundevents.vsndevts"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8407,18 +8412,6 @@
 			}
 		}
 		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-		}
-		
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -8475,9 +8468,25 @@
 				"Duration"								"%frostbite_duration"
 			}
 		}
-		
-		"OnChannelFinish"
-		{	
+
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
+				"Function"								"FreezingFieldStopSound"
+
+				"modifier_aura"							"modifier_imba_freezing_field_aura"
+				"modifier_caster"						"modifier_imba_freezing_field_caster"
+				"modifier_NE"							"modifier_imba_freezing_field_northeast"
+				"modifier_NW"							"modifier_imba_freezing_field_northwest"
+				"modifier_SW"							"modifier_imba_freezing_field_southwest"
+				"modifier_SE"							"modifier_imba_freezing_field_southeast"
+			}
+		}
+
+		"OnChannelSucceeded"
+		{
 			"RunScript"
 			{
 				"ScriptFile"							"hero/hero_crystal_maiden.lua"
@@ -8692,7 +8701,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"100 110 120 130"
+		"AbilityManaCost"								"100"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9726,7 +9735,7 @@
 				"TextureName"					"imba_drow_ranger_frost_arrows"
 				
 				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
+				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf"
 				"StatusEffectPriority" 			"10"
 
 				"OnCreated"
@@ -10566,7 +10575,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trueshot_ranged_damage"	"18 24 30 36"
+				"trueshot_ranged_damage"	"20 26 32 38"
 			}
 				
 			"02"
@@ -11825,7 +11834,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"15 30 45 60"
+				"damage_bonus"				"20 35 50 65"
 			}
 			"03"
 			{
@@ -12104,7 +12113,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"19 16 13 10"
+		"AbilityCooldown"				"20 16 12 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -13111,15 +13120,24 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"850"
-		"AbilityCastPoint"				"0.3"	
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"145.0 115.0 60.0"	
+		"AbilityCooldown"				"145.0 115.0 60.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 325 450"	
+		"AbilityManaCost"				"200 325 450"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
+			"particle"					"particles/units/heroes/hero_lich/lich_slowed_cold.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13138,27 +13156,27 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_attack_speed"			"-20"
+				"slow_attack_speed"			"-30"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"jump_range"				"600 700 800"
+				"jump_range"				"600 675 750"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"jump_range_scepter"		"900 1200 1500"
+				"jump_range_scepter"		"900 1150 1400"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"750"
+				"projectile_speed"			"850"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed_scepter"	"800 900 1000"
+				"projectile_speed_scepter"	"1000"
 			}
 			"08"
 			{	
@@ -13180,14 +13198,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"mini_stun"					"0.1"
 			}		
-		}	
-
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-			"particle"					"particles/units/heroes/hero_lich/lich_slowed_cold.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}	
+		}		
 
 		"OnSpellStart"
 		{
@@ -13715,11 +13726,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"7.0"
-		"AbilityDuration"				"1.6 1.9 2.2 2.5"	
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"120 160 200 240"	
+		"AbilityDuration"				"1.6 1.9 2.2 2.5"		
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -13747,7 +13754,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_damage"			"120 160 200 240"
+				"light_strike_array_damage"			"80 120 160 200"
 			}
 			"05"
 			{
@@ -13798,7 +13805,7 @@
 					{
 						"Target"	"TARGET"
 						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%AbilityDamage"
+						"Damage"	"%light_strike_array_damage"
 					}
 				}
 
@@ -13852,10 +13859,6 @@
 		"AbilityCooldown"				"3.0"
 		"AbilityDuration"				"1.6 1.9 2.2 2.5"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"120 160 200 240"
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"225 250 275 300"
@@ -13882,7 +13885,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_damage"			"120 160 200 240"
+				"light_strike_array_damage"			"80 120 160 200"
 			}
 			"05"
 			{
@@ -13927,7 +13930,7 @@
 					{
 						"Target"	"TARGET"
 						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%AbilityDamage"
+						"Damage"	"%light_strike_array_damage"
 					}
 				}
 
@@ -15547,7 +15550,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_regen"		"1 2 3 4"
+				"health_regen"		"1 2 3 5"
 			}
 			"04"
 			{
@@ -16742,8 +16745,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"30.0 40.0 50.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"40 50 60"
 			}
 			"02"
 			{
@@ -17330,31 +17333,31 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"obsidian_destroyer_sanity_eclipse"
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"							"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"					"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"						"2"
+		"AbilityTextureName"					"obsidian_destroyer_sanity_eclipse"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.2"
-		"AOERadius"						"%radius"
+		"AbilityCastRange"						"700"
+		"AbilityCastPoint"						"0.2"
+		"AOERadius"								"%radius"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
-			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
-			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
-			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
-			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
+			"particle"							"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"							"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
+			"particle"							"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
+			"particle"							"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
 		}
 		
 		// Time		
@@ -17387,7 +17390,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_burn_pct"					"75"
+				"mana_burn_pct"					"50"
 			}	
 		}
 
@@ -17457,7 +17460,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.25"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -17814,7 +17817,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sticky_time"			"2.0"
+				"sticky_time"			"1.0"
 			}
 			"06"
 			{
@@ -18313,10 +18316,6 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"30 25 20 15"
-		
-		//Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"80 120 160 200"
 			
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -18345,7 +18344,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_dmg_pct"			"50"
+				"bonus_creep_dmg"		"80 120 160 200"
 			}
 		}
 
@@ -18376,22 +18375,10 @@
 				"Target"
 				{
 					"Center"			"TARGET"
-					"Types"				"DOTA_UNIT_TARGET_HERO"
-				}
-
-				"Type"					"DAMAGE_TYPE_PURE"
-				"Damage"				"%AbilityDamage * %hero_dmg_pct / 100"
-			}
-
-			"Damage"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
 					"Types"				"DOTA_UNIT_TARGET_BASIC"
 				}
 				"Type"					"DAMAGE_TYPE_PURE"
-				"Damage"				"%AbilityDamage"
+				"Damage"				"%bonus_creep_dmg"
 			}
 
 			"FireSound"
@@ -18415,13 +18402,13 @@
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_phantom_assassin.lua"
-				"Function"				"StiflingDaggerCrit"
+				"Function"				"StiflingDaggerHit"
 				"Target"				"TARGET"
 
-				"modifier_crit"			"modifier_imba_coup_de_grace_stacks"
-				"crit_ability_name"		"imba_phantom_assassin_coup_de_grace"
-				"modifier_blood_fx"		"modifier_imba_stifling_dagger_blood"
-				"sound_crit"			"Hero_PhantomAssassin.CoupDeGrace"
+				"ability_crit"			"imba_phantom_assassin_coup_de_grace"
+				"modifier_crit"			"modifier_imba_coup_de_grace_crit"
+				"modifier_stacks"		"modifier_imba_coup_de_grace_stacks"
+				"modifier_kill"			"modifier_imba_coup_de_grace_kill"
 			}
 		}
 
@@ -18463,29 +18450,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_stifling_dagger_blood"
-			{
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-
-				"Duration"					"0.01"
-
-				"OnDestroy"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
 				}
 			}
 		}
@@ -18535,7 +18499,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"130 160 190 220"
+				"bonus_attack_speed"		"130 150 170 190"
 			}
 			"02"
 			{
@@ -18631,15 +18595,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"phantom_assassin_blur"
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"				"phantom_assassin_blur"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"particle"						"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
 		}
 
 		// Special
@@ -19054,7 +19018,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"120"
+				"damage_scepter"		"140"
 			}
 		}
 
@@ -20542,7 +20506,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"330 460 590"
+				"damage_scepter"		"325 450 575"
 			}
 			"07"
 			{
@@ -20706,17 +20670,22 @@
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"far_knockback"					"25"
+				"far_knockback"					"80 120 160 200"
 			}
 			"12"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"knockback_speed"				"900"
+				"knockback_speed"				"700"
 			}
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"far_shot_speed"				"2500"
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"far_proc_chance"				"30"
 			}
 		}
 
@@ -21516,7 +21485,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_pct"				"40 60 80 100"
+				"cleave_pct"				"35 50 65 80"
 			}
 			"03"
 			{
@@ -22057,11 +22026,11 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"14 12 10 8"
+		"AbilityCooldown"					"7 6 5 4"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 150 175 200"
+		"AbilityManaCost"					"60 75 85 100"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22070,7 +22039,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 375 450 525"
+				"damage"					"150 190 230 270"
 			}
 			"02"
 			{
@@ -22080,7 +22049,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"big_radius"				"550"
+				"big_radius"				"525"
 			}
 			"04"
 			{
@@ -22090,7 +22059,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"throw_chance"				"9 11 13 15"
+				"throw_chance"				"16 19 22 25"
 			}
 			"06"
 			{
@@ -22165,7 +22134,6 @@
 				"States"
 				{
 					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -22178,10 +22146,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"4"
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"				"rubick_empty1"
+		"MaxLevel"							"4"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -22190,7 +22158,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 375 450 525"
+				"damage"					"150 190 230 270"
 			}
 			"02"
 			{
@@ -22200,7 +22168,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"big_radius"				"550"
+				"big_radius"				"525"
 			}
 			"04"
 			{
@@ -24113,7 +24081,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawn_length"			"1200"
+				"spawn_length"			"1400"
 			}
 			"05"
 			{
@@ -24138,7 +24106,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"400"
+				"speed"					"475"
 			}
 			"10"
 			{
@@ -24228,8 +24196,8 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-				    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-				    "MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
 				}
 
 				"States"
@@ -24259,7 +24227,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 1.5 0.5"
+		"AbilityCooldown"				"2.5 1.25 0.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24346,6 +24314,1507 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_penalty"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Magic Missile
+	//=================================================================================================================
+	"imba_vengeful_magic_missile"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"vengefulspirit_magic_missile"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+			"particle"					"particles/hero/vengeful/rancor_magic_missile.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"650"
+		"AbilityCastPoint"				"0.2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12 11 10 9"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"100 175 250 325"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rancor_damage"			"20 30 40 50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rancor_radius"			"650"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1350"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.5 1.6 1.7 1.8"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_vengeful.lua"
+				"Function"				"MagicMissile"
+
+				"sound_cast"			"Hero_VengefulSpirit.MagicMissile"
+				"particle_missile"		"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
+				"particle_rancor"		"particles/hero/vengeful/rancor_magic_missile.vpcf"
+				"modifier_rancor"		"modifier_imba_rancor"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_vengeful.lua"
+				"Function"				"MagicMissileHit"
+
+				"sound_hit"				"Hero_VengefulSpirit.MagicMissileImpact"
+				"particle_rancor"		"particles/hero/vengeful/rancor_magic_missile.vpcf"
+				"modifier_rancor"		"modifier_imba_rancor"
+			}					
+		}	
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Wave of Terror
+	//=================================================================================================================
+	"imba_vengeful_wave_of_terror"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"					"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
+			"particle"  				"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"		
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2100"
+		"AbilityCastPoint"				"0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"2500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"				"2100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"60 90 120 150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"armor"					"-3.5 -5.0 -6.5 -8"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rancor_amp"			"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_aoe"			"600"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"terror_angle"			"70"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_vengeful.lua"
+				"Function"				"WaveOfTerror"
+				"Target"				"POINT"
+
+				"sound_cast"			"Hero_VengefulSpirit.WaveOfTerror"
+				"particle_wave"			"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_vengeful.lua"
+				"Function"				"WaveOfTerrorHit"
+
+				"modifier_armor"		"modifier_imba_wave_of_terror_armor"
+				"modifier_terror"		"modifier_imba_wave_of_terror_debuff"
+				"modifier_rancor"		"modifier_imba_rancor"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_wave_of_terror_armor"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+
+				"Duration"				"%duration"
+		
+				"EffectName"			"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
+				"EffectAttachType"		"follow_origin"
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
+				}
+			}
+
+			"modifier_imba_wave_of_terror_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+
+				"Duration"				"%duration"
+
+				"ThinkInterval"			"0.25"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_vengeful.lua"
+						"Function"				"WaveOfTerrorTerror"
+
+						"modifier_terror"		"modifier_imba_wave_of_terror_debuff"
+						"modifier_rancor"		"modifier_imba_rancor"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Vengeance Aura
+	//=================================================================================================================
+	"imba_vengeful_command_aura"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"				"vengefulspirit_command_aura"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"						"particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf"
+		}	
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"1200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_bonus"				"16 24 32 40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"20"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_crit_damage"			"160"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rancor_crit_damage"		"10"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"negative_damage"			"-20 -30 -40 -50"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_command_aura_positive_aura"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Aura"						"modifier_imba_command_aura_positive"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				"Aura_ApplyToCaster"		"1"
+			}
+
+			"modifier_imba_command_aura_positive"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+		
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_vengeful.lua"
+						"Function"			"VengeanceAuraCritCleanup"
+
+						"modifier_crit"		"modifier_imba_command_aura_positive_crit"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_vengeful.lua"
+						"Function"			"VengeanceAuraCrit"
+
+						"modifier_crit"		"modifier_imba_command_aura_positive_crit"
+						"modifier_rancor"	"modifier_imba_rancor"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus"
+				}
+			}
+
+			"modifier_imba_command_aura_negative_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+		
+				"Aura"						"modifier_imba_command_aura_negative"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				"Aura_ApplyToCaster"		"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+			"modifier_imba_command_aura_negative"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%negative_damage"
+				}
+			}
+
+			"modifier_imba_command_aura_positive_crit"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Rancor
+	//=================================================================================================================
+	"imba_vengeful_rancor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"vengeful_rancor"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"Modifiers"
+		{
+			"modifier_imba_rancor_start"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+
+				"ThinkInterval"				"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_vengeful.lua"
+						"Function"			"RancorUpdate"
+					}
+				}
+			}
+	
+			"modifier_imba_rancor"
+			{
+				"Passive"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Nether Swap
+	//=================================================================================================================
+	"imba_vengeful_nether_swap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"					"2"
+		"AbilityTextureName"				"vengefulspirit_nether_swap"
+		"CastFilterRejectCaster" 			"1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
+			"particle"						"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+			"particle"  					"particles/units/heroes/hero_vengeful/vengeful_nether_swap_target.vpcf"
+			"particle"						"particles/hero/vengeful/rancor_magic_missile.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"1000 1500 2000"
+		"AbilityCastPoint"					"0.2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"20.0 15.0 10.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"75 100 125"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"1000 1500 2000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rancor_radius"				"450 550 650"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"rancor_stun"				"0.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rancor_damage"				"100 175 250"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rancor_speed"				"1350"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"swapback_min_time"			"2.0 1.5 1.0"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"swapback_max_time"			"3.5"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tree_radius"				"300"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"7"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ministun_duration"			"0.1"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"LevelUpAbility"
+			{
+				"Target"					"CASTER"
+				"AbilityName"				"imba_vengeful_swap_back"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_vengeful.lua"
+				"Function"					"NetherSwap"
+
+				"ability_swapback"			"imba_vengeful_swap_back"
+				"sound_swap"				"Hero_VengefulSpirit.NetherSwap"
+				"particle_caster"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+				"particle_target"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap_target.vpcf"
+				"particle_rancor"			"particles/hero/vengeful/rancor_magic_missile.vpcf"
+				"modifier_rancor"			"modifier_imba_rancor"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"1"
+
+			"FireSound"
+			{
+				"EffectName"				"Hero_VengefulSpirit.MagicMissileImpact"
+				"Target"					"TARGET"
+			}
+
+			"Stun"
+			{
+				"Duration"					"%rancor_stun"
+				"Target"					"TARGET"
+			}
+
+			"Damage"
+			{
+				"Target"					"TARGET"
+				"Type"						"DAMAGE_TYPE_MAGICAL"
+				"Damage"					"%rancor_damage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit's Swapback
+	//=================================================================================================================
+	"imba_vengeful_swap_back"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"vengeful_swap_back"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"					"0.2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"2.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_vengeful.lua"
+				"Function"					"NetherSwapBack"
+
+				"ability_swap"				"imba_vengeful_nether_swap"
+				"sound_swap"				"Hero_VengefulSpirit.NetherSwap"
+				"particle_caster"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Venomous Gale
+	//=================================================================================================================
+	"imba_venomancer_venomous_gale"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"venomancer_venomous_gale"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"21.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"125"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"14"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_damage"		"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_damage_pct"	"5 6 7 8"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tick_damage"			"15 35 55 75"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_damage_pct"		"2.0 2.5 3.0 3.5"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tick_interval"			"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_slow"			"60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"final_slow"			"6 12 18 24"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_per_tick"			"9 8 7 6"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"175"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"850"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ward_radius"			"1200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_venomancer.lua"
+				"Function"				"GaleCast"
+				"Target"				"POINT"
+
+				"sound_cast"			"Hero_Venomancer.VenomousGale"
+				"particle_projectile"	"particles/units/heroes/hero_venomancer/venomancer_venomous_gale.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_venomancer.lua"
+				"Function"				"GaleHit"
+
+				"sound_hit"				"Hero_Venomancer.VenomousGaleImpact"
+				"modifier_slow"			"modifier_imba_venomous_gale_slow"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_venomous_gale_slow"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%duration"
+
+				"EffectName"			"particles/units/heroes/hero_venomancer/venomancer_gale_poison_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"ThinkInterval"			"%tick_interval"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_venomancer.lua"
+						"Function"		"GaleTick"
+
+						"modifier_slow"	"modifier_imba_venomous_gale_slow"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"Toxicity"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"ToxicityDown"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Poison Sting
+	//=================================================================================================================
+	"imba_venomancer_poison_sting"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"venomancer_poison_sting"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_decay"				"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_decay_min"			"2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"caster_stacks"				"2 3 4 5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_stacks"			"8 10 12 14"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"armor_per_stack"			"-0.25"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dmg_per_stack"				"1"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_per_stack"			"-1"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_poison_sting_caster"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"PoisonSting"
+
+						"modifier_sting"	"modifier_imba_poison_sting"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_poison_sting_caster"
+					}
+				}
+			}
+
+			"modifier_imba_poison_sting"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"PoisonStingTick"
+
+						"modifier_sting"	"modifier_imba_poison_sting"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"Toxicity"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"ToxicityDown"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_per_stack"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_stack"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Plague Wards
+	//=================================================================================================================
+	"imba_venomancer_plague_ward"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"AbilityTextureName"			"venomancer_plague_ward"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_plague_ward_projectile.vpcf"
+			"model"						"models/heroes/venomancer/venomancer_ward.vmdl"
+			"model"						"models/items/venomancer/deathbringer_ward/deathbringer_ward.vmdl"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"20"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scourge_hero_health"	"2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scourge_creep_health"	"4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scourge_damage"		"30"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_hero_health"	"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_creep_health"	"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_damage"			"18"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"plague_amount"			"0 1 2 3"
+			}
+		}
+
+		"OnSpellStart"
+		{			
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_venomancer.lua"
+				"Function"				"WardCast"
+				"Target"				"POINT"
+
+				"ability_caster_sting"	"imba_venomancer_poison_sting"
+				"ability_sting"			"imba_venomancer_poison_sting_ward"
+				"ability_scourge"		"imba_venomancer_scourge_ward_multiattack"
+				"sound_cast"			"Hero_Venomancer.Plague_Ward"
+				"modifier_ward"			"modifier_imba_plague_ward"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_plague_ward"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_venomancer.lua"
+						"Function"		"WardDamage"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Venomancer's Poison Sting (Ward version)
+	//=================================================================================================================
+	"imba_venomancer_poison_sting_ward"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"				"venomancer_poison_sting"
+		"MaxLevel"							"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"					"1"
+			
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_venomancer.lua"
+				"Function"					"WardSting"
+
+				"ability_sting"				"imba_venomancer_poison_sting"
+				"modifier_sting"			"modifier_imba_poison_sting"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_poison_sting_ward"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"WardSting"
+
+						"ability_sting"		"imba_venomancer_poison_sting"
+						"modifier_sting"	"modifier_imba_poison_sting"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Scourge Ward multiattack
+	//=================================================================================================================
+	"imba_venomancer_scourge_ward_multiattack"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"					"venomancer_plague_ward"
+		"MaxLevel"								"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attack_rate"					"1.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"attack_delay"					"0.65"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_range"					"800"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"projectile_speed"				"1900"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_damage"					"30"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"						"1"
+			
+			"RunScript"
+			{
+				"ScriptFile"					"hero/hero_venomancer.lua"
+				"Function"						"ScourgeWardHit"
+
+				"sound_hit"						"Hero_VenomancerWard.ProjectileImpact"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_scourge_ward_multiattack"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"ThinkInterval"					"%attack_rate"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_venomancer.lua"
+						"Function"				"ScourgeWardAttack"
+
+						"ability_sting"			"imba_venomancer_poison_sting_ward"
+						"sound_attack"			"Hero_VenomancerWard.Attack"
+						"projectile_attack"		"particles/units/heroes/hero_venomancer/venomancer_plague_ward_projectile.vpcf"
+					}
+				}
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_venomancer.lua"
+						"Function"				"ScourgeWardAttack"
+
+						"ability_sting"			"imba_venomancer_poison_sting_ward"
+						"sound_attack"			"Hero_VenomancerWard.Attack"
+						"projectile_attack"		"particles/units/heroes/hero_venomancer/venomancer_plague_ward_projectile.vpcf"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Compound Toxicity
+	//=================================================================================================================
+	"imba_venomancer_toxicity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"venomancer_toxicity"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_amp"					"-10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_toxicity"
+			{
+				"Passive"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_amp" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Venomancer's Poison Nova
+	//=================================================================================================================
+	"imba_venomancer_poison_nova"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"venomancer_poison_nova"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+			"particle"					"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+			"particle"					"particles/status_fx/status_effect_poison_venomancer.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"900"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120.0 90.0 60.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 225 300"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"16"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_min"				"30 55 80"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"4 5 6"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_min_scepter"		"60 85 110"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"contagion_radius_scepter"	"425"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"contagion_extra_duration"	"2"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"FireSound"
+			{
+				"EffectName"				"Hero_Venomancer.PoisonNova"
+				"Target"					"CASTER"
+			}
+
+			"FireEffect"
+			{
+				"EffectName"				"particles/units/heroes/hero_venomancer/venomancer_poison_nova_cast.vpcf"
+				"EffectAttachType"			"attach_origin"
+				"Target"					"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_venomancer.lua"
+				"Function"					"PoisonNova"
+
+				"particle_nova"				"particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf"
+			}
+
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center"				"CASTER"
+					"Radius"				"%radius"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"					"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				}
+
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_poison_nova"
+						"Target"			"TARGET"
+						"Duration"			"%duration"
+					}
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_poison_nova"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"StatusEffectName" 			"particles/status_fx/status_effect_poison_venomancer.vpcf"
+				"StatusEffectPriority" 		"10"
+				
+				"EffectName"				"particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf"
+				"EffectAttachType"			"follow_origin"
+
+				"ThinkInterval"				"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"PoisonNovaTick"
+
+						"modifier_nova"		"modifier_imba_poison_nova"
+					}
+				}
+
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Venomancer.PoisonNovaImpact"
+						"Target"			"TARGET"
+					}
+
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"Toxicity"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_venomancer.lua"
+						"Function"			"ToxicityDown"
+
+						"ability_poison"	"imba_venomancer_toxicity"
+						"modifier_poison"	"modifier_imba_toxicity"
+					}
 				}
 			}
 		}

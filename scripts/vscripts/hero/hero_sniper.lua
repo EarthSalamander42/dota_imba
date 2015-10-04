@@ -15,6 +15,8 @@ function Headshot( keys )
 	local normal_damage = ability:GetLevelSpecialValueFor("normal_damage", ability_level)
 	local far_aoe = ability:GetLevelSpecialValueFor("far_aoe", ability_level)
 	local far_shot_speed = ability:GetLevelSpecialValueFor("far_shot_speed", ability_level)
+	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
+	local far_proc_chance = ability:GetLevelSpecialValueFor("far_proc_chance", ability_level)
 
 	-- Near mode headshot, stuns the target if it is not a building
 	if caster:HasModifier(modifier_near) then
@@ -23,7 +25,7 @@ function Headshot( keys )
 		end
 
 	-- Far mode headshot, finds all enemies around the target and creates a projectile for each one
-	elseif caster:HasModifier(modifier_far) and target:GetTeam() ~= caster:GetTeam() then
+	elseif caster:HasModifier(modifier_far) and target:GetTeam() ~= caster:GetTeam() and RandomInt(1, proc_chance) <= far_proc_chance then
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, far_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _,unit in pairs(units) do
 			local headshot_projectile = {
@@ -73,24 +75,15 @@ function HeadshotKnockback( keys )
 	end
 
 	-- Parameters
-	local distance_pct = ability:GetLevelSpecialValueFor("far_knockback", ability_level)
+	local knockback_distance = ability:GetLevelSpecialValueFor("far_knockback", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("knockback_speed", ability_level)
-
-	-- Knockback geometry calculations
 	local caster_pos = caster:GetAbsOrigin()
-	local caster_range = caster:GetAttackRange()
-	local target_pos = target:GetAbsOrigin()
-	local knockback_pos = caster_pos + ( target_pos - caster_pos ):Normalized() * caster_range
-	local knockback_distance = ( knockback_pos - target_pos ):Length2D() * distance_pct / 100
-	if ( target_pos - caster_pos ):Length2D() > caster_range then
-		knockback_distance = 50
-	end
 
 	-- Knockback
 	local headshot_knockback =	{
 		should_stun = 1,
-		knockback_duration = math.min( knockback_distance / speed, 0.3),
-		duration = math.min( knockback_distance / speed, 0.3),
+		knockback_duration = knockback_distance / speed,
+		duration = knockback_distance / speed,
 		knockback_distance = knockback_distance,
 		knockback_height = knockback_distance * 0.3,
 		center_x = caster_pos.x,

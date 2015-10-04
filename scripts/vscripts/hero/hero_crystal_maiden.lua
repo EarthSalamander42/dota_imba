@@ -127,8 +127,15 @@ function FreezingFieldCast( keys )
 		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
 	end
 
-	-- Plays wind sound
-	caster.freezing_field_center:EmitSound("hero_Crystal.freezingField.wind")
+	-- Plays the channeling animation
+	StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
+
+	-- Plays ult ambient sound
+	if RandomInt(1, 100) <= 100 then
+		caster.freezing_field_center:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))
+	else
+		caster.freezing_field_center:EmitSound("hero_Crystal.freezingField.wind")
+	end
 
 	-- Grants the slowing aura to the center unit
 	ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_aura, {})
@@ -208,7 +215,7 @@ function FreezingFieldExplode( keys )
 	explosion_dummy:Destroy()
 end
 
-function FreezingFieldEnd( keys )
+function FreezingFieldStopSound( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local scepter = HasScepter(caster)
@@ -219,8 +226,46 @@ function FreezingFieldEnd( keys )
 	local modifier_SW = keys.modifier_SW
 	local modifier_SE = keys.modifier_SE
 
-	-- Stop playing sound
+	-- Stop playing sounds
 	caster.freezing_field_center:StopSound("hero_Crystal.freezingField.wind")
+	caster.freezing_field_center:StopSound("Imba.CrystalMaidenLetItGo01")
+	caster.freezing_field_center:StopSound("Imba.CrystalMaidenLetItGo02")
+	caster.freezing_field_center:StopSound("Imba.CrystalMaidenLetItGo03")
+
+	-- Stop animation
+	EndAnimation(caster)
+
+	-- Removes auras and modifiers
+	if scepter then
+		caster.freezing_field_center:Destroy()
+		caster:RemoveModifierByName(modifier_caster)
+	else
+		caster:RemoveModifierByName(modifier_aura)
+		caster:RemoveModifierByName(modifier_NE)
+		caster:RemoveModifierByName(modifier_NW)
+		caster:RemoveModifierByName(modifier_SW)
+		caster:RemoveModifierByName(modifier_SE)
+	end
+
+	-- Destroy center particle
+	ParticleManager:DestroyParticle(caster.freezing_field_particle, true)
+
+	-- Resets the center position
+	caster.freezing_field_center = nil
+	caster.freezing_field_particle = nil
+
+end
+
+function FreezingFieldEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local scepter = HasScepter(caster)
+	local modifier_aura = keys.modifier_aura
+	local modifier_caster = keys.modifier_caster
+	local modifier_NE = keys.modifier_NE
+	local modifier_NW = keys.modifier_NW
+	local modifier_SW = keys.modifier_SW
+	local modifier_SE = keys.modifier_SE
 
 	-- Removes auras and modifiers
 	if scepter then

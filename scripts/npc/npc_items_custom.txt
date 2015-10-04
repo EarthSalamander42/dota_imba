@@ -1345,14 +1345,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1038"
 		"BaseClass"						"item_clarity"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"Model"							"models/props_gameplay/clarity.mdl"	
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"250"
+		"AbilityCastRange"				"400"
 		"AbilityCastPoint"				"0.0"
 		
 		// Item Info
@@ -1373,12 +1373,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"75"
+				"total_mana"			"300"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_mana"			"300"
+				"buff_duration"			"75"
 			}
 		}
 	}
@@ -1392,7 +1392,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2001"
 		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName" 			"item_imba_mango"
@@ -1442,12 +1442,8 @@
 			{
 				"ScriptFile"	"items/item_mango.lua"
 				"Function"		"Mango"
-			}
 
-			"FireSound"
-			{
-				"EffectName"	"DOTA_Item.Mango.Activate"
-				"Target" 		"TARGET"
+				"sound_cast"	"DOTA_Item.Mango.Activate"
 			}
 
 			"SpendCharge" {}
@@ -1479,14 +1475,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1039"
 		"BaseClass"						"item_flask"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"Model"							"models/props_gameplay/salve.mdl"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"250"
+		"AbilityCastRange"				"400"
 		"AbilityCastPoint"				"0.0"
 		
 		// Item Info
@@ -8445,7 +8441,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"150"
+				"damage_amplify"		"133"
 			}
 			"03"
 			{
@@ -8567,7 +8563,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"200"
+				"damage_amplify"		"166"
 			}
 			"03"
 			{
@@ -8689,7 +8685,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"250"
+				"damage_amplify"		"200"
 			}
 			"03"
 			{
@@ -8811,7 +8807,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"300"
+				"damage_amplify"		"233"
 			}
 			"03"
 			{
@@ -8933,7 +8929,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"350"
+				"damage_amplify"		"266"
 			}
 			"03"
 			{
@@ -9055,7 +9051,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"400"
+				"damage_amplify"		"300"
 			}
 			"03"
 			{
@@ -9177,7 +9173,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"450"
+				"damage_amplify"		"333"
 			}
 			"03"
 			{
@@ -9299,7 +9295,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"500"
+				"damage_amplify"		"366"
 			}
 			"03"
 			{
@@ -9421,7 +9417,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_amplify"		"550"
+				"damage_amplify"		"400"
 			}
 			"03"
 			{
@@ -10254,12 +10250,9 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"35"
+				"proc_chance"			"50"
 			}
 		}
-
-		// Datadriven
-		//-------------------------------------------------------------------------------------------------------------
 		
 		"OnSpellStart"
 		{
@@ -18161,8 +18154,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"8475"
 		"ItemShopTags"					"damage;ias;agi"
-		"ItemQuality"					"common"
-		"ItemAliases"					"shotgun"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"starfury"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -18171,17 +18164,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"90"
+				"bonus_damage"			"75"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"25"
+				"bonus_as"				"20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"70"
+				"bonus_agi"				"65"
 			}
 			"04"
 			{
@@ -18191,17 +18184,22 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_targets"			"1"
+				"proc_bonus"			"20"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_bonus"			"20"
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"3.0"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"3.0"
+				"range"					"500"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"speed"					"1100"
 			}
 		}
 
@@ -18235,10 +18233,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"items/item_shotgun.lua"
+						"ScriptFile"		"items/item_starfury.lua"
 						"Function"			"Starfury"
 
 						"sound_proc"		"Ability.StarfallImpact"
+						"particle_proc"		"particles/item/starfury/starfury_projectile.vpcf"
 						"modifier_dummy"	"modifier_item_imba_starfury_buff_dummy"
 						"modifier_buff"		"modifier_item_imba_starfury_buff"
 					}
@@ -18258,7 +18257,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"items/item_shotgun.lua"
+						"ScriptFile"		"items/item_starfury.lua"
 						"Function"			"StarfuryBuff"
 
 						"modifier_buff"		"modifier_item_imba_starfury_buff"

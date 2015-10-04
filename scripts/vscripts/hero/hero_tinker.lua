@@ -290,7 +290,7 @@ function MarchSpawn( keys )
 	-- Calculate spawn point
 	local spawner_loc = spawner:GetAbsOrigin()
 	local forward_direction = spawner:GetForwardVector()
-	local spawn_start = spawner_loc - forward_direction * spawn_length / 2
+	local spawn_start = spawner_loc - forward_direction * spawn_length / 3
 	local spawn_point = RotatePosition(spawn_start, QAngle(0, 90, 0), spawn_start + forward_direction * ( RandomInt(0, 10) - 5 ) * spawn_radius / 5 )
 
 	-- Spawn projectile

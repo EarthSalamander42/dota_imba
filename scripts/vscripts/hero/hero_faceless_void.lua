@@ -20,9 +20,20 @@ function Chronosphere( keys )
 	local extra_duration = ability:GetLevelSpecialValueFor("extra_duration", ability_level)
 	local tick_interval = ability:GetLevelSpecialValueFor("tick_interval", ability_level)
 
-	-- Calculate Chronosphere parameters
+	-- Fetch caster mana
 	local mana_cost = ability:GetManaCost(-1)
 	local caster_mana = caster:GetMana()
+
+	-- Apply diminishing returns to caster's mana pool
+	if caster_mana > 3000 then
+		caster_mana = 1000 + 1000 * 0.8 + 1000 * 0.6 + (caster_mana - 3000) * 0.4
+	elseif caster_mana > 2000 then
+		caster_mana = 1000 + 1000 * 0.8 + (caster_mana - 2000) * 0.6
+	elseif caster_mana > 1000 then
+		caster_mana = 1000 + (caster_mana - 1000) * 0.8
+	end
+
+	-- Calculate final chronosphere parameters
 	local total_radius = base_radius + extra_radius * caster_mana / mana_cost / FRANTIC_MULTIPLIER
 	local total_duration = base_duration + extra_duration * caster_mana / mana_cost / FRANTIC_MULTIPLIER
 

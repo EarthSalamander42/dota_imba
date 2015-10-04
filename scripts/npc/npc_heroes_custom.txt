@@ -519,10 +519,9 @@
 
 		"AttackDamageMin"			"26"
 		"AttackDamageMax"			"30"
-		"AttackRate"				"1.5"
+		"AttackRate"				"1.6"
 
 		"AttributeBaseAgility"		"20"
-		"AttributeAgilityGain"		"3.0"
 
 		"MovementTurnRate"			"0.8"	
 
@@ -693,6 +692,8 @@
 	"npc_imba_hero_phantom_lancer"
 	{
 		"override_hero"				"npc_dota_hero_phantom_lancer"
+
+		"AttributeAgilityGain"		"3.5"
 
 		//"Ability1"					"imba_phantom_lancer_spirit_lance"
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
@@ -1064,19 +1065,19 @@
 		"AttackDamageMin"			"28"
 		"AttackDamageMax"			"34"
 
-		"AttributeAgilityGain"		"3.5"
+		"AttackRate"				"1.6"
 
-		"AttackRate"				"1.5"
+		"AttackRange"				"475"
 
-		"AttackRange"				"500"
+		"AbilityLayout"				"5"
 
-		"ArmorPhysical"				"1"
-
-	//	"Ability1"					"imba_vengefulspirit_magic_missile"
-	//	"Ability2"					"imba_vengefulspirit_wave_of_terror"
-	//	"Ability3"					"imba_vengefulspirit_command_aura"
-	//	"Ability4"					"imba_vengefulspirit_nether_swap"
-		"Ability5"					"attribute_bonus_agi"
+		"Ability1"					"imba_vengeful_magic_missile"
+		"Ability2"					"imba_vengeful_wave_of_terror"
+		"Ability3"					"imba_vengeful_command_aura"
+		"Ability4"					"imba_vengeful_rancor"
+		"Ability5"					"imba_vengeful_nether_swap"
+		"Ability6"					"attribute_bonus_agi"
+		"Ability7"					"imba_vengeful_swap_back"
 	}
 
 	//=================================================================================================================
@@ -1088,11 +1089,14 @@
 
 		"AttackRange"				"500"
 
-	//	"Ability1"					"imba_venomancer_venomous_gale"
-	//	"Ability2"					"imba_venomancer_poison_sting"
-	//	"Ability3"					"imba_venomancer_plague_ward"
-	//	"Ability4"					"imba_venomancer_poison_nova"
-		"Ability5"					"attribute_bonus_agi"
+		"AbilityLayout"				"5"
+
+		"Ability1"					"imba_venomancer_venomous_gale"
+		"Ability2"					"imba_venomancer_poison_sting"
+		"Ability3"					"imba_venomancer_plague_ward"
+		"Ability4"					"imba_venomancer_toxicity"
+		"Ability5"					"imba_venomancer_poison_nova"
+		"Ability6"					"attribute_bonus_agi"
 	}
 
 	//=================================================================================================================
