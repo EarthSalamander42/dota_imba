@@ -946,7 +946,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"total_armor"							"60"
+				"total_armor"							"80"
 			}
 			"02"
 			{
@@ -1026,12 +1026,12 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"super_creep_structure_bonus"			"12"
+				"super_creep_structure_bonus"			"10"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"mega_creep_structure_bonus"			"16"
+				"mega_creep_structure_bonus"			"12"
 			}
 		}
 
@@ -3140,7 +3140,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"slow"							"-10 -15 -20"
+				"slow"							"-10 -20 -30"
 			}
 			"03"
 			{
@@ -3184,7 +3184,7 @@
 						"ScriptFile"			"hero/tower_abilities.lua"
 						"Function"				"PlagueParticle"
 
-						"particle_plague"		"particles/units/heroes/hero_pudge/pudge_rot.vpcf"
+						"particle_plague"		"particles/units/heroes/hero_pudge/pudge_rot_radius.vpcf"
 					}
 				}	
 			}
@@ -6443,11 +6443,6 @@
 				"var_type"						"FIELD_INTEGER"
 				"gold_steal_scepter"			"30"
 			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_scepter"			"10 15 20"
-			}
 		}
 
 		"OnUpgrade"
@@ -6720,9 +6715,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200 1500 1800"
+		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"12 10 8"
+		"AbilityCooldown"				"15 12 9"
 		"AbilityManaCost"				"0"	
 			
 		// Special
@@ -6732,7 +6727,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1200 1500 1800"
+				"range"					"1200"
 			}
 		}	
 
@@ -14907,35 +14902,35 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"mirana_invis"	
+		"BaseClass"							"ability_datadriven"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"					"2"
+		"AbilityTextureName"				"mirana_invis"	
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
-			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
-			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
-			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"						"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"						"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"particle"						"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4"	
+		"AbilityCastPoint"					"0.4"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140.0 120.0 100.0"	
+		"AbilityCooldown"					"140.0 120.0 100.0"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"	
+		"AbilityManaCost"					"75"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14943,18 +14938,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"1.2 1.0 0.8"
+				"var_type"					"FIELD_FLOAT"
+				"fade_delay"				"1.6 1.3 1.0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"15"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"global_radius"			"25000"
+				"var_type"					"FIELD_INTEGER"
+				"global_radius"				"25000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fade_delay_scepter"		"6"
 			}
 		}	
 
@@ -14962,9 +14962,9 @@
 		{
 			"FireEffect"
 			{
-				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"CASTER"
+				"EffectName"				"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+				"EffectAttachType"			"follow_origin"
+				"Target"					"CASTER"
 			}
 		}	
 
@@ -14973,221 +14973,157 @@
 			"ActOnTargets"
 			{
 				"Target"
-	            {
-	                "Center"			"CASTER"
-	                "Radius"			"%global_radius"
-	                "Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
-	                "Types"				"DOTA_UNIT_TARGET_HERO"
-	            }	
+				{
+					"Center"				"CASTER"
+					"Radius"				"%global_radius"
+					"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+					"Types"					"DOTA_UNIT_TARGET_HERO"
+					"Flags"					"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				}	
 
-	            "Action"
-	            {
-	            	"ApplyModifier"
-	            	{
-	            		"ModifierName"	"modifier_imba_moonlight_duration"
-	            		"Target"		"TARGET"
-	            		"Duration"		"%duration"
-	            	}
-
-	            	"ApplyModifier"
-	            	{
-	            		"ModifierName"	"modifier_imba_moonlight_fade"
-	            		"Target"		"TARGET"
-	            	}	
-
-	            	"FireEffect"
-	            	{
-	            		"EffectName"		"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
-	            		"EffectAttachType"	"follow_origin"
-	            		"Target"			"TARGET"
-	            	}
-	            }
-	        }	
-
-	        "ApplyModifier"
-	        {
-	        	"ModifierName"			"modifier_imba_moonlight_cast"
-	        	"Target" 				"CASTER"
-	        	"Duration"				"%duration"
-	        }
-
-	        "FireSound"
-	        {
-	        	"EffectName"			"Ability.MoonlightShadow"
-	        	"Target"				"CASTER"
-	        }
-		}	
-	
-
-		"Modifiers"
-		{
-			"modifier_imba_moonlight_duration"
-			{
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-				"Passive"				"0"
-
-				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
-				"EffectAttachType"		"follow_overhead"
-				
-				"OnAttack"
+				"Action"
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_imba_moonlight_fade"
-						"Target"		"ATTACKER"
+						"ModifierName"		"modifier_imba_moonlight_buff"
+						"Target"			"TARGET"
 					}
-				}	
+
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+			}	
+
+			"FireSound"
+			{
+				"EffectName"				"Ability.MoonlightShadow"
+				"Target"					"CASTER"
+			}
+		}	
+	
+		"Modifiers"
+		{
+			"modifier_imba_moonlight_caster"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.1"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_mirana.lua"
+						"Function"			"MoonlightShadow"
+
+						"modifier_buff"		"modifier_imba_moonlight_buff"
+						"modifier_fade"		"modifier_imba_moonlight_fade"
+						"modifier_scepter"	"modifier_imba_moonlight_fade_scepter"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_moonlight_caster"
+					}
+				}
+			}
+
+			"modifier_imba_moonlight_buff"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%duration"
+				
+				"EffectName"				"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType"			"follow_overhead"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"OnAbilityExecuted"
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"	"modifier_imba_moonlight_fade"
-						"Target"		"UNIT"
+						"ModifierName"		"modifier_imba_moonlight_fade"
+						"Target"			"UNIT"
 					}
-				}	
+				}
+
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_imba_moonlight_fade"
+						"Target"			"ATTACKER"
+					}
+				}
 
 				"OnDestroy"
 				{
 					"RemoveModifier"
 					{
-						"ModifierName"	"modifier_imba_moonlight_fade"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}	
-
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_imba_moonlight_invis"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
+						"ModifierName"		"modifier_imba_moonlight_fade"
+						"Target"			"TARGET"
 					}
 				}
 			}	
 
 			"modifier_imba_moonlight_fade"
 			{
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsBuff"				"1"
-				"Passive"				"0"
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
 
-				"Duration"				"%fade_delay"
-
-				"OnCreated"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_imba_moonlight_invis"
-						"Target"		"TARGET"
-					}
-				}
+				"Duration"					"%fade_delay"
 
 				"OnDestroy"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_imba_moonlight_invis"
-						"Target"		"TARGET"
+						"ScriptFile"		"hero/hero_mirana.lua"
+						"Function"			"MoonlightFade"
+
+						"modifier_buff"		"modifier_imba_moonlight_buff"
 					}
 				}
-			}	
+			}
 
-			"modifier_imba_moonlight_invis"
+			"modifier_imba_moonlight_fade_scepter"
 			{
-				"IsHidden"				"1"
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
 
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target"		"TARGET"
-					}
-				}	
+				"Duration"					"%fade_delay_scepter"
+
+				"EffectName"				"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType"			"follow_overhead"
 
 				"OnDestroy"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"	"modifier_invisible"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-					}
-				}	
-
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_moonlight_scepter_aura"
-			{
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Aura"          		"modifier_imba_moonlight_scepter"
-				"Aura_Radius"   		"%global_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster" 	"1"
-
-				"OnCreated"
-				{
 					"RunScript"
 					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_imba_moonlight_scepter_aura"
+						"ScriptFile"		"hero/hero_mirana.lua"
+						"Function"			"MoonlightFadeScepter"
 					}
 				}
-			}
-
-			"modifier_imba_moonlight_scepter"
-			{
-				"IsHidden"				"1"
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_mirana.lua"
-						"Function"		"MoonlightScepter"
-
-						"Target"		"TARGET"
-						"modifier"		"modifier_imba_moonlight_duration"
-						"fade_modifier"	"modifier_imba_moonlight_fade"
-						"cast_modifier"	"modifier_imba_moonlight_cast"
-					}
-				}
-			}
-
-			"modifier_imba_moonlight_cast"
-			{
-				"IsHidden"				"1"
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
 			}
 		}
 	}
@@ -19412,7 +19348,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"1.5 2.0 2.5 3.0"
+				"stack_str"							"1.0 1.5 2.0 2.5"
 			}
 			"03"
 			{
@@ -24802,7 +24738,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"vengefulspirit_nether_swap"

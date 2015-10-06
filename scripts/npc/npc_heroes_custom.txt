@@ -357,6 +357,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Invoker
+	//=================================================================================================================
+	"npc_imba_hero_invoker"
+	{
+		"override_hero"				"npc_dota_hero_invoker"
+
+		"AttackDamageMin"			"17"
+		"AttackDamageMax"			"23"
+
+		"AttributeBaseIntelligence"		"25"
+		
+		//"Ability1"				"imba_invoker_quas"
+		//"Ability2"				"imba_invoker_wex"
+		//"Ability3"				"imba_invoker_exort"
+		//"Ability4"				"imba_invoker_empty1"
+		//"Ability5"				"imba_invoker_empty2"
+		//"Ability6"				"imba_invoker_invoke"
+		//"Ability7"				"imba_invoker_cold_snap"
+		//"Ability8"				"imba_invoker_ghost_walk"
+		//"Ability9"				"imba_invoker_tornado"
+		//"Ability10"				"imba_invoker_emp"
+		//"Ability11"				"imba_invoker_alacrity"
+		//"Ability12"				"imba_invoker_chaos_meteor"
+		//"Ability13"				"imba_invoker_sun_strike"
+		//"Ability14"				"imba_invoker_forge_spirit"
+		//"Ability15"				"imba_invoker_ice_wall"
+		//"Ability16"				"imba_invoker_deafening_blast"
+	}
+
+	//=================================================================================================================
 	// HERO: Jakiro
 	//=================================================================================================================
     "npc_imba_hero_jakiro"
@@ -417,9 +447,25 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Legion Commander
+	//=================================================================================================================
+	"npc_imba_hero_legion_commander"
+	{
+		"override_hero"				"npc_dota_hero_legion_commander"
+
+		"AttackRate"				"1.6"
+		
+		//"Ability1"				"imba_legion_commander_overwhelming_odds"
+		//"Ability2"				"imba_legion_commander_press_the_attack"
+		//"Ability3"				"imba_legion_commander_moment_of_courage"
+		//"Ability4"				"imba_legion_commander_duel"
+		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
 	// HERO: Lich
 	//=================================================================================================================
-    "npc_imba_hero_lich"
+	"npc_imba_hero_lich"
 	{
 		"override_hero"				"npc_dota_hero_lich"
 		
@@ -430,6 +476,28 @@
 		"Ability5"					"attribute_bonus_int"
 
 		"AttributeBaseIntelligence"	"22"
+	}
+
+	//=================================================================================================================
+	// HERO: Lifestealer
+	//=================================================================================================================
+	"npc_imba_hero_life_stealer"
+	{
+		"override_hero"				"npc_dota_hero_life_stealer"
+
+		"AttributeAgilityGain"		"3.0"
+
+		"MovementSpeed"				"320"
+
+		//"Ability1"				"imba_life_stealer_rage"
+		//"Ability2"				"imba_life_stealer_feast"
+		//"Ability3"				"imba_life_stealer_open_wounds"
+		//"Ability4"				"imba_life_stealer_assimilate"
+		//"Ability5"				"imba_life_stealer_assimilate_eject"
+		//"Ability6"				"imba_life_stealer_infest"
+		//"Ability7"				"imba_life_stealer_control"
+		//"Ability8"				"imba_life_stealer_consume"
+		"Ability9"					"attribute_bonus_str"
 	}
 
 	//=================================================================================================================
@@ -1034,6 +1102,22 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Tiny
+	//=================================================================================================================
+	"npc_imba_hero_tiny"
+	{
+		"override_hero"				"npc_dota_hero_tiny"
+
+		"ModelScale"				"1.6"
+
+		//"Ability1"				"imba_tiny_avalanche"
+		//"Ability2"				"imba_tiny_toss"
+		//"Ability3"				"imba_tiny_craggy_exterior"
+		//"Ability4"				"imba_tiny_grow"
+		"Ability5"					"attribute_bonus_str"
+	}
+
+	//=================================================================================================================
 	// HERO: Ursa
 	//=================================================================================================================
 	"npc_imba_hero_ursa"
@@ -1097,6 +1181,20 @@
 		"Ability4"					"imba_venomancer_toxicity"
 		"Ability5"					"imba_venomancer_poison_nova"
 		"Ability6"					"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Winter Wyvern
+	//=================================================================================================================
+	"npc_imba_hero_winter_wyvern"
+	{
+		"override_hero"				"npc_dota_hero_winter_wyvern"
+
+		//"Ability1"				"imba_winter_wyvern_arctic_burn"
+		//"Ability2"				"imba_winter_wyvern_splinter_blast"
+		//"Ability3"				"imba_winter_wyvern_cold_embrace"
+		//"Ability4"				"imba_winter_wyvern_winters_curse"
+		"Ability5"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================

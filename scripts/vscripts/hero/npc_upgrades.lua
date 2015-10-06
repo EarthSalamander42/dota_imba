@@ -26,19 +26,26 @@ function AncientArmor( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_stack = keys.modifier_stack
 
+	-- If the game is set to end on kills, make the ancient invulnerable
+	if END_GAME_ON_KILLS then
+		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
+		return nil
+	end
+
 	-- Parameters
 	local total_armor = ability:GetLevelSpecialValueFor("total_armor", ability_level)
 	local enemy_range = ability:GetLevelSpecialValueFor("enemy_range", ability_level)
 	local enemy_count = IMBA_PLAYERS_ON_GAME / 2
 
 	-- Find nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, enemy_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, enemy_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 
 	-- Calculate total bonus armor
 	local total_stacks = total_armor - ( total_armor / enemy_count ) * #enemies
 
 	-- Update stacks
 	caster:SetModifierStackCount(modifier_stack, caster, total_stacks)
+
 end
 
 function CreepStructureDamage( keys )

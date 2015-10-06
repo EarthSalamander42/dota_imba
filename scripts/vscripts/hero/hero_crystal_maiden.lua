@@ -131,7 +131,7 @@ function FreezingFieldCast( keys )
 	StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
 
 	-- Plays ult ambient sound
-	if RandomInt(1, 100) <= 100 then
+	if RandomInt(1, 100) <= 30 then
 		caster.freezing_field_center:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))
 	else
 		caster.freezing_field_center:EmitSound("hero_Crystal.freezingField.wind")

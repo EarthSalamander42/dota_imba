@@ -222,24 +222,72 @@ function Leap( keys )
 	end)
 end
 
-function MoonlightScepter( keys )
+function MoonlightShadow( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local target = keys.target
-	local modifier = keys.modifier
-	local cast_modifier = keys.cast_modifier
-	local fade_modifier = keys.fade_modifier
+	local modifier_buff = keys.modifier_buff
+	local modifier_fade = keys.modifier_fade
+	local modifier_scepter = keys.modifier_scepter
 	local scepter = HasScepter(caster)
 
-	if scepter and not GameRules:IsDaytime() and caster:IsAlive() then
-		if not target:HasModifier(modifier) then
-			ability:ApplyDataDrivenModifier(caster, target, modifier, {})
-			ability:ApplyDataDrivenModifier(caster, target, fade_modifier, {})
-		end
-	else
-		if target:HasModifier(modifier) and not caster:HasModifier(cast_modifier) then
-			target:RemoveModifierByName(modifier)
+	-- Save processing power by exiting early if nothing should be done
+	if not scepter and not caster:HasModifier(modifier_buff) then
+		return nil
+	end
+
+	-- Iterate through allied heroes
+	local allied_heroes = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	for _,hero in pairs(allied_heroes) do
+
+		-- If this hero has the buff and is not invisible or fading, apply fade
+		if hero:HasModifier(modifier_buff) and not hero:HasModifier(modifier_fade) and not hero:HasModifier("modifier_invisible") then
+			ability:ApplyDataDrivenModifier(caster, hero, modifier_fade, {})
+
+		-- If scepter, it's night, and this hero is not invisible or fading, apply scepter fade
+		elseif scepter and not GameRules:IsDaytime() and not hero:HasModifier("modifier_invisible") and not hero:HasModifier(modifier_fade) and not hero:HasModifier(modifier_scepter) then
+			ability:ApplyDataDrivenModifier(caster, hero, modifier_scepter, {})
+
 		end
 	end
 end
 
+function MoonlightFade( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_buff = keys.modifier_buff
+
+	-- If the target is affected by Moonlight Shadow, make it invisible for the remainder of the duration
+	if target:HasModifier(modifier_buff) then
+		
+		-- Fetch the Moonlight Shadow buff
+		local modifier_moonlight = target:FindModifierByNameAndCaster(modifier_buff, caster)
+		local remaining_duration = modifier_moonlight:GetRemainingTime()
+
+		-- Apply invisibility
+		target:AddNewModifier(caster, ability, "modifier_invisible", {duration = remaining_duration})
+	end
+end
+
+function MoonlightFadeScepter( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local scepter = HasScepter(caster)
+
+	-- If the caster still has a scepter and it's night, make the target invisible for its remainder
+	if scepter and not GameRules:IsDaytime() then
+		
+		-- Fetch the remaining night duration
+		local full_day_duration = 480
+		local remaining_duration = 0
+		if GameRules:GetTimeOfDay() > 0.5 then
+			remaining_duration = ( 1.25 - GameRules:GetTimeOfDay() ) * full_day_duration
+		else
+			remaining_duration = ( 0.25 - GameRules:GetTimeOfDay() ) * full_day_duration
+		end
+
+		-- Apply invisibility
+		target:AddNewModifier(caster, ability, "modifier_invisible", {duration = remaining_duration})
+	end
+end

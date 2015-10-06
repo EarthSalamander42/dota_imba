@@ -938,8 +938,13 @@ function GameMode:OnEntityKilled( keys )
 	if killed_unit:IsRealHero() and killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
 
 		-- Killed hero Rancor clean-up
-		if VENGEFUL_RANCOR then
-			killed_unit:RemoveModifierByName("modifier_imba_rancor")
+		if killed_unit:HasModifier("modifier_imba_rancor") then
+			local current_stacks = killed_unit:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
+			if current_stacks <= 4 then
+				killed_unit:RemoveModifierByName("modifier_imba_rancor")
+			else
+				killed_unit:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 2)
+			end
 		end
 
 		-- Killed hero gold loss
@@ -1052,6 +1057,7 @@ function GameMode:OnEntityKilled( keys )
 					AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
 					local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
 					ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
+					ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
 				end
 			end
 		end
@@ -1101,6 +1107,7 @@ function GameMode:OnEntityKilled( keys )
 				AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, killer_hero, "modifier_imba_rancor", rancor_stacks, true)
 				local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, killer_hero)
 				ParticleManager:SetParticleControl(rancor_pfx, 0, killer_hero:GetAbsOrigin())
+				ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
 			end
 
 			-- Vengeance Aura logic

@@ -25,8 +25,10 @@ function MagicMissile( keys )
 	-- Parameters
 	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
 
-	-- Store the original target for later
-	caster.magic_missile_main_target = target
+	-- Initialize the targets hit table
+	caster.magic_missile_targets = nil
+	caster.magic_missile_targets = {}
+	caster.magic_missile_targets[1] = target
 
 	-- Play the cast sound
 	caster:EmitSound(sound_cast)
@@ -91,24 +93,30 @@ function MagicMissileHit( keys )
 	-- Stun the target
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
-	-- If this is the original target, deal extra damage and check for nearby rancored targets
-	if target == caster.magic_missile_main_target then
-		
-		-- Fetch target's rancor stacks
-		local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
+	-- Fetch target's rancor stacks
+	local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
 
-		-- Calculate damage
-		local total_damage = base_damage + rancor_damage * rancor_stacks
+	-- Calculate damage
+	local total_damage = base_damage + rancor_damage * rancor_stacks
 
-		-- Apply damage
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	-- Apply damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
-		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, rancor_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-		for _,enemy in pairs(enemies) do
-			if enemy:HasModifier(modifier_rancor) and enemy ~= caster.magic_missile_main_target then
-				
-				-- Launch an undisjointable, vision-granting projectile
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, rancor_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		if enemy:HasModifier(modifier_rancor) then
+
+			-- Check if this enemy was already hit
+			local already_hit = false
+			for _,enemy_test in pairs(caster.magic_missile_targets) do
+				if enemy_test == enemy then
+					already_hit = true
+				end
+			end
+			
+			-- If the target wasn't hit, launch an undisjointable, vision-granting projectile
+			if not already_hit then
 				local rancor_projectile = {
 					Target = enemy,
 					Source = target,
@@ -123,16 +131,12 @@ function MagicMissileHit( keys )
 				}
 
 				ProjectileManager:CreateTrackingProjectile(rancor_projectile)
+
+				-- Add this target to the targets already hit list
+				caster.magic_missile_targets[#caster.magic_missile_targets + 1] = enemy
 			end
 		end
-
-	-- If not the original target, just deal damage
-	else
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
-
-	-- Cleanup the magic missile target
-	caster.magic_missile_main_target = nil
 end
 
 function WaveOfTerror( keys )

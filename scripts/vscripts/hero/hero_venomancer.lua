@@ -317,7 +317,7 @@ function WardDamage( keys )
 	local damage = 1
 	
 	-- If the attacker is a hero, deal more damage
-	if attacker:IsHero() or attacker:IsTower() then
+	if attacker:IsHero() or attacker:IsTower() or IsRoshan(attacker) then
 		local ability_level = ability:GetLevel() - 1
 		damage = ability:GetLevelSpecialValueFor("plague_creep_health", ability_level)
 	end

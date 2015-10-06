@@ -327,7 +327,7 @@ function GameMode:OnAllPlayersLoaded()
 		-- Kills to end the game
 		local kills_to_end = ""
 		if END_GAME_ON_KILLS then
-			kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills, or the Ancient falls."
+			kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
 		end
 		
 		Say(nil, game_mode..same_hero, false)
