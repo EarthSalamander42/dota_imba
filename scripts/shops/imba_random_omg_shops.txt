@@ -14,6 +14,7 @@
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
 		"item"		"item_imba_bottle"
+		"item"		"item_imba_soul_of_truth"
 	}
 
 	"attributes"
@@ -62,7 +63,6 @@
 		"item"		"item_imba_shadow_amulet"
 		"item"		"item_imba_ghost"
 		"item"		"item_imba_blink"
-			
 	}	
 	
 	// Level 1 - Green Recipes

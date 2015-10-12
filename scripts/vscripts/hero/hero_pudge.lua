@@ -69,6 +69,29 @@ function MeatHook( keys )
 	-- Set the global hook_launched variable
 	caster.hook_launched = true
 
+	-- Prevent Pudge from using tps while the hook is out
+	local forbidden_items = {
+		"item_tpscroll",
+		"item_travel_boots",
+		"item_travel_boots_2"
+	}
+	for i = 0, 5 do
+		local current_item = caster:GetItemInSlot(i)
+		local should_mute = false
+
+		-- If this item is forbidden, do not refresh it
+		for _,forbidden_item in pairs(forbidden_items) do
+			if current_item and current_item:GetName() == forbidden_item then
+				should_mute = true
+			end
+		end
+
+		-- Make item inactive
+		if current_item and should_mute then
+			current_item:SetActivated(false)
+		end
+	end
+
 	-- Sound, particle and modifier keys
 	local sound_extend = keys.sound_extend
 	local sound_hit = keys.sound_hit
@@ -257,6 +280,12 @@ function MeatHook( keys )
 
 				-- Clear global variables
 				caster.hook_launched = nil
+
+				-- Reactivate tp scrolls/boots
+				for i = 0, 5 do
+					local current_item = caster:GetItemInSlot(i)
+					current_item:SetActivated(true)
+				end
 
 			-- If this is not the final step, keep reeling the hook in
 			else

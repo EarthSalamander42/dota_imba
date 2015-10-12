@@ -403,7 +403,7 @@ function ScourgeWardAttack( keys )
 end
 
 function ScourgeWardHit( keys )
-	local caster = keys.caster:GetOwnerEntity()
+	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1

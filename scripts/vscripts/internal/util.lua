@@ -231,6 +231,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_imba_purification_passive")
+	target:RemoveModifierByName("modifier_borrowed_time")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -287,7 +288,8 @@ end
 function IsPlayerOwnedSummon( unit )
 
 	local summon_names = {
-		"npc_dota_techies_mines"
+		"npc_dota_techies_mines",
+		"npc_dota_venomancer_plagueward"
 	}
 
 	local unit_name = unit:GetName()

@@ -102,7 +102,11 @@ function Darkness( keys )
 	end
 
 	-- Time variables
-	local time_elapsed = 0
+	local darkness_was_refreshed = false
+	if caster.darkness_time_elapsed and caster.darkness_time_elapsed > 0 then
+		darkness_was_refreshed = true
+	end
+	caster.darkness_time_elapsed = 0
 
 	-- Calculating what time of the day will it be after Darkness ends
 	local start_time_of_day = GameRules:GetTimeOfDay()
@@ -113,23 +117,25 @@ function Darkness( keys )
 	-- Set the clock to  [dawn - Darkness' duration]
 	GameRules:SetTimeOfDay(0.25 * (1 - duration / 120))
 
-	-- Using a timer to keep enemies debuffed and once Darkness is over, normal day resumes
-	Timers:CreateTimer(1, function()
-		enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		for k,v in pairs(enemy_heroes) do
-			ability:ApplyDataDrivenModifier(caster, v, modifier, {})
-		end
-		if time_elapsed < duration then
-			time_elapsed = time_elapsed + 1
-			return 1
-		else
-			GameRules:SetTimeOfDay(end_time_of_day)
+	-- Use a timer to keep enemies debuffed and once Darkness is over, normal day resumes
+	if not darkness_was_refreshed then
+		Timers:CreateTimer(1, function()
+			enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 			for k,v in pairs(enemy_heroes) do
-				v:RemoveModifierByName(modifier)
+				ability:ApplyDataDrivenModifier(caster, v, modifier, {})
 			end
-			return nil
-		end
-	end)
+			if caster.darkness_time_elapsed < duration then
+				caster.darkness_time_elapsed = caster.darkness_time_elapsed + 1
+				return 1
+			else
+				GameRules:SetTimeOfDay(end_time_of_day)
+				for k,v in pairs(enemy_heroes) do
+					v:RemoveModifierByName(modifier)
+				end
+				return nil
+			end
+		end)
+	end
 end
 
 function DarknessLimitBreak( keys )

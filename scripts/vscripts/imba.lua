@@ -75,6 +75,32 @@ function GameMode:OnFirstPlayerLoaded()
 	local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Contributor models
+	-------------------------------------------------------------------------------------------------
+
+	local radiant_spawn = Vector(6820, -6028, 408)
+	local dire_spawn = Vector(-5930, 6916, 278)
+	local spawn_radius = 400
+	local radiant_count = 3
+	--local direction = RandomVector(1)
+	local radiant_spawns = {}
+	for i = 1,radiant_count do
+		radiant_spawns[i] = radiant_spawn + RandomVector(1) * spawn_radius * (i - 1) / (radiant_count - 1)
+	end
+
+	-- Martyn Garcia
+	local martyn_model = CreateUnitByName("npc_imba_contributor_martyn", radiant_spawns[1], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	martyn_model:SetForwardVector(RandomVector(100))
+
+	-- Mikkel Garcia
+	local mikkel_model = CreateUnitByName("npc_imba_contributor_mikkel", radiant_spawns[2], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	mikkel_model:SetForwardVector(RandomVector(100))
+
+	-- Hjort
+	local hjort_model = CreateUnitByName("npc_imba_contributor_hjort", radiant_spawns[3], true, nil, nil, DOTA_TEAM_NEUTRALS)
+	hjort_model:SetForwardVector(RandomVector(100))
+
 end
 
 -- Multiplies bounty rune experience and gold according to the gamemode multiplier

@@ -133,6 +133,7 @@ function SpikedCarapaceReflect( keys )
 
 		-- Deals damage only to heroes
 		if attacker:IsHero() then
+			
 			-- Uses HP removal to avoid infinite damage return loops. If the target's health is <= 0, kills it
 			if attacker:GetHealth() <= damage_taken then
 				attacker:Kill(ability, caster)

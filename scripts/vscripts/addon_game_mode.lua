@@ -1,5 +1,6 @@
 -- This is the entry-point to your game mode and should be used primarily to precache models/particles/sounds/etc
 
+require('statcollection/init')
 require('internal/util')
 require('imba')
 
@@ -38,6 +39,11 @@ function Precache( context )
 	-- Roshan
 	PrecacheResource("particle", "particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf", context)
 	PrecacheResource("particle", "particles/neutral_fx/roshan_slam.vpcf", context)
+
+	-- Contributor models
+	PrecacheResource("model", "models/items/courier/throe/throe.vmdl", context)
+	PrecacheResource("model", "models/courier/greevil/gold_greevil.vmdl", context)
+	PrecacheResource("model", "models/courier/baby_winter_wyvern/baby_winter_wyvern.vmdl", context)
 
 	-- Fountain
 	PrecacheResource("particle", "particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf", context)

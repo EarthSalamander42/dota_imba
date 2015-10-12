@@ -80,8 +80,8 @@ function RapierDamage( keys )
 	local ability_level = ability:GetLevel() - 1
 	local damage = keys.damage
 
-	-- If the target is Roshan, a building, or an ally, or if the caster is invulnerable, do nothing
-	if target:IsBuilding() or IsRoshan(target) or target:GetTeam() == caster:GetTeam() or caster:IsInvulnerable() then
+	-- If the target is Roshan, a building, or an ally, or if the caster is an invulnerable storm spirit, do nothing
+	if target:IsBuilding() or IsRoshan(target) or target:GetTeam() == caster:GetTeam() or (caster:IsInvulnerable() and caster:GetName() == "npc_dota_hero_storm_spirit") then
 		return nil
 	end
 

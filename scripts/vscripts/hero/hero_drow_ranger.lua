@@ -103,12 +103,9 @@ function Trueshot( keys )
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 
-	-- Remove previous instance of the aura
-	target:RemoveModifierByName(modifier_stack)
-
 	-- Adjust damage based on agility of caster
 	local agility = caster:GetAgility()
-	local percent = ability:GetLevelSpecialValueFor( "trueshot_ranged_damage", ability:GetLevel() - 1 )
+	local percent = ability:GetLevelSpecialValueFor("trueshot_ranged_damage", ability:GetLevel() - 1 )
 	local damage = math.floor( agility * percent / 100 )
 
 	-- Check if the unit is Drow Ranger
@@ -118,7 +115,16 @@ function Trueshot( keys )
 
 	-- Apply stacks equal to the bonus damage only if the target is ranged
 	if target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK or target == caster then
-		AddStacks(ability, caster, target, modifier_stack, damage, true)
+
+		-- Check if the aura needs to be updated
+		if target:GetModifierStackCount(modifier_stack, caster) ~= damage then
+
+			-- Remove previous instance of the aura
+			target:RemoveModifierByName(modifier_stack)
+
+			-- Update aura values
+			AddStacks(ability, caster, target, modifier_stack, damage, true)
+		end
 	end
 end
 

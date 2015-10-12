@@ -13,8 +13,8 @@
 	{
 		"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "rubick_empty1"
-		"MaxLevel"                      "1"
+		"AbilityTextureName"			"rubick_empty1"
+		"MaxLevel"						"1"
 
 		"Modifiers"
 		{
@@ -30,6 +30,30 @@
 					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	"contributor_dummy_unit_state"
+	{
+		"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"			"rubick_empty1"
+		"MaxLevel"						"1"
+
+		"Modifiers"
+		{
+			"modifier_contributor_dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                       "1"    
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -7105,7 +7129,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"1"
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"1"
 				}
 			}
 		}
@@ -8941,12 +8965,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"passive_cooldown"						"120.0 100.0 80.0 60.0"
+				"passive_cooldown"						"90.0"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"passive_cooldown_scepter"				"30.0 25.0 20.0 15.0"
+				"passive_cooldown_scepter"				"30.0"
 			}
 		}
 
@@ -9127,10 +9151,6 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"								"80 90 100 110"
-		
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"									"80 100 120 140"
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9975,7 +9995,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"750"
+		"AbilityCastRange"						"725"
 		"AbilityCastPoint"						"0.0"
 
 		// Time		
@@ -10184,7 +10204,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"800"
+		"AbilityCastRange"						"750"
 		"AbilityCastPoint"						"0.0"
 
 		// Time		
@@ -10720,7 +10740,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"range_bonus"							"75 125 175"
+				"range_bonus"							"75 100 125"
 			}
 			"04"
 			{
@@ -11305,6 +11325,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"1100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"700 800 900 1000"
 			}
 		}
 
@@ -12881,11 +12906,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"	
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.3"	// Easy to spam 	
+		"AbilityManaCost"				"25"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21263,7 +21284,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650 700 750 800"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.25"
 
 		// Time		
@@ -21426,7 +21447,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_stack"			"20"
+				"damage_per_stack"			"25"
 			}
 			"04"
 			{
@@ -21516,6 +21537,11 @@
 
 						"modifier_passive"	"modifier_imba_great_cleave_passive"
 					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 
@@ -21712,6 +21738,7 @@
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%active_str"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms" 
 				}
 			}
 		}
@@ -21760,7 +21787,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"self_damage_bonus"				"150 225 300"
+				"self_damage_bonus"				"150 200 250"
 			}
 			"02"
 			{
@@ -21770,42 +21797,37 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"		
+				"radius"						"1200"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"storm_bolt_damage"				"100 150 200"		
+				"storm_bolt_damage"				"100"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"storm_bolt_radius"				"75 125 175"		
+				"storm_bolt_radius"				"125"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"25.0"		
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"great_cleave_stacks"			"2 3 4"		
+				"duration"						"25.0"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ally_damage_bonus_scepter"		"75 100 125"		
+				"ally_damage_bonus_scepter"		"75 100 125"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ally_cleave_pct_scepter"		"40"		
+				"ally_cleave_pct_scepter"		"40"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ally_cleave_radius_scepter"	"400"		
+				"ally_cleave_radius_scepter"	"400"
 			}
 		}
 
@@ -24421,7 +24443,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rancor_amp"			"10"
+				"rancor_amp"			"6 7 8 9"
 			}
 			"06"
 			{
@@ -24670,6 +24692,8 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
+				"Duration"					"1.0"
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"1"
@@ -24761,7 +24785,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20.0 15.0 10.0"
+		"AbilityCooldown"					"20.0 16.0 12.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -25464,7 +25488,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"attack_range"					"800"
+				"attack_range"					"725"
 			}
 			"04"
 			{
@@ -25630,8 +25654,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"4 5 6"
+				"var_type"					"FIELD_FLOAT"
+				"damage_pct"				"5 6 7"
 			}
 			"05"
 			{
@@ -25646,7 +25670,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"contagion_extra_duration"	"2"
+				"contagion_extra_duration"	"3"
 			}
 		}
 

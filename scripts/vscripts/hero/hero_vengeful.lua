@@ -96,11 +96,18 @@ function MagicMissileHit( keys )
 	-- Fetch target's rancor stacks
 	local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
 
-	-- Calculate damage
-	local total_damage = base_damage + rancor_damage * rancor_stacks
+	-- If this is the main target, increase damage dealt based on rancor stacks
+	if target == caster.magic_missile_targets[1] then
+		-- Calculate damage
+		local total_damage = base_damage + rancor_damage * rancor_stacks
 
-	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		-- Apply damage
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- Else, just deal normal damage
+	else
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = base_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	end
 
 	-- Find nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, rancor_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)

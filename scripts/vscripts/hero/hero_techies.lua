@@ -15,6 +15,7 @@ function LandMinePlant( keys )
 
 	-- Create the mine at the specified place
 	local land_mine = CreateUnitByName("npc_imba_techies_land_mine", target, false, caster, caster, caster:GetTeam())
+	FindClearSpaceForUnit(land_mine, target, true)
 	land_mine:SetControllableByPlayer(player_id, true)
 
 	-- Root the mine in place

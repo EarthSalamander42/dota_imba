@@ -93,6 +93,7 @@ function DeathCoil( keys )
 end
 
 function AphoticShieldInitialize( keys )
+	
 	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability

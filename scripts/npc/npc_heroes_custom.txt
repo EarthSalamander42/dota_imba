@@ -109,7 +109,7 @@
 
 		"AttackRange"				"500"
 
-		"ProjectileSpeed"			"400"
+		"ProjectileSpeed"			"500"
 
 		"Ability1"					"imba_bane_enfeeble"							
 		"Ability2"					"imba_bane_brain_sap"
@@ -1149,9 +1149,7 @@
 		"AttackDamageMin"			"28"
 		"AttackDamageMax"			"34"
 
-		"AttackRate"				"1.6"
-
-		"AttackRange"				"475"
+		"AttackRange"				"425"
 
 		"AbilityLayout"				"5"
 

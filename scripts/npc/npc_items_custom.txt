@@ -1345,7 +1345,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1038"
 		"BaseClass"						"item_clarity"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"Model"							"models/props_gameplay/clarity.mdl"	
@@ -1475,7 +1475,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1039"
 		"BaseClass"						"item_flask"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"Model"							"models/props_gameplay/salve.mdl"
@@ -1532,7 +1532,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"80"
+		"ItemCost"						"75"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemAliases"					"dust of appearance"
@@ -3446,6 +3446,8 @@
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
+
+				"Duration"				"1.0"
 
 				"Properties"
 				{
@@ -6003,12 +6005,12 @@
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 		
-				"Aura"          		"modifier_item_imba_necronomicon_debuff"
-				"Aura_Radius"   		"%aura_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster" 	"0"
+				"Aura"					"modifier_item_imba_necronomicon_debuff"
+				"Aura_Radius"			"%aura_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
 				{
@@ -6292,12 +6294,12 @@
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 		
-				"Aura"          		"modifier_item_imba_necronomicon_2_debuff"
-				"Aura_Radius"   		"%aura_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster" 	"0"
+				"Aura"					"modifier_item_imba_necronomicon_2_debuff"
+				"Aura_Radius"			"%aura_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
 				{
@@ -6587,12 +6589,12 @@
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 		
-				"Aura"          		"modifier_item_imba_necronomicon_3_debuff"
-				"Aura_Radius"   		"%aura_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster" 	"0"
+				"Aura"					"modifier_item_imba_necronomicon_3_debuff"
+				"Aura_Radius"			"%aura_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
 				{
@@ -7564,12 +7566,14 @@
 	// Vanguard
 	//=================================================================================================================
 	"item_imba_vanguard"
-	{
+	{	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1125"
-		"BaseClass"						"item_vanguard"
+		"ID"							"2182"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_vanguard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -7585,28 +7589,62 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"300"
+				"var_type"						"FIELD_INTEGER"
+				"health"						"300"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"var_type"						"FIELD_INTEGER"
+				"health_regen"					"8"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"block_chance"			"100"
+				"var_type"						"FIELD_INTEGER"
+				"damage_block"					"40"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged"	"30"
+				"var_type"						"FIELD_INTEGER"
+				"proc_chance"					"20"
 			}
-			"05"
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_vanguard_passive"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee"	"50"
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+		
+				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+				}
+			}
+
+			"modifier_item_vanguard_unique"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"VanguardBlock"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"ui.inv_pickup_metalblade"
+					}
+				}
 			}
 		}
 	}
@@ -18282,5 +18320,159 @@
 		}
 	}
 
-	//next free ID: 2180
+	//=================================================================================================================
+	// Recipe: Soul of Truth
+	//=================================================================================================================
+	"item_recipe_imba_soul_of_truth"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2180"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"50"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_soul_of_truth"
+		"ItemRequirements"
+		{
+			"01"						"item_ward_sentry;item_imba_dust;item_imba_helm_of_iron_will"
+		}
+	}
+
+	//=================================================================================================================
+	// Soul of Truth
+	//=================================================================================================================
+	"item_imba_soul_of_truth"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2181"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName" 			"item_imba_soul_of_truth"
+		"Model"							"models/props_gameplay/gem01.vmdl"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1200"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"soul; truth; soul of truth"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemRequiresCharges" 			"1"
+		"SideShop"						"0"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"360"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"4"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"6"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_imba_soul_of_truth"
+				"Target"				"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"			"Item.DropGemWorld"
+				"Target"				"CASTER"
+			}
+
+			"SpendCharge" {}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_soul_of_truth"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%duration"
+
+				"TextureName"			"item_imba_soul_of_truth"
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_item_gem_of_true_sight"
+						"Target"		"CASTER"
+						"Duration"		"%duration"
+					}
+				}
+
+				"OnDeath"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_item_gem_of_true_sight"
+						"Target"
+						{
+							"Center"  	"CASTER"
+							"Radius" 	"0"
+							"Teams" 	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+							"Types" 	"DOTA_UNIT_TARGET_HERO"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+				}
+			}
+		}
+	}
+
+	//next free ID: 2183
 }
