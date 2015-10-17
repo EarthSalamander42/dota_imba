@@ -105,7 +105,13 @@ function Return( keys )
 	local attacker = keys.attacker
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_prevent_return = keys.modifier_prevent_return
+	local modifier_prevent = keys.modifier_prevent
+	local particle_return = keys.particle_return
+
+	-- If the ability is disabled by Break, do nothing
+	if ability_level < 0 then
+		return nil
+	end
 
 	-- Parameters
 	local str_percentage = ability:GetLevelSpecialValueFor("strength_pct", ability_level)
@@ -114,13 +120,19 @@ function Return( keys )
 	-- Calculate return damage
 	local damage = caster:GetStrength() * str_percentage / 100
 
-	-- Damages attacker if it hasn't taken return damage in the last second
-	if not attacker:HasModifier(modifier_prevent_return) then
-		-- Applies "damaged by return" modifier to the attacker
-		ability:ApplyDataDrivenModifier(caster, attacker, modifier_prevent_return, {duration = duration})
+	-- Damage attacker if it hasn't taken return damage in the last second
+	if not attacker:HasModifier(modifier_prevent) then
 
-		-- Deals damage
+		-- Apply "damaged by return" modifier to the attacker
+		ability:ApplyDataDrivenModifier(caster, attacker, modifier_prevent, {duration = duration})
+
+		-- Deal damage
 		ApplyDamage({victim = attacker, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL })
+
+		-- Play particle
+		local return_pfx = ParticleManager:CreateParticle(particle_return, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControlEnt(return_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(return_pfx, 1, attacker, PATTACH_POINT_FOLLOW, "attach_hitloc", attacker:GetAbsOrigin(), true)
 	end
 end
 

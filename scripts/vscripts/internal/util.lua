@@ -708,9 +708,9 @@ function PrecacheUnitWithQueue( unit_name )
 	
 	Timers:CreateTimer(0, function()
 
-		-- If something else is being precached, wait one second
+		-- If something else is being precached, wait two seconds
 		if UNIT_BEING_PRECACHED then
-			return 1
+			return 2
 
 		-- Otherwise, start precaching and block other calls from doing so
 		else
@@ -915,5 +915,16 @@ function UpgradeTower( tower )
 			tower:SetModelScale(tower:GetModelScale() + 0.08)
 			return nil
 		end
+	end
+end
+
+-- Sets a creature's max health to [health]
+function SetCreatureHealth(unit, health, update_current_health)
+
+	unit:SetBaseMaxHealth(health)
+	unit:SetMaxHealth(health)
+
+	if update_current_health then
+		unit:SetHealth(health)
 	end
 end

@@ -104,31 +104,140 @@ function GameMode:OnFirstPlayerLoaded()
 end
 
 -- Multiplies bounty rune experience and gold according to the gamemode multiplier
-function GameMode:FilterBountyRunePickup( filter_table )
-	filter_table["gold_bounty"] = ( 100 + CREEP_GOLD_BONUS ) / 100 * filter_table["gold_bounty"]
-	filter_table["xp_bounty"] = ( 100 + CREEP_XP_BONUS ) / 100 * filter_table["xp_bounty"]
+function GameMode:BountyRuneFilter( keys )
+
+	--player_id_const	 ==> 	0
+	--xp_bounty	 ==> 	136.5
+	--gold_bounty	 ==> 	132.6
+
+	keys["gold_bounty"] = ( 100 + CREEP_GOLD_BONUS ) / 100 * keys["gold_bounty"]
+	keys["xp_bounty"] = ( 100 + CREEP_XP_BONUS ) / 100 * keys["xp_bounty"]
+
 	return true
 end
 
 -- Order filter function
-function GameMode:FilterExecuteOrder( filter_table )
+function GameMode:OrderFilter( keys )
 
-	local units = filter_table["units"]
-	local unit = EntIndexToHScript(units["0"])
+	--entindex_ability	 ==> 	0
+	--sequence_number_const	 ==> 	20
+	--queue	 ==> 	0
+	--units	 ==> 	table: 0x031d5fd0
+	--entindex_target	 ==> 	0
+	--position_z	 ==> 	384
+	--position_x	 ==> 	-5694.3334960938
+	--order_type	 ==> 	1
+	--position_y	 ==> 	-6381.1127929688
+	--issuer_player_id_const	 ==> 	0
 
-	-- Identifies which player is interacting with tower ability upgrades
-	if filter_table['order_type'] == DOTA_UNIT_ORDER_CAST_NO_TARGET then
-		local order_player 	= PlayerResource:GetPlayer(filter_table['issuer_player_id_const'])
-		local ability = EntIndexToHScript( filter_table['entindex_ability'] )
-		if ability:GetName() == "imba_tower_upgrade" then
-			unit:SetOwner(order_player:GetAssignedHero())
-			return true
+	--local units = keys["units"]
+	--local unit = EntIndexToHScript(units["0"])
+
+	return true
+end
+
+-- Damage filter function
+function GameMode:DamageFilter( keys )
+
+	--damagetype_const
+	--damage
+	--entindex_attacker_const
+	--entindex_victim_const
+
+	local attacker = EntIndexToHScript(keys.entindex_attacker_const)
+	local victim = EntIndexToHScript(keys.entindex_victim_const)
+	local damage_type = keys.damagetype_const
+	local display_red_crit_number = false
+
+	-- Lack of entities handling
+	if not attacker or not victim then
+		return true
+	end
+
+	-- Orchid crit
+	if attacker:HasModifier("modifier_item_imba_orchid_unique") and (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) then
+		
+		-- Fetch the Orchid's ability handle
+		local ability
+		for i = 0,5 do
+			local this_item = attacker:GetItemInSlot(i)
+			if this_item and this_item:GetName() == "item_imba_orchid" then
+				ability = this_item
+			end
+		end
+
+		local ability_level = ability:GetLevel() - 1
+
+		-- Parameters
+		local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
+		local crit_damage = ability:GetLevelSpecialValueFor("crit_damage", ability_level)
+		local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+		local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
+
+		-- Check for a valid target
+		if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
+
+			-- Scale damage bonus according to distance
+			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+			local distance_taper = 1
+			if distance > distance_taper_start and distance < distance_taper_end then
+				distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
+			elseif distance >= distance_taper_end then
+				distance_taper = 0.3
+			end
+
+			-- Roll for crit chance
+			if RandomInt(1, 100) <= crit_chance then
+				print("hp before damage: "..victim:GetHealth())
+				Timers:CreateTimer(0.01, function()
+					print("hp after damage: "..victim:GetHealth())
+				end)
+				keys.damage = keys.damage * (100 + (crit_damage - 100) * distance_taper) / 100
+				display_red_crit_number = true
+			end
 		end
 	end
 
-	-- Ignore all other orders to towers
-	if string.find(unit:GetName(), "tower") then
-		return false
+	-- Backtrack dodge
+	if victim:HasModifier("modifier_imba_backtrack") and not victim:HasModifier("modifier_imba_backtrack_cooldown") then
+
+		-- Fetch backtrack's ability handle
+		local ability
+		for i = 0,15 do
+			local this_ability = victim:GetAbilityByIndex(i)
+			if this_ability and this_ability:GetName() == "imba_faceless_void_backtrack" then
+				ability = this_ability
+			end
+		end
+
+		local ability_level = ability:GetLevel() - 1
+
+		-- Parameters
+		local dodge_chance = ability:GetLevelSpecialValueFor("passive_dodge", ability_level)
+		
+		-- If backtrack is active, increase dodge chance
+		if victim:HasModifier("modifier_imba_backtrack_active") then
+			dodge_chance = ability:GetLevelSpecialValueFor("active_dodge", ability_level)
+		end
+
+		-- Roll for dodge chance
+		if RandomInt(1, 100) <= dodge_chance then
+
+			-- Nullify damage
+			keys.damage = 0
+
+			-- Play backtrack particle
+			local backtrack_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, victim)
+			ParticleManager:SetParticleControl(backtrack_pfx, 0, victim:GetAbsOrigin())
+
+			-- Prevent crit damage notifications
+			display_red_crit_number = false
+		end
+	end
+
+	-- Damage overhead display
+	if display_red_crit_number then
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
 	end
 
 	return true
@@ -234,11 +343,12 @@ function GameMode:OnAllPlayersLoaded()
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Bounty Rune xp/gold adjustment
+	-- IMBA: Filter setup
 	-------------------------------------------------------------------------------------------------
 
-	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "FilterBountyRunePickup"), self )
-	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "FilterExecuteOrder"), self )
+	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "BountyRuneFilter"), self )
+	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
+	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
@@ -325,7 +435,7 @@ function GameMode:OnAllPlayersLoaded()
 		local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
 
 		-- Creep power ramp
-		local creep_power = "Creeps and structures will gain power "
+		local creep_power = "Creeps and summons' damage will increase "
 		if CREEP_POWER_RAMP_UP_FACTOR == 1 then
 			creep_power = creep_power.."at <font color='#FF7800'>normal</font> speed."
 		elseif CREEP_POWER_RAMP_UP_FACTOR == 2 then
@@ -353,7 +463,7 @@ function GameMode:OnAllPlayersLoaded()
 		-- Kills to end the game
 		local kills_to_end = ""
 		if END_GAME_ON_KILLS then
-			kills_to_end = "Game will end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
+			kills_to_end = "<font color='#FF7800'>ARENA MODE:</font> Game will only end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
 		end
 		
 		Say(nil, game_mode..same_hero, false)
@@ -398,9 +508,10 @@ function GameMode:OnHeroInGame(hero)
 	--If not, flag it as being done
 	player.already_spawned = true
 
-	-- Create kill and death streak globals
+	-- Create kill and death streak and buyback globals
 	hero.kill_streak_count = 0
 	hero.death_streak_count = 0
+	hero.buyback_count = 0
 
 	-- Add frantic mode passive buff
 	if FRANTIC_MULTIPLIER > 1 then
@@ -551,6 +662,34 @@ function GameMode:OnGameInProgress()
 			local ancient_ability = building:FindAbilityByName("imba_ancient_buffs")
 			ancient_ability:SetLevel(1)
 
+			if TOWER_ABILITY_MODE then
+
+				-- Add Poison Nova ability
+				building:AddAbility("venomancer_poison_nova")
+				ancient_ability = building:FindAbilityByName("venomancer_poison_nova")
+				ancient_ability:SetLevel(1)
+
+				-- Add Overgrowth ability
+				building:AddAbility("treant_overgrowth")
+				ancient_ability = building:FindAbilityByName("treant_overgrowth")
+				ancient_ability:SetLevel(1)
+
+				-- Add Eye of the Storm ability
+				building:AddAbility("razor_eye_of_the_storm")
+				ancient_ability = building:FindAbilityByName("razor_eye_of_the_storm")
+				ancient_ability:SetLevel(1)
+
+				-- Add Borrowed Time ability
+				building:AddAbility("abaddon_borrowed_time")
+				ancient_ability = building:FindAbilityByName("abaddon_borrowed_time")
+				ancient_ability:SetLevel(1)
+
+				-- Add Ravage ability
+				building:AddAbility("tidehunter_ravage")
+				ancient_ability = building:FindAbilityByName("tidehunter_ravage")
+				ancient_ability:SetLevel(1)
+			end
+
 		elseif string.find(building_name, "fountain") then
 			-- Do nothing (fountain was already modified previously)
 		else
@@ -679,19 +818,16 @@ function GameMode:OnGameInProgress()
 		dire_left_t4.tower_tier = 4
 		dire_right_t4.tower_tier = 4
 
-		-- Random two abilities from the list
-		local left_ability_name = GetRandomTowerAbility(4)
-		local right_ability_name = GetRandomTowerAbility(4)
-
-		-- Add and level up the abilities
-		radiant_left_t4:AddAbility(left_ability_name)
-		dire_left_t4:AddAbility(left_ability_name)
-		radiant_right_t4:AddAbility(right_ability_name)
-		dire_right_t4:AddAbility(right_ability_name)
-		local radiant_left_ability = radiant_left_t4:FindAbilityByName(left_ability_name)
-		local dire_left_ability = dire_left_t4:FindAbilityByName(left_ability_name)
-		local radiant_right_ability = radiant_right_t4:FindAbilityByName(right_ability_name)
-		local dire_right_ability = dire_right_t4:FindAbilityByName(right_ability_name)
+		-- Add and level up the multishot ability
+		local multishot_ability = "imba_tower_multishot"
+		radiant_left_t4:AddAbility(multishot_ability)
+		dire_left_t4:AddAbility(multishot_ability)
+		radiant_right_t4:AddAbility(multishot_ability)
+		dire_right_t4:AddAbility(multishot_ability)
+		local radiant_left_ability = radiant_left_t4:FindAbilityByName(multishot_ability)
+		local dire_left_ability = dire_left_t4:FindAbilityByName(multishot_ability)
+		local radiant_right_ability = radiant_right_t4:FindAbilityByName(multishot_ability)
+		local dire_right_ability = dire_right_t4:FindAbilityByName(multishot_ability)
 		radiant_left_ability:SetLevel(1)
 		dire_left_ability:SetLevel(1)
 		radiant_right_ability:SetLevel(1)

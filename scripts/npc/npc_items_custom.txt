@@ -4362,41 +4362,6 @@
 			{
 				"Passive"						"1"
 				"IsHidden"						"1"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidCrit"
-
-						"damage"				"%attack_damage"
-						"modifier_prevent"		"modifier_item_imba_orchid_prevent_crit"
-						"modifier_orchid"		"modifier_item_imba_orchid_unique"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidAttack"
-
-						"damage"				"%attack_damage"
-						"modifier_prevent"		"modifier_item_imba_orchid_prevent_crit"
-					}
-				}
-			}
-
-			"modifier_item_imba_orchid_prevent_crit"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"0.01"
 			}
 
 			"modifier_item_imba_orchid_debuff"
@@ -6009,7 +5974,6 @@
 				"Aura_Radius"			"%aura_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
@@ -6298,7 +6262,6 @@
 				"Aura_Radius"			"%aura_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
@@ -6308,10 +6271,7 @@
 						"ModifierName"	"modifier_item_imba_necronomicon_1_aura"
 						"Target" 		"CASTER"
 					}
-				}
 
-				"OnCreated"
-				{
 					"RunScript"
 					{
 						"ScriptFile"	"internal/util.lua"
@@ -6593,7 +6553,6 @@
 				"Aura_Radius"			"%aura_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				"Aura_ApplyToCaster"	"0"
 
 				"OnCreated"
@@ -6603,19 +6562,13 @@
 						"ModifierName"	"modifier_item_imba_necronomicon_1_aura"
 						"Target" 		"CASTER"
 					}
-				}
 
-				"OnCreated"
-				{
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_item_imba_necronomicon_2_aura"
 						"Target" 		"CASTER"
 					}
-				}
 
-				"OnCreated"
-				{
 					"RunScript"
 					{
 						"ScriptFile"	"internal/util.lua"
@@ -6908,21 +6861,19 @@
 			"01"						"item_imba_reaver;item_imba_vitality_booster"
 		}
 	}
-	
+
 	//=================================================================================================================
-	// Heart
+	// Heart of Tarrasque
 	//=================================================================================================================
 	"item_imba_heart"
-	{
+	{	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1114"
-		"BaseClass"						"item_heart"
+		"ID"							"2186"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
+		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6939,22 +6890,141 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"60"
+				"bonus_strength"		"45"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"400"
+				"bonus_health"			"300"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen_rate"		"4.0"
+				"aura_str"				"16"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_melee"		"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_regen"			"1"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"noncombat_regen"		"3"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_cooldown"		"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_tooltip"			"4"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_heart_passive"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+		
+				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+				}
+			}
+
+			"modifier_item_heart_unique"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Aura"							"modifier_item_heart_aura_effect"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
+				"Aura_ApplyToCaster"			"1"
+
+				"ThinkInterval"					"0.2"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_heart.lua"
+						"Function"				"HeartRegen"
+
+						"modifier_regen"		"modifier_item_heart_extra_regen"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_heart_unique"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_heart.lua"
+						"Function"				"HeartDamage"
+
+						"modifier_regen"		"modifier_item_heart_extra_regen"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%base_regen"
+				}
+			}
+
+			"modifier_item_heart_aura_effect"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%aura_str"
+				}
+			}
+
+			"modifier_item_heart_extra_regen"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%noncombat_regen"
+				}
 			}
 		}
 	}
@@ -7573,13 +7643,13 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_vanguard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"2050"
 		"ItemShopTags"					"regen_health;block;health_pool"
-		"ItemQuality"					"epic"
+		"ItemQuality"					"artifact"
 		"ItemAliases"					"vanguard"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
@@ -7642,7 +7712,18 @@
 						"Function"				"VanguardBlock"
 
 						"damage"				"%attack_damage"
-						"block_sound"			"ui.inv_pickup_metalblade"
+						"block_sound"			"Imba.VanguardBlock"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_vanguard_unique"
 					}
 				}
 			}
@@ -7674,18 +7755,21 @@
 			"01"						"item_imba_vanguard;item_imba_buckler"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Crimson Guard
 	//=================================================================================================================
 	"item_imba_crimson_guard"
-	{
+	{	
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2060"
+		"ID"							"2183"
 		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"item_crimson_guard"
+		"AbilityTextureName" 			"item_imba_crimson_guard"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -7706,72 +7790,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"350"
+				"health"				"350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"9"
+				"health_regen"			"9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"3"
+				"bonus_stats"			"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"7"
+				"armor"					"7"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_chance"			"100"
+				"damage_block"			"50"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee"	"60"
+				"active_armor"			"3"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged"	"36"
-			}			
+				"duration"				"7"
+			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_aoe_armor"		"3"
+				"active_radius"			"1200"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"20"
-			}		
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_aoe_radius"		"1200"
-			}		
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_melee_active"	"65"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_damage_ranged_active"	"65"
-			}		
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"block_chance_active"	"100"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"item_cooldown"			"70.0"
+				"proc_chance"			"20"
 			}
 		}
 
@@ -7779,8 +7838,12 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"items/item_crimson_guard.lua"
-				"Function"		"crimson_guard_activate"
+				"ScriptFile"			"items/item_vanguard.lua"
+				"Function"				"CrimsonGuard"
+
+				"modifier_active"		"modifier_item_crimson_guard_active"
+				"sound_cast"			"Item.CrimsonGuard.Cast"
+				"particle_cast"			"particles/items2_fx/vanguard_active_launch.vpcf"
 			}
 		}
 
@@ -7788,92 +7851,364 @@
 		{
 			"modifier_item_crimson_guard_passive"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+		
+				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_stats"
+				}
+			}
+
+			"modifier_item_crimson_guard_unique"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"CrimsonGuardBlock"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+					}
 				}
 
 				"OnCreated"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"items/item_crimson_guard.lua"
-						"Function"		"crimson_guard_created"
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_crimson_guard_unique"
 					}
 				}
 			}
 
-			"modifier_item_crimson_guard_block_melee"
+			"modifier_item_crimson_guard_active"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-			
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%duration"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"CrimsonGuardParticle"
+
+						"particle_guard"		"particles/items2_fx/vanguard_active.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"CrimsonGuardParticleEnd"
+					}
+				}
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"CrimsonGuardBlock"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+					}
+				}
+
 				"Properties"
 				{
-				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_melee"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Greatwyrm Plate
+	//=================================================================================================================
+	"item_recipe_imba_greatwyrm_plate"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2184"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_greatwyrm_plate"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_crimson_guard;item_imba_reaver"
+		}
+	}
+
+	//=================================================================================================================
+	// Greatwyrm Plate
+	//=================================================================================================================
+	"item_imba_greatwyrm_plate"
+	{	
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2185"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"imba_greatwyrm_plate"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"70.0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8000"
+		"ItemShopTags"					"armor;boost_armor;regen_health;block;health_pool"
+		"ItemQuality"					"epic"
+		"ItemAlertable"					"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health"				"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_stats"			"4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"40"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_block"			"60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_armor"			"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"7"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_radius"			"1200"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"25"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_vanguard.lua"
+				"Function"				"GreatwyrmPlate"
+
+				"modifier_active"		"modifier_item_greatwyrm_plate_active"
+				"sound_cast"			"Item.CrimsonGuard.Cast"
+				"particle_cast"			"particles/items2_fx/vanguard_active_launch.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_greatwyrm_plate_passive"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+		
+				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%health"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
 				}
 			}
 
-			"modifier_item_crimson_guard_block_ranged"
+			"modifier_item_greatwyrm_plate_unique"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsDebuff"			"0"
-			
-				"Properties"
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"OnCreated"
 				{
-				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_ranged"
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_greatwyrm_plate_unique"
+					}
+				}
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmBlockAttack"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmBlockDamage"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
+					}
 				}
 			}
 
-			"modifier_item_crimson_guard_active_melee"
+			"modifier_item_greatwyrm_plate_active"
 			{
-				"Passive"			"0"	
-				"IsHidden"			"0"
-				"IsDebuff"			"0"
-				"Duration"			"%duration"
-				
-//				"EffectName"		""
-			
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%duration"
+
+				"TextureName"					"item_imba_greatwyrm_plate"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmParticle"
+
+						"particle_guard"		"particles/item/greatwyrm_plate/greatwyrm_active.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmParticleEnd"
+					}
+				}
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmBlockAttack"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_vanguard.lua"
+						"Function"				"GreatwyrmBlockDamage"
+
+						"damage"				"%attack_damage"
+						"block_sound"			"Imba.VanguardBlock"
+						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
+					}
+				}
+
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_aoe_armor"
-				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_melee_active"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
 				}
 			}
 
-			"modifier_item_crimson_guard_active_ranged"
+			"modifier_item_imba_greatwyrm_plate_prevent_block"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"0"
-				"Duration"			"%duration"
-			
-//				"EffectName"		""
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_aoe_armor"
-				    "MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"		"%block_damage_ranged_active"
-				}
-			}
+				"Passive"						"0"
+				"IsDebuff"						"1"
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
 
-			"modifier_item_crimson_guard_cooldown"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"0"
-				"Duration"			"%item_cooldown - 1"
+				"Duration"						"0.01"
 			}
 		}
 	}
@@ -7904,7 +8239,7 @@
 			"01"						"item_imba_broadsword;item_imba_chainmail;item_imba_robe"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Blade Mail
 	//=================================================================================================================
@@ -7912,20 +8247,20 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1127"
+		"ID"							"127"
 		"BaseClass"						"item_blade_mail"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"13.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
 		"ItemCost"						"2200"
 		"ItemShopTags"					"damage;armor;int;hard_to_tag"
-		"ItemQuality"					"epic"
+		"ItemQuality"					"artifact"
 		"ItemAliases"					"blade mail"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		
@@ -7946,7 +8281,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"13"
+				"bonus_intellect"		"12"
 			}
 			"04"
 			{
@@ -9881,7 +10216,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"150"
+				"bonus_range"			"125"
 			}
 			"04"
 			{
@@ -9891,35 +10226,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_radius"		"125"
+				"pulverize_radius"		"300"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_length"		"400"
+				"pulverize_damage"		"100"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pulverize_damage"		"100"
-			}
-			"08"
-			{
 				"var_type"				"FIELD_FLOAT"
 				"pulverize_stun"		"0.01"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-
-			"RunScript"
-			{
-				"ScriptFile"				"items/item_mkb.lua"
-				"Function"					"MonkeyKingBarHit"
-
-				"particle_hit"				"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
 			}
 		}
 
@@ -9975,6 +10292,7 @@
 
 						"sound_hit"			"Hero_Brewmaster.ThunderClap"
 						"sound_bash"		"DOTA_Item.MKB.Minibash"
+						"particle_hit"		"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
 					}
 				}
 
@@ -9984,6 +10302,17 @@
 					{
 						"ModifierName"		"modifier_item_imba_mkb_ranged"
 						"Target"			"CASTER"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_mkb_unique"
 					}
 				}
 			}
@@ -17790,19 +18119,44 @@
 						"sound_heal"		"DOTA_Item.ClarityPotion.Activate"
 					}
 				}
-		
-				"OnDeath"
+
+				"OnTakeDamage"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"items/item_aegis.lua"
-						"Function"			"AegisActivate"
+						"Function"			"AegisDamage"
 
+						"modifier_aegis"	"modifier_item_imba_aegis"
+						"modifier_death"	"modifier_item_imba_aegis_death"
 						"particle_wait"		"particles/items_fx/aegis_timer.vpcf"
 						"particle_respawn"	"particles/items_fx/aegis_respawn_timer.vpcf"
-						"sound_aegis"		"sounds/music/stingers/reincarnate.vsnd"
+						"sound_aegis"		"Imba.AegisStinger"
 					}
 				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MIN_HEALTH"		"1" 
+				}
+			}
+
+			"modifier_item_imba_aegis_death"
+			{
+				"Duration"					"%reincarnate_time"
+				"IsDebuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}		
 			}
 		}
 	}
@@ -17931,25 +18285,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_radius"		"125"
+				"pulverize_radius"		"275"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_length"		"400"
+				"pulverize_damage"		"30"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"items/item_jingu_bang.lua"
-				"Function"					"JinguBangHit"
-
-				"particle_hit"				"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
+				"var_type"				"FIELD_FLOAT"
+				"pulverize_stun"		"0.01"
 			}
 		}
 
@@ -18028,6 +18374,7 @@
 						"Function"			"JinguBangProc"
 
 						"sound_hit"			"Hero_Brewmaster.ThunderClap"
+						"particle_hit"		"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
 					}
 				}
 			}
@@ -18333,7 +18680,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"50"	
+		"ItemCost"						"125"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -18342,7 +18689,7 @@
 		"ItemResult"					"item_imba_soul_of_truth"
 		"ItemRequirements"
 		{
-			"01"						"item_ward_sentry;item_imba_dust;item_imba_helm_of_iron_will"
+			"01"						"item_imba_dust;item_imba_helm_of_iron_will"
 		}
 	}
 
@@ -18376,6 +18723,8 @@
 		"ItemPermanent"					"0"
 		"ItemInitialCharges"			"1"
 		"ItemRequiresCharges" 			"1"
+		"ItemStockMax"					"2"
+		"ItemStockTime"					"120.0"
 		"SideShop"						"0"
 
 		// Special	
@@ -18474,5 +18823,5 @@
 		}
 	}
 
-	//next free ID: 2183
+	//next free ID: 2187
 }

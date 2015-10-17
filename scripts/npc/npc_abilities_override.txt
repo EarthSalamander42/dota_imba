@@ -721,8 +721,227 @@
 	//-----------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================
 
+	//=================================================================================================================
+	// Ancient: Ravage
+	//=================================================================================================================
+	"tidehunter_ravage"
+	{
+		"MaxLevel"					"1"
 
-    //=================================================================================================================
+		"AbilityCastPoint"			"0.0"
+		
+		"AbilityCooldown"			"60.0"
+
+		"AbilityDamage"				"600"
+
+		"AbilityManaCost"			"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"2000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"1400"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Eye of the Storm
+	//=================================================================================================================
+	"razor_eye_of_the_storm"
+	{
+		"MaxLevel"							"1"
+
+		"AbilityCastPoint"					"0.0"
+
+		"AbilityCooldown"					"60"
+
+		"AbilityManaCost"					"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1000"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"30.0"		
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"strike_interval"			"0.3"		
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction"			"2"		
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"75"		
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"strike_interval_scepter"	"0.3"		
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Borrowed Time
+	//=================================================================================================================
+	"abaddon_borrowed_time"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"60.0"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_threshold"				"2800"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"5.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect"					"0.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"redirect_pct_tooltip_scepter"		"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect_range_tooltip_scepter"	"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Poison Nova
+	//=================================================================================================================
+	"venomancer_poison_nova"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60.0"
+
+		"AbilityManaCost"				"0"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"250"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"120"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"60.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"20"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"120"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"750"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Overgrowth
+	//=================================================================================================================
+	"treant_overgrowth"
+	{
+		"MaxLevel"						"1"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"45"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"3.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1500"
+			}	
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"eyes_radius"					"800"
+			}				
+		}
+	}
+
+	//=================================================================================================================
 	// Alchemist: Acid Spray
 	//=================================================================================================================
 	"alchemist_acid_spray"
@@ -1059,31 +1278,31 @@
 	//=================================================================================================================
 	"ancient_apparition_ice_blast"
 	{
-		"AbilityCooldown"				"30.0"
+		"AbilityCooldown"				"40.0 35.0 30.0"
 		
-		"AbilityDamage"					"300 400 500"
+		"AbilityDamage"					"250 375 500"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_min"			"350 400 450"
+				"radius_min"			"350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"radius_grow"			"100.0"
+				"radius_grow"			"70.0 85.0 100.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_max"			"1500"
+				"radius_max"			"1300"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"350 400 450"
+				"path_radius"			"350"
 			}
 			"05"
 			{	
@@ -1475,7 +1694,7 @@
 
 		"AbilityCooldown"				"12.0"
 		
-		"AbilityDamage"					"100 175 250 325"
+		"AbilityDamage"					"120 200 280 360"
 		
 		"AbilityManaCost"				"100"
 		
@@ -1977,48 +2196,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Faceless Void: Time Walk
-	//=================================================================================================================
-	"faceless_void_time_walk"
-	{
-		"AbilityCastRange"				"1000 1150 1300 1450"
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityCooldown"				"19.0 16.0 13.0 10.0"
-
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"3000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"-20 -30 -40 -50"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"1400"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Faceless Void: Backtrack
@@ -2240,14 +2417,14 @@
 	//================================================================================================================
 	"lion_impale"
 	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"			"1000"
+		"AbilityCastPoint"			"0.2"
 		
-		"AbilityCooldown"				"11.0"
+		"AbilityCooldown"			"11.0"
 
-		"AbilityManaCost"				"100 110 120 130"
+		"AbilityManaCost"			"100 110 120 130"
 		
-		"AbilityDamage"					"120 200 280 360"
+		"AbilityDamage"				"120 200 280 360"
 		
 		"AbilitySpecial"
 		{
@@ -2419,7 +2596,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"550 600 650 700"
+				"range"						"550 575 600 625"
 			}
 			"02"
 			{
@@ -2429,7 +2606,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_percent"	"35 30 25 20"
+				"damage_reduction_percent"	"30"
 			}
 		}
 	}
@@ -2526,34 +2703,34 @@
 	//=================================================================================================================
 	"medusa_split_shot"
 	{
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastPoint"					"0.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_modifier"			"0"
+				"damage_modifier"			"-60 -40 -20 0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_modifier_tooltip"	"100"
+				"damage_modifier_tooltip"	"40 60 80 100"
 			}
 			"03"
 			{	
 				"var_type"					"FIELD_INTEGER"
-				"arrow_count"				"1 3 7 15"
+				"arrow_count"				"15"
 			}
 			"04"
 			{	
 				"var_type"					"FIELD_INTEGER"
-				"total_arrow_count"			"2 4 8 16"
+				"total_arrow_count"			"16"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"700 800 900 1000"
+				"range"						"800"
 			}
 			"06"
 			{
@@ -3195,7 +3372,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance_pct"			"50 75 100"
+				"proc_chance_pct"			"40 60 80"
 			}
 			"03"
 			{
@@ -3230,7 +3407,7 @@
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"illusion_from_illusion_duration"		"4 6 8"
+				"illusion_from_illusion_duration"		"4 5 6"
 			}
 		}
 	}
@@ -5223,7 +5400,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 325 375 425"
+				"radius"				"400"
 			}
 			"02"
 			{
@@ -5272,7 +5449,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 325 375 425"
+				"radius"				"400"
 			}
 			"04"
 			{
@@ -5281,8 +5458,8 @@
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"grow_bonus_damage_pct"		"40 60 80 100"
+				"var_type"				"FIELD_INTEGER"
+				"grow_bonus_damage_pct"	"40 60 80 100"
 			}
 			"06"
 			{
@@ -5340,7 +5517,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"80 120 160"
+				"bonus_damage"				"80 130 180"
 			}
 			"02"
 			{
@@ -6006,7 +6183,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 125 160"
+				"damage"					"90 135 180"
 			}
 			"02"
 			{
@@ -7074,32 +7251,32 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"visibility_threshold_pct"	"25 30 35 40"
-			}
+				"min_bonus_pct"				"100"
+			}			
 			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"invis_threshold_pct"		"25 30 35 40"
-			}
-			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_movement_speed"		"10 20 30 40"
 			}			
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_damage"				"20 30 40 50"
 			}		
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_bonus_pct"				"25 30 35 40"
 			}	
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"visibility_threshold_pct"	"25 30 35 40"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_bonus_pct"				"90"
+				"invis_threshold_pct"		"25 30 35 40"
 			}
 		}
 	}
@@ -7319,19 +7496,19 @@
 	//=================================================================================================================
 	"slardar_sprint"
 	{
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"					"15"
 		
 		"AbilitySpecial"
-		{
+		{	
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"10 0 -10 -20"
+				"bonus_speed"				"24 32 40 48"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_speed"				"24 32 40 48"
+				"bonus_damage"				"10 0 -10 -20"
 			}
 			"03"
 			{
@@ -7475,31 +7652,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor_bonus"			"-4 -6 -8 -10"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tidehunter: Kraken Shell
-	//=================================================================================================================
-	"tidehunter_kraken_shell"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"20 30 40 50"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_reset_interval"	"6.0"
 			}
 		}
 	}
@@ -8522,14 +8674,14 @@
 	//=================================================================================================================
 	"legion_commander_moment_of_courage"
 	{
-		"AbilityCooldown"					"1.8 1.4 1.0 0.6"
+		"AbilityCooldown"					"1.5 1.0 0.5 0.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"20 30 40 50"
+				"trigger_chance"			"25"
 			}
 			"02"
 			{
@@ -8539,7 +8691,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hp_leech_percent"			"55 70 85 100"
+				"hp_leech_percent"			"55 65 75 85"
 			}
 		}
 	}
@@ -8552,21 +8704,21 @@
 		"AbilityCastRange"				"300"
 		"AbilityCastPoint"				"0.2"
 		
-		"AbilityCooldown"				"50.0"
+		"AbilityCooldown"				"12.0"
 		
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"25"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"50.0"
+				"duration"				"4.0 4.75 5.5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reward_damage"			"12 18 24"
+				"reward_damage"			"10 15 20"
 			}
 		}
 	}
@@ -8583,12 +8735,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_regen_per_instance"	"2.0 3.0 4.5 6.0 8.0 10.0 13.0 16.0"
+				"health_regen_per_instance"	"1.5 3.0 4.5 6.0 8.0 10.0 13.0 16.0 20.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_strength"			"3 6 9 12 15 18 21 24"
+				"bonus_strength"			"2 5 7 10 13 16 20 24 28"
 			}
 		}
 	}
@@ -8605,17 +8757,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_per_instance"	"4 8 12 18 24 32 40 50"
+				"attack_speed_per_instance"	"3 6 10 15 21 28 36 45 55"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_speed_per_instance"	"3 4 5 6 7 8 9 10"
+				"move_speed_per_instance"	"3 4 5 6 7 8 9 10 11"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agility"				"3 6 9 12 15 18 21 24"
+				"bonus_agility"				"2 5 7 10 13 16 20 24 28"
 			}
 		}
 	}
@@ -8632,12 +8784,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_per_instance"	"4 8 12 18 24 32 40 50"
+				"bonus_damage_per_instance"	"3 6 10 15 21 28 36 45 55"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intelligence"		"5 10 15 20 25 30 35 40"
+				"bonus_intelligence"		"3 6 10 14 20 26 33 40 48"
 			}
 		}
 	}
@@ -8648,7 +8800,6 @@
 	"invoker_invoke"
 	{
 		"MaxLevel"							"1"
-		"LevelsBetweenUpgrades"				"5"
 		"RequiredLevel"						"2"
 
 		"AbilityCooldown"					"5"
@@ -8688,8 +8839,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.5 4.8 5.1 5.4 5.7 6.0 6.3 6.6 6.9"
-				"levelkey"				"quaslevel"	
+				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0"
+				"levelkey"				"quaslevel"
 			}
 			"02"
 			{
@@ -8699,7 +8850,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_cooldown"		"0.7 0.6 0.5 0.4 0.3 0.2 0.1 0.1 0.1"
+				"freeze_cooldown"		"0.7 0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
 				"levelkey"				"quaslevel"	
 			}
 			"04"
@@ -8739,13 +8890,13 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"enemy_slow"			"-20 -25 -30 -35 -40 -45 -50 -55 -60 -65"
+				"enemy_slow"			"-20 -25 -30 -35 -40 -45 -50 -55 -60"
 				"levelkey"				"quaslevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"self_slow"				"0 6 12 18 24 30 40 45 50"
+				"self_slow"				"0 6 12 18 24 30 36 42 48"
 				"levelkey"				"wexlevel"
 			}			
 			"05"
@@ -9157,7 +9308,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"100 150 200 250 300 350 400 450 500"
+				"damage"				"60 100 140 180 220 260 300 350 400"
 				"levelkey"				"exortlevel"
 			}
 			"07"
@@ -9171,6 +9322,1840 @@
 				"var_type"				"FIELD_FLOAT"
 				"disarm_duration"		"1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0"
 				"levelkey"				"wexlevel"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abyssal Underlord: Firestorm
+	//=================================================================================================================
+	"abyssal_underlord_firestorm"
+	{
+		"AbilityCastRange"						"900"
+		"AbilityCastPoint"						"0.3"
+		
+		"AbilityCooldown"						"12.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"550"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"wave_duration"					"7.0"
+			}		
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"wave_count"					"6"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"wave_damage"					"30 50 70 90"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"wave_interval"					"1.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"burn_damage"					"10 20 30 40"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"burn_interval"					"1.0"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"burn_duration"					"2.0"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"first_wave_delay"				"0.4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abyssal Underlord: Pit of Malice
+	//=================================================================================================================
+	"abyssal_underlord_pit_of_malice"
+	{
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+
+		"AbilityManaCost"				"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"325 375 425 475"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pit_duration"					"7.0"
+			}		
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"pit_interval"					"0.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"pit_damage"					"100"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"ensnare_duration"				"1.0 1.5 2.0 2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abyssal Underlord: Atrophy Aura
+	//=================================================================================================================
+	"abyssal_underlord_atrophy_aura"
+	{
+		"AbilityCastRange"						"1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction_pct"			"20 30 40 50"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_from_creep"		"10"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_from_hero"		"30 36 42 48"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_damage_duration"			"45.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Huskar: Berserker's Blood
+	//=================================================================================================================
+	"huskar_berserkers_blood"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_bonus_per_stack"	"15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"resistance_per_stack"			"4 5 6 7"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Huskar: Life Break
+	//=================================================================================================================
+	"huskar_life_break"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"7"
+
+		"AbilityCastRange"				"700"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_cost_percent"		".35"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_damage"				"0.4 0.5 0.6"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"health_damage_scepter"		"0.65 0.70 0.75"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_speed"				"1000"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage"				"40 50 60"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_cost_percent"		"35"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed"					"-40 -50 -60"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_durtion_tooltip"		"4 5 6"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_health_damage_scepter"		"65 70 75"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster: Thunder Clap
+	//=================================================================================================================
+	"brewmaster_thunder_clap"
+	{
+		"AbilityCooldown"				"12 11 10 9"
+		
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityManaCost"				"90 100 110 120"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400 425 450 475"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"120 190 260 330"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"25 35 45 55"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_speed_slow"			"25 35 45 55"
+			}			
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_creeps"			"8.0"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster: Drunken Haze
+	//=================================================================================================================
+	"brewmaster_drunken_haze"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"4"
+
+		"AbilityManaCost"				"25"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"8.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_creeps"			"12.0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_slow"				"15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"miss_chance"				"50 60 70 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster: Drunken Brawler
+	//=================================================================================================================
+	"brewmaster_drunken_brawler"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"dodge_chance"				"15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"15 20 25 30"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_multiplier"			"240"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"last_proc"					"10 8 6 4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster: Primal Split
+	//=================================================================================================================
+	"brewmaster_primal_split"
+	{
+		"AbilityCooldown"				"140.0 110.0 80.0"
+		
+		"AbilityCastPoint"				"0.5"
+
+		"AbilitySpecial"
+		{
+			
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"split_duration"			"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Earth: Hurl Boulder
+	//=================================================================================================================
+	"brewmaster_earth_hurl_boulder"
+	{
+		"AbilityCastRange"				"1000"
+
+		"AbilityCooldown"				"5"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"60 80 100 120"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"2.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Earth: Pulverize
+	//=================================================================================================================
+	"brewmaster_earth_pulverize"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_inner"				"60 80 100 120"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_inner"				"250"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_outer"				"60 80 100 120"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_outer"				"250"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"chance"					"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Storm: Dispel Magic
+	//=================================================================================================================
+	"brewmaster_storm_dispel_magic"
+	{
+		"AbilityCastRange"				"900"
+
+		"AbilityCastPoint"				"0.3"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"200 250 300 350"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Storm: Cyclone
+	//=================================================================================================================
+	"brewmaster_storm_cyclone"
+	{
+		"AbilityCastRange"				"900"
+
+		"AbilityCooldown"				"6.0"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_hero"			"6.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_unit"			"20.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Storm: Wind Walk
+	//=================================================================================================================
+	"brewmaster_storm_wind_walk"
+	{
+		"AbilityCooldown"				"3.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"100 140 180 220"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speeed"		"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Brewmaster Fire: Permanent Immolation
+	//=================================================================================================================
+	"brewmaster_fire_permanent_immolation"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"20 40 60 80"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"360"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shredder: Whirling Death
+	//=================================================================================================================
+	"shredder_whirling_death"
+	{
+		"AbilityCastRange"				"400"
+
+		"AbilityCooldown"				"4.5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_radius"			"400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"whirling_damage"			"100 160 220 280"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"whirling_tick"				"0.3"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stat_loss_pct"				"20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"7.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shredder: Timber Chain
+	//=================================================================================================================
+	"shredder_timber_chain"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCastRange"				"1150 1400 1650 1900"
+		
+		"AbilityCooldown"				"3.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chain_radius"		"120"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1200 1450 1700 1950"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_radius"		"275"
+			}
+			"04"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"2000 2500 3000 3500"
+			}
+			"05"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 160 220 280"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shredder: Reactive Armor
+	//=================================================================================================================
+	"shredder_reactive_armor"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_armor"						"1"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_hp_regen"					"1"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_limit"						"12 18 24 30"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_duration"					"16"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bristleback: Viscous Nasal Goo
+	//=================================================================================================================
+	"bristleback_viscous_nasal_goo"
+	{
+		"AbilityCastPoint"				"0.1"
+
+		"AbilityCooldown"				"1.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"goo_speed"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"goo_duration"			"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"armor_per_stack"		"1.5 1.8 2.1 2.4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_move_slow"		"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow_per_stack"	"3 6 9 12"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_limit"			"10"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"goo_duration_creep"	"10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bristleback: Quill Spray
+	//=================================================================================================================
+	"bristleback_quill_spray"
+	{
+		"AbilityCastRange"				"675"
+
+		"AbilityCooldown"				"2.5"
+		"AbilityManaCost"				"30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"675"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quill_base_damage"		"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quill_stack_damage"	"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quill_stack_duration"	"16"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bristleback: Bristleback
+	//=================================================================================================================
+	"bristleback_bristleback"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"side_damage_reduction"			"12 18 24 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"back_damage_reduction"			"30 40 50 60"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"side_angle"					"130"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"back_angle"					"90"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"quill_release_threshold"		"230"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bristleback: Warpath
+	//=================================================================================================================
+	"bristleback_warpath"
+	{
+		"AbilityDuration"						"16.0"
+				
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_damage"					"20 25 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_stack"				"20 25 30"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_move_speed"				"3 4 5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"move_speed_per_stack"			"3 4 5"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stack_duration"				"16"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"6 8 10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Natural Order
+	//=================================================================================================================
+	"elder_titan_natural_order"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"armor_reduction_pct"	    "50 80 110 140"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"20 30 40 50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Elder Titan: Earth Splitter
+	//=================================================================================================================
+	"elder_titan_earth_splitter"
+	{
+		"AbilityCastRange"					"24000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"crack_time"				"3.14"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crack_width"				"350"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crack_distance"			"24000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_pct"					"30 40 50"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"3.0 4.0 5.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"9100"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"35 45 55"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_width"				"500"
+			}
+			"09"
+			{	
+				"var_type"					"FIELD_FLOAT"
+				"vision_interval"			"0.02"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"vision_duration"			"4.0"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_step"				"2000"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"total_steps"				"12"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration_scepter"		"4.0 5.0 6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Devour
+	//=================================================================================================================
+	"doom_bringer_devour"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCastRange"				"600"
+		"AbilityCooldown"				"70.0 60.0 50.0 40.0"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"166"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_per_second"		"66"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Scorched Earth
+	//=================================================================================================================
+	"doom_bringer_scorched_earth"
+	{
+		"AbilityCastRange"				"900"
+		"AbilityCooldown"				"60.0 50.0 40.0 30.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"20 30 40 50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed_pct"	"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0 12.0 14.0 16.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Lvl? Death
+	//=================================================================================================================
+	"doom_bringer_lvl_death"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCastRange"				"666"
+
+		"AbilityCooldown"				"6"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"120 180 240 300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lvl_bonus_damage"		"66"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lvl_bonus_multiple"	"6 5 4 3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Charge of Darkness
+	//=================================================================================================================
+	"spirit_breaker_charge_of_darkness"
+	{
+		"AbilityCastPoint"				"0.36"
+
+		"AbilityCooldown"				"12 11 10 9"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_speed"		"700 800 900 1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.6 1.9 2.2 2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius"			"350"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"500"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Empowering Haste
+	//=================================================================================================================
+	"spirit_breaker_empowering_haste"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_pct"	"10 15 20 25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed_pct_extra"		"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spirit Breaker: Nether Strike
+	//=================================================================================================================
+	"spirit_breaker_nether_strike"
+	{
+		"AbilityCastPoint"				"0.9"
+
+		"AbilityCastRange"				"1000"
+
+		"AbilityCastRangeBuffer"		"1000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150 275 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"0.7"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tooltip_range"			"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_scepter"	"25000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_radius_scepter"	"350"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_scepter"		"20.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lycan: Howl
+	//=================================================================================================================
+	"lycan_howl"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"50 40 30 20"
+		"AbilityDuration"				"12"
+	
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"howl_duration"			"12.0"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_bonus_damage"		"30 45 60 75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"unit_bonus_damage"		"7 14 21 28"
+			}
+		}
+	}
+
+	//=====================================================================================================
+	// Lycan: Feral Impulse
+	//=================================================================================================================
+	"lycan_feral_impulse"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"20 30 40 50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"20 30 40 50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lycan: Shapeshift
+	//=================================================================================================================
+	"lycan_shapeshift"
+	{
+		"AbilityCooldown"					"100.0 70.0 40.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"20.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"700 800 900"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_night_vision"		"1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"30 35 40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_damage"				"175"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transformation_time"		"1.0"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Magnataur: Shockwave
+	//=================================================================================================================
+	"magnataur_shockwave"
+	{
+		"AbilityCastRange"				"1600"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"7.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shock_speed"				"1400"
+			}
+			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shock_width"				"200"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shock_distance"			"1600"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"shock_damage"				"100 175 250 325"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Magnataur: Empower
+	//=================================================================================================================
+	"magnataur_empower"
+	{
+		"AbilityCastRange"				"1000"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"4"
+
+		"AbilityManaCost"				"30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"empower_duration"		"60.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_pct"		"30 40 50 60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_damage_pct"		"30 40 50 60"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_radius"			"275"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Magnataur: Skewer
+	//=================================================================================================================
+	"magnataur_skewer"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"30.0 25.0 20.0 15.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"skewer_speed"			"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1000 1200 1400 1600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"skewer_radius"			"175"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"2.5"
+			}			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"skewer_damage"			"100 175 250 325"
+			}			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tree_radius"			"200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Magnataur: Reverse Polarity
+	//=================================================================================================================
+	"magnataur_reverse_polarity"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCastRange"				"550 775 1000"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_radius"			"550 775 1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarity_damage"		"150 275 400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_stun_duration"	"2.25 3.0 3.75"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_stun_duration"	"3.0 4.0 5.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pull_duration"			"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gyrocopter: Rocket Barrage
+	//=================================================================================================================
+	"gyrocopter_rocket_barrage"
+	{
+		"AbilityCooldown"				"7.0 6.0 5.0 4.0"
+
+		"AbilityDamage"					"10 15 20 25"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rockets_per_second"		"10"
+			}
+		}
+	}	
+	
+	//=================================================================================================================
+	// Gyrocopter: Flak Cannon
+	//=================================================================================================================
+	"gyrocopter_flak_cannon"
+	{
+		"AbilityCooldown"				"15"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1000"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_attacks"					"4 6 8 10"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"projectile_speed"				"900"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Gyrocopter: Call Down
+	//=================================================================================================================
+	"gyrocopter_call_down"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"50 45 40"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_first"		"2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration_second"		"4"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_first"				"250 300 350"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second"				"100 200 300"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_first"				"30"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_second"				"60"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"675"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range_scepter"				"0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_second_scepter"		"200 325 450"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord: Fervor
+	//=================================================================================================================
+	"troll_warlord_fervor"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"4 6 8 10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed"			"30"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	//  Troll Warlord: Battle Trance
+	//=================================================================================================================
+	"troll_warlord_battle_trance"
+	{
+		"AbilityCooldown"				"15"
+	
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"trance_duration"	"5.0 6.0 7.0"		
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_speed"		"90 150 210"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Broodmother: Incapacitating Bite
+	//=================================================================================================================
+	"broodmother_incapacitating_bite"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_chance"			"40 60 80 100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"-25 -30 -35 -40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Broodmother: Insatiable Hunger
+	//=================================================================================================================
+	"broodmother_insatiable_hunger"
+	{
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"30.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"60 90 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal_pct"			"60 90 120"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"14.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Weaver: Shukuchi
+	//=================================================================================================================
+	"weaver_shukuchi"
+	{
+		"AbilityCooldown"				"7.0 6.0 5.0 4.0"
+
+		"AbilityManaCost"				"60 50 40 30"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90 120 150 180"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"0.25"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spectre: Desolate
+	//=================================================================================================================
+	"spectre_desolate"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"30 50 70 90"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Spectre: Dispersion
+	//=================================================================================================================
+	"spectre_dispersion"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reflection_pct"	"15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_radius"			"600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_radius"			"1200"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Dark Seer: Vacuum
+	//=================================================================================================================
+	"dark_seer_vacuum"
+	{
+		"AbilityCastRange"				"750"
+
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCooldown"				"28 25 22 19"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"325 450 575 700"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.5 0.6 0.7 0.8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 100 150 200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_tree"			"275"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dark Seer: Surge
+	//=================================================================================================================
+	"dark_seer_surge"
+	{
+		"AbilityCastRange"				"750"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityManaCost"				"20"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 6.0 8.0 10.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Visage: Grave Chill
+	//=================================================================================================================
+	"visage_grave_chill"
+	{
+		"AbilityCooldown"				"14.0 12.0 10.0 8.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"chill_duration"			"6.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"28 32 36 40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackspeed_bonus"			"60 80 95 110"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Visage: Soul Assumption
+	//=================================================================================================================
+	"visage_soul_assumption"
+	{
+		"AbilityCastRange"				"1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bolt_speed"				"1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_base_damage"			"40 60 80 100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"soul_charge_damage"		"70"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_limit"				"3 5 7 9"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stack_duration"			"6.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_limit"				"110"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1600"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_min"				"2.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_max"				"3000.0"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Visage: Gravekeeper's Cloak
+	//=================================================================================================================
+	"visage_gravekeepers_cloak"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_armor"						"4 6 8 10"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"bonus_resist"						"8 12 16 20"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"max_layers"						"4"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"recovery_time"						"2"
 			}
 		}
 	}

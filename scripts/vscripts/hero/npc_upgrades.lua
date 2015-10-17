@@ -20,32 +20,155 @@ function Upgrade( keys )
 	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
 end
 
-function AncientArmor( keys )
+function AncientHealth( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_stack = keys.modifier_stack
+
+	-- Parameters
+	local health = ability:GetLevelSpecialValueFor("ancient_health", 0)
+
+	-- Update health
+	SetCreatureHealth(caster, health, true)
+end
+
+function AncientThink( keys )
+	local caster = keys.caster
+	local ability = keys.ability
 
 	-- If the game is set to end on kills, make the ancient invulnerable
 	if END_GAME_ON_KILLS then
+
+		-- Make the ancient invulnerable
 		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
+
+		-- Kill any nearby creeps (prevents lag)
+		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemy_creeps) do
+			enemy:Kill(ability, caster)
+		end
 		return nil
 	end
 
 	-- Parameters
-	local total_armor = ability:GetLevelSpecialValueFor("total_armor", ability_level)
-	local enemy_range = ability:GetLevelSpecialValueFor("enemy_range", ability_level)
-	local enemy_count = IMBA_PLAYERS_ON_GAME / 2
+	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
 
-	-- Find nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, enemy_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	-- Search for nearby units
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 
-	-- Calculate total bonus armor
-	local total_stacks = total_armor - ( total_armor / enemy_count ) * #enemies
+	-- If there are no nearby enemies, do nothing
+	if #enemies == 0 then
+		return nil
+	end
+	
+	-- Ancient abilities logic
+	local ability_ravage = caster:FindAbilityByName("tidehunter_ravage")
+	local ability_eye_of_the_storm = caster:FindAbilityByName("razor_eye_of_the_storm")
+	local ability_borrowed_time = caster:FindAbilityByName("abaddon_borrowed_time")
+	local ability_poison_nova = caster:FindAbilityByName("venomancer_poison_nova")
+	local ability_overgrowth = caster:FindAbilityByName("treant_overgrowth")
 
-	-- Update stacks
-	caster:SetModifierStackCount(modifier_stack, caster, total_stacks)
+	-- If health < 20%, refresh abilities once
+	if ancient_health < 0.20 and not caster.abilities_refreshed then
+		ability_ravage:EndCooldown()
+		ability_borrowed_time:EndCooldown()
+		caster.abilities_refreshed = true
+	end
 
+	-- If health < 30%, use Ravage
+	if ancient_health < 0.3 and ability_ravage and ability_ravage:IsCooldownReady() then
+		ability_eye_of_the_storm:EndCooldown()
+		ability_ravage:OnSpellStart()
+		ability_ravage:StartCooldown(ability_ravage:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 40%, use Borrowed Time
+	if ancient_health < 0.4 and ability_borrowed_time and ability_borrowed_time:IsCooldownReady() then
+		ability_eye_of_the_storm:EndCooldown()
+		ability_borrowed_time:OnSpellStart()
+		ability_borrowed_time:StartCooldown(ability_borrowed_time:GetCooldown(1))
+	end
+
+	-- If health < 60%, use Eye of the Storm
+	if ancient_health < 0.6 and ability_eye_of_the_storm and ability_eye_of_the_storm:IsCooldownReady() then
+		ability_poison_nova:EndCooldown()
+		ability_eye_of_the_storm:OnSpellStart()
+		ability_eye_of_the_storm:StartCooldown(ability_eye_of_the_storm:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 80%, use Overgrowth
+	if ancient_health < 0.8 and ability_overgrowth and ability_overgrowth:IsCooldownReady() then
+		ability_overgrowth:OnSpellStart()
+		ability_overgrowth:StartCooldown(ability_overgrowth:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 100%, use Poison Nova
+	if ancient_health < 1.0 and ability_poison_nova and ability_poison_nova:IsCooldownReady() then
+		ability_poison_nova:OnSpellStart()
+		ability_poison_nova:StartCooldown(ability_poison_nova:GetCooldown(1))
+		return nil
+	end
+end
+
+function AncientAttacked( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Parameters
+	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
+	
+	-- Ancient abilities logic
+	local ability_ravage = caster:FindAbilityByName("tidehunter_ravage")
+	local ability_eye_of_the_storm = caster:FindAbilityByName("razor_eye_of_the_storm")
+	local ability_borrowed_time = caster:FindAbilityByName("abaddon_borrowed_time")
+	local ability_poison_nova = caster:FindAbilityByName("venomancer_poison_nova")
+	local ability_overgrowth = caster:FindAbilityByName("treant_overgrowth")
+
+	-- If health < 20%, refresh abilities once
+	if ancient_health < 0.20 and not caster.abilities_refreshed then
+		ability_ravage:EndCooldown()
+		ability_borrowed_time:EndCooldown()
+		caster.abilities_refreshed = true
+	end
+
+	-- If health < 30%, use Ravage
+	if ancient_health < 0.3 and ability_ravage and ability_ravage:IsCooldownReady() then
+		ability_eye_of_the_storm:EndCooldown()
+		ability_ravage:OnSpellStart()
+		ability_ravage:StartCooldown(ability_ravage:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 40%, use Borrowed Time
+	if ancient_health < 0.4 and ability_borrowed_time and ability_borrowed_time:IsCooldownReady() then
+		ability_eye_of_the_storm:EndCooldown()
+		ability_borrowed_time:OnSpellStart()
+		ability_borrowed_time:StartCooldown(ability_borrowed_time:GetCooldown(1))
+	end
+
+	-- If health < 60%, use Eye of the Storm
+	if ancient_health < 0.6 and ability_eye_of_the_storm and ability_eye_of_the_storm:IsCooldownReady() then
+		ability_poison_nova:EndCooldown()
+		ability_eye_of_the_storm:OnSpellStart()
+		ability_eye_of_the_storm:StartCooldown(ability_eye_of_the_storm:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 80%, use Overgrowth
+	if ancient_health < 0.8 and ability_overgrowth and ability_overgrowth:IsCooldownReady() then
+		ability_overgrowth:OnSpellStart()
+		ability_overgrowth:StartCooldown(ability_overgrowth:GetCooldown(1))
+		return nil
+	end
+
+	-- If health < 100%, use Poison Nova
+	if ancient_health < 1.0 and ability_poison_nova and ability_poison_nova:IsCooldownReady() then
+		ability_poison_nova:OnSpellStart()
+		ability_poison_nova:StartCooldown(ability_poison_nova:GetCooldown(1))
+		return nil
+	end
 end
 
 function CreepStructureDamage( keys )
@@ -59,13 +182,6 @@ function CreepStructureDamage( keys )
 	local hero_damage = ability:GetLevelSpecialValueFor("hero_damage_per_minute", ability_level)
 	local game_time = math.min( GAME_TIME_ELAPSED / 60, CREEP_POWER_MAX_UPGRADES)
 
-	-- Super/mega creep building damage increase
-	if string.find(caster:GetUnitName(), "mega") then
-		building_damage = ability:GetLevelSpecialValueFor("mega_creep_structure_bonus", ability_level)
-	elseif string.find(caster:GetUnitName(), "upgraded") then
-		building_damage = ability:GetLevelSpecialValueFor("super_creep_structure_bonus", ability_level)
-	end
-
 	-- Deal bonus damage
 	if target:IsBuilding() or target:IsTower() then
 		local bonus_damage = caster:GetAttackDamage() * building_damage * game_time / 100
@@ -76,12 +192,24 @@ function CreepStructureDamage( keys )
 	end
 end
 
-function FountainParticle( keys )
+function FountainThink( keys )
 	local caster = keys.caster
+	local ability = keys.ability
 	local particle_danger = keys.particle_danger
 
 	local danger_pfx = ParticleManager:CreateParticle(particle_danger, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(danger_pfx, 0, caster:GetAbsOrigin())
+
+	-- If mega creeps are nearby on arena mode, disable fountain protection
+	if END_GAME_ON_KILLS and caster.fountain_disabled then
+		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for	_,enemy in pairs(enemy_creeps) do
+			if enemy:GetTeam() ~= caster:GetTeam() and (enemy:GetUnitName() == "npc_dota_creep_goodguys_melee_upgraded_mega" or enemy:GetUnitName() == "npc_dota_creep_badguys_melee_upgraded_mega") then
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_imba_fountain_disabled", {})
+				caster.fountain_disabled = true
+			end
+		end
+	end
 end
 
 function FountainBash( keys )

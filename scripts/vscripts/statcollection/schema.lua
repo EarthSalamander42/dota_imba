@@ -3,10 +3,7 @@ customSchema = class({})
 function customSchema:init()
 
     -- Check the schema_examples folder for different implementations
-
-    -- Flag Example
-    -- statCollection:setFlags({version = GetVersion()})
-
+    
     -- Listen for changes in the current state
     ListenToGameEvent('game_rules_state_change', function(keys)
         local state = GameRules:State_Get()
@@ -20,8 +17,15 @@ function customSchema:init()
             -- Build players array
             local players = BuildPlayersArray()
 
+            -- Print the schema data to the console
+            if statCollection.TESTING then
+                PrintSchema(game,players)
+            end
+
             -- Send custom stats
-            statCollection:sendCustom({game=game, players=players})
+            if statCollection.HAS_SCHEMA then
+                statCollection:sendCustom({game=game, players=players})
+            end
         end
     end, nil)
 end
@@ -29,132 +33,132 @@ end
 -------------------------------------
 
 function customSchema:submitRound(args)
-    winners = BuildRoundWinnerArray()
-    game = BuildGameArray()
-    players = BuildPlayersArray()
+	winners = BuildRoundWinnerArray()
+	game = BuildGameArray()
+	players = BuildPlayersArray()
 
-    statCollection:sendCustom({game=game, players=players})
+	statCollection:sendCustom({game=game, players=players})
 
-    return {winners = winners, lastRound = false}
+	return {winners = winners, lastRound = false}
 end
 
 -------------------------------------
 
 function BuildRoundWinnerArray()
-    local winners = {}
-    local current_winner_team = GameRules.Winner or 0
-    for playerID = 0, DOTA_MAX_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            if not PlayerResource:IsBroadcaster(playerID) then
-                winners[PlayerResource:GetSteamAccountID(playerID)] = (PlayerResource:GetTeam(playerID) == current_winner_team) and 1 or 0
-            end
-        end
-    end
-    return winners
+	local winners = {}
+	return winners
 end
 
 -- Returns a table with our custom game tracking.
 function BuildGameArray()
-    local game = {}
-    game.rs = GetRoshanKills() -- This is an example of a function that returns how many times roshan was killed
-    return game
+
+	local game = {}
+
+	-- Tracks total game length, from the horn sound, in minutes
+	game.length = GAME_TIME_ELAPSED / 60
+
+	-- Tracks which team won the game
+	game.winner_team = GAME_WINNER_TEAM
+	
+	return game
 end
 
 -- Returns a table containing data for every player in the game
 function BuildPlayersArray()
-    local players = {}
-    for playerID = 0, DOTA_MAX_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            if not PlayerResource:IsBroadcaster(playerID) then
+	local players = {}
+	for playerID = 0, DOTA_MAX_PLAYERS do
+		if PlayerResource:IsValidPlayerID(playerID) then
+			if not PlayerResource:IsBroadcaster(playerID) then
 
-                local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+				local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
-                table.insert(players, {
-                    --steamID32 required in here
-                    steamID32 = PlayerResource:GetSteamAccountID(playerID),
+				table.insert(players, {
 
-                    -- Example functions of generic stats (keep, delete or change any that you don't need)
-                    ph = GetHeroName(playerID), --Hero by its short name
-                    pk = hero:GetKills(),   --Number of kills of this players hero
-                    pd = hero:GetDeaths(),  --Number of deaths of this players hero
-                    nt = GetNetworth(hero), --Sum of hero gold and item worth
+					-- SteamID32 required in here
+					steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-                    -- Item List
-                    il = GetItemList(hero),
-                })
-            end
-        end
-    end
+					hero_name = GetHeroName(playerID),										-- Hero by its short name
+					hero_level = hero:GetLevel(),											-- Hero level at the end of the game
+					hero_net_worth = GetNetworth(hero),										-- Sum of hero gold and item worth
+					hero_buyback_count = hero.buyback_count,								-- Amount of buybacks performed during the game
+					player_team = hero:GetTeam(),											-- Hero's team
+					player_kills = hero:GetKills(),											-- Number of kills of this players hero
+					player_assists = hero:GetAssists(),										-- Number of deaths of this players hero
+					player_deaths = hero:GetDeaths(),										-- Number of deaths of this players hero
+					item_list = GetItemList(hero)											-- Item list
+				})
+			end
+		end
+	end
 
-    return players
+	return players
 end
 
 -------------------------------------
 --          Stat Functions         --
 -------------------------------------
 
-function GetRoshanKills()
-    local total_rosh_kills = 0
-    for playerID = 0, DOTA_MAX_PLAYERS do
-        if PlayerResource:IsValidPlayerID(playerID) then
-            local roshan_kills_player =  PlayerResource:GetRoshanKills(playerID)
-            total_rosh_kills = total_rosh_kills + roshan_kills_player
-        end
-    end
+if Convars:GetBool('developer') then
+    Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(),BuildPlayersArray()) end, "Test the custom schema arrays", 0)
+end
+
+function PrintSchema( gameArray, playerArray )
+    print("--------- GAME DATA ---------")
+    DeepPrintTable(gameArray)
+    print("\n-------- PLAYER DATA --------")
+    DeepPrintTable(playerArray)
+    print("-----------------------------")
 end
 
 function GetHeroName( playerID )
-    local heroName = GetSelectedHeroName( playerID )
-    heroName = string.gsub(heroName,"npc_dota_hero_","") --Cuts the npc_dota_hero_ prefix
-    return heroName
+	local heroName = PlayerResource:GetSelectedHeroName( playerID )
+	heroName = string.gsub(heroName,"npc_dota_hero_","")
+	return heroName
 end
 
 function GetNetworth( hero )
-    local gold = hero:GetGold()
+	local gold = hero:GetGold()
 
-    -- Iterate over item slots adding up its gold cost
-    for i=0,15 do
-        local item = hero:GetItemInSlot(i)
-        if item then
-            gold = gold + item:GetCost()
-        end
-    end
+	-- Iterate over item slots adding up its gold cost
+	for i = 0,15 do
+		local item = hero:GetItemInSlot(i)
+		if item then
+			gold = gold + item:GetCost()
+		end
+	end
+
+	return gold
 end
 
 function GetItemName(hero, slot)
-    local item = hero:GetItemInSlot(slot)
-    if item then
-        local itemName = item:GetAbilityName()
-        itemName = string.gsub(itemName,"item_","") --Cuts the item_ prefix
-        return itemName
-    else
-        return ""
-    end
+	local item = hero:GetItemInSlot(slot)
+	if item then
+		local itemName = item:GetAbilityName()
+		itemName = string.gsub(itemName,"item_","") --Cuts the item_ prefix
+		return itemName
+	else
+		return ""
+	end
 end
 
---NOTE THAT THIS FUNCTION RELIES ON YOUR npc_items_custom.txt
---having "ID" properly set to unique values (within your mod)
 function GetItemList(hero)
-    --Create a table of items for the hero
-    --Order that table to remove the impact of slot order
-    --Concatonate the table into a single string
-    local item
-    local itemID
-    local itemTable = {}
-    local itemList
+	local itemTable = {}
 
-    for i=0,5 do
-        item = hero:GetItemInSlot(i)
-        if item then
-            itemID = item:GetAbilityIndex()
-            if itemID then
-                table.insert(itemTable,itemID)
-            end
-        end
-    end
+	for i=0,5 do
+		local item = hero:GetItemInSlot(i)
+		if item then
+			if string.find(item:GetAbilityName(), "imba") then
+				local itemName = string.gsub(item:GetAbilityName(),"item_imba_","")
+				table.insert(itemTable,itemName)
+			else
+				local itemName = string.gsub(item:GetAbilityName(),"item_","")
+				table.insert(itemTable,itemName)
+			end
+		end
+	end
 
-    table.sort(itemTable)
-    itemList = table.concat(itemTable, "_")
+	table.sort(itemTable)
+	local itemList = table.concat(itemTable, ",")
 
-    return itemList
+	return itemList
 end

@@ -7,34 +7,80 @@ function LandMinePlant( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_state = keys.modifier_state
+	local modifier_charges = keys.modifier_charges
 	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
 	local player_id = caster:GetPlayerID()
 
-	-- Create the mine at the specified place
-	local land_mine = CreateUnitByName("npc_imba_techies_land_mine", target, false, caster, caster, caster:GetTeam())
-	FindClearSpaceForUnit(land_mine, target, true)
-	land_mine:SetControllableByPlayer(player_id, true)
+	-- Calculate amount of mines to place
+	local mine_amount = 1
+	if caster:HasModifier(modifier_charges) then
+		mine_amount = 1 + math.max(caster:GetModifierStackCount(modifier_charges, caster), 1)
+		caster:RemoveModifierByName(modifier_charges)
+	end
 
-	-- Root the mine in place
-	land_mine:AddNewModifier(land_mine, ability, "modifier_rooted", {})
+	-- Create the mines at the specified place
+	for i = 1, mine_amount do
+		local land_mine = CreateUnitByName("npc_imba_techies_land_mine", target, false, caster, caster, caster:GetTeam())
+		FindClearSpaceForUnit(land_mine, target + RandomVector(10), true)
+		land_mine:SetControllableByPlayer(player_id, true)
 
-	-- Make the mine have no unit collision or health bar
-	ability:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
+		-- Root the mine in place
+		land_mine:AddNewModifier(land_mine, ability, "modifier_rooted", {})
 
-	-- Wait for the activation delay
-	Timers:CreateTimer(activation_time, function()
-		
-		-- Grant the mine the appropriately leveled abilities
-		local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-		mine_passive:SetLevel(ability_level + 1)
-		if scepter then
-			local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
-			mine_teleport:SetLevel(1)
+		-- Make the mine have no unit collision or health bar
+		ability:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
+
+		-- Wait for the activation delay
+		Timers:CreateTimer(activation_time, function()
+			
+			-- Grant the mine the appropriately leveled abilities
+			local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
+			mine_passive:SetLevel(ability_level + 1)
+			if scepter then
+				local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+				mine_teleport:SetLevel(1)
+			end
+		end)
+	end
+end
+
+function LandMineCharges( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_charges = keys.modifier_charges
+	
+	-- Parameters
+	local levels_per_charge = ability:GetLevelSpecialValueFor("levels_per_charge", ability_level)
+	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
+	local max_charges = math.floor( caster:GetLevel() / levels_per_charge + 1 )
+	local current_charges = caster:GetModifierStackCount(modifier_charges, caster)
+	local actual_cooldown = math.ceil( charge_cooldown / max_charges)
+
+	-- If charges are already at their maximum, do nothing
+	if current_charges >= max_charges then
+		return nil
+	end
+	
+	-- Initialize charge counter if necessary
+	if not caster.land_mine_charge_counter then
+		caster.land_mine_charge_counter = 0
+
+	-- Increment the timer and add charges if appropriate
+	else
+		caster.land_mine_charge_counter = caster.land_mine_charge_counter + 1
+		if caster.land_mine_charge_counter >= actual_cooldown then
+			
+			-- Reset timer
+			caster.land_mine_charge_counter = 0
+
+			-- If possible, add a charge
+			AddStacks(ability, caster, caster, modifier_charges, 1, true)
 		end
-	end)
+	end
 end
 
 function LandMineThrow( keys )
@@ -320,10 +366,10 @@ function StasisTrapThink( keys )
 		-- Find nearby enemies
 		local near_units
 		if think_type == "mine" then
-			near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 		elseif think_type == "creep" then
 			local creep = keys.target
-			near_units = FindUnitsInRadius(caster:GetTeamNumber(), creep:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+			near_units = FindUnitsInRadius(caster:GetTeamNumber(), creep:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 		end
 		
 		-- If any enemy is inside the small blast range, explode

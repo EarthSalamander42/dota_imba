@@ -74,7 +74,7 @@ function ShallowGraveDamageCheck( keys )
 
 	-- Check caster's health
 	local health = caster:GetHealth()
-	if health == 1 and not caster:HasModifier(modifier_grave) then
+	if health <= 2 and not caster:HasModifier(modifier_grave) and not caster.has_aegis then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_grave, {})
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = passive_cooldown})
 		caster:RemoveModifierByName(modifier_passive)
@@ -93,7 +93,7 @@ function ShallowGraveDamageStorage( keys )
 		unit.grave_damage = 0
 	end
 
-	if health <= 1 then
+	if health <= 2 then
 		unit.grave_damage = unit.grave_damage + damage
 	end
 end

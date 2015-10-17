@@ -196,29 +196,11 @@ end
 function Blur( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local caster_loc = caster:GetAbsOrigin()
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
-	local modifier_enemy = keys.modifier_enemy
-
-	local enemy_heroes = FindUnitsInRadius(caster:GetTeam(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-
-	if #enemy_heroes > 0 then
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_enemy, {})
-	else
-		if caster:HasModifier(modifier_enemy) then
-			caster:RemoveModifierByName(modifier_enemy)
-		end
-	end
-end
-
-function BlurStacks( keys )
-	local caster = keys.caster
-	local ability = keys.ability
 	local attacker = keys.attacker
 	local stack_modifier = keys.stack_modifier
 
 	-- Increase amount of evasion stacks if damage was done by a hero
-	if attacker:IsHero() then
+	if attacker and attacker:IsHero() then
 		AddStacks(ability, caster, caster, stack_modifier, 1, true)
 	end
 end

@@ -241,11 +241,8 @@ function RoshanDeath( keys )
 	local respawn_time = ROSHAN_RESPAWN_TIME
 
 	-- Increase Roshan's death count
-	if not ROSHAN_DEATHS then
-		ROSHAN_DEATHS = 1
-	else
-		ROSHAN_DEATHS = ROSHAN_DEATHS + 1
-	end
+	_G.GAME_ROSHAN_KILLS = _G.GAME_ROSHAN_KILLS + 1
+	print(_G.GAME_ROSHAN_KILLS)
 
 	-- Drop the Aegis
 	local drop_aegis = CreateItem("item_imba_aegis", nil, nil)
@@ -253,8 +250,8 @@ function RoshanDeath( keys )
 	drop_aegis:LaunchLoot(false, 100, 0.5, caster:GetAbsOrigin())
 
 	-- On each sucessive death, grant extra chesse
-	if ROSHAN_DEATHS > 1 then
-		for i = 2, ROSHAN_DEATHS do
+	if _G.GAME_ROSHAN_KILLS > 1 then
+		for i = 2, _G.GAME_ROSHAN_KILLS do
 			local drop_cheese = CreateItem("item_imba_cheese", nil, nil)
 			CreateItemOnPositionSync(caster:GetAbsOrigin(), drop_cheese)
 			drop_cheese:LaunchLoot(false, 100, 0.5, caster:GetAbsOrigin() + RandomVector(100))
@@ -273,9 +270,16 @@ function RoshanAI( keys )
 	local attacker = keys.attacker
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local damage_taken = keys.damage_taken
 	local ability_slam = caster:FindAbilityByName(keys.ability_slam)
 	local ability_roshling = caster:FindAbilityByName(keys.ability_roshling)
 	local ability_fury = caster:FindAbilityByName(keys.ability_fury)
+
+	-- If the damage source's height is different from Roshan's (cliff attacks), prevent damage and do nothing
+	if (attacker:GetAbsOrigin().z - caster:GetAbsOrigin().z) > 25 then
+		caster:Heal(damage_taken, caster)
+		return nil
+	end
 
 	-- If already acting, do nothing
 	if caster.ai_is_active then

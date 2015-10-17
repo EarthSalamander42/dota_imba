@@ -127,6 +127,7 @@ function SpikedCarapaceReflect( keys )
 
 	-- Prevents damage
 	caster:SetHealth( caster_health + damage_taken )
+	local attacker_health = attacker:GetHealth() + 1
 	
 	-- Checks if the target is not spell immune
 	if not attacker:IsMagicImmune() then
@@ -135,10 +136,10 @@ function SpikedCarapaceReflect( keys )
 		if attacker:IsHero() then
 			
 			-- Uses HP removal to avoid infinite damage return loops. If the target's health is <= 0, kills it
-			if attacker:GetHealth() <= damage_taken then
+			if attacker_health <= damage_taken then
 				attacker:Kill(ability, caster)
 			else
-				attacker:SetHealth( attacker:GetHealth() - damage_taken )
+				attacker:SetHealth( attacker_health - damage_taken )
 			end
 		end
 

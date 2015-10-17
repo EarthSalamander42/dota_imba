@@ -342,4 +342,57 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Finish mode setup and start the game
 	GameRules:FinishCustomGameSetup()
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Stat tracking stuff
+	-------------------------------------------------------------------------------------------------
+
+	-- Tracks game version
+	statCollection:setFlags({version = "6.85.1"})
+
+	-- Tracks this game's map
+	if GetMapName() == "imba_standard" then
+		statCollection:setFlags({map_name = "standard"})
+	elseif GetMapName() == "imba_random_omg" then
+		statCollection:setFlags({map_name = "random_omg"})
+	elseif GetMapName() == "imba_custom" then
+		statCollection:setFlags({map_name = "custom"})
+	elseif GetMapName() == "imba_10v10" then
+		statCollection:setFlags({map_name = "10v10"})
+	end
+
+	-- Tracks if game options were customized or just left as default
+	statCollection:setFlags({game_options_set = GAME_OPTIONS_SET and 1 or 0})
+
+	-- Tracks the game mode
+	statCollection:setFlags({mode_all_pick = IMBA_PICK_MODE_ALL_PICK and 1 or 0})
+	statCollection:setFlags({mode_all_random = IMBA_PICK_MODE_ALL_RANDOM and 1 or 0})
+	statCollection:setFlags({mode_random_omg = IMBA_ABILITY_MODE_RANDOM_OMG and 1 or 0})
+	statCollection:setFlags({mode_random_omg_deathmatch = IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH and 1 or 0})
+	statCollection:setFlags({mode_same_hero = ALLOW_SAME_HERO_SELECTION and 1 or 0})
+	statCollection:setFlags({mode_end_on_kills = END_GAME_ON_KILLS and 1 or 0})
+
+	-- Track arena mode kills condition
+	statCollection:setFlags({mode_arena_kills = KILLS_TO_END_GAME_FOR_TEAM})
+
+	-- Tracks gold/experience options
+	statCollection:setFlags({mode_gold_bonus = CREEP_GOLD_BONUS})
+	statCollection:setFlags({mode_exp_bonus = CREEP_XP_BONUS})
+
+	-- Tracks respawn and buyback
+	statCollection:setFlags({mode_respawn_time_multiplier = HERO_RESPAWN_TIME_MULTIPLIER})
+	statCollection:setFlags({mode_buyback_cost_multiplier = HERO_BUYBACK_COST_MULTIPLIER})
+
+	-- Track starting gold and levels
+	statCollection:setFlags({mode_starting_gold = HERO_INITIAL_GOLD})
+	statCollection:setFlags({mode_starting_level = HERO_STARTING_LEVEL})
+
+	-- Tracks creep upgrade speed
+	statCollection:setFlags({mode_creep_upgrade_multiplier = CREEP_POWER_RAMP_UP_FACTOR})
+
+	-- Tracks Frantic Mode multiplier
+	statCollection:setFlags({mode_frantic_multiplier = FRANTIC_MULTIPLIER})
+
+	-- Tracks structure abilities and upgrades
+	statCollection:setFlags({mode_tower_abilities = TOWER_ABILITY_MODE and 1 or 0})
+	statCollection:setFlags({mode_tower_upgrades = TOWER_UPGRADE_MODE and 1 or 0})
 end

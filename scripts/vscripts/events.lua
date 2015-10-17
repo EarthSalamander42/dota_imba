@@ -84,6 +84,7 @@ function GameMode:OnDisconnect(keys)
 			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
 				if GOODGUYS_CONNECTED_PLAYERS == 0 then
 					GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+					GAME_WINNER_TEAM = "Dire"
 				end
 			--end)
 		end
@@ -99,6 +100,7 @@ function GameMode:OnDisconnect(keys)
 			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
 				if BADGUYS_CONNECTED_PLAYERS == 0 then
 					GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+					GAME_WINNER_TEAM = "Radiant"
 				end
 			--end)
 		end
@@ -197,33 +199,6 @@ function GameMode:OnNPCSpawned(keys)
 	end)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Aegis clean-up
-	-------------------------------------------------------------------------------------------------
-	if npc.has_aegis then
-
-		-- Remove Aegis ownership flag
-		npc.has_aegis = nil
-		npc:RemoveModifierByName("modifier_item_imba_aegis")
-
-		-- Update kill bounty
-		local npc_level = npc:GetLevel()
-		local gold_bounty = HERO_KILL_GOLD_BASE + npc_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(npc)
-		local xp_bounty
-		if npc_level <= 5 then
-			xp_bounty = HERO_KILL_XP_CONSTANT_1 + ( npc_level - 1 ) * HERO_KILL_XP_CONSTANT_2
-		else
-			xp_bounty = ( npc_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
-		end
-
-		-- Adjust bounties with the game options multiplier
-		gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
-		xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-		npc:SetDeathXP(xp_bounty)
-		npc:SetMaximumGoldBounty(gold_bounty)
-		npc:SetMinimumGoldBounty(gold_bounty)
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Reaper's Scythe buyback prevention clean-up
 	-------------------------------------------------------------------------------------------------
 
@@ -238,6 +213,9 @@ function GameMode:OnNPCSpawned(keys)
 	-- Check if the spawned unit has the buyback penalty modifier
 	Timers:CreateTimer(0.1, function()
 		if not npc:IsNull() and npc:HasModifier("modifier_buyback_gold_penalty") then
+
+			-- Add one to this player's buyback count
+			npc.buyback_count = npc.buyback_count + 1
 
 			-- Update the quick sucession buyback cost increase variable
 			if npc.quick_sucession_buybacks then
@@ -522,13 +500,6 @@ function GameMode:OnPlayerLevelUp(keys)
 	hero:SetMaximumGoldBounty(gold_bounty)
 	hero:SetMinimumGoldBounty(gold_bounty)
 
-	-- If the hero owns the Aegis, nullify its bounty
-	if hero.has_aegis then
-		hero:SetDeathXP(0)
-		hero:SetMaximumGoldBounty(0)
-		hero:SetMinimumGoldBounty(0)
-	end
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Unlimited level logic
 	-------------------------------------------------------------------------------------------------
@@ -675,8 +646,10 @@ function GameMode:OnEntityKilled( keys )
 
 		if radiant_kills >= KILLS_TO_END_GAME_FOR_TEAM then
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+			GAME_WINNER_TEAM = "Radiant"
 		elseif dire_kills >= KILLS_TO_END_GAME_FOR_TEAM then
 			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+			GAME_WINNER_TEAM = "Dire"
 		end
 	end
 
@@ -882,11 +855,6 @@ function GameMode:OnEntityKilled( keys )
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
 
-		-- If the owner has an aegis, disregard everything
-		if killed_unit.has_aegis then
-			killed_unit:SetTimeUntilRespawn(3)
-			killed_unit:SetRespawnPosition(killed_unit:GetAbsOrigin())
-		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -927,11 +895,6 @@ function GameMode:OnEntityKilled( keys )
 
 	if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
 		non_neutral_killer = true
-	end
-
-	-- If the killed unit owns the Aegis, do nothing
-	if killed_unit.has_aegis then
-		return nil
 	end
 	
 	-- Check if killed unit is a hero, and killer/killed belong to different teams
@@ -1082,12 +1045,6 @@ function GameMode:OnEntityKilled( keys )
 			killer_bounty = math.max( killer_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
 			killer_hero:SetMaximumGoldBounty(killer_bounty)
 			killer_hero:SetMinimumGoldBounty(killer_bounty)
-
-			-- If the killer owns the Aegis, nullify its bounty
-			if killer_hero.has_aegis then
-				killer_hero:SetMaximumGoldBounty(0)
-				killer_hero:SetMinimumGoldBounty(0)
-			end
 
 			-- Killer Rancor logic
 			if VENGEFUL_RANCOR and killer_hero:GetTeam() ~= VENGEFUL_RANCOR_TEAM then

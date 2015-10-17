@@ -36,14 +36,17 @@ function OctarineLifesteal( keys )
 	local lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(lifesteal_fx, 0, caster:GetAbsOrigin())
 
-	-- If the target is a real hero, heal for the full value
-	if target:IsRealHero() then
-		caster:Heal(damage * hero_lifesteal / 100, caster)
+	-- Delay the lifesteal for one game tick to prevent blademail/octarine interaction
+	Timers:CreateTimer(0.01, function()
+		-- If the target is a real hero, heal for the full value
+		if target:IsRealHero() then
+			caster:Heal(damage * hero_lifesteal / 100, caster)
 
-	-- else, heal for the reduced value
-	else
-		caster:Heal(damage * creep_lifesteal / 100, caster)
-	end
+		-- else, heal for the reduced value
+		else
+			caster:Heal(damage * creep_lifesteal / 100, caster)
+		end
+	end)
 end
 
 function OctarineAttack( keys )

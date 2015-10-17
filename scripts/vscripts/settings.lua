@@ -209,6 +209,9 @@ end
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
+GAME_WINNER_TEAM = 0														-- Tracks game winner
+GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
+
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 20												-- How many kills for a team should signify the end of the game?
 			

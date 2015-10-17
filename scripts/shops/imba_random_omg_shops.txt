@@ -135,6 +135,7 @@
 		//"item"		"item_imba_sphere"
 		"item"		"item_imba_assault"
 		"item"		"item_imba_heart"
+		"item"		"item_imba_greatwyrm_plate"
 	}
 			
 	"weapons"

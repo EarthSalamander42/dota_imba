@@ -284,7 +284,9 @@ function MeatHook( keys )
 				-- Reactivate tp scrolls/boots
 				for i = 0, 5 do
 					local current_item = caster:GetItemInSlot(i)
-					current_item:SetActivated(true)
+					if current_item then
+						current_item:SetActivated(true)
+					end
 				end
 
 			-- If this is not the final step, keep reeling the hook in

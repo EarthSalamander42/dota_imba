@@ -112,6 +112,13 @@ function DarkRitual( keys )
 	end
 end
 
+function ChainFrostStart( keys )
+	local caster = keys.caster
+
+	-- Resets bounce count
+	caster.chain_frost_bounces = 0
+end
+
 function ChainFrost( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -121,7 +128,6 @@ function ChainFrost( keys )
 
 	-- If ability is unlearned, do nothing
 	if not ability then
-		caster.chain_frost_bounces = nil
 		return nil
 	end
 
@@ -129,6 +135,7 @@ function ChainFrost( keys )
 	local jump_range = ability:GetLevelSpecialValueFor("jump_range", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
+	local speed_decay = ability:GetLevelSpecialValueFor("speed_decay", ability_level)
 	local target_pos = target:GetAbsOrigin()
 	local bounce_target = target
 
@@ -140,9 +147,7 @@ function ChainFrost( keys )
 	local particle_name = keys.particle_name
 
 	-- Track the number of bounces (lazy count)
-	if not caster.chain_frost_bounces then
-		caster.chain_frost_bounces = 1
-	elseif caster.chain_frost_bounces < 60 then
+	if caster.chain_frost_bounces < 40 then
 		caster.chain_frost_bounces = caster.chain_frost_bounces + 1
 	end
 
@@ -176,6 +181,14 @@ function ChainFrost( keys )
 			should_bounce = true
 		end
 	end
+	
+	-- Prevent bouncing if inside the enemy fountain
+	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
+
+		-- Clear the bounce count
+		caster.chain_frost_bounces = 0
+		should_bounce = false
+	end
 
 	-- If there's a target to bounce to, find it and jump
 	if should_bounce then
@@ -199,7 +212,7 @@ function ChainFrost( keys )
 			EffectName = particle_name,
 			bDodgeable = false,
 			bProvidesVision = false,
-			iMoveSpeed = projectile_speed,
+			iMoveSpeed = projectile_speed - caster.chain_frost_bounces * speed_decay,
 		--	iVisionRadius = vision_radius,
 			iVisionTeamNumber = caster:GetTeamNumber(), -- Vision still belongs to the one that casted the ability
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
@@ -208,6 +221,6 @@ function ChainFrost( keys )
 	else
 
 		-- Clear the bounce count
-		caster.chain_frost_bounces = nil
+		caster.chain_frost_bounces = 0
 	end
 end

@@ -259,7 +259,7 @@
 
 		"ArmorPhysical"				"2"
 
-		"MagicalResistance"			"35"
+		"MagicalResistance"			"40"
 
 		"AttributeBaseStrength"		"23"
 
@@ -347,7 +347,7 @@
 
 		"AttackRate"				"1.5"
 
-		//"Ability1"					"imba_faceless_void_time_walk"					
+		"Ability1"					"imba_faceless_void_time_walk"					
 		//"Ability2"					"imba_faceless_void_backtrack"					
 		//"Ability3"					"imba_faceless_void_time_lock"					
 		"Ability4"					"imba_faceless_void_chronosphere"				
@@ -1129,6 +1129,8 @@
 		"AttackAnimationPoint"		"0.2"
 
 		"AttackRate"				"1.5"
+
+		"MovementSpeed"				"320"
 
 		//"Ability1"					"imba_ursa_earthshock"
 		//"Ability2"					"imba_ursa_overpower"

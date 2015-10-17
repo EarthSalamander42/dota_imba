@@ -112,11 +112,6 @@ function RapierDrop( keys )
 	local rapier_name = keys.rapier_name
 	local caster_pos = caster:GetAbsOrigin()
 
-	-- If the caster has aegis, do nothing
-	if caster.has_aegis then
-		return nil
-	end
-
 	-- Remove the rapiers from the player's inventory
 	for i = 0, 5 do
 		local item = caster:GetItemInSlot(i)
