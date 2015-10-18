@@ -10861,7 +10861,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90"
+		"AbilityManaCost"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11154,26 +11154,53 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0"
+				"var_type"					"FIELD_INTEGER"
+				"bash_chance"				"10 15 20 25"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_creep"		"2.0"
+				"var_type"					"FIELD_INTEGER"
+				"bash_damage"				"40 50 60 70"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"chance_pct"			"10 15 20 25"
+				"var_type"					"FIELD_FLOAT"
+				"bash_duration"				"1.0"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40 50 60 70"
+				"var_type"					"FIELD_INTEGER"
+				"bash_radius"				"250"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_time_lock"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_faceless_void.lua"
+						"Function"			"TimeLock"
+
+						"sound_bash"		"Hero_FacelessVoid.TimeLockImpact"
+						"particle_chrono"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+						"ability_chrono"	"imba_faceless_void_chronosphere"
+						"modifier_caster"	"modifier_imba_chronosphere_caster"
+						"modifier_ally"		"modifier_imba_chronosphere_ally_scepter"
+					}
+				}
 			}
 		}
 	}
+
 	//=================================================================================================================
 	// Faceless Void's Chronosphere
 	//=================================================================================================================
@@ -21460,8 +21487,8 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sniper_assassinate"
 		
@@ -21517,7 +21544,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"325 500 675"
+				"damage"					"320 485 650"
 			}
 			"07"
 			{
@@ -21527,7 +21554,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"400 650 900"
+				"damage_scepter"			"400 575 750"
 			}
 			"09"
 			{

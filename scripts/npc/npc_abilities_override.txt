@@ -3634,7 +3634,7 @@
 	//=================================================================================================================
 	"phoenix_supernova"
 	{
-		"AbilityCastRange"						"600"
+		"AbilityCastRange"						"1200"
 
 		"AbilityManaCost"						"0"
 
@@ -3668,7 +3668,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"600"
+				"cast_range_tooltip_scepter"	"1200"
 			}
 		}
 	}
@@ -4948,7 +4948,7 @@
 		"AbilityCastRange"				"550 625 700"
 		"AbilityCastPoint"				"1.4"
 		
-		"AbilityCooldown"				"10.0 9.0 8.0"
+		"AbilityCooldown"				"10.0 8.5 7.0"
 	
 		"AbilityManaCost"				"180 240 300"
 
@@ -5770,7 +5770,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"split_radius"			"650"
+				"split_radius"			"600 700 800 900"
 			}
 			"04"
 			{
@@ -6183,7 +6183,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 135 180"
+				"damage"					"90 140 190"
 			}
 			"02"
 			{

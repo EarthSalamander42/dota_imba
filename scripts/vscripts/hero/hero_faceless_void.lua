@@ -42,6 +42,23 @@ function TimeWalk( keys )
 	ParticleManager:SetParticleControl(chrono_pfx[latest_chrono_pfx], 0, caster_loc)
 	ParticleManager:SetParticleControl(chrono_pfx[latest_chrono_pfx], 1, Vector(chrono_radius, chrono_radius, 0))
 
+	-- Mini-freeze enemies (initial)
+	local chrono_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, chrono_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(chrono_enemies) do
+		enemy:AddNewModifier(caster, ability, "modifier_faceless_void_chronosphere_freeze", {duration = (duration - elapsed_duration + chrono_linger)})
+	end
+
+	-- Slow enemies (initial)
+	local slow_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(slow_enemies) do
+		if not enemy:HasModifier(modifier_slow) and enemy:IsRealHero() then
+			AddStacks(ability, caster, caster, modifier_buff, 1, true)
+		elseif enemy:IsRealHero() then
+			AddStacks(ability, caster, caster, modifier_buff, 0, true)
+		end
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
+	end
+
 	-- Apply caster modifier
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
 
@@ -59,7 +76,7 @@ function TimeWalk( keys )
 
 			-- Update latest chrono position
 			last_chrono_loc = caster_loc
-			latest_chrono_pfx =latest_chrono_pfx + 1
+			latest_chrono_pfx = latest_chrono_pfx + 1
 
 			-- Create the particle
 			chrono_pfx[latest_chrono_pfx] = ParticleManager:CreateParticle(particle_chrono, PATTACH_ABSORIGIN, caster)
@@ -67,16 +84,18 @@ function TimeWalk( keys )
 			ParticleManager:SetParticleControl(chrono_pfx[latest_chrono_pfx], 1, Vector(chrono_radius, chrono_radius, 0))
 
 			-- Mini-freeze enemies
-			local chrono_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, chrono_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			chrono_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, chrono_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(chrono_enemies) do
 				enemy:AddNewModifier(caster, ability, "modifier_faceless_void_chronosphere_freeze", {duration = (duration - elapsed_duration + chrono_linger)})
 			end
 
 			-- Slow enemies
-			local slow_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			slow_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(slow_enemies) do
 				if not enemy:HasModifier(modifier_slow) and enemy:IsRealHero() then
 					AddStacks(ability, caster, caster, modifier_buff, 1, true)
+				elseif enemy:IsRealHero() then
+					AddStacks(ability, caster, caster, modifier_buff, 0, true)
 				end
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 			end
@@ -103,6 +122,66 @@ function TimeWalk( keys )
 			return tick_interval
 		end
 	end)
+end
+
+function TimeLock( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local ability_chrono = caster:FindAbilityByName(keys.ability_chrono)
+	local sound_bash = keys.sound_bash
+	local particle_chrono = keys.particle_chrono
+	local modifier_caster = keys.modifier_caster
+	local modifier_ally = keys.modifier_ally
+	local scepter = HasScepter(caster)
+
+	-- If the target is invalid, do nothing
+	if target:IsTower() or target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
+		return nil
+	end
+	
+	-- Parameters
+	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
+	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
+	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
+	local bash_radius = ability:GetLevelSpecialValueFor("bash_radius", ability_level)
+
+	-- Roll for bash chance
+	if RandomInt(1, 100) <= bash_chance then
+
+		-- Fire sound effect
+		target:EmitSound(sound_bash)
+
+		-- Fire particle
+		local chrono_pfx = ParticleManager:CreateParticle(particle_chrono, PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(chrono_pfx, 0, bash_radius)
+		ParticleManager:SetParticleControl(chrono_pfx, 1, Vector(bash_radius, bash_radius, 0))
+
+		-- Find units inside the chrono
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, caster.small_chrono_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		
+		-- Apply appropriate modifiers
+		for _,unit in pairs(units) do
+			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then
+				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {duration = bash_duration})
+			elseif unit:GetTeam() == caster:GetTeam() then
+				ability_chrono:ApplyDataDrivenModifier(caster, unit, modifier_ally, {duration = bash_duration})
+			else
+
+				-- Double damage if the target is inside a chrono
+				if unit:HasModifier("modifier_faceless_void_chronosphere_freeze") then
+					bash_damage = bash_damage * 2
+				end
+
+				-- Apply bash damage
+				ApplyDamage({attacker = caster, victim = unit, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				ability:ApplyDataDrivenModifier(caster, unit, "modifier_faceless_void_chronosphere_freeze", {duration = bash_duration})
+			end
+		end
+
+		
+	end
 end
 
 function Chronosphere( keys )

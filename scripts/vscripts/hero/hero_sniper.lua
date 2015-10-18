@@ -357,7 +357,7 @@ function AssassinateHit( keys )
 	end
 
 	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Grant short-lived vision
 	ability:CreateVisibilityNode(target:GetAbsOrigin(), 500, 1.0)

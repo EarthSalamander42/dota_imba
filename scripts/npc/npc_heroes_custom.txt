@@ -345,11 +345,9 @@
 	{
 		"override_hero"				"npc_dota_hero_faceless_void"
 
-		"AttackRate"				"1.5"
-
 		"Ability1"					"imba_faceless_void_time_walk"					
-		//"Ability2"					"imba_faceless_void_backtrack"					
-		//"Ability3"					"imba_faceless_void_time_lock"					
+		"Ability2"					"imba_faceless_void_backtrack"					
+		"Ability3"					"imba_faceless_void_time_lock"					
 		"Ability4"					"imba_faceless_void_chronosphere"				
 		"Ability5"					"attribute_bonus_agi"
 

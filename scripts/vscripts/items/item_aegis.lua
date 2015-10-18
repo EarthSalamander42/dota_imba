@@ -72,7 +72,8 @@ function AegisDamage( keys )
 	caster:AddNoDraw()
 
 	-- Play initial particle
-	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_ABSORIGIN, caster)
+	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleAlwaysSimulate(wait_pfx)
 	ParticleManager:SetParticleControl(wait_pfx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(wait_pfx, 1, Vector(respawn_delay, 0, 0))
 

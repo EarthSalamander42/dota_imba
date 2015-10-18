@@ -54,11 +54,11 @@ function BuildGameArray()
 
 	local game = {}
 
-	-- Tracks total game length, from the horn sound, in minutes
-	game.length = GAME_TIME_ELAPSED / 60
+	-- Tracks total game length, from the horn sound, in seconds
+	game.len = GAME_TIME_ELAPSED
 
 	-- Tracks which team won the game
-	game.winner_team = GAME_WINNER_TEAM
+	game.win = GAME_WINNER_TEAM
 	
 	return game
 end
@@ -77,15 +77,15 @@ function BuildPlayersArray()
 					-- SteamID32 required in here
 					steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-					hero_name = GetHeroName(playerID),										-- Hero by its short name
-					hero_level = hero:GetLevel(),											-- Hero level at the end of the game
-					hero_net_worth = GetNetworth(hero),										-- Sum of hero gold and item worth
-					hero_buyback_count = hero.buyback_count,								-- Amount of buybacks performed during the game
-					player_team = hero:GetTeam(),											-- Hero's team
-					player_kills = hero:GetKills(),											-- Number of kills of this players hero
-					player_assists = hero:GetAssists(),										-- Number of deaths of this players hero
-					player_deaths = hero:GetDeaths(),										-- Number of deaths of this players hero
-					item_list = GetItemList(hero)											-- Item list
+					nam = GetHeroName(playerID),	-- Hero by its short name
+					lvl = hero:GetLevel(),			-- Hero level at the end of the game
+					pnw = GetNetworth(hero),			-- Sum of hero gold and item worth
+					pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
+					pt = hero:GetTeam(),			-- Hero's team
+					pk = hero:GetKills(),			-- Number of kills of this players hero
+					pa = hero:GetAssists(),			-- Number of deaths of this players hero
+					pd = hero:GetDeaths(),			-- Number of deaths of this players hero
+					pil = GetItemList(hero)			-- Item list
 				})
 			end
 		end
