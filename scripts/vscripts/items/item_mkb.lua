@@ -31,10 +31,13 @@ function MonkeyKingBarProc( keys )
 	local pulverize_stun = ability:GetLevelSpecialValueFor("pulverize_stun", ability_level)
 
 	-- Check for a proc
-	if not target:IsBuilding() and RandomInt(1, 100) <= pulverize_chance then
+	if not target:IsBuilding() and ability:IsCooldownReady() and RandomInt(1, 100) <= pulverize_chance then
 		
 		-- Play bash sound
 		target:EmitSound(sound_bash)
+
+		-- Start cooldown
+		ability:StartCooldown(ability:GetCooldown(0))
 
 		-- If the caster is melee, pulverize
 		if not caster:IsRangedAttacker() then

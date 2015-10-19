@@ -129,11 +129,8 @@ function TimeLock( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local ability_chrono = caster:FindAbilityByName(keys.ability_chrono)
 	local sound_bash = keys.sound_bash
 	local particle_chrono = keys.particle_chrono
-	local modifier_caster = keys.modifier_caster
-	local modifier_ally = keys.modifier_ally
 	local scepter = HasScepter(caster)
 
 	-- If the target is invalid, do nothing
@@ -146,6 +143,7 @@ function TimeLock( keys )
 	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
 	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
 	local bash_radius = ability:GetLevelSpecialValueFor("bash_radius", ability_level)
+	local target_loc = target:GetAbsOrigin()
 
 	-- Roll for bash chance
 	if RandomInt(1, 100) <= bash_chance then
@@ -155,33 +153,81 @@ function TimeLock( keys )
 
 		-- Fire particle
 		local chrono_pfx = ParticleManager:CreateParticle(particle_chrono, PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(chrono_pfx, 0, bash_radius)
+		ParticleManager:SetParticleControl(chrono_pfx, 0, target_loc)
 		ParticleManager:SetParticleControl(chrono_pfx, 1, Vector(bash_radius, bash_radius, 0))
 
+		-- Destroy particle after [bash_duration]
+		Timers:CreateTimer(bash_duration, function()
+			ParticleManager:DestroyParticle(chrono_pfx, false)
+		end)
+
 		-- Find units inside the chrono
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, caster.small_chrono_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, bash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		
-		-- Apply appropriate modifiers
-		for _,unit in pairs(units) do
-			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then
-				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {duration = bash_duration})
-			elseif unit:GetTeam() == caster:GetTeam() then
-				ability_chrono:ApplyDataDrivenModifier(caster, unit, modifier_ally, {duration = bash_duration})
+		-- Perform bash
+		for _,enemy in pairs(enemies) do
+
+			-- Double damage if the target is inside a chrono
+			if enemy:HasModifier("modifier_faceless_void_chronosphere_freeze") then
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bash_damage * 2, damage_type = DAMAGE_TYPE_MAGICAL})
 			else
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			end
 
-				-- Double damage if the target is inside a chrono
-				if unit:HasModifier("modifier_faceless_void_chronosphere_freeze") then
-					bash_damage = bash_damage * 2
-				end
+			-- Apply bash modifier
+			ability:ApplyDataDrivenModifier(caster, enemy, "modifier_faceless_void_chronosphere_freeze", {duration = bash_duration})
+		end
+	end
+end
 
-				-- Apply bash damage
-				ApplyDamage({attacker = caster, victim = unit, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-				ability:ApplyDataDrivenModifier(caster, unit, "modifier_faceless_void_chronosphere_freeze", {duration = bash_duration})
+function Timelord( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	
+	-- Parameters
+	local maximum_as = 1000
+	local original_bat = 1.7
+
+	-- Calculate minimum BAT
+	local minimum_bat = original_bat * _G.MAXIMUM_ATTACK_SPEED / maximum_as
+
+	-- Get current attack speed
+	local current_as = caster:GetAttackSpeed() * 100
+
+	-- Adjust BAT
+	if current_as > _G.MAXIMUM_ATTACK_SPEED then
+		local new_bat = _G.MAXIMUM_ATTACK_SPEED / current_as * original_bat
+		caster:SetBaseAttackTime(math.max(new_bat, minimum_bat))
+	else
+		caster:SetBaseAttackTime(original_bat)
+	end
+end
+
+function TimelordStrike( keys )
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local cooldown_increase = ability:GetLevelSpecialValueFor("cooldown_increase", ability_level)
+
+	-- If a hero was damaged, increase all its ability cooldowns
+	if target:IsRealHero() then
+		for i = 0, 15 do
+			local current_ability = target:GetAbilityByIndex(i)
+			if current_ability and not current_ability:IsCooldownReady() then
+				current_ability:StartCooldown( current_ability:GetCooldownTimeRemaining() + cooldown_increase )
 			end
 		end
-
-		
 	end
+end
+
+function TimelordEnd( keys )
+	local caster = keys.caster
+
+	-- Revert BAT
+	caster:SetBaseAttackTime(1.7)
 end
 
 function Chronosphere( keys )
@@ -202,18 +248,15 @@ function Chronosphere( keys )
 	local extra_radius = ability:GetLevelSpecialValueFor("extra_radius", ability_level)
 	local extra_duration = ability:GetLevelSpecialValueFor("extra_duration", ability_level)
 	local tick_interval = ability:GetLevelSpecialValueFor("tick_interval", ability_level)
+	local linger_duration = ability:GetLevelSpecialValueFor("linger_duration", ability_level)
 
 	-- Fetch caster mana
 	local mana_cost = ability:GetManaCost(-1)
 	local caster_mana = caster:GetMana()
 
 	-- Apply diminishing returns to caster's mana pool
-	if caster_mana > 3000 then
-		caster_mana = 1000 + 1000 * 0.8 + 1000 * 0.6 + (caster_mana - 3000) * 0.4
-	elseif caster_mana > 2000 then
-		caster_mana = 1000 + 1000 * 0.8 + (caster_mana - 2000) * 0.6
-	elseif caster_mana > 1000 then
-		caster_mana = 1000 + (caster_mana - 1000) * 0.8
+	if caster_mana > 1000 then
+		caster_mana = 1000 + (caster_mana - 1000) * 0.5
 	end
 
 	-- Calculate final chronosphere parameters
@@ -248,8 +291,9 @@ function Chronosphere( keys )
 				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})	
 			elseif scepter and unit:GetTeam() == caster:GetTeam() then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_ally, {})
-			elseif not unit:HasModifier(modifier_enemy) then
-				ability:ApplyDataDrivenModifier(caster, unit, "modifier_faceless_void_chronosphere_freeze", {duration = (total_duration - elapsed_duration)})
+				unit:AddNewModifier(caster, ability, "modifier_imba_chronosphere_ally_slow", {duration = linger_duration})
+			else
+				ability:ApplyDataDrivenModifier(caster, unit, "modifier_faceless_void_chronosphere_freeze", {duration = linger_duration})
 			end
 		end
 

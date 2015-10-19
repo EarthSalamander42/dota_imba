@@ -178,8 +178,8 @@ function GameMode:OnNPCSpawned(keys)
 	-------------------------------------------------------------------------------------------------
 
 	Timers:CreateTimer(1.5, function()
-		if npc:HasModifier("modifier_techies_remote_mine") then
-
+		if not npc:IsNull() and npc:HasModifier("modifier_techies_remote_mine") then
+		
 			-- Add extra abilities
 			npc:AddAbility("imba_techies_minefield_teleport")
 			npc:AddAbility("imba_techies_remote_auto_creep")
@@ -195,6 +195,15 @@ function GameMode:OnNPCSpawned(keys)
 			if scepter then
 				minefield_teleport:SetLevel(1)
 			end
+
+			-- Toggle abilities on according to the current caster setting
+			local mine_owner = npc:GetOwnerEntity()
+			if mine_owner.auto_hero_exploding then
+				auto_hero:ToggleAbility()
+			elseif mine_owner.auto_creep_exploding then
+				auto_creep:ToggleAbility()
+			end
+
 		end
 	end)
 

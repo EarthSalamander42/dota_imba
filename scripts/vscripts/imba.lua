@@ -157,7 +157,7 @@ function GameMode:DamageFilter( keys )
 	-- Orchid crit
 	if attacker:HasModifier("modifier_item_imba_orchid_unique") and (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) then
 		
-		-- Fetch the Orchid's ability handle
+		-- Fetch the orchid's ability handle
 		local ability
 		for i = 0,5 do
 			local this_item = attacker:GetItemInSlot(i)
@@ -232,6 +232,122 @@ function GameMode:DamageFilter( keys )
 
 			-- Prevent crit damage notifications
 			display_red_crit_number = false
+		end
+	end
+
+	-- Vanguard block
+	if victim:HasModifier("modifier_item_vanguard_unique") and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
+
+		-- If a higher tier of Vanguard-based block is present, do nothing
+		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) then
+
+			local block_sound = "Imba.VanguardBlock"
+			local proc_chance = 20
+			local damage_block = 40
+
+			-- Roll for a proc
+			if RandomInt(1, 100) <= proc_chance then
+
+				-- Play the block sound
+				victim:EmitSound(block_sound)
+
+				-- Play block message
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+
+				-- Nullify damage
+				keys.damage = 0
+
+				-- Prevent crit damage notifications
+				display_red_crit_number = false
+
+			-- If no proc, block part of the damage
+			else
+
+				-- Calculate actual damage
+				local actual_damage = math.max(keys.damage - damage_block, 0)
+
+				-- Play block message
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
+
+				-- Reduce damage
+				keys.damage = actual_damage
+			end
+		end
+	end
+
+	-- Crimson Guard block
+	if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
+
+		-- If a higher tier of Vanguard-based block is present, do nothing
+		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) then
+
+			local block_sound = "Imba.VanguardBlock"
+			local proc_chance = 20
+			local damage_block = 45
+
+			-- Roll for a proc
+			if RandomInt(1, 100) <= proc_chance then
+
+				-- Play the block sound
+				victim:EmitSound(block_sound)
+
+				-- Play block message
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+
+				-- Nullify damage
+				keys.damage = 0
+
+				-- Prevent crit damage notifications
+				display_red_crit_number = false
+
+			-- If no proc, block part of the damage
+			else
+
+				-- Calculate actual damage
+				local actual_damage = math.max(keys.damage - damage_block, 0)
+
+				-- Play block message
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
+
+				-- Reduce damage
+				keys.damage = actual_damage
+			end
+		end
+	end
+
+	-- Greatwyrm plate block
+	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 then
+
+		local block_sound = "Imba.VanguardBlock"
+		local proc_chance = 20
+		local damage_block = 50
+
+		-- Roll for a proc
+		if RandomInt(1, 100) <= proc_chance then
+
+			-- Play the block sound
+			victim:EmitSound(block_sound)
+
+			-- Play block message
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+
+			-- Nullify damage
+			keys.damage = 0
+
+			-- Prevent crit damage notifications
+			display_red_crit_number = false
+
+		-- If no proc, but damage is physical, block part of it
+		elseif damage_type == DAMAGE_TYPE_PHYSICAL then
+
+			-- Calculate actual damage
+			local actual_damage = math.max(keys.damage - damage_block, 0)
+
+			-- Play block message
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
+
+			-- Reduce damage
+			keys.damage = actual_damage
 		end
 	end
 

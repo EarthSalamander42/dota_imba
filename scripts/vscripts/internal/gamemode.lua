@@ -346,53 +346,52 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- IMBA: Stat tracking stuff
 	-------------------------------------------------------------------------------------------------
 
-	-- Tracks game version
-	statCollection:setFlags({ver = "6.85.1"})
-
-	-- Tracks this game's map name
-	if GetMapName() == "imba_standard" then
-		statCollection:setFlags({map = "standard"})
-	elseif GetMapName() == "imba_random_omg" then
-		statCollection:setFlags({map = "random_omg"})
-	elseif GetMapName() == "imba_custom" then
-		statCollection:setFlags({map = "custom"})
-	elseif GetMapName() == "imba_10v10" then
-		statCollection:setFlags({map = "10v10"})
-	end
-
 	-- Tracks if game options were customized or just left as default
-	statCollection:setFlags({set = GAME_OPTIONS_SET and 1 or 0})
+	statCollection:setFlags({game_options_set = GAME_OPTIONS_SET and 1 or 0})
 
 	-- Tracks the game mode
-	statCollection:setFlags({ap = IMBA_PICK_MODE_ALL_PICK and 1 or 0})
-	statCollection:setFlags({ar = IMBA_PICK_MODE_ALL_RANDOM and 1 or 0})
-	statCollection:setFlags({ro = IMBA_ABILITY_MODE_RANDOM_OMG and 1 or 0})
-	statCollection:setFlags({rod = IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH and 1 or 0})
-	statCollection:setFlags({sh = ALLOW_SAME_HERO_SELECTION and 1 or 0})
-	statCollection:setFlags({dm = END_GAME_ON_KILLS and 1 or 0})
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		statCollection:setFlags({game_mode = "Random_OMG"})
+		if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+			statCollection:setFlags({romg_mode = "ROMG_random_skills"})
+		else
+			statCollection:setFlags({romg_mode = "ROMG_fixed_skills"})
+		end
+	elseif IMBA_PICK_MODE_ALL_RANDOM then
+		statCollection:setFlags({game_mode = "All_Random"})
+	else
+		statCollection:setFlags({game_mode = "All_Pick"})
+	end
 
-	-- Track arena mode kills condition
-	statCollection:setFlags({dmk = KILLS_TO_END_GAME_FOR_TEAM})
+	-- Tracks same-hero selection
+	statCollection:setFlags({same_hero = ALLOW_SAME_HERO_SELECTION and 1 or 0})
+
+	-- Tracks game objective
+	if END_GAME_ON_KILLS then
+		statCollection:setFlags({kills_to_end = KILLS_TO_END_GAME_FOR_TEAM})
+	else
+		statCollection:setFlags({kills_to_end = 0})
+	end
 
 	-- Tracks gold/experience options
-	statCollection:setFlags({gb = CREEP_GOLD_BONUS})
-	statCollection:setFlags({xpb = CREEP_XP_BONUS})
+	statCollection:setFlags({gold_bonus = CREEP_GOLD_BONUS})
+	statCollection:setFlags({exp_bonus = CREEP_XP_BONUS})
 
 	-- Tracks respawn and buyback
-	statCollection:setFlags({res = HERO_RESPAWN_TIME_MULTIPLIER})
-	statCollection:setFlags({bbm = HERO_BUYBACK_COST_MULTIPLIER})
+	statCollection:setFlags({respawn_mult = HERO_RESPAWN_TIME_MULTIPLIER})
+	statCollection:setFlags({buyback_mult = HERO_BUYBACK_COST_MULTIPLIER})
 
 	-- Track starting gold and levels
-	statCollection:setFlags({sg = HERO_INITIAL_GOLD})
-	statCollection:setFlags({sxp = HERO_STARTING_LEVEL})
+	statCollection:setFlags({starting_gold = HERO_INITIAL_GOLD})
+	statCollection:setFlags({starting_exp = HERO_STARTING_LEVEL})
 
 	-- Tracks creep upgrade speed
-	statCollection:setFlags({cre = CREEP_POWER_RAMP_UP_FACTOR})
+	statCollection:setFlags({creep_power = CREEP_POWER_RAMP_UP_FACTOR})
 
 	-- Tracks Frantic Mode multiplier
-	statCollection:setFlags({frm = FRANTIC_MULTIPLIER})
+	statCollection:setFlags({frantic_mult = FRANTIC_MULTIPLIER})
 
 	-- Tracks structure abilities and upgrades
-	statCollection:setFlags({twa = TOWER_ABILITY_MODE and 1 or 0})
-	statCollection:setFlags({twu = TOWER_UPGRADE_MODE and 1 or 0})
+	statCollection:setFlags({tower_abilities = TOWER_ABILITY_MODE and 1 or 0})
+	statCollection:setFlags({tower_upgrades = TOWER_UPGRADE_MODE and 1 or 0})
 end

@@ -201,7 +201,7 @@ function FountainThink( keys )
 	ParticleManager:SetParticleControl(danger_pfx, 0, caster:GetAbsOrigin())
 
 	-- If mega creeps are nearby on arena mode, disable fountain protection
-	if END_GAME_ON_KILLS and caster.fountain_disabled then
+	if END_GAME_ON_KILLS and not caster.fountain_disabled then
 		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for	_,enemy in pairs(enemy_creeps) do
 			if enemy:GetTeam() ~= caster:GetTeam() and (enemy:GetUnitName() == "npc_dota_creep_goodguys_melee_upgraded_mega" or enemy:GetUnitName() == "npc_dota_creep_badguys_melee_upgraded_mega") then

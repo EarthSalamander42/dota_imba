@@ -758,6 +758,7 @@ function InitializeInnateAbilities( hero )
 
 	-- List of innate abilities
 	local innate_abilities = {
+		"imba_faceless_void_timelord",
 		"imba_queenofpain_delightful_torment",
 		"imba_techies_minefield_sign",
 		"imba_vengeful_rancor",
@@ -798,13 +799,32 @@ function PassiveBreak( unit, duration )
 	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
 	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_active")
 
+	-- Non-passive abilities disabled by break
+	local break_exceptions = {
+		"imba_antimage_spell_shield",
+		"imba_faceless_void_backtrack"
+	}
+
 	-- Set all passive abilities' levels to zero
 	for i = 0, 15 do
 		local ability = unit:GetAbilityByIndex(i)
-		if ability and ( ability:IsPassive() or ability:GetName() == "imba_antimage_spell_shield" ) and ability:GetLevel() > 0 then
-			passive_detected = true
-			unit.break_learn_levels[i] = ability:GetLevel()
-			ability:SetLevel(0)
+		if ability and ability:GetLevel() > 0 then
+			
+			-- Check for regular passives
+			if ability:IsPassive() then
+				passive_detected = true
+				unit.break_learn_levels[i] = ability:GetLevel()
+				ability:SetLevel(0)
+			end
+
+			-- Check for exceptions (togglable/activable "passives")
+			for _,ability_exception in pairs(break_exceptions) do
+				if ability_exception == ability:GetName() then
+					passive_detected = true
+					unit.break_learn_levels[i] = ability:GetLevel()
+					ability:SetLevel(0)
+				end
+			end
 		end
 	end
 

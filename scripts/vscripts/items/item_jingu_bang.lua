@@ -32,10 +32,13 @@ function JinguBangProc( keys )
 	local pulverize_stun = ability:GetLevelSpecialValueFor("pulverize_stun", ability_level)
 
 	-- Check for a proc
-	if not target:IsBuilding() and RandomInt(1, 100) <= pulverize_chance then
+	if not target:IsBuilding() and ability:IsCooldownReady() and RandomInt(1, 100) <= pulverize_chance then
 		
 		-- Play pulverize sound
 		target:EmitSound(sound_hit)
+
+		-- Start cooldown
+		ability:StartCooldown(ability:GetCooldown(0))
 
 		-- Find enemies in the pulverize area
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, pulverize_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -45,9 +48,6 @@ function JinguBangProc( keys )
 
 			-- Deal pulverize damage
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-			-- Apply ministun
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = pulverize_stun})
 
 			-- Play particle
 			local pulverize_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, enemy)

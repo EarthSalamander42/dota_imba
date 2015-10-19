@@ -345,11 +345,14 @@
 	{
 		"override_hero"				"npc_dota_hero_faceless_void"
 
-		"Ability1"					"imba_faceless_void_time_walk"					
-		"Ability2"					"imba_faceless_void_backtrack"					
-		"Ability3"					"imba_faceless_void_time_lock"					
-		"Ability4"					"imba_faceless_void_chronosphere"				
-		"Ability5"					"attribute_bonus_agi"
+		"AbilityLayout"				"5"
+
+		"Ability1"					"imba_faceless_void_time_walk"
+		"Ability2"					"imba_faceless_void_backtrack"
+		"Ability3"					"imba_faceless_void_time_lock"
+		"Ability4"					"imba_faceless_void_timelord"
+		"Ability5"					"imba_faceless_void_chronosphere"
+		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
 	}

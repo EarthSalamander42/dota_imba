@@ -614,12 +614,21 @@ end
 
 function RemoteMineAutoCreep( keys )
 	local mine = keys.caster
+	local caster = mine:GetOwnerEntity()
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local auto_hero_ability = mine:FindAbilityByName("imba_techies_remote_auto_hero")
 	local modifier_unselect = keys.modifier_unselect
+	local sound_cast = keys.sound_cast
 
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
+
+	-- Play sound
+	mine:EmitSound(sound_cast)
+
+	-- Set up auto toggle for any future mines planted
+	caster.auto_creep_exploding = true
+	caster.auto_hero_exploding = nil
 
 	-- Make this mine unselectable briefly to remove it from the current unit selection
 	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
@@ -645,12 +654,21 @@ end
 
 function RemoteMineAutoHero( keys )
 	local mine = keys.caster
+	local caster = mine:GetOwnerEntity()
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local auto_creep_ability = mine:FindAbilityByName("imba_techies_remote_auto_creep")
 	local modifier_unselect = keys.modifier_unselect
+	local sound_cast = keys.sound_cast
 
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
+
+	-- Play sound
+	mine:EmitSound(sound_cast)
+
+	-- Set up auto toggle for any future mines planted
+	caster.auto_hero_exploding = true
+	caster.auto_creep_exploding = nil
 
 	-- Make this mine unselectable briefly to remove it from the current unit selection
 	ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})
@@ -677,25 +695,42 @@ end
 
 function RemoteMineAutoCreepEnd( keys )
 	local mine = keys.caster
+	local caster = mine:GetOwnerEntity()
 
+	caster.auto_creep_exploding = nil
 	mine.auto_creep_exploding = nil
 end
 
 function RemoteMineAutoHeroEnd( keys )
 	local mine = keys.caster
+	local caster = mine:GetOwnerEntity()
 
+	caster.auto_hero_exploding = nil
 	mine.auto_hero_exploding = nil
 end
 
 function MinefieldTeleport( keys )
 	local mine = keys.caster
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local caster = mine:GetOwnerEntity()
 	local modifier_unselect = keys.modifier_unselect
 
-	-- Teleport this mine to the minefield, if it exists
+	-- Parameters
+	local teleport_radius = ability:GetLevelSpecialValueFor("teleport_radius", ability_level)
+
+	-- Teleport mine to the minefield, if it exists
 	if caster.minefield_sign then
-		mine:SetAbsOrigin(caster.minefield_sign:GetAbsOrigin())
+
+		-- Find nearby mines
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), mine:GetAbsOrigin(), nil, teleport_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,unit in pairs(units) do
+
+			-- Check if this unit is really a mine from the same player
+			if unit:FindAbilityByName("imba_techies_minefield_teleport") and unit:GetOwnerEntity() == caster then
+				unit:SetAbsOrigin(caster.minefield_sign:GetAbsOrigin() + RandomVector(RandomInt(1,60)))
+			end
+		end
 
 		-- Make this mine unselectable briefly to remove it from the current unit selection
 		ability:ApplyDataDrivenModifier(mine, mine, modifier_unselect, {})

@@ -7704,18 +7704,6 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"VanguardBlock"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-					}
-				}
-
 				"OnCreated"
 				{
 					"RunScript"
@@ -7810,7 +7798,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
+				"damage_block"			"45"
 			}
 			"06"
 			{
@@ -7876,18 +7864,6 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"CrimsonGuardBlock"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-					}
-				}
-
 				"OnCreated"
 				{
 					"RunScript"
@@ -7926,18 +7902,6 @@
 					{
 						"ScriptFile"			"items/item_vanguard.lua"
 						"Function"				"CrimsonGuardParticleEnd"
-					}
-				}
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"CrimsonGuardBlock"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
 					}
 				}
 
@@ -8034,7 +7998,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"60"
+				"damage_block"			"50"
 			}
 			"07"
 			{
@@ -8054,7 +8018,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"25"
+				"proc_chance"			"20"
 			}
 		}
 
@@ -8110,32 +8074,6 @@
 						"modifier"				"modifier_item_greatwyrm_plate_unique"
 					}
 				}
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmBlockAttack"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmBlockDamage"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
-					}
-				}
 			}
 
 			"modifier_item_greatwyrm_plate_active"
@@ -8169,46 +8107,10 @@
 					}
 				}
 
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmBlockAttack"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmBlockDamage"
-
-						"damage"				"%attack_damage"
-						"block_sound"			"Imba.VanguardBlock"
-						"modifier_prevent"		"modifier_item_imba_greatwyrm_plate_prevent_block"
-					}
-				}
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
 				}
-			}
-
-			"modifier_item_imba_greatwyrm_plate_prevent_block"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"0.01"
 			}
 		}
 	}
@@ -10199,6 +10101,10 @@
 		"ItemAliases"					"mkb;monkey king bar"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10827,7 +10733,7 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.2"
+		"AbilityCooldown"				"1.8"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -10869,7 +10775,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bash_cooldown"			"1.2"
+				"bash_cooldown"			"1.8"
 			}
 			"07"
 			{
@@ -15165,17 +15071,15 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bash_cooldown"			"1.0"
+				"bash_cooldown"			"1.8"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"2.0"
 			}			
-
 		}
 	}
-	
 
 	//=================================================================================================================
 	// Recipe: Heaven's Halberd
@@ -18258,6 +18162,10 @@
 		"ItemAliases"					"jingu"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"1.0"
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18290,12 +18198,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pulverize_damage"		"30"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pulverize_stun"		"0.01"
+				"pulverize_damage"		"50"
 			}
 		}
 

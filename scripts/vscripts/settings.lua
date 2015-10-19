@@ -2,11 +2,13 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
+IMBA_VERSION = "6.85.1a"					-- Tracks game version
+
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
 -------------------------------------------------------------------------------------------------
 
-START_GAME_AUTOMATICALLY = true			-- Should the game start automatically
+START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
@@ -248,6 +250,13 @@ HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the star
 HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the start of the game on randoming their hero
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
+
+if GetMapName() == "imba_10v10" then										-- 10v10 defaults
+	HERO_INITIAL_GOLD = 2000
+	HERO_INITIAL_REPICK_GOLD = 1500
+	HERO_INITIAL_RANDOM_GOLD = 2500
+	HERO_STARTING_LEVEL = 5
+end
 
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
 MAX_LEVEL = 35																-- What level should we let heroes get to?

@@ -2,32 +2,35 @@ customSchema = class({})
 
 function customSchema:init()
 
-    -- Check the schema_examples folder for different implementations
-    
-    -- Listen for changes in the current state
-    ListenToGameEvent('game_rules_state_change', function(keys)
-        local state = GameRules:State_Get()
+	-- Check the schema_examples folder for different implementations
 
-        -- Send custom stats when the game ends
-        if state == DOTA_GAMERULES_STATE_POST_GAME then
+	-- Tracks game version
+	statCollection:setFlags({version = IMBA_VERSION})
+	
+	-- Listen for changes in the current state
+	ListenToGameEvent('game_rules_state_change', function(keys)
+		local state = GameRules:State_Get()
 
-            -- Build game array
-            local game = BuildGameArray()
+		-- Send custom stats when the game ends
+		if state == DOTA_GAMERULES_STATE_POST_GAME then
 
-            -- Build players array
-            local players = BuildPlayersArray()
+			-- Build game array
+			local game = BuildGameArray()
 
-            -- Print the schema data to the console
-            if statCollection.TESTING then
-                PrintSchema(game,players)
-            end
+			-- Build players array
+			local players = BuildPlayersArray()
 
-            -- Send custom stats
-            if statCollection.HAS_SCHEMA then
-                statCollection:sendCustom({game=game, players=players})
-            end
-        end
-    end, nil)
+			-- Print the schema data to the console
+			if statInfo.TESTING then
+				PrintSchema(game,players)
+			end
+
+			-- Send custom stats
+			if statInfo.HAS_SCHEMA then
+				statCollection:sendCustom({game=game, players=players})
+			end
+		end
+	end, nil)
 end
 
 -------------------------------------
@@ -79,14 +82,23 @@ function BuildPlayersArray()
 
 					nam = GetHeroName(playerID),	-- Hero by its short name
 					lvl = hero:GetLevel(),			-- Hero level at the end of the game
-					pnw = GetNetworth(hero),			-- Sum of hero gold and item worth
+					pnw = GetNetworth(hero),		-- Sum of hero gold and item worth
 					pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
-					pt = hero:GetTeam(),			-- Hero's team
 					pk = hero:GetKills(),			-- Number of kills of this players hero
 					pa = hero:GetAssists(),			-- Number of deaths of this players hero
 					pd = hero:GetDeaths(),			-- Number of deaths of this players hero
 					pil = GetItemList(hero)			-- Item list
 				})
+
+				if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+					table.insert(players, {
+						pd = "Radiant"
+					})
+				else
+					table.insert(players, {
+						pd = "Dire"
+					})
+				end
 			end
 		end
 	end
@@ -99,15 +111,15 @@ end
 -------------------------------------
 
 if Convars:GetBool('developer') then
-    Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(),BuildPlayersArray()) end, "Test the custom schema arrays", 0)
+	Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(),BuildPlayersArray()) end, "Test the custom schema arrays", 0)
 end
 
 function PrintSchema( gameArray, playerArray )
-    print("--------- GAME DATA ---------")
-    DeepPrintTable(gameArray)
-    print("\n-------- PLAYER DATA --------")
-    DeepPrintTable(playerArray)
-    print("-----------------------------")
+	print("--------- GAME DATA ---------")
+	DeepPrintTable(gameArray)
+	print("\n-------- PLAYER DATA --------")
+	DeepPrintTable(playerArray)
+	print("-----------------------------")
 end
 
 function GetHeroName( playerID )
