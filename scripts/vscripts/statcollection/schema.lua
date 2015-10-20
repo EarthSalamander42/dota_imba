@@ -6,6 +6,7 @@ function customSchema:init()
 
 	-- Tracks game version
 	statCollection:setFlags({version = IMBA_VERSION})
+	print("sent version flag")
 	
 	-- Listen for changes in the current state
 	ListenToGameEvent('game_rules_state_change', function(keys)
@@ -13,21 +14,26 @@ function customSchema:init()
 
 		-- Send custom stats when the game ends
 		if state == DOTA_GAMERULES_STATE_POST_GAME then
+			print("got to post game stage")
 
 			-- Build game array
 			local game = BuildGameArray()
+			print("built game array")
 
 			-- Build players array
 			local players = BuildPlayersArray()
+			print("built players array")
 
 			-- Print the schema data to the console
-			if statInfo.TESTING then
+			if statCollection.TESTING then
 				PrintSchema(game,players)
+				print("printed schema")
 			end
 
 			-- Send custom stats
-			if statInfo.HAS_SCHEMA then
+			if statCollection.HAS_SCHEMA then
 				statCollection:sendCustom({game=game, players=players})
+				print("sent stats")
 			end
 		end
 	end, nil)
@@ -75,6 +81,14 @@ function BuildPlayersArray()
 
 				local hero = PlayerResource:GetSelectedHeroEntity(playerID)
 
+				-- Team string logic
+				local player_team = ""
+				if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+					player_team = "Radiant"
+				else
+					player_team = "Dire"
+				end
+
 				table.insert(players, {
 
 					-- SteamID32 required in here
@@ -84,21 +98,12 @@ function BuildPlayersArray()
 					lvl = hero:GetLevel(),			-- Hero level at the end of the game
 					pnw = GetNetworth(hero),		-- Sum of hero gold and item worth
 					pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
+					pt = player_team,				-- Team this hero belongs to
 					pk = hero:GetKills(),			-- Number of kills of this players hero
 					pa = hero:GetAssists(),			-- Number of deaths of this players hero
 					pd = hero:GetDeaths(),			-- Number of deaths of this players hero
 					pil = GetItemList(hero)			-- Item list
 				})
-
-				if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-					table.insert(players, {
-						pd = "Radiant"
-					})
-				else
-					table.insert(players, {
-						pd = "Dire"
-					})
-				end
 			end
 		end
 	end
