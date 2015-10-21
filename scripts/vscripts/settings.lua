@@ -211,6 +211,8 @@ end
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
+IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enabled?
+
 GAME_WINNER_TEAM = 0														-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 

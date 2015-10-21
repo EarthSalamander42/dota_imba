@@ -15,7 +15,7 @@ function RapierCombine( keys )
 				this_rapier = nil
 				item = nil
 				caster:AddItem(CreateItem("item_imba_rapier_"..(j+1), caster, caster))
-				break
+				return nil
 			end
 		end
 	end

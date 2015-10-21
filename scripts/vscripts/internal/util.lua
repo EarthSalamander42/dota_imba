@@ -722,7 +722,7 @@ function PrecacheUnitWithQueue( unit_name )
 			PrecacheUnitByNameAsync(unit_name, function(...) end)
 
 			-- Release the queue after one second
-			Timers:CreateTimer(1, function()
+			Timers:CreateTimer(2, function()
 				UNIT_BEING_PRECACHED = false
 			end)
 		end

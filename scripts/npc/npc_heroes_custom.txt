@@ -927,6 +927,48 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Skeleton King (BOSS version)
+	//=================================================================================================================
+	"npc_imba_hero_skeleton_king"
+	{
+		"override_hero"				"npc_dota_hero_skeleton_king"
+
+		"Model"						"models/heroes/skeleton_king/skeleton_king.vmdl"
+
+		"ModelScale"				"1.8"
+
+		//"HeroSelectSoundEffect"		"Hero_SkeletonKing.Pick"
+		//"Ability1"		"skeleton_king_hellfire_blast"
+		//"Ability2"		"skeleton_king_vampiric_aura"
+		//"Ability3"		"skeleton_king_mortal_strike"
+		//"Ability4"		"skeleton_king_reincarnation"
+		
+		"ArmorPhysical"				"3"
+		"AttackDamageMin"			"17"
+		"AttackDamageMax"			"23"
+
+		"AttributeBaseStrength"		"100"
+		"AttributeStrengthGain"		"10.0"
+
+		"AttributeBaseIntelligence"	"30"
+		"AttributeIntelligenceGain"	"2.0"
+
+		"AttributeBaseAgility"		"30"
+		"AttributeAgilityGain"		"3.0"
+
+		"MovementSpeed"				"310"
+
+		"RingRadius"				"160"
+		//"HealthBarOffset"			"190"
+		
+		//"particle_folder"			"particles/units/heroes/hero_skeletonking"
+		//"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
+		//"VoiceFile"					"scripts/voscripts/game_sounds_vo_skeleton_king.vsndevts"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Slark
 	//=================================================================================================================
 	"npc_imba_hero_slark"
@@ -1196,25 +1238,6 @@
 		//"Ability3"				"imba_winter_wyvern_cold_embrace"
 		//"Ability4"				"imba_winter_wyvern_winters_curse"
 		"Ability5"					"attribute_bonus_int"
-	}
-
-	//=================================================================================================================
-	// HERO: Wraith King
-	//=================================================================================================================
-	"npc_imba_hero_skeleton_king"
-	{
-		"override_hero"				"npc_dota_hero_skeleton_king"
-
-		"AttributeBaseStrength"		"24"
-		"AttributeStrengthGain"		"3.0"
-
-	//	"Ability1"					"imba_skeleton_king_hellfire_blast"
-	//	"Ability2"					"imba_skeleton_king_vampiric_aura"
-	//	"Ability3"					"imba_skeleton_king_mortal_strike"
-	//	"Ability4"					"imba_skeleton_king_reincarnation"
-		"Ability5"					"attribute_bonus_str"
-
-		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================

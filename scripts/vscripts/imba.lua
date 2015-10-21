@@ -144,14 +144,22 @@ function GameMode:DamageFilter( keys )
 	--entindex_attacker_const
 	--entindex_victim_const
 
-	local attacker = EntIndexToHScript(keys.entindex_attacker_const)
-	local victim = EntIndexToHScript(keys.entindex_victim_const)
+	local attacker
+	local victim
+
+	if keys.entindex_attacker_const and keys.entindex_victim_const then
+		attacker = EntIndexToHScript(keys.entindex_attacker_const)
+		victim = EntIndexToHScript(keys.entindex_victim_const)
+	else
+		return false
+	end
+
 	local damage_type = keys.damagetype_const
 	local display_red_crit_number = false
 
 	-- Lack of entities handling
 	if not attacker or not victim then
-		return true
+		return false
 	end
 
 	-- Orchid crit
@@ -195,45 +203,48 @@ function GameMode:DamageFilter( keys )
 	end
 
 	-- Rapier damage amplification
-	if attacker:HasModifier("modifier_item_imba_rapier_unique") then
+	--if attacker:HasModifier("modifier_item_imba_rapier_unique") then
 
 		-- If the target is Roshan, a building, or an ally, or if the attacker is an invulnerable storm spirit, do nothing
-		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or (attacker:IsInvulnerable() and attacker:GetName() == "npc_dota_hero_storm_spirit") ) then
+		--if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or (attacker:IsInvulnerable() and attacker:GetName() == "npc_dota_hero_storm_spirit") ) then
 			
 			-- Fetch the rapier's ability handle
-			local ability
-			local rapier_level = 1
-			for i = 0,5 do
-				local item = attacker:GetItemInSlot(i)
-				for j = 1, 10 do
-					if item and item:GetAbilityName() == ( "item_imba_rapier_"..j ) then
-						if j >= rapier_level then
-							ability = item
-							rapier_level = j
-						end
-					end
-				end
-			end
-			local ability_level = ability:GetLevel() - 1
+			--local ability = false
+			--local rapier_level = 1
+			--for i = 0,5 do
+			--	local item = attacker:GetItemInSlot(i)
+			--	for j = 1, 10 do
+			--		if item and item:GetAbilityName() == ( "item_imba_rapier_"..j ) then
+			--			if j >= rapier_level then
+			--				ability = item
+			--				rapier_level = j
+			--			end
+			--		end
+			--	end
+			--end
 
-			-- Parameters
-			local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level)
-			local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
-			local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
+			--if ability then
+			--	local ability_level = ability:GetLevel() - 1
 
-			-- Scale damage bonus according to distance
-			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			local distance_taper = 1
-			if distance > distance_taper_start and distance < distance_taper_end then
-				distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
-			elseif distance >= distance_taper_end then
-				distance_taper = 0.3
-			end
+				-- Parameters
+			--	local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level)
+			--	local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+			--	local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
 
-			-- Amplify damage
-			keys.damage = keys.damage * (100 + damage_amplify * distance_taper) / 100
-		end
-	end
+				-- Scale damage bonus according to distance
+			--	local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+			--	local distance_taper = 1
+			--	if distance > distance_taper_start and distance < distance_taper_end then
+			--		distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
+			--	elseif distance >= distance_taper_end then
+			--		distance_taper = 0.3
+			--	end
+
+				-- Amplify damage
+			--	keys.damage = keys.damage * (100 + damage_amplify * distance_taper) / 100
+			--end
+		--end
+	--end
 
 	-- Spiked Carapace damage prevention
 	if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
@@ -1013,6 +1024,78 @@ function GameMode:OnGameInProgress()
 		dire_left_ability:SetLevel(1)
 		radiant_right_ability:SetLevel(1)
 		dire_right_ability:SetLevel(1)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Diretide 2015 logic
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_GAME_MODE_DIRETIDE_2015 then
+		
+		local radiant_hero
+		local dire_hero
+		local radiant_player_id
+		local dire_player_id
+		local hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
+
+		-- Randomly choose a hero for each team to become SK
+		if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+			radiant_hero = hero
+			while hero:GetTeam() == DOTA_TEAM_GOODGUYS do
+				hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
+			end
+			dire_hero = hero
+		else
+			dire_hero = hero
+			while hero:GetTeam() == DOTA_TEAM_BADGUYS do
+				hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
+			end
+			radiant_hero = hero
+		end
+
+		-- Replace selected heroes with Skeleton King
+		radiant_player_id = radiant_hero:GetPlayerID()
+		dire_player_id = dire_hero:GetPlayerID()
+		PlayerResource:ReplaceHeroWith(radiant_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(radiant_player_id), 0)
+		PlayerResource:ReplaceHeroWith(dire_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(dire_player_id), 0)
+		radiant_hero = PlayerResource:GetPlayer(radiant_player_id):GetAssignedHero()
+		dire_hero = PlayerResource:GetPlayer(dire_player_id):GetAssignedHero()
+
+		-- Create kill and death streak and buyback globals
+		radiant_hero.kill_streak_count = 0
+		radiant_hero.death_streak_count = 0
+		radiant_hero.buyback_count = 0
+		dire_hero.kill_streak_count = 0
+		dire_hero.death_streak_count = 0
+		dire_hero.buyback_count = 0
+
+		-- Set up initial level
+		if HERO_STARTING_LEVEL > 1 then
+			Timers:CreateTimer(1, function()
+				radiant_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+				dire_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+			end)
+		end
+
+		-- Set up initial hero kill gold bounty
+		local gold_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
+
+		-- Multiply bounty by the lobby options
+		gold_bounty = gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100
+
+		-- Update the hero's bounty
+		radiant_hero:SetMinimumGoldBounty(gold_bounty)
+		radiant_hero:SetMaximumGoldBounty(gold_bounty)
+		dire_hero:SetMinimumGoldBounty(gold_bounty)
+		dire_hero:SetMaximumGoldBounty(gold_bounty)
+
+		-- Set up initial hero kill XP bounty
+		local xp_bounty = HERO_KILL_XP_CONSTANT_1
+
+		-- Multiply bounty by the lobby options
+		xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
+		radiant_hero:SetDeathXP(xp_bounty)
+		dire_hero:SetDeathXP(xp_bounty)
 	end
 
 end
