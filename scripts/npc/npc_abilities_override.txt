@@ -2377,6 +2377,8 @@
 	
 		"AbilityManaCost"						"150 175 200"
 
+		"AbilityCooldown"						"100.0"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -6183,7 +6185,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 140 190"
+				"damage"					"90 150 220"
 			}
 			"02"
 			{
@@ -8728,19 +8730,19 @@
 	//=================================================================================================================
 	"invoker_quas"
 	{
-		"MaxLevel"							"8"
+		"MaxLevel"							"11"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_regen_per_instance"	"1.5 3.0 4.5 6.0 8.0 10.0 13.0 16.0 20.0"
+				"health_regen_per_instance"	"1.5 3.0 4.5 6.0 8.0 10.0 13.0 16.0 19.0 22.0 25.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_strength"			"2 5 7 10 13 16 20 24 28"
+				"bonus_strength"			"2 4 6 9 12 15 18 21 25 30 35"
 			}
 		}
 	}
@@ -8750,24 +8752,24 @@
 	//=================================================================================================================
 	"invoker_wex"
 	{
-		"MaxLevel"							"8"
+		"MaxLevel"							"11"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_speed_per_instance"	"3 6 10 15 21 28 36 45 55"
+				"attack_speed_per_instance"	"4 8 12 16 20 25 30 35 40 45 50"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_speed_per_instance"	"3 4 5 6 7 8 9 10 11"
+				"move_speed_per_instance"	"3 4 5 6 7 8 9 10 12 14 16"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agility"				"2 5 7 10 13 16 20 24 28"
+				"bonus_agility"				"2 4 6 9 12 15 18 21 25 30 35"
 			}
 		}
 	}
@@ -8777,19 +8779,19 @@
 	//=================================================================================================================
 	"invoker_exort"
 	{
-		"MaxLevel"							"8"
+		"MaxLevel"							"11"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_per_instance"	"3 6 10 15 21 28 36 45 55"
+				"bonus_damage_per_instance"	"4 8 12 16 20 25 30 35 40 45 50"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intelligence"		"3 6 10 14 20 26 33 40 48"
+				"bonus_intelligence"		"3 6 9 12 16 20 25 30 35 40 50"
 			}
 		}
 	}
@@ -8839,7 +8841,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0"
+				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5 6.5 6.5 6.5 6.5"
 				"levelkey"				"quaslevel"
 			}
 			"02"
@@ -8850,13 +8852,13 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_cooldown"		"0.7 0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
+				"freeze_cooldown"		"0.7 0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3 0.27 0.24 0.2"
 				"levelkey"				"quaslevel"	
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_damage"			"20 25 30 35 40 45 50 55 70"
+				"freeze_damage"			"20 25 30 35 40 45 50 55 60 65 70 75"
 				"levelkey"				"quaslevel"	
 			}
 			"05"
@@ -8890,13 +8892,13 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"enemy_slow"			"-20 -25 -30 -35 -40 -45 -50 -55 -60"
+				"enemy_slow"			"-20 -25 -30 -35 -40 -45 -50 -55 -60 -65 -70 -75"
 				"levelkey"				"quaslevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"self_slow"				"0 6 12 18 24 30 36 42 48"
+				"self_slow"				"0 5 10 15 20 25 30 35 40 40 40 40"
 				"levelkey"				"wexlevel"
 			}			
 			"05"
@@ -8921,13 +8923,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"3000 3300 3600 3900 4200 4500 4800 5100 5400"
+				"travel_distance"		"3000 3300 3600 3900 4200 4500 4800 5100 5400 5700 6000 6300"
 				"levelkey"				"wexlevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"1000 1100 1200 1300 1400 1500 1600 1700 1800"
+				"travel_speed"			"1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100"
 			}
 			"03"
 			{
@@ -8947,7 +8949,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"lift_duration"			"1.3 1.5 1.7 1.9 2.1 2.3 2.5 2.7 2.7"
+				"lift_duration"			"1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.6 2.6 2.6 2.6"
 				"levelkey"				"quaslevel"
 			}
 			"07"
@@ -8958,13 +8960,13 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"quas_damage"			"20 40 60 80 100 120 140 160 180"
+				"quas_damage"			"20 40 60 80 100 120 140 160 170 180 190 200"
 				"levelkey"				"quaslevel"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"wex_damage"			"80 120 160 200 240 280 320 360 400"
+				"wex_damage"			"80 120 160 200 240 280 320 350 380 410 430 450"
 				"levelkey"				"wexlevel"
 			}
 		}
@@ -8995,7 +8997,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_burned"			"120 200 280 360 440 520 600 700 800"
+				"mana_burned"			"120 200 280 360 440 510 590 650 710 780 840 900"
 				"levelkey"				"wexlevel"
 			}
 			"04"
@@ -9021,13 +9023,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"35 50 65 80 95 110 125 140 160"
+				"bonus_attack_speed"	"35 50 65 80 95 110 125 140 150 160 170 180"
 				"levelkey"				"wexlevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"35 50 65 80 95 110 125 140 160"
+				"bonus_damage"			"35 50 65 80 95 110 125 140 150 160 170 180"
 				"levelkey"				"exortlevel"
 			}
 			"03"
@@ -9061,7 +9063,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"1200 1600 2000 2400 2800 3200 3600 4000 4400"
+				"travel_distance"		"1200 1600 2000 2400 2800 3200 3600 4000 4400 4800 5200 5600"
 				"levelkey"				"wexlevel"
 			}
 			"04"
@@ -9087,7 +9089,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"main_damage"			"60 80 100 120 150 180 210 240 270"
+				"main_damage"			"60 80 100 120 150 180 210 240 260 280 300 320"
 				"levelkey"				"exortlevel"
 			}
 			"09"
@@ -9098,7 +9100,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_dps"				"15 20 25 30 35 40 45 50 60"
+				"burn_dps"				"15 20 25 30 35 40 44 48 52 56 60 64"
 				"levelkey"				"exortlevel"
 			}
 		}
@@ -9127,7 +9129,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"160 240 320 400 480 560 640 720 800"
+				"damage"				"160 240 320 400 480 550 620 680 740 800 850 900"
 				"levelkey"				"exortlevel"
 			}
 			"04"
@@ -9155,37 +9157,37 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spirit_damage"			"30 40 50 60 70 80 90 100 110"
+				"spirit_damage"			"30 40 50 60 70 80 90 100 110 120 130 140"
 				"levelkey"				"exortlevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_hp"				"400 500 600 700 800 900 1000 1100 1200"
+				"spirit_hp"				"400 500 600 700 800 900 1000 1100 1200 1300 1400 1500"
 				"levelkey"				"exortlevel"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_armor"			"4 5 6 7 8 9 10 11 12"
+				"spirit_armor"			"4 5 6 7 8 9 10 11 12 13 14 15"
 				"levelkey"				"exortlevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spirit_attack_range"	"600 625 650 675 700 725 750 775 800"
+				"spirit_attack_range"	"600 625 650 675 700 725 750 775 800 800 800 800"
 				"levelkey"				"quaslevel"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_mana"			"400 500 600 700 800 900 1000 1100 1200"
+				"spirit_mana"			"400 500 600 700 800 900 1000 1100 1200 1300 1400 1500"
 				"levelkey"				"quaslevel"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spirit_duration"		"50 55 60 65 70 75 80 85 90"
+				"spirit_duration"		"50 55 60 65 70 75 80 85 90 95 100 105"
 				"levelkey"				"quaslevel"
 			}
 		}
@@ -9226,13 +9228,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0"
+				"duration"				"6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 17.0"
 				"levelkey"				"quaslevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160 -180"
+				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160 -180 -200 -220 -240"
 				"levelkey"				"quaslevel"
 			}
 			"03"
@@ -9243,7 +9245,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"16 24 32 40 48 56 64 72 80"
+				"damage_per_second"		"16 24 32 40 48 56 64 72 80 90 100 110"
 				"levelkey"				"exortlevel"
 			}
 			"05"
@@ -9308,19 +9310,19 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"60 100 140 180 220 260 300 350 400"
+				"damage"				"60 100 140 180 220 260 300 330 360 390 420 450"
 				"levelkey"				"exortlevel"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"0.8 0.95 1.1 1.25 1.4 1.55 1.7 1.85 2.0"
+				"knockback_duration"	"0.8 0.95 1.1 1.25 1.4 1.55 1.7 1.85 2.0 2.0 2.0 2.0"
 				"levelkey"				"quaslevel"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0"
+				"disarm_duration"		"1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.0 5.0 5.0"
 				"levelkey"				"wexlevel"
 			}
 		}
@@ -9658,12 +9660,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"240"
+				"crit_multiplier"			"200"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"last_proc"					"10 8 6 4"
+				"last_proc"					"10 9 8 7"
 			}
 		}
 	}

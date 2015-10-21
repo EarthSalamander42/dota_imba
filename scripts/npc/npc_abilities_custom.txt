@@ -1112,15 +1112,30 @@
 			}
 			"04"
 			{
+				"var_type"								"FIELD_INTEGER"
+				"regen_radius"							"1275"
+			}
+			"05"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"regen_rate"							"1.0"
+			}
+			"06"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"regen_stickyness"						"3.0"
+			}
+			"07"
+			{
 				"var_type"								"FIELD_FLOAT"
 				"bash_duration"							"0.3"
 			}
-			"05"
+			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bash_distance"							"200"
 			}
-			"06"
+			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bash_height"							"50"
@@ -1139,6 +1154,13 @@
 				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"ThinkInterval"							"0.9"
+
+				"Aura"									"modifier_imba_fountain_regen"
+				"Aura_Radius"							"%regen_radius"
+				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+				"Aura_ApplyToCaster"					"0"
 
 				"OnIntervalThink"
 				{
@@ -1189,6 +1211,22 @@
 				"States"
 				{
 					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_fountain_regen"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+
+				"Duration"								"%regen_stickyness"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"			"%regen_rate"
+				    "MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%regen_rate" 
 				}
 			}
 		}
@@ -11169,19 +11207,19 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"			"faceless_void_time_lock"
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"				"faceless_void_time_lock"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"					"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"						"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 
 		// Special
@@ -11206,7 +11244,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_radius"				"250"
+				"bash_radius"				"235"
 			}
 		}
 
@@ -11350,6 +11388,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
@@ -11385,7 +11424,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_radius"			"50"
+				"extra_radius"			"40"
 			}
 			"04"
 			{
@@ -11416,10 +11455,12 @@
 
 		"OnUpgrade"
 		{
-			"LevelUpAbility"
+			"RunScript"
 			{
-				"Target"				"CASTER"
-				"AbilityName"			"imba_faceless_void_timelord"
+				"ScriptFile"			"hero/hero_faceless_void.lua"
+				"Function"				"TimelordUpgrade"
+
+				"ability_timelord"		"imba_faceless_void_timelord"
 			}
 		}
 
@@ -11432,6 +11473,7 @@
 				"Target"				"POINT"
 
 				"sound_cast"			"Hero_FacelessVoid.Chronosphere"
+				"sound_za_warudo"		"Imba.FacelessZaWarudo"
 				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
 				"modifier_caster"		"modifier_imba_chronosphere_caster"
 				"modifier_enemy"		"modifier_imba_chronosphere_enemy"
@@ -13628,7 +13670,7 @@
 					"FireSound"
 					{
 						"EffectName"	"Hero_Lich.FrostArmorDamage"
-						"Target"		"TARGET"
+						"Target"		"ATTACKER"
 					}
 				}
 			}	
@@ -17246,11 +17288,6 @@
 						"damage_taken"		"%attack_damage"
 						"stun_modifier"		"modifier_imba_spiked_carapaced_stun"
 					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"		"1" 
 				}
 			}
 			
@@ -25103,7 +25140,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"vision_duration"		"6.0"
 			}
 			"09"
 			{

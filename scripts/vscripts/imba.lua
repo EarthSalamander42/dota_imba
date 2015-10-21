@@ -188,18 +188,65 @@ function GameMode:DamageFilter( keys )
 
 			-- Roll for crit chance
 			if RandomInt(1, 100) <= crit_chance then
-				print("hp before damage: "..victim:GetHealth())
-				Timers:CreateTimer(0.01, function()
-					print("hp after damage: "..victim:GetHealth())
-				end)
 				keys.damage = keys.damage * (100 + (crit_damage - 100) * distance_taper) / 100
 				display_red_crit_number = true
 			end
 		end
 	end
 
+	-- Rapier damage amplification
+	if attacker:HasModifier("modifier_item_imba_rapier_unique") then
+
+		-- If the target is Roshan, a building, or an ally, or if the attacker is an invulnerable storm spirit, do nothing
+		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or (attacker:IsInvulnerable() and attacker:GetName() == "npc_dota_hero_storm_spirit") ) then
+			
+			-- Fetch the rapier's ability handle
+			local ability
+			local rapier_level = 1
+			for i = 0,5 do
+				local item = attacker:GetItemInSlot(i)
+				for j = 1, 10 do
+					if item and item:GetAbilityName() == ( "item_imba_rapier_"..j ) then
+						if j >= rapier_level then
+							ability = item
+							rapier_level = j
+						end
+					end
+				end
+			end
+			local ability_level = ability:GetLevel() - 1
+
+			-- Parameters
+			local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level)
+			local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+			local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
+
+			-- Scale damage bonus according to distance
+			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+			local distance_taper = 1
+			if distance > distance_taper_start and distance < distance_taper_end then
+				distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
+			elseif distance >= distance_taper_end then
+				distance_taper = 0.3
+			end
+
+			-- Amplify damage
+			keys.damage = keys.damage * (100 + damage_amplify * distance_taper) / 100
+		end
+	end
+
+	-- Spiked Carapace damage prevention
+	if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
+
+		-- Nullify damage
+		keys.damage = 0
+
+		-- Prevent crit damage notifications
+		display_red_crit_number = false
+	end
+
 	-- Backtrack dodge
-	if victim:HasModifier("modifier_imba_backtrack") and not victim:HasModifier("modifier_imba_backtrack_cooldown") then
+	if victim:HasModifier("modifier_imba_backtrack") and not victim:HasModifier("modifier_imba_backtrack_cooldown") and keys.damage > 0 then
 
 		-- Fetch backtrack's ability handle
 		local ability
@@ -239,39 +286,42 @@ function GameMode:DamageFilter( keys )
 	if victim:HasModifier("modifier_item_vanguard_unique") and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
 
 		-- If a higher tier of Vanguard-based block is present, do nothing
-		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) then
+		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 20
-			local damage_block = 40
+			local proc_chance = 30
+			local damage_block = 30
+			local damage_blocked = 0
 
 			-- Roll for a proc
 			if RandomInt(1, 100) <= proc_chance then
 
-				-- Play the block sound
-				victim:EmitSound(block_sound)
+				-- Play the block sound for damage over a certain threshold
+				if keys.damage > (victim:GetMaxHealth() * 0.2) then
+					victim:EmitSound(block_sound)
+				end
 
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+				-- Halve damage
+				keys.damage = keys.damage / 2
 
-				-- Nullify damage
-				keys.damage = 0
+				-- Store blocked damage
+				damage_blocked = damage_blocked + keys.damage
 
 				-- Prevent crit damage notifications
 				display_red_crit_number = false
-
-			-- If no proc, block part of the damage
-			else
-
-				-- Calculate actual damage
-				local actual_damage = math.max(keys.damage - damage_block, 0)
-
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
-
-				-- Reduce damage
-				keys.damage = actual_damage
 			end
+
+			-- Calculate actual damage
+			local actual_damage = math.max(keys.damage - damage_block, 0)
+
+			-- Update blocked damage
+			damage_blocked = damage_blocked + keys.damage - actual_damage
+
+			-- Play block message
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+			-- Reduce damage
+			keys.damage = actual_damage
 		end
 	end
 
@@ -279,75 +329,90 @@ function GameMode:DamageFilter( keys )
 	if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
 
 		-- If a higher tier of Vanguard-based block is present, do nothing
-		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) then
+		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 20
-			local damage_block = 45
+			local proc_chance = 35
+			local damage_block = 35
+			local damage_blocked = 0
 
 			-- Roll for a proc
 			if RandomInt(1, 100) <= proc_chance then
 
-				-- Play the block sound
-				victim:EmitSound(block_sound)
+				-- Play the block sound for damage over a certain threshold
+				if keys.damage > (victim:GetMaxHealth() * 0.2) then
+					victim:EmitSound(block_sound)
+				end
 
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+				-- Halve damage
+				keys.damage = keys.damage / 2
 
-				-- Nullify damage
-				keys.damage = 0
+				-- Store blocked damage
+				damage_blocked = damage_blocked + keys.damage
 
 				-- Prevent crit damage notifications
 				display_red_crit_number = false
-
-			-- If no proc, block part of the damage
-			else
-
-				-- Calculate actual damage
-				local actual_damage = math.max(keys.damage - damage_block, 0)
-
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
-
-				-- Reduce damage
-				keys.damage = actual_damage
 			end
+
+			-- Calculate actual damage
+			local actual_damage = math.max(keys.damage - damage_block, 0)
+
+			-- Update blocked damage
+			damage_blocked = damage_blocked + keys.damage - actual_damage
+
+			-- Play block message
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+			-- Reduce damage
+			keys.damage = actual_damage
 		end
 	end
 
 	-- Greatwyrm plate block
 	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 then
 
-		local block_sound = "Imba.VanguardBlock"
-		local proc_chance = 20
-		local damage_block = 50
+		if ( damage_type == DAMAGE_TYPE_PHYSICAL or damage_type == DAMAGE_TYPE_MAGICAL ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
-		-- Roll for a proc
-		if RandomInt(1, 100) <= proc_chance then
+			local block_sound = "Imba.VanguardBlock"
+			local proc_chance = 40
+			local damage_block = 40
+			local damage_blocked = 0
 
-			-- Play the block sound
-			victim:EmitSound(block_sound)
+			-- Roll for a proc
+			if RandomInt(1, 100) <= proc_chance then
 
-			-- Play block message
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+				-- Play the block sound for damage over a certain threshold
+				if keys.damage > (victim:GetMaxHealth() * 0.2) then
+					victim:EmitSound(block_sound)
+				end
 
-			-- Nullify damage
-			keys.damage = 0
+				-- Halve damage
+				keys.damage = keys.damage / 2
 
-			-- Prevent crit damage notifications
-			display_red_crit_number = false
+				-- Store blocked damage
+				damage_blocked = damage_blocked + keys.damage
 
-		-- If no proc, but damage is physical, block part of it
-		elseif damage_type == DAMAGE_TYPE_PHYSICAL then
+				-- Prevent crit damage notifications
+				display_red_crit_number = false
+			end
 
-			-- Calculate actual damage
-			local actual_damage = math.max(keys.damage - damage_block, 0)
+			-- If damage is physical, block part of it
+			if damage_type == DAMAGE_TYPE_PHYSICAL then
 
-			-- Play block message
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage - actual_damage, nil)
+				-- Calculate actual damage
+				local actual_damage = math.max(keys.damage - damage_block, 0)
 
-			-- Reduce damage
-			keys.damage = actual_damage
+				-- Update blocked damage
+				damage_blocked = damage_blocked + keys.damage - actual_damage
+
+				-- Reduce damage
+				keys.damage = actual_damage
+			end
+
+			-- If any damage was blocked, play block message
+			if damage_blocked > 0 then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+			end
 		end
 	end
 

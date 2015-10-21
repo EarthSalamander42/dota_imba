@@ -176,6 +176,7 @@ function CullingBlade( keys )
 
  	-- Check if the target HP is equal or below the threshold
 	if target:GetHealth() <= kill_threshold then
+		
 		-- If it is then purge it and manually remove unpurgable modifiers
 		target:Purge(true, true, false, false, true)
 

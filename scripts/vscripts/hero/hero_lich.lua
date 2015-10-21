@@ -83,7 +83,7 @@ function DarkRitual( keys )
 
 	-- If the caster's mana is full, grant the excess mana as healing
 	local current_mana = caster:GetMana()
-	local max_mana = caster:GetMana()
+	local max_mana = caster:GetMaxMana()
 	if max_mana - current_mana < mana_gain then
 		caster:Heal( ( mana_gain - (max_mana - current_mana) ) / FRANTIC_MULTIPLIER, caster)
 	end
@@ -104,8 +104,8 @@ function DarkRitual( keys )
     ParticleManager:SetParticleControl(particle, 2, Vector(1, digits+1, 0))
     ParticleManager:SetParticleControl(particle, 3, Vector(170, 0, 250))
 
-    -- Kill the target, ForceKill doesn't grant xp
-	target:ForceKill(true)
+    -- Kill the target
+	target:Kill(ability, caster)
 
 	for _,v in pairs(heroes) do
 		v:AddExperience(split_XP, false, false)

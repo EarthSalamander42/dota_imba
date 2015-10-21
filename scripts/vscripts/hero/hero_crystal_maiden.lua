@@ -71,7 +71,7 @@ function Frostbite( keys )
 			ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_hero - damage_interval})
 			caster:RemoveModifierByName(modifier_passive)
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_cooldown, {duration = cooldown})
-		elseif not attacker:IsTower() then
+		elseif not attacker:IsTower() and not attacker:IsBuilding() then
 			if RandomInt(1, 100) <= creep_chance then
 				ability:ApplyDataDrivenModifier(caster, attacker, modifier_root, {duration = duration_creep})
 				ability:ApplyDataDrivenModifier(caster, attacker, modifier_damage, {duration = duration_creep - damage_interval})

@@ -268,7 +268,7 @@ function WardCast( keys )
 
 	-- Kill the ward if too near the enemy fountain
 	if IsNearEnemyClass(scourge_ward, 1360, "ent_dota_fountain") then
-		scourge_ward:Kill(ability, nil)
+		scourge_ward:Kill(ability, caster)
 	end
 
 	-- Spawn Plague Wards
@@ -296,7 +296,7 @@ function WardCast( keys )
 
 		-- Kill the ward if too near the enemy fountain
 		if IsNearEnemyClass(plague_ward, 1360, "ent_dota_fountain") then
-			plague_ward:Kill(ability, nil)
+			plague_ward:Kill(ability, caster)
 		end
 	end
 end

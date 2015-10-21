@@ -699,6 +699,11 @@ function RemoteMineAutoCreepEnd( keys )
 
 	caster.auto_creep_exploding = nil
 	mine.auto_creep_exploding = nil
+	Timers:CreateTimer(0.01, function()
+		if not mine:IsAlive() then
+			caster.auto_creep_exploding = true
+		end
+	end)
 end
 
 function RemoteMineAutoHeroEnd( keys )
@@ -707,6 +712,11 @@ function RemoteMineAutoHeroEnd( keys )
 
 	caster.auto_hero_exploding = nil
 	mine.auto_hero_exploding = nil
+	Timers:CreateTimer(0.01, function()
+		if not mine:IsAlive() then
+			caster.auto_hero_exploding = true
+		end
+	end)
 end
 
 function MinefieldTeleport( keys )

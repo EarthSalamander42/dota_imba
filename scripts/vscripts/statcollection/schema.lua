@@ -115,10 +115,6 @@ end
 --          Stat Functions         --
 -------------------------------------
 
-if Convars:GetBool('developer') then
-	Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(),BuildPlayersArray()) end, "Test the custom schema arrays", 0)
-end
-
 function PrintSchema( gameArray, playerArray )
 	print("--------- GAME DATA ---------")
 	DeepPrintTable(gameArray)

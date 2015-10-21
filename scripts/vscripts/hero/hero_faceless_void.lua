@@ -151,21 +151,21 @@ function TimeLock( keys )
 		-- Fire sound effect
 		target:EmitSound(sound_bash)
 
-		-- Fire particle
-		local chrono_pfx = ParticleManager:CreateParticle(particle_chrono, PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(chrono_pfx, 0, target_loc)
-		ParticleManager:SetParticleControl(chrono_pfx, 1, Vector(bash_radius, bash_radius, 0))
-
-		-- Destroy particle after [bash_duration]
-		Timers:CreateTimer(bash_duration, function()
-			ParticleManager:DestroyParticle(chrono_pfx, false)
-		end)
-
 		-- Find units inside the chrono
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, bash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		
 		-- Perform bash
 		for _,enemy in pairs(enemies) do
+
+			-- Fire particle
+			local chrono_pfx = ParticleManager:CreateParticle(particle_chrono, PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl(chrono_pfx, 0, enemy:GetAbsOrigin())
+			ParticleManager:SetParticleControl(chrono_pfx, 1, Vector(40, 40, 0))
+
+			-- Destroy particle after [bash_duration]
+			Timers:CreateTimer(bash_duration, function()
+				ParticleManager:DestroyParticle(chrono_pfx, false)
+			end)
 
 			-- Double damage if the target is inside a chrono
 			if enemy:HasModifier("modifier_faceless_void_chronosphere_freeze") then
@@ -230,12 +230,23 @@ function TimelordEnd( keys )
 	caster:SetBaseAttackTime(1.7)
 end
 
+function TimelordUpgrade( keys )
+	local caster = keys.caster
+	local ability_timelord = caster:FindAbilityByName(keys.ability_timelord)
+
+	-- Upgrade the Timelord ability
+	if ability_timelord then
+		ability_timelord:SetLevel(ability_timelord:GetLevel() + 1)
+	end
+end
+
 function Chronosphere( keys )
 	local caster = keys.caster
 	local chrono_center = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
+	local sound_za_warudo = keys.sound_za_warudo
 	local particle_chrono = keys.particle_chrono
 	local modifier_caster = keys.modifier_caster
 	local modifier_enemy = keys.modifier_enemy
@@ -266,9 +277,6 @@ function Chronosphere( keys )
 	-- Spend mana
 	caster:SpendMana(caster:GetMana(), ability)
 
-	-- Play sound
-	caster:EmitSound(sound_cast)
-
 	-- Create flying vision node
 	ability:CreateVisibilityNode(chrono_center, total_radius, total_duration)
 
@@ -277,13 +285,21 @@ function Chronosphere( keys )
 	ParticleManager:SetParticleControl(chrono_pfx, 0, chrono_center)
 	ParticleManager:SetParticleControl(chrono_pfx, 1, Vector(total_radius, total_radius, 0))
 
+	-- Decide which cast sound to play
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	if #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
+		EmitGlobalSound(sound_za_warudo)
+	else
+		caster:EmitSound(sound_cast)
+	end
+
 	-- Effect loop
 	local elapsed_duration = 0
 	Timers:CreateTimer(0, function()
 		
 		-- Find units inside the Chrono's radius
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-		
+
 		-- Apply appropriate modifiers
 		for _,unit in pairs(units) do
 			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then

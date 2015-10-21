@@ -307,10 +307,10 @@ function GameMode:OnItemPickedUp(keys)
 	DebugPrint( '[BAREBONES] OnItemPickedUp' )
 	DebugPrintTable(keys)
 
-	local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-	local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
-	local itemname = keys.itemname
+	--local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+	--local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
+	--local player = PlayerResource:GetPlayer(keys.PlayerID)
+	--local itemname = keys.itemname
 end
 
 -- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
@@ -515,19 +515,27 @@ function GameMode:OnPlayerLevelUp(keys)
 
 	if hero_level > 25 then
 
-		-- Prevent the hero from gaining further ability points after level 25
-		hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+		-- Invoker is a special case
+		if hero:GetName() == "npc_dota_hero_invoker" then
+			if hero_level > 34 then
+				hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+			end
+		else
 
-		-- If the generic powerup isn't present, apply it
-		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-		if not ability_powerup then
-			hero:AddAbility("imba_unlimited_level_powerup")
-			ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-			ability_powerup:SetLevel(1)
+			-- Prevent the hero from gaining further ability points after level 25
+			hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+
+			-- If the generic powerup isn't present, apply it
+			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+			if not ability_powerup then
+				hero:AddAbility("imba_unlimited_level_powerup")
+				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+				ability_powerup:SetLevel(1)
+			end
+
+			-- Increase the amount of stacks of the high level power-up
+			AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", 1, true)
 		end
-
-		-- Increase the amount of stacks of the high level power-up
-		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", 1, true)
 	end
 
 end

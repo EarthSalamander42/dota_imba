@@ -16,8 +16,15 @@ end
 function ShadowStrikeDecay( keys )
 	local caster = keys.caster
 	local target = keys.target
-
+	local ability = keys.ability
 	local stack_modifier = keys.stack_modifier
+
+	-- If the ability was unlearned, remove all stacks
+	if not ability then
+		target:RemoveModifierByName(stack_modifier)
+	end
+
+	-- Else, reduce stacks by 1
 	local current_charges = target:GetModifierStackCount(stack_modifier, caster)
 	if current_charges <= 1 then
 		target:RemoveModifierByName(stack_modifier)

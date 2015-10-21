@@ -219,8 +219,13 @@ end
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
 	
-	-- Shallow Grave is more pesky
+	-- Shallow Grave and Purification are peskier
 	target:RemoveModifierByName("modifier_imba_shallow_grave")
+
+	-- Extremely specific blademail interaction because fuck everything
+	if caster:HasModifier("modifier_item_blade_mail_reflect") then
+		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
 
 	-- Deals lethal damage in order to trigger death-preventing abilities
 	target:Kill(ability, caster)
@@ -230,7 +235,6 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_imba_shallow_grave")
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
-	target:RemoveModifierByName("modifier_imba_purification_passive")
 	target:RemoveModifierByName("modifier_borrowed_time")
 
 	-- Kills the target

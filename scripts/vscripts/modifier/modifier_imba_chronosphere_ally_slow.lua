@@ -5,7 +5,7 @@ if modifier_imba_chronosphere_ally_slow == nil then
 	modifier_imba_chronosphere_ally_slow = class({})
 end
 
-function modifier_imba_chronosphere_ally_slow:OnCreated( kv )	
+function modifier_imba_chronosphere_ally_slow:OnCreated( kv )
 	if IsServer() then
 	end
 end
@@ -19,7 +19,7 @@ function modifier_imba_chronosphere_ally_slow:DeclareFunctions()
 end
 
 function modifier_imba_chronosphere_ally_slow:GetModifierProjectileSpeedBonus()
-	return -500
+	return -450
 end
 
 function modifier_imba_chronosphere_ally_slow:IsHidden()

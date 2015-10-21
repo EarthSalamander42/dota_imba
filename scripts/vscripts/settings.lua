@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "6.85.1a"					-- Tracks game version
+IMBA_VERSION = "6.85.1c"					-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -256,6 +256,8 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	HERO_INITIAL_REPICK_GOLD = 1500
 	HERO_INITIAL_RANDOM_GOLD = 2500
 	HERO_STARTING_LEVEL = 5
+	HERO_XP_BONUS = 60
+	CREEP_XP_BONUS = 60
 end
 
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?

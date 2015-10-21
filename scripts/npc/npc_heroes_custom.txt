@@ -364,8 +364,8 @@
 	{
 		"override_hero"				"npc_dota_hero_invoker"
 
-		"AttackDamageMin"			"17"
-		"AttackDamageMax"			"23"
+		"AttackDamageMin"				"17"
+		"AttackDamageMax"				"23"
 
 		"AttributeBaseIntelligence"		"25"
 		

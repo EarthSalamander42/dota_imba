@@ -10,7 +10,7 @@ function ButterflyEffect( keys )
 	local enemy = enemies[RandomInt(1, #enemies)]
 
 	-- Ignore the attack if a courier was found
-	if enemy:GetUnitName() == "npc_dota_courier" or enemy:GetName() == "npc_dota_fort" then
+	if enemy:GetUnitName() == "npc_dota_courier" or enemy:GetName() == "npc_badguys_fort" or enemy:GetName() == "npc_goodguys_fort" or enemy:GetName() == "npc_dota_roshan" then
 		return nil
 	end
 
