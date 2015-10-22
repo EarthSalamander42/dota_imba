@@ -90,11 +90,11 @@ function BuildPlayersArray()
 				end
 
 				table.insert(players, {
-
 					-- SteamID32 required in here
 					steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-					nam = GetHeroName(playerID),	-- Hero by its short name
+					nam = GetHeroName(playerID),		-- Hero by its short name
+					pt = prettifyTeamName(hero),		-- Nice team name
 					lvl = hero:GetLevel(),			-- Hero level at the end of the game
 					pnw = GetNetworth(hero),		-- Sum of hero gold and item worth
 					pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
@@ -174,4 +174,15 @@ function GetItemList(hero)
 	local itemList = table.concat(itemTable, ",")
 
 	return itemList
+end
+
+function prettifyTeamName(hero)
+	local playerTeam = hero:GetTeam()
+	if playerTeam == DOTA_TEAM_GOODGUYS then
+		return "Radiant"
+	else if playerTeam == DOTA_TEAM_BADGUYS then
+		return "Dire"
+	end
+	
+	return "Unknown"
 end
