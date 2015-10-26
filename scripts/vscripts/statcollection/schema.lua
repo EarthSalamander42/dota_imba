@@ -82,7 +82,7 @@ function BuildPlayersArray()
 					pk = hero:GetKills(),			-- Number of kills of this players hero
 					pa = hero:GetAssists(),			-- Number of deaths of this players hero
 					pd = hero:GetDeaths(),			-- Number of deaths of this players hero
-					pil = GetItemList(hero)			-- Item list
+					pil = GetItemListImba(hero)		-- Item list
 				})
 			end
 		end
@@ -137,3 +137,27 @@ function BuildRoundWinnerArray()
 end
 
 -------------------------------------
+-- MY CUSTOM FUNCTIONS
+-------------------------------------
+
+function GetItemListImba(hero)
+	local itemTable = {}
+
+	for i=0,5 do
+		local item = hero:GetItemInSlot(i)
+		if item then
+			if string.find(item:GetAbilityName(), "imba") then
+				local itemName = string.gsub(item:GetAbilityName(),"item_imba_","")
+				table.insert(itemTable,itemName)
+			else
+				local itemName = string.gsub(item:GetAbilityName(),"item_","")
+				table.insert(itemTable,itemName)
+			end
+		end
+	end
+
+	table.sort(itemTable)
+	local itemList = table.concat(itemTable, ",")
+
+	return itemList
+end
