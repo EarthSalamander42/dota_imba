@@ -16,7 +16,7 @@ function DeathCoil( keys )
 	
 	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
 	local max_stacks = 1
-	if ability_frostmourne:GetLevel() ~= 0 then
+	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
 		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
 	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
@@ -239,20 +239,26 @@ function EndShieldParticle( keys )
 	local target = keys.target
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
 	local max_damage_absorb = base_damage_absorb
 	local damageType = DAMAGE_TYPE_MAGICAL
-	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
 
 	target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
 	ParticleManager:DestroyParticle(target.ShieldParticle,false)
 
-	local enemies = FindUnitsInRadius(caster.GetTeam(caster), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- If ability was unlearned, do nothing
+	if not ability then
+		return nil
+	end
+
+	local ability_level = ability:GetLevel() - 1
+	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
+	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
+
+	local enemies = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
 	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
 	local max_stacks = 1
-	if ability_frostmourne:GetLevel() ~= 0 then
+	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
 		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
 	end
 	local modifier_debuff_base = "modifier_frostmourne_debuff_base"

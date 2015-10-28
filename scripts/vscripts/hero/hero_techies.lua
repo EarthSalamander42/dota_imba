@@ -621,7 +621,7 @@ function RemoteMineAutoCreep( keys )
 	local modifier_unselect = keys.modifier_unselect
 	local sound_cast = keys.sound_cast
 
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.7
 
 	-- Play sound
 	mine:EmitSound(sound_cast)
@@ -646,8 +646,8 @@ function RemoteMineAutoCreep( keys )
 			mine:ForceKill(false)
 			mine.auto_creep_exploding = nil
 		end
-		if mine.auto_creep_exploding then
-			return 0.2
+		if mine:IsAlive() and mine.auto_creep_exploding then
+			return 0.5
 		end
 	end)
 end
@@ -661,7 +661,7 @@ function RemoteMineAutoHero( keys )
 	local modifier_unselect = keys.modifier_unselect
 	local sound_cast = keys.sound_cast
 
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.6
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level) * 0.7
 
 	-- Play sound
 	mine:EmitSound(sound_cast)
@@ -687,8 +687,8 @@ function RemoteMineAutoHero( keys )
 			mine:CastAbilityImmediately(self_detonate, mine:GetOwnerEntity():GetPlayerID())
 			mine.auto_hero_exploding = nil
 		end
-		if mine.auto_hero_exploding then
-			return 0.2
+		if mine:IsAlive() and mine.auto_hero_exploding then
+			return 0.5
 		end
 	end)
 end

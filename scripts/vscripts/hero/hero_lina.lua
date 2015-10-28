@@ -324,11 +324,11 @@ function LagunaBladeDamage( keys )
 	local target = keys.target
 	local scepter = HasScepter(caster)
 
-	local int = caster:GetIntellect()
-	local int_multiplier = ability:GetLevelSpecialValueFor("int_multiplier_scepter", ability:GetLevel() - 1 )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1 )
 
 	if scepter then
+		local int = caster:GetIntellect()
+		local int_multiplier = ability:GetLevelSpecialValueFor("int_multiplier_scepter", ability:GetLevel() - 1 )
 		damage = damage + int * int_multiplier
 		ApplyDamage({victim = target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	else

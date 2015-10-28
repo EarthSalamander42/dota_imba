@@ -952,3 +952,70 @@ function SetCreatureHealth(unit, health, update_current_health)
 		unit:SetHealth(health)
 	end
 end
+
+function RemoveWearables( hero )
+
+	-- Setup variables
+	Timers:CreateTimer(0.1, function()
+		hero.hiddenWearables = {} -- Keep every wearable handle in a table to show them later
+		local model = hero:FirstMoveChild()
+		while model ~= nil do
+			if model:GetClassname() == "dota_item_wearable" then
+				model:AddEffects(EF_NODRAW) -- Set model hidden
+				table.insert(hero.hiddenWearables, model)
+			end
+			model = model:NextMovePeer()
+		end
+	end)
+end
+
+function ShowWearables( event )
+  local hero = event.caster
+
+  for i,v in pairs(hero.hiddenWearables) do
+    v:RemoveEffects(EF_NODRAW)
+  end
+end
+
+-- Skeleton king cosmetics
+function SkeletonKingWearables( hero )
+
+	-- Cape
+	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_cape.vmdl", 1.0)
+
+	-- Shoulderpiece
+	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_shoulder.vmdl", 1.0)
+
+	-- Crown
+	Attachments:AttachProp(hero, "attach_head", "models/heroes/skeleton_king/wraith_king_head.vmdl", 1.0)
+
+	-- Gauntlet
+	Attachments:AttachProp(hero, "attach_attack1", "models/heroes/skeleton_king/wraith_king_gauntlet.vmdl", 1.0)
+
+	-- Weapon (randomly chosen)
+	local random_weapon = {
+		"models/items/skeleton_king/spine_splitter/spine_splitter.vmdl",
+		"models/items/skeleton_king/regalia_of_the_bonelord_sword/regalia_of_the_bonelord_sword.vmdl",
+		"models/items/skeleton_king/weapon_backbone.vmdl",
+		"models/items/skeleton_king/the_blood_shard/the_blood_shard.vmdl",
+		"models/items/skeleton_king/sk_dragon_jaw/sk_dragon_jaw.vmdl",
+		"models/items/skeleton_king/weapon_spine_sword.vmdl",
+		"models/items/skeleton_king/shattered_destroyer/shattered_destroyer.vmdl"
+	}
+	Attachments:AttachProp(hero, "attach_attack1", random_weapon[RandomInt(1, #random_weapon)], 1.0)
+
+	-- Eye particles
+	local eye_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_skeletonking/skeletonking_eyes.vpcf", PATTACH_ABSORIGIN, hero)
+	ParticleManager:SetParticleControlEnt(eye_pfx, 0, hero, PATTACH_POINT_FOLLOW, "attach_eyeL", hero:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(eye_pfx, 1, hero, PATTACH_POINT_FOLLOW, "attach_eyeR", hero:GetAbsOrigin(), true)
+end
+
+-- Returns the total cooldown reduction on a given unit
+function GetCooldownReduction( unit )
+
+	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
+		return 0.75
+	else
+		return 1
+	end
+end

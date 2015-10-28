@@ -307,11 +307,22 @@ function WeaveRemoveBuff( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local modifier = keys.modifier
 	local modifier_scepter = keys.modifier_scepter
 
+	-- If the ability was unlearned, just remove everything
+	if not ability or not caster then
+		while target:HasModifier(modifier) do
+			target:RemoveModifierByName(modifier)
+		end
+		while target:HasModifier(modifier_scepter) do
+			target:RemoveModifierByName(modifier_scepter)
+		end
+		return nil
+	end
+
 	-- Modifier variables
+	local ability_level = ability:GetLevel() - 1
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local tick_interval = ability:GetLevelSpecialValueFor("tick_interval", ability_level)
 

@@ -1242,6 +1242,8 @@
 	//=================================================================================================================
 	"ancient_apparition_chilling_touch"
 	{
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+
 		"AbilityCastRange"				"1000"
 
 		"AbilityCooldown"				"25"
@@ -2334,6 +2336,8 @@
 	//=================================================================================================================
 	"juggernaut_healing_ward"
 	{
+		"AbilityUnitTargetTeam"						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+
 		"AbilityCastRange"							"525 575 625 675"
 		"AbilityCastPoint"							"0.2"
 		
@@ -5372,7 +5376,7 @@
 
 		"AbilityCastRange"				"600"
 
-		"AbilityManaCost"				"200 100 0"
+		"AbilityManaCost"				"100"
 
 		"AbilityCastPoint"				"0.15"
 
@@ -8217,86 +8221,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"cooldown_scepter"			"30.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Pugna: Decrepify
-	//=================================================================================================================
-	"pugna_decrepify"
-	{
-		"AbilityCastRange"					"900"
-
-		"AbilityManaCost"					"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_spell_damage_pct_allies"		"0"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_movement_speed_allies"		"0"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_spell_damage_pct"			"-30 -40 -50 -60"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_movement_speed"				"-30 -40 -50 -60"
-			}			
-			"05"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"tooltip_duration"					"3.5"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Pugna: Nether Ward
-	//=================================================================================================================
-	"pugna_nether_ward"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"30.0 25.0 20.0 15.0"
-
-		"AbilityManaCost"				"75"		
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1600"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"mana_multiplier"			"1.5 1.8 2.1 2.4"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"mana_regen"				"-2.0 -4.0 -6.0 -8.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attacks_to_destroy_tooltip"	"4"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ward_duration_tooltip"		"30"
 			}
 		}
 	}

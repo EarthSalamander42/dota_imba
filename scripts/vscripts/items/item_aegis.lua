@@ -10,7 +10,11 @@ function AegisPickup( keys )
 	-- Display aegis pickup message for all players
 	if not caster.has_aegis then
 		local line_duration = 7
-		Notifications:BottomToAll({hero = caster:GetName(), duration = line_duration})
+		if caster.is_skeleton_king then
+			Notifications:BottomToAll({image = "file://{images}/custom_game/skeleton_king_mini.png", duration = line_duration})
+		else
+			Notifications:BottomToAll({hero = caster:GetName(), duration = line_duration})
+		end
 		Notifications:BottomToAll({text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." ", duration = line_duration, continue = true})
 		Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 	end
@@ -103,5 +107,10 @@ function AegisDamage( keys )
 
 		-- Redraw caster's model
 		caster:RemoveNoDraw()
+
+		-- Remove wearables
+		if caster.is_skeleton_king then
+			RemoveWearables(caster)
+		end
 	end)
 end

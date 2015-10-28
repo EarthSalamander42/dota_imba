@@ -189,6 +189,14 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- IMBA: Pick mode selection
 	-------------------------------------------------------------------------------------------------
 
+	-- Diretide information
+	if tonumber(mode_info.diretide) == 1 then
+		IMBA_GAME_MODE_DIRETIDE_2015 = true
+		print("IMBATIDE mode activated!")
+	else
+		IMBA_GAME_MODE_DIRETIDE_2015 = false
+	end
+
 	-- Retrieve information
 	if tonumber(mode_info.all_random) == 1 then
 		IMBA_PICK_MODE_ALL_RANDOM = true

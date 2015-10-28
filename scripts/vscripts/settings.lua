@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "6.85.1c"					-- Tracks game version
+IMBA_VERSION = "DIRETIDE 2015"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -137,6 +137,12 @@ GAME_TIME_ELAPSED = 0														-- Initializes game time tracker
 
 VENGEFUL_RANCOR = false														-- Tracks if Vengeful Spirit's "Rancor" ability is in the game
 
+IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enabled?
+
+DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Kings' bounty multiplier
+DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Kings' extra respawn time
+DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Kings' buyback cost multiplier
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -196,12 +202,15 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_GAME_MODE_DIRETIDE_2015 = true
 elseif GetMapName() == "imba_random_omg" then
 	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
 	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_GAME_MODE_DIRETIDE_2015 = true
 elseif GetMapName() == "imba_10v10" then
 	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_GAME_MODE_DIRETIDE_2015 = true
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
@@ -211,9 +220,7 @@ end
 -- IMBA: game mode globals
 -------------------------------------------------------------------------------------------------
 
-IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enabled?
-
-GAME_WINNER_TEAM = 0														-- Tracks game winner
+GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?

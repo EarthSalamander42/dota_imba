@@ -68,6 +68,11 @@ function BattleHungerAntiRegen( keys )
 	local modifier_stacks = keys.modifier_stacks
 	local modifier_enemy = keys.modifier_enemy
 
+	-- If the ability was unlearned, remove the debuff
+	if not ability then
+		target:RemoveModifierByName(modifier_enemy)
+	end
+
 	-- If the target is near its own fountain, end the debuff
 	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
 		target:RemoveModifierByName(modifier_enemy)

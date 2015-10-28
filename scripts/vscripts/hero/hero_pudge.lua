@@ -156,9 +156,12 @@ function MeatHook( keys )
 	ParticleManager:SetParticleControlEnt(hook_pfx, 7, caster, PATTACH_CUSTOMORIGIN, nil, caster_loc, true)
 
 	-- Remove the caster's hook
-	local weapon_hook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
-	if weapon_hook ~= nil then
-		weapon_hook:AddEffects( EF_NODRAW )
+	local weapon_hook
+	if caster:IsHero() then
+		weapon_hook = caster:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
+		if weapon_hook ~= nil then
+			weapon_hook:AddEffects( EF_NODRAW )
+		end
 	end
 
 	-- Initialize Hook variables
@@ -623,7 +626,10 @@ function Dismember( keys )
 	-- Parameters
 	local dismember_damage = ability:GetLevelSpecialValueFor("dismember_damage", ability_level)
 	local strength_damage = ability:GetLevelSpecialValueFor("strength_damage", ability_level)
-	local caster_str = caster:GetStrength()
+	local caster_str = 0
+	if caster:IsHero() then
+		caster_str = caster:GetStrength()
+	end
 
 	-- Flag the target as such
 	if not caster.dismember_target then

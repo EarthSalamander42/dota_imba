@@ -21,6 +21,8 @@ require('libraries/projectiles')
 require('libraries/notifications')
 -- This library can be used for starting customized animations on units from lua
 require('libraries/animations')
+-- This library can be used for creating frankenstein monsters
+require('libraries/attachments')
 
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
@@ -32,10 +34,10 @@ require('settings')
 require('events')
 
 -- storage API
-require('libraries/json')
-require('libraries/storage')
+--require('libraries/json')
+--require('libraries/storage')
 
-Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
+--Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
 
 --[[
 	This function should be used to set up Async precache calls at the beginning of the gameplay.
@@ -54,11 +56,7 @@ Storage:SetApiKey("35c56d290cbd168b6a58aabc43c87aff8d6b39cb")
 ]]
 function GameMode:PostLoadPrecache()
 	DebugPrint("[IMBA] Performing Post-Load precache")    
-	--PrecacheItemByNameAsync("item_example_item", function(...) end)
-	--PrecacheItemByNameAsync("example_ability", function(...) end)
 
-	--PrecacheUnitByNameAsync("npc_dota_hero_viper", function(...) end)
-	--PrecacheUnitByNameAsync("npc_dota_hero_enigma", function(...) end)
 end
 
 --[[
@@ -74,6 +72,12 @@ function GameMode:OnFirstPlayerLoaded()
 
 	local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Skeleton King wearables setup
+	-------------------------------------------------------------------------------------------------
+
+	SendToServerConsole("dota_combine_models 0")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -427,6 +431,13 @@ function GameMode:DamageFilter( keys )
 		end
 	end
 
+	-- Decrepify damage counter
+	if victim.decrepify_damage_counter then
+		if damage_type == DAMAGE_TYPE_MAGICAL then
+			victim.decrepify_damage_counter = victim.decrepify_damage_counter + keys.damage
+		end
+	end
+
 	-- Damage overhead display
 	if display_red_crit_number then
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
@@ -764,26 +775,6 @@ function GameMode:OnHeroInGame(hero)
 	hero:SetDeathXP(xp_bounty)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player greeting and explanations
-	-------------------------------------------------------------------------------------------------
-
-	local line_duration = 5
-	
-	-- First line
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"}	} )
-	Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true}	)
-		
-	-- Second line
-	Timers:CreateTimer(line_duration, function()
-		Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
-
-		-- Third line
-		Timers:CreateTimer(line_duration, function()
-			Notifications:Bottom(hero:GetPlayerID(), {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
-		end)
-	end)
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Initialize innate hero abilities
 	-------------------------------------------------------------------------------------------------
 
@@ -1024,78 +1015,6 @@ function GameMode:OnGameInProgress()
 		dire_left_ability:SetLevel(1)
 		radiant_right_ability:SetLevel(1)
 		dire_right_ability:SetLevel(1)
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Diretide 2015 logic
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_GAME_MODE_DIRETIDE_2015 then
-		
-		local radiant_hero
-		local dire_hero
-		local radiant_player_id
-		local dire_player_id
-		local hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-
-		-- Randomly choose a hero for each team to become SK
-		if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-			radiant_hero = hero
-			while hero:GetTeam() == DOTA_TEAM_GOODGUYS do
-				hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-			end
-			dire_hero = hero
-		else
-			dire_hero = hero
-			while hero:GetTeam() == DOTA_TEAM_BADGUYS do
-				hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-			end
-			radiant_hero = hero
-		end
-
-		-- Replace selected heroes with Skeleton King
-		radiant_player_id = radiant_hero:GetPlayerID()
-		dire_player_id = dire_hero:GetPlayerID()
-		PlayerResource:ReplaceHeroWith(radiant_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(radiant_player_id), 0)
-		PlayerResource:ReplaceHeroWith(dire_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(dire_player_id), 0)
-		radiant_hero = PlayerResource:GetPlayer(radiant_player_id):GetAssignedHero()
-		dire_hero = PlayerResource:GetPlayer(dire_player_id):GetAssignedHero()
-
-		-- Create kill and death streak and buyback globals
-		radiant_hero.kill_streak_count = 0
-		radiant_hero.death_streak_count = 0
-		radiant_hero.buyback_count = 0
-		dire_hero.kill_streak_count = 0
-		dire_hero.death_streak_count = 0
-		dire_hero.buyback_count = 0
-
-		-- Set up initial level
-		if HERO_STARTING_LEVEL > 1 then
-			Timers:CreateTimer(1, function()
-				radiant_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-				dire_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-			end)
-		end
-
-		-- Set up initial hero kill gold bounty
-		local gold_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
-
-		-- Multiply bounty by the lobby options
-		gold_bounty = gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100
-
-		-- Update the hero's bounty
-		radiant_hero:SetMinimumGoldBounty(gold_bounty)
-		radiant_hero:SetMaximumGoldBounty(gold_bounty)
-		dire_hero:SetMinimumGoldBounty(gold_bounty)
-		dire_hero:SetMaximumGoldBounty(gold_bounty)
-
-		-- Set up initial hero kill XP bounty
-		local xp_bounty = HERO_KILL_XP_CONSTANT_1
-
-		-- Multiply bounty by the lobby options
-		xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-		radiant_hero:SetDeathXP(xp_bounty)
-		dire_hero:SetDeathXP(xp_bounty)
 	end
 
 end

@@ -106,12 +106,23 @@ function Precache( context )
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts", context)
   	PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_roshan_halloween.vsndevts", context)
 
-  	-- Precache the King
-  	if IMBA_GAME_MODE_DIRETIDE_2015 then
-		--PrecacheUnitByNameAsync("npc_dota_hero_skeleton_king", function(...) end)
-		--PrecacheResource("model_folder", "models/items/skeleton_king/", context)
-	end
+	-- Precache the Kings
+	if IMBA_GAME_MODE_DIRETIDE_2015 then
+		PrecacheUnitWithQueue("npc_dota_hero_skeleton_king")
+		PrecacheUnitWithQueue("npc_dota_hero_undying")
+		PrecacheResource("model_folder", "models/items/wraith_king/", context)
+		PrecacheResource("particle_folder", "particles/econ/items/wraith_king/", context)
+		PrecacheResource("model_folder", "models/items/skeleton_king/", context)
+		PrecacheResource("model_folder", "models/heroes/skeleton_king/", context)
+		PrecacheResource("particle_folder", "models/heroes/skeleton_king/", context)
+		PrecacheResource("particle_folder", "particles/units/heroes/hero_skeletonking/", context)
 
+		-- Transformation stuff
+		PrecacheResource("particle", "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/imba_soundevents.vsndevts", context)
+	end
+	
   	-- Rapier sounds
   	--PrecacheResource("sound", "sounds/vo/announcer_dlc_bastion/announcer_event_store_rapier.vsnd", context)
   	--PrecacheResource("sound", "sounds/vo/announcer_dlc_pflax/announcer_divine_rapier_one.vsnd", context)

@@ -164,7 +164,7 @@
 	}
 
 	//=================================================================================================================
-	// HERO: Chaos Knight
+	//	HERO: Chaos Knight
 	//=================================================================================================================
 	"npc_imba_hero_chaos_knight"
 	{
@@ -182,6 +182,22 @@
 		"Ability5"					"attribute_bonus_str"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	//	HERO: Clinkz
+	//=================================================================================================================
+	"npc_imba_hero_clinkz"
+	{
+		"override_hero"				"npc_dota_hero_clinkz"
+
+		"AttackAnimationPoint"		"0.3"
+
+		"Ability1"					"imba_clinkz_strafe"
+		"Ability2"					"imba_clinkz_searing_arrows"
+		"Ability3"					"imba_clinkz_skeleton_walk"
+		"Ability4"					"imba_clinkz_death_pact"
+		"Ability5"					"attribute_bonus_agi"
 	}
 
 	//=================================================================================================================
@@ -814,7 +830,7 @@
 	//=================================================================================================================
 	// HERO: Pudge
 	//=================================================================================================================
-    "npc_imba_hero_pudge"
+	"npc_imba_hero_pudge"
 	{
 		"override_hero"				"npc_dota_hero_pudge"
 
@@ -835,6 +851,22 @@
 		"Ability7"					"attribute_bonus_str"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Pugna
+	//=================================================================================================================
+	"npc_imba_hero_pugna"
+	{
+		"override_hero"				"npc_dota_hero_pugna"
+
+		"ModelScale"				"0.69"
+
+		"Ability1"					"imba_pugna_nether_blast"
+		"Ability2"					"imba_pugna_decrepify"
+		"Ability3"					"imba_pugna_nether_ward"
+		"Ability4"					"imba_pugna_life_drain"
+		"Ability5"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================
@@ -933,15 +965,17 @@
 	{
 		"override_hero"				"npc_dota_hero_skeleton_king"
 
-		"Model"						"models/heroes/skeleton_king/skeleton_king.vmdl"
-
 		"ModelScale"				"1.8"
 
-		//"HeroSelectSoundEffect"		"Hero_SkeletonKing.Pick"
-		//"Ability1"		"skeleton_king_hellfire_blast"
-		//"Ability2"		"skeleton_king_vampiric_aura"
-		//"Ability3"		"skeleton_king_mortal_strike"
-		//"Ability4"		"skeleton_king_reincarnation"
+		"AbilityLayout"				"6"
+
+		"Ability1"					"imba_wraith_king_wraithfire_blast"
+		"Ability2"					"imba_wraith_king_wraithfire_eruption"
+		"Ability3"					"imba_wraith_king_summon_royal_guard"
+		"Ability4"					"imba_wraith_king_vampiric_aura"
+		"Ability5"					"imba_wraith_king_wraithfire_aura"
+		"Ability6"					"imba_wraith_king_reincarnation"
+		"Ability7"					"imba_skeleton_king_stats"
 		
 		"ArmorPhysical"				"3"
 		"AttackDamageMin"			"17"
@@ -954,17 +988,13 @@
 		"AttributeIntelligenceGain"	"2.0"
 
 		"AttributeBaseAgility"		"30"
-		"AttributeAgilityGain"		"3.0"
+		"AttributeAgilityGain"		"4.0"
 
 		"MovementSpeed"				"310"
 
-		"RingRadius"				"160"
-		//"HealthBarOffset"			"190"
+		"RingRadius"				"110"
+		"HealthBarOffset"			"400"
 		
-		//"particle_folder"			"particles/units/heroes/hero_skeletonking"
-		//"GameSoundsFile"			"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
-		//"VoiceFile"					"scripts/voscripts/game_sounds_vo_skeleton_king.vsndevts"
-
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1152,6 +1182,9 @@
 		"override_hero"				"npc_dota_hero_tiny"
 
 		"ModelScale"				"1.6"
+
+		"RingRadius"				"130"
+		"HealthBarOffset"			"350"
 
 		//"Ability1"				"imba_tiny_avalanche"
 		//"Ability2"				"imba_tiny_toss"

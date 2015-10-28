@@ -97,7 +97,7 @@ function AstralImprisonment( keys )
 	local int_steal_duration = ability:GetLevelSpecialValueFor("int_gain_duration", ability_level)
 
 	-- If the target is an enemy, steal its intelligence
-	if target:GetTeam() ~= caster:GetTeam() then
+	if target:GetTeam() ~= caster:GetTeam() and caster:IsHero() then
 
 		-- Calculate the intelligence to be stolen
 		local target_int = target:GetIntellect()
@@ -143,7 +143,7 @@ function AstralImprisonmentEnd( keys )
 	target:RemoveNoDraw()
 
 	-- Deal minor pure damage to enemies (prevents blinks)
-	if target:GetTeam() ~= caster:GetTeam() then
+	if target:GetTeam() ~= caster:GetTeam() and caster:IsHero() then
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = caster:GetIntellect(), damage_type = DAMAGE_TYPE_PURE})
 	end
 end
