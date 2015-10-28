@@ -189,14 +189,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- IMBA: Pick mode selection
 	-------------------------------------------------------------------------------------------------
 
-	-- Diretide information
-	if tonumber(mode_info.diretide) == 1 then
-		IMBA_GAME_MODE_DIRETIDE_2015 = true
-		print("IMBATIDE mode activated!")
-	else
-		IMBA_GAME_MODE_DIRETIDE_2015 = false
-	end
-
 	-- Retrieve information
 	if tonumber(mode_info.all_random) == 1 then
 		IMBA_PICK_MODE_ALL_RANDOM = true
@@ -353,6 +345,9 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat tracking stuff
 	-------------------------------------------------------------------------------------------------
+
+	-- Tracks if Diretide event was active on this game or not
+	statCollection:setFlags({diretide_active = IMBA_GAME_MODE_DIRETIDE_2015 and 1 or 0})
 
 	-- Tracks if game options were customized or just left as default
 	statCollection:setFlags({game_options_set = GAME_OPTIONS_SET and 1 or 0})

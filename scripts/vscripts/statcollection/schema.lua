@@ -48,15 +48,6 @@ function BuildGameArray()
 	-- Tracks which team won the game
 	game.win = GAME_WINNER_TEAM
 
-	-- Tracks the winning king
-	local winner_king = "none"
-	if GAME_WINNER_TEAM == "Radiant" then
-		winner_king = "Skeleton King"
-	elseif GAME_WINNER_TEAM == "Dire" then
-		winner_king = "Wraith King"
-	end
-	game.kin = winner_king
-	
 	return game
 end
 

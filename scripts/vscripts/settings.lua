@@ -202,13 +202,16 @@ CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_CUSTOM_8] = 0
 
 if GetMapName() == "imba_standard" then
 	IMBA_PICK_MODE_ALL_PICK = true
-	IMBA_GAME_MODE_DIRETIDE_2015 = true
 elseif GetMapName() == "imba_random_omg" then
 	IMBA_ABILITY_MODE_RANDOM_OMG = true
 elseif GetMapName() == "imba_custom" then
 	IMBA_PICK_MODE_ALL_PICK = true
-	IMBA_GAME_MODE_DIRETIDE_2015 = true
 elseif GetMapName() == "imba_10v10" then
+	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_PLAYERS_ON_GAME = 20
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
+elseif GetMapName() == "imbatide" then
 	IMBA_PICK_MODE_ALL_PICK = true
 	IMBA_GAME_MODE_DIRETIDE_2015 = true
 	IMBA_PLAYERS_ON_GAME = 20
@@ -261,6 +264,13 @@ HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the star
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
+	HERO_INITIAL_GOLD = 2000
+	HERO_INITIAL_REPICK_GOLD = 1500
+	HERO_INITIAL_RANDOM_GOLD = 2500
+	HERO_STARTING_LEVEL = 5
+	HERO_XP_BONUS = 60
+	CREEP_XP_BONUS = 60
+elseif GetMapName() == "imbatide" then
 	HERO_INITIAL_GOLD = 2000
 	HERO_INITIAL_REPICK_GOLD = 1500
 	HERO_INITIAL_RANDOM_GOLD = 2500
