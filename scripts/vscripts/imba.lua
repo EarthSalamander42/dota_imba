@@ -134,8 +134,13 @@ function GameMode:OrderFilter( keys )
 	--position_y	 ==> 	-6381.1127929688
 	--issuer_player_id_const	 ==> 	0
 
-	--local units = keys["units"]
-	--local unit = EntIndexToHScript(units["0"])
+	local units = keys["units"]
+	if units["0"] ~= nil then
+		local unit = EntIndexToHScript(units["0"])
+		if unit.shouldnotitem and (keys.order_type == DOTA_UNIT_ORDER_DROP_ITEM or keys.order_type == DOTA_UNIT_ORDER_GIVE_ITEM or keys.order_type == DOTA_UNIT_ORDER_SELL_ITEM or keys.order_type == DOTA_UNIT_ORDER_DISASSEMBLE_ITEM or keys.order_type == DOTA_UNIT_ORDER_MOVE_ITEM or (keys.entindex_ability ~= nil and keys.entindex_ability ~= 0 and EntIndexToHScript(keys.entindex_ability):IsItem())) then
+			return false
+		end
+	end
 
 	return true
 end

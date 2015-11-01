@@ -2849,4 +2849,68 @@
 		//----------------------------------------------------------------
 		"HasInventory"				"0"
 	}
+	"npc_imba_tribal_totem"
+	{
+		"BaseClass"				"npc_dota_creature"
+		"Model"					"models/items/earthshaker/totem_dragon_wall/fissure_body.vmdl"
+		"Level"					"1"
+		"ModelScale"				"1.4"
+		"ConsideredHero"			"1"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"				""
+		"Ability2"				""
+		"Ability3"				""
+		"Ability4"				""
+		"Ability5"				""
+
+		"ArmorPhysical"				"99"
+		"MagicalResistance"			"99"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.0"
+		"AttackAcquisitionRange"	"0"
+		"AttackRange"				"0"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+		"HealthBarOffset"			"170"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0"
+	
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"
+		"BountyGoldMin"				"0"
+		"BountyGoldMax"				"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0.0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+
+		//Inventory
+		//----------------------------------------------------------------
+		"HasInventory"				"1"
+	}
 }

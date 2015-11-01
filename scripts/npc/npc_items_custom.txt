@@ -18809,5 +18809,86 @@
 			}
 		}
 	}
-	//next free ID: 2186
+
+	//=================================================================================================================
+	// Tribal Totem
+	//=================================================================================================================
+	"item_imba_tribal_totem"
+	{
+		"ID"	"2186"
+		"BaseClass"	"item_datadriven"
+		"AbilityBehavior"	"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"		"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"		"earthshaker_enchant_totem" // placeholder
+
+		"AbilityCastRange"	"0"
+		"AbilityCastPoint"	"0.0"
+
+		"ItemCost"			"10000"  // potentially needs to be higher-this is a very powerful item
+		"ItemShopTags"			"consumable"
+		"ItemQuality"			"consumable"
+		"ItemAliases"			"totem; tribal; gangbang stone"
+		"ItemStackable"			"0"
+		"ItemPermanent"			"0"
+		"ItemInitialCharges"		"0"
+		"ItemRequiresCharges"		"0"
+		"SideShop"			"0"
+		"precache"
+		{
+			"model"					"models/items/earthshaker/totem_dragon_wall/fissure_body.vmdl"
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"maxtotems"		"1"
+			}
+		}
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"			"modifier_item_tribal_totem_chieftan"
+				"Target"			"CASTER"
+			}
+			"RunScript" {
+				"ScriptFile"	"items/item_tribal_totem.lua"
+				"Function"	"create_totem"
+			}
+			"SpendCharge" {}
+			// a nice sound would be pretty good
+			//"FireSound"
+			//{
+			//}
+			// the script will remove the item, if actually used up. saves a bit of gold for the people who buy a second by accident
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_tribal_totem_chieftan"
+			{
+				// Catch summon-creating abilities
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_tribal_totem.lua"
+						"Function"	"trigger_totem"
+					}
+				}
+				// Catch the ones that we normally wouldn't - stuff like eilodons replicating, or PL's illusions. Not as heavy as think, but gets called often enough during fights (when it's likely to matter)
+				"OnOrder"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_tribal_totem.lua"
+						"Function"	"trigger_totem"
+					}
+				}
+			}
+		}
+	}
+	//next free ID: 2187
 }
