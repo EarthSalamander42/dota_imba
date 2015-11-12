@@ -1,4 +1,4 @@
-STAT_UTILITIES_VERSION = "0.1"
+STAT_UTILITIES_VERSION = "0.2"
 
 --[[
     This file contains a general use API for collecting stats, to be used in your schema.lua BuildGameArray or BuildPlayersArray
@@ -49,6 +49,17 @@ function GetNetworth( hero )
     end
 
     return networth
+end
+
+-- String of item name, without the item_ prefix
+function GetItemSlot(hero,slot)
+    local item = hero:GetItemInSlot(slot)
+    
+    if item then
+        local itemName = string.gsub(item:GetAbilityName(),"item_","") or nil
+    end
+    
+    return itemName
 end
 
 -- Long string of item names ordered alphabetically, without the item_ prefix and separated by commas
