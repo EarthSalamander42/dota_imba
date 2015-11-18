@@ -1019,3 +1019,82 @@ function GetCooldownReduction( unit )
 		return 1
 	end
 end
+
+-- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)
+function IsWardTypeUnit( unit )
+
+	local ward_type_units = {
+		"npc_imba_pugna_nether_ward_1",
+		"npc_imba_pugna_nether_ward_2",
+		"npc_imba_pugna_nether_ward_3",
+		"npc_imba_pugna_nether_ward_4"
+	}
+
+	for _, ward_unit in pairs(ward_type_units) do
+		if unit:GetUnitName() == ward_unit then
+			return true
+		end
+	end
+
+	return false
+end
+
+-- Randoms an ability of a certain tier for the Ancient
+function GetAncientAbility( tier )
+
+	-- Tier 1 abilities
+	if tier == 1 then
+		local ability_list = {
+			"venomancer_poison_nova",
+			"bristleback_quill_spray",
+			"doom_bringer_scorched_earth",
+			"death_prophet_exorcism"
+		}
+
+		return ability_list[RandomInt(1, #ability_list)]
+
+	-- Tier 2 abilities
+	elseif tier == 2 then
+		local ability_list = {
+			"treant_overgrowth",
+			"naga_siren_song_of_the_siren",
+			"nyx_assassin_spiked_carapace"
+		}
+
+		return ability_list[RandomInt(1, #ability_list)]
+
+	-- Tier 3 abilities
+	elseif tier == 3 then
+		local ability_list = {
+			"razor_eye_of_the_storm",
+			"rattletrap_battery_assault",
+			"axe_counter_helix",
+			"leshrac_diabolic_edict"
+		}
+
+		return ability_list[RandomInt(1, #ability_list)]
+
+	-- Tier 4 abilities
+	elseif tier == 4 then
+		local ability_list = {
+			"abaddon_borrowed_time",
+			"axe_berserkers_call",
+			"weaver_time_lapse",
+			"windrunner_windrun"
+		}
+
+		return ability_list[RandomInt(1, #ability_list)]
+
+	-- Tier 5 abilities
+	elseif tier == 5 then
+		local ability_list = {
+			"tidehunter_ravage",
+			"slardar_slithereen_crush",
+			"magnataur_reverse_polarity"
+		}
+
+		return ability_list[RandomInt(1, #ability_list)]
+	end
+	
+	return nil
+end

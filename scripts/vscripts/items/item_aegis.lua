@@ -107,10 +107,5 @@ function AegisDamage( keys )
 
 		-- Redraw caster's model
 		caster:RemoveNoDraw()
-
-		-- Remove wearables
-		if caster.is_skeleton_king then
-			RemoveWearables(caster)
-		end
 	end)
 end

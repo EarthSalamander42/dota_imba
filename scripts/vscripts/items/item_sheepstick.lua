@@ -25,7 +25,7 @@ function Sheepstick( keys )
 		magical_armor = math.max( math.min(magical_armor, 0.8), 0)
 
 		local magical_armor_stacks = math.floor( 100 * ( 1 / ( 1 - magical_armor ) - 1 ) )
-		local armor_stacks = math.floor(target:GetPhysicalArmorValue())
+		local armor_stacks = math.floor(target:GetPhysicalArmorBaseValue() + target:GetAgility() / 7)
 		AddStacks(ability, caster, target, modifier_dearmor, armor_stacks, false)
 		AddStacks(ability, caster, target, modifier_demagic, magical_armor_stacks, false)
 	end

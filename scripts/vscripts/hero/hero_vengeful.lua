@@ -319,7 +319,6 @@ function NetherSwap( keys )
 	local particle_target = keys.particle_target
 	local particle_rancor = keys.particle_rancor
 	local modifier_rancor = keys.modifier_rancor
-	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local rancor_radius = ability:GetLevelSpecialValueFor("rancor_radius", ability_level)
@@ -327,7 +326,6 @@ function NetherSwap( keys )
 	local tree_radius = ability:GetLevelSpecialValueFor("tree_radius", ability_level)
 	local swapback_min_time = ability:GetLevelSpecialValueFor("swapback_min_time", ability_level)
 	local swapback_max_time = ability:GetLevelSpecialValueFor("swapback_max_time", ability_level)
-	local cooldown_scepter = ability:GetLevelSpecialValueFor("cooldown_scepter", ability_level)
 	local ministun_duration = ability:GetLevelSpecialValueFor("ministun_duration", ability_level)
 
 	-- Ministun the target if it's an enemy
@@ -428,11 +426,6 @@ function NetherSwap( keys )
 		caster:SwapAbilities(ability_name, ability_swapback_name, true, false)
 		caster.nether_swap_start_position = nil
 	end)
-
-	-- Trigger scepter cooldown if appropriate
-	if scepter then
-		ability:StartCooldown(cooldown_scepter)
-	end
 
 end
 

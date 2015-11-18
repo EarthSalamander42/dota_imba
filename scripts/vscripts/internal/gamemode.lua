@@ -328,13 +328,9 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
 
-	-- Buyback cost information
-	if mode_info.buyback == "buyback_double" then
-		HERO_BUYBACK_COST_MULTIPLIER = 200
-	elseif mode_info.buyback == "buyback_none" then
-		HERO_BUYBACK_COST_MULTIPLIER = 99999
-	end
-	print("buyback cost multiplier: "..HERO_BUYBACK_COST_MULTIPLIER)
+	-- Buyback cooldown information
+	HERO_BUYBACK_COOLDOWN = tonumber(mode_info.buyback)
+	print("buyback cooldown: "..HERO_BUYBACK_COOLDOWN.." seconds")
 	
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true
@@ -345,9 +341,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat tracking stuff
 	-------------------------------------------------------------------------------------------------
-
-	-- Tracks if Diretide event was active on this game or not
-	statCollection:setFlags({diretide_active = IMBA_GAME_MODE_DIRETIDE_2015 and 1 or 0})
 
 	-- Tracks if game options were customized or just left as default
 	statCollection:setFlags({game_options_set = GAME_OPTIONS_SET and 1 or 0})

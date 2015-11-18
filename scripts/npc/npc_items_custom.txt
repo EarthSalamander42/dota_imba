@@ -6816,12 +6816,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200 "
+				"aura_radius"			"1200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_attack_speed"		"40"
+				"aura_attack_speed"		"45"
 			}
 			"05"
 			{
@@ -7798,7 +7798,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"35"
+				"damage_block"			"45"
 			}
 			"06"
 			{
@@ -7998,7 +7998,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"40"
+				"damage_block"			"60"
 			}
 			"07"
 			{
@@ -13501,12 +13501,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"corruption_armor"		"-12"
+				"corruption_armor"		"-10"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"corruption_duration"	"30.0"
+				"var_type"				"FIELD_INTEGER"
+				"corruption_duration"	"15"
 			}
 		}
 	}

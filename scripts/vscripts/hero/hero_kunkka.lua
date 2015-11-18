@@ -167,7 +167,7 @@ function TidebringerStartCooldown( keys )
 		if caster:HasModifier(modifier_wave_break) then
 			caster:RemoveModifierByName(modifier_wave_break)
 		else
-			ability:StartCooldown(cooldown)
+			ability:StartCooldown(cooldown * GetCooldownReduction(caster))
 		end
 	end
 end

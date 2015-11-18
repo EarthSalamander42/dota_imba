@@ -825,12 +825,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0"
+				"duration"					"4.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"5.0"
+				"duration_scepter"			"4.0"
 			}
 			"04"
 			{
@@ -942,6 +942,411 @@
 	}
 
 	//=================================================================================================================
+	// Ancient: Battery Assault
+	//=================================================================================================================
+	"rattletrap_battery_assault"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"45.0"
+
+		"AbilityDamage"					"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+			"02"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"20.0"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Berserker's Call
+	//=================================================================================================================
+	"axe_berserkers_call"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"40"
+
+		"AbilityManaCost"				"0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"1000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Counter Helix
+	//=================================================================================================================
+	"axe_counter_helix"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"0.0"
+		
+		"AbilityDamage"					"100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trigger_chance"			"20"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown"					"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Slithereen Crush
+	//=================================================================================================================
+	"slardar_slithereen_crush"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastRange"				"1200"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"20.0"
+
+		"AbilityDamage"					"300"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_extra_slow"				"-25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_attack_slow_tooltip"		"-60"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"crush_extra_slow_duration"		"2.0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Reverse Polarity
+	//=================================================================================================================
+	"magnataur_reverse_polarity"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"
+
+		"AbilityCastRange"				"1500"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_radius"			"1500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarity_damage"		"400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_stun_duration"	"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_stun_duration"	"3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pull_duration"			"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Rocket Barrage
+	//=================================================================================================================
+	"gyrocopter_rocket_barrage"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"20"
+
+		"AbilityManaCost"				"0"
+
+		"AbilityCastRange"				"1200"
+
+		"AbilityDamage"					"30"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"rockets_per_second"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Time Lapse
+	//=================================================================================================================
+	"weaver_time_lapse"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown_scepter"				"60"
+			}	
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range_tooltip_scepter"	"0"
+			}				
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Spiked Carapce
+	//=================================================================================================================
+	"nyx_assassin_spiked_carapace"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"45"
+
+		"AbilityCastPoint"				"0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"reflect_duration"			"2.25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"2.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"0"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"burrow_aoe"				"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Exorcism
+	//=================================================================================================================
+	"death_prophet_exorcism"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"6.0"
+		"AbilityDuration"				"20.0"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirits"				"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spirit_speed"			"600"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_distance"			"2000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"give_up_distance"		"1200"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_damage"			"60"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"60"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_percent"			"25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"average_damage"		"60"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"structure_reduction"	"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Diabolic Edict
+	//=================================================================================================================
+	"leshrac_diabolic_edict"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilityDamage"					"40"
+
+		"AbilityDuration"				"12"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"num_explosions"		"40"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tower_bonus"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Alchemist: Acid Spray
 	//=================================================================================================================
 	"alchemist_acid_spray"
@@ -969,8 +1374,8 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"4 6 8 10"
+				"var_type"				"FIELD_FLOAT"
+				"armor_reduction"		"4.5 6 7.5 9"
 			}
 			"05"
 			{
@@ -2975,8 +3380,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"armor_reduction"			"-3 -5 -7 -9"
+				"var_type"					"FIELD_FLOAT"
+				"armor_reduction"			"-2.5 -4 -5.5 -7"
 			}
 			"02"
 			{
@@ -4198,7 +4603,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"presence_armor_reduction"		"-6 -8 -10 -12"
+				"presence_armor_reduction"		"-4 -6 -8 -10"
 			}
 			"02"
 			{
@@ -4954,7 +5359,7 @@
 		"AbilityCastRange"				"550 625 700"
 		"AbilityCastPoint"				"1.4"
 		
-		"AbilityCooldown"				"10.0 8.5 7.0"
+		"AbilityCooldown"				"10.0 9.0 8.0"
 	
 		"AbilityManaCost"				"180 240 300"
 
@@ -5089,7 +5494,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"-4 -6 -8 -10"
+				"bonus_armor"							"-3 -5 -7 -9"
 			}
 			"03"
 			{
@@ -7525,51 +7930,6 @@
 	}	
 	
 	//=================================================================================================================
-	// Ability: Slardar Slithereen Crush
-	//=================================================================================================================
-	"slardar_slithereen_crush"
-	{
-		"AbilityCastRange"				"350 375 400 425"
-
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityCooldown"				"7.0"
-
-		"AbilityDamage"					"90 160 230 300"
-
-		"AbilityManaCost"				"80 90 100 110"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_radius"					"350 375 400 425"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_extra_slow"				"-20 -25 -30 -35"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_attack_slow_tooltip"		"-20 -25 -30 -35"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"crush_extra_slow_duration"		"2.0"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.6 1.9 2.2 2.5"
-			}
-		}
-	}
-	
-	//=================================================================================================================
 	// Ability: Slardar Bash
 	//=================================================================================================================
 	"slardar_bash"
@@ -7796,7 +8156,7 @@
 
 		"AbilityDuration"				"4 6 8 10"
 	
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -8246,37 +8606,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_damage_tooltip"	"64 128 192 256"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Rattletrap: Battery Assault
-	//=================================================================================================================
-	"rattletrap_battery_assault"
-	{
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"20.0"
-
-		"AbilityDamage"					"35 50 65 80"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"350"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"12.0"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"interval"			"0.6 0.5 0.4 0.3"
 			}
 		}
 	}
@@ -10591,45 +10920,6 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-	// Magnataur: Reverse Polarity
-	//=================================================================================================================
-	"magnataur_reverse_polarity"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCastRange"				"550 775 1000"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius"			"550 775 1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"polarity_damage"		"150 275 400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_stun_duration"	"2.25 3.0 3.75"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"creep_stun_duration"	"3.0 4.0 5.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pull_duration"			"0.0"
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Gyrocopter: Rocket Barrage
@@ -10653,7 +10943,7 @@
 				"rockets_per_second"		"10"
 			}
 		}
-	}	
+	}
 	
 	//=================================================================================================================
 	// Gyrocopter: Flak Cannon

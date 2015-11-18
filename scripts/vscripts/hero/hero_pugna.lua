@@ -365,9 +365,7 @@ function NetherWardZap( keys )
 		"imba_techies_land_mines",
 		"imba_techies_stasis_trap",
 		"techies_suicide",
-		"winter_wyvern_arctic_burn",
-		"imba_wraith_king_wraithfire_eruption",
-		"imba_skeleton_king_hellfire_eruption"
+		"winter_wyvern_arctic_burn"
 	}
 
 	-- Ignore items

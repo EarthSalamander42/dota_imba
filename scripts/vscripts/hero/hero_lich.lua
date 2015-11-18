@@ -177,7 +177,7 @@ function ChainFrost( keys )
 	end
 
 	for _,v in pairs(units) do
-		if v ~= target and not IsRoshan(v) then
+		if v ~= target and not IsRoshan(v) and not IsWardTypeUnit(v) then
 			should_bounce = true
 		end
 	end

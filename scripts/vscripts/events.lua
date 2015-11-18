@@ -54,11 +54,7 @@ function GameMode:OnDisconnect(keys)
 				local remaining_connected_players
 
 				-- Show disconnect message
-				if hero.is_skeleton_king then
-					Notifications:BottomToAll({image = "file://{images}/custom_game/skeleton_king_mini.png", duration = line_duration})
-				else
-					Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				end
+				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
@@ -128,245 +124,28 @@ function GameMode:OnGameRulesStateChange(keys)
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Diretide 2015 logic
-	-------------------------------------------------------------------------------------------------
-
-		if IMBA_GAME_MODE_DIRETIDE_2015 then
-
-			-- Timings
-			local initial_time = 4
-			local announcer_time = 6
-			local interlude_time = 6
-			local time_between_kings = 4
-
-			-- Initial "Welcome to Diretide"
-			Timers:CreateTimer(initial_time, function()
-
-				-- Announcer welcome
-				EmitGlobalSound("Imba.DiretideStart0"..RandomInt(1, 2))
-
-				-- Text welcome
-				Notifications:TopToAll( {image = "file://{images}/custom_game/tutorial/IMBA.png", duration = announcer_time + interlude_time + time_between_kings * 2} )
-				Notifications:TopToAll( {text = "#imba_diretide_introduction_line_01", duration = announcer_time, style = {color = "DodgerBlue"} }	)
-				Notifications:TopToAll( {text = "#imba_diretide_introduction_line_02", duration = announcer_time, style = {color = "Red"}, continue = true}	)
-			end)
-
-			-- Diretide stinger
-			Timers:CreateTimer(initial_time + announcer_time, function()
-
-				-- Global stinger
-				EmitGlobalSound("DireTideGameStart.DireSide")
-				EmitGlobalSound("DireTideGameStart.RadiantSide")
-
-				-- Picking the kings text
-				Notifications:TopToAll( {text = "#imba_diretide_introduction_line_03", duration = interlude_time, style = {color = "DodgerBlue"} }	)
-			end)
-
-			-- Start transformations
-			Timers:CreateTimer(initial_time + announcer_time + interlude_time, function()
-
-				local radiant_hero
-				local dire_hero
-				local radiant_player_id
-				local dire_player_id
-				local all_heroes = HeroList:GetAllHeroes()
-				local hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-
-				-- Set up initial hero kill gold bounty
-				local gold_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
-
-				-- Multiply bounty by the lobby options
-				gold_bounty = gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100 * DIRETIDE_KING_BOUNTY_MULTIPLIER
-
-				-- Set up initial hero kill XP bounty
-				local xp_bounty = HERO_KILL_XP_CONSTANT_1
-
-				-- Multiply bounty by the lobby options
-				xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100 * DIRETIDE_KING_BOUNTY_MULTIPLIER
-
-				-- Randomly choose a hero for each team to become king
-				if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-					radiant_hero = hero
-					while hero:GetTeam() == DOTA_TEAM_GOODGUYS do
-						hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-					end
-					dire_hero = hero
-				else
-					dire_hero = hero
-					while hero:GetTeam() == DOTA_TEAM_BADGUYS do
-						hero = HeroList:GetHero(RandomInt(0, HeroList:GetHeroCount() - 1 ))
-					end
-					radiant_hero = hero
-				end
-
-				-- Fetch players' current hero names and ID
-				local radiant_hero_name = radiant_hero:GetName()
-				local dire_hero_name = dire_hero:GetName()
-				local radiant_player_id = radiant_hero:GetPlayerID()
-				local dire_player_id = dire_hero:GetPlayerID()
-
-				-- Destroy Wraith King's old hero
-				local old_dire_hero = PlayerResource:GetPlayer(dire_player_id):GetAssignedHero()
-				Timers:CreateTimer(0.01, function()
-					old_dire_hero:Destroy()
-				end)
-
-				-- Replace player's hero with Wraith King
-				PlayerResource:ReplaceHeroWith(dire_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(dire_player_id), 0)
-				Timers:CreateTimer(0.01, function()
-					dire_hero = PlayerResource:GetPlayer(dire_player_id):GetAssignedHero()
-					dire_hero.is_king = true
-
-					-- Focus all players' camera on the Wraith King player
-					dire_hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, time_between_kings)
-					all_heroes = HeroList:GetAllHeroes()
-					for _,hero in pairs(all_heroes) do
-						PlayerResource:SetCameraTarget(hero:GetPlayerID(), dire_hero)
-					end
-
-					-- Play transformation particle
-					local wraith_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_dragon_knight/dragon_knight_transform_green.vpcf", PATTACH_CUSTOMORIGIN, nil)
-					ParticleManager:SetParticleAlwaysSimulate(wraith_pfx)
-					ParticleManager:SetParticleControl(wraith_pfx, 0, dire_hero:GetAbsOrigin())
-
-					-- Play Wraith King stinger and message
-					EmitGlobalSound("Imba.DiretideSpawn01")
-					Notifications:TopToAll( {hero = dire_hero_name, duration = time_between_kings} )
-					Notifications:TopToAll( {text = PlayerResource:GetPlayerName(dire_player_id).." ", duration = time_between_kings, continue = true} )
-					Notifications:TopToAll( {text = "#imba_diretide_introduction_line_04", duration = time_between_kings, style = {color = "DodgerBlue"}, continue = true} )
-					Notifications:TopToAll( {text = "#imba_diretide_introduction_line_05", duration = time_between_kings, style = {color = "Green"}, continue = true} )
-
-					-- Create kill and death streak and buyback globals
-					dire_hero.kill_streak_count = 0
-					dire_hero.death_streak_count = 0
-					dire_hero.buyback_count = 0
-
-					-- Set up initial level
-					if HERO_STARTING_LEVEL > 1 then
-						Timers:CreateTimer(1, function()
-							dire_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-						end)
-					end
-
-					-- Update the hero's bounty
-					dire_hero:SetMinimumGoldBounty(gold_bounty)
-					dire_hero:SetMaximumGoldBounty(gold_bounty)
-					dire_hero:SetDeathXP(xp_bounty)
-				end)
-
-				-- Delay between Kings
-				Timers:CreateTimer(time_between_kings, function()
-
-					-- Destroy Skeleton King's old hero
-					local old_radiant_hero = PlayerResource:GetPlayer(radiant_player_id):GetAssignedHero()
-					Timers:CreateTimer(0.01, function()
-						old_radiant_hero:Destroy()
-					end)
-
-					-- Replace player's hero with Skeleton King
-					PlayerResource:ReplaceHeroWith(radiant_player_id, "npc_dota_hero_skeleton_king", PlayerResource:GetGold(radiant_player_id), 0)
-					Timers:CreateTimer(0.01, function()
-						radiant_hero = PlayerResource:GetPlayer(radiant_player_id):GetAssignedHero()
-						radiant_hero.is_king = true
-
-						-- Mark the radiant player as skeleton king, and change its model
-						radiant_hero.is_skeleton_king = true
-						radiant_hero:SetOriginalModel("models/heroes/skeleton_king/skeleton_king.vmdl")
-						radiant_hero:SetModel("models/heroes/skeleton_king/skeleton_king.vmdl")
-
-						-- Set up Skeleton King's wearables
-						SkeletonKingWearables(radiant_hero)
-
-						-- Remove Skeleton King's old abilities
-						for i = 0, 6 do
-							local old_ability = radiant_hero:GetAbilityByIndex(i)
-							if old_ability then
-								radiant_hero:RemoveAbility(old_ability:GetAbilityName())
-							end
-						end
-
-						-- Add Skeleton King's new abilities
-						radiant_hero:AddAbility("imba_skeleton_king_hellfire_blast")
-						radiant_hero:AddAbility("imba_skeleton_king_hellfire_eruption")
-						radiant_hero:AddAbility("imba_skeleton_king_summon_royal_guard")
-						radiant_hero:AddAbility("imba_skeleton_king_vampiric_aura")
-						radiant_hero:AddAbility("imba_skeleton_king_hellfire_aura")
-						radiant_hero:AddAbility("imba_skeleton_king_reincarnation")
-						radiant_hero:AddAbility("imba_skeleton_king_stats")
-
-						-- Focus all players' camera on the Skeleton King player
-						radiant_hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, time_between_kings)
-						all_heroes = HeroList:GetAllHeroes()
-						for _,hero in pairs(all_heroes) do
-							PlayerResource:SetCameraTarget(hero:GetPlayerID(), radiant_hero)
-						end
-
-						-- Play transformation particle
-						local skeleton_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_dragon_knight/dragon_knight_transform_red.vpcf", PATTACH_CUSTOMORIGIN, nil)
-						ParticleManager:SetParticleAlwaysSimulate(skeleton_pfx)
-						ParticleManager:SetParticleControl(skeleton_pfx, 0, radiant_hero:GetAbsOrigin())
-
-						-- Play Skeleton King stinger and message
-						EmitGlobalSound("Imba.DiretideSpawn01")
-						Notifications:TopToAll( {hero = radiant_hero_name, duration = time_between_kings} )
-						Notifications:TopToAll( {text = PlayerResource:GetPlayerName(radiant_player_id).." ", duration = time_between_kings, continue = true} )
-						Notifications:TopToAll( {text = "#imba_diretide_introduction_line_06", duration = time_between_kings, style = {color = "DodgerBlue"}, continue = true} )
-						Notifications:TopToAll( {text = "#imba_diretide_introduction_line_07", duration = time_between_kings, style = {color = "Red"}, continue = true} )
-
-						-- Create kill and death streak and buyback globals
-						radiant_hero.kill_streak_count = 0
-						radiant_hero.death_streak_count = 0
-						radiant_hero.buyback_count = 0
-
-						-- Set up initial level
-						if HERO_STARTING_LEVEL > 1 then
-							Timers:CreateTimer(1, function()
-								radiant_hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-							end)
-						end
-
-						-- Update the hero's bounties
-						radiant_hero:SetMinimumGoldBounty(gold_bounty)
-						radiant_hero:SetMaximumGoldBounty(gold_bounty)
-						radiant_hero:SetDeathXP(xp_bounty)
-
-						-- Free camera control and start the match
-						Timers:CreateTimer(time_between_kings, function()
-							EmitGlobalSound("Imba.DiretideSpawn02")
-							Notifications:TopToAll( {text = "#imba_diretide_introduction_line_08", duration = time_between_kings, style = {color = "Orange"} } )
-							all_heroes = HeroList:GetAllHeroes()
-							for _,hero in pairs(all_heroes) do
-								PlayerResource:SetCameraTarget(hero:GetPlayerID(), nil)
-							end
-						end)
-					end)
-				end)
-			end)
-		else
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player greeting and explanations
 	-------------------------------------------------------------------------------------------------
 
-			local initial_time = 2
-			local line_duration = 5
-		
-			Timers:CreateTimer(initial_time, function()
-				-- First line
-				Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
-				Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true}	)
-					
-				-- Second line
-				Timers:CreateTimer(line_duration, function()
-					Notifications:BottomToAll( {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
+		local initial_time = 2
+		local line_duration = 5
+	
+		Timers:CreateTimer(initial_time, function()
 
-					-- Third line
-					Timers:CreateTimer(line_duration, function()
-						Notifications:BottomToAll( {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
-					end)
+			-- First line
+			Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
+			Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true}	)
+				
+			-- Second line
+			Timers:CreateTimer(line_duration, function()
+				Notifications:BottomToAll( {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
+
+				-- Third line
+				Timers:CreateTimer(line_duration, function()
+					Notifications:BottomToAll( {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
 				end)
 			end)
-		end
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -386,42 +165,6 @@ function GameMode:OnNPCSpawned(keys)
 	GameMode:_OnNPCSpawned(keys)
 
 	local npc = EntIndexToHScript(keys.entindex)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Skeleton King wearables setup
-	-------------------------------------------------------------------------------------------------
-
-	if npc:GetName() == "npc_dota_hero_skeleton_king" and npc:GetTeam() == DOTA_TEAM_GOODGUYS then
-		
-		Timers:CreateTimer(0.1, function()
-
-			RemoveWearables(npc)
-
-			-- Re-add cosmetics to illusions
-			if npc:IsIllusion() then
-				npc:SetOriginalModel("models/heroes/skeleton_king/skeleton_king.vmdl")
-				npc:SetModel("models/heroes/skeleton_king/skeleton_king.vmdl")
-				SkeletonKingWearables(npc)
-
-				-- Remove Illusions' old abilities
-				for i = 0, 6 do
-					local old_ability = npc:GetAbilityByIndex(i)
-					if old_ability then
-						npc:RemoveAbility(old_ability:GetAbilityName())
-					end
-				end
-
-				-- Add Illusions' new abilities
-				npc:AddAbility("imba_skeleton_king_hellfire_blast")
-				npc:AddAbility("imba_skeleton_king_hellfire_eruption")
-				npc:AddAbility("imba_skeleton_king_summon_royal_guard")
-				npc:AddAbility("imba_skeleton_king_vampiric_aura")
-				npc:AddAbility("imba_skeleton_king_hellfire_aura")
-				npc:AddAbility("imba_skeleton_king_reincarnation")
-				npc:AddAbility("imba_skeleton_king_stats")
-			end
-		end)
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Random OMG on-respawn skill randomization
@@ -683,12 +426,7 @@ function GameMode:OnPlayerReconnect(keys)
 
 				-- Show reconnection message to remaining players
 				local line_duration = 5
-
-				if hero.is_skeleton_king then
-					Notifications:BottomToAll({image = "file://{images}/custom_game/skeleton_king_mini.png", duration = line_duration})
-				else
-					Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				end
+				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
@@ -797,12 +535,6 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- Adjust bounties with the game options multiplier
 	gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
 	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-
-	-- Adjust the kings' bounties
-	if hero.is_king then
-		gold_bounty = gold_bounty * DIRETIDE_KING_BOUNTY_MULTIPLIER
-		xp_bounty = xp_bounty * DIRETIDE_KING_BOUNTY_MULTIPLIER
-	end
 
 	-- Set up bounties
 	hero:SetDeathXP(xp_bounty)
@@ -1179,11 +911,6 @@ function GameMode:OnEntityKilled( keys )
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 
-		-- Increase the kings' respawn timer by a flat amount
-		if killed_unit.is_king then
-			respawn_time = respawn_time + DIRETIDE_KING_EXTRA_RESPAWN_TIME
-		end
-
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
 
@@ -1212,14 +939,12 @@ function GameMode:OnEntityKilled( keys )
 		local buyback_cost = ( HERO_BUYBACK_BASE_COST + hero_level * HERO_BUYBACK_COST_PER_LEVEL + game_time * HERO_BUYBACK_COST_PER_MINUTE ) * buyback_cost_multiplier
 		local buyback_penalty_duration = HERO_BUYBACK_RESET_TIME_PER_LEVEL * hero_level + HERO_BUYBACK_RESET_TIME_PER_MINUTE * game_time
 
-		-- Adjust the kings' bounties
-		if killed_unit.is_king then
-			buyback_cost = buyback_cost * DIRETIDE_KING_BUYBACK_COST_MULTIPLIER
-		end
-
 		-- Update buyback cost and penalty duration 
 		PlayerResource:SetCustomBuybackCost(killed_unit:GetPlayerID(), buyback_cost)
 		PlayerResource:SetBuybackGoldLimitTime(killed_unit:GetPlayerID(), buyback_penalty_duration)
+
+		-- Setup buyback cooldown
+		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), HERO_BUYBACK_COOLDOWN)
 		
 	end
 
@@ -1262,7 +987,7 @@ function GameMode:OnEntityKilled( keys )
 			assist_gold = assist_gold * 0.2
 			allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_UNITS_EVERYWHERE, false)
 			for _,ally in pairs(allied_heroes) do
-				ally:EmitSound("General.Coins")
+				EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 				SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 				ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 			end
@@ -1287,7 +1012,7 @@ function GameMode:OnEntityKilled( keys )
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_2
 				for _,ally in pairs(allied_heroes) do
 					if ally ~= killer then
-						ally:EmitSound("General.Coins")
+						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
@@ -1296,7 +1021,7 @@ function GameMode:OnEntityKilled( keys )
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
 				for _,ally in pairs(allied_heroes) do
 					if ally ~= killer then
-						ally:EmitSound("General.Coins")
+						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
@@ -1305,7 +1030,7 @@ function GameMode:OnEntityKilled( keys )
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
 				for _,ally in pairs(allied_heroes) do
 					if ally ~= killer then
-						ally:EmitSound("General.Coins")
+						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
@@ -1314,7 +1039,7 @@ function GameMode:OnEntityKilled( keys )
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
 				for _,ally in pairs(allied_heroes) do
 					if ally ~= killer then
-						ally:EmitSound("General.Coins")
+						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
 					end
@@ -1418,11 +1143,7 @@ function GameMode:OnEntityKilled( keys )
 		local line_duration = 7
 
 		if killed_unit.death_streak_count >= 3 then
-			if killed_unit.is_skeleton_king then
-				Notifications:BottomToAll({image = "file://{images}/custom_game/skeleton_king_mini.png", duration = line_duration})
-			else
-				Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
-			end
+			Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
 			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, continue = true})
 		end
 

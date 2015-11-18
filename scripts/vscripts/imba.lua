@@ -74,12 +74,6 @@ function GameMode:OnFirstPlayerLoaded()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Skeleton King wearables setup
-	-------------------------------------------------------------------------------------------------
-
-	SendToServerConsole("dota_combine_models 0")
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
@@ -272,28 +266,32 @@ function GameMode:DamageFilter( keys )
 			end
 		end
 
-		local ability_level = ability:GetLevel() - 1
+		-- If the ability wasn't found, do nothing
+		if ability then
 
-		-- Parameters
-		local dodge_chance = ability:GetLevelSpecialValueFor("passive_dodge", ability_level)
-		
-		-- If backtrack is active, increase dodge chance
-		if victim:HasModifier("modifier_imba_backtrack_active") then
-			dodge_chance = ability:GetLevelSpecialValueFor("active_dodge", ability_level)
-		end
+			local ability_level = ability:GetLevel() - 1
 
-		-- Roll for dodge chance
-		if RandomInt(1, 100) <= dodge_chance then
+			-- Parameters
+			local dodge_chance = ability:GetLevelSpecialValueFor("passive_dodge", ability_level)
+			
+			-- If backtrack is active, increase dodge chance
+			if victim:HasModifier("modifier_imba_backtrack_active") then
+				dodge_chance = ability:GetLevelSpecialValueFor("active_dodge", ability_level)
+			end
 
-			-- Nullify damage
-			keys.damage = 0
+			-- Roll for dodge chance
+			if RandomInt(1, 100) <= dodge_chance then
 
-			-- Play backtrack particle
-			local backtrack_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, victim)
-			ParticleManager:SetParticleControl(backtrack_pfx, 0, victim:GetAbsOrigin())
+				-- Nullify damage
+				keys.damage = 0
 
-			-- Prevent crit damage notifications
-			display_red_crit_number = false
+				-- Play backtrack particle
+				local backtrack_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, victim)
+				ParticleManager:SetParticleControl(backtrack_pfx, 0, victim:GetAbsOrigin())
+
+				-- Prevent crit damage notifications
+				display_red_crit_number = false
+			end
 		end
 	end
 
@@ -348,7 +346,7 @@ function GameMode:DamageFilter( keys )
 
 			local block_sound = "Imba.VanguardBlock"
 			local proc_chance = 35
-			local damage_block = 35
+			local damage_block = 45
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -386,11 +384,11 @@ function GameMode:DamageFilter( keys )
 	-- Greatwyrm plate block
 	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 then
 
-		if ( damage_type == DAMAGE_TYPE_PHYSICAL or damage_type == DAMAGE_TYPE_MAGICAL ) and not victim:HasModifier("modifier_sheepstick_debuff") then
+		if damage_type == DAMAGE_TYPE_PHYSICAL and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
 			local proc_chance = 40
-			local damage_block = 40
+			local damage_block = 60
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -625,13 +623,11 @@ function GameMode:OnAllPlayersLoaded()
 		end
 
 		-- Buyback
-		local buyback_cost = HERO_BUYBACK_COST_MULTIPLIER
-		if buyback_cost == 100 then
-			buyback_cost = "<font color='#FF7800'>normal</font> buyback cost."
-		elseif buyback_cost == 200 then
-			buyback_cost = "<font color='#FF7800'>double</font> buyback cost."
-		elseif buyback_cost == 99999 then
-			buyback_cost = "<font color='#FF7800'>no buyback</font>."
+		local buyback_cooldown = HERO_BUYBACK_COOLDOWN
+		if buyback_cooldown == 0 then
+			buyback_cooldown = "<font color='#FF7800'>no</font> buyback cooldown."
+		else
+			buyback_cooldown = "<font color='#FF7800'>"..buyback_cooldown.." seconds</font> buyback cooldown."
 		end
 
 		-- Starting gold & level
@@ -670,7 +666,7 @@ function GameMode:OnAllPlayersLoaded()
 		end
 		
 		Say(nil, game_mode..same_hero, false)
-		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cost, false)
+		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cooldown, false)
 		Say(nil, start_status, false)
 		Say(nil, creep_power..frantic_mode, false)
 		Say(nil, tower_abilities, false)

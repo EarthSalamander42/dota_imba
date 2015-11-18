@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "DIRETIDE 2015"						-- Tracks game version
+IMBA_VERSION = "6.85.3"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -112,6 +112,7 @@ HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback pr
 HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
 
 HERO_BUYBACK_COST_SCALING = 100												-- Cost multiplier when buybacking in quick sucession (in %)
+HERO_BUYBACK_COOLDOWN = 30													-- Buyback cooldown
 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
@@ -139,9 +140,9 @@ VENGEFUL_RANCOR = false														-- Tracks if Vengeful Spirit's "Rancor" abi
 
 IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enabled?
 
-DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Kings' bounty multiplier
-DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Kings' extra respawn time
-DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Kings' buyback cost multiplier
+DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Diretide Kings' bounty multiplier
+DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn time
+DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
@@ -211,12 +212,6 @@ elseif GetMapName() == "imba_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
-elseif GetMapName() == "imbatide" then
-	IMBA_PICK_MODE_ALL_PICK = true
-	IMBA_GAME_MODE_DIRETIDE_2015 = true
-	IMBA_PLAYERS_ON_GAME = 20
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
-	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
 end
 
 -------------------------------------------------------------------------------------------------
@@ -264,13 +259,6 @@ HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the star
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
-	HERO_INITIAL_GOLD = 2000
-	HERO_INITIAL_REPICK_GOLD = 1500
-	HERO_INITIAL_RANDOM_GOLD = 2500
-	HERO_STARTING_LEVEL = 5
-	HERO_XP_BONUS = 60
-	CREEP_XP_BONUS = 60
-elseif GetMapName() == "imbatide" then
 	HERO_INITIAL_GOLD = 2000
 	HERO_INITIAL_REPICK_GOLD = 1500
 	HERO_INITIAL_RANDOM_GOLD = 2500

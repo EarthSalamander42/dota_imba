@@ -136,24 +136,6 @@ function Return( keys )
 	end
 end
 
-function ReturnUpdate( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Parameters
-	local max_block = ability:GetLevelSpecialValueFor("max_block", ability_level)
-	local block_str_percentage = ability:GetLevelSpecialValueFor("block_str_percentage", ability_level)
-
-	-- Calculate amount of stacks to give
-	local total_block = math.min( caster:GetStrength() * block_str_percentage / 100 , max_block)
-
-	-- Update amount of stacks
-	caster:RemoveModifierByName(modifier_stacks)
-	AddStacks(ability, caster, caster, modifier_stacks, total_block, true)
-end
-
 -- Emits the global sound and initializes a table to keep track of the units hit
 function StampedeStart( keys )
 	local caster = keys.caster

@@ -580,293 +580,9 @@
 	}
 
 	//=================================================================================
-	//	Skeleton King: Hellfire Blast skeletons I
+	//	Wraith King: Wraithfire Blast wraith
 	//=================================================================================
-	"npc_imba_hellfire_blast_summon_1"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Skeleton"
-		"Level"						"0"
-		"ModelScale"				"1.1"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_skeleton_king_hellfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"10"
-		"AttackDamageMax"			"10"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"10"
-		"BountyGoldMin"				"10"
-		"BountyGoldMax"				"10"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"100"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Skeleton King: Hellfire Blast skeletons II
-	//=================================================================================
-	"npc_imba_hellfire_blast_summon_2"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Skeleton"
-		"Level"						"0"
-		"ModelScale"				"1.2"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_skeleton_king_hellfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"20"
-		"AttackDamageMax"			"20"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"12"
-		"BountyGoldMin"				"12"
-		"BountyGoldMax"				"12"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"200"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Skeleton King: Hellfire Blast skeletons III
-	//=================================================================================
-	"npc_imba_hellfire_blast_summon_3"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Skeleton"
-		"Level"						"0"
-		"ModelScale"				"1.3"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_skeleton_king_hellfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"
-		"AttackDamageMax"			"30"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"14"
-		"BountyGoldMin"				"14"
-		"BountyGoldMax"				"14"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"300"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Skeleton King: Hellfire Blast skeletons IV
-	//=================================================================================
-	"npc_imba_hellfire_blast_summon_4"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Skeleton"
-		"Level"						"0"
-		"ModelScale"				"1.4"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_skeleton_king_hellfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"40"
-		"AttackDamageMax"			"40"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"16"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"16"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"400"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Wraith King: Wraithfire Blast wraiths I
-	//=================================================================================
-	"npc_imba_wraithfire_blast_summon_1"
+	"npc_imba_wraithfire_blast_summon"
 	{
 		// General
 		//----------------------------------------------------------------
@@ -874,78 +590,7 @@
 		"BaseClass"					"npc_dota_creep_neutral"
 		"SoundSet"					"n_creep_ghost_b"
 		"Level"						"0"
-		"ModelScale"				"1.1"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_wraith_king_wraithfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"10"
-		"AttackDamageMax"			"10"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"10"
-		"BountyGoldMin"				"10"
-		"BountyGoldMax"				"10"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"100"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Wraith King: Wraithfire Blast wraiths II
-	//=================================================================================
-	"npc_imba_wraithfire_blast_summon_2"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_ghost_b"
-		"Level"						"0"
-		"ModelScale"				"1.2"
+		"ModelScale"				"1.0"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -977,9 +622,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"12"
-		"BountyGoldMin"				"12"
-		"BountyGoldMax"				"12"
+		"BountyXP"					"15"
+		"BountyGoldMin"				"15"
+		"BountyGoldMax"				"15"
 
 		// Movement
 		//----------------------------------------------------------------
@@ -989,7 +634,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"200"
+		"StatusHealth"				"150"
 		"StatusHealthRegen"			"0.0"
 		
 		// Vision
@@ -1006,17 +651,17 @@
 	}
 
 	//=================================================================================
-	//	Wraith King: Wraithfire Blast wraiths III
+	//	Wraith King: Kingdom Come Wraith
 	//=================================================================================
-	"npc_imba_wraithfire_blast_summon_3"
+	"npc_imba_kingdom_come_summon"
 	{
 		// General
 		//----------------------------------------------------------------
 		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
 		"BaseClass"					"npc_dota_creep_neutral"
 		"SoundSet"					"n_creep_ghost_b"
-		"Level"						"0"
-		"ModelScale"				"1.3"
+		"Level"						"1"
+		"ModelScale"				"1.0"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1027,13 +672,13 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
+		"ArmorPhysical"				"3"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"
-		"AttackDamageMax"			"30"
+		"AttackDamageMin"			"20"
+		"AttackDamageMax"			"20"
 		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -1048,238 +693,25 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"14"
-		"BountyGoldMin"				"14"
-		"BountyGoldMax"				"14"
+		"BountyXP"					"25"
+		"BountyGoldMin"				"25"
+		"BountyGoldMax"				"25"
 
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
+		"MovementSpeed"				"300"
 		"MovementTurnRate"			"1.0"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"300"
+		"StatusHealth"				"100"
 		"StatusHealthRegen"			"0.0"
 		
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"900"
 		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Wraith King: Wraithfire Blast wraiths IV
-	//=================================================================================
-	"npc_imba_wraithfire_blast_summon_4"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_ghost_b"
-		"Level"						"0"
-		"ModelScale"				"1.4"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_wraith_king_wraithfire_blast_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"40"
-		"AttackDamageMax"			"40"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"16"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"16"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"400"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Skeleton King: Royal Guard skeletons
-	//=================================================================================
-	"npc_imba_royal_guard_skeleton"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_Skeleton"
-		"Level"						"0"
-		"ModelScale"				"1.8"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_skeleton_king_royal_guard_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"15"
-		"BountyGoldMin"				"15"
-		"BountyGoldMax"				"15"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"400"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"300"
-		"VisionNighttimeRange"		"300"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-	}
-
-	//=================================================================================
-	//	Wraith King: Royal Guard wraiths
-	//=================================================================================
-	"npc_imba_royal_guard_wraith"
-	{
-		// General
-		//----------------------------------------------------------------
-		"Model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
-		"BaseClass"					"npc_dota_creep_neutral"
-		"SoundSet"					"n_creep_ghost_b"
-		"Level"						"0"
-		"ModelScale"				"1.7"
-
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"imba_wraith_king_royal_guard_passive"
-		"Ability2"					""
-		"Ability3"					""
-		"Ability4"					""
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"0"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"
-		"AttackRate"				"1.0"
-		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"600"
-		"AttackRange"				"128"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"HealthBarOffset"			"145"
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"15"
-		"BountyGoldMin"				"15"
-		"BountyGoldMax"				"15"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
-		"MovementSpeed"				"0"
-		"MovementTurnRate"			"1.0"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"3"
-		"StatusHealthRegen"			"0.0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"300"
-		"VisionNighttimeRange"		"300"
 
 		// Team
 		//----------------------------------------------------------------

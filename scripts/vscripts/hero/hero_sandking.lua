@@ -207,7 +207,7 @@ function SandStormEnd( keys )
 	ability:SetActivated(true)
 
 	-- Trigger forced cooldown
-	ability:StartCooldown(cooldown)
+	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
 end
 
 function CausticFinale( keys )

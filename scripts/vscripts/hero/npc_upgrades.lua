@@ -68,7 +68,7 @@ function AncientThink( keys )
 	local ability_overgrowth = caster:FindAbilityByName("treant_overgrowth")
 
 	-- If health < 20%, refresh abilities once
-	if ancient_health < 0.20 and not caster.abilities_refreshed and IMBA_PLAYERS_ON_GAME == 20 then
+	if ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 and not caster.abilities_refreshed then
 		ability_ravage:EndCooldown()
 		ability_borrowed_time:EndCooldown()
 		caster.abilities_refreshed = true

@@ -98,19 +98,14 @@ function SearingArrowsHit( keys )
 
 	-- Parameters
 	local bonus_damage = ability:GetLevelSpecialValueFor("bonus_damage", ability_level)
-	local max_building_stacks = ability:GetLevelSpecialValueFor("max_building_stacks", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Play the impact sound
 	target:EmitSound(sound_impact)
 
-	-- If the target is a building, limit the amount of minus armor stacks
-	if target:IsBuilding() then
-		if target:GetModifierStackCount(modifier_debuff, caster) >= max_building_stacks then
-			AddStacks(ability, caster, target, modifier_debuff, 0, true)
-		else
-			AddStacks(ability, caster, target, modifier_debuff, 1, true)
-		end
-	-- Else, just apply the armor debuff
+	-- Limit the amount of minus armor stacks
+	if target:GetModifierStackCount(modifier_debuff, caster) >= max_stacks then
+		AddStacks(ability, caster, target, modifier_debuff, 0, true)
 	else
 		AddStacks(ability, caster, target, modifier_debuff, 1, true)
 	end
@@ -177,7 +172,7 @@ function DeathPact( keys )
 	local modifier_target = keys.modifier_target
 	local scepter = HasScepter(caster)
 
-	-- If the target is the caster, do nothing
+	-- If the target is the caster or a king, do nothing
 	if target == caster then
 		ability:RefundManaCost()
 		ability:EndCooldown()

@@ -300,9 +300,10 @@ function ReapersScythe( keys )
 
 			-- Flag this as a scythe death, increasing respawn timer by respawn_base
 			target.scythe_added_respawn = respawn_base
-
 			target:RemoveModifierByName("modifier_imba_reapers_scythe")
-			target:Kill(ability, caster)
+			if not target:HasModifier("modifier_reincarnation") then
+				target:Kill(ability, caster)
+			end
 
 			-- Prevent buyback if caster has scepter
 			if scepter then
