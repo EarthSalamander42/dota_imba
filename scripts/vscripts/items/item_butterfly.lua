@@ -4,7 +4,6 @@ function ButterflyEffect( keys )
 	local damage = keys.damage
 
 	-- Finds all valid units on the map
-<<<<<<< HEAD
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 	-- Single out a random enemy
@@ -20,17 +19,5 @@ function ButterflyEffect( keys )
 		caster:PerformAttack(enemy, true, false, true, true)
 	else
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-=======
-	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_ANY_ORDER, false)
-
-	-- Singles out a random unit from the list above and deals damage to it
-	local unit = RandomInt(1, #enemies)
-	for k, enemy in pairs(enemies) do
-		unit = unit - 1
-		if unit == 0 then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-			break
-		end
->>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108
 	end
 end

@@ -218,18 +218,7 @@ function CullingBlade( keys )
 		caster:EmitSound(sound_success)
 
 		-- Remove exceptional modifiers and kill the target
-<<<<<<< HEAD:scripts/vscripts/hero/hero_axe.lua
 		TrueKill(caster, target, ability)
-=======
-		target:Kill(ability, caster)
-		if target:HasModifier("modifier_imba_shallow_grave") then
-			target:RemoveModifierByName("modifier_imba_shallow_grave")
-		end
-		if target:HasModifier("modifier_aphotic_shield") then
-			target:RemoveModifierByName("modifier_aphotic_shield")
-		end
-		target:Kill(ability, caster)
->>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108:scripts/vscripts/abilities/hero_axe.lua
 
 		-- Find the valid units in the area that should recieve the speed buff and then apply it to them
 		local units_to_buff = FindUnitsInRadius(caster:GetTeam(), caster_location, nil, speed_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, ability:GetAbilityTargetType() , 0, FIND_CLOSEST, false)
