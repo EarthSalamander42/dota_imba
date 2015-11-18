@@ -1,5 +1,9 @@
+<<<<<<< HEAD:scripts/vscripts/hero/hero_dazzle.lua
 --[[	Authors: Hewdraw & Firetoad
 		Last edited 25.07.2015		]]
+=======
+--[[ Author: Hewdraw ]]
+>>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108:scripts/vscripts/abilities/hero_dazzle.lua
 
 function PoisonTouch( keys )
 	local caster = keys.caster

@@ -11,6 +11,7 @@ function FrostNova( keys )
 	local sound = keys.sound
 	local ability_level = ability:GetLevel() - 1
 
+<<<<<<< HEAD:scripts/vscripts/hero/hero_lich.lua
 	-- If the ability was unlearned, do nothing
 	if not ability then
 		return nil
@@ -20,6 +21,12 @@ function FrostNova( keys )
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local aoe_damage = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
+=======
+	local cast_chance = ability:GetLevelSpecialValueFor("chance_per_stack", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local aoe_damage = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
+
+>>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108:scripts/vscripts/abilities/hero_lich.lua
 	local target_pos = target:GetAbsOrigin()
 
 	-- Adds a stack of the aura modifier
@@ -29,8 +36,12 @@ function FrostNova( keys )
 	local stack_count = target:GetModifierStackCount(modifier, ability)
 
 	-- Rolls for the chance of casting Frost Nova
+<<<<<<< HEAD:scripts/vscripts/hero/hero_lich.lua
 	if RandomInt(1, 100) <= proc_chance then
 		
+=======
+	if RandomInt(1, 100) <= cast_chance * stack_count then
+>>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108:scripts/vscripts/abilities/hero_lich.lua
 		-- Casts the spell
 		target:EmitSound(sound)
 		local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)
@@ -72,7 +83,11 @@ function DarkRitual( keys )
 	-- Mana to give	
 	local target_health = target:GetMaxHealth()
 	local rate = ability:GetLevelSpecialValueFor("health_conversion", ability:GetLevel() - 1 ) * 0.01
+<<<<<<< HEAD:scripts/vscripts/hero/hero_lich.lua
 	local mana_gain = target_health * rate * FRANTIC_MULTIPLIER
+=======
+	local mana_gain = target_health * rate
+>>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108:scripts/vscripts/abilities/hero_lich.lua
 	
 	-- Heroes to share XP
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, xp_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false )

@@ -1,6 +1,7 @@
 --[[	Author: d2imba
 		Date:	16.05.2015	]]
 
+<<<<<<< HEAD
 function RapierPickUp( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -154,6 +155,32 @@ function RapierDrop( keys )
 				MinimapEvent(DOTA_TEAM_GOODGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
 				MinimapEvent(DOTA_TEAM_BADGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
 			end
+=======
+function Rapier( keys )
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local damage = keys.damage
+
+	if target:GetHealth() < damage then
+		target:Kill(ability, caster)
+	else
+		target:SetHealth(target:GetHealth() - damage)
+	end	
+end
+
+function RapierDrop( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local caster_pos = caster:GetAbsOrigin()
+
+	for i=0,5 do
+		print("badlel")
+		local item = caster:GetItemInSlot(i)
+		if item and item:GetAbilityName() == "item_imba_rapier" then
+			caster:DropItemAtPositionImmediate(item, caster_pos)
+			print("lel")
+>>>>>>> 89be1c8d830c3e137210ee56e52e0e38cc5c3108
 		end
 	end
 end
