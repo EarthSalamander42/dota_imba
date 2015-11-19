@@ -28,7 +28,7 @@ local statInfo = LoadKeyValues('scripts/vscripts/statcollection/settings.kv')
 local postLocation = 'http://getdotastats.com/s2/api/'
 
 -- The schema version we are currently using
-local schemaVersion = 2
+local schemaVersion = 4
 
 -- Constants used for pretty formatting, as well as strings
 local printPrefix = 'Stat Collection: '
@@ -57,486 +57,505 @@ local messagePhase1Complete = 'Match was successfully registered with GetDotaSta
 local messagePhase2Complete = 'Match pregame settings have been recorded!'
 local messagePhase3Complete = 'Match stats were successfully recorded!'
 local messageCustomComplete = 'Match custom stats were successfully recorded!'
-local messageFlagsSet       = 'Flag was successfully set!'
-
--- Store the first detected steamID
-local firstConnectedSteamID = -1
-ListenToGameEvent('player_connect', function(keys)
--- Grab their steamID
-	local steamID64 = tostring(keys.xuid)
-	local steamIDPart = tonumber(steamID64:sub(4))
-	if not steamIDPart then return end
-	local steamID = tostring(steamIDPart - 61197960265728)
-
-	-- Store it
-	firstConnectedSteamID = steamID
-end, nil)
+local messageFlagsSet = 'Flag was successfully set!'
 
 -- Create the stat collection class
 if not statCollection then
-	statCollection = class({})
+    statCollection = class({})
 end
 
 -- Function that will setup stat collection
 function statCollection:init()
-	-- Only allow init to be run once
-	if self.doneInit then
-		print(printPrefix .. errorInitCalledTwice)
-		return
-	end
-	self.doneInit = true
+    -- Only allow init to be run once
+    if self.doneInit then
+        print(printPrefix .. errorInitCalledTwice)
+        return
+    end
+    self.doneInit = true
 
-	-- Print the intro message
-	print(printPrefix .. messageStarting)
+    -- Print the intro message
+    print(printPrefix .. messageStarting)
 
-	-- Check for a modIdentifier
-	local modIdentifier = statInfo.modID
-	if not modIdentifier then
-		print(printPrefix .. errorMissingModIdentifier)
+    -- Check for a modIdentifier
+    local modIdentifier = statInfo.modID
+    if not modIdentifier then
+        print(printPrefix .. errorMissingModIdentifier)
 
-	elseif modIdentifier == 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' then
-		print(printPrefix.. errorDefaultModIdentifier)
+    elseif modIdentifier == 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' then
+        print(printPrefix .. errorDefaultModIdentifier)
 
-		self.doneInit = false
-		return
-	end
+        self.doneInit = false
+        return
+    end
 
-	--[[ Check for a schemaIdentifier
-	if not schemaID then
-		print(printPrefix .. errorMissingSchemaIdentifier)
-	elseif schemaID == 'XXXXXXXXXXXXXXXX' and self.HAS_SCHEMA then
-		print(printPrefix.. errorDefaultSchemaIdentifier)
+    --[[ Check for a schemaIdentifier
+    if not schemaID then
+        print(printPrefix .. errorMissingSchemaIdentifier)
+    elseif schemaID == 'XXXXXXXXXXXXXXXX' and self.HAS_SCHEMA then
+        print(printPrefix.. errorDefaultSchemaIdentifier)
 
-		self.doneInit = false
-		return
-	end]]
+        self.doneInit = false
+        return
+    end]]
 
-	-- Load and set settings
-	self.HAS_SCHEMA = statInfo.schemaID ~= 'XXXXXXXXXXXXXXXX'
-	self.HAS_ROUNDS = tobool(statInfo.HAS_ROUNDS)
-	self.GAME_WINNER = tobool(statInfo.GAME_WINNER)
-	self.ANCIENT_EXPLOSION = tobool(statInfo.ANCIENT_EXPLOSION)
-	self.TESTING = tobool(statInfo.TESTING)
+    -- Load and set settings
+    self.HAS_SCHEMA = statInfo.schemaID ~= 'XXXXXXXXXXXXXXXX'
+    self.HAS_ROUNDS = tobool(statInfo.HAS_ROUNDS)
+    self.GAME_WINNER = tobool(statInfo.GAME_WINNER)
+    self.ANCIENT_EXPLOSION = tobool(statInfo.ANCIENT_EXPLOSION)
+    self.TESTING = tobool(statInfo.TESTING)
 
-	-- Store the modIdentifier
-	self.modIdentifier = modIdentifier
+    -- Store the modIdentifier
+    self.modIdentifier = modIdentifier
 
-	-- Store the schemaIdentifier
-	self.SCHEMA_KEY = statInfo.schemaID
+    -- Store the schemaIdentifier
+    self.SCHEMA_KEY = statInfo.schemaID
 
-	-- Set the default winner to -1 (no winner)
-	self.winner = -1
-	
-	--Store roundID globally
-	self.roundID = 0
-	
-	-- Hook requred functions to operate correctly
-	self:hookFunctions()
+    -- Set the default winner to -1 (no winner)
+    self.winner = -1
 
-	-- Send stage1 stuff
-	self:sendStage1()
+    --Store roundID globally
+    self.roundID = 0
+
+    -- Hook requred functions to operate correctly
+    self:hookFunctions()
 end
 
 --Build the winners array
 function statCollection:calcWinnersByTeam()
-	output = {}
-	local winningTeam = self.winner
+    local output = {}
+    local winningTeam = self.winner
 
-	for playerID = 0, DOTA_MAX_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			output[PlayerResource:GetSteamAccountID(playerID)] = PlayerResource:GetTeam(playerID) == winningTeam and '1' or '0'
-		end
-	end
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            output[PlayerResource:GetSteamAccountID(playerID)] = PlayerResource:GetTeam(playerID) == winningTeam and '1' or '0'
+        end
+    end
 
-	return output
+    return output
 end
 
 -- Hooks functions to make things actually work
 function statCollection:hookFunctions()
-	local this = self
+    local this = self
 
-	-- Hook winner function
-	if self.GAME_WINNER then
-		local oldSetGameWinner = GameRules.SetGameWinner
-		GameRules.SetGameWinner = function(gameRules, team)
+    -- Hook winner function
+    if self.GAME_WINNER then
+        local oldSetGameWinner = GameRules.SetGameWinner
+        GameRules.SetGameWinner = function(gameRules, team)
 
-			-- Store the stats
-			this.winner = team
+            -- Store the stats
+            this.winner = team
 
-			-- Run the rael setGameWinner function
-			oldSetGameWinner(gameRules, team)
+            -- Run the rael setGameWinner function
+            oldSetGameWinner(gameRules, team)
 
-			-- Attempt to send stage 3, since the match is over
-			this:sendStage3(this:calcWinnersByTeam(), true)
-		end
-	end
+            -- Attempt to send stage 3, since the match is over
+            this:sendStage3(this:calcWinnersByTeam(), true)
+        end
+    end
 
-	-- Listen for changes in the current state
-	ListenToGameEvent('game_rules_state_change', function(keys)
-	-- Grab the current state
-		local state = GameRules:State_Get()
+    --Wait for host before sending Phase 1
+    ListenToGameEvent('player_connect_full', function(keys)
+        -- Ensure we can only send it once, and everything is good to go
+        if self.playerCheckStage1 then return end
 
-		if state >= DOTA_GAMERULES_STATE_PRE_GAME then
-			-- Send pregame stats
-			this:sendStage2()
-		end
-		if self.ANCIENT_EXPLOSION then
-			if state >= DOTA_GAMERULES_STATE_POST_GAME then
-				-- Send postgame stats
-				self:findWinnerUsingForts()
-				this:sendStage3(this:calcWinnersByTeam(), true)
-			end
-		end
-		
-	end, nil)
+        -- Check each connected player to see if they are host
+        for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+            if PlayerResource:IsValidPlayerID(playerID) then
+                local player = PlayerResource:GetPlayer(playerID)
+
+                if GameRules:PlayerHasCustomGameHostPrivileges(player) then
+                    self.playerCheckStage1 = true
+                    -- Send stage1 stuff
+                    self:sendStage1()
+                    break
+                end
+            end
+        end
+    end, nil)
+
+    -- Listen for changes in the current state
+    ListenToGameEvent('game_rules_state_change', function(keys)
+        -- Grab the current state
+        local state = GameRules:State_Get()
+
+        if state == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+            -- Load time flag
+            statCollection:setFlags({ loadTime = math.floor(GameRules:GetGameTime()) })
+
+            -- Start the client checking recording
+            CustomUI:DynamicHud_Create(-1, "statcollection", "file://{resources}/layout/custom_game/statcollection.xml", nil)
+
+        elseif state >= DOTA_GAMERULES_STATE_PRE_GAME then
+            -- Send pregame stats
+            this:sendStage2()
+        end
+        if self.ANCIENT_EXPLOSION then
+            if state >= DOTA_GAMERULES_STATE_POST_GAME then
+                -- Send postgame stats
+                self:findWinnerUsingForts()
+                this:sendStage3(this:calcWinnersByTeam(), true)
+            end
+        end
+    end, nil)
 end
 
 -- This function will attempt to detect the winner using forts, if winner is currently -1
 function statCollection:findWinnerUsingForts()
-	-- Check if we have found no winner yet
-	if self.winner == -1 then
-		local winners = 0
+    -- Check if we have found no winner yet
+    if self.winner == -1 then
+        local winners = 0
 
-		local forts = Entities:FindAllByClassname('npc_dota_fort')
-		for k, v in pairs(forts) do
-			-- Check it's HP level
-			if v:GetHealth() > 0 then
-				local team = v:GetTeam()
+        local forts = Entities:FindAllByClassname('npc_dota_fort')
+        for k, v in pairs(forts) do
+            -- Check it's HP level
+            if v:GetHealth() > 0 then
+                local team = v:GetTeam()
 
-				if winners == 0 then
-					winners = team
-				else
-					winners = -1
-				end
-			end
-		end
+                if winners == 0 then
+                    winners = team
+                else
+                    winners = -1
+                end
+            end
+        end
 
-		if winners == 0 then
-			winners = -1
-		end
+        if winners == 0 then
+            winners = -1
+        end
 
-		-- Return our estimate
-		self.winner = winners
-	end
+        -- Return our estimate
+        self.winner = winners
+    end
 end
 
 -- Sets a flag
 function statCollection:setFlags(flags)
-	if not self.flags then self.flags = {} end
+    if not self.flags then self.flags = {} end
 
-	if type(flags) == "table" then
-		-- Store the new flags
-		for flagKey,flagValue in pairs(flags) do
-			self.flags[flagKey] = flagValue
-			print(printPrefix .. messageFlagsSet .. " {"..flagKey..":"..tostring(flagValue).."}")
-		end
-		
-	else
-		-- Yell at the developer
-		print(printPrefix .. errorFlags)
-	end
+    if type(flags) == "table" then
+        -- Store the new flags
+        for flagKey, flagValue in pairs(flags) do
+            self.flags[flagKey] = flagValue
+            print(printPrefix .. messageFlagsSet .. " {" .. flagKey .. ":" .. tostring(flagValue) .. "}")
+        end
+
+    else
+        -- Yell at the developer
+        print(printPrefix .. errorFlags)
+    end
 end
 
 -- Sends stage1
 function statCollection:sendStage1()
-	-- If we are missing required parameters, then don't send
-	if not self.doneInit then
-		print(printPrefix .. errorRunInit)
-		return
-	end
+    -- If we are missing required parameters, then don't send
+    if not self.doneInit then
+        print(printPrefix .. errorRunInit)
+        return
+    end
 
-	-- Ensure we can only send it once, and everything is good to go
-	if self.sentStage1 then return end
-	self.sentStage1 = true
+    -- Ensure we can only send it once, and everything is good to go
+    if self.sentStage1 then return end
+    self.sentStage1 = true
 
-	-- Print the intro message
-	print(printPrefix .. messagePhase1Starting)
+    -- Print the intro message
+    print(printPrefix .. messagePhase1Starting)
 
-	-- Grab a reference to self
-	local this = self
+    -- Grab a reference to self
+    local this = self
 
-	-- Workout the player count
-	local playerCount = PlayerResource:GetPlayerCount()
-	if playerCount <= 0 then playerCount = 1 end
+    -- Workout the player count
+    local playerCount = PlayerResource:GetPlayerCount()
+    if playerCount <= 0 then playerCount = 1 end
+    statCollection:setFlags({ numPlayers = playerCount })
 
-	-- Workout who is hosting
-	local hostSteamID = PlayerResource:GetSteamAccountID(0)
-	if hostSteamID == 0 then
-		if firstConnectedSteamID ~= -1 then
-			hostSteamID = firstConnectedSteamID
-		else
-			hostSteamID = -1
-		end
-	end
+    -- Workout who is hosting
+    local hostID = 0
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            local player = PlayerResource:GetPlayer(playerID)
+            if GameRules:PlayerHasCustomGameHostPrivileges(player) then
+                hostID = playerID
+                break
+            end
+        end
+    end
+    local hostSteamID = PlayerResource:GetSteamAccountID(hostID)
 
-	-- Workout if the server is dedicated or not
-	local isDedicated = (IsDedicatedServer() and 1) or 0
-	statCollection:setFlags({dedi = isDedicated})
+    -- Workout if the server is dedicated or not
+    local isDedicated = (IsDedicatedServer() and 1) or 0
+    statCollection:setFlags({ dedi = isDedicated })
 
-	-- Grab the mapname
-	local mapName = GetMapName()
-	statCollection:setFlags({map = mapName})
+    -- Grab the mapname
+    local mapName = GetMapName()
+    statCollection:setFlags({ map = mapName })
 
-	-- Build the payload
-	local payload = {
-		modIdentifier = self.modIdentifier,
-		hostSteamID32 = tostring(hostSteamID),
-		numPlayers = playerCount,
-		schemaVersion = schemaVersion
-	}
+    -- Build the payload
+    local payload = {
+        modIdentifier = self.modIdentifier,
+        hostSteamID32 = tostring(hostSteamID),
+        schemaVersion = schemaVersion
+    }
 
-	-- Begin the initial request
-	self:sendStage('s2_phase_1.php', payload, function(err, res)
-	-- Check if we got an error
-		if err then
-			print(printPrefix .. errorJsonDecode)
-			print(printPrefix .. err)
-			return
-		end
+    -- Begin the initial request
+    self:sendStage('s2_phase_1.php', payload, function(err, res)
+        -- Check if we got an error
+        if err then
+            print(printPrefix .. errorJsonDecode)
+            print(printPrefix .. err)
+            return
+        end
 
-		-- Check for an error
-		if res.error then
-			print(printPrefix .. errorSomethingWentWrong)
-			print(res.error)
-			return
-		end
+        -- Check for an error
+        if res.error then
+            print(printPrefix .. errorSomethingWentWrong)
+            print(res.error)
+            return
+        end
 
-		-- Woot, store our vars
-		this.authKey = res.authKey
-		this.matchID = res.matchID
+        -- Woot, store our vars
+        this.authKey = res.authKey
+        this.matchID = res.matchID
 
-		-- Tell the user
-		print(printPrefix .. messagePhase1Complete)
-	end)
+        -- Tell the user
+        print(printPrefix .. messagePhase1Complete)
+    end)
 end
 
 -- Sends stage2
 function statCollection:sendStage2()
-	-- If we are missing required parameters, then don't send
-	if not self.doneInit or not self.authKey or not self.matchID then
-		print(printPrefix .. errorRunInit)
-		return
-	end
+    -- If we are missing required parameters, then don't send
+    if not self.doneInit or not self.authKey or not self.matchID then
+        print(printPrefix .. errorRunInit)
+        return
+    end
 
-	-- Ensure we can only send it once, and everything is good to go
-	if self.sentStage2 then return end
-	self.sentStage2 = true
+    -- Ensure we can only send it once, and everything is good to go
+    if self.sentStage2 then return end
+    self.sentStage2 = true
 
-	-- Print the intro message
-	print(printPrefix .. messagePhase2Starting)
+    -- Print the intro message
+    print(printPrefix .. messagePhase2Starting)
 
-	-- Build players array
-	local players = {}
-	for playerID = 0, DOTA_MAX_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			table.insert(players, {
-				playerName = PlayerResource:GetPlayerName(playerID),
-				steamID32 = PlayerResource:GetSteamAccountID(playerID),
-				connectionState = PlayerResource:GetConnectionState(playerID)
-			})
-		end
-	end
+    -- Client check in
+    CustomGameEventManager:Send_ServerToAllClients("statcollection_client", { modID = self.modIdentifier, matchID = self.matchID, schemaVersion = schemaVersion })
 
-	local payload = {
-		authKey = self.authKey,
-		matchID = self.matchID,
-		modIdentifier = self.modIdentifier,
-		flags = self.flags,
-		schemaVersion = schemaVersion,
-		players = players
-	}
+    -- Build players array
+    local players = {}
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            table.insert(players, {
+                playerName = PlayerResource:GetPlayerName(playerID),
+                steamID32 = PlayerResource:GetSteamAccountID(playerID),
+                connectionState = PlayerResource:GetConnectionState(playerID)
+            })
+        end
+    end
 
-	-- Send stage2
-	self:sendStage('s2_phase_2.php', payload, function(err, res)
-	-- Check if we got an error
-		if err then
-			print(printPrefix .. errorJsonDecode)
-			print(printPrefix .. err)
-			return
-		end
+    local payload = {
+        authKey = self.authKey,
+        matchID = self.matchID,
+        modIdentifier = self.modIdentifier,
+        flags = self.flags,
+        schemaVersion = schemaVersion,
+        players = players
+    }
 
-		-- Check for an error
-		if res.error then
-			print(printPrefix .. errorSomethingWentWrong)
-			print(res.error)
-			return
-		end
+    -- Send stage2
+    self:sendStage('s2_phase_2.php', payload, function(err, res)
+        -- Check if we got an error
+        if err then
+            print(printPrefix .. errorJsonDecode)
+            print(printPrefix .. err)
+            return
+        end
 
-		-- Tell the user
-		print(printPrefix .. messagePhase2Complete)
-	end)
+        -- Check for an error
+        if res.error then
+            print(printPrefix .. errorSomethingWentWrong)
+            print(res.error)
+            return
+        end
+
+        -- Tell the user
+        print(printPrefix .. messagePhase2Complete)
+    end)
 end
 
 -- Sends stage3
 function statCollection:sendStage3(winners, lastRound)
-	-- If we are missing required parameters, then don't send
-	if not self.doneInit or not self.authKey or not self.matchID then
-		print("sendStage3 ERROR")
-		print(printPrefix .. errorRunInit)
-		return
-	end
+    -- If we are missing required parameters, then don't send
+    if not self.doneInit or not self.authKey or not self.matchID then
+        print("sendStage3 ERROR")
+        print(printPrefix .. errorRunInit)
+        return
+    end
 
-	-- Ensure we can only send it once, and everything is good to go
-	if not self.HAS_ROUNDS then
-		if self.sentStage3 then return end
-		self.sentStage3 = true
-	else
-		self.roundID = self.roundID + 1
-	end
+    -- Ensure we can only send it once, and everything is good to go
+    if not self.HAS_ROUNDS then
+        if self.sentStage3 then return end
+        self.sentStage3 = true
+    else
+        self.roundID = self.roundID + 1
+    end
 
-	-- Print the intro message
-	print(printPrefix .. messagePhase3Starting)
+    -- Print the intro message
+    print(printPrefix .. messagePhase3Starting)
 
-	-- Build players array
-	local players = {}
-	for i = 1, (PlayerResource:GetPlayerCount() or 1) do
-		local steamID = PlayerResource:GetSteamAccountID(i - 1)
+    -- Build players array
+    local players = {}
+    for playerID = 0, DOTA_MAX_TEAM_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            local steamID = PlayerResource:GetSteamAccountID(playerID)
 
-		table.insert(players, {
-			steamID32 = steamID,
-			connectionState = PlayerResource:GetConnectionState(i - 1),
-			isWinner = winners[PlayerResource:GetSteamAccountID(i - 1)]
-		})
-	end
+            table.insert(players, {
+                steamID32 = steamID,
+                connectionState = PlayerResource:GetConnectionState(playerID),
+                isWinner = winners[steamID]
+            })
+        end
+    end
 
-	-- Build rounds table
-	rounds = {}
-	rounds[tostring(self.roundID)] = {
-		players=players
-	}
-	local payload = {
-		authKey = self.authKey,
-		matchID = self.matchID,
-		modIdentifier = self.modIdentifier,
-		schemaVersion = schemaVersion,
-		rounds = rounds,
-		gameDuration = GameRules:GetGameTime()
-	}
-	if lastRound == false then
-		payload.gameFinished = 0
-	end
+    -- Build rounds table
+    local rounds = {}
+    rounds[tostring(self.roundID)] = {
+        players = players
+    }
+    local payload = {
+        authKey = self.authKey,
+        matchID = self.matchID,
+        modIdentifier = self.modIdentifier,
+        schemaVersion = schemaVersion,
+        rounds = rounds,
+        gameDuration = GameRules:GetGameTime()
+    }
+    if lastRound == false then
+        payload.gameFinished = 0
+    end
 
-	-- Send stage3
-	self:sendStage('s2_phase_3.php', payload, function(err, res)
-	-- Check if we got an error
-		if err then
-			print(printPrefix .. errorJsonDecode)
-			print(printPrefix .. err)
-			return
-		end
+    -- Send stage3
+    self:sendStage('s2_phase_3.php', payload, function(err, res)
+        -- Check if we got an error
+        if err then
+            print(printPrefix .. errorJsonDecode)
+            print(printPrefix .. err)
+            return
+        end
 
-		-- Check for an error
-		if res.error then
-			print(printPrefix .. errorSomethingWentWrong)
-			print(res.error)
-			return
-		end
+        -- Check for an error
+        if res.error then
+            print(printPrefix .. errorSomethingWentWrong)
+            print(res.error)
+            return
+        end
 
-		-- Tell the user
-		print(printPrefix .. messagePhase3Complete)
-	end)
+        -- Tell the user
+        print(printPrefix .. messagePhase3Complete)
+    end)
 end
+
 function statCollection:submitRound(args)
-	--We receive the winners from the custom schema, lets tell phase 3 about it!
-	returnArgs = customSchema:submitRound(args)
-	self:sendStage3(returnArgs.winners, returnArgs.lastRound) 
+    --We receive the winners from the custom schema, lets tell phase 3 about it!
+    local returnArgs = customSchema:submitRound(args)
+    self:sendStage3(returnArgs.winners, returnArgs.lastRound)
 end
 
 -- Sends custom
 function statCollection:sendCustom(args)
-	if not self.HAS_SCHEMA then
-		print("sendCustom ERROR")
-		print(printPrefix .. errorDefaultSchemaIdentifier)
-		return
-	end
+    if not self.HAS_SCHEMA then
+        print("sendCustom ERROR")
+        print(printPrefix .. errorDefaultSchemaIdentifier)
+        return
+    end
 
-	local game = args.game or {} --Some custom gamemodes might not want this (ie, use player info only)
-	local players = args.players or {} --Some custom gamemodes might not want this (ie, use game info only)
-	if game == {} and players == {} then
-		return --We have no info to actually send, truck it!
-	end
-	-- If we are missing required parameters, then don't send
-	if not self.doneInit or not self.authKey or not self.matchID or not self.SCHEMA_KEY then
-		print(printPrefix .. errorRunInit)
-		if not self.SCHEMA_KEY then
-			print(printPrefix .. errorRunInit)
-		end
-		return
-	end
+    local game = args.game or {} --Some custom gamemodes might not want this (ie, use player info only)
+    local players = args.players or {} --Some custom gamemodes might not want this (ie, use game info only)
+    if game == {} and players == {} then
+        return --We have no info to actually send, truck it!
+    end
+    -- If we are missing required parameters, then don't send
+    if not self.doneInit or not self.authKey or not self.matchID or not self.SCHEMA_KEY then
+        print(printPrefix .. errorRunInit)
+        if not self.SCHEMA_KEY then
+            print(printPrefix .. errorRunInit)
+        end
+        return
+    end
 
-	-- Ensure we can only send it once, and everything is good to go
-	if self.HAS_ROUNDS  == false then
-		if self.sentCustom then return end
-		self.sentCustom = true
-	end
-	
-	-- Print the intro message
-	print(printPrefix .. messageCustomStarting)
+    -- Ensure we can only send it once, and everything is good to go
+    if self.HAS_ROUNDS == false then
+        if self.sentCustom then return end
+        self.sentCustom = true
+    end
 
-	-- Build rounds table
-	rounds = {}
-	rounds[tostring(self.roundID)] = {
-		game = game,
-		players=players
-	}
+    -- Print the intro message
+    print(printPrefix .. messageCustomStarting)
 
-	local payload = {
-		authKey = self.authKey,
-		matchID = self.matchID,
-		modIdentifier = self.modIdentifier,
-		schemaAuthKey = self.SCHEMA_KEY,
-		schemaVersion = schemaVersion,
-		rounds = rounds
-	}
+    -- Build rounds table
+    local rounds = {}
+    rounds[tostring(self.roundID)] = {
+        game = game,
+        players = players
+    }
 
-	-- Send custom
-	self:sendStage('s2_custom.php', payload, function(err, res)
-	-- Check if we got an error
-		if err then
-			print(printPrefix .. errorJsonDecode)
-			print(printPrefix .. err)
-			return
-		end
+    local payload = {
+        authKey = self.authKey,
+        matchID = self.matchID,
+        modIdentifier = self.modIdentifier,
+        schemaAuthKey = self.SCHEMA_KEY,
+        schemaVersion = schemaVersion,
+        rounds = rounds
+    }
 
-		-- Check for an error
-		if res.error then
-			print(printPrefix .. errorSomethingWentWrong)
-			print(res.error)
-			return
-		end
+    -- Send custom
+    self:sendStage('s2_custom.php', payload, function(err, res)
+        -- Check if we got an error
+        if err then
+            print(printPrefix .. errorJsonDecode)
+            print(printPrefix .. err)
+            return
+        end
 
-		-- Tell the user
-		print(printPrefix .. messageCustomComplete)
-	end)
+        -- Check for an error
+        if res.error then
+            print(printPrefix .. errorSomethingWentWrong)
+            print(res.error)
+            return
+        end
+
+        -- Tell the user
+        print(printPrefix .. messageCustomComplete)
+    end)
 end
 
 -- Sends the payload data for the given stage, and return the result
 function statCollection:sendStage(stageName, payload, callback)
-	-- Create the request
-	local req = CreateHTTPRequest('POST', postLocation .. stageName)
-	print(json.encode(payload))
-	-- Add the data
-	req:SetHTTPRequestGetOrPostParameter('payload', json.encode(payload))
+    -- Create the request
+    local req = CreateHTTPRequest('POST', postLocation .. stageName)
+    --print(json.encode(payload))
+    -- Add the data
+    req:SetHTTPRequestGetOrPostParameter('payload', json.encode(payload))
 
-	-- Send the request
-	req:Send(function(res)
-		if res.StatusCode ~= 200 or not res.Body then
-			print(printPrefix .. errorFailedToContactServer)
-			return
-		end
+    -- Send the request
+    req:Send(function(res)
+        if res.StatusCode ~= 200 or not res.Body then
+            print(printPrefix .. errorFailedToContactServer)
+            return
+        end
 
-		-- Try to decode the result
-		local obj, pos, err = json.decode(res.Body, 1, nil)
+        -- Try to decode the result
+        local obj, pos, err = json.decode(res.Body, 1, nil)
 
-		-- Feed the result into our callback
-		callback(err, obj)
-	end)
+        -- Feed the result into our callback
+        callback(err, obj)
+    end)
 end
 
 function tobool(s)
-	if s=="true" or s=="1" or s==1 then
-		return true
-	else --nil "false" "0"
-		return false
-	end
+    if s == "true" or s == "1" or s == 1 then
+        return true
+    else --nil "false" "0"
+    return false
+    end
 end
