@@ -1,35 +1,36 @@
 customSchema = class({})
 
 function customSchema:init()
-	-- Check the schema_examples folder for different implementations
 
-	-- Tracks game version
-	statCollection:setFlags({version = IMBA_VERSION})
-	
-	-- Listen for changes in the current state
-	ListenToGameEvent('game_rules_state_change', function(keys)
-		local state = GameRules:State_Get()
+    -- Check the schema_examples folder for different implementations
 
-		-- Send custom stats when the game ends
-		if state == DOTA_GAMERULES_STATE_POST_GAME then
+    -- Flag Example
+    statCollection:setFlags({version = IMBA_VERSION})
 
-			-- Build game array
-			local game = BuildGameArray()
+    -- Listen for changes in the current state
+    ListenToGameEvent('game_rules_state_change', function(keys)
+        local state = GameRules:State_Get()
 
-			-- Build players array
-			local players = BuildPlayersArray()
+        -- Send custom stats when the game ends
+        if state == DOTA_GAMERULES_STATE_POST_GAME then
 
-			-- Print the schema data to the console
-			if statCollection.TESTING then
-				PrintSchema(game,players)
-			end
+            -- Build game array
+            local game = BuildGameArray()
 
-			-- Send custom stats
-			if statCollection.HAS_SCHEMA then
-				statCollection:sendCustom({game=game, players=players})
-			end
-		end
-	end, nil)
+            -- Build players array
+            local players = BuildPlayersArray()
+
+            -- Print the schema data to the console
+            if statCollection.TESTING then
+                PrintSchema(game, players)
+            end
+
+            -- Send custom stats
+            if statCollection.HAS_SCHEMA then
+                statCollection:sendCustom({ game = game, players = players })
+            end
+        end
+    end, nil)
 end
 
 -------------------------------------
@@ -39,76 +40,74 @@ end
 
 -- Returns a table with our custom game tracking.
 function BuildGameArray()
+    local game = {}
 
-	local game = {}
+    -- Add game values here as game.someValue = GetSomeGameValue()
+    game.gl = GAME_TIME_ELAPSED -- Tracks total game length, from the horn sound, in seconds
+    game.wt = GAME_WINNER_TEAM -- Tracks which team won the game
 
-	-- Tracks total game length, from the horn sound, in seconds
-	game.len = GAME_TIME_ELAPSED
-
-	-- Tracks which team won the game
-	game.win = GAME_WINNER_TEAM
-
-	return game
+    return game
 end
 
 -- Returns a table containing data for every player in the game
 function BuildPlayersArray()
-	local players = {}
-	for playerID = 0, DOTA_MAX_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			if not PlayerResource:IsBroadcaster(playerID) then
+    local players = {}
+    for playerID = 0, DOTA_MAX_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            if not PlayerResource:IsBroadcaster(playerID) then
 
-				local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+                local hero = PlayerResource:GetSelectedHeroEntity(playerID)
+                
+                -- Team string logic
+                local player_team = ""
+                if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                	player_team = "Radiant"
+                else
+                	player_team = "Dire"
+                end
 
-				-- Team string logic
-				local player_team = ""
-				if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
-					player_team = "Radiant"
-				else
-					player_team = "Dire"
-				end
+                table.insert(players, {
+                    -- steamID32 required in here
+                    steamID32 = PlayerResource:GetSteamAccountID(playerID),
 
-				table.insert(players, {
-
-					-- SteamID32 required in here
-					steamID32 = PlayerResource:GetSteamAccountID(playerID),
-
-					-- Example functions for generic stats are defined in statcollection/lib/utilities.lua
+                    -- Example functions for generic stats are defined in statcollection/lib/utilities.lua
                     -- Add player values here as someValue = GetSomePlayerValue(),
+                    ph = GetHeroName(playerID),	-- Hero by its short name
+                    pl = hero:GetLevel(),		-- Hero level at the end of the game
+                    pnw = GetNetworth(hero),		-- Sum of hero gold and item worth
+                    pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
+                    pt = player_team,			-- Team this hero belongs to
+                    pk = hero:GetKills(),		-- Number of kills of this players hero
+                    pa = hero:GetAssists(),		-- Number of deaths of this players hero
+                    pd = hero:GetDeaths(),		-- Number of deaths of this players hero
+                    
+                    -- Item list
+                    i1 = GetItemSlotImba(hero, 0),
+                    i2 = GetItemSlotImba(hero, 1),
+                    i3 = GetItemSlotImba(hero, 2),
+                    i4 = GetItemSlotImba(hero, 3),
+                    i5 = GetItemSlotImba(hero, 4),
+                    i6 = GetItemSlotImba(hero, 5)
+                })
+            end
+        end
+    end
 
-					nam = GetHeroName(playerID),	-- Hero by its short name
-					lvl = hero:GetLevel(),			-- Hero level at the end of the game
-					pnw = GetNetworth(hero),		-- Sum of hero gold and item worth
-					pbb = hero.buyback_count,		-- Amount of buybacks performed during the game
-					pt = player_team,				-- Team this hero belongs to
-					pk = hero:GetKills(),			-- Number of kills of this players hero
-					pa = hero:GetAssists(),			-- Number of deaths of this players hero
-					pd = hero:GetDeaths(),			-- Number of deaths of this players hero
-					pil = GetItemListImba(hero)		-- Item list
-				})
-			end
-		end
-	end
-
-	return players
+    return players
 end
 
--------------------------------------
---          Stat Functions         --
--------------------------------------
-
 -- Prints the custom schema, required to get an schemaID
-function PrintSchema( gameArray, playerArray )
-	print("--------- GAME DATA ---------")
-	DeepPrintTable(gameArray)
-	print("\n-------- PLAYER DATA --------")
-	DeepPrintTable(playerArray)
-	print("-----------------------------")
+function PrintSchema(gameArray, playerArray)
+    print("-------- GAME DATA --------")
+    DeepPrintTable(gameArray)
+    print("\n-------- PLAYER DATA --------")
+    DeepPrintTable(playerArray)
+    print("-------------------------------------")
 end
 
 -- Write 'test_schema' on the console to test your current functions instead of having to end the game
 if Convars:GetBool('developer') then
-	Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(),BuildPlayersArray()) end, "Test the custom schema arrays", 0)
+    Convars:RegisterCommand("test_schema", function() PrintSchema(BuildGameArray(), BuildPlayersArray()) end, "Test the custom schema arrays", 0)
 end
 
 -------------------------------------
@@ -117,33 +116,52 @@ end
 -- If you intend to send rounds, make sure your settings.kv has the 'HAS_ROUNDS' set to true. Each round will send the game and player arrays defined earlier
 -- The round number is incremented internally, lastRound can be marked to notify that the game ended properly
 function customSchema:submitRound(isLastRound)
-	local winners = BuildRoundWinnerArray()
-	local game = BuildGameArray()
-	local players = BuildPlayersArray()
 
-	statCollection:sendCustom({game=game, players=players})
+    local winners = BuildRoundWinnerArray()
+    local game = BuildGameArray()
+    local players = BuildPlayersArray()
 
-	isLastRound = isLastRound or false -- If the function is passed with no parameter, default to false.
-	return {winners = winners, lastRound = isLastRound}
+    statCollection:sendCustom({ game = game, players = players })
+
+    isLastRound = isLastRound or false --If the function is passed with no parameter, default to false.
+    return { winners = winners, lastRound = isLastRound }
 end
 
 -- A list of players marking who won this round
 function BuildRoundWinnerArray()
-	local winners = {}
-	local current_winner_team = GameRules.Winner or 0 -- You'll need to provide your own way of determining which team won the round
-	for playerID = 0, DOTA_MAX_PLAYERS do
-		if PlayerResource:IsValidPlayerID(playerID) then
-			if not PlayerResource:IsBroadcaster(playerID) then
-				winners[PlayerResource:GetSteamAccountID(playerID)] = (PlayerResource:GetTeam(playerID) == current_winner_team) and 1 or 0
-			end
-		end
-	end
-	return winners
+    local winners = {}
+    local current_winner_team = GameRules.Winner or 0 --You'll need to provide your own way of determining which team won the round
+    for playerID = 0, DOTA_MAX_PLAYERS do
+        if PlayerResource:IsValidPlayerID(playerID) then
+            if not PlayerResource:IsBroadcaster(playerID) then
+                winners[PlayerResource:GetSteamAccountID(playerID)] = (PlayerResource:GetTeam(playerID) == current_winner_team) and 1 or 0
+            end
+        end
+    end
+    return winners
 end
 
 -------------------------------------
 -- MY CUSTOM FUNCTIONS
 -------------------------------------
+
+-- String of item name, without the item_imba_ prefix
+function GetItemSlotImba(hero, slot)
+    local item = hero:GetItemInSlot(slot)
+    local itemName = "empty"
+
+    if item then
+        itemName = string.gsub(item:GetAbilityName(), "item_", "")
+        
+        if string.find(item:GetAbilityName(), "imba") then
+        	string.gsub(item:GetAbilityName(), "item_imba_", "")
+        else
+        	string.gsub(item:GetAbilityName(), "item_", "")
+        end
+    end
+
+    return itemName
+end
 
 function GetItemListImba(hero)
 	local itemTable = {}
