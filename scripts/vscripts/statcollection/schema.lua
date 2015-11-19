@@ -151,9 +151,7 @@ function GetItemSlotImba(hero, slot)
     local itemName = "empty"
 
     if item then
-        itemName = string.gsub(item:GetAbilityName(), "item_", "")
-        
-        if string.find(item:GetAbilityName(), "imba") then
+    	if string.find(item:GetAbilityName(), "imba") then
         	string.gsub(item:GetAbilityName(), "item_imba_", "")
         else
         	string.gsub(item:GetAbilityName(), "item_", "")
@@ -163,6 +161,7 @@ function GetItemSlotImba(hero, slot)
     return itemName
 end
 
+-- String of item names per slot in a list, ordered by name
 function GetItemListImba(hero)
 	local itemTable = {}
 
