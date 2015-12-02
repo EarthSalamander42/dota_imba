@@ -42,7 +42,7 @@ function AncientThink( keys )
 		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
 
 		-- Kill any nearby creeps (prevents lag)
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemy_creeps) do
 			enemy:Kill(ability, caster)
 		end
@@ -61,53 +61,53 @@ function AncientThink( keys )
 	end
 	
 	-- Ancient abilities logic
-	local ability_ravage = caster:FindAbilityByName("tidehunter_ravage")
-	local ability_eye_of_the_storm = caster:FindAbilityByName("razor_eye_of_the_storm")
-	local ability_borrowed_time = caster:FindAbilityByName("abaddon_borrowed_time")
-	local ability_poison_nova = caster:FindAbilityByName("venomancer_poison_nova")
-	local ability_overgrowth = caster:FindAbilityByName("treant_overgrowth")
+	local tier_1_ability = caster:GetAbilityByIndex(2)
+	local tier_2_ability = caster:GetAbilityByIndex(3)
+	local tier_3_ability = caster:GetAbilityByIndex(4)
+	local tier_4_ability = caster:GetAbilityByIndex(5)
+	local tier_5_ability = caster:GetAbilityByIndex(6)
 
 	-- If health < 20%, refresh abilities once
-	if ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 and not caster.abilities_refreshed then
-		ability_ravage:EndCooldown()
-		ability_borrowed_time:EndCooldown()
+	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
+		tier_5_ability:EndCooldown()
 		caster.abilities_refreshed = true
 	end
 
-	-- If health < 30%, use Ravage
-	if ancient_health < 0.3 and ability_ravage and ability_ravage:IsCooldownReady() then
-		ability_eye_of_the_storm:EndCooldown()
-		ability_ravage:OnSpellStart()
-		ability_ravage:StartCooldown(ability_ravage:GetCooldown(1))
+	-- If health < 30%, use the tier 5 ability
+	if ancient_health < 0.3 and tier_5_ability and tier_5_ability:IsCooldownReady() then
+		tier_4_ability:EndCooldown()
+		tier_5_ability:OnSpellStart()
+		tier_5_ability:StartCooldown(tier_5_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 40%, use Borrowed Time
-	if ancient_health < 0.4 and ability_borrowed_time and ability_borrowed_time:IsCooldownReady() then
-		ability_eye_of_the_storm:EndCooldown()
-		ability_borrowed_time:OnSpellStart()
-		ability_borrowed_time:StartCooldown(ability_borrowed_time:GetCooldown(1))
+	-- If health < 40%, use the tier 4 ability
+	if ancient_health < 0.4 and tier_4_ability and tier_4_ability:IsCooldownReady() then
+		tier_3_ability:EndCooldown()
+		tier_4_ability:OnSpellStart()
+		tier_4_ability:StartCooldown(tier_4_ability:GetCooldown(1))
 	end
 
-	-- If health < 60%, use Eye of the Storm
-	if ancient_health < 0.6 and ability_eye_of_the_storm and ability_eye_of_the_storm:IsCooldownReady() then
-		ability_poison_nova:EndCooldown()
-		ability_eye_of_the_storm:OnSpellStart()
-		ability_eye_of_the_storm:StartCooldown(ability_eye_of_the_storm:GetCooldown(1))
+	-- If health < 60%, use the tier 3 ability
+	if ancient_health < 0.6 and tier_3_ability and tier_3_ability:IsCooldownReady() then
+		tier_2_ability:EndCooldown()
+		tier_3_ability:OnSpellStart()
+		tier_3_ability:StartCooldown(tier_3_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 80%, use Overgrowth
-	if ancient_health < 0.8 and ability_overgrowth and ability_overgrowth:IsCooldownReady() then
-		ability_overgrowth:OnSpellStart()
-		ability_overgrowth:StartCooldown(ability_overgrowth:GetCooldown(1))
+	-- If health < 80%, use the tier 2 ability
+	if ancient_health < 0.8 and tier_2_ability and tier_2_ability:IsCooldownReady() then
+		tier_1_ability:EndCooldown()
+		tier_2_ability:OnSpellStart()
+		tier_2_ability:StartCooldown(tier_2_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 100%, use Poison Nova
-	if ancient_health < 1.0 and ability_poison_nova and ability_poison_nova:IsCooldownReady() then
-		ability_poison_nova:OnSpellStart()
-		ability_poison_nova:StartCooldown(ability_poison_nova:GetCooldown(1))
+	-- If health < 100%, use the tier 1 ability
+	if ancient_health < 1.0 and tier_1_ability and tier_1_ability:IsCooldownReady() then
+		tier_1_ability:OnSpellStart()
+		tier_1_ability:StartCooldown(tier_1_ability:GetCooldown(1))
 		return nil
 	end
 end
@@ -120,54 +120,68 @@ function AncientAttacked( keys )
 	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
 	
 	-- Ancient abilities logic
-	local ability_ravage = caster:FindAbilityByName("tidehunter_ravage")
-	local ability_eye_of_the_storm = caster:FindAbilityByName("razor_eye_of_the_storm")
-	local ability_borrowed_time = caster:FindAbilityByName("abaddon_borrowed_time")
-	local ability_poison_nova = caster:FindAbilityByName("venomancer_poison_nova")
-	local ability_overgrowth = caster:FindAbilityByName("treant_overgrowth")
+	local tier_1_ability = caster:GetAbilityByIndex(2)
+	local tier_2_ability = caster:GetAbilityByIndex(3)
+	local tier_3_ability = caster:GetAbilityByIndex(4)
+	local tier_4_ability = caster:GetAbilityByIndex(5)
+	local tier_5_ability = caster:GetAbilityByIndex(6)
 
 	-- If health < 20%, refresh abilities once
-	if ancient_health < 0.20 and not caster.abilities_refreshed then
-		ability_ravage:EndCooldown()
-		ability_borrowed_time:EndCooldown()
+	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
+		tier_5_ability:EndCooldown()
 		caster.abilities_refreshed = true
 	end
 
-	-- If health < 30%, use Ravage
-	if ancient_health < 0.3 and ability_ravage and ability_ravage:IsCooldownReady() then
-		ability_eye_of_the_storm:EndCooldown()
-		ability_ravage:OnSpellStart()
-		ability_ravage:StartCooldown(ability_ravage:GetCooldown(1))
+	-- If health < 30%, use the tier 5 ability
+	if ancient_health < 0.3 and tier_5_ability and tier_5_ability:IsCooldownReady() then
+		tier_4_ability:EndCooldown()
+		tier_5_ability:OnSpellStart()
+		tier_5_ability:StartCooldown(tier_5_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 40%, use Borrowed Time
-	if ancient_health < 0.4 and ability_borrowed_time and ability_borrowed_time:IsCooldownReady() then
-		ability_eye_of_the_storm:EndCooldown()
-		ability_borrowed_time:OnSpellStart()
-		ability_borrowed_time:StartCooldown(ability_borrowed_time:GetCooldown(1))
+	-- If health < 40%, use the tier 4 ability
+	if ancient_health < 0.4 and tier_4_ability and tier_4_ability:IsCooldownReady() then
+		tier_3_ability:EndCooldown()
+		tier_4_ability:OnSpellStart()
+		tier_4_ability:StartCooldown(tier_4_ability:GetCooldown(1))
 	end
 
-	-- If health < 60%, use Eye of the Storm
-	if ancient_health < 0.6 and ability_eye_of_the_storm and ability_eye_of_the_storm:IsCooldownReady() then
-		ability_poison_nova:EndCooldown()
-		ability_eye_of_the_storm:OnSpellStart()
-		ability_eye_of_the_storm:StartCooldown(ability_eye_of_the_storm:GetCooldown(1))
+	-- If health < 60%, use the tier 3 ability
+	if ancient_health < 0.6 and tier_3_ability and tier_3_ability:IsCooldownReady() then
+		tier_2_ability:EndCooldown()
+		tier_3_ability:OnSpellStart()
+		tier_3_ability:StartCooldown(tier_3_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 80%, use Overgrowth
-	if ancient_health < 0.8 and ability_overgrowth and ability_overgrowth:IsCooldownReady() then
-		ability_overgrowth:OnSpellStart()
-		ability_overgrowth:StartCooldown(ability_overgrowth:GetCooldown(1))
+	-- If health < 80%, use the tier 2 ability
+	if ancient_health < 0.8 and tier_2_ability and tier_2_ability:IsCooldownReady() then
+		tier_1_ability:EndCooldown()
+		tier_2_ability:OnSpellStart()
+		tier_2_ability:StartCooldown(tier_2_ability:GetCooldown(1))
 		return nil
 	end
 
-	-- If health < 100%, use Poison Nova
-	if ancient_health < 1.0 and ability_poison_nova and ability_poison_nova:IsCooldownReady() then
-		ability_poison_nova:OnSpellStart()
-		ability_poison_nova:StartCooldown(ability_poison_nova:GetCooldown(1))
+	-- If health < 100%, use the tier 1 ability
+	if ancient_health < 1.0 and tier_1_ability and tier_1_ability:IsCooldownReady() then
+		tier_1_ability:OnSpellStart()
+		tier_1_ability:StartCooldown(tier_1_ability:GetCooldown(1))
 		return nil
+	end
+end
+
+function CreepArmor( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_armor = keys.modifier_armor
+
+	-- Parameters
+	local game_time = GAME_TIME_ELAPSED / 60
+
+	-- Adjust mega creep armor
+	if string.find(caster:GetUnitName(), "mega") then
+		AddStacks(ability, caster, caster, modifier_armor, math.max(game_time - 13, 0), true)
 	end
 end
 
@@ -197,7 +211,7 @@ function FountainThink( keys )
 	local ability = keys.ability
 	local particle_danger = keys.particle_danger
 
-	local danger_pfx = ParticleManager:CreateParticle(particle_danger, PATTACH_ABSORIGIN, caster)
+	local danger_pfx = ParticleManager:CreateParticle(particle_danger, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(danger_pfx, 0, caster:GetAbsOrigin())
 
 	-- If mega creeps are nearby on arena mode, disable fountain protection

@@ -944,7 +944,11 @@ function GameMode:OnEntityKilled( keys )
 		PlayerResource:SetBuybackGoldLimitTime(killed_unit:GetPlayerID(), buyback_penalty_duration)
 
 		-- Setup buyback cooldown
-		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), HERO_BUYBACK_COOLDOWN)
+		local buyback_cooldown = 0
+		if game_time > HERO_BUYBACK_COOLDOWN_START_POINT and HERO_BUYBACK_COOLDOWN > 0 then
+			buyback_cooldown = HERO_BUYBACK_COOLDOWN + game_time - HERO_BUYBACK_COOLDOWN_START_POINT
+		end
+		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), buyback_cooldown)
 		
 	end
 

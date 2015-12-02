@@ -388,7 +388,17 @@ function Rearm( keys )
 		"imba_tinker_rearm",
 		"ancient_apparition_ice_blast",
 		"zuus_thundergods_wrath",
-		"furion_wrath_of_nature"
+		"furion_wrath_of_nature",
+		"imba_magnus_reverse_polarity",
+		"imba_omniknight_guardian_angel",
+		"imba_mirana_arrow",
+		"imba_dazzle_shallow_grave",
+		"imba_wraith_king_reincarnation",
+		"imba_abaddon_borrowed_time",
+		"furion_force_of_nature",
+		"imba_nyx_assassin_spiked_carapace",
+		"elder_titan_earth_splitter",
+		"imba_centaur_stampede"
 	}
 
 	-- List of unrefreshable items

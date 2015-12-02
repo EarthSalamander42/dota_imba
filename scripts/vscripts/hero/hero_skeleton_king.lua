@@ -69,8 +69,10 @@ function HellfireBlastHit( keys )
 	-- Play the impact sound
 	caster:EmitSound(sound_hit)
 
-	-- Stun the target
-	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = secondary_stun})
+	-- Stun the target if it is not magic immune
+	if not target:IsMagicImmune() then
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = secondary_stun})
+	end
 
 	-- Deal damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -82,14 +84,16 @@ function HellfireBlastHit( keys )
 		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
 		-- Spawn the summon
-		local skeleton_loc = target:GetAbsOrigin() + RandomVector(100)
-		local hellfire_skeleton = CreateUnitByName(summon_name, skeleton_loc, false, caster, caster, caster:GetTeam())
-		FindClearSpaceForUnit(hellfire_skeleton, skeleton_loc, true)
+		if caster:IsHero() then
+			local skeleton_loc = target:GetAbsOrigin() + RandomVector(100)
+			local hellfire_skeleton = CreateUnitByName(summon_name, skeleton_loc, false, caster, caster, caster:GetTeam())
+			FindClearSpaceForUnit(hellfire_skeleton, skeleton_loc, true)
 
-		-- Make the summon limited duration and uncontrollable
-		hellfire_skeleton:SetControllableByPlayer(caster:GetPlayerID(), true)
-		hellfire_skeleton:SetForceAttackTarget(target)
-		hellfire_skeleton:AddNewModifier(caster, ability, "modifier_kill", {duration = summon_duration})
+			-- Make the summon limited duration and uncontrollable
+			hellfire_skeleton:SetControllableByPlayer(caster:GetPlayerID(), true)
+			hellfire_skeleton:SetForceAttackTarget(target)
+			hellfire_skeleton:AddNewModifier(caster, ability, "modifier_kill", {duration = summon_duration})
+		end
 
 		-- Find nearby enemies
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
@@ -141,12 +145,15 @@ function VampiricAura( keys )
 	-- If the attacker is a real hero, heal and draw the particle
 	if attacker:IsRealHero() then
 
-		if target:IsRealHero() then
-			attacker:Heal(damage * lifesteal_hero / 100, caster)
-		else
-			attacker:Heal(damage * lifesteal_creep / 100, caster)
-		end
-
+		-- Delay the lifesteal for one game tick to prevent blademail interaction
+		Timers:CreateTimer(0.01, function()
+			if target:IsRealHero() then
+				attacker:Heal(damage * lifesteal_hero / 100, caster)
+			else
+				attacker:Heal(damage * lifesteal_creep / 100, caster)
+			end
+		end)
+		
 		local lifesteal_pfx = ParticleManager:CreateParticle(particle_heal, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_pfx, 0, attacker:GetAbsOrigin())
 		ParticleManager:SetParticleControl(lifesteal_pfx, 1, attacker:GetAbsOrigin())
@@ -226,11 +233,19 @@ function KingdomComeEndChannel( keys )
 	local summon_name = keys.summon_name
 	local modifier_debuff = keys.modifier_debuff
 	local modifier_summon = keys.modifier_summon
+	local modifier_dmg = keys.modifier_dmg
+	local modifier_ms = keys.modifier_ms
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-	local summon_health = ability:GetLevelSpecialValueFor("summon_health", ability_level)
+	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local creep_damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
+	local creep_ms = ability:GetLevelSpecialValueFor("creep_ms", ability_level)
+	local hero_damage = ability:GetLevelSpecialValueFor("hero_damage", ability_level)
+	local hero_ms = ability:GetLevelSpecialValueFor("hero_ms", ability_level)
+	local caster_loc = caster:GetAbsOrigin()
 
 	-- Destroy tell particle
 	ParticleManager:DestroyParticle(caster.kingdom_come_tell_pfx, false)
@@ -243,93 +258,41 @@ function KingdomComeEndChannel( keys )
 		-- Apply the debuff modifier to this enemy
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 
-		-- Summon a wraith for this enemy
-		local wraith_loc = target:GetAbsOrigin() - target:GetForwardVector() * 120
-		local kingdom_wraith = CreateUnitByName(summon_name, wraith_loc, false, caster, caster, caster:GetTeam())
-		FindClearSpaceForUnit(kingdom_wraith, wraith_loc, true)
+		-- Stun this enemy
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
-		-- Make the summon limited duration and uncontrollable
-		kingdom_wraith:SetControllableByPlayer(caster:GetPlayerID(), true)
-		kingdom_wraith:SetForceAttackTarget(target)
-		kingdom_wraith:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+		-- Kill non-ancient creeps and illusions
+		if not target:IsRealHero() and not target:IsAncient() then
+			target:Kill(ability, caster)
 
-		-- Adjust the summon's stats if this unit is an enemy hero
-		if target:IsHero() then
-			local target_level = target:GetLevel()
-			AddStacks(ability, caster, kingdom_wraith, modifier_summon, target_level, true)
-			SetCreatureHealth(kingdom_wraith, kingdom_wraith:GetMaxHealth() + (target_level - 1) * summon_health, true)
-			kingdom_wraith:SetModelScale(kingdom_wraith:GetModelScale() + math.min(0.025 * target_level, 0.6))
-		else
+			-- Add buff stacks to the caster
+			AddStacks(ability, caster, caster, modifier_dmg, creep_damage, true)
+			AddStacks(ability, caster, caster, modifier_ms, creep_ms, true)
+
+		-- Damage and create wraiths for heroes
+		elseif target:IsRealHero() then
+
+			-- Damage
+			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+			-- Summon a wraith for this enemy
+			local target_loc = target:GetAbsOrigin()
+			local wraith_loc = target_loc + (caster_loc - target_loc):Normalized() * 120
+			local kingdom_wraith = CreateUnitByName(summon_name, wraith_loc, false, caster, caster, caster:GetTeam())
+			FindClearSpaceForUnit(kingdom_wraith, wraith_loc, true)
+
+			-- Make the summon limited duration and uncontrollable
+			kingdom_wraith:SetControllableByPlayer(caster:GetPlayerID(), true)
+			kingdom_wraith:SetForceAttackTarget(target)
+			kingdom_wraith:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+
+			-- Apply the summon's modifier
 			ability:ApplyDataDrivenModifier(caster, kingdom_wraith, modifier_summon, {})
+
+			-- Add buff stacks to the caster
+			AddStacks(ability, caster, caster, modifier_dmg, hero_damage, true)
+			AddStacks(ability, caster, caster, modifier_ms, hero_ms, true)
 		end
-
-		-- Set this unit as the summon's target
-		kingdom_wraith.kingdom_come_target = target
-	end
-end
-
-function KingdomComeAddStack( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_dmg = keys.modifier_dmg
-	local modifier_ms = keys.modifier_ms
-
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
-	local move_speed = ability:GetLevelSpecialValueFor("creep_ms", ability_level)
-
-	-- If this unit is a hero, increase parameters
-	if target:IsHero() then
-		damage = ability:GetLevelSpecialValueFor("hero_damage", ability_level)
-		move_speed = ability:GetLevelSpecialValueFor("hero_ms", ability_level)
-	end
-
-	-- Add the appropriate number of stacks to the caster
-	AddStacks(ability, caster, caster, modifier_dmg, damage, true)
-	AddStacks(ability, caster, caster, modifier_ms, move_speed, true)
-end
-
-function KingdomComeRemoveStack( keys )
-	local caster = keys.caster
-	local summon = keys.target
-	local target = summon.kingdom_come_target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_dmg = keys.modifier_dmg
-	local modifier_ms = keys.modifier_ms
-	local modifier_debuff = keys.modifier_debuff
-
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
-	local move_speed = ability:GetLevelSpecialValueFor("creep_ms", ability_level)
-
-	-- If this summon's associated unit is a hero, increase parameters
-	if target:IsHero() then
-		damage = ability:GetLevelSpecialValueFor("hero_damage", ability_level)
-		move_speed = ability:GetLevelSpecialValueFor("hero_ms", ability_level)
-	end
-
-	-- Remove the debuff from the associated unit
-	target:RemoveModifierByName(modifier_debuff)
-
-	-- Remove stacks from the caster accordingly
-	local damage_stacks = caster:GetModifierStackCount(modifier_dmg, caster)
-	local speed_stacks = caster:GetModifierStackCount(modifier_ms, caster)
-
-	-- If there are few enough stacks of damage remaining, remove them all
-	if damage_stacks <= damage then
-		caster:RemoveModifierByName(modifier_dmg)
-	else
-		caster:SetModifierStackCount(modifier_dmg, caster, damage_stacks - damage)
-	end
-
-	-- If there are few enough stacks of speed, remove them all
-	if speed_stacks <= move_speed then
-		caster:RemoveModifierByName(modifier_ms)
-	else
-		caster:SetModifierStackCount(modifier_ms, caster, speed_stacks - move_speed)
 	end
 end
 
@@ -337,11 +300,18 @@ function ReincarnationUpdate( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_reincarnation = keys.modifier_reincarnation
+	local modifier_scepter = keys.modifier_scepter
+	local modifier_wraith = keys.modifier_wraith
+	local scepter = HasScepter(caster)
 
 	-- If the ability was unlearned, do nothing
 	if not ability then
 		return nil
 	end
+
+	-- Parameters
+	local ability_level = ability:GetLevel() - 1
+	local aura_radius_scepter = ability:GetLevelSpecialValueFor("aura_radius_scepter", ability_level)
 
 	-- Add reincarnation modifier if it's missing
 	if ability:IsCooldownReady() and not caster:HasModifier(modifier_reincarnation) then
@@ -352,13 +322,71 @@ function ReincarnationUpdate( keys )
 	if not ability:IsCooldownReady() and caster:HasModifier(modifier_reincarnation) then
 		caster:RemoveModifierByName(modifier_reincarnation)
 	end
+
+	-- If the caster has a scepter, apply its aura to all nearby teammates
+	if scepter then
+		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aura_radius_scepter, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		for _,ally in pairs(allies) do
+			if ally ~= caster and not ally:HasModifier(modifier_wraith) then
+				ability:ApplyDataDrivenModifier(caster, ally, modifier_scepter, {})
+			end
+		end
+	end
+end
+
+function ReincarnationWraithDamage( keys )
+	local target = keys.unit
+
+	-- If health is not 1, do nothing
+	if target:GetHealth() > 1 or target.has_aegis or target:HasModifier("modifier_imba_shallow_grave") or target:HasModifier("modifier_imba_shallow_grave_passive") then
+		return nil
+	end
+
+	-- Keyvalues
+	local caster = keys.caster
+	local attacker = keys.attacker
+	local ability = keys.ability
+	local modifier_scepter = keys.modifier_scepter
+	local modifier_wraith = keys.modifier_wraith
+	local sound_wraith = keys.sound_wraith
+
+	-- Store the attacker which killed this unit for later
+	if attacker:GetOwnerEntity() then
+		target.reincarnation_scepter_killer_id = attacker:GetOwnerEntity():GetPlayerID()
+	else
+		target.reincarnation_scepter_killer_id = attacker:GetPlayerID()
+	end
+
+	-- Play transformation sound
+	target:EmitSound(sound_wraith)
+
+	-- Apply wraith form modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_wraith, {})
+
+	-- Remove the scepter aura modifier
+	target:RemoveModifierByName(modifier_scepter)
+
+	-- Purge all debuffs
+	target:Purge(false, true, false, true, false)
+end
+
+function ReincarnationWraithEnd( keys )
+	local target = keys.target
+	local ability = keys.ability
+	
+	-- Kill the target, granting credit to the original killer
+	local killer_hero = PlayerResource:GetPlayer(target.reincarnation_scepter_killer_id):GetAssignedHero()
+	TrueKill(killer_hero, target, ability)
+
+	-- Clear the killer variable
+	target.reincarnation_scepter_killer_id = nil
 end
 
 function ReincarnationDamage( keys )
 	local caster = keys.caster
 
 	-- If health is not 1, do nothing
-	if caster:GetHealth() > 1 or caster.has_aegis or caster:HasModifier("modifier_imba_shallow_grave") then
+	if caster:GetHealth() > 1 or caster.has_aegis or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") then
 		return nil
 	end
 
@@ -381,7 +409,7 @@ function ReincarnationDamage( keys )
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 
-	-- If health is 1, but the ability is on cooldown, die to the original attacker
+	-- If health is minimal, but the ability is on cooldown, die to the original attacker
 	if not ability:IsCooldownReady() then
 		caster:RemoveModifierByName(modifier_reincarnation)
 		ApplyDamage({attacker = attacker, victim = caster, ability = ability, damage = 3, damage_type = DAMAGE_TYPE_PURE})
@@ -393,8 +421,12 @@ function ReincarnationDamage( keys )
 	ability:StartCooldown( ability:GetCooldown(ability_level) * cooldown_reduction )
 
 	-- Play initial sound
-	EmitGlobalSound(sound_death)
-	--caster:EmitSound(sound_death)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	if #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
+		caster:EmitSound("Hero_WraithKing.IllBeBack")
+	else
+		caster:EmitSound(sound_death)
+	end
 
 	-- Create visibility node
 	ability:CreateVisibilityNode(caster_loc, vision_radius, reincarnate_delay)
@@ -417,28 +449,36 @@ function ReincarnationDamage( keys )
 		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 	end
 
+	-- Heal, even through healing prevention debuffs
+	caster:SetHealth(caster:GetMaxHealth())
+	caster:SetMana(caster:GetMaxMana())
+
 	-- After the respawn delay
 	Timers:CreateTimer(reincarnate_delay, function()
 
-		-- Play reincarnation stinger
-		EmitGlobalSound(sound_reincarnation)
-		--caster:EmitSound(sound_reincarnation)
+		-- Count nearby allies
+		local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
 		-- Grant temporary bonus strength
-		local bonus_str = math.floor( caster:GetStrength() * str_bonus / 100 )
-		AddStacks(ability, caster, caster, modifier_str, bonus_str, true)
+		if nearby_allies and #nearby_allies > 1 then
+			local bonus_str = math.floor( caster:GetStrength() * str_bonus * math.min(#nearby_allies - 1, 4) / 100 )
+			AddStacks(ability, caster, caster, modifier_str, bonus_str, true)
+		end
+
+		-- Purge all debuffs
+		caster:Purge( false, true, false, true, false)
 
 		-- Heal, even through healing prevention debuffs
 		caster:SetHealth(caster:GetMaxHealth())
 		caster:SetMana(caster:GetMaxMana())
-
-		-- Purge all debuffs
-		caster:Purge( false, true, false, true, false)
 
 		-- Remove reincarnation modifier
 		caster:RemoveModifierByName(modifier_reincarnation)
 
 		-- Redraw caster's model
 		caster:RemoveNoDraw()
+
+		-- Play reincarnation stinger
+		caster:EmitSound(sound_reincarnation)
 	end)
 end

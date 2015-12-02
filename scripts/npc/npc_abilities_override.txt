@@ -730,7 +730,7 @@
 
 		"AbilityCastPoint"			"0.0"
 		
-		"AbilityCooldown"			"60.0"
+		"AbilityCooldown"			"60"
 
 		"AbilityDamage"				"600"
 
@@ -752,6 +752,255 @@
 			{	
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Slithereen Crush
+	//=================================================================================================================
+	"slardar_slithereen_crush"
+	{
+		"MaxLevel"					"1"
+
+		"AbilityCastRange"			"1200"
+
+		"AbilityCastPoint"			"0.0"
+
+		"AbilityCooldown"			"20"
+
+		"AbilityDamage"				"400"
+
+		"AbilityManaCost"			"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_radius"					"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_extra_slow"				"-25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crush_attack_slow_tooltip"		"-60"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"crush_extra_slow_duration"		"2.0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Reverse Polarity
+	//=================================================================================================================
+	"magnataur_reverse_polarity"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"
+
+		"AbilityCastRange"				"1600"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_radius"			"1600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarity_damage"		"450"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_stun_duration"	"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_stun_duration"	"3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pull_duration"			"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Borrowed Time
+	//=================================================================================================================
+	"abaddon_borrowed_time"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_threshold"				"2800"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"4.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect"					"0.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"redirect_pct_tooltip_scepter"		"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect_range_tooltip_scepter"	"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Berserker's Call
+	//=================================================================================================================
+	"axe_berserkers_call"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"40"
+
+		"AbilityManaCost"				"0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"9999"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Windrun
+	//=================================================================================================================
+	"windrunner_windrun"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"30"
+
+		"AbilityDuration"				"4"
+	
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus_pct"		"0"		
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"evasion_pct_tooltip"		"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_movespeed_bonus_pct"	"-30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1400"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"4.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Battery Assault
+	//=================================================================================================================
+	"rattletrap_battery_assault"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"40"
+
+		"AbilityDamage"					"50"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+			"02"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"20.0"
+			}
+			"03"
+			{	
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.3"
 			}
 		}
 	}
@@ -805,13 +1054,58 @@
 	}
 
 	//=================================================================================================================
-	// Ancient: Borrowed Time
+	// Ancient: Diabolic Edict
 	//=================================================================================================================
-	"abaddon_borrowed_time"
+	"leshrac_diabolic_edict"
 	{
 		"MaxLevel"						"1"
 
-		"AbilityCooldown"				"60.0"
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"60"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilityDamage"					"70"
+
+		"AbilityDuration"				"12"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"num_explosions"		"40"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tower_bonus"			"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Overgrowth
+	//=================================================================================================================
+	"treant_overgrowth"
+	{
+		"MaxLevel"						"1"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"45"
 
 		"AbilityManaCost"				"0"
 
@@ -819,33 +1113,66 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_threshold"				"2800"
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"3.5"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1500"
+			}	
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"eyes_radius"					"800"
+			}				
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Spiked Carapce
+	//=================================================================================================================
+	"nyx_assassin_spiked_carapace"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"40"
+
+		"AbilityCastPoint"				"0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"reflect_duration"			"2.25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
+				"stun_duration"				"2.5"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"0"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"redirect"					"0.5"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"0"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"redirect_pct_tooltip_scepter"		"50"
+				"bonus_intellect"			"0"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"redirect_range_tooltip_scepter"	"1200"
+				"var_type"					"FIELD_INTEGER"
+				"burrow_aoe"				"0"
 			}
 		}
 	}
@@ -859,7 +1186,7 @@
 
 		"AbilityCastPoint"				"0.0"
 
-		"AbilityCooldown"				"60.0"
+		"AbilityCooldown"				"60"
 
 		"AbilityManaCost"				"0"		
 
@@ -909,246 +1236,26 @@
 	}
 
 	//=================================================================================================================
-	// Ancient: Overgrowth
-	//=================================================================================================================
-	"treant_overgrowth"
-	{
-		"MaxLevel"						"1"
-		
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"45"
-
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"3.5"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1500"
-			}	
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"eyes_radius"					"800"
-			}				
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Battery Assault
-	//=================================================================================================================
-	"rattletrap_battery_assault"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"45.0"
-
-		"AbilityDamage"					"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"20.0"
-			}
-			"03"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"interval"			"0.3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Berserker's Call
-	//=================================================================================================================
-	"axe_berserkers_call"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCooldown"				"40"
-
-		"AbilityManaCost"				"0"	
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"1000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
-			}	
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Counter Helix
-	//=================================================================================================================
-	"axe_counter_helix"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCooldown"				"0.0"
-		
-		"AbilityDamage"					"100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"20"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown"					"0.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Slithereen Crush
-	//=================================================================================================================
-	"slardar_slithereen_crush"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCastRange"				"1200"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"20.0"
-
-		"AbilityDamage"					"300"
-
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_radius"					"1200"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_extra_slow"				"-25"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crush_attack_slow_tooltip"		"-60"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"crush_extra_slow_duration"		"2.0"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Reverse Polarity
-	//=================================================================================================================
-	"magnataur_reverse_polarity"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"60"
-
-		"AbilityManaCost"				"0"
-
-		"AbilityCastRange"				"1500"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius"			"1500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"polarity_damage"		"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_stun_duration"	"3.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"creep_stun_duration"	"3.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pull_duration"			"0.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Ancient: Rocket Barrage
 	//=================================================================================================================
 	"gyrocopter_rocket_barrage"
 	{
 		"MaxLevel"						"1"
 
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"6"
 
 		"AbilityManaCost"				"0"
 
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"1000"
 
-		"AbilityDamage"					"30"
+		"AbilityDamage"					"40"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"radius"					"1000"
 			}
 			"02"
 			{
@@ -1159,189 +1266,44 @@
 	}
 
 	//=================================================================================================================
-	// Ancient: Time Lapse
+	// Ancient: Quill Spray
 	//=================================================================================================================
-	"weaver_time_lapse"
+	"bristleback_quill_spray"
 	{
 		"MaxLevel"						"1"
 
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"1200"
 
-		"AbilityCooldown"				"60"
-
-		"AbilityManaCost"				"0"	
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"60"
-			}	
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"0"
-			}				
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Spiked Carapce
-	//=================================================================================================================
-	"nyx_assassin_spiked_carapace"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCooldown"				"45"
-
-		"AbilityCastPoint"				"0"
-
-		"AbilityManaCost"				"0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"reflect_duration"			"2.25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2.5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"burrow_aoe"				"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Exorcism
-	//=================================================================================================================
-	"death_prophet_exorcism"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"6.0"
-		"AbilityDuration"				"20.0"
+		"AbilityCooldown"				"2.0"
 
 		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
 			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirits"				"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spirit_speed"			"600"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_distance"			"2000"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"give_up_distance"		"1200"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_damage"			"60"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"60"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"average_damage"		"60"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"structure_reduction"	"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient: Diabolic Edict
-	//=================================================================================================================
-	"leshrac_diabolic_edict"
-	{
-		"MaxLevel"						"1"
-
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"60"
-
-		"AbilityManaCost"				"0"
-		
-		"AbilityDamage"					"40"
-
-		"AbilityDuration"				"12"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"num_explosions"		"40"
-			}
-			
-			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1200"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"quill_base_damage"		"100"
+			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tower_bonus"			"0"
+				"quill_stack_damage"	"50"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_tooltip"		"12"
+				"quill_stack_duration"	"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_damage"			"500"
 			}
 		}
 	}
@@ -3614,12 +3576,12 @@
 			"01"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"health_regen_rate"							"2.0"
+				"health_regen_rate"							"1.5"
 			}
 			"02"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"mana_regen_rate"							"2.0"
+				"mana_regen_rate"							"1.5"
 			}
 			"03"
 			{
@@ -4148,7 +4110,7 @@
 	{
 		"AbilityCooldown"					"9.0"
 	
-		"AbilityDamage"						"100 175 250 325"
+		"AbilityDamage"						"100 180 260 340"
 
 		"AbilityManaCost"					"130"
 
@@ -4162,12 +4124,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_distance"				"1950 2250 2550 2850"
+				"max_distance"				"2700"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"orb_speed"					"650 750 850 950"
+				"orb_speed"					"900"
 			}
 			"04"
 			{
@@ -4187,9 +4149,9 @@
 	//=================================================================================================================
 	"puck_waning_rift"
 	{
-		"AbilityCooldown"					"15 14 13 12"
+		"AbilityCooldown"					"16 14 12 10"
 
-		"AbilityDamage"						"120 190 260 330"
+		"AbilityDamage"						"125 200 275 350"
 
 		"AbilityManaCost"					"100 110 120 130"		
 
@@ -4239,12 +4201,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"coil_duration"				"6.0"
+				"coil_duration"				"7.0"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_init_damage_tooltip"	"125 200 275"
+				"coil_init_damage_tooltip"	"150"
 			}
 			"03"
 			{
@@ -4274,12 +4236,12 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"coil_duration_scepter"		"8"
+				"coil_duration_scepter"		"8.0"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"coil_break_damage_scepter"	"350 500 650"
+				"coil_break_damage_scepter"	"400 700 1000"
 			}
 			"10"
 			{
@@ -5359,7 +5321,7 @@
 		"AbilityCastRange"				"550 625 700"
 		"AbilityCastPoint"				"1.4"
 		
-		"AbilityCooldown"				"10.0 9.0 8.0"
+		"AbilityCooldown"				"10.0"
 	
 		"AbilityManaCost"				"180 240 300"
 
@@ -8146,47 +8108,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Windrunner: Windrun
-	//=================================================================================================================
-	"windrunner_windrun"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityDuration"				"4 6 8 10"
-	
-		"AbilityManaCost"				"0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus_pct"	"100"		
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"evasion_pct_tooltip"	"100"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"enemy_movespeed_bonus_pct"	"-30"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4 6 8 10"
-			}
-		}
-	}
 		
 	//=================================================================================================================
 	// Windrunner: Focus Fire
@@ -10274,46 +10195,6 @@
 	}
 
 	//=================================================================================================================
-	// Bristleback: Quill Spray
-	//=================================================================================================================
-	"bristleback_quill_spray"
-	{
-		"AbilityCastRange"				"675"
-
-		"AbilityCooldown"				"2.5"
-		"AbilityManaCost"				"30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"675"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"quill_base_damage"		"40 60 80 100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"quill_stack_damage"	"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"quill_stack_duration"	"16"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Bristleback: Bristleback
 	//=================================================================================================================
 	"bristleback_bristleback"
@@ -10515,39 +10396,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_per_second"		"66"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Scorched Earth
-	//=================================================================================================================
-	"doom_bringer_scorched_earth"
-	{
-		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"60.0 50.0 40.0 30.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"20 30 40 50"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0 12.0 14.0 16.0"
 			}
 		}
 	}
@@ -10873,13 +10721,15 @@
 	}
 
 	//=================================================================================================================
-	// Magnataur: Skewer
+	// Magnus: Skewer
 	//=================================================================================================================
 	"magnataur_skewer"
 	{
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityCooldown"				"30.0 25.0 20.0 15.0"
+		"AbilityCooldown"				"24.0 20.0 16.0 12.0"
+
+		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
 		{
@@ -10901,7 +10751,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"skewer_radius"			"175"
+				"skewer_radius"			"160"
 			}
 			"05"
 			{
@@ -10917,30 +10767,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"tree_radius"			"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Gyrocopter: Rocket Barrage
-	//=================================================================================================================
-	"gyrocopter_rocket_barrage"
-	{
-		"AbilityCooldown"				"7.0 6.0 5.0 4.0"
-
-		"AbilityDamage"					"10 15 20 25"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"500"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"rockets_per_second"		"10"
 			}
 		}
 	}

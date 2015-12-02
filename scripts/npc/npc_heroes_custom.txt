@@ -574,6 +574,28 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Magnus
+	//=================================================================================================================
+	"npc_imba_hero_magnataur"
+	{
+		"override_hero"				"npc_dota_hero_magnataur"
+
+		"ModelScale"				"1.04"
+		
+		"AbilityLayout"				"5"
+
+		"Ability1"					"imba_magnus_shockwave"
+		"Ability2"					"imba_magnus_empower"
+		"Ability4"					"imba_magnus_magnetize"
+		"Ability5"					"imba_magnus_reverse_polarity"
+		"Ability6"					"attribute_bonus_str"
+
+		"MovementTurnRate"			"1.0"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Medusa
 	//=================================================================================================================
 	"npc_imba_hero_medusa"
@@ -862,11 +884,14 @@
 
 		"ModelScale"				"0.69"
 
+		"AbilityLayout"				"5"
+
 		"Ability1"					"imba_pugna_nether_blast"
 		"Ability2"					"imba_pugna_decrepify"
 		"Ability3"					"imba_pugna_nether_ward"
-		"Ability4"					"imba_pugna_life_drain"
-		"Ability5"					"attribute_bonus_int"
+		"Ability4"					"imba_pugna_life_drain_end"
+		"Ability5"					"imba_pugna_life_drain"
+		"Ability6"					"attribute_bonus_int"
 	}
 
 	//=================================================================================================================

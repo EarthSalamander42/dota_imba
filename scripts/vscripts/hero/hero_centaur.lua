@@ -14,25 +14,36 @@ function HoofStomp( keys )
 	local pit_duration = ability:GetLevelSpecialValueFor("pit_duration", ability:GetLevel() - 1)
 	local pit_center = caster:GetAbsOrigin()
 	local pit_duration_elapsed = 0
+	local pit_enemies = {}
 
 	-- Fire the particle
 	local pit_fx = ParticleManager:CreateParticle(particle_pit, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(pit_fx, 0, pit_center)
 
+	-- Mark the enemies inside the pit to prevent them from leaving
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	for _, enemy in pairs(nearby_enemies) do
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {duration = pit_duration})
+		pit_enemies[#pit_enemies + 1] = enemy
+		enemy.hoof_pit_owner = caster
+	end
+
 	-- Continuously prevent enemies inside the ring from leaving
 	Timers:CreateTimer(0, function()
 
-		-- Mark the enemies inside the pit to prevent them from leaving
-		local marked_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		for _, enemy in pairs(marked_enemies) do
-			ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {})
-			enemy.hoof_pit_owner = caster
+		-- Check if any new enemies entered the pit
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _, enemy in pairs(nearby_enemies) do
+			if not enemy:HasModifier(modifier_enemies) then
+				ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {duration = pit_duration - pit_duration_elapsed})
+				pit_enemies[#pit_enemies + 1] = enemy
+				enemy.hoof_pit_owner = caster
+			end
 		end
 
 		-- If an enemy previously marked is outside the ring, move it in
-		local all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		for _, enemy in pairs(all_enemies) do
-			if enemy:HasModifier(modifier_enemies) and ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius and enemy.hoof_pit_owner == caster then
+		for _, enemy in pairs(pit_enemies) do
+			if ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius and enemy.hoof_pit_owner == caster then
 				FindClearSpaceForUnit(enemy, pit_center + ( enemy:GetAbsOrigin() - pit_center ):Normalized() * pit_radius, true)
 			end
 		end
@@ -52,8 +63,7 @@ function HoofStomp( keys )
 			ParticleManager:DestroyParticle(pit_fx, false)
 
 			-- Remove modifier from marked enemies
-			all_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-			for _, enemy in pairs(all_enemies) do
+			for _, enemy in pairs(pit_enemies) do
 				enemy:RemoveModifierByName(modifier_enemies)
 				enemy.hoof_pit_owner = nil
 			end
@@ -118,7 +128,8 @@ function Return( keys )
 	local duration = ability:GetLevelSpecialValueFor("cooldown", ability_level)
 
 	-- Calculate return damage
-	local damage = caster:GetStrength() * str_percentage / 100
+	local caster_str = caster:GetStrength()
+	local damage = caster_str * str_percentage / 100 * 300 / (caster_str + 300)
 
 	-- Damage attacker if it hasn't taken return damage in the last second
 	if not attacker:HasModifier(modifier_prevent) then

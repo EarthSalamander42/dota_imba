@@ -18,7 +18,6 @@ function NetherBlast( keys )
 	local secondary_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local center_radius = ability:GetLevelSpecialValueFor("center_radius", ability_level)
-	local structure_damage = ability:GetLevelSpecialValueFor("structure_damage", ability_level)
 	local secondary_blasts = ability:GetLevelSpecialValueFor("secondary_blasts", ability_level)
 
 	-- Create sound dummy and play sound on it
@@ -41,11 +40,7 @@ function NetherBlast( keys )
 		ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 
 		-- Deal damage
-		if enemy:IsBuilding() then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage * structure_damage / 100, damage_type = DAMAGE_TYPE_MAGICAL})
-		else
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})			
-		end
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})			
 	end
 
 	-- Calculate secondary blast positions
@@ -85,7 +80,7 @@ function NetherBlast( keys )
 			ParticleManager:SetParticleControl(secondary_blast_pfx, 1, Vector(radius, 0, 0))
 
 			-- Find enemies in each secondary blast area
-			local secondary_enemies = FindUnitsInRadius(caster:GetTeamNumber(), blast_target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local secondary_enemies = FindUnitsInRadius(caster:GetTeamNumber(), blast_target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 			-- Iterate through secondary blast enemies
 			for _,enemy in pairs(secondary_enemies) do
@@ -94,11 +89,7 @@ function NetherBlast( keys )
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 
 				-- Deal damage
-				if enemy:IsBuilding() then
-					ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = secondary_damage * structure_damage / 100, damage_type = DAMAGE_TYPE_MAGICAL})
-				else
-					ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = secondary_damage, damage_type = DAMAGE_TYPE_MAGICAL})			
-				end
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = secondary_damage, damage_type = DAMAGE_TYPE_MAGICAL})			
 			end
 		end
 
@@ -365,7 +356,11 @@ function NetherWardZap( keys )
 		"imba_techies_land_mines",
 		"imba_techies_stasis_trap",
 		"techies_suicide",
-		"winter_wyvern_arctic_burn"
+		"winter_wyvern_arctic_burn",
+		"imba_wraith_king_kingdom_come",
+		"imba_faceless_void_chronosphere",
+		"magnataur_skewer",
+		"imba_tinker_march_of_the_machines"
 	}
 
 	-- Ignore items
@@ -542,6 +537,16 @@ function NetherWardZap( keys )
 	end)
 end
 
+function LifeDrainCancelUpgrade( keys )
+	local caster = keys.caster
+	local ability_cancel = caster:FindAbilityByName(keys.ability_cancel)
+
+	-- Upgrade the Life Drain Cancel ability
+	if ability_cancel then
+		ability_cancel:SetLevel(1)
+	end
+end
+
 function LifeDrain( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -671,8 +676,8 @@ function LifeDrainTickEnemy( keys )
 		should_break = true
 	end
 
-	-- Break the link if this target is no longer visible
-	if not caster:CanEntityBeSeenByMyTeam(target) then
+	-- Break the link if this target is out of the world or no longer visible
+	if not caster:CanEntityBeSeenByMyTeam(target) or target:IsOutOfGame() then
 		should_break = true
 	end
 
@@ -761,6 +766,24 @@ function LifeDrainTickAlly( keys )
 	-- If any of the break conditions is true, break the link
 	if should_break then
 		target:RemoveModifierByName(modifier_ally)
+	end
+end
+
+function LifeDrainCancel( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_ally = keys.modifier_ally
+	
+	-- Parameters
+	local search_range = ability:GetLevelSpecialValueFor("search_range", ability_level)
+
+	-- Find all currently tethered allies
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, search_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	
+	-- Iterate through valid allies, removing the life drain modifier
+	for _,ally in pairs(allies) do
+		ally:RemoveModifierByNameAndCaster(modifier_ally, caster)
 	end
 end
 

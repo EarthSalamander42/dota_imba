@@ -253,6 +253,7 @@ function CoupDeGraceKill( keys )
 
 	-- Global effect when killing a real hero
 	if target:IsRealHero() then
+		
 		-- Play screen blood particle
 		local blood_pfx = ParticleManager:CreateParticle("particles/hero/phantom_assassin/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 

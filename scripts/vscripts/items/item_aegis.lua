@@ -94,7 +94,7 @@ function AegisDamage( keys )
 		caster:SetMana(caster:GetMaxMana())
 
 		-- Purge all debuffs
-		caster:Purge( false, true, false, true, false)
+		caster:Purge(false, true, false, true, false)
 
 		-- Remove Aegis modifier
 		caster:RemoveModifierByName(modifier_aegis)

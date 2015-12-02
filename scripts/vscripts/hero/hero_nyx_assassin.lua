@@ -134,7 +134,7 @@ function SpikedCarapaceReflect( keys )
 			
 			-- Uses HP removal to avoid infinite damage return loops. If the target's health would become <= 0, kills it
 			if attacker_health <= damage_taken then
-				attacker:Kill(ability, caster)
+				ApplyDamage({attacker = caster, victim = attacker, ability = ability, damage = damage_taken, damage_type = DAMAGE_TYPE_PURE})
 			else
 				attacker:SetHealth(math.max(attacker_health - damage_taken, 5))
 			end

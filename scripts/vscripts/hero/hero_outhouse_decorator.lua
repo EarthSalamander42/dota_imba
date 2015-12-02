@@ -13,24 +13,17 @@ function ArcaneOrb( keys )
 	local summon_damage = ability:GetLevelSpecialValueFor("illusion_damage", ability_level)
 	local mana_damage_pct = ability:GetLevelSpecialValueFor("mana_pool_damage_pct", ability_level) / 100
 	local int_steal = ability:GetLevelSpecialValueFor("int_gain", ability_level)
-	local int_steal_pct = ability:GetLevelSpecialValueFor("int_steal_pct", ability_level)
 	local int_steal_duration = ability:GetLevelSpecialValueFor("int_steal_duration", ability_level)
 	
 	-- Steal intelligence from the enemy if it's a hero
 	if target:IsRealHero() then
-
-		-- Calculate the intelligence to be stolen
-		local target_int = target:GetIntellect()
-		local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
-		if target_int_pct > int_steal then
-			int_steal = target_int_pct
-		end
 
 		-- Add the appropriate number of stacks to the caster
 		AddStacks(ability, caster, caster, int_gain_modifier, int_steal, true)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, int_steal, nil)
 
 		-- Prevent the target from going under 1 int
+		local target_int = target:GetIntellect()
 		if target_int <= int_steal then
 			int_steal = target_int - 1
 		end
@@ -275,39 +268,44 @@ function SanityEclipse( keys )
 		local int_steal_duration = ability_astral:GetLevelSpecialValueFor("int_gain_duration", ability_astral_level)
 		local total_int_steal = 0
 
-		-- Affect each valid enemy
+		-- Affect each valid enemy (instantly kills illusions)
 		for _,enemy in pairs(enemies) do
-			if enemy:HasModifier(astral_modifier) then
+			if enemy:IsRealHero() then
+				if enemy:HasModifier(astral_modifier) then
+					enemy:RemoveModifierByName(astral_modifier)
+				end
+
+				-- Calculate the intelligence to be stolen
+				local target_int = enemy:GetIntellect()
+				local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
+				local this_target_int_steal = int_steal
+				if target_int_pct > int_steal then
+					this_target_int_steal = target_int_pct
+				end
+
+				-- Add the appropriate number of stacks to the caster
+				AddStacks(int_steal_ability, caster, caster, int_gain_modifier, this_target_int_steal, true)
+				ability_astral:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
+				total_int_steal = total_int_steal + this_target_int_steal
+
+				-- Prevent the target from going under 1 int
+				if target_int <= int_steal then
+					this_target_int_steal = target_int - 1
+				end
+
+				-- Add the appropriate number of stacks to the target
+				AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
+				ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, this_target_int_steal, nil)
+
+				-- Play sound, remove the target's model, and apply the Astral Imprisonment debuff
+				enemy:EmitSound(astral_sound)
+				enemy:AddNoDraw()
+				ability_astral:ApplyDataDrivenModifier(caster, enemy, astral_modifier, {})
+			else
 				enemy:RemoveModifierByName(astral_modifier)
+				TrueKill(caster, enemy, ability)
 			end
-
-			-- Calculate the intelligence to be stolen
-			local target_int = enemy:GetIntellect()
-			local target_int_pct = math.floor( target_int * int_steal_pct / 100 )
-			local this_target_int_steal = int_steal
-			if target_int_pct > int_steal then
-				this_target_int_steal = target_int_pct
-			end
-
-			-- Add the appropriate number of stacks to the caster
-			AddStacks(int_steal_ability, caster, caster, int_gain_modifier, this_target_int_steal, true)
-			ability_astral:ApplyDataDrivenModifier(caster, caster, int_gain_modifier, {duration = int_steal_duration})
-			total_int_steal = total_int_steal + this_target_int_steal
-
-			-- Prevent the target from going under 1 int
-			if target_int <= int_steal then
-				this_target_int_steal = target_int - 1
-			end
-
-			-- Add the appropriate number of stacks to the target
-			AddStacks(int_steal_ability, caster, enemy, int_loss_modifier, this_target_int_steal, true)
-			ability_astral:ApplyDataDrivenModifier(caster, enemy, int_loss_modifier, {duration = int_steal_duration})
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, enemy, this_target_int_steal, nil)
-
-			-- Play sound, remove the target's model, and apply the Astral Imprisonment debuff
-			enemy:EmitSound(astral_sound)
-			enemy:AddNoDraw()
-			ability_astral:ApplyDataDrivenModifier(caster, enemy, astral_modifier, {})
 		end
 
 		-- Show total int gained by the caster

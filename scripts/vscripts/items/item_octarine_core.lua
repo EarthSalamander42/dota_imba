@@ -38,6 +38,7 @@ function OctarineLifesteal( keys )
 
 	-- Delay the lifesteal for one game tick to prevent blademail/octarine interaction
 	Timers:CreateTimer(0.01, function()
+		
 		-- If the target is a real hero, heal for the full value
 		if target:IsRealHero() then
 			caster:Heal(damage * hero_lifesteal / 100, caster)

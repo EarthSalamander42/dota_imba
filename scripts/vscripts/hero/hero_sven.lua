@@ -355,6 +355,8 @@ function GodStrengthCleave( keys )
 	
 	-- Deal damage
 	for _,enemy in pairs(enemies) do
-		ApplyDamage({attacker = attacker, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+		if enemy ~= target then
+			ApplyDamage({attacker = attacker, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+		end
 	end
 end

@@ -43,3 +43,27 @@ function Maim( keys )
 		AddStacks(ability, caster, target, modifier_maim, maim_base, true)
 	end
 end
+
+function SangeDisarm( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_disarm = keys.modifier_disarm
+	local sound_disarm = keys.sound_disarm
+	local duration = keys.duration
+
+	-- If there's no valid target, or the ability is on cooldown, do nothing
+	if target:IsBuilding() or target:IsAncient() or not ability:IsCooldownReady() then
+		return nil
+	end
+
+	-- Play disarm sound effect
+	target:EmitSound(sound_disarm)
+
+	-- Apply disarm modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_disarm, {duration = duration})
+
+	-- Put the item in cooldown
+	ability:StartCooldown(ability:GetCooldown(ability_level))
+end

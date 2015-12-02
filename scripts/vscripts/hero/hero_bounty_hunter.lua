@@ -13,7 +13,6 @@ function ShurikenToss( keys )
 	-- shuriken projectile keyvalues
 	local shuriken_particle = keys.shuriken_particle
 	local shuriken_speed = ability:GetLevelSpecialValueFor("speed", ability_level)
-	local bounce_radius = ability:GetLevelSpecialValueFor("bounce_radius", ability_level)
 
 	local shuriken_projectile = {
 		Target = target,
@@ -32,7 +31,7 @@ function ShurikenToss( keys )
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
 
 	-- retrieves the targettable enemy heroes on the map
-	local tracked_targets = FindUnitsInRadius(caster:GetTeam(), target_location, nil, bounce_radius, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
+	local tracked_targets = FindUnitsInRadius(caster:GetTeam(), target_location, nil, 25000, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 
 	-- if a target is tracked and is not the main target, create a shuriken projectile flying towards it
 	for _,v in pairs(tracked_targets) do
@@ -188,10 +187,8 @@ function Track( keys )
 	local target = keys.unit
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local scepter = HasScepter(caster)
 
 	-- Parameters
-	local gold_to_steal = ability:GetLevelSpecialValueFor("gold_steal_scepter", ability_level)
 	local bonus_gold_self = ability:GetLevelSpecialValueFor("bonus_gold_self", ability_level)
 	local bonus_gold_self_per_lvl = ability:GetLevelSpecialValueFor("bonus_gold_self_per_lvl", ability_level)
 	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability_level)
@@ -218,23 +215,6 @@ function Track( keys )
 
 	-- Find all valid friendly heroes within the bonus gold radius
 	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , target:GetAbsOrigin(), nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-
-	-- If the caster owns an Aghanim's Scepter, steal unreliable gold from the target
-	if scepter then
-
-		-- Fetch amount of gold to be stolen
-		gold_to_steal = math.max( PlayerResource:GetUnreliableGold(target:GetPlayerID()), 0) * gold_to_steal / 100
-
-		-- Update target's gold
-		target:ModifyGold( (-1) * gold_to_steal, false, DOTA_ModifyGold_Death)
-
-		-- Divide stolen gold among nearby allies
-		gold_to_steal = math.floor( gold_to_steal / #bonus_gold_targets )
-
-		-- Update bonus gold
-		bonus_gold_self = bonus_gold_self + gold_to_steal
-		bonus_gold = bonus_gold + gold_to_steal
-	end
 
 	-- Grant bonus gold to the caster
 	caster:ModifyGold(bonus_gold_self, true, 0)

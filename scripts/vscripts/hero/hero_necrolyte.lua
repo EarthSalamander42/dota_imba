@@ -151,16 +151,16 @@ function Heartstopper( keys )
 
 	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1
-	local max_creep_stacks = ability:GetLevelSpecialValueFor("max_creep_stacks", ability_level)
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Adds a stack of the debuff
-	if target:IsHero() or target:GetModifierStackCount(stack_modifier, ability) < max_creep_stacks then
+	if target:GetModifierStackCount(stack_modifier, ability) < max_stacks then
 		AddStacks(ability, caster, target, stack_modifier, 1, true)
 	end
 	
 	-- If the target is at low enough HP, kill it
 	if target:GetHealth() <= 5 then
-		target:Kill(ability, caster)
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 10, damage_type = DAMAGE_TYPE_PURE})
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos
@@ -289,7 +289,7 @@ function ReapersScythe( keys )
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
 
 		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
-		if target:GetHealth() <= 1 then
+		if target:GetHealth() <= 3 then
 
 			-- Initialize or increase scythe respawn timer stacking penalty
 			if target.scythe_stacking_respawn_timer then
@@ -301,9 +301,7 @@ function ReapersScythe( keys )
 			-- Flag this as a scythe death, increasing respawn timer by respawn_base
 			target.scythe_added_respawn = respawn_base
 			target:RemoveModifierByName("modifier_imba_reapers_scythe")
-			if not target:HasModifier("modifier_reincarnation") then
-				target:Kill(ability, caster)
-			end
+			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 30, damage_type = DAMAGE_TYPE_PURE})
 
 			-- Prevent buyback if caster has scepter
 			if scepter then

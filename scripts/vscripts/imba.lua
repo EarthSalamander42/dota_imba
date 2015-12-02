@@ -799,6 +799,13 @@ function GameMode:OnGameInProgress()
 	-- IMBA: Structure bounty/stats setup
 	-------------------------------------------------------------------------------------------------
 
+	-- Roll the random ancient abilities for this game
+	local ancient_ability_1 = GetAncientAbility(1)
+	local ancient_ability_2 = GetAncientAbility(2)
+	local ancient_ability_3 = GetAncientAbility(3)
+	local ancient_ability_4 = GetAncientAbility(4)
+	local ancient_ability_5 = GetAncientAbility(5)
+
 	-- Find all buildings on the map
 	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	
@@ -843,29 +850,29 @@ function GameMode:OnGameInProgress()
 
 			if TOWER_ABILITY_MODE then
 
-				-- Add Poison Nova ability
-				building:AddAbility("venomancer_poison_nova")
-				ancient_ability = building:FindAbilityByName("venomancer_poison_nova")
+				-- Add tier 1 ability
+				building:AddAbility(ancient_ability_1)
+				ancient_ability = building:FindAbilityByName(ancient_ability_1)
 				ancient_ability:SetLevel(1)
 
-				-- Add Overgrowth ability
-				building:AddAbility("treant_overgrowth")
-				ancient_ability = building:FindAbilityByName("treant_overgrowth")
+				-- Add tier 2 ability
+				building:AddAbility(ancient_ability_2)
+				ancient_ability = building:FindAbilityByName(ancient_ability_2)
 				ancient_ability:SetLevel(1)
 
-				-- Add Eye of the Storm ability
-				building:AddAbility("razor_eye_of_the_storm")
-				ancient_ability = building:FindAbilityByName("razor_eye_of_the_storm")
+				-- Add tier 3 ability
+				building:AddAbility(ancient_ability_3)
+				ancient_ability = building:FindAbilityByName(ancient_ability_3)
 				ancient_ability:SetLevel(1)
 
-				-- Add Borrowed Time ability
-				building:AddAbility("abaddon_borrowed_time")
-				ancient_ability = building:FindAbilityByName("abaddon_borrowed_time")
+				-- Add tier 4 ability
+				building:AddAbility(ancient_ability_4)
+				ancient_ability = building:FindAbilityByName(ancient_ability_4)
 				ancient_ability:SetLevel(1)
 
-				-- Add Ravage ability
-				building:AddAbility("tidehunter_ravage")
-				ancient_ability = building:FindAbilityByName("tidehunter_ravage")
+				-- Add tier 5 ability
+				building:AddAbility(ancient_ability_5)
+				ancient_ability = building:FindAbilityByName(ancient_ability_5)
 				ancient_ability:SetLevel(1)
 			end
 

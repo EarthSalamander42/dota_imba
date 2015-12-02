@@ -239,7 +239,6 @@ function EndShieldParticle( keys )
 	local target = keys.target
 	local caster = keys.caster
 	local ability = keys.ability
-	local max_damage_absorb = base_damage_absorb
 	local damageType = DAMAGE_TYPE_MAGICAL
 
 	target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
@@ -265,7 +264,7 @@ function EndShieldParticle( keys )
 	local modifier_debuff = "modifier_frostmourne_debuff"
 
 	for _,enemy in pairs(enemies) do
-		ApplyDamage({ victim = enemy, attacker = caster, damage = max_damage_absorb, damage_type = damageType })
+		ApplyDamage({ victim = enemy, attacker = caster, damage = base_damage_absorb, damage_type = damageType })
 		if enemy:HasModifier(modifier_debuff_base) then
 			local stack_count = enemy:GetModifierStackCount(modifier_debuff, ability)
 

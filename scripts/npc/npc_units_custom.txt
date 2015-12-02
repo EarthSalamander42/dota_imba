@@ -672,13 +672,13 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"3"
+		"ArmorPhysical"				"0"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"20"
-		"AttackDamageMax"			"20"
+		"AttackDamageMin"			"10"
+		"AttackDamageMax"			"10"
 		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.3"
 		"AttackAcquisitionRange"	"600"
@@ -700,18 +700,18 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"300"
+		"MovementSpeed"				"400"
 		"MovementTurnRate"			"1.0"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"100"
+		"StatusHealth"				"1"
 		"StatusHealthRegen"			"0.0"
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"
-		"VisionNighttimeRange"		"900"
+		"VisionDaytimeRange"		"600"
+		"VisionNighttimeRange"		"600"
 
 		// Team
 		//----------------------------------------------------------------

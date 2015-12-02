@@ -206,15 +206,16 @@ function LandMineExplode( keys )
 	local sound_explode = keys.sound_explode
 	local particle_explode = keys.particle_explode
 	local modifier_invis = keys.modifier_invis
+	local modifier_debuff = keys.modifier_debuff
 	local scepter = HasScepter(caster:GetOwnerEntity())
 
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local bonus_damage_scepter = ability:GetLevelSpecialValueFor("bonus_damage_scepter", ability_level)
 	local small_radius = ability:GetLevelSpecialValueFor("small_radius", ability_level)
 	local big_radius = ability:GetLevelSpecialValueFor("big_radius", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
+	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 
 	-- Make the mine visible
@@ -236,10 +237,19 @@ function LandMineExplode( keys )
 
 	-- Damage small radius enemies
 	for _,enemy in pairs(near_units) do
-		if scepter then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = (damage + enemy:GetMaxHealth() * bonus_damage_scepter / 100), damage_type = DAMAGE_TYPE_PHYSICAL})
-		else
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+		-- Scepter bonus damage
+		local bonus_damage = 0
+		if scepter and not enemy:IsBuilding() then
+			bonus_damage = enemy:GetMaxHealth() * damage_scepter / 100
+		end
+
+		-- Damage
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage + bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+		-- Building damage debuff
+		if enemy:IsBuilding() then
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 		end
 	end
 
@@ -256,10 +266,19 @@ function LandMineExplode( keys )
 
 		-- If not, apply half damage
 		if not already_damaged then
-			if scepter then
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = (damage / 2 + enemy:GetMaxHealth() * bonus_damage_scepter / 200), damage_type = DAMAGE_TYPE_PHYSICAL})
-			else
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage / 2, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+			-- Scepter bonus damage
+			local bonus_damage = 0
+			if scepter and not enemy:IsBuilding() then
+				bonus_damage = enemy:GetMaxHealth() * damage_scepter / 100
+			end
+
+			-- Damage
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = (damage + bonus_damage) / 2, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+			-- Building damage debuff
+			if enemy:IsBuilding() then
+				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 			end
 		end
 	end

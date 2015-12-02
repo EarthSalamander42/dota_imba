@@ -172,7 +172,7 @@ function DeathPact( keys )
 	local modifier_target = keys.modifier_target
 	local scepter = HasScepter(caster)
 
-	-- If the target is the caster or a king, do nothing
+	-- If the target is the caster, do nothing
 	if target == caster then
 		ability:RefundManaCost()
 		ability:EndCooldown()
@@ -284,4 +284,20 @@ function DeathPactKill( keys )
 
 	-- Force update caster's attributes
 	caster:CalculateStatBonus()
+end
+
+function DeathPactDeath( keys )
+	local caster = keys.unit
+	local ability = keys.ability
+	local modifier_pact = keys.modifier_pact
+
+	-- Fetch current stacks
+	local current_stacks = caster:GetModifierStackCount(modifier_pact, caster)
+
+	-- Remove half of the stacks
+	if current_stacks <= 1 then
+		caster:RemoveModifierByName(modifier_pact)
+	else
+		caster:SetModifierStackCount(modifier_pact, caster, current_stacks - 1)
+	end
 end

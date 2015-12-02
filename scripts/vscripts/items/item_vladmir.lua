@@ -60,11 +60,14 @@ function VladmirBlood( keys )
 	-- If the attacker is a real hero, heal and draw the particle
 	if attacker:IsRealHero() then
 
-		if target:IsRealHero() then
-			attacker:Heal(damage * hero_lifesteal / 100, caster)
-		else
-			attacker:Heal(damage * creep_lifesteal / 100, caster)
-		end
+		-- Delay the lifesteal for one game tick to prevent blademail interaction
+		Timers:CreateTimer(0.01, function()
+			if target:IsRealHero() then
+				attacker:Heal(damage * hero_lifesteal / 100, caster)
+			else
+				attacker:Heal(damage * creep_lifesteal / 100, caster)
+			end
+		end)
 
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())

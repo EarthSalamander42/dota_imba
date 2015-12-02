@@ -7988,7 +7988,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"40"
+				"bonus_strength"		"35"
 			}
 			"05"
 			{
@@ -11996,7 +11996,7 @@
 			"15"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"disarm_duration"			"1.0"
+				"disarm_duration"			"0.5"
 			}
 			"16"
 			{
@@ -12479,6 +12479,11 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName" 			"item_imba_sange_and_yasha"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2.0"
+		"AbilitySharedCooldown"			"sange"
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"4100"
@@ -12574,31 +12579,15 @@
 				"Function"				"YashaProjectileHit"
 			}
 
-			"ActOnTargets"
+			"RunScript"
 			{
-				"Target"
-				{
-					"Center"  				"TARGET"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-			
-				"Action"
-				{
-					"FireSound"
-					{
-						"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-						"Target"			"TARGET"
-					}
+				"ScriptFile"			"items/item_sange.lua"
+				"Function"				"SangeDisarm"
+				"Target"				"TARGET"
 
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_item_imba_sange_and_yasha_proc_effect"
-						"Duration"			"%proc_duration"
-						"Target"			"TARGET"
-					}
-				}
+				"modifier_disarm"		"modifier_item_imba_sange_and_yasha_proc_effect"
+				"sound_disarm"			"DOTA_Item.HeavensHalberd.Activate"
+				"duration"				"%proc_duration"
 			}
 		}
 		
@@ -13098,6 +13087,11 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName" 			"item_imba_sange"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2.0"
+		"AbilitySharedCooldown"			"sange"
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"2050"
@@ -13193,29 +13187,15 @@
 
 						"OnSuccess"
 						{
-							"FireSound"
+							"RunScript"
 							{
-								"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-								"Target"
-								{
-									"Center"		"TARGET"
-									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							}
+								"ScriptFile"		"items/item_sange.lua"
+								"Function"			"SangeDisarm"
+								"Target"			"TARGET"
 
-							"ApplyModifier"
-							{
-								"ModifierName"		"modifier_item_imba_sange_disarm"
-								"Duration"			"%disarm_duration"
-								"Target"
-								{
-									"Center"		"TARGET"
-									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
+								"modifier_disarm"	"modifier_item_imba_sange_disarm"
+								"sound_disarm"		"DOTA_Item.HeavensHalberd.Activate"
+								"duration"			"%disarm_duration"
 							}
 						}
 					}
@@ -14148,7 +14128,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ethereal_damage_bonus"	"-50"
+				"ethereal_damage_bonus"	"-40"
 			}
 			"09"
 			{
@@ -15939,6 +15919,11 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName" 			"item_imba_sange_and_azura"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2.0"
+		"AbilitySharedCooldown"			"sange"
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"4100"
@@ -16060,26 +16045,24 @@
 										"Target" 			"TARGET"
 									}
 
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-										"Target"			"TARGET"
-									}
-
 									"Damage"
 									{
 										"Target"			"TARGET"
 										"Type"				"DAMAGE_TYPE_MAGICAL"
 										"Damage"			"%proc_damage"
 									}
-
-									"ApplyModifier"
-									{
-										"ModifierName"		"modifier_item_imba_sange_and_azura_proc_effect"
-										"Duration"			"%proc_duration"
-										"Target"			"TARGET"
-									}
 								}
+							}
+
+							"RunScript"
+							{
+								"ScriptFile"				"items/item_sange.lua"
+								"Function"					"SangeDisarm"
+								"Target"					"TARGET"
+
+								"modifier_disarm"			"modifier_item_imba_sange_and_azura_proc_effect"
+								"sound_disarm"				"DOTA_Item.HeavensHalberd.Activate"
+								"duration"					"%proc_duration"
 							}
 						}
 					}
@@ -16468,6 +16451,11 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName" 			"item_imba_sange_and_azura_and_yasha"
 
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"2.0"
+		"AbilitySharedCooldown"			"sange"
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"6150"
@@ -16573,14 +16561,25 @@
 				"Function"				"YashaProjectileHit"
 			}
 
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_sange.lua"
+				"Function"				"SangeDisarm"
+				"Target"				"TARGET"
+
+				"modifier_disarm"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
+				"sound_disarm"			"DOTA_Item.HeavensHalberd.Activate"
+				"duration"				"%proc_duration"
+			}
+
 			"ActOnTargets"
 			{
 				"Target"
 				{
-					"Center"	"TARGET"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+					"Center"			"TARGET"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+					"Flags"				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 				}
 			
 				"Action"
@@ -16596,19 +16595,6 @@
 					{
 						"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
 						"Target" 			"TARGET"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-						"Target"			"TARGET"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
-						"Duration"			"%proc_duration"
-						"Target"			"TARGET"
 					}
 
 					"Damage"
@@ -18161,6 +18147,11 @@
 				"IsDebuff"					"1"
 				"IsHidden"					"1"
 				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DISABLE_HEALING"	"1"
+				}
 
 				"States"
 				{

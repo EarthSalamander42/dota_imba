@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "6.85.3"						-- Tracks game version
+IMBA_VERSION = "6.85.4f"					-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -112,7 +112,9 @@ HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback pr
 HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
 
 HERO_BUYBACK_COST_SCALING = 100												-- Cost multiplier when buybacking in quick sucession (in %)
-HERO_BUYBACK_COOLDOWN = 30													-- Buyback cooldown
+HERO_BUYBACK_COOLDOWN = 30													-- Base buyback cooldown
+HERO_BUYBACK_COOLDOWN_START_POINT = 20										-- Game time (in minutes) after which buyback cooldown is activated
+HERO_BUYBACK_COOLDOWN_GROW_FACTOR = 2										-- Buyback cooldown increase per minute
 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
 HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
@@ -143,6 +145,8 @@ IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enab
 DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Diretide Kings' bounty multiplier
 DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn time
 DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
+
+ANCIENT_ABILITIES_LIST = {}
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings

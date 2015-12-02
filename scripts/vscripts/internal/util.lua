@@ -219,7 +219,7 @@ end
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
 	
-	-- Shallow Grave and Purification are peskier
+	-- Shallow Grave is peskier
 	target:RemoveModifierByName("modifier_imba_shallow_grave")
 
 	-- Extremely specific blademail interaction because fuck everything
@@ -701,6 +701,8 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_purification_passive")
 	hero:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
 	hero:RemoveModifierByName("modifier_imba_double_edge_prevent_deny")
+	hero:RemoveModifierByName("modifier_imba_vampiric_aura")
+	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -766,7 +768,8 @@ function InitializeInnateAbilities( hero )
 		"imba_queenofpain_delightful_torment",
 		"imba_techies_minefield_sign",
 		"imba_vengeful_rancor",
-		"imba_venomancer_toxicity"
+		"imba_venomancer_toxicity",
+		"imba_magnus_magnetize"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -809,6 +812,11 @@ function PassiveBreak( unit, duration )
 		"imba_faceless_void_backtrack"
 	}
 
+	-- Passive abilities not disabled by break
+	local break_immunities = {
+		"imba_wraith_king_reincarnation"
+	}
+
 	-- Set all passive abilities' levels to zero
 	for i = 0, 15 do
 		local ability = unit:GetAbilityByIndex(i)
@@ -829,6 +837,15 @@ function PassiveBreak( unit, duration )
 					ability:SetLevel(0)
 				end
 			end
+
+			-- Check for immunities (passives which are not disabled by Break)
+			for _,ability_immunity in pairs(break_immunities) do
+				if ability_immunity == ability:GetName() then
+					ability:SetLevel(unit.break_learn_levels[i])
+					unit.break_learn_levels[i] = 0
+				end
+			end
+
 		end
 	end
 
@@ -1047,8 +1064,7 @@ function GetAncientAbility( tier )
 		local ability_list = {
 			"venomancer_poison_nova",
 			"bristleback_quill_spray",
-			"doom_bringer_scorched_earth",
-			"death_prophet_exorcism"
+			"leshrac_diabolic_edict"
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1057,7 +1073,7 @@ function GetAncientAbility( tier )
 	elseif tier == 2 then
 		local ability_list = {
 			"treant_overgrowth",
-			"naga_siren_song_of_the_siren",
+			"rattletrap_battery_assault",
 			"nyx_assassin_spiked_carapace"
 		}
 
@@ -1067,9 +1083,7 @@ function GetAncientAbility( tier )
 	elseif tier == 3 then
 		local ability_list = {
 			"razor_eye_of_the_storm",
-			"rattletrap_battery_assault",
-			"axe_counter_helix",
-			"leshrac_diabolic_edict"
+			"gyrocopter_rocket_barrage"
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1079,7 +1093,6 @@ function GetAncientAbility( tier )
 		local ability_list = {
 			"abaddon_borrowed_time",
 			"axe_berserkers_call",
-			"weaver_time_lapse",
 			"windrunner_windrun"
 		}
 
@@ -1097,4 +1110,71 @@ function GetAncientAbility( tier )
 	end
 	
 	return nil
+end
+
+-- Precaches the ancients' spell assets
+function PrecacheAncientAbilities( ability_name )
+
+	--if ability_name == "venomancer_poison_nova" then
+		PrecacheResource("particle", "particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts", context)
+	--elseif ability_name == "bristleback_quill_spray" then
+		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts", context)
+	--elseif ability_name == "gyrocopter_rocket_barrage" then
+		PrecacheResource("particle", "particles/units/heroes/hero_gyrocopter/gyro_rocket_barrage.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
+	--elseif ability_name == "treant_overgrowth" then
+		PrecacheResource("particle", "particles/units/heroes/hero_treant/treant_overgrowth_cast.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts", context)
+	--elseif ability_name == "doom_bringer_scorched_earth" then
+		PrecacheResource("particle", "particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_debuff.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts", context)
+	--elseif ability_name == "nyx_assassin_spiked_carapace" then
+		PrecacheResource("particle", "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts", context)
+	--elseif ability_name == "razor_eye_of_the_storm" then
+		PrecacheResource("particle", "particles/units/heroes/hero_razor/razor_rain_storm.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context)
+	--elseif ability_name == "axe_counter_helix" then
+		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_counterhelix.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts", context)
+	--elseif ability_name == "rattletrap_battery_assault" then
+		PrecacheResource("particle", "particles/units/heroes/hero_rattletrap/rattletrap_battery_assault.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_rattletrap.vsndevts", context)
+	--elseif ability_name == "leshrac_diabolic_edict" then
+		PrecacheResource("particle", "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts", context)
+	--elseif ability_name == "abaddon_borrowed_time" then
+		PrecacheResource("particle", "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf", context)
+		PrecacheResource("particle", "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
+	--elseif ability_name == "axe_berserkers_call" then
+		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf", context)
+		PrecacheResource("particle", "particles/status_fx/status_effect_beserkers_call.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts", context)
+	--elseif ability_name == "windrunner_windrun" then
+		PrecacheResource("particle", "particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf", context)
+		PrecacheResource("particle", "particles/units/heroes/hero_windrunner/windrunner_windrun_slow.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts", context)
+	--elseif ability_name == "tidehunter_ravage" then
+		PrecacheResource("particle", "particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts", context)
+	--elseif ability_name == "slardar_slithereen_crush" then
+		PrecacheResource("particle", "particles/units/heroes/hero_slardar/slardar_crush.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts", context)
+	--elseif ability_name == "magnataur_reverse_polarity" then
+		PrecacheResource("particle", "particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf", context)
+		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts", context)
+	--end
+
 end

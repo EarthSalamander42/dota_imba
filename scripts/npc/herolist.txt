@@ -94,7 +94,7 @@
 	"npc_dota_hero_keeper_of_the_light" "0"
 	"npc_dota_hero_visage" "0"
 	"npc_dota_hero_meepo" "0"
-	"npc_dota_hero_magnataur" "0"
+	"npc_dota_hero_magnataur" "1"
 	"npc_dota_hero_centaur" "1"
 	"npc_dota_hero_slark" "1"
 	"npc_dota_hero_shredder" "0"

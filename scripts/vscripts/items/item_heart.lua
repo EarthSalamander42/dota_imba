@@ -8,8 +8,8 @@ function HeartDamage( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_regen = keys.modifier_regen
 
-	-- If the attacker is not a hero, do nothing
-	if not attacker:IsHero() and not IsRoshan(attacker) then
+	-- If the attacker is not a hero, roshan, or is an ally, do nothing
+	if not attacker:IsHero() and not IsRoshan(attacker) and attacker ~= caster then
 		return nil
 	end
 
