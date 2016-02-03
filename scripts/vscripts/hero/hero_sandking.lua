@@ -143,7 +143,7 @@ function SandStorm( keys )
 			ParticleManager:SetParticleControl(sandstorm_pfx, 1, Vector(current_radius, current_radius, 0))
 
 			-- Find enemies to damage
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 			-- Apply damage according to distance from the center
 			for _,enemy in pairs(enemies) do
@@ -172,21 +172,22 @@ function SandStorm( keys )
 	Timers:CreateTimer(0, function()
 
 		-- Find enemies to move
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 		-- Move targets according to distance from the center
 		for _,enemy in pairs(enemies) do
 			local distance_to_center = ( enemy:GetAbsOrigin() - caster_pos ):Length2D()
 			local enemy_wind_force = ( wind_force - math.max( ( distance_to_center - base_radius ) / ( max_radius - base_radius ) * wind_force, 0) ) * tick_rate
 			local enemy_pos = enemy:GetAbsOrigin()
-			local target_pos = RotatePosition(caster_pos, QAngle(0, -90, 0), caster_pos + ( enemy_pos - caster_pos ))
-			if distance_to_center > 150 then
-				FindClearSpaceForUnit(enemy, enemy_pos + ( target_pos - enemy_pos ):Normalized() * enemy_wind_force, true)
-			else
-				target_pos = RotatePosition(caster_pos, QAngle(0, -2, 0), caster_pos + ( enemy_pos - caster_pos ))
-				FindClearSpaceForUnit(enemy, target_pos, true)
-			end
-			
+			local target_pos = RotatePosition(caster_pos, QAngle(0, -5, 0), caster_pos + ( enemy_pos - caster_pos ))
+			if not IsUninterruptableForcedMovement(enemy) then
+				if distance_to_center > 150 then
+					FindClearSpaceForUnit(enemy, enemy_pos + ( target_pos - enemy_pos ):Normalized() * enemy_wind_force, true)
+				else
+					target_pos = RotatePosition(caster_pos, QAngle(0, -3, 0), caster_pos + ( enemy_pos - caster_pos ))
+					FindClearSpaceForUnit(enemy, target_pos, true)
+				end
+			end			
 		end
 
 		if ability:IsChanneling() then
@@ -283,7 +284,7 @@ function EpicenterChannel( keys )
 		end
 	end)
 
-	-- Play cast sounds for the caster's team
+	-- Play cast sounds
 	caster:EmitSound(sound_cast)
 	caster:EmitSound(sound_darude)
 
@@ -308,11 +309,18 @@ function Epicenter( keys )
 	local max_pulses = ability:GetLevelSpecialValueFor("max_pulses", ability_level)
 	local pulse_duration = ability:GetLevelSpecialValueFor("pulse_duration", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local pull_scepter = ability:GetLevelSpecialValueFor("pull_scepter", ability_level) * 0.03
+	local pull_scepter = ability:GetLevelSpecialValueFor("pull_scepter", ability_level)
 	local pull_radius_scepter = ability:GetLevelSpecialValueFor("pull_radius_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
+	local bonus_pulses = 0
 	if scepter then
-		max_pulses = ability:GetLevelSpecialValueFor("max_pulses_scepter", ability_level)
+		bonus_pulses = bonus_pulses + ability:GetLevelSpecialValueFor("bonus_pulses_scepter", ability_level)
+	end
+
+	-- Add level-based pulses
+	if caster:IsHero() then
+		local caster_level = caster:GetLevel()
+		bonus_pulses = bonus_pulses + math.floor( caster_level / ability:GetLevelSpecialValueFor("levels_per_pulse", ability_level) )
 	end
 
 	-- Stop cast animation + particle
@@ -333,9 +341,8 @@ function Epicenter( keys )
 
 	-- Pulse parameters
 	local current_pulse = 0
-	local total_pulses = math.floor( max_pulses * channel_time / 4 )
+	local total_pulses = math.floor( max_pulses * channel_time / 4 ) + bonus_pulses
 	local pulse_interval = pulse_duration / total_pulses
-	pull_scepter = pull_scepter * channel_time / 4
 	local pulse_ended = false
 
 	-- Make caster and particle visible for the duration
@@ -356,11 +363,21 @@ function Epicenter( keys )
 		ParticleManager:SetParticleControl(epicenter_pfx, 1, Vector(current_radius, current_radius, 0))
 
 		-- Apply damage and slow to nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemies) do
 			if ability then
 				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
+			end
+		end
+
+		-- Scepter pull
+		if scepter then
+			local scepter_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, pull_radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in pairs(scepter_enemies) do
+				if ( enemy:GetAbsOrigin() - caster_loc ):Length2D() > 100 and not IsUninterruptableForcedMovement(enemy) then
+					FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin() + (caster_loc - enemy:GetAbsOrigin()):Normalized() * pull_scepter, true)
+				end
 			end
 		end
 
@@ -372,21 +389,6 @@ function Epicenter( keys )
 			caster:StopSound(sound_epicenter)
 		end
 	end)
-
-	-- Scepter pull loop
-	if scepter then
-		Timers:CreateTimer(0, function()
-			local scepter_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, pull_radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in pairs(scepter_enemies) do
-				if ( enemy:GetAbsOrigin() - caster_loc ):Length2D() > 100 then
-					FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin() + (caster_loc - enemy:GetAbsOrigin()):Normalized() * pull_scepter * ( ( caster_loc - enemy:GetAbsOrigin() ):Length2D() * 3 ) / pull_radius_scepter, true)
-				end
-			end
-			if not pulse_ended then
-				return 0.03
-			end
-		end)
-	end
 end
 
 function ScepterCheck( keys )

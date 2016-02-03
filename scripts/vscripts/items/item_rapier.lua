@@ -19,7 +19,7 @@ function RapierPickUp( keys )
 	
 	-- Calculate total rapier level carried by the owner
 	for i = 0, 5 do
- 		local item = caster:GetItemInSlot(i)
+		local item = caster:GetItemInSlot(i)
 
 		for j = 1, 10 do
 			if item and item:GetAbilityName() == ( "item_imba_rapier_"..j ) then
@@ -27,8 +27,8 @@ function RapierPickUp( keys )
 				item = nil
 				rapier_level = rapier_level + j
 			end
- 		end
- 	end
+		end
+	end
 
  	-- Cap rapier level at 10
 	rapier_level = math.min(rapier_level, 10)
@@ -81,7 +81,7 @@ function RapierDamage( keys )
 	local damage = keys.damage
 
 	-- If the target is Roshan, a building, or an ally, or if the caster is an invulnerable storm spirit, do nothing
-	if target:IsBuilding() or IsRoshan(target) or target:GetTeam() == caster:GetTeam() or (caster:IsInvulnerable() and caster:GetName() == "npc_dota_hero_storm_spirit") then
+	if target:IsBuilding() or target:IsAncient() or target:GetTeam() == caster:GetTeam() or (caster:IsInvulnerable() and caster:GetName() == "npc_dota_hero_storm_spirit") then
 		return nil
 	end
 

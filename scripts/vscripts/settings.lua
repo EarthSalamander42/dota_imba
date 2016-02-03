@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "6.85.4f"					-- Tracks game version
+IMBA_VERSION = "6.86"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -58,11 +58,11 @@ DISABLE_ANNOUNCER = false					-- Should we disable the announcer from working in
 FORCE_PICKED_HERO = nil						-- What hero should we force all players to spawn as? (e.g. "npc_dota_hero_axe").  Use nil to allow players to pick their own hero.
 
 FIXED_RESPAWN_TIME = -1						-- What time should we use for a fixed respawn timer?  Use -1 to keep the default dota behavior.
-FOUNTAIN_CONSTANT_MANA_REGEN = -1			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
-FOUNTAIN_PERCENTAGE_MANA_REGEN = -1			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
-FOUNTAIN_PERCENTAGE_HEALTH_REGEN = -1		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
+FOUNTAIN_CONSTANT_MANA_REGEN = 14			-- What should we use for the constant fountain mana regen?  Use -1 to keep the default dota behavior.
+FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fountain mana regen?  Use -1 to keep the default dota behavior.
+FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
 MAXIMUM_ATTACK_SPEED = 600					-- What should we use for the maximum attack speed?
-MINIMUM_ATTACK_SPEED = 20					-- What should we use for the minimum attack speed?
+MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed?
 
 											-- NOTE: You always need at least 2 non-bounty (non-regen while broken) type runes to be able to spawn or your game will crash!
 ENABLED_RUNES = {}							-- Which runes should be enabled to spawn in our game mode?
@@ -70,7 +70,7 @@ ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
 ENABLED_RUNES[DOTA_RUNE_HASTE] = true
 ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
 ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
-ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true		-- Regen runes are currently not spawning as of the writing of this comment
+ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
 ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
 
 -------------------------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ HERO_KILL_GOLD_PER_LEVEL = 9												-- Hero gold bounty increase per level
 HERO_KILL_GOLD_PER_KILLSTREAK = 60											-- Amount of gold awarded per killstreak
 HERO_KILL_GOLD_PER_DEATHSTREAK = 50											-- Amount of gold reduced from the hero's bounty on a deathstreak
 
-HERO_KILL_GOLD_KILLSTREAK_CAP = 1000										-- Maximum percentage of its bounty a hero can grant
+HERO_KILL_GOLD_KILLSTREAK_CAP = 1500										-- Maximum percentage of its bounty a hero can grant
 HERO_KILL_GOLD_DEATHSTREAK_CAP = 50											-- Minimum percentage of its bounty a hero can grant
 
 HERO_DEATH_GOLD_LOSS_PER_LEVEL = 30											-- Amount of gold lost on death per level
@@ -99,7 +99,7 @@ HERO_ASSIST_BOUNTY_FACTOR_3 = 0.40											-- Factor to multiply the assist bo
 HERO_ASSIST_BOUNTY_FACTOR_4 = 0.30											-- Factor to multiply the assist bounty by when 4 heroes are involved
 HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bounty by when 5 heroes are involved
 
-HERO_GLOBAL_BOUNTY_FACTOR = 15												-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
+HERO_GLOBAL_BOUNTY_FACTOR = 18												-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
 
 HERO_KILL_XP_CONSTANT_1 = 100												-- XP formula up to level 5 is constant I + (level - 1) * constant II
 HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is the level 5 value + (level - 5) * constant II
@@ -113,7 +113,7 @@ HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback p
 
 HERO_BUYBACK_COST_SCALING = 100												-- Cost multiplier when buybacking in quick sucession (in %)
 HERO_BUYBACK_COOLDOWN = 30													-- Base buyback cooldown
-HERO_BUYBACK_COOLDOWN_START_POINT = 20										-- Game time (in minutes) after which buyback cooldown is activated
+HERO_BUYBACK_COOLDOWN_START_POINT = 15										-- Game time (in minutes) after which buyback cooldown is activated
 HERO_BUYBACK_COOLDOWN_GROW_FACTOR = 2										-- Buyback cooldown increase per minute
 
 HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
@@ -226,7 +226,7 @@ GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 20												-- How many kills for a team should signify the end of the game?
+KILLS_TO_END_GAME_FOR_TEAM = 25												-- How many kills for a team should signify the end of the game?
 			
 ALLOW_SAME_HERO_SELECTION = false											-- Allows people to select the same hero as each other if true
 
@@ -235,7 +235,6 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait befor
 
 IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
-IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = true							-- Randomizes skills every time you die in Random OMG
 
 CREEP_GOLD_BONUS = 30														-- Amount of bonus gold granted by creeps and passive gold (in %)
 HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in %)
@@ -243,12 +242,13 @@ HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in 
 CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
 HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
-CREEP_POWER_RAMP_UP_FACTOR = 1												-- Creep power increase multiplier factor
+CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
-CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 4											-- Creep bounty increase (in %) based on game time
+CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 5											-- Creep bounty increase (in %) based on game time
 
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
 TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
+TOWER_POWER_FACTOR = 0														-- Tower durability/damage increase factor (0 = default)
 
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 
@@ -269,6 +269,10 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	HERO_STARTING_LEVEL = 5
 	HERO_XP_BONUS = 60
 	CREEP_XP_BONUS = 60
+	TOWER_UPGRADE_MODE = true
+	CREEP_POWER_FACTOR = 2
+	TOWER_POWER_FACTOR = 1
+	HERO_BUYBACK_COOLDOWN = 60
 end
 
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
@@ -303,3 +307,4 @@ end
 TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
 RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
 RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")
+PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")

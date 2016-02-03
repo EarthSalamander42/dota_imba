@@ -360,7 +360,28 @@ function NetherWardZap( keys )
 		"imba_wraith_king_kingdom_come",
 		"imba_faceless_void_chronosphere",
 		"magnataur_skewer",
-		"imba_tinker_march_of_the_machines"
+		"imba_tinker_march_of_the_machines",
+		"riki_blink_strike",
+		"riki_tricks_of_the_trade",
+		"imba_necrolyte_death_pulse",
+		"beastmaster_call_of_the_wild",
+		"beastmaster_call_of_the_wild_boar",
+		"dark_seer_ion_shell",
+		"dark_seer_wall_of_replica",
+		"morphling_waveform",
+		"morphling_adaptive_strike",
+		"morphling_replicate",
+		"morphling_morph_replicate",
+		"morphling_hybrid",
+		"leshrac_pulse_nova",
+		"rattletrap_power_cogs",
+		"rattletrap_rocket_flare",
+		"rattletrap_hookshot",
+		"spirit_breaker_charge_of_darkness",
+		"shredder_timber_chain",
+		"shredder_chakram",
+		"shredder_chakram_2",
+		"imba_enigma_demonic_conversion"
 	}
 
 	-- Ignore items
@@ -405,6 +426,13 @@ function NetherWardZap( keys )
 		local ability_souls = ward:FindAbilityByName("nevermore_necromastery")
 		ward:AddNewModifier(ward, ability_souls, "modifier_nevermore_necromastery", {})
 		ward:SetModifierStackCount("modifier_nevermore_necromastery", ward, 40)
+	end
+
+	-- Nether Strike: add greater bash
+	if cast_ability_name == "spirit_breaker_nether_strike" then
+		ward:AddAbility("spirit_breaker_greater_bash")
+		local ability_bash = ward:FindAbilityByName("spirit_breaker_greater_bash")
+		ability_bash:SetLevel(4)
 	end
 
 	-- Purification: remove omniguard
@@ -635,7 +663,9 @@ function LifeDrainTickEnemy( keys )
 
 	-- Increase damage with scepter
 	if scepter then
-		health_drain = ability:GetLevelSpecialValueFor("health_drain_scepter", ability_level)
+		local extra_health_drain = ability:GetLevelSpecialValueFor("health_drain_scepter", ability_level)
+		local enemy_health = target:GetHealth()
+		health_drain = health_drain + enemy_health * extra_health_drain / 100
 	end
 
 	-- Apply damage
@@ -710,9 +740,11 @@ function LifeDrainTickAlly( keys )
 	local break_range = ability:GetLevelSpecialValueFor("break_range", ability_level)
 	local tick_rate = ability:GetLevelSpecialValueFor("tick_rate", ability_level)
 
-	-- Increase damage with scepter
+	-- Increase heal with scepter
 	if scepter then
-		health_drain = ability:GetLevelSpecialValueFor("health_drain_scepter", ability_level)
+		local extra_health_drain = ability:GetLevelSpecialValueFor("health_drain_scepter", ability_level)
+		local caster_health = caster:GetHealth()
+		health_drain = health_drain + caster_health * extra_health_drain / 100
 	end
 
 	-- Apply damage

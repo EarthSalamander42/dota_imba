@@ -229,6 +229,9 @@ function March( keys )
 	local spawn_points = {}
 	local caster_pos = caster:GetAbsOrigin()
 	local target_direction = (target - caster_pos):Normalized()
+	if target == caster_pos then
+		target_direction = caster:GetForwardVector()
+	end
 	spawn_points[1] = RotatePosition(target, QAngle(0, -90, 0), target + target_direction * spawner_width / 2 )
 	spawn_points[2] = RotatePosition(target, QAngle(0, 90, 0), target + target_direction * spawner_width / 2 )
 
@@ -414,7 +417,10 @@ function Rearm( keys )
 		"item_imba_refresher",
 		"item_imba_necronomicon",
 		"item_imba_necronomicon_2",
-		"item_imba_necronomicon_3"
+		"item_imba_necronomicon_3",
+		"item_imba_necronomicon_4",
+		"item_imba_necronomicon_5",
+		"item_imba_skadi"
 	}
 
 	-- Play sound

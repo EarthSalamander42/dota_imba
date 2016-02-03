@@ -35,6 +35,11 @@ function TimeWalk( keys )
 	ParticleManager:SetParticleControlEnt(afterimage_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControl(afterimage_pfx, 1, caster:GetAbsOrigin())
 
+	-- Heal recent damage
+	if caster.time_walk_damage_taken then
+		caster:Heal(caster.time_walk_damage_taken, caster)
+	end
+
 	-- Create chrono particle
 	local chrono_pfx = {}
 	local latest_chrono_pfx = 1
@@ -122,6 +127,102 @@ function TimeWalk( keys )
 			return tick_interval
 		end
 	end)
+end
+
+function TimeWalkDamage( keys )
+	local ability = keys.ability
+
+	-- If the ability was unlearned, do nothing
+	if not ability then
+		return nil
+	end
+
+	-- Parameters
+	local caster = keys.caster
+	local ability_level = ability:GetLevel() - 1
+	local damage_taken = keys.damage_taken
+	local damage_time = ability:GetLevelSpecialValueFor("damage_time", ability_level)
+
+	-- Initializes damage taken counter if necessary
+	if not caster.time_walk_damage_taken then
+		caster.time_walk_damage_taken = 0
+	end
+	
+	-- Stores this instance of damage
+	caster.time_walk_damage_taken = caster.time_walk_damage_taken + damage_taken
+
+	-- Decrease damage counter after the duration is up
+	Timers:CreateTimer(damage_time, function()
+		caster.time_walk_damage_taken = caster.time_walk_damage_taken - damage_taken
+	end)
+end
+
+function TimeDilation( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local sound_hit = keys.sound_hit
+	local particle_cast = keys.particle_cast
+	local particle_hit = keys.particle_hit
+	local modifier_slow = keys.modifier_slow
+	local modifier_buff = keys.modifier_buff
+
+	-- Parameters
+	local cooldown_increase = ability:GetLevelSpecialValueFor("cooldown_increase", ability_level)
+	local cooldown_start = ability:GetLevelSpecialValueFor("cooldown_start", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local caster_pos = caster:GetAbsOrigin()
+
+	-- Play cast sound
+	caster:EmitSound(sound_cast)
+
+	-- Play cast particles
+	local cast_pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(cast_pfx, 0, caster_pos)
+	ParticleManager:SetParticleControl(cast_pfx, 1, Vector(radius, 0, 0))
+	local cast_pfx_2 = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(cast_pfx, 0, caster_pos)
+
+	-- Iterate through affected enemies
+	local abilities_affected = 0
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	for _,target in pairs(nearby_enemies) do
+		
+		-- Play hit sound
+		target:EmitSound(sound_hit)
+
+		-- Play hit particle
+		local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
+
+		-- Iterate through the target's abilities
+		local abilities_on_cooldown = 0
+		for i = 0, 15 do
+			local current_ability = target:GetAbilityByIndex(i)
+			if current_ability then
+				if current_ability:IsCooldownReady() then
+					current_ability:StartCooldown(cooldown_start)
+				else
+					current_ability:StartCooldown( current_ability:GetCooldownTimeRemaining() + cooldown_increase )
+					abilities_on_cooldown = abilities_on_cooldown + 1
+				end
+			end
+		end
+
+		-- Apply slow according to how many abilities were affected
+		if abilities_on_cooldown > 0 then
+			AddStacks(ability, caster, target, modifier_slow, abilities_on_cooldown, true)
+		end
+
+		-- Add abilities affected to the total count
+		abilities_affected = abilities_affected + abilities_on_cooldown
+	end
+
+	-- Grant bonuses, if applicable
+	if abilities_affected > 0 then
+		AddStacks(ability, caster, caster, modifier_buff, abilities_affected, true)
+	end
 end
 
 function TimeLock( keys )

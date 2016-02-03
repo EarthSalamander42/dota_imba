@@ -95,12 +95,10 @@ function MeatHook( keys )
 	-- Sound, particle and modifier keys
 	local sound_extend = keys.sound_extend
 	local sound_hit = keys.sound_hit
-	local sound_scepter_hit = keys.sound_scepter_hit
 	local sound_retract = keys.sound_retract
 	local sound_retract_stop = keys.sound_retract_stop
 	local particle_hook = keys.particle_hook
 	local particle_hit = keys.particle_hit
-	local particle_hit_scepter = keys.particle_hit_scepter
 	local modifier_caster = keys.modifier_caster
 	local modifier_target_enemy = keys.modifier_target_enemy
 	local modifier_target_ally = keys.modifier_target_ally
@@ -117,9 +115,11 @@ function MeatHook( keys )
 	local stack_range = ability:GetLevelSpecialValueFor("stack_range", ability_level)
 	local stack_speed = ability:GetLevelSpecialValueFor("stack_speed", ability_level)
 	local stack_damage = ability:GetLevelSpecialValueFor("stack_damage", ability_level)
+	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+	local cooldown_scepter = ability:GetLevelSpecialValueFor("cooldown_scepter", ability_level)
+	local cooldown_cap_scepter = ability:GetLevelSpecialValueFor("cooldown_cap_scepter", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
-	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 	local start_loc = caster_loc + caster:GetForwardVector() * hook_width
 
@@ -129,6 +129,14 @@ function MeatHook( keys )
 	local hook_speed = base_speed + stack_speed * light_stacks
 	local hook_range = base_range + stack_range * light_stacks
 	local hook_damage = base_damage + stack_damage * sharp_stacks
+
+	-- If the caster has a scepter, improve stack-based damage and cooldown
+	if scepter then
+		hook_damage = hook_damage + light_stacks * damage_scepter
+		local hook_cooldown = math.max(ability:GetCooldown(ability_level) - cooldown_scepter * sharp_stacks, cooldown_cap_scepter)
+		ability:EndCooldown()
+		ability:StartCooldown(hook_cooldown * GetCooldownReduction(caster))
+	end
 
 	-- Stun the caster for the hook duration
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
@@ -204,11 +212,6 @@ function MeatHook( keys )
 			target:EmitSound(sound_hit)
 			local hook_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, target)
 
-			-- If Pudge has scepter, play the Rupture sound effect
-			if scepter and target:GetTeam() ~= caster:GetTeam() then
-				target:EmitSound(sound_scepter_hit)
-			end
-
 			-- Grant vision on the hook hit area
 			ability:CreateVisibilityNode(hook_loc, vision_radius, vision_duration)
 		end
@@ -227,6 +230,7 @@ function MeatHook( keys )
 
 		-- If we are here, this means the hook has to start reeling back; prepare return variables
 		local direction = ( caster_loc - hook_loc )
+		local current_tick = 0
 
 		-- Stop the extending sound and start playing the return sound
 		caster:StopSound(sound_extend)
@@ -254,9 +258,10 @@ function MeatHook( keys )
 			hook_loc = hook_dummy:GetAbsOrigin()
 			direction = ( caster_loc - hook_loc )
 			hook_step = direction:Normalized() * hook_speed
+			current_tick = current_tick + 1
 			
-			-- If the target is close enough, finalize the hook return
-			if direction:Length2D() < hook_speed then
+			-- If the target is close enough, or the hook has been out too long, finalize the hook return
+			if direction:Length2D() < hook_speed or current_tick > 300 then
 
 				-- Stop moving the target
 				if target_hit then
@@ -302,13 +307,6 @@ function MeatHook( keys )
 					target:SetAbsOrigin(hook_loc + hook_step)
 					target:SetForwardVector(direction:Normalized())
 					ability:CreateVisibilityNode(hook_loc, vision_radius, 0.5)
-
-					-- If Pudge has scepter, deal damage on every step
-					if scepter and target:GetTeam() ~= caster:GetTeam() then
-						local step_damage = damage_scepter * hook_speed / 1000
-						ApplyDamage({attacker = caster, victim = target, ability = ability, damage = step_damage, damage_type = DAMAGE_TYPE_PURE})
-						local rupture_pfx = ParticleManager:CreateParticle(particle_hit_scepter, PATTACH_ABSORIGIN, target)
-					end
 				end
 				
 				return tick_rate

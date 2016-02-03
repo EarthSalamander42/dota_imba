@@ -8,7 +8,6 @@ function RancorUpdate( keys )
 	_G.VENGEFUL_RANCOR = true
 	_G.VENGEFUL_RANCOR_CASTER = caster
 	_G.VENGEFUL_RANCOR_ABILITY = ability
-	_G.VENGEFUL_RANCOR_SCEPTER = HasScepter(caster)
 	_G.VENGEFUL_RANCOR_TEAM = caster:GetTeam()
 end
 
@@ -306,6 +305,17 @@ function VengeanceAuraCrit( keys )
 	end
 end
 
+function UpgradeSwapback( keys )
+	local caster = keys.caster
+	local ability_swapback = caster:FindAbilityByName(keys.ability_swapback)
+
+	-- Upgrade the Swapback ability
+	if ability_swapback then
+		ability_swapback:SetLevel(1)
+		ability_swapback:SetActivated(false)
+	end
+end
+
 function NetherSwap( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -319,6 +329,7 @@ function NetherSwap( keys )
 	local particle_target = keys.particle_target
 	local particle_rancor = keys.particle_rancor
 	local modifier_rancor = keys.modifier_rancor
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local rancor_radius = ability:GetLevelSpecialValueFor("rancor_radius", ability_level)
@@ -327,6 +338,13 @@ function NetherSwap( keys )
 	local swapback_min_time = ability:GetLevelSpecialValueFor("swapback_min_time", ability_level)
 	local swapback_max_time = ability:GetLevelSpecialValueFor("swapback_max_time", ability_level)
 	local ministun_duration = ability:GetLevelSpecialValueFor("ministun_duration", ability_level)
+	local cooldown_scepter = ability:GetLevelSpecialValueFor("cooldown_scepter", ability_level)
+
+	-- Start the reduced cooldown if the caster has a scepter
+	if scepter then
+		ability:EndCooldown()
+		ability:StartCooldown(cooldown_scepter * GetCooldownReduction(caster))
+	end
 
 	-- Ministun the target if it's an enemy
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -336,6 +354,12 @@ function NetherSwap( keys )
 	-- Play sounds
 	caster:EmitSound(sound_swap)
 	target:EmitSound(sound_swap)
+
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(caster)
+	if target:GetTeam() == caster:GetTeam() then
+		ProjectileManager:ProjectileDodge(target)
+	end
 
 	-- Play caster particle
 	local caster_pfx = ParticleManager:CreateParticle(particle_caster, PATTACH_ABSORIGIN, caster)
@@ -350,6 +374,17 @@ function NetherSwap( keys )
 	-- Fetch positions
 	local caster_loc = caster:GetAbsOrigin()
 	local target_loc = target:GetAbsOrigin()
+
+	-- Adjust target's position if it is inside the enemy fountain
+	local fountain_loc
+	if target:GetTeam() == DOTA_TEAM_GOODGUYS then
+		fountain_loc = Vector(7472, 6912, 512)
+	else
+		fountain_loc = Vector(-7456, -6938, 528)
+	end
+	if (caster_loc - fountain_loc):Length2D() < 1700 then
+		caster_loc = fountain_loc + (target_loc - fountain_loc):Normalized() * 1700
+	end
 
 	-- Store initial position for swapback
 	caster.nether_swap_start_position = caster_loc
@@ -412,19 +447,14 @@ function NetherSwap( keys )
 		end
 	end)
 
-	-- Grant Swapback ability
-	caster:SwapAbilities(ability_name, ability_swapback_name, false, true)
-	ability_swapback:SetActivated(false)
-
 	-- Activate swapback after [swapback_min_time] seconds
 	Timers:CreateTimer(swapback_min_time, function()
 		ability_swapback:SetActivated(true)
 	end)
 
-	-- Grant nether swap back after [swapback_max_time] seconds
+	-- Deactivate swapback after [swapback_max_time] seconds
 	Timers:CreateTimer(swapback_max_time, function()
-		caster:SwapAbilities(ability_name, ability_swapback_name, true, false)
-		caster.nether_swap_start_position = nil
+		ability_swapback:SetActivated(false)
 	end)
 
 end
@@ -449,13 +479,16 @@ function NetherSwapBack( keys )
 	-- Play sound
 	caster:EmitSound(sound_swap)
 
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(caster)
+
 	-- Create dummy on the initial position
 	local dummy_target = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber())
 
 	-- Play particle
 	local swap_pfx = ParticleManager:CreateParticle(particle_caster, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControlEnt(swap_pfx, 1, dummy_target, PATTACH_POINT_FOLLOW, "attach_hitloc", dummy_target:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControlEnt(swap_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(swap_pfx, 0, dummy_target, PATTACH_POINT_FOLLOW, "attach_hitloc", dummy_target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(swap_pfx, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
 
 	-- Swap positions
 	FindClearSpaceForUnit(caster, caster.nether_swap_start_position, true)
@@ -469,4 +502,7 @@ function NetherSwapBack( keys )
 	Timers:CreateTimer(0.01, function()
 		dummy_target:Destroy()
 	end)
+
+	-- Deactivate the swapback ability
+	ability:SetActivated(false)
 end

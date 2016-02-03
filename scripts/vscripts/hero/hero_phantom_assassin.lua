@@ -34,7 +34,7 @@ function StiflingDaggerHit( keys )
 	local initial_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
 	caster:SetAbsOrigin(target_pos)
-	caster:PerformAttack(target, true, true, true, true)
+	caster:PerformAttack(target, true, true, true, true, true)
 	caster:SetAbsOrigin(initial_pos)
 end
 
@@ -188,7 +188,7 @@ function PhantomStrikeHit( keys )
 		local initial_pos = caster:GetAbsOrigin()
 		local target_pos = target:GetAbsOrigin()
 		caster:SetAbsOrigin(target_pos)
-		caster:PerformAttack(target, true, true, true, true)
+		caster:PerformAttack(target, true, true, true, true, true)
 		caster:SetAbsOrigin(initial_pos)
 	end
 end

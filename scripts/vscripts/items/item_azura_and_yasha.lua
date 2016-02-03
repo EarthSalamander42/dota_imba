@@ -76,9 +76,7 @@ function Azura( keys )
 	local stack_sound = keys.stack_sound
 
 	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	elseif target:IsAncient() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
 		return nil
 	end
 

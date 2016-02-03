@@ -242,10 +242,12 @@ function WardCast( keys )
 	scourge_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 
 	-- Prevent nearby units from getting stuck
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	for _,unit in pairs(units) do
-		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-	end
+	Timers:CreateTimer(0.01, function()
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, 64, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _,unit in pairs(units) do
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		end
+	end)
 
 	-- Apply ward modifiers (controls damage taken and duration)
 	ability:ApplyDataDrivenModifier(caster, scourge_ward, modifier_ward, {})
@@ -278,10 +280,12 @@ function WardCast( keys )
 		plague_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 
 		-- Prevent nearby units from getting stuck
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), spawn_point, nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		for _,unit in pairs(units) do
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-		end
+		Timers:CreateTimer(0.01, function()
+			local units = FindUnitsInRadius(caster:GetTeamNumber(), spawn_point, nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _,unit in pairs(units) do
+				FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+			end
+		end)
 
 		-- Apply ward modifiers (controls damage taken and duration)
 		ability:ApplyDataDrivenModifier(caster, plague_ward, modifier_ward, {})

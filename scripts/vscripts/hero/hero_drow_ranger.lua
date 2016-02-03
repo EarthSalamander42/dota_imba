@@ -16,21 +16,12 @@ function FrostArrows( keys )
 		target:SetModifierStackCount(stack_modifier, ability, 1)
 	elseif target:GetModifierStackCount(stack_modifier, ability) < stacks_to_freeze - 1 then
 		local stack_count = target:GetModifierStackCount(stack_modifier, ability)
+		ability:ApplyDataDrivenModifier(caster, target, stack_modifier, {})
 		target:SetModifierStackCount(stack_modifier, ability, stack_count + 1)
 	else
 		target:RemoveModifierByName(stack_modifier)
 		ability:ApplyDataDrivenModifier(caster, target, freeze_modifier, {})
 	end	
-end
-
--- Resets frost arrows stacks on the target when the slow wears off
-function FrostArrowsEnd( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local stack_modifier = keys.stack_modifier
-
-	target:RemoveModifierByName(stack_modifier)
 end
 
 -- Upgrades Frost Arrows' cast range when leveling up Marksmanship
@@ -84,7 +75,7 @@ function Gust( keys )
 	-- knockbacks using modifier_knockback
 	local knockbackModifierTable =
 	{
-		should_stun = 1,
+		should_stun = 0,
 		knockback_duration = keys.duration,
 		duration = keys.duration,
 		knockback_distance = len,
@@ -132,58 +123,85 @@ function Marksmanship( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_effect = keys.modifier_effect
+
+	-- If the ability was unlearned, do nothing
+	if not ability then
+		return nil
+	end
+
+	-- Parameters
 	local enemy_radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local tree_radius = ability:GetLevelSpecialValueFor("tree_radius_scepter", ability_level)
 	local caster_position = caster:GetAbsOrigin()
 
-	-- Modifier names
-	local modifier_regular = keys.modifier_effect
-	local modifier_scepter = keys.modifier_scepter
-
-	-- Effect logic
-	local scepter = HasScepter(caster)
-	local enemy_nearby
-	local tree_nearby
-	local modifier_effect
-
-	-- Switches between scepter and regular modifiers
-	if scepter then 
-		if caster:HasModifier(modifier_regular) then
-			caster:RemoveModifierByName(modifier_regular)
-		end
-		modifier_effect = modifier_scepter
-	else
-		if caster:HasModifier(modifier_scepter) then
-			caster:RemoveModifierByName(modifier_scepter)
-		end
-		modifier_effect = modifier_regular
-	end
-
 	-- Check enemy presence in enemy_radius
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster_position, caster, enemy_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster_position, caster, enemy_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, 0, false)
+	
+	-- If enemies are nearby, remove the effect
 	if #units > 0 then
-		enemy_nearby = true
-	end
-
-	-- Check tree presence in tree_radius
-	local tree_nearby = GridNav:IsNearbyTree(caster_position, tree_radius, true)
-
-	-- Switches between scepter and regular modifiers
-	if not enemy_nearby then
-		if not caster:HasModifier(modifier_effect) then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
-		end
-		if scepter and tree_nearby and not caster:IsAttacking() and not caster.shadow_blade_active then
-			caster:AddNewModifier(caster, ability, "modifier_invisible", {})
-		else
-			if not caster.shadow_blade_active then
-				caster:RemoveModifierByName("modifier_invisible")
-			end
-		end
-	else
 		caster:RemoveModifierByName(modifier_effect)
-		if not caster.shadow_blade_active then
-			caster:RemoveModifierByName("modifier_invisible")
+
+	-- Else, apply it if not previously existing
+	elseif not caster:HasModifier(modifier_effect) then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_effect, {})
+	end
+end
+
+function MarksmanshipSplinter( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local scepter = HasScepter(caster)
+
+	-- If the ability was unlearned, or there's no scepter, do nothing
+	if not ability or not scepter or caster:IsIllusion() then
+		return nil
+	end
+
+	-- Parameters
+	local splinter_chance = ability:GetLevelSpecialValueFor("splinter_chance_scepter", ability_level)
+	local splinter_radius = ability:GetLevelSpecialValueFor("splinter_radius_scepter", ability_level)
+	local target_pos = target:GetAbsOrigin()
+	
+	-- Roll for splinter chance
+	if RandomInt(1, 100) <= splinter_chance then
+
+		-- Find enemies near the target
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, splinter_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		if #nearby_enemies > 1 then
+
+			-- Choose a nearby enemy different from the initial target
+			local splinter_target
+			if nearby_enemies[1] ~= target then
+				splinter_target = nearby_enemies[1]
+			else
+				splinter_target = nearby_enemies[2]
+			end
+
+			-- Splinter projectile parameters
+			local splinter_projectile = {
+				Target = splinter_target,
+				Source = target,
+				Ability = ability,
+				EffectName = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf",
+				bDodgeable = true,
+				bProvidesVision = false,
+				iMoveSpeed = 1250,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+			}
+
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(splinter_projectile)
 		end
 	end
+end
+
+function MarksmanshipHit( keys )
+	local caster = keys.caster
+	local target = keys.target
+
+	caster:PerformAttack(target, true, true, true, true, false)
 end

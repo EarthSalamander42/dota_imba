@@ -25,7 +25,11 @@ function DragonSlave( keys )
 
 	-- Defines the projectiles' directions
 	local target_pos = keys.target_points[1]
-	local direction_center = ( target_pos - caster:GetAbsOrigin() ):Normalized()
+	local caster_pos = caster:GetAbsOrigin()
+	local direction_center = (target_pos - caster_pos):Normalized()
+	if target_pos == caster_pos then
+		direction_center = caster:GetForwardVector()
+	end
 	local direction_left = (RotatePosition(target_pos, QAngle(0, 45, 0), target_pos + direction_center * distance) - target_pos):Normalized()
 	local direction_right = (RotatePosition(target_pos, QAngle(0, -45, 0), target_pos + direction_center) - target_pos):Normalized()
 
@@ -124,8 +128,12 @@ function LightStrikeArray( keys )
 	-- Blast positioning variables
 	local target_pos = keys.target_points[1]
 	local caster_pos = caster:GetAbsOrigin()
+	local direction = (target_pos - caster_pos):Normalized()
+	if target_pos == caster_pos then
+		direction = caster:GetForwardVector()
+	end
 	local blast_pos = target_pos
-	local step = (target_pos - caster_pos):Normalized() * radius
+	local step = direction * radius
 	local blast_count = 0
 
 	-- Create a (visible) dummy at the initial cast point

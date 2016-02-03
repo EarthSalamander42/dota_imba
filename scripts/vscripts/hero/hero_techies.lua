@@ -12,6 +12,7 @@ function LandMinePlant( keys )
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 
 	-- Calculate amount of mines to place
@@ -26,6 +27,7 @@ function LandMinePlant( keys )
 		local land_mine = CreateUnitByName("npc_imba_techies_land_mine", target, false, caster, caster, caster:GetTeam())
 		FindClearSpaceForUnit(land_mine, target + RandomVector(10), true)
 		land_mine:SetControllableByPlayer(player_id, true)
+		land_mine:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
 
 		-- Root the mine in place
 		land_mine:AddNewModifier(land_mine, ability, "modifier_rooted", {})
@@ -52,6 +54,7 @@ function LandMineCharges( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_charges = keys.modifier_charges
+	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local levels_per_charge = ability:GetLevelSpecialValueFor("levels_per_charge", ability_level)
@@ -71,7 +74,14 @@ function LandMineCharges( keys )
 
 	-- Increment the timer and add charges if appropriate
 	else
-		caster.land_mine_charge_counter = caster.land_mine_charge_counter + 1
+
+		-- If the caster has a scepter, increment the timer twice as fast
+		if scepter then
+			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 2
+		else
+			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 1
+		end
+
 		if caster.land_mine_charge_counter >= actual_cooldown then
 			
 			-- Reset timer
@@ -96,6 +106,7 @@ function LandMineThrow( keys )
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
 	local throw_chance = ability:GetLevelSpecialValueFor("throw_chance", ability_level)
 	local throw_speed = ability:GetLevelSpecialValueFor("throw_speed", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 	local step_duration = 0.03
 
@@ -107,6 +118,7 @@ function LandMineThrow( keys )
 	-- Create the mine at the specified place
 	local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
 	land_mine:SetControllableByPlayer(player_id, true)
+	land_mine:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
 
 	-- Root the mine in place
 	land_mine:AddNewModifier(land_mine, ability, "modifier_rooted", {})
@@ -194,7 +206,9 @@ function LandMineThink( keys )
 		if should_explode then
 			caster:ForceKill(false)
 		else
-			return think_interval
+			if caster:IsAlive() then
+				return think_interval
+			end
 		end
 	end)
 end
@@ -302,6 +316,7 @@ function StasisTrapPlant( keys )
 	
 	-- Parameters
 	local activation_delay = ability:GetLevelSpecialValueFor("activation_delay", ability_level)
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 
 	-- If a creep is near the target point, apply the mine modifier to it
@@ -348,6 +363,7 @@ function StasisTrapPlant( keys )
 		-- Create the mine at the specified place
 		local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", target, false, caster, caster, caster:GetTeam())
 		stasis_trap:SetControllableByPlayer(player_id, true)
+		stasis_trap:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
 
 		-- Root the mine in place
 		stasis_trap:AddNewModifier(stasis_trap, ability, "modifier_rooted", {})
@@ -414,7 +430,9 @@ function StasisTrapThink( keys )
 				end)
 			end
 		else
-			return think_interval
+			if caster:IsAlive() then
+				return think_interval
+			end
 		end
 	end)
 end

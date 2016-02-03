@@ -77,27 +77,68 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
-	local radiant_spawn = Vector(6820, -6028, 408)
-	local dire_spawn = Vector(-5930, 6916, 278)
-	local spawn_radius = 400
-	local radiant_count = 3
-	--local direction = RandomVector(1)
-	local radiant_spawns = {}
-	for i = 1,radiant_count do
-		radiant_spawns[i] = radiant_spawn + RandomVector(1) * spawn_radius * (i - 1) / (radiant_count - 1)
-	end
+	--local contributor_locations = {}
+	--for i = 1, 9 do
+	--	contributor_locations[i] = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
+	--end
+	--for i = 10, 30 do
+	--	contributor_locations[i] = Entities:FindByName(nil, "contributor_location_"..i):GetAbsOrigin()
+	--end
 
 	-- Martyn Garcia
-	local martyn_model = CreateUnitByName("npc_imba_contributor_martyn", radiant_spawns[1], true, nil, nil, DOTA_TEAM_NEUTRALS)
-	martyn_model:SetForwardVector(RandomVector(100))
+	--local current_position = table.remove(contributor_locations, RandomInt(1, 30))
+	--local martyn_model = CreateUnitByName("npc_imba_contributor_martyn", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--martyn_model:SetForwardVector(RandomVector(100))
 
 	-- Mikkel Garcia
-	local mikkel_model = CreateUnitByName("npc_imba_contributor_mikkel", radiant_spawns[2], true, nil, nil, DOTA_TEAM_NEUTRALS)
-	mikkel_model:SetForwardVector(RandomVector(100))
+	--current_position = table.remove(contributor_locations, RandomInt(1, 29))
+	--local mikkel_model = CreateUnitByName("npc_imba_contributor_mikkel", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--mikkel_model:SetForwardVector(RandomVector(100))
 
 	-- Hjort
-	local hjort_model = CreateUnitByName("npc_imba_contributor_hjort", radiant_spawns[3], true, nil, nil, DOTA_TEAM_NEUTRALS)
-	hjort_model:SetForwardVector(RandomVector(100))
+	--current_position = table.remove(contributor_locations, RandomInt(1, 28))
+	--local hjort_model = CreateUnitByName("npc_imba_contributor_hjort", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--hjort_model:SetForwardVector(RandomVector(100))
+
+	-- Anees
+	--current_position = table.remove(contributor_locations, RandomInt(1, 27))
+	--local anees_model = CreateUnitByName("npc_imba_contributor_anees", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--anees_model:SetForwardVector(RandomVector(100))
+
+	-- Swizard
+	--current_position = table.remove(contributor_locations, RandomInt(1, 26))
+	--local swizard_model = CreateUnitByName("npc_imba_contributor_swizard", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--swizard_model:SetForwardVector(RandomVector(100))
+
+	-- Phroureo
+	--current_position = table.remove(contributor_locations, RandomInt(1, 25))
+	--local phroureo_model = CreateUnitByName("npc_imba_contributor_phroureo", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--phroureo_model:SetForwardVector(RandomVector(100))
+
+	-- Catchy
+	--current_position = table.remove(contributor_locations, RandomInt(1, 24))
+	--local catchy_model = CreateUnitByName("npc_imba_contributor_catchy", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--catchy_model:SetForwardVector(RandomVector(100))
+
+	-- Hewdraw
+	--current_position = table.remove(contributor_locations, RandomInt(1, 23))
+	--local hewdraw_model = CreateUnitByName("npc_imba_contributor_hewdraw", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--hewdraw_model:SetForwardVector(RandomVector(100))
+
+	-- Zimber
+	--current_position = table.remove(contributor_locations, RandomInt(1, 22))
+	--local zimber_model = CreateUnitByName("npc_imba_contributor_zimber", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--zimber_model:SetForwardVector(RandomVector(100))
+
+	-- Matt
+	--current_position = table.remove(contributor_locations, RandomInt(1, 21))
+	--local matt_model = CreateUnitByName("npc_imba_contributor_matt", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--matt_model:SetForwardVector(RandomVector(100))
+
+	-- Maxime
+	--current_position = table.remove(contributor_locations, RandomInt(1, 20))
+	--local maxime_model = CreateUnitByName("npc_imba_contributor_maxime", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	--maxime_model:SetForwardVector(RandomVector(100))
 
 end
 
@@ -252,47 +293,6 @@ function GameMode:DamageFilter( keys )
 
 		-- Prevent crit damage notifications
 		display_red_crit_number = false
-	end
-
-	-- Backtrack dodge
-	if victim:HasModifier("modifier_imba_backtrack") and not victim:HasModifier("modifier_imba_backtrack_cooldown") and keys.damage > 0 then
-
-		-- Fetch backtrack's ability handle
-		local ability
-		for i = 0,15 do
-			local this_ability = victim:GetAbilityByIndex(i)
-			if this_ability and this_ability:GetName() == "imba_faceless_void_backtrack" then
-				ability = this_ability
-			end
-		end
-
-		-- If the ability wasn't found, do nothing
-		if ability then
-
-			local ability_level = ability:GetLevel() - 1
-
-			-- Parameters
-			local dodge_chance = ability:GetLevelSpecialValueFor("passive_dodge", ability_level)
-			
-			-- If backtrack is active, increase dodge chance
-			if victim:HasModifier("modifier_imba_backtrack_active") then
-				dodge_chance = ability:GetLevelSpecialValueFor("active_dodge", ability_level)
-			end
-
-			-- Roll for dodge chance
-			if RandomInt(1, 100) <= dodge_chance then
-
-				-- Nullify damage
-				keys.damage = 0
-
-				-- Play backtrack particle
-				local backtrack_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf", PATTACH_ABSORIGIN, victim)
-				ParticleManager:SetParticleControl(backtrack_pfx, 0, victim:GetAbsOrigin())
-
-				-- Prevent crit damage notifications
-				display_red_crit_number = false
-			end
-		end
 	end
 
 	-- Vanguard block
@@ -594,10 +594,7 @@ function GameMode:OnAllPlayersLoaded()
 		if IMBA_PICK_MODE_ALL_RANDOM then
 			game_mode = "<font color='#FF7800'>ALL RANDOM</font>"
 		elseif IMBA_ABILITY_MODE_RANDOM_OMG then
-			game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates"
-			if IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
-				game_mode = game_mode..", skills are randomed on every respawn"
-			end
+			game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates, skills are randomed on every respawn"
 		end
 
 		-- Same hero
@@ -633,20 +630,24 @@ function GameMode:OnAllPlayersLoaded()
 		-- Starting gold & level
 		local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
 
-		-- Creep power ramp
-		local creep_power = "Creeps and summons' damage will increase "
-		if CREEP_POWER_RAMP_UP_FACTOR == 1 then
-			creep_power = creep_power.."at <font color='#FF7800'>normal</font> speed."
-		elseif CREEP_POWER_RAMP_UP_FACTOR == 2 then
-			creep_power = creep_power.."<font color='#FF7800'>quicker</font> than normal."
-		elseif CREEP_POWER_RAMP_UP_FACTOR == 4 then
-			creep_power = creep_power.."at <font color='#FF7800'>extreme</font> speed."
+		-- Creep power setting
+		local creep_power = "Lane creeps' power is set to "
+		if CREEP_POWER_FACTOR == 1 then
+			creep_power = creep_power.."<font color='#FF7800'>normal</font>,"
+		elseif CREEP_POWER_FACTOR == 2 then
+			creep_power = creep_power.."<font color='#FF7800'>high</font>,"
+		elseif CREEP_POWER_FACTOR == 4 then
+			creep_power = creep_power.."<font color='#FF7800'>extreme</font>,"
 		end
 
-		-- Frantic mode
-		local frantic_mode = ""
-		if FRANTIC_MULTIPLIER > 1 then
-			frantic_mode = " <font color='#FF7800'>Frantic mode</font> is activated - cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
+		-- Tower power setting
+		local tower_power = " and tower power is set to "
+		if TOWER_POWER_FACTOR == 0 then
+			tower_power = tower_power.."<font color='#FF7800'>normal</font>."
+		elseif TOWER_POWER_FACTOR == 1 then
+			tower_power = tower_power.."<font color='#FF7800'>high</font>."
+		elseif TOWER_POWER_FACTOR == 2 then
+			tower_power = tower_power.."<font color='#FF7800'>extreme</font>."
 		end
 
 		-- Tower abilities
@@ -662,15 +663,24 @@ function GameMode:OnAllPlayersLoaded()
 		-- Kills to end the game
 		local kills_to_end = ""
 		if END_GAME_ON_KILLS then
-			kills_to_end = "<font color='#FF7800'>ARENA MODE:</font> Game will only end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
+			kills_to_end = "<font color='#FF7800'>ARENA MODE:</font> the game will only end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
+		end
+
+		-- Frantic mode
+		local frantic_mode = ""
+		if FRANTIC_MULTIPLIER > 1 then
+			frantic_mode = " <font color='#FF7800'>FRANTIC MODE:</font> cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
 		end
 		
 		Say(nil, game_mode..same_hero, false)
 		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cooldown, false)
 		Say(nil, start_status, false)
-		Say(nil, creep_power..frantic_mode, false)
+		Say(nil, creep_power..tower_power, false)
 		Say(nil, tower_abilities, false)
 		Say(nil, kills_to_end, false)
+		if frantic_mode ~= "" then
+			Say(nil, frantic_mode, false)
+		end
 	end)
 end
 
@@ -711,6 +721,11 @@ function GameMode:OnHeroInGame(hero)
 	hero.kill_streak_count = 0
 	hero.death_streak_count = 0
 	hero.buyback_count = 0
+
+	-- Give Invoker an extra ability point at level 1
+	if hero:GetName() == "npc_dota_hero_invoker" then
+		hero:SetAbilityPoints( hero:GetAbilityPoints() + 1 )
+	end
 
 	-- Add frantic mode passive buff
 	if FRANTIC_MULTIPLIER > 1 then
@@ -800,11 +815,10 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	-- Roll the random ancient abilities for this game
-	local ancient_ability_1 = GetAncientAbility(1)
-	local ancient_ability_2 = GetAncientAbility(2)
-	local ancient_ability_3 = GetAncientAbility(3)
-	local ancient_ability_4 = GetAncientAbility(4)
-	local ancient_ability_5 = GetAncientAbility(5)
+	local ancient_ability_2 = "imba_ancient_stalwart_defense"
+	local ancient_ability_3 = GetAncientAbility(1)
+	local ancient_ability_4 = GetAncientAbility(2)
+	local ancient_ability_5 = GetAncientAbility(3)
 
 	-- Find all buildings on the map
 	local buildings = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -826,6 +840,9 @@ function GameMode:OnGameInProgress()
 			min_bounty = TOWER_MINIMUM_GOLD
 			max_bounty = TOWER_MAXIMUM_GOLD
 			xp_bounty = TOWER_EXPERIENCE
+			building:AddAbility("imba_tower_buffs")
+			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
+			tower_ability:SetLevel(1)
 
 		elseif string.find(building_name, "rax_melee") then
 
@@ -850,27 +867,32 @@ function GameMode:OnGameInProgress()
 
 			if TOWER_ABILITY_MODE then
 
-				-- Add tier 1 ability
-				building:AddAbility(ancient_ability_1)
-				ancient_ability = building:FindAbilityByName(ancient_ability_1)
+				-- Add Spawn Behemoth ability
+				if string.find(building_name, "goodguys") then
+					building:AddAbility("imba_ancient_radiant_spawn_behemoth")
+					ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
+				elseif string.find(building_name, "badguys") then
+					building:AddAbility("imba_ancient_dire_spawn_behemoth")
+					ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
+				end
 				ancient_ability:SetLevel(1)
 
-				-- Add tier 2 ability
+				-- Add Stalwart Defense ability
 				building:AddAbility(ancient_ability_2)
 				ancient_ability = building:FindAbilityByName(ancient_ability_2)
 				ancient_ability:SetLevel(1)
 
-				-- Add tier 3 ability
+				-- Add tier 1 ability
 				building:AddAbility(ancient_ability_3)
 				ancient_ability = building:FindAbilityByName(ancient_ability_3)
 				ancient_ability:SetLevel(1)
 
-				-- Add tier 4 ability
+				-- Add tier 2 ability
 				building:AddAbility(ancient_ability_4)
 				ancient_ability = building:FindAbilityByName(ancient_ability_4)
 				ancient_ability:SetLevel(1)
 
-				-- Add tier 5 ability
+				-- Add tier 3 ability
 				building:AddAbility(ancient_ability_5)
 				ancient_ability = building:FindAbilityByName(ancient_ability_5)
 				ancient_ability:SetLevel(1)
@@ -1035,6 +1057,9 @@ function GameMode:InitGameMode()
 
 	-- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
 	Convars:RegisterCommand( "command_example", Dynamic_Wrap(GameMode, 'ExampleConsoleCommand'), "A console command example", FCVAR_CHEAT )
+
+	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
+	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
 	DebugPrint('[IMBA] Finished loading Dota IMBA!\n\n')
 end

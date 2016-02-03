@@ -11,6 +11,7 @@ function Sheepstick( keys )
 
 	-- Parameters
 	local duration = ability:GetLevelSpecialValueFor("sheep_duration", ability:GetLevel() - 1 )
+	local armor_max = ability:GetLevelSpecialValueFor("armor_reduction", ability:GetLevel() - 1 )
 
 	-- Kills the target if it is an illusion
 	if target:IsIllusion() then
@@ -25,7 +26,7 @@ function Sheepstick( keys )
 		magical_armor = math.max( math.min(magical_armor, 0.8), 0)
 
 		local magical_armor_stacks = math.floor( 100 * ( 1 / ( 1 - magical_armor ) - 1 ) )
-		local armor_stacks = math.floor(target:GetPhysicalArmorBaseValue() + target:GetAgility() / 7)
+		local armor_stacks = math.floor(math.min(target:GetPhysicalArmorValue(), armor_max))
 		AddStacks(ability, caster, target, modifier_dearmor, armor_stacks, false)
 		AddStacks(ability, caster, target, modifier_demagic, magical_armor_stacks, false)
 	end

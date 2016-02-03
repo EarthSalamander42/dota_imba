@@ -10,9 +10,7 @@ function Maim( keys )
 	local sound_maim = keys.sound_maim
 
 	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	elseif target:IsAncient() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
 		return nil
 	end
 
@@ -55,9 +53,7 @@ function MaxMaim( keys )
 	local modifier_maim = keys.modifier_maim
 
 	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	elseif target:IsAncient() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
 		return nil
 	end
 
@@ -218,11 +214,11 @@ end
 function SilverEdgeAura( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local particle_break = keys.particle_break
+	local particle_target = keys.particle_target
 
 	-- Create particle
 	if not target.silver_edge_aura_particle then
-		target.silver_edge_aura_particle = ParticleManager:CreateParticleForTeam(particle_break, PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
+		target.silver_edge_aura_particle = ParticleManager:CreateParticleForTeam(particle_target, PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
 		ParticleManager:SetParticleControl(target.silver_edge_aura_particle, 0, target:GetAbsOrigin())
 	end
 end

@@ -16,7 +16,7 @@ function ButterflyEffect( keys )
 
 	-- Perform an attack on the singled out enemy
 	if caster:IsRangedAttacker() then
-		caster:PerformAttack(enemy, true, false, true, true)
+		caster:PerformAttack(enemy, true, false, true, true, true)
 	else
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end

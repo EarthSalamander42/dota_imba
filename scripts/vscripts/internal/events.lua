@@ -25,6 +25,7 @@ end
 
 -- An entity died
 function GameMode:_OnEntityKilled( keys )
+	
 	-- The Unit that was Killed
 	local killedUnit = EntIndexToHScript( keys.entindex_killed )
 	-- The Killing entity

@@ -102,12 +102,9 @@ function LaunchArrow( keys )
 	local arrow_ticks = 0
 
 	Timers:CreateTimer(0, function()
-		-- During the night, ignores creeps and hits only heroes
-		if GameRules:IsDaytime() then
-			enemy_units = FindUnitsInRadius(caster:GetTeamNumber(), sacred_arrow:GetAbsOrigin(), nil, arrow_width, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-		else
-			enemy_units = FindUnitsInRadius(caster:GetTeamNumber(), sacred_arrow:GetAbsOrigin(), nil, arrow_width, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, 0, false)
-		end
+
+		-- Find nearby enemy units
+		enemy_units = FindUnitsInRadius(caster:GetTeamNumber(), sacred_arrow:GetAbsOrigin(), nil, arrow_width, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 
 		-- If no enemy is found, keep going
 		if #enemy_units == 0 then
@@ -121,33 +118,71 @@ function LaunchArrow( keys )
 				return 0.03
 			end
 
-		-- else, play the impact sound and apply damage
+		-- Else, check targets' status
 		else
+			local creep_hit = false
+			local hero_hit = false
 			for _,unit in pairs(enemy_units) do
-				-- Calculate hit distance 
-				local distance = (sacred_arrow:GetAbsOrigin() - arrow_location):Length2D()
 
-				-- Calculate and apply stun
-				if distance < arrow_max_stunrange then
-					arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
+				-- If this unit is a non-ancient creep or illusion, kill it
+				if not unit:IsRealHero() then
+					if not unit:IsAncient() then
+						unit:Kill(ability, caster)
+						unit:EmitSound(sound_arrow)
+						SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, unit, 9999, nil)
+						ability:CreateVisibilityNode(unit:GetAbsOrigin(), vision_radius, vision_duration)
+
+						-- Store the fact a non-hero was hit
+						creep_hit = true
+					end
+
+				-- Else, it's a real hero; play sound, damage, and apply stun
 				else
-					arrow_stun_duration = arrow_max_stun
+					-- Calculate hit distance 
+					local distance = (sacred_arrow:GetAbsOrigin() - arrow_location):Length2D()
+
+					-- Calculate and apply stun
+					if distance < arrow_max_stunrange then
+						arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
+					else
+						arrow_stun_duration = arrow_max_stun
+					end
+					unit:AddNewModifier(caster, ability, "modifier_stunned", {duration = arrow_stun_duration})
+
+					-- Impact sound
+					unit:EmitSound(sound_arrow)
+
+					-- Impact vision
+					ability:CreateVisibilityNode(unit:GetAbsOrigin(), vision_radius, vision_duration)
+
+					-- Damage
+					local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
+					damage_table.victim = unit
+					damage_table.damage = arrow_damage
+					ApplyDamage(damage_table)
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, unit, arrow_damage, nil)
+
+					-- Store the fact a hero was hit
+					hero_hit = true
 				end
+			end
 
-				unit:AddNewModifier(caster, ability, "modifier_stunned", {duration = arrow_stun_duration})
-
-				-- Damage
-				local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
-				damage_table.victim = unit
-				damage_table.damage = arrow_damage
-				ApplyDamage(damage_table)
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, unit, arrow_damage, nil)
-
-				-- Destroy the arrow and play the hit sound
+			-- If a hero was hit, or if a creep was hit during the day, destroy the arrow
+			if hero_hit or ( creep_hit and GameRules:IsDaytime() ) then
 				sacred_arrow:StopPhysicsSimulation()
 				sacred_arrow:Destroy()
-				unit:EmitSound(sound_arrow)
-				ability:CreateVisibilityNode(unit:GetAbsOrigin(), vision_radius, vision_duration)
+			
+			-- Else, keep going
+			else
+				arrow_ticks = arrow_ticks + 1
+			
+				-- Destroys the arrow after 1000 ticks (~30 seconds) or when near the enemy fountain
+				if arrow_ticks >= 1000 or IsNearEnemyClass(sacred_arrow, 1360, "ent_dota_fountain") then
+					sacred_arrow:StopPhysicsSimulation()
+					sacred_arrow:Destroy()
+				else
+					return 0.03
+				end
 			end
 		end
 	end)

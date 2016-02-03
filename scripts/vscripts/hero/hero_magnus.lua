@@ -64,10 +64,8 @@ function ShockwaveHit( keys )
 	local shock_damage = ability:GetLevelSpecialValueFor("shock_damage", ability_level)
 	local secondary_damage = ability:GetLevelSpecialValueFor("secondary_damage", ability_level)
 	local secondary_angle = ability:GetLevelSpecialValueFor("secondary_angle", ability_level)
+	local max_secondary = ability:GetLevelSpecialValueFor("max_secondary", ability_level)
 	local has_been_hit = false
-
-	-- Play impact sound
-	target:EmitSound(sound_hit)
 
 	-- Play impact particle
 	local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
@@ -80,13 +78,16 @@ function ShockwaveHit( keys )
 		end
 	end
 
-	-- If the unit has already been hit, deal only secondary damage
-	if has_been_hit then
+	-- If the unit has already been hit, or maximum split count has been reached, deal only secondary damage
+	if has_been_hit or #caster.shockwave_targets_hit >= max_secondary then
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = secondary_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Else, deal primary damage, mark the target as hit, and create extra shockwaves if appropriate
 	else
 
+		-- Play impact sound
+		target:EmitSound(sound_hit)
+		
 		-- Mark target as hit
 		caster.shockwave_targets_hit[#caster.shockwave_targets_hit + 1] = target
 
@@ -94,7 +95,7 @@ function ShockwaveHit( keys )
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = shock_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 		-- If the target is magnetized, launch bonus shockwaves
-		if target:HasModifier(modifier_magnetize) then
+		if target:IsRealHero() then
 
 			-- Geometry
 			local target_pos = target:GetAbsOrigin()
@@ -207,6 +208,39 @@ function ShockwaveHit( keys )
 	end
 end
 
+function EmpowerAura( keys )
+	local caster = keys.caster
+	local scepter = HasScepter(caster)
+
+	-- If the caster has no scepter, do nothing
+	if not scepter then
+		return nil
+	end
+
+	-- Parameters
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_empower = keys.modifier_empower
+	local sound_target = keys.sound_target
+	local radius = ability:GetLevelSpecialValueFor("scepter_radius", ability_level)
+	local empower_duration = ability:GetLevelSpecialValueFor("supercharge_duration", ability_level)
+
+	-- Iterate through nearby allies
+	local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,target in pairs(nearby_allies) do
+		
+		-- Play sound if the target is gaining the buff now
+		if not target:HasModifier(modifier_empower) then
+			target:EmitSound(sound_target)
+		end
+
+		-- Refresh the Empower buff on anything but the caster
+		if target ~= caster then
+			ability:ApplyDataDrivenModifier(caster, target, modifier_empower, {duration = empower_duration})
+		end
+	end
+end
+
 function Empower( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -228,9 +262,11 @@ function Empower( keys )
 	-- Play target sound
 	target:EmitSound(sound_target)
 
-	-- Apply empower modifier if the target doesn't have the empower ability
+	-- Apply limited-duration empower modifier if the target doesn't have the empower ability
 	if not target:FindAbilityByName("imba_magnus_empower") then
 		ability:ApplyDataDrivenModifier(caster, target, modifier_empower, {duration = empower_duration})
+	else
+		ability:ApplyDataDrivenModifier(caster, target, modifier_empower, {})
 	end
 end
 
@@ -239,9 +275,7 @@ function EmpowerHit( keys )
 	local attacker = keys.attacker
 	local target = keys.target
 	local ability = keys.ability
-	local ability_magnetize = caster:FindAbilityByName(keys.ability_magnetize)
 	local ability_level = ability:GetLevel() - 1
-	local modifier_magnet = keys.modifier_magnet
 	local modifier_supercharged = keys.modifier_supercharged
 	local particle_cleave = keys.particle_cleave
 	local particle_red_cleave = keys.particle_red_cleave
@@ -274,13 +308,6 @@ function EmpowerHit( keys )
 	
 	-- Deal damage
 	for _,enemy in pairs(enemies) do
-
-		-- Apply magnetize debuff
-		if enemy:IsRealHero() and enemy:GetTeam() ~= caster:GetTeam() then
-			ability_magnetize:ApplyDataDrivenModifier(caster, enemy, modifier_magnet, {})
-		end
-
-		-- Apply damage
 		if enemy ~= target then
 			ApplyDamage({attacker = attacker, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 		end
@@ -330,7 +357,7 @@ function MagnetizeThink( keys )
 	for _,hero in pairs(heroes) do
 
 		-- If this hero has the magnetize debuff and is not the target, modify its movement speed
-		if hero ~= target and ( hero:HasModifier(modifier_debuff) or hero:HasModifier(modifier_supercharged) ) then
+		if hero ~= target and hero:HasModifier(modifier_debuff)then
 
 			-- Calculate movement direction
 			local position = hero:GetAbsOrigin() - target_pos
@@ -363,7 +390,7 @@ function ReversePolarityAnim( keys )
 	local normal_pull = ability:GetLevelSpecialValueFor("normal_pull", ability_level)
 
 	-- Play animation sound
-	EmitGlobalSound(sound_anim)
+	caster:EmitSound(sound_anim)
 
 	-- Play animation particle
 	local animation_pfx = ParticleManager:CreateParticle(particle_anim, PATTACH_ABSORIGIN, caster)
@@ -382,7 +409,6 @@ function ReversePolarity( keys )
 	local particle_pull = keys.particle_pull
 	local modifier_magnet = keys.modifier_magnet
 	local modifier_slow = keys.modifier_slow
-	local scepter = HasScepter(caster)
 
 	-- Parameters
 	local normal_pull = ability:GetLevelSpecialValueFor("normal_pull", ability_level)
@@ -393,16 +419,11 @@ function ReversePolarity( keys )
 	local ministun_scepter = ability:GetLevelSpecialValueFor("ministun_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 
-	-- Adjust parameters if the caster has a scepter
-	if scepter then
-		modifier_slow = keys.modifier_scepter
-	end
-
 	-- Play cast sound
-	EmitGlobalSound(sound_cast)
+	caster:EmitSound(sound_cast)
 
-	-- Find enemy targets
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	-- Find enemy heroes
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		
 		-- Calculate pull and distance to the caster
@@ -416,14 +437,16 @@ function ReversePolarity( keys )
 			enemy_pull = magnetize_pull
 		end
 
-		-- If the caster has a scepter, ministun the enemy
-		if scepter then
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = ministun_scepter})
-		end
+		-- Play hit sound
+		enemy:EmitSound(sound_stun)
+
+		-- Ministun enemies
+		enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = ministun_scepter})
 
 		-- Play pull particle
 		local pull_pfx = ParticleManager:CreateParticle(particle_pull, PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(pull_pfx, 0, enemy_loc)
+		ParticleManager:SetParticleControl(pull_pfx, 1, caster:GetAbsOrigin())
 
 		-- Apply slow modifier
 		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
@@ -431,19 +454,14 @@ function ReversePolarity( keys )
 		-- If the enemy is too far away, pull it and apply the slow + a normalized stun
 		if distance > enemy_pull then
 			
-			-- Damage and pull the enemy if it is not Roshan
-			if not IsRoshan(enemy) then
-				FindClearSpaceForUnit(enemy, enemy_loc + direction * enemy_pull, true)
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			end
+			-- Damage and pull the enemy
+			FindClearSpaceForUnit(enemy, enemy_loc + direction * enemy_pull, true)
 
-			-- Destroy trees in the enemy's pull path if it is a hero, or destination if it's a creep
+			-- Destroy trees in the enemy's pull path if it is a real hero
 			if enemy:IsRealHero() then
 				for i = 0, math.ceil(enemy_pull / tree_radius) do
 					GridNav:DestroyTreesAroundPoint(enemy_loc + direction * (enemy_pull - i * tree_radius), tree_radius, false)
 				end
-			else
-				GridNav:DestroyTreesAroundPoint(enemy_loc + direction * enemy_pull, tree_radius, false)
 			end
 
 			-- Stun enemies who were pulled near enough
@@ -459,14 +477,9 @@ function ReversePolarity( keys )
 		-- If the enemy is near enough, move it to the caster's front and stun it
 		else
 
-			-- Play stun sound
-			enemy:EmitSound(sound_stun)
-
-			-- Damage and pull the enemy if it is not Roshan
-			if not IsRoshan(enemy) then
-				FindClearSpaceForUnit(enemy, caster_loc + caster:GetForwardVector() * 100, true)
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			end
+			-- Damage and pull the enemy
+			FindClearSpaceForUnit(enemy, caster_loc + caster:GetForwardVector() * 100, true)
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 			-- Apply stun
 			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})

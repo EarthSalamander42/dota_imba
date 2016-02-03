@@ -10,9 +10,7 @@ function Maim( keys )
 	local sound_maim = keys.sound_maim
 
 	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	elseif target:IsAncient() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
 		return nil
 	end
 
@@ -54,7 +52,7 @@ function SangeDisarm( keys )
 	local duration = keys.duration
 
 	-- If there's no valid target, or the ability is on cooldown, do nothing
-	if target:IsBuilding() or target:IsAncient() or not ability:IsCooldownReady() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() or not ability:IsCooldownReady() then
 		return nil
 	end
 

@@ -5,7 +5,15 @@ function TorrentBubble( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target_points[1]
-	local delay = ability:GetLevelSpecialValueFor("delay", ability:GetLevel() - 1 )
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local delay = ability:GetLevelSpecialValueFor("delay", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local vision_duration = ability:GetLevelSpecialValueFor( "vision_duration", ability_level)
+	
+	-- Grant vision on the target area
+	ability:CreateVisibilityNode(target, radius, vision_duration)
 
 	-- Sound and particle
 	local particle_name = keys.particle_name
@@ -13,7 +21,7 @@ function TorrentBubble( keys )
 
 	-- Plays the particle for the caster's team
 	local bubbles_pfx = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_ABSORIGIN, caster, caster:GetTeam())
-	ParticleManager:SetParticleControl(bubbles_pfx, 0, target )
+	ParticleManager:SetParticleControl(bubbles_pfx, 0, target)
 
 	-- Plays the sound for the caster's team
 	EmitSoundOnLocationForAllies(target, sound_name, caster)
@@ -31,10 +39,9 @@ function Torrent( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Ability parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local vision_duration = ability:GetLevelSpecialValueFor( "vision_duration", ability:GetLevel() - 1 )
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local delay = ability:GetLevelSpecialValueFor("delay", ability_level)
 	local height = ability:GetLevelSpecialValueFor("torrent_height", ability_level)
 	local max_ticks = ability:GetLevelSpecialValueFor("tick_count", ability_level)
@@ -114,8 +121,7 @@ function Torrent( keys )
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 		end
 
-		-- Creates the post-ability vision node and sound effect
-		ability:CreateVisibilityNode(target, radius, vision_duration)
+		-- Creates the post-ability sound effect
 		local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
 		dummy:EmitSound(sound_name)
 
@@ -145,7 +151,7 @@ function TidebringerCooldown( keys )
 	end
 end
 
-function TidebringerStartCooldown( keys )
+function Tidebringer( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -356,12 +362,13 @@ function OnABoat( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_rum = keys.modifier_rum
 
 	-- Parameters
 	local crash_distance = ability:GetLevelSpecialValueFor("crash_distance", ability_level)
 	local ship_speed = ability:GetLevelSpecialValueFor("ghostship_speed", ability_level)
 	local impact_damage = ability:GetLevelSpecialValueFor("impact_damage", ability_level)
-	local modifier_rum = keys.modifier_rum
+	local ghostship_width = ability:GetLevelSpecialValueFor("ghostship_width", ability_level)
 
 	-- Scepter parameters
 	local scepter = HasScepter(caster)
@@ -385,7 +392,7 @@ function OnABoat( keys )
 
 	-- Apply the knockback modifier and deal impact damage
 	local knockback =
-	{	should_stun = 1,
+	{	should_stun = 0,
 		knockback_duration = duration,
 		duration = duration,
 		knockback_distance = distance,
@@ -397,6 +404,11 @@ function OnABoat( keys )
 	target:RemoveModifierByName("modifier_knockback")
 	target:AddNewModifier(caster, nil, "modifier_knockback", knockback)
 	ApplyDamage({victim = target, attacker = caster, ability = ability, damage = impact_damage, damage_type = ability:GetAbilityDamageType()})
+
+	-- Stun target after it reaches the crash zone
+	Timers:CreateTimer(duration, function()
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = ghostship_width / ship_speed})
+	end)
 end
 
 function GhostShipRegisterDamage( keys )

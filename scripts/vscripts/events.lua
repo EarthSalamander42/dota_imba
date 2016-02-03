@@ -158,8 +158,6 @@ end
 
 -- An NPC has spawned somewhere in game. This includes heroes
 function GameMode:OnNPCSpawned(keys)
-	DebugPrint("[BAREBONES] NPC Spawned")
-	DebugPrintTable(keys)
 
 	-- This internal handling is used to set up main barebones functions
 	GameMode:_OnNPCSpawned(keys)
@@ -167,10 +165,37 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arc Warden Refresher Orb interaction
+	-------------------------------------------------------------------------------------------------
+
+	if npc:GetName() == "npc_dota_hero_arc_warden" then
+
+		-- Trigger Refresher Orb's cooldown on this arc warden
+		if npc ~= self.heroes[npc:GetOwnerEntity():GetPlayerID()] then
+			Timers:CreateTimer(0.01, function()
+				for i = 0, 5 do
+					local item = npc:GetItemInSlot(i)
+					if item and item:GetAbilityName() == "item_imba_refresher" then
+						item:StartCooldown(item:GetCooldown(0))
+					end
+				end
+			end)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Remote Mine ability setup
+	-------------------------------------------------------------------------------------------------
+
+	if string.find(npc:GetUnitName(), "npc_dota_techies_remote_mine") then
+		npc.needs_remote_mine_setup = true
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Random OMG on-respawn skill randomization
 	-------------------------------------------------------------------------------------------------
 
-	if IMBA_ABILITY_MODE_RANDOM_OMG and IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH then
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
 		if npc:IsRealHero() then
 			
 			-- Randomize abilities
@@ -179,8 +204,21 @@ function GameMode:OnNPCSpawned(keys)
 			-- Clean-up undesired permanent modifiers
 			RemovePermanentModifiersRandomOMG(npc)
 
-			-- Grant unspent skill points equal to the hero's level
-			npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
+			-- If the hero is level 25 or above, max out all its abilities
+			if npc:GetLevel() >= 25 then
+
+				npc:SetAbilityPoints(0)
+				for i = 0, 16 do
+					local current_ability = npc:GetAbilityByIndex(i)
+					if current_ability then
+						current_ability:SetLevel(current_ability:GetMaxLevel())
+					end
+				end
+				
+			-- Else, grant unspent skill points equal to the hero's level
+			else
+				npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
+			end
 		end
 	end
 
@@ -190,7 +228,6 @@ function GameMode:OnNPCSpawned(keys)
 	
 	-- Attempt to find War Veteran ability 
 	local ability_powerup = npc:FindAbilityByName("imba_unlimited_level_powerup")
-
 	if ability_powerup then
 
 		-- Fetch hero level and current amount of stacks
@@ -202,40 +239,6 @@ function GameMode:OnNPCSpawned(keys)
 			AddStacks(ability_powerup, npc, npc, "modifier_imba_unlimited_level_powerup", ( correct_amount - power_stacks ), true)
 		end
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Remote Mines adjustment
-	-------------------------------------------------------------------------------------------------
-
-	Timers:CreateTimer(1.5, function()
-		if not npc:IsNull() and npc:HasModifier("modifier_techies_remote_mine") then
-		
-			-- Add extra abilities
-			npc:AddAbility("imba_techies_minefield_teleport")
-			npc:AddAbility("imba_techies_remote_auto_creep")
-			npc:AddAbility("imba_techies_remote_auto_hero")
-			local minefield_teleport = npc:FindAbilityByName("imba_techies_minefield_teleport")
-			local auto_creep = npc:FindAbilityByName("imba_techies_remote_auto_creep")
-			local auto_hero = npc:FindAbilityByName("imba_techies_remote_auto_hero")
-			auto_creep:SetLevel(1)
-			auto_hero:SetLevel(1)
-
-			-- Enable minefield teleport if the caster has a scepter
-			local scepter = HasScepter(npc:GetOwnerEntity())
-			if scepter then
-				minefield_teleport:SetLevel(1)
-			end
-
-			-- Toggle abilities on according to the current caster setting
-			local mine_owner = npc:GetOwnerEntity()
-			if mine_owner.auto_hero_exploding then
-				auto_hero:ToggleAbility()
-			elseif mine_owner.auto_creep_exploding then
-				auto_creep:ToggleAbility()
-			end
-
-		end
-	end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Reaper's Scythe buyback prevention clean-up
@@ -310,8 +313,8 @@ function GameMode:OnNPCSpawned(keys)
 		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 
-		-- Add passive buff to non-neutrals
-		if not string.find(npc:GetName(), "neutral") then
+		-- Add passive buff to lane creeps
+		if string.find(npc:GetUnitName(), "dota_creep") then
 			npc:AddAbility("imba_creep_buffs")
 			local creep_ability = npc:FindAbilityByName("imba_creep_buffs")
 			creep_ability:SetLevel(1)
@@ -468,6 +471,51 @@ function GameMode:OnAbilityUsed(keys)
 
 	local player = PlayerResource:GetPlayer(keys.PlayerID)
 	local abilityname = keys.abilityname
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Remote Mines adjustment
+	-------------------------------------------------------------------------------------------------
+
+	if abilityname == "techies_remote_mines" then
+
+		local mine_caster = player:GetAssignedHero()
+		Timers:CreateTimer(0.01, function()
+			local nearby_units = FindUnitsInRadius(mine_caster:GetTeamNumber(), mine_caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,unit in pairs(nearby_units) do
+
+				-- Only operate on remotes which need setup
+				if unit.needs_remote_mine_setup then
+					
+					-- Add extra abilities
+					unit:AddAbility("imba_techies_minefield_teleport")
+					unit:AddAbility("imba_techies_remote_auto_creep")
+					unit:AddAbility("imba_techies_remote_auto_hero")
+					local minefield_teleport = unit:FindAbilityByName("imba_techies_minefield_teleport")
+					local auto_creep = unit:FindAbilityByName("imba_techies_remote_auto_creep")
+					local auto_hero = unit:FindAbilityByName("imba_techies_remote_auto_hero")
+					auto_creep:SetLevel(1)
+					auto_hero:SetLevel(1)
+
+					-- Enable minefield teleport if the caster has a scepter
+					local scepter = HasScepter(mine_caster)
+					if scepter then
+						minefield_teleport:SetLevel(1)
+					end
+
+					-- Toggle abilities on according to the current caster setting
+					if mine_caster.auto_hero_exploding then
+						auto_hero:ToggleAbility()
+					elseif mine_caster.auto_creep_exploding then
+						auto_creep:ToggleAbility()
+					end
+
+					-- Set this mine's setup as done
+					unit.needs_remote_mine_setup = nil
+				end
+			end
+		end)
+	end
+
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
@@ -549,8 +597,28 @@ function GameMode:OnPlayerLevelUp(keys)
 
 		-- Invoker is a special case
 		if hero:GetName() == "npc_dota_hero_invoker" then
-			if hero_level > 34 then
+			if hero_level > 35 then
 				hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+			end
+
+		-- Arc Warden is also tricky
+		elseif hero:GetName() == "npc_dota_hero_arc_warden" then
+
+			-- If the generic powerup isn't present, apply it
+			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+			if not ability_powerup then
+				hero:AddAbility("imba_unlimited_level_powerup")
+				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+				ability_powerup:SetLevel(1)
+			end
+
+			-- Apply the relevant amount of stacks of the high level power-up
+			local buff_stacks = hero_level - 25
+			if buff_stacks > 0 then
+				ability_powerup:ApplyDataDrivenModifier(hero, hero, "modifier_imba_unlimited_level_powerup", {})
+				hero:SetModifierStackCount("modifier_imba_unlimited_level_powerup", hero, buff_stacks)
+			else
+				hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
 			end
 		else
 
@@ -720,73 +788,53 @@ function GameMode:OnEntityKilled( keys )
 	local ability_suicide = killed_unit:FindAbilityByName("techies_suicide")
 	if ability_suicide and ability_suicide:GetLevel() > 0 then
 
-		-- Aghanim's Scepter doubles the number of mines dropped
+		-- Check for scepter
 		local scepter = HasScepter(killed_unit)
 			
-		-- Land mines
+		-- Land Mines
 		local ability_land_mine = killed_unit:FindAbilityByName("imba_techies_land_mines")
 		if ability_land_mine and ability_land_mine:GetLevel() > 0 then
 			local caster = killed_unit				
 			local ability_level = ability_land_mine:GetLevel() - 1
 			local modifier_state = "modifier_imba_land_mines_state"
+			local modifier_charges = "modifier_imba_land_mines_charge"
 			
 			-- Parameters
 			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
+			local duration = ability_land_mine:GetLevelSpecialValueFor("duration", ability_level)
 			local player_id = caster:GetPlayerID()
 
-			-- Create the mines at the specified place
-			local land_mine_1 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-			local land_mine_2 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-			land_mine_1:SetControllableByPlayer(player_id, true)
-			land_mine_2:SetControllableByPlayer(player_id, true)
-
-			-- Root the mines in place
-			land_mine_1:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
-			land_mine_2:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
-
-			-- Make the mines have no unit collision or health bar
-			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_1, modifier_state, {})
-			ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_2, modifier_state, {})
-
-			-- Create two more mines if the owner has Aghanim's Scepter
-			local land_mine_3
-			local land_mine_4
-			if scepter then
-				land_mine_3 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-				land_mine_4 = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-				land_mine_3:SetControllableByPlayer(player_id, true)
-				land_mine_4:SetControllableByPlayer(player_id, true)
-				land_mine_3:AddNewModifier(land_mine_3, ability_land_mine, "modifier_rooted", {})
-				land_mine_4:AddNewModifier(land_mine_4, ability_land_mine, "modifier_rooted", {})
-				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_3, modifier_state, {})
-				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine_4, modifier_state, {})
+			-- Calculate amount of mines to drop
+			local mine_amount = 1
+			if caster:HasModifier(modifier_charges) then
+				mine_amount = 1 + math.max(caster:GetModifierStackCount(modifier_charges, caster), 1)
+				caster:RemoveModifierByName(modifier_charges)
 			end
 
-			-- Wait for the activation delay
-			Timers:CreateTimer(activation_time, function()
-				
-				-- Grant the mines the appropriately leveled abilities
-				local mine_passive_1 = land_mine_1:FindAbilityByName("imba_techies_land_mine_passive")
-				local mine_passive_2 = land_mine_2:FindAbilityByName("imba_techies_land_mine_passive")
-				mine_passive_1:SetLevel(ability_level + 1)
-				mine_passive_2:SetLevel(ability_level + 1)
+			-- Drop the mines
+			for i = 1, mine_amount do
+				local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
+				land_mine:SetControllableByPlayer(player_id, true)
+				land_mine:AddNewModifier(caster, ability_land_mine, "modifier_kill", {duration = duration})
 
-				-- Grant the second mine the appropriately leveled abilities if appropriate
-				if scepter then
-					mine_passive_1 = land_mine_3:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_passive_2 = land_mine_4:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_passive_1:SetLevel(ability_level + 1)
-					mine_passive_2:SetLevel(ability_level + 1)
-					local mine_teleport = land_mine_1:FindAbilityByName("imba_techies_minefield_teleport")
-					mine_teleport:SetLevel(1)
-					mine_teleport = land_mine_2:FindAbilityByName("imba_techies_minefield_teleport")
-					mine_teleport:SetLevel(1)
-					mine_teleport = land_mine_3:FindAbilityByName("imba_techies_minefield_teleport")
-					mine_teleport:SetLevel(1)
-					mine_teleport = land_mine_4:FindAbilityByName("imba_techies_minefield_teleport")
-					mine_teleport:SetLevel(1)
-				end
-			end)
+				-- Root the mine in place
+				land_mine:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
+
+				-- Make the mine have no unit collision or health bar
+				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
+
+				-- Wait for the activation delay
+				Timers:CreateTimer(activation_time, function()
+					
+					-- Grant the mine the appropriately leveled abilities
+					local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
+					mine_passive:SetLevel(ability_level + 1)
+					if scepter then
+						local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
+						mine_teleport:SetLevel(1)
+					end
+				end)
+			end
 		end
 
 		-- Stasis Trap
@@ -807,19 +855,13 @@ function GameMode:OnEntityKilled( keys )
 			ParticleManager:SetParticleControl(trap_pfx, 0, trap_loc_1)
 			ParticleManager:SetParticleControl(trap_pfx, 1, trap_loc_1)
 
-			-- Play the spawn animation for the scepter extra mine, if appropriate
-			if scepter then
-				local trap_pfx_2 = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
-				ParticleManager:SetParticleControl(trap_pfx_2, 0, trap_loc_2)
-				ParticleManager:SetParticleControl(trap_pfx_2, 1, trap_loc_2)
-			end
-
 			-- Wait for the activation delay
 			Timers:CreateTimer(activation_delay, function()
 
 				-- Create the mine at the specified place
 				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_1, false, caster, caster, caster:GetTeam())
 				stasis_trap:SetControllableByPlayer(player_id, true)
+				stasis_trap:AddNewModifier(caster, ability_stasis_trap, "modifier_kill", {duration = 600})
 
 				-- Root the mine in place
 				stasis_trap:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
@@ -830,49 +872,7 @@ function GameMode:OnEntityKilled( keys )
 				-- Grant the mine the appropriately leveled abilities
 				local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
 				trap_passive:SetLevel(ability_level + 1)
-
-				-- Create a second mine if the owner has Aghanim's Scepter
-				local stasis_trap_2
-				if scepter then
-					stasis_trap_2 = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_2, false, caster, caster, caster:GetTeam())
-					stasis_trap_2:SetControllableByPlayer(player_id, true)
-					stasis_trap_2:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
-					ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap_2, "modifier_imba_stasis_trap_state", {})
-					local trap_passive = stasis_trap_2:FindAbilityByName("imba_techies_stasis_trap_passive")
-					trap_passive:SetLevel(ability_level + 1)
-					local trap_teleport = stasis_trap:FindAbilityByName("imba_techies_minefield_teleport")
-					trap_teleport:SetLevel(1)
-					local trap_teleport = stasis_trap_2:FindAbilityByName("imba_techies_minefield_teleport")
-					trap_teleport:SetLevel(1)
-				end
 			end)
-		end
-
-		-- Remote Mine
-		local ability_remote_mine = killed_unit:FindAbilityByName("techies_remote_mines")
-		if ability_remote_mine and ability_remote_mine:GetLevel() > 0 then
-
-			-- Create mine
-			local remote_mine = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin() + RandomVector(100), false, killed_unit, killed_unit, killed_unit:GetTeam())
-			remote_mine:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
-			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
-			remote_mine:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})
-
-			-- Adjust abilities
-			local remote_self_detonate = remote_mine:FindAbilityByName("techies_remote_mines_self_detonate")
-			remote_self_detonate:SetLevel(ability_remote_mine:GetLevel())
-
-			-- Second mine (scepter)
-			if scepter then
-				local remote_mine_2 = CreateUnitByName("npc_dota_techies_remote_mine", killed_unit:GetAbsOrigin() + RandomVector(100), false, killed_unit, killed_unit, killed_unit:GetTeam())
-				remote_mine_2:SetControllableByPlayer(killed_unit:GetPlayerID(), true)
-				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_kill", {duration = 6000})
-				remote_mine_2:AddNewModifier(killed_unit, ability_remote_mine, "modifier_techies_remote_mine", {})
-
-				-- Adjust abilities
-				remote_self_detonate = remote_mine_2:FindAbilityByName("techies_remote_mines_self_detonate")
-				remote_self_detonate:SetLevel(ability_remote_mine:GetLevel())
-			end
 		end
 	end
 
@@ -934,7 +934,7 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Calculate regular buyback cost and 
 		local hero_level = killed_unit:GetLevel()
-		local game_time = GAME_TIME_ELAPSED / 60
+		local game_time = GameRules:GetDOTATime(false, false) / 60
 
 		local buyback_cost = ( HERO_BUYBACK_BASE_COST + hero_level * HERO_BUYBACK_COST_PER_LEVEL + game_time * HERO_BUYBACK_COST_PER_MINUTE ) * buyback_cost_multiplier
 		local buyback_penalty_duration = HERO_BUYBACK_RESET_TIME_PER_LEVEL * hero_level + HERO_BUYBACK_RESET_TIME_PER_MINUTE * game_time
@@ -946,7 +946,7 @@ function GameMode:OnEntityKilled( keys )
 		-- Setup buyback cooldown
 		local buyback_cooldown = 0
 		if game_time > HERO_BUYBACK_COOLDOWN_START_POINT and HERO_BUYBACK_COOLDOWN > 0 then
-			buyback_cooldown = HERO_BUYBACK_COOLDOWN + game_time - HERO_BUYBACK_COOLDOWN_START_POINT
+			buyback_cooldown = HERO_BUYBACK_COOLDOWN + (game_time - HERO_BUYBACK_COOLDOWN_START_POINT) * HERO_BUYBACK_COOLDOWN_GROW_FACTOR
 		end
 		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), buyback_cooldown)
 		
@@ -969,10 +969,10 @@ function GameMode:OnEntityKilled( keys )
 		-- Killed hero Rancor clean-up
 		if killed_unit:HasModifier("modifier_imba_rancor") then
 			local current_stacks = killed_unit:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
-			if current_stacks <= 4 then
+			if current_stacks <= 2 then
 				killed_unit:RemoveModifierByName("modifier_imba_rancor")
 			else
-				killed_unit:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 2)
+				killed_unit:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
 			end
 		end
 
@@ -1077,11 +1077,6 @@ function GameMode:OnEntityKilled( keys )
 						rancor_stacks = rancor_stacks * 2
 					end
 
-					-- Double stacks if Venge has a scepter
-					if VENGEFUL_RANCOR_SCEPTER then
-						rancor_stacks = rancor_stacks * 2
-					end
-
 					-- Add stacks and play particle effect
 					AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
 					local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
@@ -1118,11 +1113,6 @@ function GameMode:OnEntityKilled( keys )
 
 				-- Double stacks if the killed unit was Venge
 				if killed_unit == VENGEFUL_RANCOR_CASTER then
-					rancor_stacks = rancor_stacks * 2
-				end
-
-				-- Double stacks if Venge has a scepter
-				if VENGEFUL_RANCOR_SCEPTER then
 					rancor_stacks = rancor_stacks * 2
 				end
 
@@ -1269,6 +1259,7 @@ function GameMode:OnIllusionsCreated(keys)
 			end
 		end
 	end
+
 end
 
 -- This function is called whenever an item is combined to create a new item

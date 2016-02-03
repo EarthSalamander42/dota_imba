@@ -11,9 +11,7 @@ function Maim( keys )
 	local sound_amp = keys.sound_amp
 
 	-- If there's no valid target, do nothing
-	if not target:IsHero() and not target:IsCreep() then
-		return nil
-	elseif target:IsAncient() then
+	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
 		return nil
 	end
 

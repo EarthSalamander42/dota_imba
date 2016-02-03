@@ -19,10 +19,10 @@ function DeathCoil( keys )
 	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
 		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
 	end
-	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_frostmourne_debuff"
-	local modifier_buff_base = "modifier_frostmourne_buff_base"
-	local modifier_buff = "modifier_frostmourne_buff"
+	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+	local modifier_debuff = "modifier_imba_frostmourne_debuff"
+	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+	local modifier_buff = "modifier_imba_frostmourne_buff"
 
 	-- Play the ability sound
 	caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
@@ -260,8 +260,8 @@ function EndShieldParticle( keys )
 	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
 		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
 	end
-	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_frostmourne_debuff"
+	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+	local modifier_debuff = "modifier_imba_frostmourne_debuff"
 
 	for _,enemy in pairs(enemies) do
 		ApplyDamage({ victim = enemy, attacker = caster, damage = base_damage_absorb, damage_type = damageType })
@@ -290,10 +290,10 @@ function FrostMourne( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_frostmourne_debuff"
-	local modifier_buff_base = "modifier_frostmourne_buff_base"
-	local modifier_buff = "modifier_frostmourne_buff"
+	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+	local modifier_debuff = "modifier_imba_frostmourne_debuff"
+	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+	local modifier_buff = "modifier_imba_frostmourne_buff"
 
 
 	if caster:HasModifier(modifier_buff_base) then
@@ -336,10 +336,10 @@ function FrostMourneAttacked( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local modifier_debuff_base = "modifier_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_frostmourne_debuff"
-	local modifier_buff_base = "modifier_frostmourne_buff_base"
-	local modifier_buff = "modifier_frostmourne_buff"
+	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+	local modifier_debuff = "modifier_imba_frostmourne_debuff"
+	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+	local modifier_buff = "modifier_imba_frostmourne_buff"
 
 	local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 

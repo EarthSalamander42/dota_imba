@@ -26,6 +26,11 @@ function Starfury( keys )
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 	end
+
+	-- If this is an illusion, stop here
+	if caster:IsIllusion() then
+		return nil
+	end
 	
 	-- Find nearby enemies
 	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)

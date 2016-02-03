@@ -1,23 +1,23 @@
 function DebugPrint(...)
-	local spew = Convars:GetInt('barebones_spew') or -1
-	if spew == -1 and BAREBONES_DEBUG_SPEW then
-	spew = 1
-	end
+	--local spew = Convars:GetInt('barebones_spew') or -1
+	--if spew == -1 and BAREBONES_DEBUG_SPEW then
+	--spew = 1
+	--end
 
-	if spew == 1 then
-	print(...)
-	end
+	--if spew == 1 then
+	--print(...)
+	--end
 end
 
 function DebugPrintTable(...)
-	local spew = Convars:GetInt('barebones_spew') or -1
-	if spew == -1 and BAREBONES_DEBUG_SPEW then
-	spew = 1
-	end
+	--local spew = Convars:GetInt('barebones_spew') or -1
+	--if spew == -1 and BAREBONES_DEBUG_SPEW then
+	--spew = 1
+	--end
 
-	if spew == 1 then
-	PrintTable(...)
-	end
+	--if spew == 1 then
+	--PrintTable(...)
+	--end
 end
 
 function PrintTable(t, indent, done)
@@ -125,7 +125,7 @@ function AddStacks(ability, caster, unit, modifier, stack_amount, refresh)
 		if refresh then
 			ability:ApplyDataDrivenModifier(caster, unit, modifier, {})
 		end
-		unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, ability) + stack_amount)
+		unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, nil) + stack_amount)
 	else
 		ability:ApplyDataDrivenModifier(caster, unit, modifier, {})
 		unit:SetModifierStackCount(modifier, ability, stack_amount)
@@ -697,12 +697,12 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_zuus_static_field")
 	hero:RemoveModifierByName("modifier_witchdoctor_voodoorestoration")
 	hero:RemoveModifierByName("modifier_imba_land_mines_caster")
-	hero:RemoveModifierByName("modifier_riki_blinkstrike")
 	hero:RemoveModifierByName("modifier_imba_purification_passive")
 	hero:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
 	hero:RemoveModifierByName("modifier_imba_double_edge_prevent_deny")
 	hero:RemoveModifierByName("modifier_imba_vampiric_aura")
 	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
+	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -768,8 +768,10 @@ function InitializeInnateAbilities( hero )
 		"imba_queenofpain_delightful_torment",
 		"imba_techies_minefield_sign",
 		"imba_vengeful_rancor",
+		"vengefulspirit_nether_swap",
 		"imba_venomancer_toxicity",
-		"imba_magnus_magnetize"
+		"imba_magnus_magnetize",
+		"imba_enigma_gravity"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -890,7 +892,9 @@ function StickProcCheck( ability )
 	local forbidden_skills = {
 		"storm_spirit_ball_lightning",
 		"witch_doctor_voodoo_restoration",
-		"imba_necrolyte_death_pulse"
+		"imba_necrolyte_death_pulse",
+		"shredder_chakram",
+		"shredder_chakram_2"
 	}
 
 	for i = 1, #forbidden_skills do
@@ -910,7 +914,7 @@ function UpgradeTower( tower )
 	-- Fetch tower abilities
 	for i = 0, 15 do
 		local current_ability = tower:GetAbilityByIndex(i)
-		if current_ability and current_ability:GetName() ~= "backdoor_protection" and current_ability:GetName() ~= "backdoor_protection_in_base" then
+		if current_ability and current_ability:GetName() ~= "backdoor_protection" and current_ability:GetName() ~= "backdoor_protection_in_base" and current_ability:GetName() ~= "imba_tower_buffs" then
 			abilities[#abilities+1] = current_ability
 		end
 	end
@@ -1062,9 +1066,7 @@ function GetAncientAbility( tier )
 	-- Tier 1 abilities
 	if tier == 1 then
 		local ability_list = {
-			"venomancer_poison_nova",
-			"bristleback_quill_spray",
-			"leshrac_diabolic_edict"
+			"venomancer_poison_nova"
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1072,9 +1074,9 @@ function GetAncientAbility( tier )
 	-- Tier 2 abilities
 	elseif tier == 2 then
 		local ability_list = {
-			"treant_overgrowth",
-			"rattletrap_battery_assault",
-			"nyx_assassin_spiked_carapace"
+			"abaddon_borrowed_time",
+			"nyx_assassin_spiked_carapace",
+			"axe_berserkers_call"
 		}
 
 		return ability_list[RandomInt(1, #ability_list)]
@@ -1082,27 +1084,8 @@ function GetAncientAbility( tier )
 	-- Tier 3 abilities
 	elseif tier == 3 then
 		local ability_list = {
-			"razor_eye_of_the_storm",
-			"gyrocopter_rocket_barrage"
-		}
-
-		return ability_list[RandomInt(1, #ability_list)]
-
-	-- Tier 4 abilities
-	elseif tier == 4 then
-		local ability_list = {
-			"abaddon_borrowed_time",
-			"axe_berserkers_call",
-			"windrunner_windrun"
-		}
-
-		return ability_list[RandomInt(1, #ability_list)]
-
-	-- Tier 5 abilities
-	elseif tier == 5 then
-		local ability_list = {
+			"treant_overgrowth",
 			"tidehunter_ravage",
-			"slardar_slithereen_crush",
 			"magnataur_reverse_polarity"
 		}
 
@@ -1112,69 +1095,64 @@ function GetAncientAbility( tier )
 	return nil
 end
 
--- Precaches the ancients' spell assets
-function PrecacheAncientAbilities( ability_name )
+function GetBaseRangedProjectileName( unit )
+	local unit_name = unit:GetUnitName()
+	unit_name = string.gsub(unit_name, "dota", "imba")
+	local unit_table = unit:IsHero() and GameRules.HeroKV[unit_name] or GameRules.UnitKV[unit_name]
+	return unit_table and unit_table["ProjectileModel"] or ""
+end
 
-	--if ability_name == "venomancer_poison_nova" then
-		PrecacheResource("particle", "particles/units/heroes/hero_venomancer/venomancer_poison_nova.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_venomancer/venomancer_poison_debuff_nova.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts", context)
-	--elseif ability_name == "bristleback_quill_spray" then
-		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_hit_creep.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_bristleback/bristleback_quill_spray_impact.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts", context)
-	--elseif ability_name == "gyrocopter_rocket_barrage" then
-		PrecacheResource("particle", "particles/units/heroes/hero_gyrocopter/gyro_rocket_barrage.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts", context)
-	--elseif ability_name == "treant_overgrowth" then
-		PrecacheResource("particle", "particles/units/heroes/hero_treant/treant_overgrowth_cast.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_treant/treant_overgrowth_vines.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_treant.vsndevts", context)
-	--elseif ability_name == "doom_bringer_scorched_earth" then
-		PrecacheResource("particle", "particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_doom_bringer/doom_bringer_scorched_earth_debuff.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts", context)
-	--elseif ability_name == "nyx_assassin_spiked_carapace" then
-		PrecacheResource("particle", "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts", context)
-	--elseif ability_name == "razor_eye_of_the_storm" then
-		PrecacheResource("particle", "particles/units/heroes/hero_razor/razor_rain_storm.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_razor.vsndevts", context)
-	--elseif ability_name == "axe_counter_helix" then
-		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_counterhelix.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts", context)
-	--elseif ability_name == "rattletrap_battery_assault" then
-		PrecacheResource("particle", "particles/units/heroes/hero_rattletrap/rattletrap_battery_assault.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_rattletrap.vsndevts", context)
-	--elseif ability_name == "leshrac_diabolic_edict" then
-		PrecacheResource("particle", "particles/units/heroes/hero_leshrac/leshrac_diabolic_edict.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_leshrac.vsndevts", context)
-	--elseif ability_name == "abaddon_borrowed_time" then
-		PrecacheResource("particle", "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf", context)
-		PrecacheResource("particle", "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts", context)
-	--elseif ability_name == "axe_berserkers_call" then
-		PrecacheResource("particle", "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf", context)
-		PrecacheResource("particle", "particles/status_fx/status_effect_beserkers_call.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_axe.vsndevts", context)
-	--elseif ability_name == "windrunner_windrun" then
-		PrecacheResource("particle", "particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf", context)
-		PrecacheResource("particle", "particles/units/heroes/hero_windrunner/windrunner_windrun_slow.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts", context)
-	--elseif ability_name == "tidehunter_ravage" then
-		PrecacheResource("particle", "particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts", context)
-	--elseif ability_name == "slardar_slithereen_crush" then
-		PrecacheResource("particle", "particles/units/heroes/hero_slardar/slardar_crush.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts", context)
-	--elseif ability_name == "magnataur_reverse_polarity" then
-		PrecacheResource("particle", "particles/units/heroes/hero_magnataur/magnataur_reverse_polarity.vpcf", context)
-		PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts", context)
-	--end
+function ChangeAttackProjectileImba( unit )
 
+	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
+	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
+	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
+	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
+	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
+
+	-- If the unit has a Desolator and a Skadi, use the special projectile
+	if unit:HasModifier("modifier_item_imba_desolator_unique") or unit:HasModifier("modifier_item_imba_desolator_2_unique") then
+		if unit:HasModifier("modifier_item_imba_skadi_unique") then
+			unit:SetRangedProjectileName(particle_deso_skadi)
+
+		-- If only a Desolator, use its attack projectile instead
+		else
+			unit:SetRangedProjectileName(particle_deso)
+		end
+
+	-- If only a Skadi, use its attack projectile instead
+	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
+		unit:SetRangedProjectileName(particle_skadi)
+
+	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
+	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
+		unit:SetRangedProjectileName(particle_clinkz_arrows)
+
+	-- If it's one of Dragon Knight's forms, use its attack projectile instead
+	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_green)
+	elseif unit:HasModifier("modifier_dragon_knight_splash_attack") then
+		unit:SetRangedProjectileName(particle_dragon_form_red)
+	elseif unit:HasModifier("modifier_dragon_knight_frost_breath") then
+		unit:SetRangedProjectileName(particle_dragon_form_blue)
+
+	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
+	elseif unit:HasModifier("modifier_terrorblade_metamorphosis") then
+		unit:SetRangedProjectileName(particle_terrorblade_transform)
+
+	-- Else, default to the base ranged projectile
+	else
+		unit:SetRangedProjectileName(GetBaseRangedProjectileName(unit))
+	end
+end
+
+function IsUninterruptableForcedMovement( unit )
+	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement") then
+		return true
+	end
+
+	return false
 end

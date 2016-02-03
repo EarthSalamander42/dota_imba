@@ -1,209 +1,54 @@
 --[[	Author: Firetoad
 		Date: 16.08.2015	]]
 
-function Upgrade( keys )
+function CreepUpgrade( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifier_stack = keys.modifier_stack
-
-	-- Calculate total buff stacks
-	local total_stacks = GAME_TIME_ELAPSED / 60
-
-	-- Increase amount of stacks according to game speed
-	total_stacks = total_stacks * CREEP_POWER_RAMP_UP_FACTOR
-
-	-- Cap the stacks
-	total_stacks = math.min(total_stacks, CREEP_POWER_MAX_UPGRADES)
-
-	-- Update the stacks buff
-	caster:RemoveModifierByName(modifier_stack)
-	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
-end
-
-function AncientHealth( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- Parameters
-	local health = ability:GetLevelSpecialValueFor("ancient_health", 0)
-
-	-- Update health
-	SetCreatureHealth(caster, health, true)
-end
-
-function AncientThink( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If the game is set to end on kills, make the ancient invulnerable
-	if END_GAME_ON_KILLS then
-
-		-- Make the ancient invulnerable
-		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
-
-		-- Kill any nearby creeps (prevents lag)
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for _,enemy in pairs(enemy_creeps) do
-			enemy:Kill(ability, caster)
-		end
-		return nil
-	end
-
-	-- Parameters
-	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
-
-	-- Search for nearby units
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
-
-	-- If there are no nearby enemies, do nothing
-	if #enemies == 0 then
-		return nil
-	end
-	
-	-- Ancient abilities logic
-	local tier_1_ability = caster:GetAbilityByIndex(2)
-	local tier_2_ability = caster:GetAbilityByIndex(3)
-	local tier_3_ability = caster:GetAbilityByIndex(4)
-	local tier_4_ability = caster:GetAbilityByIndex(5)
-	local tier_5_ability = caster:GetAbilityByIndex(6)
-
-	-- If health < 20%, refresh abilities once
-	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
-		tier_5_ability:EndCooldown()
-		caster.abilities_refreshed = true
-	end
-
-	-- If health < 30%, use the tier 5 ability
-	if ancient_health < 0.3 and tier_5_ability and tier_5_ability:IsCooldownReady() then
-		tier_4_ability:EndCooldown()
-		tier_5_ability:OnSpellStart()
-		tier_5_ability:StartCooldown(tier_5_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 40%, use the tier 4 ability
-	if ancient_health < 0.4 and tier_4_ability and tier_4_ability:IsCooldownReady() then
-		tier_3_ability:EndCooldown()
-		tier_4_ability:OnSpellStart()
-		tier_4_ability:StartCooldown(tier_4_ability:GetCooldown(1))
-	end
-
-	-- If health < 60%, use the tier 3 ability
-	if ancient_health < 0.6 and tier_3_ability and tier_3_ability:IsCooldownReady() then
-		tier_2_ability:EndCooldown()
-		tier_3_ability:OnSpellStart()
-		tier_3_ability:StartCooldown(tier_3_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 80%, use the tier 2 ability
-	if ancient_health < 0.8 and tier_2_ability and tier_2_ability:IsCooldownReady() then
-		tier_1_ability:EndCooldown()
-		tier_2_ability:OnSpellStart()
-		tier_2_ability:StartCooldown(tier_2_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 100%, use the tier 1 ability
-	if ancient_health < 1.0 and tier_1_ability and tier_1_ability:IsCooldownReady() then
-		tier_1_ability:OnSpellStart()
-		tier_1_ability:StartCooldown(tier_1_ability:GetCooldown(1))
-		return nil
-	end
-end
-
-function AncientAttacked( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- Parameters
-	local ancient_health = caster:GetHealth() / caster:GetMaxHealth()
-	
-	-- Ancient abilities logic
-	local tier_1_ability = caster:GetAbilityByIndex(2)
-	local tier_2_ability = caster:GetAbilityByIndex(3)
-	local tier_3_ability = caster:GetAbilityByIndex(4)
-	local tier_4_ability = caster:GetAbilityByIndex(5)
-	local tier_5_ability = caster:GetAbilityByIndex(6)
-
-	-- If health < 20%, refresh abilities once
-	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
-		tier_5_ability:EndCooldown()
-		caster.abilities_refreshed = true
-	end
-
-	-- If health < 30%, use the tier 5 ability
-	if ancient_health < 0.3 and tier_5_ability and tier_5_ability:IsCooldownReady() then
-		tier_4_ability:EndCooldown()
-		tier_5_ability:OnSpellStart()
-		tier_5_ability:StartCooldown(tier_5_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 40%, use the tier 4 ability
-	if ancient_health < 0.4 and tier_4_ability and tier_4_ability:IsCooldownReady() then
-		tier_3_ability:EndCooldown()
-		tier_4_ability:OnSpellStart()
-		tier_4_ability:StartCooldown(tier_4_ability:GetCooldown(1))
-	end
-
-	-- If health < 60%, use the tier 3 ability
-	if ancient_health < 0.6 and tier_3_ability and tier_3_ability:IsCooldownReady() then
-		tier_2_ability:EndCooldown()
-		tier_3_ability:OnSpellStart()
-		tier_3_ability:StartCooldown(tier_3_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 80%, use the tier 2 ability
-	if ancient_health < 0.8 and tier_2_ability and tier_2_ability:IsCooldownReady() then
-		tier_1_ability:EndCooldown()
-		tier_2_ability:OnSpellStart()
-		tier_2_ability:StartCooldown(tier_2_ability:GetCooldown(1))
-		return nil
-	end
-
-	-- If health < 100%, use the tier 1 ability
-	if ancient_health < 1.0 and tier_1_ability and tier_1_ability:IsCooldownReady() then
-		tier_1_ability:OnSpellStart()
-		tier_1_ability:StartCooldown(tier_1_ability:GetCooldown(1))
-		return nil
-	end
-end
-
-function CreepArmor( keys )
-	local caster = keys.caster
-	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_damage = keys.modifier_damage
 	local modifier_armor = keys.modifier_armor
+	local modifier_magic_resist = keys.modifier_magic_resist
 
 	-- Parameters
-	local game_time = GAME_TIME_ELAPSED / 60
+	local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
+	local magic_armor_per_minute = ability:GetLevelSpecialValueFor("mega_magic_armor_per_minute", ability_level)
+
+	-- Adjust creep damage
+	AddStacks(ability, caster, caster, modifier_damage, game_time, true)
 
 	-- Adjust mega creep armor
 	if string.find(caster:GetUnitName(), "mega") then
-		AddStacks(ability, caster, caster, modifier_armor, math.max(game_time - 13, 0), true)
+		AddStacks(ability, caster, caster, modifier_armor, math.max(game_time - 12, 0), true)
+		AddStacks(ability, caster, caster, modifier_magic_resist, math.floor(100 - 100 * (1 - magic_armor_per_minute / 100) ^ math.max(game_time - 12, 0)), true)
 	end
 end
 
-function CreepStructureDamage( keys )
+function TowerUpgrade( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_buffs = keys.modifier_buffs
 
 	-- Parameters
-	local building_damage = ability:GetLevelSpecialValueFor("structure_damage_per_minute", ability_level)
-	local hero_damage = ability:GetLevelSpecialValueFor("hero_damage_per_minute", ability_level)
-	local game_time = math.min( GAME_TIME_ELAPSED / 60, CREEP_POWER_MAX_UPGRADES)
+	local base_health_per_tier = ability:GetLevelSpecialValueFor("base_health_per_tier", ability_level) * TOWER_POWER_FACTOR
 
-	-- Deal bonus damage
-	if target:IsBuilding() or target:IsTower() then
-		local bonus_damage = caster:GetAttackDamage() * building_damage * game_time / 100
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-	elseif target:IsHero() then
-		local bonus_damage = caster:GetAttackDamage() * hero_damage * game_time / 100
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	-- Calculate tower tier
+	local tower_tier_multiplier = 0
+	if string.find(caster:GetUnitName(), "tower1") then
+		return nil
+	elseif string.find(caster:GetUnitName(), "tower2") then
+		tower_tier_multiplier = 1
+	elseif string.find(caster:GetUnitName(), "tower3") then
+		tower_tier_multiplier = 2
+	elseif string.find(caster:GetUnitName(), "tower4") then
+		tower_tier_multiplier = 3
 	end
+
+	-- Adjust health
+	SetCreatureHealth(caster, caster:GetMaxHealth() + base_health_per_tier * tower_tier_multiplier, true)
+
+	-- Adjust damage/armor/attack speed
+	AddStacks(ability, caster, caster, modifier_buffs, tower_tier_multiplier * TOWER_POWER_FACTOR, true)
 end
 
 function FountainThink( keys )
@@ -216,9 +61,9 @@ function FountainThink( keys )
 
 	-- If mega creeps are nearby on arena mode, disable fountain protection
 	if END_GAME_ON_KILLS and not caster.fountain_disabled then
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 5000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for	_,enemy in pairs(enemy_creeps) do
-			if enemy:GetTeam() ~= caster:GetTeam() and (enemy:GetUnitName() == "npc_dota_creep_goodguys_melee_upgraded_mega" or enemy:GetUnitName() == "npc_dota_creep_badguys_melee_upgraded_mega") then
+			if enemy:GetTeam() ~= caster:GetTeam() and string.find(enemy:GetUnitName(), "mega") then
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_imba_fountain_disabled", {})
 				caster.fountain_disabled = true
 			end
@@ -306,4 +151,96 @@ function FranticUpdate( keys )
 	-- Apply stacks
 	AddStacks(ability, caster, caster, modifier_mana, mana_stacks, true)
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
+end
+
+function NecrowarriorTrample( keys )
+	local caster = keys.caster
+	local target = keys.target_points[1]
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local sound_hit = keys.sound_hit
+	local particle_hit = keys.particle_hit
+	local modifier_dummy = keys.modifier_dummy
+
+	-- Parameters
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+	local caster_loc = caster:GetAbsOrigin()
+	local direction = (target - caster_loc):Normalized()
+	local distance = (target - caster_loc):Length2D()
+
+	-- Play sound
+	caster:EmitSound(sound_cast)
+
+	-- Play animation
+	StartAnimation(caster, {activity = ACT_DOTA_ATTACK, rate = 1.2})
+
+	-- Movement parameters
+	local current_distance = 0
+	local tick_rate = 0.03
+	local distance_tick = direction * speed * tick_rate
+
+	-- Move the caster
+	Timers:CreateTimer(0, function()
+		caster:SetAbsOrigin(caster:GetAbsOrigin() + distance_tick)
+		current_distance = current_distance + speed * tick_rate
+		
+		-- If the movement has ended, find a legal position and exit
+		if current_distance >= distance then
+			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
+		-- Else, keep moving
+		else
+
+			-- Destroy trees
+			GridNav:DestroyTreesAroundPoint(caster:GetAbsOrigin(), 175, false)
+
+			-- Iterate through nearby enemies
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in pairs(nearby_enemies) do
+				if not enemy:HasModifier(modifier_dummy) then
+					
+					-- Apply the multiple-hit-prevention modifier
+					ability:ApplyDataDrivenModifier(caster, enemy, modifier_dummy, {})
+
+					-- Play hit sound
+					enemy:EmitSound(sound_hit)
+
+					-- Play hit particle
+					local trample_hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, enemy)
+					ParticleManager:SetParticleControl(trample_hit_pfx, 0, enemy:GetAbsOrigin())
+
+					-- Deal damage
+					ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				end
+			end
+
+			-- Keep moving
+			return tick_rate
+		end
+	end)
+end
+
+function NecrowarriorBlazeSpikes( keys )
+	local caster = keys.caster
+	local target = keys.attacker
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local particle_hit = keys.particle_hit
+	local sound_hit = keys.sound_hit
+
+	-- Parameters
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+
+	-- Play sound
+	target:EmitSound(sound_hit)
+
+	-- Play particle
+	local blaze_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(blaze_pfx, 0, target:GetAbsOrigin())
+
+	-- Deal damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end

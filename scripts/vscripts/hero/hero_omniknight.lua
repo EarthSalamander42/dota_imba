@@ -9,7 +9,7 @@ function Purification( keys )
 	local scepter = HasScepter(caster)
 
 	-- If the target is a building and there's no scepter, refund mana and reset the cooldown.
-	if target:IsTower() and not scepter then
+	if target:IsBuilding() and not scepter then
 		ability:RefundManaCost()
 		ability:EndCooldown()
 		return nil
@@ -25,12 +25,17 @@ function Purification( keys )
 	local heal_pct = ability:GetLevelSpecialValueFor("heal_pct", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local target_pos = target:GetAbsOrigin()
-	local heal = math.max( heal_min, target:GetMaxHealth() * heal_pct / 100 )
+
+	-- Increase healing if the target is not a building
+	local heal = heal_min
+	if not target:IsBuilding() then
+		heal = math.max( heal_min, target:GetMaxHealth() * heal_pct / 100 )		
+	end
 
 	-- Heal and apply the strong purge on the target
 	target:Heal(heal, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-	target:Purge(false, true, false, true, false)
+	--target:Purge(false, true, false, true, false)
 
 	-- Play cast sound and particles
 	target:EmitSound(cast_sound)
@@ -71,7 +76,7 @@ function PurificationDeath( keys )
 
 		-- Heal and apply the strong purge
 		caster:Heal(heal, caster)
-		caster:Purge(false, true, false, true, false)
+		--caster:Purge(false, true, false, true, false)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal, nil)
 
 		-- Play cast sound and particles

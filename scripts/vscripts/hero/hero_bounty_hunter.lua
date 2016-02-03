@@ -229,6 +229,17 @@ function Track( keys )
 	end
 end
 
+function UpgradeJaunt( keys )
+	local caster = keys.caster
+	local ability_jaunt = caster:FindAbilityByName(keys.ability_jaunt)
+	local track_level = keys.ability:GetLevel()
+
+	-- Upgrade the Shadow Jaunt ability
+	if ability_jaunt then
+		ability_jaunt:SetLevel(track_level)
+	end
+end
+
 function ShadowJaunt( keys )
 	local caster = keys.caster
 	local target = keys.target

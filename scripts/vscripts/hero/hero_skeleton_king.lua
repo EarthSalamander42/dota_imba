@@ -350,11 +350,25 @@ function ReincarnationWraithDamage( keys )
 	local modifier_wraith = keys.modifier_wraith
 	local sound_wraith = keys.sound_wraith
 
-	-- Store the attacker which killed this unit for later
+	-- Store the attacker which killed this unit's ID
+	local killer_id
+	local killer_type = "hero"
 	if attacker:GetOwnerEntity() then
-		target.reincarnation_scepter_killer_id = attacker:GetOwnerEntity():GetPlayerID()
+		killer_id = attacker:GetOwnerEntity():GetPlayerID()
+	elseif attacker:IsHero() then
+		killer_id = attacker:GetPlayerID()
 	else
-		target.reincarnation_scepter_killer_id = attacker:GetPlayerID()
+		killer_id = attacker
+		killer_type = "creature"
+	end
+
+	-- If there is a player-owned killer, store it
+	if killer_type == "hero" then
+		target.reincarnation_scepter_killer = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
+
+	-- Else, assign the kill to the unit which dealt the finishing blow
+	else
+		target.reincarnation_scepter_killer = attacker
 	end
 
 	-- Play transformation sound
@@ -375,8 +389,11 @@ function ReincarnationWraithEnd( keys )
 	local ability = keys.ability
 	
 	-- Kill the target, granting credit to the original killer
-	local killer_hero = PlayerResource:GetPlayer(target.reincarnation_scepter_killer_id):GetAssignedHero()
-	TrueKill(killer_hero, target, ability)
+	if target.reincarnation_scepter_killer then
+		TrueKill(target.reincarnation_scepter_killer, target, ability)
+	else
+		TrueKill(target, target, ability)
+	end
 
 	-- Clear the killer variable
 	target.reincarnation_scepter_killer_id = nil
@@ -386,7 +403,7 @@ function ReincarnationDamage( keys )
 	local caster = keys.caster
 
 	-- If health is not 1, do nothing
-	if caster:GetHealth() > 1 or caster.has_aegis or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") then
+	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") then
 		return nil
 	end
 

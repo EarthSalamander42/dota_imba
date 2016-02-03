@@ -42,8 +42,8 @@ function HoofStomp( keys )
 		end
 
 		-- If an enemy previously marked is outside the ring, move it in
-		for _, enemy in pairs(pit_enemies) do
-			if ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius and enemy.hoof_pit_owner == caster then
+		for k, enemy in pairs(pit_enemies) do
+			if ( enemy:GetAbsOrigin() - pit_center ):Length2D() > pit_radius and enemy.hoof_pit_owner == caster and enemy:HasModifier(modifier_enemies) then
 				FindClearSpaceForUnit(enemy, pit_center + ( enemy:GetAbsOrigin() - pit_center ):Normalized() * pit_radius, true)
 			end
 		end

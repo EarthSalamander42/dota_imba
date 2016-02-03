@@ -189,6 +189,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- IMBA: Pick mode selection
 	-------------------------------------------------------------------------------------------------
 
+	print("starting game setup TESTTEST")
 	-- Retrieve information
 	if tonumber(mode_info.all_random) == 1 then
 		IMBA_PICK_MODE_ALL_RANDOM = true
@@ -215,22 +216,14 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Set frantic mode multiplier
-	if tonumber(mode_info.frantic_mode) > 1 then
-		FRANTIC_MULTIPLIER = tonumber(mode_info.frantic_mode)
+	if tonumber(mode_info.frantic_mode) == 1 then
+		FRANTIC_MULTIPLIER = 3
 		print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
 	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Additional Random OMG setup
 	-------------------------------------------------------------------------------------------------
-
-	-- Enable skill randomization on respawn
-	if tonumber(mode_info.randomize_every_spawn) == 1 then
-		IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = true
-		print("Skill randomization on respawn enabled!")
-	else
-		IMBA_RANDOM_OMG_RANDOMIZE_SKILLS_ON_DEATH = false
-	end
 
 	-- Detect amount of abilities/ultimates to learn each time
 	if mode_info.number_of_abilities == "3a2u" then
@@ -285,15 +278,11 @@ function OnSetGameMode( eventSourceIndex, args )
 	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
 	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
 
-	-- Creep growth ramp speed
-	CREEP_POWER_RAMP_UP_FACTOR = tonumber(mode_info.creep_power)
-	print("Creep growth ramp multiplier:"..CREEP_POWER_RAMP_UP_FACTOR)
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creeps and buildings setup
 	-------------------------------------------------------------------------------------------------
 	
-	-- Enable skill randomization on respawn
+	-- Enable tower/ancient abilities
 	if tonumber(mode_info.tower_upgrades) == 1 then
 		TOWER_ABILITY_MODE = true
 		TOWER_UPGRADE_MODE = true
@@ -305,13 +294,19 @@ function OnSetGameMode( eventSourceIndex, args )
 		TOWER_ABILITY_MODE = false
 	end
 
+	-- Creep and tower power adjustment
+	CREEP_POWER_FACTOR = tonumber(mode_info.creep_power)
+	TOWER_POWER_FACTOR = tonumber(mode_info.tower_power)
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero levels and respawn setup
 	-------------------------------------------------------------------------------------------------
 
 	-- Enable higher starting level
-	HERO_STARTING_LEVEL = tonumber(mode_info.xp_start)
-	print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
+	if tonumber(mode_info.xp_start) then
+		HERO_STARTING_LEVEL = tonumber(mode_info.xp_start)
+		print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
+	end
 
 	-- Set up level cap
 	USE_CUSTOM_HERO_LEVELS = true
@@ -336,7 +331,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	GAME_OPTIONS_SET = true
 
 	-- Finish mode setup and start the game
-	GameRules:FinishCustomGameSetup()
+	--GameRules:FinishCustomGameSetup()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat tracking stuff
@@ -381,8 +376,9 @@ function OnSetGameMode( eventSourceIndex, args )
 	statCollection:setFlags({starting_gold = HERO_INITIAL_GOLD})
 	statCollection:setFlags({starting_exp = HERO_STARTING_LEVEL})
 
-	-- Tracks creep upgrade speed
-	statCollection:setFlags({creep_power = CREEP_POWER_RAMP_UP_FACTOR})
+	-- Tracks creep and tower power settings
+	statCollection:setFlags({creep_power = CREEP_POWER_FACTOR})
+	statCollection:setFlags({tower_power = TOWER_POWER_FACTOR})
 
 	-- Tracks Frantic Mode multiplier
 	statCollection:setFlags({frantic_mult = FRANTIC_MULTIPLIER})
