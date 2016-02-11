@@ -8,13 +8,6 @@ function Purification( keys )
 	local target = keys.target
 	local scepter = HasScepter(caster)
 
-	-- If the target is a building and there's no scepter, refund mana and reset the cooldown.
-	if target:IsBuilding() and not scepter then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return nil
-	end
-
 	-- Effects
 	local cast_sound = keys.cast_sound
 	local aoe_particle = keys.aoe_particle
@@ -26,16 +19,12 @@ function Purification( keys )
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local target_pos = target:GetAbsOrigin()
 
-	-- Increase healing if the target is not a building
-	local heal = heal_min
-	if not target:IsBuilding() then
-		heal = math.max( heal_min, target:GetMaxHealth() * heal_pct / 100 )		
-	end
+	-- Increase healing if the target has enough health
+	local heal = math.max( heal_min, target:GetMaxHealth() * heal_pct / 100 )	
 
-	-- Heal and apply the strong purge on the target
+	-- Heal the target
 	target:Heal(heal, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-	--target:Purge(false, true, false, true, false)
 
 	-- Play cast sound and particles
 	target:EmitSound(cast_sound)
@@ -112,37 +101,13 @@ function DegenAura( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_stacks = keys.modifier_stacks
 
 	-- Parameters
 	local stack_reduction_pct = ability:GetLevelSpecialValueFor("stack_reduction_pct", ability_level)
-	local modifier = keys.modifier
-	local dummy_modifier = keys.dummy_modifier
-	local main_stat = 0
-
-	-- Only removes attributes from heroes
-	if target:IsHero() then
-		
-		-- Verifies which is the affected hero's main attribute
-		local main_att = target:GetPrimaryAttribute()
-		if main_att == 0 then
-			modifier = modifier.."str"
-			main_stat = target:GetStrength()
-		elseif main_att == 1 then
-			modifier = modifier.."agi"
-			main_stat = target:GetAgility()
-		elseif main_att == 2 then
-			modifier = modifier.."int"
-			main_stat = target:GetIntellect()
-		end
-
-		-- Refreshes the debuff and adds stacks
-		local stack_amount = math.max(main_stat * stack_reduction_pct / 100, 1)
-		AddStacks(ability, caster, target, modifier, stack_amount, true)
-
-		-- Places and removes a dummy modifier to refresh health/mana amounts
-		ability:ApplyDataDrivenModifier(caster, target, dummy_modifier, {})
-		target:RemoveModifierByName(dummy_modifier)
-	end
+	
+	-- Refreshes the debuff and adds stacks
+	AddStacks(ability, caster, target, modifier_stacks, stack_reduction_pct, true)
 end
 
 function ScepterCheck( keys )

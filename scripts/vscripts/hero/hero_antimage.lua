@@ -141,53 +141,46 @@ function ManaVoid( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local targetLocation = target:GetAbsOrigin()
-	local damagePerMana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability:GetLevel() -1) / FRANTIC_MULTIPLIER
-	local radius = ability:GetLevelSpecialValueFor('mana_void_aoe_radius', ability:GetLevel() -1)
+	local ability_level = ability:GetLevel() -1
 	local scepter = HasScepter(caster)
-	local manaBurn = 0
-	local maxManaBurn = 0
 
-	if scepter then
-		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct_scepter', ability:GetLevel() -1) / 100
-	else
-		manaBurn = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct', ability:GetLevel() -1) / 100
-		maxManaBurn = ability:GetLevelSpecialValueFor('max_mana_burn', ability:GetLevel() -1) * FRANTIC_MULTIPLIER
-	end
-
+	-- Parameters
+	local damage_per_mana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability_level) / FRANTIC_MULTIPLIER
+	local radius = ability:GetLevelSpecialValueFor('mana_void_aoe_radius', ability_level)
+	local mana_burn_pct = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct', ability_level)
+	local secondary_mana_pct = 0
 	local damage = 0
-	local targetMana = target:GetMana()
-	local targetMaxMana = target:GetMaxMana()
-	local manaToBurn = 0
+
+	-- If the caster has a scepter, add secondary targets' mana contribution
 	if scepter then
-		manaToBurn = manaBurn * targetMaxMana
-	else
-		manaToBurn = math.min( manaBurn * targetMaxMana, maxManaBurn)
+		secondary_mana_pct = ability:GetLevelSpecialValueFor('secondary_mana_scepter', ability_level)
 	end
 
-	if targetMana < manaToBurn then
-		target:SetMana(0)
-		damageToDeal = damagePerMana * targetMaxMana
-	else
-		target:SetMana(targetMana - manaToBurn)
-		damageToDeal = damagePerMana * (targetMaxMana - targetMana + manaToBurn)
+	-- Burn main target's mana
+	local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
+	target:ReduceMana(target_mana_burn)
+
+	-- Find all enemies in the area of effect
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(nearby_enemies) do
+
+		-- Calculate this enemy's damage contribution
+		local this_enemy_damage = (enemy:GetMaxMana() - enemy:GetMana()) * damage_per_mana
+
+		-- If this is not the main target, weight its damage contribution
+		if enemy ~= target then
+			this_enemy_damage = this_enemy_damage * secondary_mana_pct / 100
+		end
+
+		-- Add this enemy's contribution to the damage tally
+		damage = damage + this_enemy_damage
 	end
 
-	local damageTable = {}
-	damageTable.attacker = caster
-	damageTable.ability = ability
-	damageTable.damage_type = ability:GetAbilityDamageType()
-	damageTable.damage = damageToDeal
-
-	-- Finds all the enemies in a radius around the target and then deals damage to each of them
-	local unitsToDamage = FindUnitsInRadius(caster:GetTeam(), targetLocation, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, 0, false)
-
-	for _,v in ipairs(unitsToDamage) do
-		damageTable.victim = v
-		ApplyDamage(damageTable)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, v, target:GetMaxMana() - target:GetMana(), nil)
+	-- Damage all enemies in the area for the total damage tally
+	for _,enemy in pairs(nearby_enemies) do
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	end
 
+	-- Shake screen due to excessive PURITY OF WILL
 	ScreenShake(target:GetOrigin(), 10, 0.1, 1, 500, 0, true)
-
 end

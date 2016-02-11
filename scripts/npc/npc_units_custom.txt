@@ -2579,7 +2579,6 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"6"
 		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
@@ -2592,9 +2591,9 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"1"
+		"AttackDamageMax"			"1"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.3"
@@ -2631,7 +2630,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"325"
+		"MovementSpeed"				"300"
 		"MovementTurnRate"			"0.5"
 
 		// Status
@@ -2673,7 +2672,6 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"6"
 		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
@@ -2686,9 +2684,9 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
-		"AttackDamageMin"			"0"
-		"AttackDamageMax"			"0"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"1"
+		"AttackDamageMax"			"1"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.3"
@@ -2725,7 +2723,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"325"
+		"MovementSpeed"				"300"
 		"MovementTurnRate"			"0.5"
 
 		// Status

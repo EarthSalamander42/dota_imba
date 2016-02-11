@@ -765,6 +765,7 @@ function MinefieldTeleport( keys )
 
 	-- Parameters
 	local teleport_radius = ability:GetLevelSpecialValueFor("teleport_radius", ability_level)
+	local teleport_cooldown = ability:GetLevelSpecialValueFor("teleport_cooldown", ability_level)
 
 	-- Teleport mine to the minefield, if it exists
 	if caster.minefield_sign then
@@ -774,8 +775,16 @@ function MinefieldTeleport( keys )
 		for _,unit in pairs(units) do
 
 			-- Check if this unit is really a mine from the same player
-			if unit:FindAbilityByName("imba_techies_minefield_teleport") and unit:GetOwnerEntity() == caster then
-				unit:SetAbsOrigin(caster.minefield_sign:GetAbsOrigin() + RandomVector(RandomInt(1,60)))
+			local teleport_ability = unit:FindAbilityByName("imba_techies_minefield_teleport")
+			if teleport_ability and unit:GetOwnerEntity() == caster then
+
+				-- Original mine gets a free pass
+				if teleport_ability:IsCooldownReady() or unit == mine then
+
+					-- Teleport this mine and trigger the ability's cooldown
+					unit:SetAbsOrigin(caster.minefield_sign:GetAbsOrigin() + RandomVector(RandomInt(1,60)))
+					teleport_ability:StartCooldown(teleport_cooldown)
+				end
 			end
 		end
 

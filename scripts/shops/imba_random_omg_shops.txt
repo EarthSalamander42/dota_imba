@@ -154,7 +154,7 @@
 		"item"		"item_imba_monkey_king_bar"
 		"item"		"item_imba_greater_crit"
 		"item"		"item_imba_butterfly"
-		"item"		"item_imba_rapier_1"
+		"item"		"item_imba_rapier"
 		"item"		"item_imba_abyssal_blade"
 		"item"		"item_imba_starfury"
 	}

@@ -12,7 +12,7 @@ function Shockwave( keys )
 	-- Parameters
 	local shock_speed = ability:GetLevelSpecialValueFor("shock_speed", ability_level)
 	local shock_width = ability:GetLevelSpecialValueFor("shock_width", ability_level)
-	local shock_distance = ability:GetLevelSpecialValueFor("shock_distance", ability_level)
+	local shock_distance = ability:GetLevelSpecialValueFor("shock_distance", ability_level) + GetCastRangeIncrease(caster)
 
 	-- Clear targets hit table
 	caster.shockwave_targets_hit = nil

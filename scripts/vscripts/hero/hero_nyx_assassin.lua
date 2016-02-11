@@ -19,6 +19,9 @@ function Impale ( keys )
 		speed = speed * 1.75
 	end
 
+	-- Adjust based on cast range buffs
+	length = length + GetCastRangeIncrease(caster)
+
 	-- Play sound
 	caster:EmitSound(sound_cast)
 

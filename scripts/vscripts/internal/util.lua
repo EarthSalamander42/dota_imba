@@ -1150,9 +1150,19 @@ function ChangeAttackProjectileImba( unit )
 end
 
 function IsUninterruptableForcedMovement( unit )
-	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement") then
+	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement") or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback") then
 		return true
 	end
 
 	return false
+end
+
+function GetCastRangeIncrease( unit )
+	local cast_range_increase = 0
+	
+	if unit:HasModifier("modifier_item_aether_lens") then
+		cast_range_increase = cast_range_increase + 300
+	end
+
+	return cast_range_increase
 end

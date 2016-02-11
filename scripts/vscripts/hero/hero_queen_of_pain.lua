@@ -43,7 +43,7 @@ function Blink(keys)
 	local ability_scream_level = ability_scream:GetLevel()
 	local projectile_speed = 0.0
 	local radius = 0.0
-	local range = ability:GetLevelSpecialValueFor("blink_range", (ability:GetLevel() - 1))
+	local range = ability:GetLevelSpecialValueFor("blink_range", (ability:GetLevel() - 1)) + GetCastRangeIncrease(caster)
 
 	if ability_scream_level ~= 0 then
 		caster:EmitSound("Hero_QueenOfPain.ScreamOfPain")
@@ -134,7 +134,7 @@ function Torment( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level) * 10 / IMBA_PLAYERS_ON_GAME
+	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level)
 
 	-- If a hero was damaged, reduce all ability cooldowns
 	if target:IsRealHero() then

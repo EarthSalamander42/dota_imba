@@ -181,31 +181,14 @@ function SpawnRadiantBehemoth( keys )
 
 			-- Adjust health
 			SetCreatureHealth(behemoth, base_health + this_call_body_count * health_per_hero + game_time * health_per_minute, true)
-
+			
 			-- Adjust armor & health regeneration
 			AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
 
 			-- Grant extra abilities
-			local abilities_level = math.min(this_call_body_count, 5)
-			local extra_ability
-			behemoth:AddAbility("kobold_taskmaster_speed_aura")
-			behemoth:AddAbility("centaur_khan_endurance_aura")
-			behemoth:AddAbility("alpha_wolf_command_aura")
-			behemoth:AddAbility("black_dragon_dragonhide_aura")
-			behemoth:AddAbility("satyr_hellcaller_unholy_aura")
-			behemoth:AddAbility("granite_golem_hp_aura")
-			extra_ability = behemoth:FindAbilityByName("kobold_taskmaster_speed_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("centaur_khan_endurance_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("alpha_wolf_command_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("black_dragon_dragonhide_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("satyr_hellcaller_unholy_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("granite_golem_hp_aura")
-			extra_ability:SetLevel(abilities_level)
+			behemoth:AddAbility("imba_behemoth_aura_goodguys")
+			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_goodguys")
+			aura_ability:SetLevel(math.min(this_call_body_count, 5))
 
 			-- Increase Behemoth size according to its power
 			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
@@ -266,26 +249,9 @@ function SpawnDireBehemoth( keys )
 			AddStacks(ability, caster, behemoth, modifier_stack, game_time, true)
 
 			-- Grant extra abilities
-			local abilities_level = math.min(this_call_body_count, 5)
-			local extra_ability
-			behemoth:AddAbility("kobold_taskmaster_speed_aura")
-			behemoth:AddAbility("centaur_khan_endurance_aura")
-			behemoth:AddAbility("alpha_wolf_command_aura")
-			behemoth:AddAbility("black_dragon_dragonhide_aura")
-			behemoth:AddAbility("satyr_hellcaller_unholy_aura")
-			behemoth:AddAbility("granite_golem_hp_aura")
-			extra_ability = behemoth:FindAbilityByName("kobold_taskmaster_speed_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("centaur_khan_endurance_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("alpha_wolf_command_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("black_dragon_dragonhide_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("satyr_hellcaller_unholy_aura")
-			extra_ability:SetLevel(abilities_level)
-			extra_ability = behemoth:FindAbilityByName("granite_golem_hp_aura")
-			extra_ability:SetLevel(abilities_level)
+			behemoth:AddAbility("imba_behemoth_aura_badguys")
+			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_badguys")
+			aura_ability:SetLevel(math.min(this_call_body_count, 5))
 
 			-- Increase Behemoth size according to its power
 			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)

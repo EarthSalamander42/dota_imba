@@ -128,7 +128,7 @@ function EidolonAttack( keys )
 	local modifier_buffs = keys.modifier_buffs
 
 	-- If the ability was unlearned, or the target is a building, do nothing
-	if target:IsBuilding() or not ability then
+	if target:IsBuilding() or target:IsAncient() or not ability then
 		return nil
 	end
 
@@ -263,14 +263,7 @@ function MidnightPulse( keys )
 
 				-- Calculate and deal damage
 				local damage = enemy:GetMaxHealth() * damage_per_tick / 100
-				if caster:HasModifier("modifier_item_imba_rapier_damage") then
-					local rapier_ability = caster:FindModifierByName("modifier_item_imba_rapier_damage"):GetAbility()
-					caster:RemoveModifierByName("modifier_item_imba_rapier_damage")
-					ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-					rapier_ability:ApplyDataDrivenModifier(caster, caster, "modifier_item_imba_rapier_damage", {})
-				else
-					ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-				end
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 			end
 
 			return 1
@@ -359,6 +352,9 @@ function BlackHole( keys )
 	else
 		caster:EmitSound("enigma_enig_ability_failure_0"..RandomInt(1, 2))
 	end
+
+	-- Shake screen DRAMATICALLY
+	ScreenShake(caster:GetOrigin(), 8 + #enemies_caught * 2, 0.3, 2, 1000, 0, true)
 
 	-- Play cast sound
 	caster.black_hole_dummy:EmitSound(blackhole_sound)

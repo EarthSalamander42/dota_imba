@@ -16,7 +16,7 @@ function DualBreath( keys )
 	local path_radius = ability:GetLevelSpecialValueFor("path_radius", ability_level)
 	local spill_radius = ability:GetLevelSpecialValueFor("spill_radius", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
-	local range = ability:GetLevelSpecialValueFor("range", ability_level)
+	local range = ability:GetLevelSpecialValueFor("range", ability_level) + GetCastRangeIncrease(caster)
 
 	-- Path calculations
 	local initial_pos = caster:GetAbsOrigin()

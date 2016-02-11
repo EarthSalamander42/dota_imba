@@ -17,7 +17,7 @@ function HookCast( keys )
 
 	-- Calculate actual cast range
 	local light_stacks = caster:GetModifierStackCount(modifier_light, caster)
-	local hook_range = base_range + stack_range * light_stacks
+	local hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
 
 	-- Check if the target point is inside range, if not, stop casting and move closer
 	if cast_distance > hook_range then
@@ -29,7 +29,7 @@ function HookCast( keys )
 			-- Update distance and range
 			cast_distance = ( target - caster:GetAbsOrigin() ):Length2D()
 			light_stacks = caster:GetModifierStackCount(modifier_light, caster)
-			hook_range = base_range + stack_range * light_stacks
+			hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
 
 			-- If it's not a legal cast situation and no other order was given, keep moving
 			if cast_distance > hook_range and not caster.stop_hook_cast then
@@ -127,7 +127,7 @@ function MeatHook( keys )
 	local light_stacks = caster:GetModifierStackCount(modifier_light, caster)
 	local sharp_stacks = caster:GetModifierStackCount(modifier_sharp, caster)
 	local hook_speed = base_speed + stack_speed * light_stacks
-	local hook_range = base_range + stack_range * light_stacks
+	local hook_range = base_range + stack_range * light_stacks + GetCastRangeIncrease(caster)
 	local hook_damage = base_damage + stack_damage * sharp_stacks
 
 	-- If the caster has a scepter, improve stack-based damage and cooldown
@@ -189,7 +189,7 @@ function MeatHook( keys )
 		-- Check for valid units in the area
 		local units = FindUnitsInRadius(caster:GetTeamNumber(), hook_loc, nil, hook_width, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _,unit in pairs(units) do
-			if unit ~= caster and unit ~= hook_dummy and not unit:IsAncient() then
+			if unit ~= caster and unit ~= hook_dummy and not unit:IsAncient() and not IsNearFriendlyClass(unit, 1360, "ent_dota_fountain") then
 				target_hit = true
 				target = unit
 				break

@@ -1347,6 +1347,23 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Spectre
+	//=================================================================================================================
+	"npc_imba_hero_spectre"
+	{
+		"override_hero"				"npc_dota_hero_spectre"
+
+		//"Ability1"				"imba_spectre_spectral_dagger"
+		//"Ability2"				"imba_spectre_desolate"
+		//"Ability3"				"imba_spectre_dispersion"
+		//"Ability4"				"imba_spectre_reality"
+		//"Ability5"				"imba_spectre_haunt"
+		"Ability6"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Spirit Breaker
 	//=================================================================================================================
     "npc_imba_hero_spirit_breaker"
@@ -1508,6 +1525,8 @@
 
 		"ModelScale"				"1.6"
 
+		"AttackRate"				"1.6"
+
 		"RingRadius"				"130"
 		"HealthBarOffset"			"350"
 
@@ -1543,9 +1562,25 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Viper
+	//=================================================================================================================
+	"npc_imba_hero_viper"
+	{
+		"override_hero"				"npc_dota_hero_viper"
+
+		//"Ability1"				"imba_viper_poison_attack"
+		//"Ability2"				"imba_viper_nethertoxin"
+		//"Ability3"				"imba_viper_corrosive_skin"
+		//"Ability4"				"imba_viper_viper_strike"
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileModel"			"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Vengeful Spirit
 	//=================================================================================================================
-    "npc_imba_hero_vengefulspirit"
+	"npc_imba_hero_vengefulspirit"
 	{
 		"override_hero"				"npc_dota_hero_vengefulspirit"
 
@@ -1587,6 +1622,25 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Windrunner
+	//=================================================================================================================
+	"npc_imba_hero_windrunner"
+	{
+		"override_hero"				"npc_dota_hero_windrunner"
+
+		"AttackRate"				"1.45"
+		"AttackAnimationPoint"		"0.1"
+
+		//"Ability1"				"imba_windrunner_shackleshot"
+		//"Ability2"				"imba_windrunner_powershot"
+		//"Ability3"				"imba_windrunner_windrun"
+		//"Ability4"				"imba_windrunner_focusfire"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

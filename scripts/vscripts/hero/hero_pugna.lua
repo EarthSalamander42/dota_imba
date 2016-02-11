@@ -212,6 +212,14 @@ function NetherWard( keys )
 	FindClearSpaceForUnit(nether_ward, target, true)
 	nether_ward:SetControllableByPlayer(player_id, true)
 
+	-- Prevent nearby units from getting stuck
+	Timers:CreateTimer(0.01, function()
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), nether_ward:GetAbsOrigin(), nil, 128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _,unit in pairs(units) do
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		end
+	end)
+
 	-- Apply the Nether Ward duration modifier
 	nether_ward:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
 	nether_ward:AddNewModifier(caster, ability, "modifier_rooted", {})
@@ -381,7 +389,10 @@ function NetherWardZap( keys )
 		"shredder_timber_chain",
 		"shredder_chakram",
 		"shredder_chakram_2",
-		"imba_enigma_demonic_conversion"
+		"imba_enigma_demonic_conversion",
+		"spectre_haunt",
+		"windrunner_focusfire",
+		"viper_poison_attack"
 	}
 
 	-- Ignore items
@@ -590,11 +601,11 @@ function LifeDrain( keys )
 	local scepter = HasScepter(caster)
 
 	-- If the target is the caster, do nothing
-	if target == caster then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return nil
-	end
+	--if target == caster then
+	--	ability:RefundManaCost()
+	--	ability:EndCooldown()
+	--	return nil
+	--end
 
 	-- Parameters
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
@@ -658,7 +669,7 @@ function LifeDrainTickEnemy( keys )
 
 	-- Parameters
 	local health_drain = ability:GetLevelSpecialValueFor("health_drain", ability_level)
-	local break_range = ability:GetLevelSpecialValueFor("break_range", ability_level)
+	local break_range = ability:GetLevelSpecialValueFor("break_range", ability_level) + GetCastRangeIncrease(caster)
 	local tick_rate = ability:GetLevelSpecialValueFor("tick_rate", ability_level)
 
 	-- Increase damage with scepter

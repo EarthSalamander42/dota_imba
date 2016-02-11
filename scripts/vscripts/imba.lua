@@ -219,7 +219,6 @@ function GameMode:DamageFilter( keys )
 		local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
 		local crit_damage = ability:GetLevelSpecialValueFor("crit_damage", ability_level)
 		local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
-		local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
 
 		-- Check for a valid target
 		if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
@@ -227,10 +226,8 @@ function GameMode:DamageFilter( keys )
 			-- Scale damage bonus according to distance
 			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
 			local distance_taper = 1
-			if distance > distance_taper_start and distance < distance_taper_end then
-				distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
-			elseif distance >= distance_taper_end then
-				distance_taper = 0.3
+			if distance > distance_taper_start then
+				distance_taper = 0.5
 			end
 
 			-- Roll for crit chance
@@ -242,48 +239,33 @@ function GameMode:DamageFilter( keys )
 	end
 
 	-- Rapier damage amplification
-	--if attacker:HasModifier("modifier_item_imba_rapier_unique") then
+	if attacker:HasModifier("modifier_item_imba_rapier_unique") then
 
-		-- If the target is Roshan, a building, or an ally, or if the attacker is an invulnerable storm spirit, do nothing
-		--if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or (attacker:IsInvulnerable() and attacker:GetName() == "npc_dota_hero_storm_spirit") ) then
+		-- If the target is Roshan, a building, or an ally, do nothing
+		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() ) then
 			
-			-- Fetch the rapier's ability handle
-			--local ability = false
-			--local rapier_level = 1
-			--for i = 0,5 do
-			--	local item = attacker:GetItemInSlot(i)
-			--	for j = 1, 10 do
-			--		if item and item:GetAbilityName() == ( "item_imba_rapier_"..j ) then
-			--			if j >= rapier_level then
-			--				ability = item
-			--				rapier_level = j
-			--			end
-			--		end
-			--	end
-			--end
+			-- Calculate damage amplification
+			local damage_amp = 0
 
-			--if ability then
-			--	local ability_level = ability:GetLevel() - 1
+			-- Fetch appropriate stacks
+			if damage_type == DAMAGE_TYPE_PHYSICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_phys") then
+				damage_amp = 40 + 40 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_phys", attacker)
+			elseif damage_type == DAMAGE_TYPE_MAGICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
+				damage_amp = 30 + 30 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
+			elseif damage_type == DAMAGE_TYPE_PURE and attacker:HasModifier("modifier_item_imba_rapier_stacks_pure") then
+				damage_amp = 20 + 20 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_pure", attacker)
+			end
 
-				-- Parameters
-			--	local damage_amplify = ability:GetLevelSpecialValueFor("damage_amplify", ability_level)
-			--	local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
-			--	local distance_taper_end = ability:GetLevelSpecialValueFor("distance_taper_end", ability_level)
+			-- Reduce damage amplification if the target is too far away
+			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+			if distance > 2000 then
+				damage_amp = damage_amp * 0.5
+			end
 
-				-- Scale damage bonus according to distance
-			--	local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			--	local distance_taper = 1
-			--	if distance > distance_taper_start and distance < distance_taper_end then
-			--		distance_taper = distance_taper * ( 0.3 + ( distance_taper_end - distance ) / ( distance_taper_end - distance_taper_start ) * 0.7 )
-			--	elseif distance >= distance_taper_end then
-			--		distance_taper = 0.3
-			--	end
-
-				-- Amplify damage
-			--	keys.damage = keys.damage * (100 + damage_amplify * distance_taper) / 100
-			--end
-		--end
-	--end
+			-- Amplify damage
+			keys.damage = keys.damage * (100 + damage_amp) / 100
+		end
+	end
 
 	-- Spiked Carapace damage prevention
 	if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
@@ -726,6 +708,12 @@ function GameMode:OnHeroInGame(hero)
 	if hero:GetName() == "npc_dota_hero_invoker" then
 		hero:SetAbilityPoints( hero:GetAbilityPoints() + 1 )
 	end
+
+	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
+	Timers:CreateTimer(0.5, function()
+		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
+		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
+	end)
 
 	-- Add frantic mode passive buff
 	if FRANTIC_MULTIPLIER > 1 then

@@ -12,7 +12,7 @@ function GaleCast( keys )
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
-	local distance = ability:GetLevelSpecialValueFor("distance", ability_level)
+	local distance = ability:GetLevelSpecialValueFor("distance", ability_level) + GetCastRangeIncrease(caster)
 	local ward_radius = ability:GetLevelSpecialValueFor("ward_radius", ability_level)
 	local caster_pos = caster:GetAbsOrigin()
 	local projectile_speed = (target - caster_pos):Normalized() * speed
@@ -58,6 +58,10 @@ function GaleCast( keys )
 	for _,ward in pairs(nearby_wards) do
 		if ward:GetUnitName() == "npc_imba_venomancer_scourge_ward" then
 
+			-- Calculate projectile direction
+			local ward_pos = ward:GetAbsOrigin()
+			projectile_speed = (target - ward_pos):Normalized() * speed
+
 			-- Play cast sound
 			ward:EmitSound(sound_cast)
 
@@ -68,7 +72,7 @@ function GaleCast( keys )
 			local ward_projectile = {
 				Ability				= ability,
 				EffectName			= particle_projectile,
-				vSpawnOrigin		= ward:GetAbsOrigin(),
+				vSpawnOrigin		= ward_pos,
 				fDistance			= distance,
 				fStartRadius		= radius,
 				fEndRadius			= radius,
