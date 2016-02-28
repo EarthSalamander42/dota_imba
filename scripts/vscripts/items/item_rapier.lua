@@ -66,7 +66,7 @@ function RapierVision( keys )
 		caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.1)
 		caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.1)
 		if not caster.rapier_vision_pfx then
-			caster.rapier_vision_pfx = ParticleManager:CreateParticle("particles/item/rapier/item_rapier_1.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			caster.rapier_vision_pfx = ParticleManager:CreateParticle("particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		end
 	end
 
@@ -204,7 +204,7 @@ function RapierPickUp( keys )
 		caster.rapier_picked_up_level = rapier_level
 
 		-- After some time, if this is the right message call, show the message
-		Timers:CreateTimer(0.8, function()
+		Timers:CreateTimer(1.5, function()
 			if caster.rapier_picked_up_level == rapier_level then
 				
 				-- Erase the call
@@ -216,10 +216,6 @@ function RapierPickUp( keys )
 				Notifications:BottomToAll({text = "#imba_player_rapier_pickup_01", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				Notifications:BottomToAll({text = rapier_level.." ", duration = line_duration, style = {color = level_color[rapier_color]}, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_rapier_pickup_02", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-				-- Ping the location for both teams
-				MinimapEvent(DOTA_TEAM_GOODGUYS, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
-				MinimapEvent(DOTA_TEAM_BADGUYS, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
 			end
 		end)
 
@@ -239,7 +235,7 @@ function RapierPickUp( keys )
 		caster.rapier_picked_up_level = rapier_level
 
 		-- After some time, if this is the right message call, show the message
-		Timers:CreateTimer(0.8, function()
+		Timers:CreateTimer(1.5, function()
 			if caster.rapier_picked_up_level == rapier_level then
 
 				-- Erase the call
@@ -251,10 +247,6 @@ function RapierPickUp( keys )
 				Notifications:BottomToAll({text = "#imba_player_rapier_pickup_01", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 				Notifications:BottomToAll({text = rapier_level.." ", duration = line_duration, style = {color = level_color[rapier_color]}, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_rapier_pickup_02", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-				-- Ping the location for both teams
-				MinimapEvent(DOTA_TEAM_GOODGUYS, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
-				MinimapEvent(DOTA_TEAM_BADGUYS, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
 			end
 		end)
 

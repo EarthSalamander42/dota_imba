@@ -162,8 +162,8 @@ function SpawnRadiantBehemoth( keys )
 	-- Keep track of body count
 	local this_call_body_count = caster.ancient_recently_dead_enemies
 
-	-- If no other hero died after 7 seconds, spawn the Behemoth
-	Timers:CreateTimer(7, function()
+	-- If no other hero died after 10 seconds, spawn the Behemoth
+	Timers:CreateTimer(10, function()
 
 		-- If body count is a match, this is the right spawn call
 		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
@@ -172,7 +172,7 @@ function SpawnRadiantBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
+			local game_time = math.min(GameRules:GetDOTATime(false, false), 1800) * CREEP_POWER_FACTOR / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -225,8 +225,8 @@ function SpawnDireBehemoth( keys )
 	-- Keep track of body count
 	local this_call_body_count = caster.ancient_recently_dead_enemies
 
-	-- If no other hero died after 7 seconds, spawn the Behemoth
-	Timers:CreateTimer(7, function()
+	-- If no other hero died after 10 seconds, spawn the Behemoth
+	Timers:CreateTimer(10, function()
 
 		-- If body count is a match, this is the right spawn call
 		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
@@ -235,7 +235,7 @@ function SpawnDireBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
+			local game_time = math.min(GameRules:GetDOTATime(false, false), 1800) * CREEP_POWER_FACTOR / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()

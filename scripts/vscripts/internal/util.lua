@@ -732,31 +732,29 @@ function PrecacheUnitWithQueue( unit_name )
 end
 
 -- Simulates attack speed cap removal to a single unit through BAT manipulation
-function RemoveAttackSpeedCap( unit )
+function IncreaseAttackSpeedCap(unit, new_cap)
 
 	-- Fetch original BAT if necessary
-	if not unit.as_cap_removal_original_bat then
-		unit.as_cap_removal_original_bat = unit:GetBaseAttackTime()
+	if not unit.current_modified_bat then
+		unit.current_modified_bat = unit:GetBaseAttackTime()
 	end
 
-	-- Get current attack speed
-	local current_as = unit:GetAttackSpeed() * 100
+	-- Get current attack speed, limited to new_cap
+	local current_as = math.min(unit:GetAttackSpeed() * 100, new_cap)
 
 	-- Should we reduce BAT?
 	if current_as > MAXIMUM_ATTACK_SPEED then
-		local new_bat = MAXIMUM_ATTACK_SPEED / current_as * unit.as_cap_removal_original_bat
+		local new_bat = MAXIMUM_ATTACK_SPEED / current_as * unit.current_modified_bat
 		unit:SetBaseAttackTime(new_bat)
 	end
 end
 
 -- Returns a unit's attack speed cap
-function ReturnAttackSpeedCap( unit )
+function RevertAttackSpeedCap( unit )
 
 	-- Return to original BAT
-	unit:SetBaseAttackTime(unit.as_cap_removal_original_bat)
+	unit:SetBaseAttackTime(unit.current_modified_bat)
 
-	-- Clean-up
-	unit.as_cap_removal_original_bat = nil
 end
 
 -- Initializes heroes' innate abilities
@@ -771,7 +769,8 @@ function InitializeInnateAbilities( hero )
 		"vengefulspirit_nether_swap",
 		"imba_venomancer_toxicity",
 		"imba_magnus_magnetize",
-		"imba_enigma_gravity"
+		"imba_enigma_gravity",
+		"imba_troll_warlord_berserkers_rage"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -804,9 +803,12 @@ function PassiveBreak( unit, duration )
 
 	local passive_detected = false
 
-	-- AM exceptions
+	-- Exceptions
 	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
 	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_active")
+	while unit:HasModifier("modifier_imba_fervor_stacks") do
+		unit:RemoveModifierByName("modifier_imba_fervor_stacks")
+	end
 
 	-- Non-passive abilities disabled by break
 	local break_exceptions = {
@@ -1165,4 +1167,78 @@ function GetCastRangeIncrease( unit )
 	end
 
 	return cast_range_increase
+end
+
+-- Safely modify BAT while storing the unit's original value
+function ModifyBAT(unit, modify_percent, modify_flat)
+
+	-- Fetch base BAT if necessary
+	if not unit.unmodified_bat then
+		unit.unmodified_bat = unit:GetBaseAttackTime()
+	end
+
+	-- Create the current BAT variable if necessary
+	if not unit.current_modified_bat then
+		unit.current_modified_bat = unit.unmodified_bat
+	end
+
+	-- Create the percent modifier variable if necessary
+	if not unit.percent_bat_modifier then
+		unit.percent_bat_modifier = 1
+	end
+
+	-- Create the flat modifier variable if necessary
+	if not unit.flat_bat_modifier then
+		unit.flat_bat_modifier = 0
+	end
+
+	-- Update BAT percent modifiers
+	unit.percent_bat_modifier = unit.percent_bat_modifier * (100 + modify_percent) / 100
+
+	-- Update BAT flat modifiers
+	unit.flat_bat_modifier = unit.flat_bat_modifier + modify_flat
+
+	-- Unmodified BAT special exceptions
+	if unit:GetUnitName() == "npc_dota_hero_alchemist" then
+		return nil
+	end
+	
+	-- Update modifier BAT
+	unit.current_modified_bat = (unit.unmodified_bat + unit.flat_bat_modifier) * unit.percent_bat_modifier
+
+	-- Update unit's BAT
+	unit:SetBaseAttackTime(unit.current_modified_bat)
+
+end
+
+-- Override all BAT modifiers and return the unit to its base value
+function RevertBAT( unit )
+
+	-- Fetch base BAT if necessary
+	if not unit.unmodified_bat then
+		unit.unmodified_bat = unit:GetBaseAttackTime()
+	end
+
+	-- Create the current BAT variable if necessary
+	if not unit.current_modified_bat then
+		unit.current_modified_bat = unit.unmodified_bat
+	end
+
+	-- Create the percent modifier variable if necessary
+	if not unit.percent_bat_modifier then
+		unit.percent_bat_modifier = 1
+	end
+
+	-- Create the flat modifier variable if necessary
+	if not unit.flat_bat_modifier then
+		unit.flat_bat_modifier = 0
+	end
+
+	-- Reset variables
+	unit.percent_bat_modifier = 1
+	unit.flat_bat_modifier = 0
+
+	-- Reset BAT
+	unit:SetBaseAttackTime(unit.unmodified_bat)
+
 end

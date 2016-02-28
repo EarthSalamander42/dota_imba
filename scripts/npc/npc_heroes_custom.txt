@@ -1514,6 +1514,8 @@
 		//"Ability6"					"imba_shredder_chakram"
 		//"Ability7"					"imba_shredder_return_chakram"
 		"Ability8"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1535,6 +1537,35 @@
 		//"Ability3"				"imba_tiny_craggy_exterior"
 		//"Ability4"				"imba_tiny_grow"
 		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Troll Warlord
+	//=================================================================================================================
+	"npc_imba_hero_troll_warlord"
+	{
+		"override_hero"				"npc_dota_hero_troll_warlord"
+
+		"AttackRate"				"1.55"
+
+		"StatusHealth"				"280"
+
+		"MovementSpeed"				"335"
+
+		"ArmorPhysical"				"2"
+
+		"AbilityLayout"				"5"
+
+		"Ability1"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability3"					"imba_troll_warlord_fervor"
+		"Ability4"					"imba_troll_warlord_berserkers_rage"
+		"Ability5"					"imba_troll_warlord_battle_trance"
+		"Ability6"					"attribute_bonus_agi"
+
+		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

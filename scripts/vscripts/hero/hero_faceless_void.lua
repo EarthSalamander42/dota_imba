@@ -287,22 +287,10 @@ function Timelord( keys )
 	local ability_level = ability:GetLevel() - 1
 	
 	-- Parameters
-	local maximum_as = 1000
-	local original_bat = 1.7
+	local maximum_as = ability:GetLevelSpecialValueFor("maximum_as", ability_level)
 
-	-- Calculate minimum BAT
-	local minimum_bat = original_bat * _G.MAXIMUM_ATTACK_SPEED / maximum_as
-
-	-- Get current attack speed
-	local current_as = caster:GetAttackSpeed() * 100
-
-	-- Adjust BAT
-	if current_as > _G.MAXIMUM_ATTACK_SPEED then
-		local new_bat = _G.MAXIMUM_ATTACK_SPEED / current_as * original_bat
-		caster:SetBaseAttackTime(math.max(new_bat, minimum_bat))
-	else
-		caster:SetBaseAttackTime(original_bat)
-	end
+	-- Increase attack speed cap
+	IncreaseAttackSpeedCap(caster, maximum_as)
 end
 
 function TimelordStrike( keys )
@@ -327,8 +315,8 @@ end
 function TimelordEnd( keys )
 	local caster = keys.caster
 
-	-- Revert BAT
-	caster:SetBaseAttackTime(1.7)
+	-- Revert attack speed cap
+	RevertAttackSpeedCap(caster)
 end
 
 function TimelordUpgrade( keys )

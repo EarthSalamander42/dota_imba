@@ -251,7 +251,7 @@ function GameMode:DamageFilter( keys )
 			if damage_type == DAMAGE_TYPE_PHYSICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_phys") then
 				damage_amp = 40 + 40 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_phys", attacker)
 			elseif damage_type == DAMAGE_TYPE_MAGICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
-				damage_amp = 30 + 30 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
+				damage_amp = 40 + 40 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
 			elseif damage_type == DAMAGE_TYPE_PURE and attacker:HasModifier("modifier_item_imba_rapier_stacks_pure") then
 				damage_amp = 20 + 20 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_pure", attacker)
 			end
@@ -259,7 +259,7 @@ function GameMode:DamageFilter( keys )
 			-- Reduce damage amplification if the target is too far away
 			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
 			if distance > 2000 then
-				damage_amp = damage_amp * 0.5
+				damage_amp = damage_amp * 0.33
 			end
 
 			-- Amplify damage
@@ -328,7 +328,7 @@ function GameMode:DamageFilter( keys )
 
 			local block_sound = "Imba.VanguardBlock"
 			local proc_chance = 35
-			local damage_block = 45
+			local damage_block = 40
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -370,7 +370,7 @@ function GameMode:DamageFilter( keys )
 
 			local block_sound = "Imba.VanguardBlock"
 			local proc_chance = 40
-			local damage_block = 60
+			local damage_block = 50
 			local damage_blocked = 0
 
 			-- Roll for a proc

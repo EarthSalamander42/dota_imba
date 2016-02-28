@@ -12759,7 +12759,7 @@
 				"particle_hole"				"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
 				"modifier_debuff"			"imba_enigma_black_hole"
 				"modifier_debuff_ti5"		"imba_enigma_black_hole_ti5"
-				"modifier_singularity"		"imba_enigma_black_hole_singularity"
+				"modifier_singularity"		"modifier_imba_enigma_black_hole_singularity"
 			}
 		}
 
@@ -12808,7 +12808,7 @@
 
 						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
 						"particle_screen"		"particles/hero/enigma/screen_blackhole_indicator.vpcf"
-						"modifier_singularity"	"imba_enigma_black_hole_singularity"
+						"modifier_singularity"	"modifier_imba_enigma_black_hole_singularity"
 					}
 				}
 
@@ -12858,7 +12858,7 @@
 						"Function"				"BlackHoleDebuffStart"
 
 						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-						"modifier_singularity"	"imba_enigma_black_hole_singularity"
+						"modifier_singularity"	"modifier_imba_enigma_black_hole_singularity"
 					}
 				}
 
@@ -12877,7 +12877,7 @@
 				}
 			}
 
-			"imba_enigma_black_hole_singularity"
+			"modifier_imba_enigma_black_hole_singularity"
 			{
 				"Passive"					"1"
 				"IsHidden"					"0"
@@ -24829,12 +24829,29 @@
 				"Passive"					"0"
 				"IsPurgable"				"0"
 				"IsHidden"					"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"TakeAimNearBatStart"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"TakeAimNearBatEnd"
+					}
+				}
 				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range"
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%damage_reduction"
-					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%BAT"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed"
 				}
 			}
@@ -24887,7 +24904,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"		"%range"
 				}
 			}
 		}
@@ -24962,12 +24979,6 @@
 
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"EffectName"				"Ability.AssassinateLoad"
-				"Target" 					"CASTER"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"				"hero/hero_sniper.lua"
@@ -24977,6 +24988,7 @@
 				"modifier_normal"			"modifier_imba_take_aim_normal"
 				"modifier_far"				"modifier_imba_take_aim_far"
 				"normal_skill_name"			"imba_sniper_take_aim_normal"
+				"sound_cast"				"Ability.AssassinateLoad"
 			}
 		}
 		
@@ -24987,12 +24999,29 @@
 				"Passive"					"0"
 				"IsPurgable"				"0"
 				"IsHidden"					"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"TakeAimFarBatStart"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"TakeAimFarBatEnd"
+					}
+				}
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%damage_bonus"
-					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%BAT"
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%range"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
 				}
 
 				"States"
@@ -27791,6 +27820,665 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Whirling Axes (melee)
+	//=================================================================================================================
+	"imba_troll_warlord_whirling_axes_melee"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"					"particles/hero/troll_warlord/imba_whirling_axes_melee.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_damage"			"112 168 224 280"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"16 24 32 40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick"			"0.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blind_duration"		"4 5 6 7"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_troll_warlord.lua"
+				"Function"				"WhirlingAxesMelee"
+
+				"sound_cast"			"Hero_TrollWarlord.WhirlingAxes.Melee"
+				"sound_hit"				"Hero_TrollWarlord.WhirlingAxes.Target"
+				"particle_axe"			"particles/hero/troll_warlord/imba_whirling_axes_melee.vpcf"
+				"modifier_miss"			"modifier_imba_whirling_axes_melee_debuff_dummy"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_whirling_axes_melee_debuff"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+		
+				"OnAttackFailed"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"WhirlingAxesMeleeAttackMiss"
+
+						"modifier_dummy"	"modifier_imba_whirling_axes_melee_debuff_dummy"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"100"
+				}
+			}
+
+			"modifier_imba_whirling_axes_melee_debuff_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%blind_duration"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"WhirlingAxesMeleeDebuffCreate"
+
+						"modifier_miss"		"modifier_imba_whirling_axes_melee_debuff"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"WhirlingAxesMeleeDebuffEnd"
+
+						"modifier_miss"		"modifier_imba_whirling_axes_melee_debuff"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Whirling Axes (ranged)
+	//=================================================================================================================
+	"imba_troll_warlord_whirling_axes_ranged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"					"1"
+		"AbilityTextureName"				"troll_warlord_whirling_axes_ranged"	
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"1000"
+		"AbilityCastPoint"					"0.2"
+		"AbilityCastAnimation"				"ACT_DOTA_WHIRLING_AXES_RANGED"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"18 14 16 12"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"						"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"range"						"1000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"100"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1500"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"15 20 25 30"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ms_slow"					"-30"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0 3.75 4.5 5.25"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_axes"					"5"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spread_angle"				"10"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"agility_per_axe"			"20"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_troll_warlord.lua"
+				"Function"				"WhirlingAxesRanged"
+				"Target"				"POINT"
+
+				"sound_cast"			"Hero_TrollWarlord.WhirlingAxes.Ranged"
+				"particle_axe"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"0"
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_troll_warlord.lua"
+				"Function"				"WhirlingAxesRangedHit"
+
+				"sound_hit"				"Hero_TrollWarlord.WhirlingAxes.Target"
+				"modifier_slow"			"modifier_imba_whirling_axes_ranged_debuff"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_whirling_axes_ranged_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+			
+				"Duration"				"%duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Fervor
+	//=================================================================================================================
+	"imba_troll_warlord_fervor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"				"troll_warlord_fervor"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_as"					"15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_fervor"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.2"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"FervorLimitBreak"
+					}
+				}
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"FervorAttack"
+
+						"modifier_stacks"	"modifier_imba_fervor_stacks"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"FervorLimitBreakEnd"
+
+						"modifier_stacks"	"modifier_imba_fervor_stacks"
+						"modifier_dummy"	"modifier_imba_fervor_dummy"
+					}
+				}
+			}
+
+			"modifier_imba_fervor_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Duration"					"%duration"
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"FervorStackUp"
+
+						"modifier_dummy"	"modifier_imba_fervor_dummy"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"FervorStackDown"
+
+						"modifier_dummy"	"modifier_imba_fervor_dummy"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+				}
+			}
+
+			"modifier_imba_fervor_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%duration"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Berserker's Rage
+	//=================================================================================================================
+	"imba_troll_warlord_berserkers_rage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"troll_warlord_berserkers_rage"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bash_duration"			"2.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"melee_distance"		"210"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_berserkers_rage"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_troll_warlord.lua"
+						"Function"		"BerserkersRageAttackStart"
+					}
+				}
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_troll_warlord.lua"
+						"Function"		"BerserkersRageAttack"
+
+						"sound_bash"	"Hero_TrollWarlord.BerserkersRage.Stun"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Battle Trance
+	//=================================================================================================================
+	"imba_troll_warlord_battle_trance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"troll_warlord_battle_trance"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"60 120 180"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"trance_as"				"9 12 15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"trance_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bat_scepter"			"10 15 20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"total_duration"		"7.9"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_troll_warlord.lua"
+				"Function"				"BattleTrance"
+
+				"modifier_buff"			"modifier_imba_battle_trance"
+				"modifier_trance"		"modifier_imba_battle_trance_trance"
+				"modifier_scepter"		"modifier_imba_battle_trance_scepter"
+				"particle_cast"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_cast.vpcf"
+				"sound_cast"			"Hero_TrollWarlord.BattleTrance.Cast"
+				"sound_global"			"Hero_TrollWarlord.BattleTrance.Cast.Team"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_battle_trance"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"EffectName"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Duration"				"%buff_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+				}
+			}
+
+			"modifier_imba_battle_trance_trance"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%total_duration"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_troll_warlord.lua"
+						"Function"			"BattleTranceAttack"
+
+						"modifier_buff"		"modifier_imba_battle_trance"
+						"modifier_stacks"	"modifier_imba_battle_trance_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_battle_trance_scepter"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%buff_duration"
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_troll_warlord.lua"
+						"Function"		"BattleTranceBatStart"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_troll_warlord.lua"
+						"Function"		"BattleTranceBatEnd"
+					}
+				}
+			}
+
+			"modifier_imba_battle_trance_stacks"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"1"
+
+				"Duration"				"%trance_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%trance_as"
 				}
 			}
 		}

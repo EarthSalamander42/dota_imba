@@ -150,7 +150,7 @@ function DarknessLimitBreak( keys )
 	end
 
 	-- Simulate attack speed cap removal
-	RemoveAttackSpeedCap(caster)
+	IncreaseAttackSpeedCap(caster, 10000)
 end
 
 function DarknessLimitBreakEnd( keys )
@@ -160,7 +160,7 @@ function DarknessLimitBreakEnd( keys )
 	caster:RemoveModifierByName("modifier_imba_speed_limit_break")
 
 	-- Return attack speed cap
-	ReturnAttackSpeedCap(caster)
+	RevertAttackSpeedCap(caster)
 end
 
 function ReduceVision( keys )

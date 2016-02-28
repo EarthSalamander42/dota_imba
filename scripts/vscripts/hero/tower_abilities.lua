@@ -28,8 +28,14 @@ function LaserHit( keys )
 	-- Calculate damage
 	local damage = caster:GetAttackDamage() * laser_damage / 100
 
-	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+	-- Deal pure damage to heroes
+	if target:IsHero() then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+
+	-- Deal normal damage to everything else
+	else
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	end
 
 	-- If the ability is level 2, debuff the target
 	if ability_level == 1 then

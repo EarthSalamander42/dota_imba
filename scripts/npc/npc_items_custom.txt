@@ -5864,6 +5864,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100.0"
+		"AbilitySharedCooldown"			"necrobook"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -5970,6 +5971,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100.0"
+		"AbilitySharedCooldown"			"necrobook"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -6076,6 +6078,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100.0"
+		"AbilitySharedCooldown"			"necrobook"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -6182,6 +6185,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100.0"
+		"AbilitySharedCooldown"			"necrobook"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -6288,6 +6292,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"100.0"
+		"AbilitySharedCooldown"			"necrobook"
 		"FightRecapLevel"				"1"
 
 		// Item Info
@@ -7506,7 +7511,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"45"
+				"damage_block"			"40"
 			}
 			"06"
 			{
@@ -7706,7 +7711,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"60"
+				"damage_block"			"50"
 			}
 			"07"
 			{
@@ -8119,7 +8124,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"60"
+				"magic_amp"					"80"
 			}
 			"03"
 			{
@@ -8130,6 +8135,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"taper_distance"			"2000"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"100"
 			}
 		}
 
@@ -8196,6 +8206,11 @@
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
 						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 			}
 
@@ -8279,7 +8294,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"60"
+				"magic_amp"					"80"
 			}
 			"03"
 			{
@@ -8439,7 +8454,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"60"
+				"magic_amp"					"80"
 			}
 			"03"
 			{

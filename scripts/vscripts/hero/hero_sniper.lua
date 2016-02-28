@@ -127,9 +127,19 @@ function TakeAimFar( keys )
 	local modifier_normal = keys.modifier_normal
 	local modifier_far = keys.modifier_far
 	local normal_skill_name = keys.normal_skill_name
+	local sound_cast = keys.sound_cast
+
+	-- Prevent activation of Far mode inside the fountain
+	if IsNearFriendlyClass(caster, 1360, "ent_dota_fountain") then
+		ability:EndCooldown()
+		return nil
+	end
 
 	--Fetch Normal mode ability handle
 	local ability_normal = caster:FindAbilityByName(normal_skill_name)
+
+	-- Play toggle sound
+	caster:EmitSound(sound_cast)
 
 	-- If Far mode is already activated, return to Normal mode
 	if caster:HasModifier(modifier_far) then
@@ -142,6 +152,54 @@ function TakeAimFar( keys )
 		caster:RemoveModifierByName(modifier_normal)
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_far, {})
 	end
+end
+
+function TakeAimNearBatStart( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local new_bat = ability:GetLevelSpecialValueFor("BAT", ability_level) - 1.7
+
+	-- Update BAT
+	ModifyBAT(caster, 0, new_bat)
+end
+
+function TakeAimNearBatEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local new_bat = ability:GetLevelSpecialValueFor("BAT", ability_level) - 1.7
+
+	-- Update BAT
+	ModifyBAT(caster, 0, -new_bat)
+end
+
+function TakeAimFarBatStart( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local new_bat = ability:GetLevelSpecialValueFor("BAT", ability_level) - 1.7
+
+	-- Update BAT
+	ModifyBAT(caster, 0, new_bat)
+end
+
+function TakeAimFarBatEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local new_bat = ability:GetLevelSpecialValueFor("BAT", ability_level) - 1.7
+
+	-- Update BAT
+	ModifyBAT(caster, 0, -new_bat)
 end
 
 function TakeAimUpgrade( keys )
@@ -163,23 +221,34 @@ function TakeAimUpgrade( keys )
 		caster.take_aim_level = ability_level
 	end
 
-	-- Level up abilities
-	ability_near:SetLevel(caster.take_aim_level)
-	ability_normal:SetLevel(caster.take_aim_level)
-	ability_far:SetLevel(caster.take_aim_level)
-
 	-- Update the respective modifiers
 	if caster:HasModifier(modifier_near) then
 		caster:RemoveModifierByName(modifier_near)
 		caster:RemoveModifierByName(modifier_normal)
 		caster:RemoveModifierByName(modifier_far)
+
+		-- Compensate for the BAT difference during the ability's upgrade
+		local near_bat_difference = ability_near:GetLevelSpecialValueFor("BAT", ability_level - 1) - ability_near:GetLevelSpecialValueFor("BAT", ability_level - 2)
+		ModifyBAT(caster, 0, near_bat_difference)
+
 		ability_near:ApplyDataDrivenModifier(caster, caster, modifier_near, {})
 	elseif caster:HasModifier(modifier_far) then
 		caster:RemoveModifierByName(modifier_near)
 		caster:RemoveModifierByName(modifier_normal)
 		caster:RemoveModifierByName(modifier_far)
+
+		-- Compensate for the BAT difference during the ability's upgrade
+		local far_bat_difference = ability_far:GetLevelSpecialValueFor("BAT", ability_level - 1) - ability_far:GetLevelSpecialValueFor("BAT", ability_level - 2)
+		ModifyBAT(caster, 0, far_bat_difference)
+		
 		ability_far:ApplyDataDrivenModifier(caster, caster, modifier_far, {})
 	end
+
+	-- Level up abilities
+	ability_near:SetLevel(caster.take_aim_level)
+	ability_normal:SetLevel(caster.take_aim_level)
+	ability_far:SetLevel(caster.take_aim_level)
+
 end
 
 function AssassinateCast( keys )

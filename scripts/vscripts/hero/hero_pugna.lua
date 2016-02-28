@@ -392,7 +392,8 @@ function NetherWardZap( keys )
 		"imba_enigma_demonic_conversion",
 		"spectre_haunt",
 		"windrunner_focusfire",
-		"viper_poison_attack"
+		"viper_poison_attack",
+		"arc_warden_tempest_double"
 	}
 
 	-- Ignore items
