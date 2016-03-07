@@ -393,7 +393,10 @@ function NetherWardZap( keys )
 		"spectre_haunt",
 		"windrunner_focusfire",
 		"viper_poison_attack",
-		"arc_warden_tempest_double"
+		"arc_warden_tempest_double",
+		"broodmother_insatiable_hunger",
+		"weaver_time_lapse",
+		"death_prophet_exorcism"
 	}
 
 	-- Ignore items

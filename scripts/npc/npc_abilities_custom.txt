@@ -2807,6 +2807,66 @@
 	}
 
 	//=================================================================================================================
+	// Behemoth dearmor
+	//=================================================================================================================
+	"imba_behemoth_dearmor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"				"slardar_amplify_damage"
+		"MaxLevel"							"1"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"armor_lost"				"-1"
+			}
+		}
+		
+		"Modifiers"
+		{
+			
+			"modifier_imba_behemoth_dearmor"
+			{
+				"Passive"					"1"
+				"IsDebuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/ancient_abilities.lua"
+						"Function"			"BehemothAttacked"
+
+						"modifier_stack"	"modifier_imba_behemoth_dearmor_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_behemoth_dearmor_stacks"
+			{
+				"Passive"					"1"
+				"IsDebuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_lost"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Ancient ability: Stalwart Defense
 	//=================================================================================================================
 	"imba_ancient_stalwart_defense"
@@ -3265,7 +3325,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"bash_duration"					"0.6"
+				"bash_duration"					"0.5"
 			}
 		}
 
@@ -3337,7 +3397,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_increase"				"20 30 40"
+				"damage_increase"				"10 15 20"
 			}
 			"02"
 			{
@@ -12660,7 +12720,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICALMAGIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"enigma_black_hole"
@@ -27870,29 +27930,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_damage"			"112 168 224 280"
+				"damage"				"120 180 240 300"
 			}
 			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"16 24 32 40"
-			}
-			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_tick"			"0.5"
 			}
-			"04"
+			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_duration"		"3"
 			}
-			"05"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blind_duration"		"4 5 6 7"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"450"
@@ -28038,24 +28093,29 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_slow"					"-30"
+				"base_slow"					"-30"
 			}
 			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_slow"				"-5"
+			}
+			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"duration"					"3.0 3.75 4.5 5.25"
 			}
-			"07"
+			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_axes"					"5"
+				"base_axes"					"5 6 7 8"
 			}
-			"08"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"spread_angle"				"10"
 			}
-			"09"
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"agility_per_axe"			"20"
@@ -28086,6 +28146,7 @@
 
 				"sound_hit"				"Hero_TrollWarlord.WhirlingAxes.Target"
 				"modifier_slow"			"modifier_imba_whirling_axes_ranged_debuff"
+				"modifier_stack"		"modifier_imba_whirling_axes_ranged_debuff_stack"
 			}
 		}
 
@@ -28102,7 +28163,22 @@
 			
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow" 
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_slow" 
+				}
+			}
+
+			"modifier_imba_whirling_axes_ranged_debuff_stack"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+			
+				"Duration"				"%duration"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stack_slow" 
 				}
 			}
 		}
@@ -28362,7 +28438,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"trance_as"				"9 12 15"
+				"trance_as"				"15"
 			}
 			"04"
 			{

@@ -251,7 +251,7 @@ function VendettaDamageCount( keys )
 	end
 
 	-- Only stores hero-based damage
-	if attacker:IsHero() then
+	if attacker:IsHero() and attacker:GetTeam() ~= caster:GetTeam() then
 		caster.vendetta_stored_damage = caster.vendetta_stored_damage + damage_taken
 
 		-- Caps the stored damage at [max_damage] if the user does not have Aghanim's scepter

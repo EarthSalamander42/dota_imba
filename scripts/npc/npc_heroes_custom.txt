@@ -218,6 +218,24 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Broodmother
+	//=================================================================================================================
+	"npc_imba_hero_broodmother"
+	{
+		"override_hero"				"npc_dota_hero_broodmother"
+
+		"ModelScale"				"1.0"
+
+		//"Ability1"					"imba_broodmother_spawn_spiderlings"
+		//"Ability2"					"imba_broodmother_spin_web"
+		//"Ability3"					"imba_broodmother_incapacitating_bite"
+		//"Ability4"					"imba_broodmother_insatiable_hunger"
+		"Ability5"					"attribute_bonus_agi"	
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Centaur
 	//=================================================================================================================
 	"npc_imba_hero_centaur"
@@ -349,6 +367,26 @@
 		"Ability5"					"attribute_bonus_int"
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Death Prophet
+	//=================================================================================================================
+    "npc_imba_hero_death_prophet"
+	{
+		"override_hero"				"npc_dota_hero_death_prophet"
+		
+		//"Ability1"					"imba_death_prophet_carrion_swarm"
+		//"Ability2"					"imba_death_prophet_silence"
+		//"Ability3"					"imba_death_prophet_spirit_siphon"
+		//"Ability4"					"imba_death_prophet_exorcism"
+		"Ability5"					"attribute_bonus_int"
+
+		"ArmorPhysical"				"2"
+
+		"AttributeStrengthGain"		"2.5"
+
+		"ProjectileModel"			"particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -517,6 +555,26 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Huskar
+	//=================================================================================================================
+	"npc_imba_hero_huskar"
+	{
+		"override_hero"				"npc_dota_hero_huskar"
+
+		"ArmorPhysical"				"2"
+
+		"AttributeAgilityGain"		"2.0"
+
+		//"Ability1"					"imba_huskar_inner_vitality"
+		//"Ability2"					"imba_huskar_burning_spear"
+		//"Ability3"					"imba_huskar_berserkers_blood"
+		//"Ability4"					"imba_huskar_life_break"
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileModel"			"particles/units/heroes/hero_huskar/huskar_base_attack.vpcf"					
 	}
 
 	//=================================================================================================================
@@ -1653,6 +1711,26 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Weaver
+	//=================================================================================================================
+	"npc_imba_hero_weaver"
+	{
+		"override_hero"				"npc_dota_hero_weaver"
+
+		"AttackRate"				"1.7"
+
+		"ProjectileSpeed"			"3000"
+
+		//"Ability1"					"imba_weaver_the_swarm"
+		//"Ability2"					"imba_weaver_shukuchi"
+		//"Ability3"					"imba_weaver_geminate_attack"
+		//"Ability4"					"imba_weaver_time_lapse"
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

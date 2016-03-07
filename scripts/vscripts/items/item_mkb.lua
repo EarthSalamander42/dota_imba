@@ -8,7 +8,7 @@ function MonkeyKingBarPassive( keys )
 	local modifier_melee = keys.modifier_melee
 
 	-- Apply the relevant modifier, according to the caster's attack capability
-	if caster:IsRangedAttacker() then
+	if caster:IsRangedAttacker() or caster:HasModifier("modifier_imba_berserkers_rage") then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_ranged, {})
 	else
 		caster:RemoveModifierByName(modifier_ranged)
@@ -40,13 +40,13 @@ function MonkeyKingBarProc( keys )
 		ability:StartCooldown(ability:GetCooldown(0))
 
 		-- If the caster is melee, pulverize
-		if not caster:IsRangedAttacker() then
+		if not caster:IsRangedAttacker() or caster:HasModifier("modifier_imba_berserkers_rage") then
 
 			-- Play pulverize sound
 			target:EmitSound(sound_hit)
 
 			-- Find enemies in the pulverize area
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, pulverize_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, pulverize_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 			-- Damage enemies
 			for _,enemy in pairs(enemies) do

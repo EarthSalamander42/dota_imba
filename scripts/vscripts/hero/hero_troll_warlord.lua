@@ -16,6 +16,7 @@ function WhirlingAxesMelee( keys )
 	local damage_duration = ability:GetLevelSpecialValueFor("damage_duration", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local elapsed_duration = 0
+	local enemies_hit = {}
 	
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
@@ -45,9 +46,12 @@ function WhirlingAxesMelee( keys )
 		-- Iterate through affected enemies
 		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(nearby_enemies) do
-			
-			-- Apply damage
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+			-- If this enemy is being hit for the first time, damage it
+			if not enemies_hit[enemy] then
+				enemies_hit[enemy] = true
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			end
 
 			-- Play hit sound
 			enemy:EmitSound(sound_hit)
@@ -132,8 +136,8 @@ function WhirlingAxesRanged( keys )
 	end
 
 	-- Reduce spread angle if too many axes are present
-	if (total_axes - 1) * spread_angle > 120 then
-		spread_angle = 120 / (total_axes - 1)
+	if (total_axes - 1) * spread_angle > 72 then
+		spread_angle = 72 / (total_axes - 1)
 	end
 
 	-- Projectile creation loop
@@ -173,6 +177,7 @@ function WhirlingAxesRangedHit( keys )
 	local ability_level = ability:GetLevel() - 1
 	local sound_hit = keys.sound_hit
 	local modifier_slow = keys.modifier_slow
+	local modifier_stack = keys.modifier_stack
 
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -185,17 +190,21 @@ function WhirlingAxesRangedHit( keys )
 	-- Apply damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
-	-- Apply slow modifier
-	ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+	-- If the slow is already present, increase it by one stack
+	if target:HasModifier(modifier_slow) then
+		AddStacks(ability, caster, target, modifier_stack, 1, false)
+
+	-- Else, apply the initial slow
+	else
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+	end
 end
 
 function BerserkersRageAttackStart( keys )
 	local caster = keys.caster
 	
-	-- If the caster is a melee unit, make it ranged
-	if caster:GetAttackCapability() == 1 then
-		caster:SetAttackCapability(2)
-	end
+	-- Make the caster a ranged unit
+	caster:SetAttackCapability(2)
 end
 
 function BerserkersRageAttack( keys )
@@ -211,12 +220,6 @@ function BerserkersRageAttack( keys )
 	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
 	local melee_distance = ability:GetLevelSpecialValueFor("melee_distance", ability_level)
 
-	-- Calculate bash chance
-	local attack_distance = (target:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
-	if attack_distance > melee_distance then
-		bash_chance = math.max( bash_chance - (attack_distance - melee_distance) * 8 / 300, 2)
-	end
-
 	-- Calculate bash damage
 	bash_damage = caster:GetAttackDamage() * bash_damage / 100
 
@@ -224,7 +227,7 @@ function BerserkersRageAttack( keys )
 	if RandomInt(1, 100) <= bash_chance and not target:IsBuilding() then
 		
 		-- Apply bash damage
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 		-- Apply bash stun
 		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = bash_duration})
@@ -233,11 +236,8 @@ function BerserkersRageAttack( keys )
 		target:EmitSound(sound_bash)
 	end
 	
-	-- Consider the caster as a melee unit for the attack's duration
+	-- Make the caster a melee unit
 	caster:SetAttackCapability(1)
-	Timers:CreateTimer(0.01, function()
-		caster:SetAttackCapability(2)
-	end)
 end
 
 function FervorLimitBreak( keys )

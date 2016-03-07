@@ -163,7 +163,7 @@ function SpawnRadiantBehemoth( keys )
 	local this_call_body_count = caster.ancient_recently_dead_enemies
 
 	-- If no other hero died after 10 seconds, spawn the Behemoth
-	Timers:CreateTimer(10, function()
+	Timers:CreateTimer(12, function()
 
 		-- If body count is a match, this is the right spawn call
 		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
@@ -172,7 +172,7 @@ function SpawnRadiantBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = math.min(GameRules:GetDOTATime(false, false), 1800) * CREEP_POWER_FACTOR / 60
+			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "radiant_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -189,6 +189,9 @@ function SpawnRadiantBehemoth( keys )
 			behemoth:AddAbility("imba_behemoth_aura_goodguys")
 			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_goodguys")
 			aura_ability:SetLevel(math.min(this_call_body_count, 5))
+			behemoth:AddAbility("imba_behemoth_dearmor")
+			local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
+			dearmor_ability:SetLevel(1)
 
 			-- Increase Behemoth size according to its power
 			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
@@ -226,7 +229,7 @@ function SpawnDireBehemoth( keys )
 	local this_call_body_count = caster.ancient_recently_dead_enemies
 
 	-- If no other hero died after 10 seconds, spawn the Behemoth
-	Timers:CreateTimer(10, function()
+	Timers:CreateTimer(12, function()
 
 		-- If body count is a match, this is the right spawn call
 		if caster.ancient_recently_dead_enemies and (this_call_body_count == caster.ancient_recently_dead_enemies) then
@@ -235,7 +238,7 @@ function SpawnDireBehemoth( keys )
 			local base_health = ability:GetLevelSpecialValueFor("base_health", ability:GetLevel() - 1)
 			local health_per_minute = ability:GetLevelSpecialValueFor("health_per_minute", ability:GetLevel() - 1)
 			local health_per_hero = ability:GetLevelSpecialValueFor("health_per_hero", ability:GetLevel() - 1)
-			local game_time = math.min(GameRules:GetDOTATime(false, false), 1800) * CREEP_POWER_FACTOR / 60
+			local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
 			
 			-- Spawn the Behemoth
 			local spawn_loc = Entities:FindByName(nil, "dire_reinforcement_spawn_mid"):GetAbsOrigin()
@@ -252,6 +255,9 @@ function SpawnDireBehemoth( keys )
 			behemoth:AddAbility("imba_behemoth_aura_badguys")
 			local aura_ability = behemoth:FindAbilityByName("imba_behemoth_aura_badguys")
 			aura_ability:SetLevel(math.min(this_call_body_count, 5))
+			behemoth:AddAbility("imba_behemoth_dearmor")
+			local dearmor_ability = behemoth:FindAbilityByName("imba_behemoth_dearmor")
+			dearmor_ability:SetLevel(1)
 
 			-- Increase Behemoth size according to its power
 			behemoth:SetModelScale(0.85 + 0.06 * this_call_body_count)
@@ -270,6 +276,18 @@ function SpawnDireBehemoth( keys )
 			caster.ancient_recently_dead_enemies = nil
 		end
 	end)
+end
+
+function BehemothAttacked( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local attacker = keys.attacker
+	local modifier_stack = keys.modifier_stack
+
+	-- If the attacker is a hero, reduce the Behemoth's armor
+	if attacker:IsHero() then
+		AddStacks(ability, caster, caster, modifier_stack, 1, true)
+	end
 end
 
 function StalwartDefense( keys )

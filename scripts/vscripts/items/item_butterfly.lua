@@ -23,6 +23,12 @@ function ButterflyEffect( keys )
 	-- Perform an attack on the singled out enemy
 	if caster:IsRangedAttacker() then
 		caster:PerformAttack(enemy, true, false, true, true, true)
+
+	-- Troll Warlord graphical adjustment
+	elseif caster:HasModifier("modifier_imba_berserkers_rage") then
+		caster:SetAttackCapability(2)
+		caster:PerformAttack(enemy, true, false, true, true, true)
+		caster:SetAttackCapability(1)
 	else
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
