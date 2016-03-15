@@ -19,10 +19,15 @@ function Skadi( keys )
 	local damage_per_agi = ability:GetLevelSpecialValueFor("damage_per_agi", ability_level)
 
 	-- Calculate parameters
+	local caster_str = 0
+	local caster_int = 0
+	local caster_agi = 0
+	if caster:IsRealHero() then
+		caster_str = caster:GetStrength()
+		caster_int = caster:GetIntellect()
+		caster_agi = caster:GetAgility()
+	end
 	local caster_loc = caster:GetAbsOrigin()
-	local caster_str = caster:GetStrength()
-	local caster_int = caster:GetIntellect()
-	local caster_agi = caster:GetAgility()
 	local radius = base_radius + caster_str * radius_per_str
 	local duration = base_duration + caster_int * duration_per_int
 	local damage = base_damage + caster_agi * damage_per_agi

@@ -14,6 +14,7 @@ function TimeWalk( keys )
 
 	-- Parameters
 	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+	local range = ability:GetLevelSpecialValueFor("range", ability_level) + GetCastRangeIncrease(caster)
 	local slow_radius = ability:GetLevelSpecialValueFor("slow_radius", ability_level)
 	local chrono_radius = ability:GetLevelSpecialValueFor("chrono_radius", ability_level)
 	local chrono_linger = ability:GetLevelSpecialValueFor("chrono_linger", ability_level)
@@ -21,9 +22,18 @@ function TimeWalk( keys )
 	-- Movement geometry variables
 	local target_loc = keys.target_points[1]
 	local caster_loc = caster:GetAbsOrigin()
+	local path_length = (target_loc - caster_loc):Length2D()
+
+	-- Limit range to the current level-appropriate one
+	if path_length > range then
+		target_loc = caster_loc + (target_loc - caster_loc):Normalized() * range
+		path_length = range
+	end
+
+	-- More geometry variables
 	local last_chrono_loc = caster_loc
 	local tick_interval = 0.03
-	local duration = (target_loc - caster_loc):Length2D() / speed
+	local duration = path_length / speed
 	local elapsed_duration = 0
 	local tick_speed = speed * tick_interval
 

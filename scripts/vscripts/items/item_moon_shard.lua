@@ -7,6 +7,13 @@ function MoonShardActive( keys )
 	local ability = keys.ability
 	local modifier_as = keys.modifier_as
 	local modifier_vision = keys.modifier_vision
+
+	-- If this unit is not a real hero, do nothing
+	if not caster:IsRealHero() then
+		ability:RefundManaCost()
+		ability:EndCooldown()
+		return nil
+	end
 	
 	AddStacks(ability, caster, target, modifier_as, 1, true)
 	ability:ApplyDataDrivenModifier(caster, target, modifier_vision, {})

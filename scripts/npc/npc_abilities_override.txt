@@ -6732,7 +6732,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"10 0 -10 -20"
+				"bonus_damage"				"-5 -10 -15 -20"
 			}
 			"03"
 			{
@@ -8469,6 +8469,36 @@
 	}
 
 	//=================================================================================================================
+	// Warlock: Fatal Bonds
+	//=================================================================================================================
+	"warlock_fatal_bonds"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"count"						"3 5 7 9"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_share_percentage"	"25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"25.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"search_aoe"				"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Winter Wyvern: Arctic Burn
 	//=================================================================================================================
 	"winter_wyvern_arctic_burn"
@@ -8988,7 +9018,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 240"
+				"damage"					"90 180 270"
 			}
 			"02"
 			{
@@ -10484,7 +10514,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3 4 5 6"
+				"duration"					"4 5 6 7"
 			}
 		}
 	}
@@ -10521,44 +10551,8 @@
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"focusfire_damage_reduction_scepter"	"0 10 20"
+				"focusfire_damage_reduction_scepter"	"0 20 40"
 			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Warlock's Upheaval
-	//=================================================================================================================
-	"warlock_upheaval"
-	{
-		"AbilityCastPoint"				"0.35"
-
-		"AbilityCooldown"				"50 40 30 20"
-
-		"AbilityManaCost"				"100"		
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"aoe"					"650 700 750 800"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_rate_duration"	"6.0 5.0 4.0 3.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"max_slow"				"100"
-			}
 		}
 	}
 
@@ -11703,8 +11697,6 @@
 	//=================================================================================================================
 	"huskar_life_break"
 	{
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
-
 		"AbilityCastPoint"					"0.2"
 
 		"AbilityCooldown"					"7"
@@ -11888,13 +11880,12 @@
 	//=================================================================================================================
 	"brewmaster_primal_split"
 	{
-		"AbilityCooldown"				"140.0 110.0 80.0"
+		"AbilityCooldown"					"140.0 110.0 80.0"
 		
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"					"0.5"
 
 		"AbilitySpecial"
 		{
-			
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -12477,7 +12468,7 @@
 	{
 		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.15"
-		"AbilityCooldown"				"9"
+		"AbilityCooldown"				"10 9 8 7"
 		"AbilityManaCost"				"110"
 
 		"AbilitySpecial"
@@ -12663,12 +12654,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"90 120 150"
+				"bonus_damage"			"90 140 190"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"60 90 120"
+				"lifesteal_pct"			"80 100 120"
 			}
 			"03"
 			{
@@ -12777,7 +12768,7 @@
 	//=================================================================================================================
 	"weaver_geminate_attack"
 	{
-		"AbilityCooldown"				"4.0 2.0 1.0 0.5"
+		"AbilityCooldown"				"4.0 3.0 2.0 1.0"
 			
 		"AbilitySpecial"
 		{

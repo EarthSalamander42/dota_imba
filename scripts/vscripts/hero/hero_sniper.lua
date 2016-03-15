@@ -129,12 +129,6 @@ function TakeAimFar( keys )
 	local normal_skill_name = keys.normal_skill_name
 	local sound_cast = keys.sound_cast
 
-	-- Prevent activation of Far mode inside the fountain
-	if IsNearFriendlyClass(caster, 1360, "ent_dota_fountain") then
-		ability:EndCooldown()
-		return nil
-	end
-
 	--Fetch Normal mode ability handle
 	local ability_normal = caster:FindAbilityByName(normal_skill_name)
 
@@ -178,16 +172,38 @@ function TakeAimNearBatEnd( keys )
 	ModifyBAT(caster, 0, -new_bat)
 end
 
+function TakeAimFarFountainRemover( keys )
+	local caster = keys.caster
+	local ability_normal = caster:FindAbilityByName(keys.normal_skill)
+	local modifier_normal = keys.modifier_normal
+	local modifier_far = keys.modifier_far
+
+	-- Deactivate far mode if inside the fountain
+	if IsNearFriendlyClass(caster, 1360, "ent_dota_fountain") then
+		caster:RemoveModifierByName(modifier_far)
+		ability_normal:ApplyDataDrivenModifier(caster, caster, modifier_normal, {})
+	end
+end
+
 function TakeAimFarBatStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local ability_normal = caster:FindAbilityByName(keys.normal_skill)
+	local modifier_normal = keys.modifier_normal
+	local modifier_far = keys.modifier_far
 
 	-- Parameters
 	local new_bat = ability:GetLevelSpecialValueFor("BAT", ability_level) - 1.7
 
 	-- Update BAT
 	ModifyBAT(caster, 0, new_bat)
+
+	-- Immediately deactivate far mode if inside the fountain
+	if IsNearFriendlyClass(caster, 1360, "ent_dota_fountain") then
+		caster:RemoveModifierByName(modifier_far)
+		ability_normal:ApplyDataDrivenModifier(caster, caster, modifier_normal, {})
+	end
 end
 
 function TakeAimFarBatEnd( keys )

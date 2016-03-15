@@ -101,7 +101,8 @@ function Trueshot( keys )
 
 	-- Check if the unit is Drow Ranger
 	if target == caster then
-		damage = math.floor( agility * percent / 50 )
+		local self_extra_damage = ability:GetLevelSpecialValueFor("self_extra_damage", ability:GetLevel() - 1 )
+		damage = damage * (100 + self_extra_damage) / 100
 	end
 
 	-- Apply stacks equal to the bonus damage only if the target is ranged

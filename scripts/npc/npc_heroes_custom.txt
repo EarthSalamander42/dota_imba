@@ -1714,6 +1714,22 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Warlock
+	//=================================================================================================================
+	"npc_imba_hero_warlock"
+	{
+		"override_hero"				"npc_dota_hero_warlock"
+
+		"Ability1"					"warlock_fatal_bonds"
+		"Ability2"					"imba_warlock_shadow_word"
+		"Ability3"					"imba_warlock_upheaval"
+		"Ability4"					"imba_warlock_rain_of_chaos"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_warlock/warlock_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Weaver
 	//=================================================================================================================
 	"npc_imba_hero_weaver"

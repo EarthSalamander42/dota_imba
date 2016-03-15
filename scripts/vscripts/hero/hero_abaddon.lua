@@ -363,9 +363,9 @@ function BorrowedTimeActivate( keys )
 
 	-- Apply the modifier
 	if ability:GetCooldownTimeRemaining() == 0 then
-		if caster:GetHealth() < 400 then
+		if caster:GetHealth() < 400 and not caster.break_duration_left then
 
-			-- prevents illusions from gaining the borrowed time buff
+			-- Prevents illusions from gaining the borrowed time buff
 			if not caster:IsIllusion() and caster:IsAlive() then
 				BorrowedTimePurge( keys )
 				caster:EmitSound("Hero_Abaddon.BorrowedTime")
@@ -380,12 +380,24 @@ function BorrowedTimeHeal( keys )
 	-- Variables
 	local damage = keys.DamageTaken
 	local caster = keys.caster
+	local attacker = keys.attacker
 	local ability = keys.ability
 	local scepter = HasScepter(caster)
 	local radius = keys.ability:GetLevelSpecialValueFor("redirect_range", ability:GetLevel() - 1 )
 
-	local allies = FindUnitsInRadius(caster.GetTeam(caster), caster.GetAbsOrigin(caster), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	
+	-- Account for rapier damage amplification
+	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") and not caster:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") then
+			
+		-- Calculate damage amplification
+		local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
+		local damage_amp = 40 + 40 * amp_stacks
+
+		-- Amplify damage
+		damage = damage * (100 + damage_amp) / 100
+	end
+
 	if scepter == true then
 		caster:Heal(damage, caster)
 		for _,unit in pairs(allies) do
@@ -431,6 +443,17 @@ function BorrowedTimeAllies( keys )
 	-- If this unit is an illusion or currently has Borrowed Time active, do nothing
 	if unit:IsIllusion() or unit:HasModifier("modifier_borrowed_time") then
 		return nil
+	end
+	
+	-- Account for rapier damage amplification
+	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") and not unit:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") then
+			
+		-- Calculate damage amplification
+		local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
+		local damage_amp = 40 + 40 * amp_stacks
+
+		-- Amplify damage
+		damage_taken = damage_taken * (100 + damage_taken) / 100
 	end
 
 	local redirect_damage = damage_taken * ( redirect / ( 1 - redirect ) )

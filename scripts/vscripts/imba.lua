@@ -225,41 +225,42 @@ function GameMode:DamageFilter( keys )
 
 			-- Scale damage bonus according to distance
 			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			local distance_taper = 1
+			local target_too_far = false
 			if distance > distance_taper_start then
-				distance_taper = 0.5
+				target_too_far = true
 			end
 
 			-- Roll for crit chance
-			if RandomInt(1, 100) <= crit_chance then
-				keys.damage = keys.damage * (100 + (crit_damage - 100) * distance_taper) / 100
+			if RandomInt(1, 100) <= crit_chance and not target_too_far then
+				keys.damage = keys.damage * crit_damage / 100
 				display_red_crit_number = true
 			end
 		end
 	end
 
 	-- Rapier damage amplification
-	if attacker:HasModifier("modifier_item_imba_rapier_unique") then
+	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
 
-		-- If the target is Roshan, a building, or an ally, do nothing
-		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() ) then
+		-- If the target is Roshan, a building, or an ally, or this was an autoattack, do nothing
+		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or victim:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") ) then
 			
 			-- Calculate damage amplification
 			local damage_amp = 0
+			local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
 
 			-- Fetch appropriate stacks
-			if damage_type == DAMAGE_TYPE_PHYSICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_phys") then
-				damage_amp = 40 + 40 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_phys", attacker)
-			elseif damage_type == DAMAGE_TYPE_MAGICAL and attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
-				damage_amp = 40 + 40 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
-			elseif damage_type == DAMAGE_TYPE_PURE and attacker:HasModifier("modifier_item_imba_rapier_stacks_pure") then
-				damage_amp = 20 + 20 * attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_pure", attacker)
+			if damage_type == DAMAGE_TYPE_PHYSICAL then
+				damage_amp = 40 + 40 * amp_stacks
+			elseif damage_type == DAMAGE_TYPE_MAGICAL then
+				damage_amp = 40 + 40 * amp_stacks
+			elseif damage_type == DAMAGE_TYPE_PURE then
+				damage_amp = 20 + 20 * amp_stacks
 			end
 
 			-- Reduce damage amplification if the target is too far away
 			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			if distance > 2000 then
-				damage_amp = damage_amp * 0.33
+			if distance > 2500 then
+				damage_amp = 0
 			end
 
 			-- Amplify damage

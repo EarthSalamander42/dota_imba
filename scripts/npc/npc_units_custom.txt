@@ -1482,6 +1482,562 @@
 	}
 
 	//=================================================================================
+	// Warlock: Upheaval Tower
+	//=================================================================================
+	"npc_imba_warlock_upheaval_tower"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep_neutral"
+		"Model"						"models/items/wards/warlock_hells_sight\warlock_hells_sight.vmdl"
+		"SoundSet"					"Tower.Fire"
+		"Level"						"6"
+		"ModelScale"				"1.8"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"upheaval_tower"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"
+		"AttributeStrengthGain"		"0"
+		"AttributeBaseIntelligence"	"0"
+		"AttributeIntelligenceGain"	"0"
+		"AttributeBaseAgility"		"0"
+		"AttributeAgilityGain"		"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+		"HealthBarOffset"			"250"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"100"
+		"BountyGoldMin"				"125"
+		"BountyGoldMax"				"125"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		"MovementTurnRate"			"0.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_BADGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Infernal I
+	//=================================================================================
+	"npc_imba_warlock_golem_1"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_lone_druid_bear"
+		"Model"						"models/heroes/warlock/warlock_demon.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"16"
+		"ModelScale"				"1.25"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"
+		"HasInventory"				"1"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"33"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"225"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"30"
+		"StatusMana"				"400"
+		"StatusManaRegen"			"5"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Infernal II
+	//=================================================================================
+	"npc_imba_warlock_golem_2"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_lone_druid_bear"
+		"Model"						"models/items/warlock/golem/doom_of_ithogoaki/doom_of_ithogoaki.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"16"
+		"ModelScale"				"1.25"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"
+		"HasInventory"				"1"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"33"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"225"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"30"
+		"StatusMana"				"400"
+		"StatusManaRegen"			"5"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Infernal III
+	//=================================================================================
+	"npc_imba_warlock_golem_3"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_lone_druid_bear"
+		"Model"						"models/items/warlock/golem/ahmhedoq/ahmhedoq.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"16"
+		"ModelScale"				"1.25"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"
+		"HasInventory"				"1"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"33"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"225"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"30"
+		"StatusMana"				"400"
+		"StatusManaRegen"			"5"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Infernal IV
+	//=================================================================================
+	"npc_imba_warlock_golem_4"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_lone_druid_bear"
+		"Model"						"models/items/warlock/golem/obsidian_golem/obsidian_golem.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"16"
+		"ModelScale"				"1.25"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"
+		"HasInventory"				"1"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"33"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"225"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"30"
+		"StatusMana"				"400"
+		"StatusManaRegen"			"5"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Infernal V
+	//=================================================================================
+	"npc_imba_warlock_golem_5"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_lone_druid_bear"
+		"Model"						"models/items/warlock/golem/grimoires_pitlord_ultimate/grimoires_pitlord_ultimate.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"IdleSoundLoop"				"Hero_WarlockGolem.Spawn_Loop"
+		"Level"						"66"
+		"ModelScale"				"1.25"
+		"IsAncient"					"1"
+		"ConsideredHero"			"1"
+		"CanBeDominated"			"0"
+		"HasInventory"				"1"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"33"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"225"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"240"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"150"
+		"BountyGoldMin"				"150"
+		"BountyGoldMax"				"150"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1"
+		"StatusHealthRegen"			"30"
+		"StatusMana"				"400"
+		"StatusManaRegen"			"5"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
+	// Warlock: Extra Infernals
+	//=================================================================================
+	"npc_imba_warlock_golem_extra"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/items/warlock/golem/mdl_warlock_golem/mdl_warlock_golem.vmdl"
+		"SoundSet"					"Hero_WarlockGolem"
+		"Level"						"6"
+		"ModelScale"				"0.8"
+		"IsAncient"					"1"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"infernal"
+		"VoiceFile" 				"soundevents/voscripts/game_sounds_vo_warlock_golem.vsndevts"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"imba_warlock_flaming_fists"
+		"Ability2"					"imba_warlock_permanent_immolation"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"8"
+		"MagicalResistance"			"25"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"90"
+		"AttackDamageMax"			"90"
+		"AttackRate"				"1.2"
+		"AttackAnimationPoint"		"0.26"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"200"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"50"
+		"BountyGoldMin"				"50"
+		"BountyGoldMax"				"50"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1800"
+		"VisionNighttimeRange"		"1800"
+	}
+
+	//=================================================================================
 	// Roshan (normal)
 	//=================================================================================
 	"npc_imba_roshan"

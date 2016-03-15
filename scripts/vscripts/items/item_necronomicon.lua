@@ -8,6 +8,13 @@ function Necronomicon( keys )
 	local sound_cast = keys.sound_cast
 	local necro_level = keys.necro_level
 
+	-- If this unit is not a real hero, do nothing
+	if not caster:IsRealHero() then
+		ability:RefundManaCost()
+		ability:EndCooldown()
+		return nil
+	end
+
 	-- Parameters
 	local summon_duration = ability:GetLevelSpecialValueFor("summon_duration", ability_level)
 	local caster_loc = caster:GetAbsOrigin()

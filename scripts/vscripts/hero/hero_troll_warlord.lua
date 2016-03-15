@@ -218,7 +218,6 @@ function BerserkersRageAttack( keys )
 	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
 	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
 	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
-	local melee_distance = ability:GetLevelSpecialValueFor("melee_distance", ability_level)
 
 	-- Calculate bash damage
 	bash_damage = caster:GetAttackDamage() * bash_damage / 100

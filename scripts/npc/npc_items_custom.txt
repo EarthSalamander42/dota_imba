@@ -9,8 +9,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"                            "1999"
 		"BaseClass"                     "item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"ItemBaseLevel"                 "1"
 		"ItemPurchasable" 				"0"
+		"ItemSellable"					"0"
+		"ItemKillable"					"0"
+		"ItemDroppable" 				"0"
 	}
 
 	//=================================================================================================================
@@ -1087,7 +1091,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"12"
+				"max_charges"			"10"
 			}
 			"02"
 			{
@@ -1201,7 +1205,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana;int;agi;str"
 		"ItemQuality"					"common"
 		"ItemAliases"					"magic wand"
-		"ItemInitialCharges"			"12"
+		"ItemInitialCharges"			"10"
 		"ItemPermanent"					"1"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
@@ -1213,7 +1217,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"24"
+				"max_charges"			"20"
 			}
 			"02"
 			{
@@ -2359,7 +2363,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"100"
+				"bonus_mana_regen"		"75"
 			}
 		}
 	}
@@ -2427,7 +2431,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"150"
+				"bonus_mana_regen"		"125"
 			}
 		}
 	}
@@ -4127,7 +4131,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"225"
+				"bonus_mana_regen"		"175"
 			}
 			"05"
 			{
@@ -4316,7 +4320,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"200"
+				"bonus_mana_regen"			"175"
 			}
 			"05"
 			{
@@ -4341,7 +4345,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_taper_start"		"2000"
+				"distance_taper_start"		"2500"
 			}
 		}
 
@@ -4499,7 +4503,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"200"
+				"bonus_mana_regen"		"175"
 			}
 			"03"
 			{
@@ -5869,7 +5873,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"135"
 		"ItemCost"						"2950"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
@@ -5976,7 +5980,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"135"
 		"ItemCost"						"4450"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
@@ -6083,7 +6087,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"135"
 		"ItemCost"						"5950"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
@@ -6190,7 +6194,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"135"
 		"ItemCost"						"7450"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
@@ -6297,7 +6301,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"
+		"AbilityManaCost"				"135"
 		"ItemCost"						"8950"
 		"ItemShopTags"					"int;str;hard_to_tag;see_invis"
 		"ItemQuality"					"rare"
@@ -6447,7 +6451,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"300"
+				"bonus_mana_regen"		"275"
 			}
 			"03"
 			{
@@ -7971,7 +7975,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"150"
+				"bonus_mana_regen"		"125"
 			}
 		}
 	}
@@ -8119,27 +8123,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"physical_amp"				"80"
+				"base_damage"				"322"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pure_amp"					"40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"taper_distance"			"2000"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"100"
+				"stack_damage"				"161"
 			}
 		}
 
@@ -8153,7 +8142,6 @@
 				"next_item"					"item_imba_rapier_magic"
 				"modifier_phys"				"modifier_item_imba_rapier_stacks_phys"
 				"modifier_magic"			"modifier_item_imba_rapier_stacks_magic"
-				"modifier_pure"				"modifier_item_imba_rapier_stacks_pure"
 				"next_stacks"				"modifier_item_imba_rapier_stacks_magic"
 			}
 		}
@@ -8178,7 +8166,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 
@@ -8191,7 +8178,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 
@@ -8204,13 +8190,12 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
 				}
 			}
 
@@ -8224,6 +8209,11 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
+				}
 			}
 
 			"modifier_item_imba_rapier_stacks_magic"
@@ -8236,24 +8226,33 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier_magic"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierPreventAttackAmp"
+
+						"modifier_prevent"	"modifier_item_imba_rapier_prevent_attack_amp"
+					}
+				}
 			}
 
-			"modifier_item_imba_rapier_stacks_pure"
+			"modifier_item_imba_rapier_prevent_attack_amp"
 			{
 				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"				"item_imba_rapier_pure"
+				"Duration"					"0.01"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Arcane Rapier (magic)
+	// Arcane Rapier (Spell version)
 	//=================================================================================================================
 	"item_imba_rapier_magic"
 	{
@@ -8304,167 +8303,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"taper_distance"			"2000"
+				"taper_distance"			"2500"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"items/item_rapier.lua"
-				"Function"					"RapierToggle"
-
-				"next_item"					"item_imba_rapier_pure"
-				"modifier_phys"				"modifier_item_imba_rapier_stacks_phys"
-				"modifier_magic"			"modifier_item_imba_rapier_stacks_magic"
-				"modifier_pure"				"modifier_item_imba_rapier_stacks_pure"
-				"next_stacks"				"modifier_item_imba_rapier_stacks_pure"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_rapier_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierVision"
-
-						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
-						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierBuy"
-
-						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
-						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierDrop"
-
-						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
-						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
-					}
-				}
-			}
-
-			"modifier_item_imba_rapier_stacks_phys"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"				"item_imba_rapier"
-			}
-
-			"modifier_item_imba_rapier_stacks_magic"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"				"item_imba_rapier_magic"
-			}
-
-			"modifier_item_imba_rapier_stacks_pure"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"				"item_imba_rapier_pure"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// True Rapier (pure)
-	//=================================================================================================================
-	"item_imba_rapier_pure"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"									"2138"
-		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"item_imba_rapier_pure"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"Model"									"models/props_gameplay/divine_rapier.mdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"								"6200"
-		"AbilityCooldown"						"0"
-		"ItemShopTags"							"damage"
-		"ItemQuality"							"epic"
-		"ItemAliases"							"divine rapier"
-		"ItemShareability"						"ITEM_FULLY_SHAREABLE"
-		"ItemSellable"							"0"
-		"ItemPurchasable"						"0"
-		"ItemKillable"							"0"
-		"ItemDroppable" 						"0"
-		"ItemContributesToNetWorthWhenDropped"	"0"
-		"ItemStackable"							"0"
-		"ItemRequiresCharges"					"0"
-		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"physical_amp"				"80"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pure_amp"					"40"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"taper_distance"			"2000"
+				"stack_damage"				"161"
 			}
 		}
 
@@ -8478,7 +8322,6 @@
 				"next_item"					"item_imba_rapier"
 				"modifier_phys"				"modifier_item_imba_rapier_stacks_phys"
 				"modifier_magic"			"modifier_item_imba_rapier_stacks_magic"
-				"modifier_pure"				"modifier_item_imba_rapier_stacks_pure"
 				"next_stacks"				"modifier_item_imba_rapier_stacks_phys"
 			}
 		}
@@ -8503,7 +8346,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 
@@ -8516,7 +8358,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 
@@ -8529,7 +8370,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-						"modifier_pure"		"modifier_item_imba_rapier_stacks_pure"
 					}
 				}
 			}
@@ -8544,6 +8384,11 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
+				}
 			}
 
 			"modifier_item_imba_rapier_stacks_magic"
@@ -8556,18 +8401,27 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier_magic"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierPreventAttackAmp"
+
+						"modifier_prevent"	"modifier_item_imba_rapier_prevent_attack_amp"
+					}
+				}
 			}
 
-			"modifier_item_imba_rapier_stacks_pure"
+			"modifier_item_imba_rapier_prevent_attack_amp"
 			{
 				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"				"item_imba_rapier_pure"
+				"Duration"					"0.01"
 			}
 		}
 	}
@@ -8579,7 +8433,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2139"
+		"ID"							"2138"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_rapier"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
@@ -9408,7 +9262,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"200"
+				"bonus_mana_regen"		"175"
 			}
 			"04"
 			{
@@ -9827,7 +9681,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2400"
+		"ItemCost"						"1175"
 		"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"armlet of mordiggian"
@@ -9922,6 +9776,9 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
+
+				"EffectName"				"particles\items_fx\armlet.vpcf"
+				"EffectAttachType"			"follow_origin"
 				
 				"Properties"
 				{
@@ -12903,7 +12760,7 @@
 		"ItemAliases"					"diffusal blade"
 		
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"8"
+		"ItemInitialCharges"			"10"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
@@ -12929,7 +12786,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"8"
+				"initial_charges"			"10"
 			}
 			"04"
 			{
@@ -13075,7 +12932,7 @@
 		"ItemAliases"					"diffusal blade 2;purgeblade"
 		
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"12"
+		"ItemInitialCharges"			"15"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		"MaxUpgradeLevel"				"3"
@@ -13101,7 +12958,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"12"
+				"initial_charges"			"15"
 			}
 			"04"
 			{
@@ -13254,7 +13111,7 @@
 		"ItemBaseLevel"					"3"
 
 		"ItemPermanent"					"1"
-		"ItemInitialCharges"			"16"
+		"ItemInitialCharges"			"20"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
 		
@@ -13275,7 +13132,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_charges"			"16"
+				"initial_charges"			"20"
 			}
 			"04"
 			{
@@ -16490,7 +16347,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"175"
+				"bonus_mana_regen"		"125"
 			}
 			"06"
 			{
@@ -16632,7 +16489,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5900"
+		"ItemCost"						"2950"
 		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
 		"AbilityCooldown"				"1.0"
 		"AbilitySharedCooldown"			"octarine"
@@ -16762,7 +16619,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"			"%bonus_cooldown"
+					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"		"%bonus_cooldown"
 				}
 			}
 
@@ -18104,6 +17961,6 @@
 		}
 	}
 
-	//rapier freed IDs: 2140-2164
+	//rapier freed IDs: 2139-2164
 	//next free ID: 2204
 }

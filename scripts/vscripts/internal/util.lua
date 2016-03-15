@@ -291,12 +291,25 @@ end
 -- Returns if this unit is a player-owned summon or not
 function IsPlayerOwnedSummon( unit )
 
-	local summon_names = {
+	local summon_classes = {
 		"npc_dota_techies_mines",
-		"npc_dota_venomancer_plagueward"
+		"npc_dota_venomancer_plagueward",
+		"npc_dota_lone_druid_bear"
 	}
 
 	local unit_name = unit:GetName()
+
+	for i = 1, #summon_classes do
+		if unit_name == summon_classes[i] then
+			return true
+		end
+	end
+
+	local summon_names = {
+		"npc_imba_warlock_golem_extra"
+	}
+
+	unit_name = unit:GetUnitName()
 
 	for i = 1, #summon_names do
 		if unit_name == summon_names[i] then
@@ -812,8 +825,7 @@ function PassiveBreak( unit, duration )
 
 	-- Non-passive abilities disabled by break
 	local break_exceptions = {
-		"imba_antimage_spell_shield",
-		"imba_faceless_void_backtrack"
+		"imba_antimage_spell_shield"
 	}
 
 	-- Passive abilities not disabled by break
@@ -1152,7 +1164,9 @@ function ChangeAttackProjectileImba( unit )
 end
 
 function IsUninterruptableForcedMovement( unit )
-	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement") or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback") then
+	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement")
+		or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback")
+		or unit:HasModifier("modifier_item_forcestaff_active") or unit:HasModifier("modifier_shredder_timber_chain") then
 		return true
 	end
 
@@ -1241,4 +1255,14 @@ function RevertBAT( unit )
 	-- Reset BAT
 	unit:SetBaseAttackTime(unit.unmodified_bat)
 
+end
+
+-- Detect hero-creeps with an inventory, like warlock golems or lone druid's bear
+function IsHeroCreep( unit )
+
+	if unit:GetName() == "npc_dota_lone_druid_bear" then
+		return true
+	end
+
+	return false
 end

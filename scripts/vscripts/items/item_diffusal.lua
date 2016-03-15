@@ -70,10 +70,6 @@ function DiffusalHit( keys )
 	-- Burn mana if target is not magic immune
 	if not target:IsMagicImmune() then
 
-		-- Play hit particle
-		local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
-
 		-- Burn mana
 		local target_mana = target:GetMana()
 		target:ReduceMana(mana_burn)
@@ -81,6 +77,10 @@ function DiffusalHit( keys )
 		-- Deal bonus damage
 		if target_mana > mana_burn then
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = mana_burn, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+			-- Play hit particle
+			local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+			ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
 		else
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target_mana, damage_type = DAMAGE_TYPE_PHYSICAL})
 		end
@@ -137,10 +137,6 @@ function Diffusal2Hit( keys )
 	-- Burn mana if target is not magic immune
 	if not target:IsMagicImmune() then
 
-		-- Play hit particle
-		local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
-
 		-- Burn mana
 		local target_mana = target:GetMana()
 		target:ReduceMana(mana_burn)
@@ -148,6 +144,10 @@ function Diffusal2Hit( keys )
 		-- Deal bonus damage
 		if target_mana > mana_burn then
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = mana_burn, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+			-- Play hit particle
+			local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+			ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
 		else
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target_mana, damage_type = DAMAGE_TYPE_PHYSICAL})
 		end
@@ -199,10 +199,6 @@ function Diffusal3Hit( keys )
 	-- Burn mana if target is not magic immune
 	if not target:IsMagicImmune() then
 
-		-- Play hit particle
-		local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
-
 		-- Burn mana
 		local target_mana = target:GetMana()
 		target:ReduceMana(mana_burn)
@@ -210,6 +206,10 @@ function Diffusal3Hit( keys )
 		-- Deal bonus damage
 		if target_mana > mana_burn then
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = mana_burn, damage_type = DAMAGE_TYPE_PHYSICAL})
+
+			-- Play hit particle
+			local manaburn_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
+			ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin())
 		else
 			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target_mana, damage_type = DAMAGE_TYPE_PHYSICAL})
 		end

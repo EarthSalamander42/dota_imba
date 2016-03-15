@@ -152,6 +152,11 @@ function SpawnRadiantBehemoth( keys )
 	local modifier_stack = keys.modifier_stack
 	local particle_ambient = keys.particle_ambient
 
+	-- Prevents the ability from working on hero-creeps
+	if IsHeroCreep(keys.unit) then
+		return nil
+	end
+
 	-- Increase body count by 1
 	if not caster.ancient_recently_dead_enemies then
 		caster.ancient_recently_dead_enemies = 1
@@ -217,6 +222,11 @@ function SpawnDireBehemoth( keys )
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 	local particle_ambient = keys.particle_ambient
+
+	-- Prevents the ability from working on hero-creeps
+	if IsHeroCreep(keys.unit) then
+		return nil
+	end
 
 	-- Increase body count by 1
 	if not caster.ancient_recently_dead_enemies then
@@ -297,6 +307,11 @@ function StalwartDefense( keys )
 	local sound_cast = keys.sound_cast
 	local particle_hit = keys.particle_hit
 	local particle_buff = keys.particle_buff
+
+	-- Prevents the ability from working on hero-creeps
+	if IsHeroCreep(keys.unit) then
+		return nil
+	end
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1)

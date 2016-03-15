@@ -1015,7 +1015,7 @@ function GameMode:OnEntityKilled( keys )
 			if nearby_allies == 1 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_2
 				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer then
+					if ally ~= killer and not IsHeroCreep(ally) then
 						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
@@ -1024,7 +1024,7 @@ function GameMode:OnEntityKilled( keys )
 			elseif nearby_allies == 2 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
 				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer then
+					if ally ~= killer and not IsHeroCreep(ally) then
 						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
@@ -1033,7 +1033,7 @@ function GameMode:OnEntityKilled( keys )
 			elseif nearby_allies == 3 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
 				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer then
+					if ally ~= killer and not IsHeroCreep(ally) then
 						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
@@ -1042,7 +1042,7 @@ function GameMode:OnEntityKilled( keys )
 			elseif nearby_allies >= 4 then
 				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
 				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer then
+					if ally ~= killer and not IsHeroCreep(ally) then
 						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
 						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
 						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)

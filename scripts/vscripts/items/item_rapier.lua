@@ -8,7 +8,6 @@ function RapierToggle( keys )
 	local next_stacks = keys.next_stacks
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
-	local modifier_pure = keys.modifier_pure
 
 	-- If this is a courier, do nothing
 	if caster:GetUnitName() == "npc_dota_courier" then
@@ -22,12 +21,11 @@ function RapierToggle( keys )
 	end)
 
 	-- Count current stacks
-	local current_stacks = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster) + caster:GetModifierStackCount(modifier_pure, caster)
+	local current_stacks = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
 
 	-- Remove existing stacks
 	caster:RemoveModifierByName(modifier_phys)
 	caster:RemoveModifierByName(modifier_magic)
-	caster:RemoveModifierByName(modifier_pure)
 
 	-- Swap to next rapier
 	SwapToItem(caster, ability, next_item)
@@ -46,12 +44,21 @@ function RapierToggle( keys )
 	AddStacks(next_ability, caster, caster, next_stacks, current_stacks, true)
 end
 
+function RapierPreventAttackAmp( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_prevent = keys.modifier_prevent
+
+	-- Apply modifier to prevent autoattack damage amplification
+	ability:ApplyDataDrivenModifier(caster, target, modifier_prevent, {})
+end
+
 function RapierVision( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
-	local modifier_pure = keys.modifier_pure
 
 	-- If this is a courier, do nothing
 	if caster:GetUnitName() == "npc_dota_courier" then
@@ -59,7 +66,7 @@ function RapierVision( keys )
 	end
 
 	-- Fetch current rapier level
-	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster) + caster:GetModifierStackCount(modifier_pure, caster)
+	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
 	
 	-- If rapier level is enough, grant vision of the caster to all teams
 	if rapier_level >= 3 then
@@ -74,7 +81,7 @@ function RapierVision( keys )
 	local rapiers = {}
 	for i = 0, 5 do
 		local item = caster:GetItemInSlot(i)
-		if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" or item:GetAbilityName() == "item_imba_rapier_pure" ) then
+		if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" ) then
 			rapiers[#rapiers+1] = item
 		end
 	end
@@ -87,8 +94,6 @@ function RapierVision( keys )
 			AddStacks(rapiers[1], caster, caster, modifier_phys, #rapiers - 1, true)
 		elseif caster:HasModifier(modifier_magic) then
 			AddStacks(rapiers[1], caster, caster, modifier_magic, #rapiers - 1, true)
-		elseif caster:HasModifier(modifier_pure) then
-			AddStacks(rapiers[1], caster, caster, modifier_pure, #rapiers - 1, true)
 		end
 
 		-- Delete extra rapiers
@@ -105,10 +110,9 @@ function RapierBuy( keys )
 	local ability = keys.ability
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
-	local modifier_pure = keys.modifier_pure
 
 	-- If this is not a real hero, do nothing
-	if not caster:IsRealHero() then
+	if ( not caster:IsRealHero() and not IsHeroCreep(caster) ) then
 		return nil
 	end
 
@@ -124,7 +128,6 @@ function RapierPickUp( keys )
 	local ability = keys.ability
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
-	local modifier_pure = keys.modifier_pure
 	
 	-- If a rapier was already picked up, or this is an illusion, do nothing
 	if caster.rapier_picked_up then
@@ -176,7 +179,7 @@ function RapierPickUp( keys )
 		local rapier_ability
 		for i = 0, 5 do
 			local item = caster:GetItemInSlot(i)
-			if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" or item:GetAbilityName() == "item_imba_rapier_pure" ) then
+			if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" ) then
 				rapier_ability = item
 				break
 			end
@@ -190,9 +193,6 @@ function RapierPickUp( keys )
 		elseif caster:HasModifier(modifier_magic) then
 			AddStacks(rapier_ability, caster, caster, modifier_magic, 1, true)
 			rapier_level = caster:GetModifierStackCount(modifier_magic, caster)
-		elseif caster:HasModifier(modifier_pure) then
-			AddStacks(rapier_ability, caster, caster, modifier_pure, 1, true)
-			rapier_level = caster:GetModifierStackCount(modifier_pure, caster)
 		end
 
 		-- Global message parameters
@@ -218,6 +218,12 @@ function RapierPickUp( keys )
 				Notifications:BottomToAll({text = "#imba_player_rapier_pickup_02", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 			end
 		end)
+
+	-- Else, if this is a creep with an inventory attempting to pick up rapiers, prevent it from doing so
+	elseif not caster:IsRealHero() then
+		local drop = CreateItem("item_imba_rapier_dummy", nil, nil)
+		CreateItemOnPositionSync(caster:GetAbsOrigin(), drop)
+		drop:LaunchLoot(false, 250, 0.5, caster:GetAbsOrigin() + RandomVector(100))
 
 	-- Else, if it has a free slot, create a rapier on it
 	elseif caster:HasAnyAvailableInventorySpace() then
@@ -274,7 +280,6 @@ function RapierDrop( keys )
 	local ability = keys.ability
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
-	local modifier_pure = keys.modifier_pure
 
 	-- Flag hero as a rapier non-owner
 	caster.has_rapier = nil
@@ -286,17 +291,16 @@ function RapierDrop( keys )
 	end
 
 	-- Fetch rapier level
-	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster) + caster:GetModifierStackCount(modifier_pure, caster)
+	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
 	
 	-- Remove damage amp stacks
 	caster:RemoveModifierByName(modifier_phys)
 	caster:RemoveModifierByName(modifier_magic)
-	caster:RemoveModifierByName(modifier_pure)
 
 	-- Remove the rapiers from the player's inventory
 	for i = 0, 5 do
 		local item = caster:GetItemInSlot(i)
-		if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" or item:GetAbilityName() == "item_imba_rapier_pure" ) then
+		if item and ( item:GetAbilityName() == "item_imba_rapier" or item:GetAbilityName() == "item_imba_rapier_magic" ) then
 			caster:RemoveItem(item)
 		end
 	end
@@ -326,15 +330,17 @@ function RapierDrop( keys )
 	}
 
 	-- Show global message
-	Notifications:BottomToAll({hero = caster:GetName(), duration = line_duration})
-	Notifications:BottomToAll({text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." ", duration = line_duration, continue = true})
-	Notifications:BottomToAll({text = "#imba_player_rapier_drop_01", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-	Notifications:BottomToAll({text = rapier_level.." ", duration = line_duration, style = {color = level_color[rapier_color]}, continue = true})
-	Notifications:BottomToAll({text = "#imba_player_rapier_drop_02", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+	Timers:CreateTimer(0.1, function()
+		Notifications:BottomToAll({hero = caster:GetName(), duration = line_duration})
+		Notifications:BottomToAll({text = PlayerResource:GetPlayerName(caster:GetPlayerID()).." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_rapier_drop_01", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+		Notifications:BottomToAll({text = rapier_level.." ", duration = line_duration, style = {color = level_color[rapier_color]}, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_rapier_drop_02", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
 
-	-- Ping and grant vision of the location for both teams
-	caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, vision_duration)
-	caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, vision_duration)
-	MinimapEvent(DOTA_TEAM_GOODGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
-	MinimapEvent(DOTA_TEAM_BADGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
+		-- Ping and grant vision of the location for both teams
+		caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, vision_duration)
+		caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, vision_duration)
+		MinimapEvent(DOTA_TEAM_GOODGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
+		MinimapEvent(DOTA_TEAM_BADGUYS, caster, caster_pos.x, caster_pos.y, DOTA_MINIMAP_EVENT_HINT_LOCATION, vision_duration)
+	end)
 end

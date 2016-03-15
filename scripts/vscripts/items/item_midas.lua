@@ -5,6 +5,11 @@ function MidasPassiveGold( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 
+	-- If this unit is not a real hero, do nothing
+	if not caster:IsRealHero() then
+		return nil
+	end
+
 	-- Creates leftover gold global variable if it does not exist yet
 	if not caster.midas_passive_gold then
 		caster.midas_passive_gold = 0
@@ -34,6 +39,13 @@ function Midas( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local sound_cast = keys.sound_cast
+
+	-- If this unit is not a real hero, do nothing
+	if not caster:IsRealHero() then
+		ability:RefundManaCost()
+		ability:EndCooldown()
+		return nil
+	end
 
 	-- Parameters and calculations
 	local creep_XP = target:GetDeathXP()

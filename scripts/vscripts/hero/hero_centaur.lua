@@ -20,6 +20,11 @@ function HoofStomp( keys )
 	local pit_fx = ParticleManager:CreateParticle(particle_pit, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(pit_fx, 0, pit_center)
 
+	-- Destroy the particle after [pit_duration] seconds
+	Timers:CreateTimer(pit_duration, function()
+		ParticleManager:DestroyParticle(pit_fx, false)
+	end)
+
 	-- Mark the enemies inside the pit to prevent them from leaving
 	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 	for _, enemy in pairs(nearby_enemies) do
@@ -58,9 +63,6 @@ function HoofStomp( keys )
 		if pit_duration_elapsed < pit_duration then
 			return 0.05
 		else
-
-			-- Destroy particle
-			ParticleManager:DestroyParticle(pit_fx, false)
 
 			-- Remove modifier from marked enemies
 			for _, enemy in pairs(pit_enemies) do

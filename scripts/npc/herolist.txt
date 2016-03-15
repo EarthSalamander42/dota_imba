@@ -63,7 +63,7 @@
 	"npc_dota_hero_huskar" "1"
 	"npc_dota_hero_jakiro" "1"
 	"npc_dota_hero_batrider" "0"
-	"npc_dota_hero_warlock" "0"
+	"npc_dota_hero_warlock" "1"
 	"npc_dota_hero_alchemist" "1"
 	"npc_dota_hero_death_prophet" "1"
 	"npc_dota_hero_ursa" "1"

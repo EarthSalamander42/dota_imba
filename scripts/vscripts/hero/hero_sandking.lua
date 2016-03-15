@@ -139,6 +139,9 @@ function SandStorm( keys )
 			-- Update radius
 			current_radius = math.min( base_radius + radius_step * current_time, max_radius)
 
+			-- Destroy trees in the skill radius
+			GridNav:DestroyTreesAroundPoint(caster_pos, current_radius, false)
+
 			-- Update particle
 			ParticleManager:SetParticleControl(sandstorm_pfx, 1, Vector(current_radius, current_radius, 0))
 
