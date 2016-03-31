@@ -434,13 +434,12 @@ function Rot( keys )
 	local stack_damage = ability:GetLevelSpecialValueFor("stack_damage", ability_level)
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local stack_radius = ability:GetLevelSpecialValueFor("stack_radius", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local rot_tick = ability:GetLevelSpecialValueFor("rot_tick", ability_level)
 
 	-- Retrieve flesh heap stacks
 	local heap_stacks = 0
 	if caster:HasModifier(modifier_heap) then
-		heap_stacks = math.min(caster:GetModifierStackCount(modifier_heap, caster), max_stacks)
+		heap_stacks = caster:GetModifierStackCount(modifier_heap, caster)
 	end
 
 	-- Calculate damage and radius
@@ -468,12 +467,11 @@ function RotParticle( keys )
 	-- Parameters
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local stack_radius = ability:GetLevelSpecialValueFor("stack_radius", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Retrieve flesh heap stacks
 	local heap_stacks = 0
 	if caster:HasModifier(modifier_heap) then
-		heap_stacks = math.min(caster:GetModifierStackCount(modifier_heap, caster), max_stacks)
+		heap_stacks = caster:GetModifierStackCount(modifier_heap, caster)
 	end
 
 	-- Calculate radius
@@ -514,7 +512,6 @@ function FleshHeapUpgrade( keys )
 
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 	local stack_amount
 	local resist_amount
 
@@ -528,7 +525,7 @@ function FleshHeapUpgrade( keys )
 		local assists = caster:GetAssists()
 		local kills = caster:GetKills()	
 		stack_amount = kills + assists
-		resist_amount = math.min(stack_amount, max_stacks)
+		resist_amount = stack_amount
 
 		-- Define the global variables which keep track of heap stacks
 		caster.heap_stacks = stack_amount
@@ -561,17 +558,9 @@ function FleshHeap( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
-	-- Parameters
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-
-	-- Prevent resist stacks from resetting if the skill is unlearned
-	if ability_level == 0 then
-		max_stacks = caster.heap_resist_stacks + 1
-	end
-
 	-- Update the global heap stacks variable
 	caster.heap_stacks = caster.heap_stacks + 1
-	caster.heap_resist_stacks = math.min(caster.heap_resist_stacks + 1, max_stacks)
+	caster.heap_resist_stacks = caster.heap_resist_stacks + 1
 
 	-- Play pudge's voice reaction
 	caster:EmitSound("pudge_pud_ability_heap_0"..RandomInt(1,2))

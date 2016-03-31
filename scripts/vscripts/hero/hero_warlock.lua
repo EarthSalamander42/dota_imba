@@ -31,9 +31,6 @@ function ShadowWord( keys )
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	end
 
-	-- Mark target for later explosion
-	target.shadow_word_explosion_target = true
-
 	-- Start or reset looping debuff sound
 	target:StopSound(sound_target)
 	target:EmitSound(sound_target)
@@ -125,57 +122,50 @@ function ShadowWordExplode( keys )
 	-- Stop playing sound loop
 	target:StopSound(sound_target)
 
-	-- If this is the original target, explode
-	if target.shadow_word_explosion_target then
+	-- Play explosion sound
+	target:EmitSound(sound_explode)
 
-		-- Play explosion sound
-		target:EmitSound(sound_explode)
+	-- Play explosion particle
+	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(explosion_pfx, 0, target_loc)
 
-		-- Play explosion particle
-		local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(explosion_pfx, 0, target_loc)
+	-- Find nearby allies
+	local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-		-- Find nearby allies
-		local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- Find nearby enemies
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-		-- Find nearby enemies
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- If allies are nearby, play "good" cast sound and apply modifier to them
+	if #nearby_allies > 0 then
+		
+		-- Play sound
+		target:EmitSound(sound_cast_good)
 
-		-- If allies are nearby, play "good" cast sound and apply modifier to them
-		if #nearby_allies > 0 then
-			
-			-- Play sound
-			target:EmitSound(sound_cast_good)
+		-- Apply modifier
+		for _,ally in pairs(nearby_allies) do
 
-			-- Apply modifier
-			for _,ally in pairs(nearby_allies) do
-
-				-- Do not re-apply to the original target
-				if ally ~= target then
-					ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {})
-				end
-			end
-		end
-
-		-- If enemies are nearby, play "bad" cast sound and apply modifier to them
-		if #nearby_enemies > 0 then
-			
-			-- Play sound
-			target:EmitSound(sound_cast_bad)
-
-			-- Apply modifier
-			for _,enemy in pairs(nearby_enemies) do
-
-				-- Do not re-apply to the original target
-				if enemy ~= target then
-					ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
-				end
+			-- Do not re-apply to the original target
+			if ally ~= target then
+				ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {})
 			end
 		end
 	end
-	
-	-- Clean-up explosion target
-	target.shadow_word_explosion_target = nil
+
+	-- If enemies are nearby, play "bad" cast sound and apply modifier to them
+	if #nearby_enemies > 0 then
+		
+		-- Play sound
+		target:EmitSound(sound_cast_bad)
+
+		-- Apply modifier
+		for _,enemy in pairs(nearby_enemies) do
+
+			-- Do not re-apply to the original target
+			if enemy ~= target then
+				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
+			end
+		end
+	end
 end
 
 function Upheaval( keys )

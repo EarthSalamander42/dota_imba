@@ -108,7 +108,6 @@ function DeathPulseHit( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local heal = ability:GetLevelSpecialValueFor("heal", ability_level)
 	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
-	local stack_cap = ability:GetLevelSpecialValueFor("stack_cap", ability_level)
 
 	local stack_count
 
@@ -119,26 +118,18 @@ function DeathPulseHit( keys )
 		else
 			stack_count = 0
 		end
-		heal = heal * (1 + stack_power * stack_count / 100)
+		heal = heal * (1 + stack_power/ 100)^stack_count
 		target:Heal(heal, caster)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-		if stack_count < stack_cap then
-			AddStacks(ability, caster, target, stack_buff, 1, true)
-		else
-			AddStacks(ability, caster, target, stack_buff, 0, true)
-		end
+		AddStacks(ability, caster, target, stack_buff, 1, true)
 	elseif not target:IsMagicImmune() then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		if target:HasModifier(stack_debuff) then
 			stack_count = target:GetModifierStackCount(stack_debuff, ability)
 		else
 			stack_count = 0
 		end
-		if stack_count < stack_cap then
-			AddStacks(ability, caster, target, stack_debuff, 1, true)
-		else
-			AddStacks(ability, caster, target, stack_debuff, 0, true)
-		end
+		AddStacks(ability, caster, target, stack_debuff, 1, true)
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
 
@@ -151,12 +142,9 @@ function Heartstopper( keys )
 
 	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Adds a stack of the debuff
-	if target:GetModifierStackCount(stack_modifier, ability) < max_stacks then
-		AddStacks(ability, caster, target, stack_modifier, 1, true)
-	end
+	AddStacks(ability, caster, target, stack_modifier, 1, true)
 	
 	-- If the target is at low enough HP, kill it
 	if target:GetHealth() <= 5 then

@@ -285,8 +285,8 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 30
-			local damage_block = 30
+			local proc_chance = 50
+			local damage_block = 64
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -328,8 +328,8 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 35
-			local damage_block = 40
+			local proc_chance = 50
+			local damage_block = 64
 			local damage_blocked = 0
 
 			-- Roll for a proc

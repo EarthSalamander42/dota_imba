@@ -1387,7 +1387,7 @@
 
 		"ModelScale" 				".60"
 
-		"AttackAcquisitionRange"	"1800"
+		"AttackAcquisitionRange"	"2500"
 
 		"AbilityLayout"				"5"
 

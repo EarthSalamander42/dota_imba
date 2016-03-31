@@ -7,11 +7,6 @@ function Shotgun( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
-	-- If the caster is not ranged, do nothing
-	if not caster:IsRangedAttacker() then
-		return nil
-	end
-
 	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local proc_targets = ability:GetLevelSpecialValueFor("proc_targets", ability_level)
@@ -24,7 +19,7 @@ function Shotgun( keys )
 		-- Attack random units in range
 		for i,enemy in pairs(nearby_enemies) do
 			if nearby_enemies[i] ~= target then
-				caster:PerformAttack(nearby_enemies[i], true, false, true, true)
+				caster:PerformAttack(nearby_enemies[i], true, true, true, true)
 				proc_targets = proc_targets - 1
 			end
 			if proc_targets == 0 then

@@ -94,35 +94,29 @@ function CounterHelix( keys )
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
 	local str_as_damage = ability:GetLevelSpecialValueFor("str_as_damage", ability_level)
-
-	-- Check for a proc
-	if RandomInt(1, 100) <= proc_chance then
 		
-		-- Play sound
-		caster:EmitSound(sound_spin)
+	-- Play sound
+	caster:EmitSound(sound_spin)
 
-		-- Play particles
-		local helix_pfx_1 = ParticleManager:CreateParticle(particle_spin_1, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(helix_pfx_1, 0, caster:GetAbsOrigin())
-		local helix_pfx_2 = ParticleManager:CreateParticle(particle_spin_2, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(helix_pfx_2, 0, caster:GetAbsOrigin())
+	-- Play particles
+	local helix_pfx_1 = ParticleManager:CreateParticle(particle_spin_1, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(helix_pfx_1, 0, caster:GetAbsOrigin())
+	local helix_pfx_2 = ParticleManager:CreateParticle(particle_spin_2, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(helix_pfx_2, 0, caster:GetAbsOrigin())
 
-		-- Spin animation
-		StartAnimation(caster, {duration = 0.3, activity = ACT_DOTA_CAST_ABILITY_3, rate = 1.0})
+	-- Spin animation
+	StartAnimation(caster, {duration = 0.3, activity = ACT_DOTA_CAST_ABILITY_3, rate = 1.0})
 
-		-- Calculate damage
-		local damage = base_damage + caster:GetStrength() * str_as_damage / 100
+	-- Calculate damage
+	local damage = caster:GetStrength() * str_as_damage / 100
 
-		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		
-		-- Apply damage to valid enemies
-		for _,enemy in pairs(enemies) do
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-		end
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	
+	-- Apply damage to valid enemies
+	for _,enemy in pairs(enemies) do
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
 end
 

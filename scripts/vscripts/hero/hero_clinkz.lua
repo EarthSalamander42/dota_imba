@@ -98,18 +98,12 @@ function SearingArrowsHit( keys )
 
 	-- Parameters
 	local bonus_damage = ability:GetLevelSpecialValueFor("bonus_damage", ability_level)
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
 	-- Play the impact sound
 	target:EmitSound(sound_impact)
 
-	-- Limit the amount of minus armor stacks
-	if target:GetModifierStackCount(modifier_debuff, caster) >= max_stacks then
-		AddStacks(ability, caster, target, modifier_debuff, 0, true)
-	else
-		AddStacks(ability, caster, target, modifier_debuff, 1, true)
-	end
-
+	AddStacks(ability, caster, target, modifier_debuff, 1, true)
+	
 	-- Deal bonus damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end

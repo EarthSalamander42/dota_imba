@@ -204,6 +204,10 @@ function ChainFrost( keys )
 			bounce_target = units[random_unit]
 		end
 
+		local move_speed = projectile_speed - caster.chain_frost_bounces * speed_decay
+
+		if move_speed < speed_decay then move_speed = speed_decay end
+
 		-- Create the next projectile
 		local info = {
 			Target = bounce_target,
@@ -212,7 +216,7 @@ function ChainFrost( keys )
 			EffectName = particle_name,
 			bDodgeable = false,
 			bProvidesVision = false,
-			iMoveSpeed = projectile_speed - caster.chain_frost_bounces * speed_decay,
+			iMoveSpeed = move_speed,
 		--	iVisionRadius = vision_radius,
 			iVisionTeamNumber = caster:GetTeamNumber(), -- Vision still belongs to the one that casted the ability
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
