@@ -108,6 +108,7 @@ function DeathPulseHit( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local heal = ability:GetLevelSpecialValueFor("heal", ability_level)
 	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
+	local stack_cap = ability:GetLevelSpecialValueFor("stack_cap", ability_level)
 
 	local stack_count
 
@@ -118,18 +119,26 @@ function DeathPulseHit( keys )
 		else
 			stack_count = 0
 		end
-		heal = heal * (1 + stack_power/ 100)^stack_count
+		heal = heal * (1 + stack_power * stack_count / 100)
 		target:Heal(heal, caster)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-		AddStacks(ability, caster, target, stack_buff, 1, true)
+		if stack_count < stack_cap then
+			AddStacks(ability, caster, target, stack_buff, 1, true)
+		else
+			AddStacks(ability, caster, target, stack_buff, 0, true)
+		end
 	elseif not target:IsMagicImmune() then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		if target:HasModifier(stack_debuff) then
 			stack_count = target:GetModifierStackCount(stack_debuff, ability)
 		else
 			stack_count = 0
 		end
-		AddStacks(ability, caster, target, stack_debuff, 1, true)
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		if stack_count < stack_cap then
+			AddStacks(ability, caster, target, stack_debuff, 1, true)
+		else
+			AddStacks(ability, caster, target, stack_debuff, 0, true)
+		end
 	end
 end
 
@@ -142,13 +151,26 @@ function Heartstopper( keys )
 
 	-- Ability parameters
 	local ability_level = ability:GetLevel() - 1
+	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
+	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level)
+	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level)
 
 	-- Adds a stack of the debuff
-	AddStacks(ability, caster, target, stack_modifier, 1, true)
+	local debuff_stacks = target:GetModifierStackCount(stack_modifier, ability)
+	if debuff_stacks < max_stacks then
+		AddStacks(ability, caster, target, stack_modifier, 1, true)
+	end
+
+	-- Calculates damage
+	local damage = target:GetMaxHealth() * (1 + debuff_stacks * stack_power / 100) * aura_damage / 100
 	
 	-- If the target is at low enough HP, kill it
-	if target:GetHealth() <= 5 then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 10, damage_type = DAMAGE_TYPE_PURE})
+	if target:GetHealth() <= (damage + 5) then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
+
+	-- Else, remove some HP from it
+	else
+		target:SetHealth(target:GetHealth() - damage)
 	end
 
 	-- Modifier is only visible if the enemy team has vision of Necrophos
@@ -156,7 +178,6 @@ function Heartstopper( keys )
 		if not target:HasModifier(visibility_modifier) then
 			ability:ApplyDataDrivenModifier(caster, target, visibility_modifier, {})
 		end
-		target:SetModifierStackCount(visibility_modifier, ability, target:GetModifierStackCount(stack_modifier, ability) )
 	else
 		target:RemoveModifierByName(visibility_modifier)
 	end
@@ -175,16 +196,12 @@ function HeartstopperUpdate( keys )
 end
 
 function HeartstopperEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
 	local target = keys.target
 	local stack_modifier = keys.stack_modifier
-	local visibility_modifier = keys.visible_modifier
+	local visible_modifier = keys.visible_modifier
 
-	local stack_count = target:GetModifierStackCount(stack_modifier, ability)
-	RemoveStacks(ability, target, stack_modifier, stack_count)
-	stack_count = target:GetModifierStackCount(visibility_modifier, ability)
-	RemoveStacks(ability, target, visibility_modifier, stack_count)
+	target:RemoveModifierByName(stack_modifier)
+	target:RemoveModifierByName(visible_modifier)
 end
 
 function Sadist( keys )

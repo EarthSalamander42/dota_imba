@@ -4,6 +4,11 @@ function ButterflyEffect( keys )
 	local ability = keys.ability
 	local damage = keys.damage
 
+	-- Does not trigger if the enemy is an ancient
+	if target:IsAncient() then
+		return nil
+	end
+
 	-- Finds all valid units on the map
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
@@ -16,5 +21,15 @@ function ButterflyEffect( keys )
 	end
 
 	-- Perform an attack on the singled out enemy
-	caster:PerformAttack(enemy, true, true, true, true, true)
+	if caster:IsRangedAttacker() then
+		caster:PerformAttack(enemy, true, false, true, true, true)
+
+	-- Troll Warlord graphical adjustment
+	elseif caster:HasModifier("modifier_imba_berserkers_rage") then
+		caster:SetAttackCapability(2)
+		caster:PerformAttack(enemy, true, false, true, true, true)
+		caster:SetAttackCapability(1)
+	else
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+	end
 end

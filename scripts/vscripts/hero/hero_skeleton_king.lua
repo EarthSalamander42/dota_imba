@@ -197,6 +197,10 @@ function VampiricAuraCritHit( keys )
 		-- Force update the caster and target's attributes
 		caster:CalculateStatBonus()
 		target:CalculateStatBonus()
+
+	-- If it's a creep, deal damage equal to its maximum health
+	elseif caster:IsRealHero() and not target:IsRealHero() and not target:IsAncient() then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetMaxHealth(), damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
 end
 
@@ -314,12 +318,12 @@ function ReincarnationUpdate( keys )
 	local aura_radius_scepter = ability:GetLevelSpecialValueFor("aura_radius_scepter", ability_level)
 
 	-- Add reincarnation modifier if it's missing
-	if ability:GetManaCost() + ability:GetLevelSpecialValueFor("percentage_manacost", ability_level) * caster:GetMaxMana() / 100 <= caster:GetMana() and not caster:HasModifier(modifier_reincarnation) then
+	if ability:IsCooldownReady() and not caster:HasModifier(modifier_reincarnation) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_reincarnation, {})
 	end
 
 	-- Remove reincarnation modifier if it shouldn't be there
-	if not ability:GetManaCost() + ability:GetLevelSpecialValueFor("percentage_manacost", ability_level) * caster:GetMaxMana() / 100 <= caster:GetMana() and caster:HasModifier(modifier_reincarnation) then
+	if not ability:IsCooldownReady() and caster:HasModifier(modifier_reincarnation) then
 		caster:RemoveModifierByName(modifier_reincarnation)
 	end
 
@@ -427,14 +431,15 @@ function ReincarnationDamage( keys )
 	local caster_loc = caster:GetAbsOrigin()
 
 	-- If health is minimal, but the ability is on cooldown, die to the original attacker
-	if not ability:GetManaCost() + ability:GetLevelSpecialValueFor("percentage_manacost", ability_level) * caster:GetMaxMana() / 100 <= caster:GetMana() then
+	if not ability:IsCooldownReady() then
 		caster:RemoveModifierByName(modifier_reincarnation)
 		ApplyDamage({attacker = attacker, victim = caster, ability = ability, damage = 3, damage_type = DAMAGE_TYPE_PURE})
 		return nil
 	end
 
 	-- Else, put the ability on cooldown and play out the reincarnation
-	caster:SpendMana(ability:GetManaCost() + ability:GetLevelSpecialValueFor("percentage_manacost", ability_level) * caster:GetMaxMana() / 100)
+	local cooldown_reduction = GetCooldownReduction(caster)
+	ability:StartCooldown( ability:GetCooldown(ability_level) * cooldown_reduction )
 
 	-- Play initial sound
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
@@ -467,6 +472,7 @@ function ReincarnationDamage( keys )
 
 	-- Heal, even through healing prevention debuffs
 	caster:SetHealth(caster:GetMaxHealth())
+	caster:SetMana(caster:GetMaxMana())
 
 	-- After the respawn delay
 	Timers:CreateTimer(reincarnate_delay, function()

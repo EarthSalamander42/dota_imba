@@ -244,7 +244,7 @@ function NetherWardDamage( keys )
 	local damage = 1
 	
 	-- If the attacker is a hero, deal more damage
-	if attacker:IsHero() or attacker:IsTower() or IsRoshan(attacker) then
+	if (attacker:IsHero() or attacker:IsTower() or IsRoshan(attacker)) and not attacker:IsIllusion() then
 		local ability_level = ability:GetLevel() - 1
 		damage = ability:GetLevelSpecialValueFor("hero_damage", ability_level)
 	end
@@ -396,7 +396,23 @@ function NetherWardZap( keys )
 		"arc_warden_tempest_double",
 		"broodmother_insatiable_hunger",
 		"weaver_time_lapse",
-		"death_prophet_exorcism"
+		"death_prophet_exorcism",
+		"treant_eyes_in_the_forest",
+		"treant_living_armor",
+		"enchantress_impetus",
+		"chen_holy_persuasion",
+		"batrider_firefly",
+		"undying_decay",
+		"undying_tombstone",
+		"tusk_walrus_kick",
+		"tusk_walrus_punch",
+		"tusk_frozen_sigil",
+		"gyrocopter_flak_cannon",
+		"elder_titan_echo_stomp_spirit",
+		"visage_soul_assumption",
+		"visage_summon_familiars",
+		"earth_spirit_geomagnetic_grip",
+		"keeper_of_the_light_recall"
 	}
 
 	-- Ignore items
@@ -458,6 +474,11 @@ function NetherWardZap( keys )
 	-- Meat Hook: ignore cast range
 	if cast_ability_name == "imba_pudge_meat_hook" then
 		ability_range = ability:GetLevelSpecialValueFor("base_range", ability:GetLevel() - 1)
+	end
+
+	-- Earth Splitter: ignore cast range
+	if cast_ability_name == "elder_titan_earth_splitter" then
+		ability_range = 25000
 	end
 
 	-- Storm Bolt: choose another target

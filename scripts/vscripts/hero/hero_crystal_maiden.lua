@@ -33,13 +33,18 @@ function CrystalNova( keys )
 	ParticleManager:SetParticleControl(fxIndex, 1, radiusVector)
 	ParticleManager:SetParticleControl(fxIndex, 5, radiusVector)
 
-	if not scepter then
-		-- Destroys the dummy and particle when the effect expires
-		Timers:CreateTimer(duration, function()
+	-- Destroys the dummy and particle when the effect expires
+	Timers:CreateTimer(duration, function()
+		if scepter then
+			Timers:CreateTimer(duration * 4, function()
+				dummy:Destroy()
+				ParticleManager:DestroyParticle(fxIndex, false)
+			end)
+		else
 			dummy:Destroy()
 			ParticleManager:DestroyParticle(fxIndex, false)
-		end)
-	end
+		end
+	end)
 end
 
 function Frostbite( keys )

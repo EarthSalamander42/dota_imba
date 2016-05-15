@@ -36,19 +36,21 @@ function ShurikenToss( keys )
 	-- if a target is tracked and is not the main target, create a shuriken projectile flying towards it
 	for _,v in pairs(tracked_targets) do
 		if v:HasModifier(track_modifier) or v:HasModifier(track_scepter_modifier) then
-			shuriken_projectile = {
-				Target = v,
-				Source = caster,
-				Ability = ability,
-				EffectName = shuriken_particle,
-				bDodgable = true,
-				bProvidesVision = false,
-				iMoveSpeed = shuriken_speed,
-				iVisionRadius = 0,
-				iVisionTeamNumber = caster:GetTeamNumber(),
-				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-			}
-			ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
+			if v ~= target then
+				shuriken_projectile = {
+					Target = v,
+					Source = caster,
+					Ability = ability,
+					EffectName = shuriken_particle,
+					bDodgable = true,
+					bProvidesVision = false,
+					iMoveSpeed = shuriken_speed,
+					iVisionRadius = 0,
+					iVisionTeamNumber = caster:GetTeamNumber(),
+					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+				}
+				ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
+			end
 		end
 	end
 end
@@ -269,10 +271,4 @@ function ShadowJaunt( keys )
 	else
 		ability:EndCooldown()
 	end
-end
-
-function RefreshJinada( keys )
-	local caster = keys.caster
-	local ability_jinada = caster:FindAbilityByName("bounty_hunter_jinada")
-	ability:EndCooldown()
 end

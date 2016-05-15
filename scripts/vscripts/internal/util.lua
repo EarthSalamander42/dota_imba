@@ -783,7 +783,8 @@ function InitializeInnateAbilities( hero )
 		"imba_venomancer_toxicity",
 		"imba_magnus_magnetize",
 		"imba_enigma_gravity",
-		"imba_troll_warlord_berserkers_rage"
+		"imba_troll_warlord_berserkers_rage",
+		"imba_mirana_cosmic_dust"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1166,7 +1167,8 @@ end
 function IsUninterruptableForcedMovement( unit )
 	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement")
 		or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback")
-		or unit:HasModifier("modifier_item_forcestaff_active") or unit:HasModifier("modifier_shredder_timber_chain") then
+		or unit:HasModifier("modifier_item_forcestaff_active") or unit:HasModifier("modifier_shredder_timber_chain")
+		or unit:HasModifier("modifier_batrider_flaming_lasso") or unit:HasModifier("modifier_imba_leap_self_root") then
 		return true
 	end
 

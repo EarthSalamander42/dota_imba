@@ -5,50 +5,82 @@ function Starfall( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-
-	-- Particles and sounds
 	local ambient_sound = keys.ambient_sound
 	local hit_sound = keys.hit_sound
 	local ambient_particle = keys.ambient_particle
 	local hit_particle = keys.hit_particle
+	local modifier_debuff = keys.modifier_debuff
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local max_count = ability:GetLevelSpecialValueFor("secondary_count", ability_level)
-	local pulse_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
 	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
-	local secondary_damage = ability:GetLevelSpecialValueFor("secondary_damage", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 
+	-- Grant vision of the area for the duration
 	local caster_pos = caster:GetAbsOrigin()
-	local current_count = 0
+	ability:CreateVisibilityNode(caster_pos, radius, hit_delay + vision_duration)
 
-	if max_count > 0 then
-		Timers:CreateTimer(pulse_delay, function()
-			-- Emit sound
-			caster:EmitSound(ambient_sound)
+	-- Emit sound
+	caster:EmitSound(ambient_sound)
 
-			-- Create ambient particle
-			local pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(pfx, 0, caster_pos)
-			ParticleManager:SetParticleControl(pfx, 1, Vector(radius, 0, 0))
+	-- Create ambient particle
+	local ambient_pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(ambient_pfx, 0, caster_pos)
+	ParticleManager:SetParticleControl(ambient_pfx, 1, Vector(radius, 0, 0))
 
-			-- Find targets and apply the particle, damage, and hit sound
-			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false )
-			for _,v in pairs(targets) do
-				local pfx_2 = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, v)
-				ParticleManager:SetParticleControl(pfx_2, 0, v:GetAbsOrigin())
-				Timers:CreateTimer(hit_delay, function()
-					v:EmitSound(hit_sound)
-					ApplyDamage({victim = v, attacker = caster, damage = secondary_damage, damage_type = ability:GetAbilityDamageType()})
-				end)
-			end
-
-			-- If there are more pulses to create, call the function again after the pulse delay
-			current_count = current_count + 1
-			if current_count < max_count then
-				return pulse_delay
-			end
+	-- Find nearby enemies and apply the particle, damage, debuff, and hit sound
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
+	for _,enemy in pairs(enemies) do
+		local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+		Timers:CreateTimer(hit_delay, function()
+			enemy:EmitSound(hit_sound)
+			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 		end)
+	end
+end
+
+function StarfallSecondary( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local hit_sound = keys.hit_sound
+	local hit_particle = keys.hit_particle
+	local scepter = HasScepter(caster)
+
+	-- Parameters
+	local secondary_radius = ability:GetLevelSpecialValueFor("secondary_radius", ability_level)
+	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local secondary_count = ability:GetLevelSpecialValueFor("secondary_count", ability_level)
+
+	-- Add another hit during the night
+	if scepter or not GameRules:IsDaytime() then
+		secondary_count = ability:GetLevelSpecialValueFor("secondary_count_night", ability_level)
+	end
+
+	-- Iterate through eligible targets
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, secondary_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
+	for _,enemy in pairs(enemies) do
+		if secondary_count > 0 then
+			
+			Timers:CreateTimer((secondary_count - 1) * 0.3, function()
+
+				-- Fire particle, sound, and apply damage
+				local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
+				ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+				Timers:CreateTimer(hit_delay, function()
+					enemy:EmitSound(hit_sound)
+					ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				end)
+			end)
+
+			-- Decrease available target count
+			secondary_count = secondary_count - 1
+		end
 	end
 end
 
@@ -57,6 +89,7 @@ function LaunchArrow( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local target = keys.target_points[1]
+	local scepter = HasScepter(caster)
 	
 	-- Memorizes the cast location to calculate the distance traveled later
 	local arrow_location = caster:GetAbsOrigin()
@@ -75,6 +108,12 @@ function LaunchArrow( keys )
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
 	local enemy_units
+
+	-- Is it night time?
+	local is_night = false
+	if scepter or not GameRules:IsDaytime() then
+		is_night = true
+	end
 
 	-- Initializing the damage table
 	local damage_table = {}
@@ -168,7 +207,7 @@ function LaunchArrow( keys )
 			end
 
 			-- If a hero was hit, or if a creep was hit during the day, destroy the arrow
-			if hero_hit or ( creep_hit and GameRules:IsDaytime() ) then
+			if hero_hit or ( creep_hit and not is_night ) then
 				sacred_arrow:StopPhysicsSimulation()
 				sacred_arrow:Destroy()
 			
@@ -191,14 +230,32 @@ end
 function Leap( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
-	local caster_pos = caster:GetAbsOrigin()
 	local target_pos = keys.target_points[1]
-	local leap_speed = ability:GetLevelSpecialValueFor("leap_speed", ability_level)
-	local max_distance = ability:GetLevelSpecialValueFor("leap_distance", ability_level)
-	local max_time = ability:GetLevelSpecialValueFor("leap_time", ability_level)
+	local ability_level = ability:GetLevel() - 1
 	local root_modifier = keys.root_modifier
+	local buff_modifier = keys.buff_modifier
+	local sound_cast = keys.sound_cast
+	local scepter = HasScepter(caster)
+
+	-- Parameters
+	local caster_pos = caster:GetAbsOrigin()
+	local min_speed = ability:GetLevelSpecialValueFor("min_speed", ability_level)
+	local base_distance = ability:GetLevelSpecialValueFor("base_distance", ability_level)
+	local max_time = ability:GetLevelSpecialValueFor("max_time", ability_level)
+	local buff_radius = ability:GetLevelSpecialValueFor("buff_radius", ability_level)
+	local cooldown_increase = ability:GetLevelSpecialValueFor("cooldown_increase", ability_level)
+	local base_height = ability:GetLevelSpecialValueFor("base_height", ability_level)
+	local height_step = ability:GetLevelSpecialValueFor("height_step", ability_level)
+	local max_height = ability:GetLevelSpecialValueFor("max_height", ability_level)
+
+	-- Is it night time?
+	local is_night = false
+	if scepter or not GameRules:IsDaytime() then
+		is_night = true
+	end
+
+	-- Base range can be increased
+	base_distance = base_distance + GetCastRangeIncrease(caster)
 
 	-- Clears any current command
 	caster:Stop()
@@ -206,87 +263,144 @@ function Leap( keys )
 	-- Disjoint projectiles
 	ProjectileManager:ProjectileDodge(caster)
 
-	-- Physics
+	-- Calculate leap geometry
 	local direction = (target_pos - caster_pos):Normalized()
-	local leap_distance = (target_pos - caster_pos):Length2D()
-	if leap_distance > max_distance then
-		leap_distance = max_distance
-	end
-	local end_time = leap_distance / leap_speed
-	if end_time > max_time then
-		leap_speed = leap_distance / max_time
-		end_time = max_time
-	end
-	local velocity = leap_speed * 1.4
-	local time_elapsed = 0
-	local time = end_time / 2
-	local jump = end_time / 0.03
+	local distance = (target_pos - caster_pos):Length2D()
+	local height = base_height
 
-	Physics:Unit(caster)
+	-- Cap distance during the day
+	if not is_night then
+		distance = math.min(distance, base_distance)
+		target_pos = caster_pos + direction * distance
 
+	-- Adjust height during long nighttime jumps
+	else
+		height = math.min( (distance - base_distance) / base_distance * height_step + base_height, max_height)
+	end
+
+	-- Increase cooldown for long-distance jumps
+	local cooldown = ability:GetCooldown(ability_level) + cooldown_increase * math.max( (distance - base_distance) / base_distance, 0)
+	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
+
+	-- Calculate leap speed and duration
+	local leap_speed = math.max( distance / max_time, min_speed)
+	local leap_time = distance / leap_speed
+
+	-- Root the caster during the jump
 	ability:ApplyDataDrivenModifier(caster, caster, root_modifier, {})
-	caster:SetAutoUnstuck(false)
-	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
-	caster:FollowNavMesh(false)	
-	caster:SetPhysicsVelocity(direction * velocity)
 
-	-- Move the unit
-	Timers:CreateTimer(function()
-		local ground_position = GetGroundPosition(caster:GetAbsOrigin() , caster)
-		time_elapsed = time_elapsed + 0.03
-		if time_elapsed < time then
-			caster:SetAbsOrigin(caster:GetAbsOrigin() + Vector(0,0,jump)) -- Going up
+	-- Perform movement loop
+	local current_time = 0
+	Timers:CreateTimer(0.03, function()
+
+		-- Update time
+		current_time = current_time + 0.03
+
+		-- Calculate height
+		local current_height
+		if current_time <= (leap_time / 2) then
+			current_height = height * current_time / leap_time * 2
 		else
-			caster:SetAbsOrigin(caster:GetAbsOrigin() - Vector(0,0,jump)) -- Going down
-		end
-		-- If the target reached the ground then remove physics
-		if time_elapsed >= end_time then
-			caster:RemoveModifierByName(root_modifier)
-			caster:SetAbsOrigin(GetGroundPosition(caster:GetAbsOrigin() , caster))
-			caster:SetPhysicsAcceleration(Vector(0,0,0))
-			caster:SetPhysicsVelocity(Vector(0,0,0))
-			caster:OnPhysicsFrame(nil)
-			caster:SetNavCollisionType(PHYSICS_NAV_SLIDE)
-			caster:SetAutoUnstuck(true)
-			caster:FollowNavMesh(true)
-			caster:SetPhysicsFriction(.05)
-			return nil
+			current_height = height * (1 - current_time / leap_time) * 2
 		end
 
-		return 0.03
+		-- Calculate position
+		local current_position = caster_pos + direction * distance * current_time / leap_time
+
+		-- Update position
+		caster:SetAbsOrigin(Vector(current_position.x, current_position.y, GetGroundHeight(current_position, caster) + current_height))
+		
+		-- If the jump time hasn't elapsed yet, keep going
+		if current_time < leap_time then
+			return 0.03
+
+		-- Else, finalize the jump
+		else
+
+			-- Unroot the caster
+			caster:RemoveModifierByName(root_modifier)
+
+			-- Prevent the caster from getting stuck
+			FindClearSpaceForUnit(caster, target_pos, true)
+
+			-- Buff nearby allies
+			local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, buff_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,ally in pairs(nearby_allies) do
+				ability:ApplyDataDrivenModifier(caster, ally, buff_modifier, {})
+			end
+
+			-- If the leap distance was too long, roar again
+			if distance > 5000 then
+				caster:EmitSound(sound_cast)
+			end
+		end
 	end)
 end
 
-function MoonlightShadow( keys )
+function CosmicDust( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifier_buff = keys.modifier_buff
-	local modifier_fade = keys.modifier_fade
-	local modifier_scepter = keys.modifier_scepter
+	local ability_starfall = caster:FindAbilityByName("imba_mirana_starfall")
 	local scepter = HasScepter(caster)
 
-	-- Save processing power by exiting early if nothing should be done
-	if not scepter and not caster:HasModifier(modifier_buff) then
+	-- Is it night time?
+	local is_night = false
+	if scepter or not GameRules:IsDaytime() then
+		is_night = true
+	end
+
+	-- If starfall was not learned yet, or if it's day, do nothing
+	if not ability_starfall or not is_night then
+		ability:EndCooldown()
 		return nil
 	end
 
-	-- Iterate through allied heroes
-	local allied_heroes = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-	for _,hero in pairs(allied_heroes) do
+	-- Parameters
+	local ability_level = ability_starfall:GetLevel() - 1
+	local ambient_sound = keys.ambient_sound
+	local hit_sound = keys.hit_sound
+	local ambient_particle = keys.ambient_particle
+	local hit_particle = keys.hit_particle
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 
-		-- If this hero has the buff and is not invisible or fading, apply fade
-		if hero:HasModifier(modifier_buff) and not hero:HasModifier(modifier_fade) and not hero:HasModifier("modifier_invisible") then
-			ability:ApplyDataDrivenModifier(caster, hero, modifier_fade, {})
+	-- Grant vision of the area for the duration
+	local caster_pos = caster:GetAbsOrigin()
+	ability:CreateVisibilityNode(caster_pos, radius, hit_delay + vision_duration)
 
-		-- If scepter, it's night, and this hero is not invisible or fading, apply scepter fade
-		elseif scepter and not GameRules:IsDaytime() and not hero:HasModifier("modifier_invisible") and not hero:HasModifier(modifier_fade) and not hero:HasModifier(modifier_scepter) then
-			ability:ApplyDataDrivenModifier(caster, hero, modifier_scepter, {})
+	-- Emit sound
+	caster:EmitSound(ambient_sound)
 
-		end
+	-- Create ambient particle
+	local ambient_pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(ambient_pfx, 0, caster_pos)
+	ParticleManager:SetParticleControl(ambient_pfx, 1, Vector(radius, 0, 0))
+
+	-- Find nearby enemies and apply the particle, damage, debuff, and hit sound
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
+	for _,enemy in pairs(enemies) do
+		local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
+		ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+		Timers:CreateTimer(hit_delay, function()
+			enemy:EmitSound(hit_sound)
+			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		end)
 	end
 end
 
-function MoonlightFade( keys )
+function MoonlightStartFade( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_fade = keys.modifier_fade
+
+	-- Apply the fade time buff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_fade, {})
+end
+
+function MoonlightFadeEnd( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -298,29 +412,6 @@ function MoonlightFade( keys )
 		-- Fetch the Moonlight Shadow buff
 		local modifier_moonlight = target:FindModifierByNameAndCaster(modifier_buff, caster)
 		local remaining_duration = modifier_moonlight:GetRemainingTime()
-
-		-- Apply invisibility
-		target:AddNewModifier(caster, ability, "modifier_invisible", {duration = remaining_duration})
-	end
-end
-
-function MoonlightFadeScepter( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local scepter = HasScepter(caster)
-
-	-- If the caster still has a scepter and it's night, make the target invisible for its remainder
-	if scepter and not GameRules:IsDaytime() then
-		
-		-- Fetch the remaining night duration
-		local full_day_duration = 480
-		local remaining_duration = 0
-		if GameRules:GetTimeOfDay() > 0.5 then
-			remaining_duration = ( 1.25 - GameRules:GetTimeOfDay() ) * full_day_duration
-		else
-			remaining_duration = ( 0.25 - GameRules:GetTimeOfDay() ) * full_day_duration
-		end
 
 		-- Apply invisibility
 		target:AddNewModifier(caster, ability, "modifier_invisible", {duration = remaining_duration})

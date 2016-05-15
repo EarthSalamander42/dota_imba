@@ -54,6 +54,7 @@ end
 
 function DiffusalHit( keys )
 	local caster = keys.caster
+	local attacker = keys.attacker
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -66,6 +67,9 @@ function DiffusalHit( keys )
 
 	-- Parameters
 	local mana_burn = ability:GetLevelSpecialValueFor("mana_burn", ability_level)
+	if attacker:IsIllusion() then
+		mana_burn = ability:GetLevelSpecialValueFor("illusion_mana_burn", ability_level)
+	end
 
 	-- Burn mana if target is not magic immune
 	if not target:IsMagicImmune() then
@@ -99,6 +103,7 @@ end
 
 function Diffusal2Hit( keys )
 	local caster = keys.caster
+	local attacker = keys.attacker
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -112,6 +117,9 @@ function Diffusal2Hit( keys )
 	-- Parameters
 	local mana_burn = ability:GetLevelSpecialValueFor("mana_burn", ability_level)
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
+	if attacker:IsIllusion() then
+		mana_burn = ability:GetLevelSpecialValueFor("illusion_mana_burn", ability_level)
+	end
 
 	-- Roll for a proc
 	if caster:GetTeam() ~= target:GetTeam() and caster:IsRealHero() and RandomInt(1, 100) <= proc_chance then
@@ -156,6 +164,7 @@ end
 
 function Diffusal3Hit( keys )
 	local caster = keys.caster
+	local attacker = keys.attacker
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -164,6 +173,9 @@ function Diffusal3Hit( keys )
 	-- Parameters
 	local mana_burn = ability:GetLevelSpecialValueFor("mana_burn", ability_level)
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
+	if attacker:IsIllusion() then
+		mana_burn = ability:GetLevelSpecialValueFor("illusion_mana_burn", ability_level)
+	end
 
 	-- Roll for a proc
 	if caster:GetTeam() ~= target:GetTeam() and caster:IsRealHero() and RandomInt(1, 100) <= proc_chance then

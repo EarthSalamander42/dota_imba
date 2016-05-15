@@ -43,7 +43,7 @@ function Skadi( keys )
 	local blast_pfx = ParticleManager:CreateParticle(particle_ground, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleAlwaysSimulate(blast_pfx)
 	ParticleManager:SetParticleControl(blast_pfx, 0, caster_loc)
-	ParticleManager:SetParticleControl(blast_pfx, 2, Vector(radius, 1, 1))
+	ParticleManager:SetParticleControl(blast_pfx, 2, Vector(radius * 1.15, 1, 1))
 
 	-- Grant flying vision in the target area
 	ability:CreateVisibilityNode(caster_loc, radius, 3)

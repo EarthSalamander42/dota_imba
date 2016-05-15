@@ -15,8 +15,8 @@ function Impale ( keys )
 
 	-- Adjust parameters if burrow buff is present
 	if caster:HasModifier("modifier_nyx_assassin_burrow") then
-		length = length * 2
-		speed = speed * 2
+		length = length * 1.75
+		speed = speed * 1.75
 	end
 
 	-- Adjust based on cast range buffs
@@ -242,6 +242,7 @@ function VendettaDamageCount( keys )
 	local attacker = keys.attacker
 	local damage_taken = keys.damage_taken
 	local stack_modifier = keys.stack_modifier
+	local max_damage = ability:GetLevelSpecialValueFor("damage_storage", ability:GetLevel() - 1 )
 	local scepter = HasScepter(caster)
 
 	-- Initialize the variable if it doesn't exist
@@ -252,6 +253,12 @@ function VendettaDamageCount( keys )
 	-- Only stores hero-based damage
 	if attacker:IsHero() and attacker:GetTeam() ~= caster:GetTeam() then
 		caster.vendetta_stored_damage = caster.vendetta_stored_damage + damage_taken
+
+		-- Caps the stored damage at [max_damage] if the user does not have Aghanim's scepter
+		if caster.vendetta_stored_damage > max_damage and not scepter then
+			caster.vendetta_stored_damage = max_damage
+		end
+
 		-- Updates the damage counter
 		if not caster:HasModifier(stack_modifier) then
 			ability:ApplyDataDrivenModifier(caster, caster, stack_modifier, {})

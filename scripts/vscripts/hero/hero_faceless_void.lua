@@ -278,12 +278,8 @@ function TimeLock( keys )
 				ParticleManager:DestroyParticle(chrono_pfx, false)
 			end)
 
-			-- Double damage if the target is inside a chrono
-			if enemy:HasModifier("modifier_faceless_void_chronosphere_freeze") then
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bash_damage * 2, damage_type = DAMAGE_TYPE_MAGICAL})
-			else
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			end
+			-- Apply damage
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 			-- Apply bash modifier
 			ability:ApplyDataDrivenModifier(caster, enemy, "modifier_faceless_void_chronosphere_freeze", {duration = bash_duration})

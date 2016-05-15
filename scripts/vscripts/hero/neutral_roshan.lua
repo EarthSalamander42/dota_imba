@@ -242,7 +242,6 @@ function RoshanDeath( keys )
 
 	-- Increase Roshan's death count
 	_G.GAME_ROSHAN_KILLS = _G.GAME_ROSHAN_KILLS + 1
-	print(_G.GAME_ROSHAN_KILLS)
 
 	-- Drop the Aegis
 	local drop_aegis = CreateItem("item_imba_aegis", nil, nil)

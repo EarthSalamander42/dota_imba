@@ -32,18 +32,22 @@ function UnholyStrength( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local stack_modifier = keys.stack_modifier
-	local stacks_per_second = ability:GetLevelSpecialValueFor("stacks_per_second", ability_level)
+	local health_per_stack = ability:GetLevelSpecialValueFor("health_per_stack", ability_level)
 	local health_drain = ability:GetLevelSpecialValueFor("unholy_health_drain", ability_level)
 
-	if not caster:IsIllusion() then
-		-- Remove health from the owner
-		local current_hp = caster:GetHealth()
-		health_drain = health_drain / stacks_per_second
-		caster:SetHealth( math.max( current_hp - health_drain, 1) )
+	-- Calculate stacks to apply
+	local unholy_stacks = math.floor( (caster:GetMaxHealth() - caster:GetHealth()) / health_per_stack )
+
+	-- Update stack amount if necessary
+	if caster:GetModifierStackCount(stack_modifier, caster) ~= unholy_stacks then
+		caster:RemoveModifierByName(stack_modifier)
+		AddStacks(ability, caster, caster, stack_modifier, unholy_stacks, true)
 	end
 
-	-- Add a unholy strength stack
-	AddStacks(ability, caster, caster, stack_modifier, 1, true)
+	-- Remove health from the owner
+	local current_hp = caster:GetHealth()
+	health_drain = health_drain * 0.1
+	caster:SetHealth( math.max( current_hp - health_drain, 1) )
 end
 
 function UnholyStrengthEnd( keys )

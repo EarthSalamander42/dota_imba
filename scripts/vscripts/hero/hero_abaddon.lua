@@ -5,95 +5,91 @@ function DeathCoil( keys )
 
 	-- Variables
 	local caster = keys.caster
+	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local damage = ability:GetLevelSpecialValueFor( "target_damage" , ability_level  )
+	local self_heal = ability:GetLevelSpecialValueFor( "self_heal" , ability_level  )
+	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability_level )
+	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
+	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+	
+	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
+	local max_stacks = 1
+	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
+		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
+	end
+	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+	local modifier_debuff = "modifier_imba_frostmourne_debuff"
+	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+	local modifier_buff = "modifier_imba_frostmourne_buff"
 
-	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, ability:GetCastRange(), ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+	-- Play the ability sound
+	caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
+	target:EmitSound("Hero_Abaddon.DeathCoil.Target")
 
-	for _,target in pairs(units) do
-		local ability_level = ability:GetLevel() - 1
-		local damage = ability:GetLevelSpecialValueFor( "target_damage" , ability_level  )
-		local self_heal = ability:GetLevelSpecialValueFor( "self_heal" , ability_level  )
-		local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability_level )
-		local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
-		local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-		
-		local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
-		local max_stacks = 1
-		if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
-			max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
-		end
-		local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-		local modifier_debuff = "modifier_imba_frostmourne_debuff"
-		local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-		local modifier_buff = "modifier_imba_frostmourne_buff"
+	-- If the target and caster are on a different team, do Damage. Heal otherwise
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
 
-		-- Play the ability sound
-		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
-		target:EmitSound("Hero_Abaddon.DeathCoil.Target")
+		if target:HasModifier(modifier_debuff_base) then
+			local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 
-		-- If the target and caster are on a different team, do Damage. Heal otherwise
-		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-			ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
-
-			if target:HasModifier(modifier_debuff_base) then
-				local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
-
-				if stack_count < max_stacks then
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-					target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-				else
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-				end
+			if stack_count < max_stacks then
+				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+				target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
 			else
 				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
 				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-				target:SetModifierStackCount(modifier_debuff, ability, 1)
 			end
 		else
-			target:Heal(heal, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-			if target:HasModifier(modifier_buff_base) then
-				local stack_count = target:GetModifierStackCount(modifier_buff, ability)
+			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+			target:SetModifierStackCount(modifier_debuff, ability, 1)
+		end
+	else
+		target:Heal(heal, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+		if target:HasModifier(modifier_buff_base) then
+			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
-				if stack_count < max_stacks then
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-					target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
-				else
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-					target:SetModifierStackCount(modifier_buff, ability, stack_count)
-				end
+			if stack_count < max_stacks then
+				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
+				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
+				target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
 			else
 				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
 				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-				target:SetModifierStackCount(modifier_buff, ability, 1)
+				target:SetModifierStackCount(modifier_buff, ability, stack_count)
 			end
+		else
+			ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
+			ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
+			target:SetModifierStackCount(modifier_buff, ability, 1)
 		end
-
-		-- Self Heal
-		if target ~= caster then
-			caster:Heal(self_heal, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
-		end
-
-		-- Create the projectile
-		local info = {
-			Target = target,
-			Source = caster,
-			Ability = ability,
-			EffectName = particle_name,
-			bDodgeable = false,
-				bProvidesVision = true,
-				iMoveSpeed = projectile_speed,
-	        iVisionRadius = 0,
-	        iVisionTeamNumber = caster:GetTeamNumber(),
-			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-		}
-		ProjectileManager:CreateTrackingProjectile( info )
 	end
+
+	-- Self Heal
+	if target ~= caster then
+		caster:Heal(self_heal, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
+	end
+
+	-- Create the projectile
+	local info = {
+		Target = target,
+		Source = caster,
+		Ability = ability,
+		EffectName = particle_name,
+		bDodgeable = false,
+			bProvidesVision = true,
+			iMoveSpeed = projectile_speed,
+        iVisionRadius = 0,
+        iVisionTeamNumber = caster:GetTeamNumber(),
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+	}
+	ProjectileManager:CreateTrackingProjectile( info )
 end
 
 function AphoticShieldInitialize( keys )
@@ -285,11 +281,6 @@ function EndShieldParticle( keys )
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 			enemy:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
-	end
-
-	local allies = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	for _,unit in pairs(allies) do
-		unit:Heal(base_damage_absorb, caster)
 	end
 end
 

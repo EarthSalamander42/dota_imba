@@ -14,6 +14,7 @@
 		"item"		"item_flying_courier"
 		"item"		"item_ward_observer"
 		"item"		"item_ward_sentry"
+		"item"		"item_tome_of_knowledge"
 		"item"		"item_imba_bottle"
 	}
 
@@ -38,9 +39,10 @@
 		"item"		"item_imba_ring_of_protection"
 		"item"		"item_imba_stout_shield"
 		"item"		"item_quelling_blade"
+		"item"		"item_infused_raindrop"
 		"item"		"item_imba_orb_of_venom"
 		"item"		"item_imba_blades_of_attack"
-		"item"		"item_imba_shiv"
+		"item"		"item_blight_stone"
 		"item"		"item_imba_chainmail"
 		"item"		"item_imba_quarterstaff"
 		"item"		"item_imba_helm_of_iron_will"
@@ -53,9 +55,10 @@
 	"misc"
 	{
 		"item"		"item_imba_magic_stick"
+		"item"		"item_wind_lace"
 		"item"		"item_imba_sobi_mask"
 		"item"		"item_imba_ring_of_regen"
-		"item"		"item_imba_boots"
+		"item"		"item_boots"
 		"item"		"item_imba_gloves"
 		"item"		"item_imba_cloak"
 		"item"		"item_imba_ring_of_health"
@@ -133,6 +136,7 @@
 		"item"		"item_imba_crimson_guard"
 		"item"		"item_imba_white_queen_cape"
 		"item"		"item_imba_black_king_bar"
+		"item"		"item_hurricane_pike"
 		"item"		"item_imba_shivas_guard"
 		"item"		"item_imba_bloodstone"
 		"item"		"item_imba_manta"
@@ -144,6 +148,7 @@
 			
 	"weapons"
 	{
+		"item"		"item_dragon_lance"
 		"item"		"item_imba_lesser_crit"
 		"item"		"item_imba_armlet"
 		"item"		"item_imba_shadow_blade"
@@ -164,10 +169,10 @@
 	{
 		"item"		"item_imba_mask_of_madness"
 		"item"		"item_imba_helm_of_the_dominator"
-		"item"		"item_dragon_lance"
 		"item"		"item_imba_sange"
 		"item"		"item_imba_yasha"
 		"item"		"item_imba_azura"
+		"item"		"item_echo_sabre"
 		"item"		"item_imba_maelstrom"
 		"item"		"item_imba_diffusal_blade"
 		"item"		"item_imba_desolator"
@@ -186,7 +191,7 @@
 		"item"		"item_imba_sobi_mask"
 		"item"		"item_imba_ring_of_regen"
 		"item"		"item_imba_orb_of_venom"
-		"item"		"item_imba_boots"
+		"item"		"item_boots"
 		"item"		"item_imba_cloak"
 		"item"		"item_imba_ring_of_health"
 		"item"		"item_imba_void_stone"

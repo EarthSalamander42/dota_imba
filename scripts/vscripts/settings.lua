@@ -262,6 +262,9 @@ HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the star
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
+USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
+MAX_LEVEL = 35																-- What level should we let heroes get to?
+
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	HERO_INITIAL_GOLD = 2000
 	HERO_INITIAL_REPICK_GOLD = 1500
@@ -276,10 +279,21 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	CREEP_POWER_FACTOR = 2
 	TOWER_POWER_FACTOR = 1
 	HERO_BUYBACK_COOLDOWN = 60
+elseif GetMapName() == "imba_custom" then									-- Custom map defaults
+	MAX_LEVEL = 50
+	HERO_INITIAL_GOLD = 2000
+	HERO_INITIAL_REPICK_GOLD = 1500
+	HERO_INITIAL_RANDOM_GOLD = 2500
+	HERO_STARTING_LEVEL = 5
+	HERO_RESPAWN_TIME_MULTIPLIER = 50
+	CREEP_GOLD_BONUS = 200
+	HERO_GOLD_BONUS = 200
+	HERO_XP_BONUS = 200
+	CREEP_XP_BONUS = 200
+	CREEP_POWER_FACTOR = 2
+	TOWER_POWER_FACTOR = 1
+	HERO_BUYBACK_COOLDOWN = 60
 end
-
-USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
-MAX_LEVEL = 35																-- What level should we let heroes get to?
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}
@@ -292,14 +306,14 @@ end
 
 XP_PER_LEVEL_TABLE[6] = 2000
 XP_PER_LEVEL_TABLE[7] = 2600
-XP_PER_LEVEL_TABLE[8] = 3200
+XP_PER_LEVEL_TABLE[8] = 3400
 XP_PER_LEVEL_TABLE[9] = 4400
 XP_PER_LEVEL_TABLE[10] = 5400
 XP_PER_LEVEL_TABLE[11] = 6000
 XP_PER_LEVEL_TABLE[12] = 8200
 XP_PER_LEVEL_TABLE[13] = 9000
 
-for i = 14, 100 do
+for i = 14, MAX_LEVEL do
 	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
 end
 

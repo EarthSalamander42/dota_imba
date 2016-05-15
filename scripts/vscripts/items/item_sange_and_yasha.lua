@@ -22,7 +22,6 @@ function Maim( keys )
 	-- If a lower-priority maim debuff is present, remove it
 	target:RemoveModifierByName("modifier_item_imba_sange_maim")
 	target:RemoveModifierByName("modifier_item_imba_halberd_maim")
-	target:RemoveModifierByName("modifier_item_imba_silver_edge_maim")
 
 	-- Parameters
 	local maim_base = ability:GetLevelSpecialValueFor("maim_base", ability_level)
@@ -75,6 +74,8 @@ function YashaProc( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local particle_projectile = keys.particle_projectile
 	local sound_projectile = keys.sound_projectile
 
 	-- If a higher-priority illusion generation buff is present, do nothing
@@ -82,8 +83,22 @@ function YashaProc( keys )
 		return nil
 	end
 
+	-- Parameters
+	local proc_speed = ability:GetLevelSpecialValueFor("proc_speed", ability_level)
+
 	-- Play sound
 	caster:EmitSound(sound_projectile)
 
-	caster:PerformAttack(target, true, true, true, true, true)
+	-- Spawn a homing projectile which flies toward the target
+	local yasha_projectile = {
+		Target = target,
+		Source = caster,
+		Ability = ability,
+		EffectName = particle_projectile,
+		bDodgeable = false,
+		bProvidesVision = false,
+		iMoveSpeed = proc_speed,
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+	}
+	ProjectileManager:CreateTrackingProjectile(yasha_projectile)
 end

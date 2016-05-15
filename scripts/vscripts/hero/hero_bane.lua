@@ -229,8 +229,6 @@ function NightmareSpread( keys )
 	if target:HasModifier(nightmare_modifier) then
 		-- If it does then apply it to the attacker
 		ability:ApplyDataDrivenModifier(caster, attacker, nightmare_modifier, {})
-		local modifier = target:FindModifierByName(nightmare_modifier)
-		modifier:SetDuration(ability:GetLevelSpecialValueFor("duration", ability:GetLevel() - 1), true)
 	end
 end
 

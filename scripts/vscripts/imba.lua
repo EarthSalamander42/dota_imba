@@ -201,41 +201,73 @@ function GameMode:DamageFilter( keys )
 		return false
 	end
 
-	-- Orchid crit
-	if attacker:HasModifier("modifier_item_imba_orchid_unique") and (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) then
-		
-		-- Fetch the orchid's ability handle
-		local ability
-		for i = 0,5 do
-			local this_item = attacker:GetItemInSlot(i)
-			if this_item and this_item:GetName() == "item_imba_orchid" then
-				ability = this_item
+	-- Orchid spell crit
+	if attacker:HasModifier("modifier_item_imba_orchid_unique") then
+
+		-- If damage is physical, or owner has a Bloodthorn, do nothing
+		if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and not attacker:HasModifier("modifier_item_imba_bloodthorn_unique") then
+			
+			-- Parameters
+			local crit_chance = 30
+			local crit_damage = 200
+			local distance_taper_start = 2500
+
+			-- Check for a valid target
+			if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
+
+				-- Ignore crit beyond the effect threshold
+				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+				local target_too_far = false
+				if distance > distance_taper_start then
+					target_too_far = true
+				end
+
+				-- Roll for crit chance
+				if RandomInt(1, 100) <= crit_chance and not target_too_far then
+					keys.damage = keys.damage * crit_damage / 100
+					display_red_crit_number = true
+				end
 			end
 		end
+	end
 
-		local ability_level = ability:GetLevel() - 1
+	-- Bloodthorn spell crit
+	if attacker:HasModifier("modifier_item_imba_bloodthorn_unique") then
 
-		-- Parameters
-		local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
-		local crit_damage = ability:GetLevelSpecialValueFor("crit_damage", ability_level)
-		local distance_taper_start = ability:GetLevelSpecialValueFor("distance_taper_start", ability_level)
+		-- If damage is physical, do nothing
+		if damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE then
+			
+			-- Parameters
+			local crit_chance = 30
+			local crit_damage = 200
+			local distance_taper_start = 2500
 
-		-- Check for a valid target
-		if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
+			-- Check for a valid target
+			if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
 
-			-- Scale damage bonus according to distance
-			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			local target_too_far = false
-			if distance > distance_taper_start then
-				target_too_far = true
-			end
+				-- Ignore crit beyond the effect threshold
+				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
+				local target_too_far = false
+				if distance > distance_taper_start then
+					target_too_far = true
+				end
 
-			-- Roll for crit chance
-			if RandomInt(1, 100) <= crit_chance and not target_too_far then
-				keys.damage = keys.damage * crit_damage / 100
-				display_red_crit_number = true
+				-- Roll for crit chance
+				if RandomInt(1, 100) <= crit_chance and not target_too_far then
+					keys.damage = keys.damage * crit_damage / 100
+					display_red_crit_number = true
+				end
 			end
 		end
+	end
+
+	-- Bloodthorn active crit
+	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
+
+		-- Multiply damage and flag for a crit
+		local target_crit_multiplier = 135
+		keys.damage = keys.damage * target_crit_multiplier / 100
+		display_red_crit_number = true
 	end
 
 	-- Rapier damage amplification
@@ -285,8 +317,8 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 50
-			local damage_block = 64
+			local proc_chance = 30
+			local damage_block = 30
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -328,8 +360,8 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 50
-			local damage_block = 64
+			local proc_chance = 35
+			local damage_block = 40
 			local damage_blocked = 0
 
 			-- Roll for a proc
@@ -884,7 +916,12 @@ function GameMode:OnGameInProgress()
 				-- Add tier 3 ability
 				building:AddAbility(ancient_ability_5)
 				ancient_ability = building:FindAbilityByName(ancient_ability_5)
-				ancient_ability:SetLevel(1)
+				if ancient_ability:GetAbilityName() == "tidehunter_ravage" then
+					ancient_ability:SetLevel(3)
+				else
+					ancient_ability:SetLevel(1)
+				end
+				
 			end
 
 		elseif string.find(building_name, "fountain") then

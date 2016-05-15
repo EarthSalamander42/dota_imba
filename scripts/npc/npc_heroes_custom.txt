@@ -140,6 +140,27 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Batrider
+	//=================================================================================================================
+	"npc_imba_hero_batrider"
+	{
+		"override_hero"				"npc_dota_hero_batrider"
+
+		"AttackDamageMin"			"24"
+		"AttackDamageMax"			"28"
+
+		"MovementSpeed"				"315"
+
+		//"Ability1"					"imba_batrider_sticky_napalm"
+		//"Ability2"					"imba_batrider_flamebreak"
+		//"Ability3"					"imba_batrider_firefly"
+		//"Ability4"					"imba_batrider_flaming_lasso"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Bestmaster
 	//=================================================================================================================
 	"npc_imba_hero_beastmaster"
@@ -278,6 +299,28 @@
 	}
 
 	//=================================================================================================================
+	//	HERO: Chen
+	//=================================================================================================================
+	"npc_imba_hero_chen"
+	{
+		"override_hero"				"npc_dota_hero_chen"
+
+		"AttackDamageMin"			"32"
+		"AttackDamageMax"			"38"
+
+		"MovementSpeed"				"335"
+
+		//"Ability1"					"imba_chen_penitence"
+		//"Ability2"					"imba_chen_test_of_faith"
+		//"Ability3"					"imba_chen_test_of_faith_teleport"
+		//"Ability4"					"imba_chen_holy_persuasion"
+		//"Ability5"					"imba_chen_hand_of_god"
+		"Ability6"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	//	HERO: Clinkz
 	//=================================================================================================================
 	"npc_imba_hero_clinkz"
@@ -384,6 +427,7 @@
 
 		"ArmorPhysical"				"2"
 
+		"AttributeBaseStrength"		"18"
 		"AttributeStrengthGain"		"2.5"
 
 		"ProjectileModel"			"particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf"
@@ -499,6 +543,41 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Earth Spirit
+	//=================================================================================================================
+	"npc_imba_hero_earth_spirit"
+	{
+		"override_hero"				"npc_dota_hero_earth_spirit"
+
+		//"Ability1"					"imba_earth_spirit_boulder_smash"
+		//"Ability2"					"imba_earth_spirit_rolling_boulder"
+		//"Ability3"					"imba_earth_spirit_geomagnetic_grip"
+		//"Ability4"					"imba_earth_spirit_stone_caller"
+		//"Ability5"					"imba_earth_spirit_petrify"
+		//"Ability6"					"imba_earth_spirit_magnetize"
+		"Ability7"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Elder Titan
+	//=================================================================================================================
+	"npc_imba_hero_elder_titan"
+	{
+		"override_hero"				"npc_dota_hero_elder_titan"
+
+		//"Ability1"					"imba_elder_titan_echo_stomp"
+		//"Ability2"					"imba_elder_titan_ancestral_spirit"
+		//"Ability3"					"imba_elder_titan_natural_order"
+		//"Ability4"					"imba_elder_titan_return_spirit"
+		//"Ability5"					"imba_elder_titan_earth_splitter"
+		"Ability6"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Ember Spirit
 	//=================================================================================================================
 	"npc_imba_hero_ember_spirit"
@@ -515,6 +594,28 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	//	HERO: Enchantress
+	//=================================================================================================================
+	"npc_imba_hero_enchantress"
+	{
+		"override_hero"				"npc_dota_hero_enchantress"
+
+		"AttributeBaseIntelligence"	"21"
+
+		"AttackRange"				"625"
+
+		"MovementSpeed"				"335"
+
+		//"Ability1"					"imba_enchantress_untouchable"
+		//"Ability2"					"imba_enchantress_enchant"
+		//"Ability3"					"imba_enchantress_natures_attendants"
+		//"Ability4"					"imba_enchantress_impetus"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -555,6 +656,25 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Gyrocopter
+	//=================================================================================================================
+	"npc_imba_hero_gyrocopter"
+	{
+		"override_hero"				"npc_dota_hero_gyrocopter"
+
+		"AttackRange"				"480"
+
+		"Ability1"					"gyrocopter_rocket_barrage"
+		"Ability2"					"gyrocopter_homing_missile"
+		"Ability3"					"gyrocopter_flak_cannon"
+		"Ability4"					"gyrocopter_call_down"
+		"Ability5"					"attribute_bonus_agi"
+		"Ability6"					""
+
+		"ProjectileModel"			"particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -648,6 +768,29 @@
 		"Ability5"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Keeper of the Light
+	//=================================================================================================================
+	"npc_imba_hero_keeper_of_the_light"
+	{
+		"override_hero"				"npc_dota_hero_keeper_of_the_light"
+
+		"AttackDamageMin"			"28"
+
+		//"Ability1"					"imba_keeper_of_the_light_illuminate"
+		//"Ability2"					"imba_keeper_of_the_light_mana_leak"
+		//"Ability3"					"imba_keeper_of_the_light_chakra_magic"
+		//"Ability4"					"imba_keeper_of_the_light_recall"
+		//"Ability5"					"imba_keeper_of_the_light_blinding_light"
+		//"Ability6"					"imba_keeper_of_the_light_spirit_form"
+		//"Ability7"					"imba_keeper_of_the_light_illuminate_end"
+		//"Ability8"					"imba_keeper_of_the_light_spirit_form_illuminate"
+		//"Ability9"					"imba_keeper_of_the_light_spirit_form_illuminate_end"
+		"Ability10"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -791,6 +934,8 @@
 
 		"AttackRate"				"1.6"
 
+		"AttributeAgilityGain"		"4.0"
+
 		"AttackRange"				"480"
 
 		"MovementSpeed"				"335"
@@ -845,17 +990,36 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Meepo
+	//=================================================================================================================
+	"npc_imba_hero_meepo"
+	{
+		"override_hero"				"npc_dota_hero_meepo"
+
+		//"Ability1"					"imba_meepo_earthbind"
+		//"Ability2"					"imba_meepo_poof"
+		//"Ability3"					"imba_meepo_geostrike"
+		//"Ability4"					"imba_meepo_divided_we_stand"
+		"Ability5"					"attribute_bonus_agi"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
     "npc_imba_hero_mirana"
 	{
 		"override_hero"				"npc_dota_hero_mirana"
 
+		"AbilityLayout"				"5"
+
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"
-		"Ability4"					"imba_mirana_invis"
-		"Ability5"					"attribute_bonus_agi"
+		"Ability4"					"imba_mirana_cosmic_dust"
+		"Ability5"					"imba_mirana_invis"
+		"Ability6"					"attribute_bonus_agi"
 
 		"AttackDamageMin"			"26"
 		"AttackDamageMax"			"30"
@@ -1002,9 +1166,49 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Ogre McGee
+	//=================================================================================================================
+	"npc_imba_hero_ogre_magi"
+	{
+		"override_hero"				"npc_dota_hero_ogre_magi"
+
+		"ArmorPhysical"				"8.0"
+
+		"AttributeBaseIntelligence"	"22"
+
+		//"Ability1"					"imba_ogre_magi_fireblast"
+		//"Ability2"					"imba_ogre_magi_ignite"
+		//"Ability3"					"imba_ogre_magi_bloodlust"
+		//"Ability4"					"imba_ogre_magi_unrefined_fireblast"
+		//"Ability5"					"imba_ogre_magi_multicast"
+		"Ability6"					"attribute_bonus_int"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Oracle
+	//=================================================================================================================
+	"npc_imba_hero_oracle"
+	{
+		"override_hero"				"npc_dota_hero_oracle"
+
+		"AttackDamageMin"			"28"
+		"AttackDamageMax"			"30"
+
+		//"Ability1"					"imba_oracle_fortunes_end"
+		//"Ability2"					"imba_oracle_fates_edict"
+		//"Ability3"					"imba_oracle_purifying_flames"
+		//"Ability4"					"imba_oracle_false_promise"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Outworld Devourer
 	//=================================================================================================================
-    "npc_imba_hero_obsidian_destroyer"
+	"npc_imba_hero_obsidian_destroyer"
 	{
 		"override_hero"				"npc_dota_hero_obsidian_destroyer"
 
@@ -1296,6 +1500,24 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Silencer
+	//=================================================================================================================
+	"npc_imba_hero_silencer"
+	{
+		"override_hero"				"npc_dota_hero_silencer"
+
+		"AttributeIntelligenceGain"	"3.0"
+
+		//"Ability1"					"imba_silencer_curse_of_the_silent"
+		//"Ability2"					"imba_silencer_glaives_of_wisdom"
+		//"Ability3"					"imba_silencer_last_word"
+		//"Ability4"					"imba_silencer_global_silence"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Skeleton King
 	//=================================================================================================================
 	"npc_imba_hero_skeleton_king"
@@ -1319,9 +1541,25 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Skywrath Mage
+	//=================================================================================================================
+	"npc_imba_hero_skywrath_mage"
+	{
+		"override_hero"				"npc_dota_hero_skywrath_mage"
+
+		//"Ability1"					"imba_skywrath_mage_arcane_bolt"
+		//"Ability2"					"imba_skywrath_mage_concussive_shot"
+		//"Ability3"					"imba_skywrath_mage_ancient_seal"
+		//"Ability4"					"imba_skywrath_mage_mystic_flare"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
 	// HERO: Slardar
 	//=================================================================================================================
-    "npc_imba_hero_slardar"
+	"npc_imba_hero_slardar"
 	{
 		"override_hero"				"npc_dota_hero_slardar"
 
@@ -1387,7 +1625,7 @@
 
 		"ModelScale" 				".60"
 
-		"AttackAcquisitionRange"	"2500"
+		"AttackAcquisitionRange"	"1800"
 
 		"AbilityLayout"				"5"
 
@@ -1466,8 +1704,6 @@
 
 		"ArmorPhysical"				"3"
 
-		"MovementSpeed"				"310"
-
 		"Ability1"					"imba_sven_storm_bolt"
 		"Ability2"					"imba_sven_great_cleave"
 		"Ability3"					"imba_sven_warcry"
@@ -1511,9 +1747,11 @@
 	//=================================================================================================================
 	"npc_imba_hero_templar_assassin"
 	{
-		"override_hero"				"npc_dota_hero_templar_assassin"
+		"override_hero"			"npc_dota_hero_templar_assassin"
 
-		"AttackRate"				"1.6"
+		"AttackRate"			"1.6"
+
+		"AttackRange"			"150"
 
 		//"Ability1"				"imba_templar_assassin_refraction"
 		//"Ability2"				"imba_templar_assassin_meld"
@@ -1522,7 +1760,7 @@
 		//"Ability5"				"imba_templar_assassin_psionic_trap"
 		"Ability6"				"attribute_bonus_agi"
 
-		"ProjectileModel"			"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
+		"ProjectileModel"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1532,6 +1770,8 @@
 	{
 		"override_hero"				"npc_dota_hero_terrorblade"
 
+		"ArmorPhysical"				"9"
+
 		"AttributeStrengthGain"		"1.75"
 
 		//"Ability1"					"imba_terrorblade_reflection"
@@ -1539,6 +1779,26 @@
 		//"Ability3"					"imba_terrorblade_metamorphosis"
 		//"Ability4"					"imba_terrorblade_sunder"
 		"Ability5"					"attribute_bonus_agi"
+	}
+
+	//=================================================================================================================
+	// HERO: Tidehunter
+	//=================================================================================================================
+	"npc_imba_hero_tidehunter"
+	{
+		"override_hero"				"npc_dota_hero_tidehunter"
+
+		"ModelScale"				"0.96"
+
+		"AttributeBaseStrength"		"28"
+
+		//"Ability1"					"imba_tidehunter_gush"
+		//"Ability2"					"imba_tidehunter_kraken_shell"
+		//"Ability3"					"imba_tidehunter_anchor_smash"
+		//"Ability4"					"imba_tidehunter_ravage"
+		"Ability5"					"attribute_bonus_str"	
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1600,6 +1860,31 @@
 	}
 
 	//=================================================================================================================
+	// HERO: Treant
+	//=================================================================================================================
+	"npc_imba_hero_treant"
+	{
+		"override_hero"				"npc_dota_hero_treant"
+
+		"ModelScale"				"0.92"
+
+		"AttackDamageMin"			"86"
+		"AttackDamageMax"			"94"
+
+		"AttributeBaseStrength"		"29"
+		"AttributeStrengthGain"		"4.0"
+
+		//"Ability1"					"imba_treant_natures_guise"
+		//"Ability2"					"imba_treant_leech_seed"
+		//"Ability3"					"imba_treant_living_armor"
+		//"Ability4"					"imba_treant_eyes_in_the_forest"
+		//"Ability5"					"imba_treant_overgrowth"
+		"Ability6"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
 	// HERO: Troll Warlord
 	//=================================================================================================================
 	"npc_imba_hero_troll_warlord"
@@ -1624,6 +1909,46 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Tusk
+	//=================================================================================================================
+	"npc_imba_hero_tusk"
+	{
+		"override_hero"				"npc_dota_hero_tusk"
+
+		"ModelScale"				"0.96"
+
+		//"Ability1"					"imba_tusk_ice_shards"
+		//"Ability2"					"imba_tusk_snowball"
+		//"Ability3"					"imba_tusk_frozen_sigil"
+		//"Ability4"					"imba_tusk_launch_snowball"
+		//"Ability5"					"imba_tusk_walrus_kick"
+		//"Ability6"					"imba_tusk_walrus_punch"
+		"Ability7"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Undying
+	//=================================================================================================================
+	"npc_imba_hero_undying"
+	{
+		"override_hero"				"npc_dota_hero_undying"
+
+		"AttributeBaseAgility"		"20"
+
+		"AttributeAgilityGain"		"2.0"
+
+		//"Ability1"					"imba_undying_decay"
+		//"Ability2"					"imba_undying_soul_rip"
+		//"Ability3"					"imba_undying_tombstone"
+		//"Ability4"					"imba_undying_flesh_golem"
+		"Ability5"					"attribute_bonus_str"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -1711,6 +2036,24 @@
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
+	}
+
+	//=================================================================================================================
+	// HERO: Visage
+	//=================================================================================================================
+    "npc_imba_hero_visage"
+	{
+		"override_hero"				"npc_dota_hero_visage"
+
+		"AttackDamageMin"			"30"
+
+		//"Ability1"					"imba_visage_grave_chill"
+		//"Ability2"					"imba_visage_soul_assumption"
+		//"Ability3"					"imba_visage_gravekeepers_cloak"
+		//"Ability4"					"imba_visage_summon_familiars"
+		"Ability5"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

@@ -31,6 +31,9 @@ function ShadowWord( keys )
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	end
 
+	-- Mark target for later explosion
+	target.shadow_word_explosion_target = true
+
 	-- Start or reset looping debuff sound
 	target:StopSound(sound_target)
 	target:EmitSound(sound_target)
@@ -122,50 +125,57 @@ function ShadowWordExplode( keys )
 	-- Stop playing sound loop
 	target:StopSound(sound_target)
 
-	-- Play explosion sound
-	target:EmitSound(sound_explode)
+	-- If this is the original target, explode
+	if target.shadow_word_explosion_target then
 
-	-- Play explosion particle
-	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControl(explosion_pfx, 0, target_loc)
+		-- Play explosion sound
+		target:EmitSound(sound_explode)
 
-	-- Find nearby allies
-	local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		-- Play explosion particle
+		local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControl(explosion_pfx, 0, target_loc)
 
-	-- Find nearby enemies
-	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		-- Find nearby allies
+		local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-	-- If allies are nearby, play "good" cast sound and apply modifier to them
-	if #nearby_allies > 0 then
-		
-		-- Play sound
-		target:EmitSound(sound_cast_good)
+		-- Find nearby enemies
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, spread_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-		-- Apply modifier
-		for _,ally in pairs(nearby_allies) do
+		-- If allies are nearby, play "good" cast sound and apply modifier to them
+		if #nearby_allies > 0 then
+			
+			-- Play sound
+			target:EmitSound(sound_cast_good)
 
-			-- Do not re-apply to the original target
-			if ally ~= target then
-				ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {})
+			-- Apply modifier
+			for _,ally in pairs(nearby_allies) do
+
+				-- Do not re-apply to the original target
+				if ally ~= target then
+					ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {})
+				end
+			end
+		end
+
+		-- If enemies are nearby, play "bad" cast sound and apply modifier to them
+		if #nearby_enemies > 0 then
+			
+			-- Play sound
+			target:EmitSound(sound_cast_bad)
+
+			-- Apply modifier
+			for _,enemy in pairs(nearby_enemies) do
+
+				-- Do not re-apply to the original target
+				if enemy ~= target then
+					ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
+				end
 			end
 		end
 	end
-
-	-- If enemies are nearby, play "bad" cast sound and apply modifier to them
-	if #nearby_enemies > 0 then
-		
-		-- Play sound
-		target:EmitSound(sound_cast_bad)
-
-		-- Apply modifier
-		for _,enemy in pairs(nearby_enemies) do
-
-			-- Do not re-apply to the original target
-			if enemy ~= target then
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
-			end
-		end
-	end
+	
+	-- Clean-up explosion target
+	target.shadow_word_explosion_target = nil
 end
 
 function Upheaval( keys )
@@ -194,6 +204,9 @@ function Upheaval( keys )
 	if player_id then
 		upheaval_tower:SetControllableByPlayer(player_id, true)
 	end
+
+	-- Keep track of current slow level
+	upheaval_tower.current_upheaval_stack_power = 1
 
 	-- Face the same direction as the caster
 	upheaval_tower:SetForwardVector(caster:GetForwardVector())
@@ -303,13 +316,18 @@ function UpheavalTowerAura( keys )
 		
 		-- If this is a hero, use the hero particle
 		if enemy:IsHero() then
-			AddStacks(ability, caster, enemy, modifier_hero, 1, true)
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_hero, {})
+			enemy:SetModifierStackCount(modifier_hero, caster, math.max(enemy:GetModifierStackCount(modifier_hero, caster), tower.current_upheaval_stack_power))
 
 		-- Else, use the creep particle
 		else
-			AddStacks(ability, caster, enemy, modifier_creep, 1, true)
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_creep, {})
+			enemy:SetModifierStackCount(modifier_creep, caster, math.max(enemy:GetModifierStackCount(modifier_creep, caster), tower.current_upheaval_stack_power))
 		end
 	end
+
+	-- Increase stack amount
+	tower.current_upheaval_stack_power = tower.current_upheaval_stack_power + 1
 end
 
 function ChaoticOfferingPreCast( keys )
@@ -707,6 +725,7 @@ function ScepterLostCheck( keys )
 		local ability_name = keys.ability_name
 
 		caster:RemoveModifierByName(modifier_check)
+		caster.channeling_chaotic_offering_scepter = nil
 		SwitchAbilities(caster, ability_name, ability_name.."_scepter", true, true)
 	end
 end
@@ -718,7 +737,6 @@ function GolemFlamingFists( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local damage_pct = ability:GetLevelSpecialValueFor("damage_pct", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 
@@ -727,17 +745,13 @@ function GolemFlamingFists( keys )
 		return nil
 	end
 
-	-- Roll for the proc chance
-	if RandomInt(1, 100) <= proc_chance then
-		
-		-- Calculate damage
-		local damage = caster:GetAverageTrueAttackDamage() * damage_pct / 100
+	-- Calculate damage
+	local damage = caster:GetAverageTrueAttackDamage() * damage_pct / 100
 
-		-- Damage enemies in the effect radius
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		for _,enemy in pairs(enemies) do
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-		end
+	-- Damage enemies in the effect radius
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 	end
 end
 

@@ -127,7 +127,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
 		mode:SetTopBarTeamValuesVisible( TOP_BAR_VISIBLE )
 		mode:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
-		mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
 		mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 
 		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
@@ -309,11 +308,18 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Set up level cap
-	USE_CUSTOM_HERO_LEVELS = true
-	MAX_LEVEL = tonumber(mode_info.level_cap)
-	game_mode_imba:SetUseCustomHeroLevels ( USE_CUSTOM_HERO_LEVELS )
-	game_mode_imba:SetCustomHeroMaxLevel ( MAX_LEVEL )
+	if mode_info.level_cap then
+		MAX_LEVEL = tonumber(mode_info.level_cap)
+	end
 	print("Heroes can level up to level "..MAX_LEVEL)
+
+	-- Max level experience table set-up
+	if MAX_LEVEL > 35 then
+		for i = 36, MAX_LEVEL do
+			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+			mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+		end
+	end
 
 	-- Respawn time information
 	if mode_info.respawn == "respawn_half" then

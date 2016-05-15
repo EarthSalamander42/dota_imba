@@ -2065,7 +2065,7 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"
-		"MagicalResistance"			"80"
+		"MagicalResistance"			"50"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -2109,7 +2109,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision

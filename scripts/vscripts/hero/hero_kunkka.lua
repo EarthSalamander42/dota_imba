@@ -69,7 +69,7 @@ function Torrent( keys )
 
 	-- Calculates the damage to deal per tick
 	local tick_interval = duration / max_ticks
-	local damage_tick = damage / (2 * max_ticks)
+	local damage_tick = damage / max_ticks
 
 	-- After [delay], applies damage, knockback, and draws the particle
 	Timers:CreateTimer(delay, function()
@@ -81,7 +81,7 @@ function Torrent( keys )
 		for _,enemy in pairs(enemies) do
 
 			-- Deals the initial damage
-			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage / 2, damage_type = ability:GetAbilityDamageType()})
+			ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage_tick, damage_type = ability:GetAbilityDamageType()})
 			local current_ticks = 0
 			
 			-- Calculates the knockback position (for Tsunami)

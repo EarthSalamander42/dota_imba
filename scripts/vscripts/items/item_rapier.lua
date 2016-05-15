@@ -107,12 +107,14 @@ end
 
 function RapierBuy( keys )
 	local caster = keys.caster
+	local target = keys.target
 	local ability = keys.ability
 	local modifier_phys = keys.modifier_phys
 	local modifier_magic = keys.modifier_magic
 
 	-- If this is not a real hero, do nothing
-	if ( not caster:IsRealHero() and not IsHeroCreep(caster) ) then
+	if ( not caster:IsRealHero() and not IsHeroCreep(caster) ) or caster:IsIllusion() then
+		caster:RemoveModifierByName("modifier_item_imba_rapier_unique")
 		return nil
 	end
 

@@ -201,7 +201,8 @@ function RestoreMana( keys )
 	local max_stacks = math.floor( caster:GetBaseIntellect() * max_int_pct / 100 )
 
 	-- If the ability just cast uses mana, restore mana accordingly
-	if cast_ability and cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) > 0 and StickProcCheck(cast_ability) then
+	local cast_ability_level = cast_ability:GetLevel() - 1
+	if cast_ability and cast_ability:GetManaCost(cast_ability_level) > 0 and StickProcCheck(cast_ability) and cast_ability:GetCooldown(cast_ability_level) > 0 then
 
 		-- Restores mana
 		target:GiveMana(mana_restore)
