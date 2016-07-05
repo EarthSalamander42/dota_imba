@@ -562,9 +562,8 @@ function FleshHeap( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
-	-- If this was an illusion, do nothing
-	if target:IsIllusion() then
-		print("illusion")
+	-- If this isnt a real hero, do nothing.
+	if not target:IsRealHero() then
 		return nil
 	end
 

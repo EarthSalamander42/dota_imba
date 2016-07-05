@@ -54,6 +54,76 @@ function RapierPreventAttackAmp( keys )
 	ability:ApplyDataDrivenModifier(caster, target, modifier_prevent, {})
 end
 
+function RapierParticleMagic( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_phys = keys.modifier_phys
+	local modifier_magic = keys.modifier_magic
+
+	-- If this is a courier, do nothing
+	if caster:GetUnitName() == "npc_dota_courier" then
+		return nil
+	end
+
+	-- Fetch current rapier level
+	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
+	
+	-- If rapier level is enough, grant vision of the caster to all teams
+	if rapier_level >= 3 then
+
+		-- Destroy physical rapier particle
+		if caster.rapier_phys_particle then
+			ParticleManager:DestroyParticle(caster.rapier_phys_particle, true)
+			caster.rapier_phys_particle = nil
+		end
+
+		-- Create magical rapier particle if necessary
+		if not caster.rapier_magic_particle then
+			caster.rapier_magic_particle = ParticleManager:CreateParticle("particles/item/rapier/rapier_trail_arcane.vpcf", PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl(caster.rapier_magic_particle, 0, caster:GetAbsOrigin())
+
+		-- Else, update its position
+		else
+			ParticleManager:SetParticleControl(caster.rapier_magic_particle, 0, caster:GetAbsOrigin())
+		end
+	end
+end
+
+function RapierParticlePhys( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_phys = keys.modifier_phys
+	local modifier_magic = keys.modifier_magic
+
+	-- If this is a courier, do nothing
+	if caster:GetUnitName() == "npc_dota_courier" then
+		return nil
+	end
+
+	-- Fetch current rapier level
+	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
+	
+	-- If rapier level is enough, grant vision of the caster to all teams
+	if rapier_level >= 3 then
+
+		-- Destroy physical rapier particle
+		if caster.rapier_magic_particle then
+			ParticleManager:DestroyParticle(caster.rapier_magic_particle, true)
+			caster.rapier_magic_particle = nil
+		end
+
+		-- Create magical rapier particle if necessary
+		if not caster.rapier_phys_particle then
+			caster.rapier_phys_particle = ParticleManager:CreateParticle("particles/item/rapier/rapier_trail_regular.vpcf", PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl(caster.rapier_phys_particle, 0, caster:GetAbsOrigin())
+
+		-- Else, update its position
+		else
+			ParticleManager:SetParticleControl(caster.rapier_phys_particle, 0, caster:GetAbsOrigin())
+		end
+	end
+end
+
 function RapierVision( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -74,6 +144,7 @@ function RapierVision( keys )
 		caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.1)
 		if not caster.rapier_vision_pfx then
 			caster.rapier_vision_pfx = ParticleManager:CreateParticle("particles/econ/items/effigies/status_fx_effigies/gold_effigy_ambient_dire_lvl2.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleAlwaysSimulate(caster.rapier_vision_pfx)
 		end
 	end
 
@@ -286,10 +357,18 @@ function RapierDrop( keys )
 	-- Flag hero as a rapier non-owner
 	caster.has_rapier = nil
 
-	-- Destroy rapier particle, if existing
+	-- Destroy rapier particles, if existing
 	if caster.rapier_vision_pfx then
 		ParticleManager:DestroyParticle(caster.rapier_vision_pfx, false)
 		caster.rapier_vision_pfx = nil
+	end
+	if caster.rapier_phys_particle then
+		ParticleManager:DestroyParticle(caster.rapier_phys_particle, false)
+		caster.rapier_phys_particle = nil
+	end
+	if caster.rapier_magic_particle then
+		ParticleManager:DestroyParticle(caster.rapier_magic_particle, false)
+		caster.rapier_magic_particle = nil
 	end
 
 	-- Fetch rapier level

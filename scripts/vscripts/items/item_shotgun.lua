@@ -19,12 +19,12 @@ function Shotgun( keys )
 
 	-- Roll for proc chance
 	if RandomInt(1, 100) <= proc_chance then
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, search_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, search_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 		
 		-- Attack random units in range
 		for i,enemy in pairs(nearby_enemies) do
 			if nearby_enemies[i] ~= target then
-				caster:PerformAttack(nearby_enemies[i], true, false, true, true)
+				caster:PerformAttack(nearby_enemies[i], true, false, true, true, true)
 				proc_targets = proc_targets - 1
 			end
 			if proc_targets == 0 then

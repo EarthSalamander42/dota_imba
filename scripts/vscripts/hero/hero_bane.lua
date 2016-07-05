@@ -62,16 +62,35 @@ function EnfeebleEnd( keys )
 	target:RemoveModifierByName(modifier_int)
 end
 
-function BrainSapManaDrain( keys )
+function BrainSap( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local sound_target = keys.sound_target
+	local modifier_sap = keys.modifier_sap
+	local particle_sap = keys.particle_sap
 
-	local mana_to_steal = ability:GetLevelSpecialValueFor("mana_steal_amt", ability_level) * FRANTIC_MULTIPLIER
+	-- Parameters
+	local heal_amt = ability:GetLevelSpecialValueFor("heal_amt", ability_level)
 
-	target:ReduceMana(mana_to_steal)
-	caster:GiveMana(mana_to_steal)
+	-- Play sounds
+	caster:EmitSound(sound_cast)
+	target:EmitSound(sound_target)
+
+	-- Play particle
+	local sap_pfx = ParticleManager:CreateParticle(particle_sap, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControlEnt(sap_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(sap_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
+	-- Apply the debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_sap, {})
+
+	-- Heal/Damage
+	caster:Heal(heal_amt, caster)
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = heal_amt, damage_type = DAMAGE_TYPE_PURE})
+
 end
 
 function BrainSapSpellCast( keys )
@@ -81,25 +100,46 @@ function BrainSapSpellCast( keys )
 	local ability_level = ability:GetLevel() - 1
 	local cast_ability = keys.event_ability
 	local sound_manaburn = keys.sound_manaburn
+	local modifier_sap = keys.modifier_sap
 	local particle_manaburn = keys.particle_manaburn
+	local particle_sap = keys.particle_sap
+
+	-- If there isn't a casted ability, do nothing
+	if not cast_ability then
+		return nil
+	end
 
 	-- Parameters
 	local mana_percent = ability:GetLevelSpecialValueFor("mana_percent", ability_level)
-	local mana_to_spend = target:GetMaxMana() * mana_percent / 100
+	local mana_to_drain = target:GetMaxMana() * mana_percent / 100
 
 	-- If the spell uses mana, reduce target's mana by the specified %
 	if cast_ability and cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) > 0 then
-		target:ReduceMana(mana_to_spend)
+		target:ReduceMana(mana_to_drain)
 
-		-- Show how much extra mana was spent
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_spend, nil)
+		-- Show how much mana was drained
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_drain, nil)
 
 		-- Play mana burn particle
 		local manaburn_pfx = ParticleManager:CreateParticle(particle_manaburn, PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin() )
 
+		-- Play sap particle
+		local sap_pfx = ParticleManager:CreateParticle(particle_sap, PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControlEnt(sap_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(sap_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
 		-- Play mana burn sound
 		target:EmitSound(sound_manaburn)
+
+		-- Grant the caster health and mana
+		caster:Heal(mana_to_drain / 2, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, mana_to_drain / 2, nil)
+		caster:GiveMana(mana_to_drain / 2)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, mana_to_drain / 2, nil)
+
+		-- Destroy the debuff
+		target:RemoveModifierByName(modifier_sap)
 	end
 end
 
@@ -127,26 +167,16 @@ function FiendsGripStopChannel( keys )
 	local ability = keys.ability
 	local modifier = keys.modifier
 	local scepter = HasScepter(caster)
-	local max_duration = ability:GetLevelSpecialValueFor("fiends_grip_duration", (ability:GetLevel() -1))
+	local extra_duration = ability:GetLevelSpecialValueFor("fiends_grip_extra_duration", (ability:GetLevel() -1))
 
 	if scepter == true then
-		max_duration = ability:GetLevelSpecialValueFor("fiends_grip_duration_scepter", (ability:GetLevel() -1))
+		extra_duration = ability:GetLevelSpecialValueFor("fiends_grip_extra_duration_scepter", (ability:GetLevel() -1))
 	end
 
 	local enemies_affected = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
-	local channel_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
-
-	if channel_time * 2 > max_duration then
-		for _,v in pairs(enemies_affected) do
-			if v:HasModifier(modifier) then
-				ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = max_duration - channel_time})
-			end
-		end
-	else
-		for _,v in pairs(enemies_affected) do
-			if v:HasModifier(modifier) then
-				ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = channel_time})
-			end
+	for _,v in pairs(enemies_affected) do
+		if v:HasModifier(modifier) then
+			ability:ApplyDataDrivenModifier(caster, v, modifier, {duration = extra_duration})
 		end
 	end
 end

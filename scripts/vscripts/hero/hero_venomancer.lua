@@ -16,6 +16,11 @@ function GaleCast( keys )
 	local ward_radius = ability:GetLevelSpecialValueFor("ward_radius", ability_level)
 	local caster_pos = caster:GetAbsOrigin()
 	local projectile_speed = (target - caster_pos):Normalized() * speed
+
+	-- Handle clicking exactly on top of the caster
+	if projectile_speed == Vector(0, 0, 0) then
+		projectile_speed = caster:GetForwardVector() * speed
+	end
 	projectile_speed = Vector(projectile_speed.x, projectile_speed.y, 0)
 
 	-- Play cast sound
@@ -61,6 +66,11 @@ function GaleCast( keys )
 			-- Calculate projectile direction
 			local ward_pos = ward:GetAbsOrigin()
 			projectile_speed = (target - ward_pos):Normalized() * speed
+
+			-- Handle clicking exactly on top of the ward
+			if projectile_speed == Vector(0, 0, 0) then
+				projectile_speed = (target - caster_pos):Normalized() * speed
+			end
 
 			-- Play cast sound
 			ward:EmitSound(sound_cast)
@@ -122,6 +132,11 @@ function GaleHit( keys )
 	-- Calculate damage
 	local target_health = target:GetMaxHealth()
 	local final_damage = math.max(damage, target_health * damage_pct / 100)
+
+	-- Halve damage if target is already poisoned
+	if target:HasModifier(modifier_slow) then
+		final_damage = final_damage / 2
+	end
 
 	-- Apply damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = final_damage, damage_type = DAMAGE_TYPE_MAGICAL})

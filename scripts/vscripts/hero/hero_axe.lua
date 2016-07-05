@@ -92,6 +92,11 @@ function CounterHelix( keys )
 	local particle_spin_2 = keys.particle_spin_2
 	local sound_spin = keys.sound_spin
 
+	-- If the ability is disabled by Break, do nothing
+	if ability_level < 0 then
+		return nil
+	end
+
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)

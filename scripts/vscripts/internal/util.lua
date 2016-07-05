@@ -346,17 +346,41 @@ function GetRandomUltimateAbility()
 end
 
 -- Picks a random tower ability of level in the interval [level - 1, level]
-function GetRandomTowerAbility( level )
+function GetRandomTowerAbility(tier, type)
 
-	local ability = RandomFromTable(TOWER_ABILITIES)
+	local ability
 
-	if level == 4 then
-		while ability.level < 2 do
-			ability = RandomFromTable(TOWER_ABILITIES)
+	if tier == 1 then
+		if type == "active" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_one.active)
+		elseif type == "aura" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_one.aura)
+		elseif type == "attack" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_one.attack)
 		end
-	else
-		while ability.level > level or ability.level < ( level - 1) do
-			ability = RandomFromTable(TOWER_ABILITIES)
+	elseif tier == 2 then
+		if type == "active" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_two.active)
+		elseif type == "aura" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_two.aura)
+		elseif type == "attack" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_two.attack)
+		end
+	elseif tier == 3 then
+		if type == "active" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_three.active)
+		elseif type == "aura" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_three.aura)
+		elseif type == "attack" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_three.attack)
+		end
+	elseif tier == 4 then
+		if type == "active" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_four.active)
+		elseif type == "aura" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_four.aura)
+		elseif type == "attack" then
+			ability = RandomFromTable(TOWER_ABILITIES.tier_four.attack)
 		end
 	end
 
@@ -784,7 +808,8 @@ function InitializeInnateAbilities( hero )
 		"imba_magnus_magnetize",
 		"imba_enigma_gravity",
 		"imba_troll_warlord_berserkers_rage",
-		"imba_mirana_cosmic_dust"
+		"imba_mirana_cosmic_dust",
+		"imba_antimage_magehunter"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -831,7 +856,8 @@ function PassiveBreak( unit, duration )
 
 	-- Passive abilities not disabled by break
 	local break_immunities = {
-		"imba_wraith_king_reincarnation"
+		"imba_wraith_king_reincarnation",
+		"imba_drow_ranger_marksmanship"
 	}
 
 	-- Set all passive abilities' levels to zero
@@ -935,44 +961,62 @@ function UpgradeTower( tower )
 	end
 
 	-- Iterate through abilities to identify the upgradable one
-	for i = 1,3 do
+	for i = 1,4 do
 
 		-- If this ability is not maxed, try to upgrade it
 		if abilities[i] and abilities[i]:GetLevel() < 3 then
-
 			-- Upgrade ability
 			abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
-
-			-- Increase tower size
-			tower:SetModelScale(tower:GetModelScale() + 0.03)
 
 			return nil
 
 		-- If this ability is maxed and the last one, then add a new one
 		elseif abilities[i] and abilities[i]:GetLevel() == 3 and #abilities == i then
 
-			-- Add a random new ability
-			local duplicate_ability
-			local new_ability
+			-- If there are no more abilities on the tree for this tower, do nothing
+			if (tower.tower_tier <= 3 and i >= 3) or i >= 4 then
+				return nil
+			end
 
-			-- Prevent duplicates
-			repeat
-				duplicate_ability = false
-				new_ability = GetRandomTowerAbility(tower.tower_tier)
-				for _,test_ability in pairs(abilities) do
-					if test_ability:GetName() == new_ability then
-						duplicate_ability = true
-					end
+			-- Else, add a new ability from this game's ability tree
+			local new_ability = false
+			if tower.tower_tier == 1 then
+				if tower.tower_lane == "safelane" then
+					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_1"][i+1]
+				elseif tower.tower_lane == "midlane" then
+					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_1"][i+1]
+				elseif tower.tower_lane == "hardlane" then
+					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_1"][i+1]
 				end
-			until not duplicate_ability
+			elseif tower.tower_tier == 2 then
+				if tower.tower_lane == "safelane" then
+					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_2"][i+1]
+				elseif tower.tower_lane == "midlane" then
+					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_2"][i+1]
+				elseif tower.tower_lane == "hardlane" then
+					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][i+1]
+				end
+			elseif tower.tower_tier == 3 then
+				if tower.tower_lane == "safelane" then
+					new_ability = TOWER_UPGRADE_TREE["safelane"]["tier_3"][i+1]
+				elseif tower.tower_lane == "midlane" then
+					new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_3"][i+1]
+				elseif tower.tower_lane == "hardlane" then
+					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][i+1]
+				end
+			elseif tower.tower_tier == 41 then
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
+			elseif tower.tower_tier == 42 then
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
+			end
 
-			-- Level up the ability
-			tower:AddAbility(new_ability)
-			new_ability = tower:FindAbilityByName(new_ability)
-			new_ability:SetLevel(1)
+			-- Add the new ability
+			if new_ability then
+				tower:AddAbility(new_ability)
+				new_ability = tower:FindAbilityByName(new_ability)
+				new_ability:SetLevel(1)
+			end
 
-			-- Increase tower size
-			tower:SetModelScale(tower:GetModelScale() + 0.08)
 			return nil
 		end
 	end

@@ -4172,7 +4172,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT" 			"-2000"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-500"
 				}
 			}
 
@@ -5429,7 +5429,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"200"
+				"bounce_damage"			"300"
 			}
 			"08"
 			{
@@ -5439,7 +5439,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_count"			"2"
+				"bounce_decay"			"10"
 			}
 		}
 
@@ -5546,7 +5546,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"275"
+				"bounce_damage"			"400"
 			}
 			"08"
 			{
@@ -5556,7 +5556,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_count"			"2"
+				"bounce_decay"			"10"
 			}
 		}
 
@@ -5663,7 +5663,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"350"
+				"bounce_damage"			"500"
 			}
 			"08"
 			{
@@ -5673,7 +5673,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_count"			"3"
+				"bounce_decay"			"10"
 			}
 		}
 
@@ -5780,7 +5780,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"425"
+				"bounce_damage"			"600"
 			}
 			"08"
 			{
@@ -5790,7 +5790,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_count"			"3"
+				"bounce_decay"			"10"
 			}
 		}
 
@@ -5894,7 +5894,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"500"
+				"bounce_damage"			"700"
 			}
 			"08"
 			{
@@ -5904,7 +5904,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_count"			"4"
+				"bounce_decay"			"10"
 			}
 		}
 
@@ -7597,12 +7597,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_block"					"30"
+				"base_damage_block"				"0"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"proc_chance"					"30"
+				"damage_reduction"				"6"
 			}
 		}
 
@@ -7726,7 +7726,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"40"
+				"base_damage_block"		"5"
 			}
 			"06"
 			{
@@ -7746,7 +7746,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"35"
+				"damage_reduction"		"9"
 			}
 		}
 
@@ -7924,10 +7924,10 @@
 				"armor"					"8"
 			}
 			// If changed, these keyvalues have to be manually updated in the damage filter 
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"50"
+				"base_damage_block"		"10"
 			}
 			"07"
 			{
@@ -7947,7 +7947,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"40"
+				"damage_reduction"		"12"
 			}
 		}
 
@@ -8373,11 +8373,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierVision"
+						"ScriptFile"			"items/item_rapier.lua"
+						"Function"				"RapierVision"
 
-						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
-						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
+						"modifier_phys"			"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"		"modifier_item_imba_rapier_stacks_magic"
 					}
 				}
 
@@ -8422,6 +8422,20 @@
 
 				"TextureName"				"item_imba_rapier"
 
+				"ThinkInterval"				"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierParticlePhys"
+
+						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
+					}
+				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
@@ -8438,6 +8452,20 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier_magic"
+
+				"ThinkInterval"				"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierParticleMagic"
+
+						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
+					}
+				}
 
 				"OnAttackLanded"
 				{
@@ -8597,6 +8625,20 @@
 
 				"TextureName"				"item_imba_rapier"
 
+				"ThinkInterval"				"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierParticlePhys"
+
+						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
+					}
+				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
@@ -8613,6 +8655,20 @@
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"TextureName"				"item_imba_rapier_magic"
+
+				"ThinkInterval"				"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierParticleMagic"
+
+						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
+					}
+				}
 
 				"OnAttackLanded"
 				{
@@ -9151,7 +9207,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"50"
+				"proc_chance"			"35"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_range"				"600"
 			}
 		}
 		
@@ -9167,6 +9228,16 @@
 			{
 				"ModifierName"			"modifier_item_imba_butterfly_flutter"
 				"Target" 				"CASTER"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_butterfly.lua"
+				"Function"				"ButterflyProjectileHit"
 			}
 		}
 
@@ -9231,10 +9302,10 @@
 						{
 							"RunScript"
 							{
-								"ScriptFile"	"items/item_butterfly.lua"
-								"Function"		"ButterflyEffect"
+								"ScriptFile"			"items/item_butterfly.lua"
+								"Function"				"ButterflyEffect"
 
-								"damage"		"%attack_damage"
+								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
 							}
 						}
 					}	
@@ -11622,7 +11693,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_ms" 
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_ms"
 				}
 			}
 
@@ -13520,8 +13591,8 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"blast_agility_multiplier"			"3.0"
+				"var_type"						"FIELD_FLOAT"
+				"blast_agility_multiplier"		"2.25"
 			}
 			"07"
 			{

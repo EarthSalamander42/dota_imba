@@ -58,34 +58,64 @@ function UpgradeFrostArrows( keys )
 end
 
 function Gust( keys )
-	local ability = keys.ability
-	local vCaster = keys.caster:GetAbsOrigin()
-	local vTarget = keys.target:GetAbsOrigin()
 	local caster = keys.caster
-	local distance = caster:GetAttackRange()
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 
-	-- calculates knockback distance
-	local len = ( vTarget - vCaster ):Length2D()
-	if len > distance then
-		len = 25
-	else
-		len = distance - len + 25
+	-- Parameters
+	local self_knockback_duration = ability:GetLevelSpecialValueFor("self_knockback_duration", ability_level)
+	local knockback_duration = ability:GetLevelSpecialValueFor("knockback_duration", ability_level)
+	local knockback_height = ability:GetLevelSpecialValueFor("knockback_height", ability_level)
+	local knockback_distance = 0
+	local caster_range = caster:GetAttackRange()
+	local caster_loc = caster:GetAbsOrigin()
+	local target_loc = target:GetAbsOrigin()
+	local knockback_modifier = {}
+
+	-- If the target is closer than the caster's attack range, increase knockback distance
+	local target_distance = ( target_loc - caster_loc ):Length2D()
+	if target_distance < caster_range then
+		knockback_distance = caster_range - target_distance - 10
 	end
 
-	-- knockbacks using modifier_knockback
-	local knockbackModifierTable =
-	{
+	-- If this is the first target hit, knockback the caster away from it
+	if not caster.gust_enemy_hit and knockback_distance > 50 then
+		knockback_distance = knockback_distance / 2
+		caster.gust_enemy_hit = true
+		Timers:CreateTimer(0.6, function()
+			caster.gust_enemy_hit = false
+		end)
+
+		-- Caster knockback
+		knockback_modifier = {
+			should_stun = 0,
+			knockback_duration = self_knockback_duration,
+			duration = self_knockback_duration,
+			knockback_distance = knockback_distance,
+			knockback_height = knockback_height,
+			center_x = target_loc.x,
+			center_y = target_loc.y,
+			center_z = target_loc.z
+		}
+		caster:RemoveModifierByName("modifier_knockback")
+		caster:AddNewModifier(caster, ability, "modifier_knockback", knockback_modifier )
+
+	end
+
+	-- Enemy knockback
+	knockback_modifier = {
 		should_stun = 0,
-		knockback_duration = keys.duration,
-		duration = keys.duration,
-		knockback_distance = len,
-		knockback_height = keys.height,
-		center_x = keys.caster:GetAbsOrigin().x,
-		center_y = keys.caster:GetAbsOrigin().y,
-		center_z = keys.caster:GetAbsOrigin().z
+		knockback_duration = knockback_duration,
+		duration = knockback_duration,
+		knockback_distance = knockback_distance,
+		knockback_height = knockback_height,
+		center_x = caster_loc.x,
+		center_y = caster_loc.y,
+		center_z = caster_loc.z
 	}
-	keys.target:RemoveModifierByName("modifier_knockback")
-	keys.target:AddNewModifier( keys.caster, ability, "modifier_knockback", knockbackModifierTable )
+	target:RemoveModifierByName("modifier_knockback")
+	target:AddNewModifier(caster, ability, "modifier_knockback", knockback_modifier )
 end
 
 function Trueshot( keys )
@@ -94,16 +124,16 @@ function Trueshot( keys )
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 
+	-- If the caster is afflicted by Break, remove all stacks
+	if caster.break_duration_left then
+		target:RemoveModifierByName(modifier_stack)
+		return nil
+	end
+
 	-- Adjust damage based on agility of caster
 	local agility = caster:GetAgility()
 	local percent = ability:GetLevelSpecialValueFor("trueshot_ranged_damage", ability:GetLevel() - 1 )
 	local damage = math.floor( agility * percent / 100 )
-
-	-- Check if the unit is Drow Ranger
-	if target == caster then
-		local self_extra_damage = ability:GetLevelSpecialValueFor("self_extra_damage", ability:GetLevel() - 1 )
-		damage = damage * (100 + self_extra_damage) / 100
-	end
 
 	-- Apply stacks equal to the bonus damage only if the target is ranged
 	if target:GetAttackCapability() == DOTA_UNIT_CAP_RANGED_ATTACK or target == caster then
@@ -123,7 +153,6 @@ end
 function Marksmanship( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local modifier_effect = keys.modifier_effect
 
 	-- If the ability was unlearned, do nothing
@@ -131,7 +160,14 @@ function Marksmanship( keys )
 		return nil
 	end
 
+	-- If the caster is afflicted by Break, remove the buff
+	if caster.break_duration_left then
+		caster:RemoveModifierByName(modifier_effect)
+		return nil
+	end
+
 	-- Parameters
+	local ability_level = ability:GetLevel() - 1
 	local enemy_radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local caster_position = caster:GetAbsOrigin()
 
@@ -155,34 +191,30 @@ function MarksmanshipSplinter( keys )
 	local ability_level = ability:GetLevel() - 1
 	local scepter = HasScepter(caster)
 
-	-- If the ability was unlearned, or there's no scepter, do nothing
+	-- If the ability was unlearned, or there's no scepter, or this is already a splinter, do nothing
 	if not ability or not scepter or caster:IsIllusion() then
 		return nil
 	end
 
+	-- If the ability is on cooldown, do nothing
+	if not ability:IsCooldownReady() then
+		return nil
+	end
+
 	-- Parameters
-	local splinter_chance = ability:GetLevelSpecialValueFor("splinter_chance_scepter", ability_level)
 	local splinter_radius = ability:GetLevelSpecialValueFor("splinter_radius_scepter", ability_level)
 	local target_pos = target:GetAbsOrigin()
 	
-	-- Roll for splinter chance
-	if RandomInt(1, 100) <= splinter_chance then
+	-- Iterate through enemies near the target
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, splinter_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(nearby_enemies) do
 
-		-- Find enemies near the target
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, splinter_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		if #nearby_enemies > 1 then
-
-			-- Choose a nearby enemy different from the initial target
-			local splinter_target
-			if nearby_enemies[1] ~= target then
-				splinter_target = nearby_enemies[1]
-			else
-				splinter_target = nearby_enemies[2]
-			end
-
+		-- Ignore the initial target
+		if enemy ~= target then
+			
 			-- Splinter projectile parameters
 			local splinter_projectile = {
-				Target = splinter_target,
+				Target = enemy,
 				Source = target,
 				Ability = ability,
 				EffectName = "particles/units/heroes/hero_drow/drow_frost_arrow.vpcf",
@@ -198,11 +230,21 @@ function MarksmanshipSplinter( keys )
 			ProjectileManager:CreateTrackingProjectile(splinter_projectile)
 		end
 	end
+
+	-- If at least one splinter was created, put the ability on cooldown
+	if #nearby_enemies >1 then
+		ability:StartCooldown(ability:GetCooldown(ability_level))
+	end
 end
 
 function MarksmanshipHit( keys )
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
+	local modifier_dmg_penalty = keys.modifier_dmg_penalty
 
+	-- Attack the target
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_dmg_penalty, {})
 	caster:PerformAttack(target, true, true, true, true, false)
+	caster:RemoveModifierByName(modifier_dmg_penalty)
 end

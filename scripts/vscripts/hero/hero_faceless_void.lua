@@ -393,13 +393,13 @@ function Chronosphere( keys )
 	Timers:CreateTimer(0, function()
 		
 		-- Find units inside the Chrono's radius
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
 		-- Apply appropriate modifiers
 		for _,unit in pairs(units) do
 			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_caster, {})
-				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})	
+				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})
 			elseif scepter and unit:GetTeam() == caster:GetTeam() then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_ally, {})
 				unit:AddNewModifier(caster, ability, "modifier_imba_chronosphere_ally_slow", {duration = linger_duration})

@@ -311,136 +311,105 @@ function GameMode:DamageFilter( keys )
 	end
 
 	-- Vanguard block
-	if victim:HasModifier("modifier_item_vanguard_unique") and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
+	if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
 
 		-- If a higher tier of Vanguard-based block is present, do nothing
 		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
-			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 30
-			local damage_block = 30
-			local damage_blocked = 0
-
-			-- Roll for a proc
-			if RandomInt(1, 100) <= proc_chance then
-
-				-- Play the block sound for damage over a certain threshold
-				if keys.damage > (victim:GetMaxHealth() * 0.2) then
-					victim:EmitSound(block_sound)
-				end
-
-				-- Halve damage
-				keys.damage = keys.damage / 2
-
-				-- Store blocked damage
-				damage_blocked = damage_blocked + keys.damage
-
-				-- Prevent crit damage notifications
-				display_red_crit_number = false
-			end
-
-			-- Calculate actual damage
-			local actual_damage = math.max(keys.damage - damage_block, 0)
-
-			-- Update blocked damage
-			damage_blocked = damage_blocked + keys.damage - actual_damage
-
-			-- Play block message
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
 			-- Reduce damage
-			keys.damage = actual_damage
-		end
-	end
+			keys.damage = keys.damage * 0.94
 
-	-- Crimson Guard block
-	if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and damage_type == DAMAGE_TYPE_PHYSICAL and keys.damage > 0 then
-
-		-- If a higher tier of Vanguard-based block is present, do nothing
-		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 35
-			local damage_block = 40
-			local damage_blocked = 0
-
-			-- Roll for a proc
-			if RandomInt(1, 100) <= proc_chance then
-
-				-- Play the block sound for damage over a certain threshold
-				if keys.damage > (victim:GetMaxHealth() * 0.2) then
-					victim:EmitSound(block_sound)
-				end
-
-				-- Halve damage
-				keys.damage = keys.damage / 2
-
-				-- Store blocked damage
-				damage_blocked = damage_blocked + keys.damage
-
-				-- Prevent crit damage notifications
-				display_red_crit_number = false
-			end
-
-			-- Calculate actual damage
-			local actual_damage = math.max(keys.damage - damage_block, 0)
-
-			-- Update blocked damage
-			damage_blocked = damage_blocked + keys.damage - actual_damage
-
-			-- Play block message
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
-			-- Reduce damage
-			keys.damage = actual_damage
-		end
-	end
-
-	-- Greatwyrm plate block
-	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 then
-
-		if damage_type == DAMAGE_TYPE_PHYSICAL and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-			local block_sound = "Imba.VanguardBlock"
-			local proc_chance = 40
-			local damage_block = 50
-			local damage_blocked = 0
-
-			-- Roll for a proc
-			if RandomInt(1, 100) <= proc_chance then
-
-				-- Play the block sound for damage over a certain threshold
-				if keys.damage > (victim:GetMaxHealth() * 0.2) then
-					victim:EmitSound(block_sound)
-				end
-
-				-- Halve damage
-				keys.damage = keys.damage / 2
-
-				-- Store blocked damage
-				damage_blocked = damage_blocked + keys.damage
-
-				-- Prevent crit damage notifications
-				display_red_crit_number = false
-			end
-
-			-- If damage is physical, block part of it
+			-- Physical damage block
 			if damage_type == DAMAGE_TYPE_PHYSICAL then
+
+				-- Calculate damage block
+				local damage_block = 0 + victim:GetLevel()
 
 				-- Calculate actual damage
 				local actual_damage = math.max(keys.damage - damage_block, 0)
 
-				-- Update blocked damage
-				damage_blocked = damage_blocked + keys.damage - actual_damage
+				-- Calculate actually blocked damage
+				local damage_blocked = keys.damage - actual_damage
+
+				-- Play block message
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
 
 				-- Reduce damage
 				keys.damage = actual_damage
 			end
+		end
+	end
 
-			-- If any damage was blocked, play block message
-			if damage_blocked > 0 then
+	-- Crimson Guard block
+	if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and keys.damage > 0 then
+
+		-- If a higher tier of Vanguard-based block is present, do nothing
+		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
+
+			-- Reduce damage
+			keys.damage = keys.damage * 0.91
+
+			-- Physical damage block
+			if damage_type == DAMAGE_TYPE_PHYSICAL then
+
+				-- Calculate damage block
+				local damage_block = 5 + victim:GetLevel()
+
+				-- Calculate actual damage
+				local actual_damage = math.max(keys.damage - damage_block, 0)
+
+				-- Calculate actually blocked damage
+				local damage_blocked = keys.damage - actual_damage
+
+				-- Play block message
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+				-- Reduce damage
+				keys.damage = actual_damage
 			end
+		end
+	end
+
+	-- Greatwyrm plate block
+	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
+
+		-- Reduce damage
+		keys.damage = keys.damage * 0.88
+
+		-- Physical damage block
+		if damage_type == DAMAGE_TYPE_PHYSICAL then
+
+			-- Calculate damage block
+			local damage_block = 10 + victim:GetLevel()
+
+			-- Calculate actual damage
+			local actual_damage = math.max(keys.damage - damage_block, 0)
+
+			-- Calculate actually blocked damage
+			local damage_blocked = keys.damage - actual_damage
+
+			-- Play block message
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+			-- Reduce damage
+			keys.damage = actual_damage
+		end
+	end
+
+	-- Return damage prevention
+	if victim:HasModifier("modifier_imba_centaur_return") then
+
+		-- Parameters
+		local ability = victim:FindAbilityByName("imba_centaur_return")
+		local damage_ignore = ability:GetLevelSpecialValueFor("dmg_ignore", ability:GetLevel() - 1)
+
+		-- Ignore part of incoming damage
+		if keys.damage > damage_ignore then
+			keys.damage = keys.damage - damage_ignore
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_ignore, nil)
+		else
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
+			keys.damage = 0
 		end
 	end
 
@@ -950,6 +919,62 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_ABILITY_MODE then
+
+		-- Roll the random tower abilities for this game
+		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
+		TOWER_UPGRADE_TREE["safelane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
+		TOWER_UPGRADE_TREE["safelane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+
+		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
+		TOWER_UPGRADE_TREE["safelane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
+		TOWER_UPGRADE_TREE["safelane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+
+		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
+		TOWER_UPGRADE_TREE["safelane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
+		TOWER_UPGRADE_TREE["safelane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
+
+		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		
+		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
+
+		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
+		TOWER_UPGRADE_TREE["midlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
+		TOWER_UPGRADE_TREE["midlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
+
+		-- Make sure tier 4s are unique between themselves
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(4, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4, "aura")
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] = GetRandomTowerAbility(4, "active")
+
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
+		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] do
+			TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
+		end
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] do
+			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+		end
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
+		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] do
+			TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
+		end
+
 		
 		-- Safelane towers
 		for i = 1, 3 do
@@ -962,12 +987,21 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
-			-- Store the towers' tier
+			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
+			radiant_tower.tower_lane = "safelane"
+			dire_tower.tower_lane = "safelane"
 
-			-- Random an ability from the list
-			local ability_name = GetRandomTowerAbility(i)
+			-- Fetch the corresponding ability's name
+			local ability_name
+			if i == 1 then
+				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_1"][1]
+			elseif i == 2 then
+				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_2"][1]
+			elseif i == 3 then
+				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_3"][1]
+			end
 
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
@@ -989,12 +1023,21 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
-			-- Store the towers' tier
+			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
+			radiant_tower.tower_lane = "midlane"
+			dire_tower.tower_lane = "midlane"
 
-			-- Random an ability from the list
-			local ability_name = GetRandomTowerAbility(i)
+			-- Fetch the corresponding ability's name
+			local ability_name
+			if i == 1 then
+				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_1"][1]
+			elseif i == 2 then
+				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_2"][1]
+			elseif i == 3 then
+				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_3"][1]
+			end
 
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
@@ -1016,12 +1059,21 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
-			-- Store the towers' tier
+			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
+			radiant_tower.tower_lane = "hardlane"
+			dire_tower.tower_lane = "hardlane"
 
-			-- Random an ability from the list
-			local ability_name = GetRandomTowerAbility(i)
+			-- Fetch the corresponding ability's name
+			local ability_name
+			if i == 1 then
+				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1]
+			elseif i == 2 then
+				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1]
+			elseif i == 3 then
+				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1]
+			end
 
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
@@ -1046,11 +1098,15 @@ function GameMode:OnGameInProgress()
 		dire_left_t4 = dire_left_t4[1]
 		dire_right_t4 = dire_right_t4[1]
 
-		-- Store the towers' tier
-		radiant_left_t4.tower_tier = 4
-		radiant_right_t4.tower_tier = 4
-		dire_left_t4.tower_tier = 4
-		dire_right_t4.tower_tier = 4
+		-- Store the towers' tier and lane
+		radiant_left_t4.tower_tier = 41
+		radiant_right_t4.tower_tier = 42
+		dire_left_t4.tower_tier = 41
+		dire_right_t4.tower_tier = 42
+		radiant_left_t4.tower_lane = "midlane"
+		radiant_right_t4.tower_lane = "midlane"
+		dire_left_t4.tower_lane = "midlane"
+		dire_right_t4.tower_lane = "midlane"
 
 		-- Add and level up the multishot ability
 		local multishot_ability = "imba_tower_multishot"
@@ -1062,10 +1118,10 @@ function GameMode:OnGameInProgress()
 		local dire_left_ability = dire_left_t4:FindAbilityByName(multishot_ability)
 		local radiant_right_ability = radiant_right_t4:FindAbilityByName(multishot_ability)
 		local dire_right_ability = dire_right_t4:FindAbilityByName(multishot_ability)
-		radiant_left_ability:SetLevel(1)
-		dire_left_ability:SetLevel(1)
-		radiant_right_ability:SetLevel(1)
-		dire_right_ability:SetLevel(1)
+		radiant_left_ability:SetLevel(3)
+		dire_left_ability:SetLevel(3)
+		radiant_right_ability:SetLevel(3)
+		dire_right_ability:SetLevel(3)
 	end
 
 end

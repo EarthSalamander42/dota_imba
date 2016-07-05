@@ -2315,7 +2315,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"scepter_damage"		"100 150 200"
+				"damage_scepter"		"100 150 200"
 			}
 		}
 	}
@@ -2753,12 +2753,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_charges"				"3"
+				"max_charges_scepter"		"3"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"charge_restore_time"		"30"
+				"var_type"						"FIELD_INTEGER"
+				"charge_restore_time_scepter"	"30"
 			}
 		}
 	}
@@ -2846,7 +2846,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"750"
+				"radius_scepter"		"750"
 			}
 		}
 	}
@@ -3991,7 +3991,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_distance"			"1200"
+				"distance_scepter"			"1200"
 			}
 			"04"
 			{
@@ -8583,13 +8583,13 @@
 			}
 			"13"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"requiem_heal_scepter_pct"	"100"
+				"var_type"						"FIELD_FLOAT"
+				"requiem_heal_pct_scepter"		"100"
 			}	
 			"14"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"requiem_damage_scepter_pct"	"100"
+				"requiem_damage_pct_scepter"	"100"
 			}
 		}
 	}
@@ -8716,39 +8716,34 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"full_splash_radius"	"125"
+				"splash_radius"			"175"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mid_splash_radius"		"125"
+				"splash_damage"			"75"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_splash_radius"		"125"
+				"damage_min"			"21 30 40"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_min"			"21 30 40"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"damage_max"			"21 30 40"
 			}
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"20.0"
 			}
-			"08"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_min_scepter"	"40 55 70"
 			}
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_max_scepter"	"40 55 70"
@@ -9403,7 +9398,7 @@
 			"06"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"scepter_radius"							"900"
+				"radius_scepter"							"900"
 			}
 		}
 	}
@@ -11006,12 +11001,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_cooldown"		"12 8 4"
+				"cooldown_scepter"		"12 8 4"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_duration"		"12"
+				"duration_scepter"		"12"
 			}
 		}
 	}
@@ -12224,7 +12219,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"scepter_bounces"			"9"
+				"bounces_scepter"			"9"
 			}
 			"04"
 			{
@@ -12407,7 +12402,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"200"
+				"regen_rate"			"500"
 			}
 		}
 	}
@@ -12429,7 +12424,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"300"
+				"regen_rate"			"500"
 			}
 		}
 	}
@@ -15195,27 +15190,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_inner"				"60 80 100 120"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius_inner"				"250"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_outer"				"60 80 100 120"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius_outer"				"250"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"chance"					"25"
+				"bonus_building_damage"		"150"
 			}
 		}
 	}

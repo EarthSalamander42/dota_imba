@@ -37,7 +37,7 @@ function HoofStomp( keys )
 	Timers:CreateTimer(0, function()
 
 		-- Check if any new enemies entered the pit
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), pit_center, nil, pit_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(nearby_enemies) do
 			if not enemy:HasModifier(modifier_enemies) then
 				ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemies, {duration = pit_duration - pit_duration_elapsed})
@@ -164,8 +164,15 @@ function StampedeStart( keys )
 		duration = ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
 	end
 
+	-- Initialize the hit table
+	if caster.stampede_targets_hit then
+		caster.stampede_targets_hit = nil
+	end
+
+	caster.stampede_targets_hit = {}
+
 	-- Apply the modifier to all allied units
-	local allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local allies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 	for _, ally in pairs(allies) do
 		ability:ApplyDataDrivenModifier(caster, ally, modifier_stampede, {duration = duration})
 		if scepter then
@@ -174,14 +181,8 @@ function StampedeStart( keys )
 	end
 	
 	-- Plays the global sound
+	caster:EmitSound("Hero_Centaur.Stampede.Cast")
 	EmitGlobalSound("Hero_Centaur.Stampede.Cast")
-
-	-- Initialize the hit table
-	if caster.stampede_targets_hit then
-		caster.stampede_targets_hit = nil
-	end
-
-	caster.stampede_targets_hit = {}
 end
 
 function Stampede( keys )

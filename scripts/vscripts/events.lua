@@ -146,6 +146,17 @@ function GameMode:OnGameRulesStateChange(keys)
 				end)
 			end)
 		end)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Extra asset loading
+	-------------------------------------------------------------------------------------------------
+
+	--	print("loading started")
+
+	--	Timers:CreateTimer(5, function()
+	--		print("loading...")
+	--		PrecacheUnitByNameAsync("npc_dota_hero_brewmaster", function(...) end)
+	--	end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1309,6 +1320,7 @@ function GameMode:OnTowerKill(keys)
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_UPGRADE_MODE then
+		
 		-- Find all radiant towers on the map
 		local towers = FindUnitsInRadius(tower_team, Vector(0, 0, 0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 

@@ -133,7 +133,9 @@ function ShadowWave( keys )
 	local damage_radius = ability:GetLevelSpecialValueFor("damage_radius", ability_level)
 	local max_targets = ability:GetLevelSpecialValueFor("max_targets", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local bonus_healing = ability:GetLevelSpecialValueFor("bonus_healing", ability_level) / 100
 	local heal = damage
+	local this_bonus_heal
 
 	-- Particles
 	local shadow_wave_particle = keys.shadow_wave_particle
@@ -149,12 +151,15 @@ function ShadowWave( keys )
 
 	-- If the target is not the caster then do the extra bounce for the caster
 	if target ~= caster then
+
 		-- Insert the caster into the hit table
 		table.insert(hit_table, caster)
+
 		-- Heal the caster and do damage to the units around it
 		ability:ApplyDataDrivenModifier(caster, caster, armor_bonus, {})
-		caster:Heal(heal, caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal, nil)
+		this_bonus_heal = bonus_healing * (caster:GetMaxHealth() - caster:GetHealth())
+		caster:Heal(heal + this_bonus_heal, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal + this_bonus_heal, nil)
 
 		local units_to_damage = FindUnitsInRadius(caster:GetTeam(), caster_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
@@ -175,8 +180,9 @@ function ShadowWave( keys )
 
 	-- Heal the initial target and do the damage to the units around it
 	ability:ApplyDataDrivenModifier(caster, target, armor_bonus, {})
-	target:Heal(heal, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+	this_bonus_heal = bonus_healing * (target:GetMaxHealth() - target:GetHealth())
+	target:Heal(heal + this_bonus_heal, caster)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal + this_bonus_heal, nil)
 
 	local units_to_damage = FindUnitsInRadius(caster:GetTeam(), target_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
@@ -191,11 +197,11 @@ function ShadowWave( keys )
 		ParticleManager:ReleaseParticleIndex(damage_particle)
 	end
 
-	-- we start from 2 first because we healed 1 target already
+	-- We start from 2 first because we healed 1 target already
 	for i = 2, max_targets do
 
 		-- Find all units in bounce radius
-		local units = FindUnitsInRadius(caster:GetTeam(), target_location, nil, bounce_radius, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, FIND_CLOSEST, false)
+		local units = FindUnitsInRadius(caster:GetTeam(), target_location, nil, bounce_radius, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, FIND_CLOSEST, false)
 		
 		for _,unit in pairs(units) do
 			local check_unit = 0	-- Helper variable to determine if a unit has been hit or not
@@ -209,6 +215,7 @@ function ShadowWave( keys )
 
 			-- If its not hit then bounce the wave to it
 			if check_unit == 0 then
+
 				-- After we find the next unit to heal then we insert it into the hit table to keep track of it
 				-- and we also get the unit position
 				table.insert(hit_table, unit)
@@ -225,8 +232,9 @@ function ShadowWave( keys )
 
 				-- Heal it and deal damage to enemy units around it
 				ability:ApplyDataDrivenModifier(caster, target, armor_bonus, {})
-				target:Heal(heal, caster)
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+				this_bonus_heal = bonus_healing * (target:GetMaxHealth() - target:GetHealth())
+				target:Heal(heal + this_bonus_heal, caster)
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal + this_bonus_heal, nil)
 				local units_to_damage = FindUnitsInRadius(caster:GetTeam(), target_location, nil, damage_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType(), 0, 0, false)
 
 				for _,v in pairs(units_to_damage) do
@@ -274,8 +282,8 @@ function Weave( keys )
 
 	-- If Dazzle has Aghanim's Scepter, includes mechanical units and buildings
 	if scepter then
-		enemies = FindUnitsInRadius(caster.GetTeam(caster), target_point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-		allies = FindUnitsInRadius(caster.GetTeam(caster), target_point, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		enemies = FindUnitsInRadius(caster.GetTeam(caster), target_point, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		allies = FindUnitsInRadius(caster.GetTeam(caster), target_point, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	end
 
 	-- Applies the buff/debuff
@@ -293,6 +301,12 @@ function WeaveInterval( keys )
 	local ability = keys.ability
 	local scepter = caster:HasScepter()
 
+	-- Ignores over-time armor for buildings
+	if target:IsBuilding() then
+		return nil
+	end
+
+	-- Applies a stack of the buff/debuff otherwise
 	if scepter then
 		if caster:GetTeam() == target:GetTeam() then
 			ability:ApplyDataDrivenModifier(caster, target, "modifier_imba_weave_positive_scepter", {})

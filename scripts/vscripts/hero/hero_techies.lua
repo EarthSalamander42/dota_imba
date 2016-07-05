@@ -182,7 +182,7 @@ function LandMineThink( keys )
 	Timers:CreateTimer(0, function()
 		
 		-- Find nearby enemies
-		local near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, small_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		local near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, small_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 		local far_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, big_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
 		-- If any enemy hero is inside the far blast range, move towards it
@@ -246,8 +246,8 @@ function LandMineExplode( keys )
 	ParticleManager:SetParticleControl(explosion_pfx, 0, caster:GetAbsOrigin())
 		
 	-- Find nearby enemies
-	local near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, small_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-	local far_units = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, big_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+	local near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, small_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+	local far_units = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, big_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
 	-- Damage small radius enemies
 	for _,enemy in pairs(near_units) do
@@ -472,7 +472,7 @@ function StasisTrapExplode( keys )
 	ParticleManager:SetParticleControl(explosion_pfx, 0, caster_loc)
 		
 	-- Find nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 
 	-- Stun all valid enemy targets
 	for _,enemy in pairs(enemies) do
@@ -494,7 +494,7 @@ function StasisTrapExplode( keys )
 		Timers:CreateTimer(secondary_delay, function()
 
 			-- Update chain reaction targets
-			enemies = FindUnitsInRadius(caster_owner:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			enemies = FindUnitsInRadius(caster_owner:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			local chain_continue = false
 
 			-- Test if the chain reaction must continue
@@ -528,7 +528,7 @@ function StasisTrapExplode( keys )
 				ParticleManager:SetParticleControl(chain_reaction_pfx, 0, current_enemy:GetAbsOrigin())
 
 				-- Find nearby enemies
-				local chain_enemies = FindUnitsInRadius(caster_owner:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+				local chain_enemies = FindUnitsInRadius(caster_owner:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 				-- Stun all valid enemy targets
 				for _,enemy in pairs(chain_enemies) do
@@ -576,7 +576,7 @@ function StasisTrapExplodeCreep( keys )
 	ParticleManager:SetParticleControl(explosion_pfx, 0, creep_loc)
 		
 	-- Find nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), creep_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), creep_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
 
 	-- Stun all valid enemy targets
 	for _,enemy in pairs(enemies) do
@@ -598,7 +598,7 @@ function StasisTrapExplodeCreep( keys )
 		Timers:CreateTimer(secondary_delay, function()
 
 			-- Update chain reaction targets
-			enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			local chain_continue = false
 
 			-- Test if the chain reaction must continue
@@ -632,7 +632,7 @@ function StasisTrapExplodeCreep( keys )
 				ParticleManager:SetParticleControl(chain_reaction_pfx, 0, current_enemy:GetAbsOrigin())
 
 				-- Find nearby enemies
-				local chain_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+				local chain_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 				-- Stun all valid enemy targets
 				for _,enemy in pairs(chain_enemies) do

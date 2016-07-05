@@ -26,7 +26,7 @@ function Headshot( keys )
 
 	-- Far mode headshot, finds all enemies around the target and creates a projectile for each one
 	elseif caster:HasModifier(modifier_far) and target:GetTeam() ~= caster:GetTeam() and RandomInt(1, proc_chance) <= far_proc_chance then
-		local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, far_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, far_aoe, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _,unit in pairs(units) do
 			local headshot_projectile = {
 				Target = unit,
@@ -38,7 +38,7 @@ function Headshot( keys )
 				bReplaceExisting = false,
 				iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 				iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL,
+				iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 				bDeleteOnHit = true,
 				iMoveSpeed = far_shot_speed,
 				bProvidesVision = false,
@@ -363,7 +363,7 @@ function Assassinate( keys )
 		bReplaceExisting	= false,
 		iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP + DOTA_UNIT_TARGET_MECHANICAL,
+		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 	--	fExpireTime			= ,
 		bDeleteOnHit		= false,
 		vVelocity			= bullet_direction * bullet_speed,
@@ -385,7 +385,7 @@ function Assassinate( keys )
 		bReplaceExisting = false,
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
 		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
-		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL,
+		iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 		bDeleteOnHit = true,
 		iMoveSpeed = bullet_speed,
 		bProvidesVision = false,

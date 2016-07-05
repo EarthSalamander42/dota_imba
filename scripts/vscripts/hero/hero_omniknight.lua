@@ -35,7 +35,7 @@ function Purification( keys )
 	ParticleManager:SetParticleControl(target_fx, 0, target_pos)
 
 	-- Damage nearby enemies
-	local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
+	local targets = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 	for _,enemy in pairs(targets) do
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal_min, damage_type = DAMAGE_TYPE_PURE})
 	end
@@ -77,7 +77,7 @@ function PurificationDeath( keys )
 		ParticleManager:SetParticleControl(target_fx, 0, caster_pos)
 
 		-- Damage nearby enemies
-		local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_MECHANICAL, 0, 0, false)
+		local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 		for _,enemy in pairs(targets) do
 			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = heal_min, damage_type = DAMAGE_TYPE_PURE})
 		end

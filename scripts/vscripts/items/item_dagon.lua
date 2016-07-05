@@ -14,8 +14,7 @@ function Dagon( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local bounce_damage = ability:GetLevelSpecialValueFor("bounce_damage", ability_level)
 	local bounce_range = ability:GetLevelSpecialValueFor("bounce_range", ability_level)
-	local bounce_count = ability:GetLevelSpecialValueFor("bounce_count", ability_level)
-	local bounce_delay = 0.1
+	local bounce_decay = (100 - ability:GetLevelSpecialValueFor("bounce_decay", ability_level) ) / 100
 	local current_source = caster
 	local targets_hit = {}
 
@@ -40,11 +39,17 @@ function Dagon( keys )
 	-- Start bouncing from the initial target
 	current_source = target
 
-	-- Start bounce loop
-	Timers:CreateTimer(bounce_delay, function()
+	-- Flag bounce target as found
+	local keep_bouncing = true
+
+	-- Start the bounce loop
+	while keep_bouncing do
+
+		-- Reset bounce loop state
+		keep_bouncing = false
 
 		-- Find nearby enemies
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_source:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_source:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 
 		-- Check for not-yet-hit enemies
 		for _,enemy in pairs(nearby_enemies) do
@@ -65,26 +70,18 @@ function Dagon( keys )
 				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), false)
 				ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(bounce_damage, 0, 0))
 
-				-- Play hit sound if the target is a hero
-				if enemy:IsHero() then
-					enemy:EmitSound(sound_hit)
-				end
-
-				-- Deal damage to the initial target
+				-- Deal damage to the target
 				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bounce_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+				-- Reduce next bounce's damage
+				bounce_damage = bounce_damage * bounce_decay
 
 				-- Set up the next bounce
 				current_source = enemy
 				targets_hit[#targets_hit + 1] = enemy
+				keep_bouncing = true
 				break
 			end
 		end
-
-		-- Keep bouncing if appropriate
-		bounce_count = bounce_count - 1
-		if bounce_count > 0 then
-			return bounce_delay
-		end
-	end)
-
+	end
 end

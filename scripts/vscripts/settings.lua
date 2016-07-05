@@ -2,7 +2,7 @@
 -- IMBA: Game settings
 -------------------------------------------------------------------------------------------------
 
-IMBA_VERSION = "6.86"						-- Tracks game version
+IMBA_VERSION = "6.88"						-- Tracks game version
 
 -------------------------------------------------------------------------------------------------
 -- Barebones basics
@@ -249,6 +249,21 @@ CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 5											-- Creep bounty increase (in %) ba
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
 TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
 TOWER_POWER_FACTOR = 0														-- Tower durability/damage increase factor (0 = default)
+TOWER_UPGRADE_TREE = {}														-- Stores the tower upgrades for this game if necessary
+TOWER_UPGRADE_TREE["safelane"] = {}
+TOWER_UPGRADE_TREE["midlane"] = {}
+TOWER_UPGRADE_TREE["hardlane"] = {}
+TOWER_UPGRADE_TREE["safelane"]["tier_1"] = {}
+TOWER_UPGRADE_TREE["safelane"]["tier_2"] = {}
+TOWER_UPGRADE_TREE["safelane"]["tier_3"] = {}
+TOWER_UPGRADE_TREE["midlane"]["tier_1"] = {}
+TOWER_UPGRADE_TREE["midlane"]["tier_2"] = {}
+TOWER_UPGRADE_TREE["midlane"]["tier_3"] = {}
+TOWER_UPGRADE_TREE["midlane"]["tier_41"] = {}
+TOWER_UPGRADE_TREE["midlane"]["tier_42"] = {}
+TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
+TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
+TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
 FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
 
