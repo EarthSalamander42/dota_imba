@@ -33433,4 +33433,94 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Spectre Haunt Rework
+	//=================================================================================================================
+	"imba_spectre_haunt_re"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"				"spectre_haunt"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		
+	    // Stats
+	    //-------------------------------------------------------------------------------------
+	    "AbilityCastPoint" "0.5"
+		"AbilityCooldown"				"90 75 60"
+		"AbilityManaCost"				"175 225 275"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+	    {
+	      "01"
+	        {
+	          "var_type" "FIELD_FLOAT"
+	          "duration" "8"
+	        }
+	      "02"
+	        {
+	          "var_type" "FIELD_INTEGER"
+	          "max_targets" "3"
+	        }
+	    }
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+		}
+		
+	    // Data Driven
+	    //-------------------------------------------------------------------------------------
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	          "ScriptFile"  "hero/hero_spectre.lua"
+	          "Function"    "spawn_spirits"
+	        }
+	    }
+		
+	    "Modifiers"
+	    {
+	      "modifier_imba_haunt"
+	      {
+	        "Passive"      "1"
+	        "IsHidden"      "1"
+			"States"
+				{	
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DOMINATED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+	
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_spectre.lua"
+						"Function"		"AddSpirits"
+					}
+				}
+	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_spectre.lua"
+						"Function"		"RemoveSpirits"
+					}
+				}
+	      }
+	    }
+	  }
 }
+

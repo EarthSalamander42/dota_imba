@@ -4111,6 +4111,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"armor_reduction"		"8"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"sheep_recast_duration"		"10.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sheep_recast_max_stack"		"5"
+			}
 		}
 
 		"OnSpellStart"
@@ -4130,6 +4140,7 @@
 				"modifier_debuff"		"modifier_item_imba_sheepstick_disable"
 				"modifier_dearmor"		"modifier_item_imba_sheepstick_dearmor"
 				"modifier_demagic"		"modifier_item_imba_sheepstick_demagic"
+				"modifier_recast"		"modifier_item_imba_sheepstick_recast"
 			}
 		}
 
@@ -4202,6 +4213,17 @@
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
 				}
+			}
+			
+			"modifier_item_imba_sheepstick_recast"
+			{
+				"IsDebuff"								"1"
+				"IsPurgable"							"0"
+				"IsHidden"								"0"
+				
+				"TextureName"							"imba_sheepstick_recast"
+				
+				"Duration"								"%sheep_recast_duration"
 			}
 		}
 	}
