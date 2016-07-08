@@ -1630,12 +1630,12 @@
 	"npc_imba_hero_spectre"
 	{
 		"override_hero"				"npc_dota_hero_spectre"
-
+		"AbilityLayout"				"4"
 		//"Ability1"				"imba_spectre_spectral_dagger"
 		//"Ability2"				"imba_spectre_desolate"
 		//"Ability3"				"imba_spectre_dispersion"
-		//"Ability4"				"imba_spectre_reality"
-		//"Ability5"				"imba_spectre_haunt"
+		"Ability4"					"imba_spectre_haunt_re"
+		//"Ability5"				"imba_spectre_reality"
 		"Ability6"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"

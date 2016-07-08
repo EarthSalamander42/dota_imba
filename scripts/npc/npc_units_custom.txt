@@ -3301,4 +3301,81 @@
 		"VisionDaytimeRange"		"1800"
 		"VisionNighttimeRange"		"1400"
 	}
+	
+	// Spectre Haunt
+	"npc_spectre_haunt"
+	{										
+		// General
+		//----------------------------------------------------------------
+		"Model"						"models/heroes/spectre/spectre.vmdl"	// Model.
+		"BaseClass"					"npc_dota_creep"
+		"SoundSet"					"n_creep_Melee"
+		"GameSoundsFile"			"soundevents/game_sounds_creeps.vsndevts"
+		"Level"						"2"
+		"ModelScale" 				"0.8"
+
+		// Abilities
+		//----------------------------------------------------------------
+		//"Ability1"					"spirit_of_vengeance_passive"			// Ability 1
+	
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"15"		// Damage range min.
+		"AttackDamageMax"			"15"		// Damage range max.	
+		"AttackRate"				"1.35"		// Speed of attack.
+		"AttackAnimationPoint"		"0.38"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"500"		// Range within a target can be acquired.
+		"AttackRange"				"450"		// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_spectre/spectre_desolate.vpcf"			// Particle system model for projectile.
+		"ProjectileSpeed"			"900"			// Speed of projectile.		   
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"40"
+		"HealthBarOffset"			"150"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"		// Speed.
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0.0"		// Mana regeneration rate.		 
+	
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"500"		// Range of vision during day light.
+		"VisionNighttimeRange"		"500"		// Range of vision at night time.
+
+		// Team
+		//----------------------------------------------------------------
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		"Creature"
+		{
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"4903"		} //"Dress of the Ephemeral Haunt"
+				"Wearable2"		{	"ItemDef"		"4902"		} //"Horns of the Ephemeral Haunt"
+				"Wearable3" 	{	"ItemDef"		"4901"		} //"Sleeves of the Ephemeral Haunt"
+				"Wearable4"		{	"ItemDef"		"4900"		} //"Wings of the Ephemeral Haunt"
+				"Wearable5"		{	"ItemDef"		"5835"		} //"Blade of the Abyss"
+			}
+		}
+	}
 }
