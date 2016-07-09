@@ -12861,7 +12861,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"0"
 		"AbilityCastPoint"					"0"
-		"AbilityCooldown"					"90"		
+		"AbilityCooldown"					"40"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12880,7 +12880,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_duration"			"30"
+				"active_duration"			"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_agi"					"14 21 28 35"
 			}
 		}
 		
@@ -12944,9 +12949,9 @@
 					}
 				}
 
-				"States"
+				"Properties"
 				{
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
 				}
 			}
 			
@@ -13088,7 +13093,6 @@
 				"ScriptFile"						"hero/hero_drow_ranger.lua"
 				"Function"							"MarksmanshipHit"
 
-				"modifier_dummy"					"modifier_imba_marksmanship_splinter_dummy"
 				"modifier_dmg_penalty"				"modifier_imba_marksmanship_splinter_dmg_penalty"
 			}
 		}
@@ -13120,8 +13124,6 @@
 					{
 						"ScriptFile"				"hero/hero_drow_ranger.lua"
 						"Function"					"MarksmanshipSplinter"
-
-						"modifier_dummy"			"modifier_imba_marksmanship_splinter_dummy"
 					}
 				}
 
@@ -13183,16 +13185,6 @@
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_reduction_scepter"
 				}
 			}
-
-			"modifier_imba_marksmanship_splinter_dummy"
-			{
-				"Passive"						"0"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-
-				"Duration"						"0.01"
-			}
 		}
 	}
 
@@ -13220,6 +13212,9 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 			"particle"					"particles/status_fx/status_effect_enigma_malefice.vpcf"
 			"particle"					"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
+			"particle"					"particles/hero/enigma/malefice_targetstart.vpcf"
+			"particle"					"particles/hero/enigma/malefice_travel.vpcf"
+			"particle"					"particles/hero/enigma/malefice_targetend.vpcf"
 		}
 
 		// Casting
@@ -13267,7 +13262,17 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"glitch_radius"				"150 175 200 225"
+				"glitch_radius"				"225"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"glitch_pull"				"160 190 220 250"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pull_delay"				"0.4"
 			}
 		}
 
@@ -13312,6 +13317,9 @@
 						"Function"			"MaleficeTick"
 
 						"sound_tick"		"Hero_Enigma.MaleficeTick"
+						"particle_start"	"particles/hero/enigma/malefice_targetstart.vpcf"
+						"particle_travel"	"particles/hero/enigma/malefice_travel.vpcf"
+						"particle_end"		"particles/hero/enigma/malefice_targetend.vpcf"
 					}
 				}
 
@@ -13323,6 +13331,9 @@
 						"Function"			"MaleficeTick"
 
 						"sound_tick"		"Hero_Enigma.MaleficeTick"
+						"particle_start"	"particles/hero/enigma/malefice_targetstart.vpcf"
+						"particle_travel"	"particles/hero/enigma/malefice_travel.vpcf"
+						"particle_end"		"particles/hero/enigma/malefice_targetend.vpcf"
 					}
 				}
 			}
@@ -13387,24 +13398,34 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"child_duration"			"14"
+				"child_duration"			"12"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_health"				"180 200 220 240"
+				"base_health"				"180 210 240 270"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_per_level"			"15"
+				"health_per_level"			"18"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_level"			"2"
+				"base_damage"				"20 28 36 44"
 			}
 			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_level"			"3"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_ms"					"260 280 300 320"
+			}
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"ms_per_level"				"1"
@@ -13508,27 +13529,27 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"550 575 600 625"
+				"radius"					"550"
 			}
 			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"singularity_radius"		"10"
+			}
+			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"damage_per_tick"			"3.0 3.75 4.5 5.25"
 			}
-			"03"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"11"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"base_pull"					"50"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_pull"				"5"
+				"pull_distance"				"60 70 80 90"
 			}
 		}
 
@@ -13542,7 +13563,7 @@
 
 				"sound_cast"				"Hero_Enigma.Midnight_Pulse"
 				"particle_pulse"			"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
-				"modifier_gravity"			"modifier_imba_enigma_gravity_stack"
+				"modifier_singularity"		"modifier_imba_enigma_black_hole_singularity"
 			}
 		}
 	}
@@ -13578,12 +13599,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_increase"				"15"
+				"stun_increase"				"20"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stack_time"				"0.5"
+				"think_interval"			"0.2"
 			}
 		}
 
@@ -13607,11 +13628,11 @@
 			"modifier_imba_enigma_gravity"
 			{
 				"Passive"					"0"
-				"IsHidden"					"1"
+				"IsHidden"					"0"
 				"IsDebuff"					"1"
 				"IsPurgable"				"0"
 
-				"ThinkInterval"				"%stack_time"
+				"ThinkInterval"				"%think_interval"
 
 				"OnIntervalThink"
 				{
@@ -13619,29 +13640,8 @@
 					{
 						"ScriptFile"		"hero/hero_enigma.lua"
 						"Function"			"Gravity"
-
-						"modifier_stacks"	"modifier_imba_enigma_gravity_stack"
 					}
 				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"GravityEnd"
-
-						"modifier_stacks"	"modifier_imba_enigma_gravity_stack"
-					}
-				}
-			}
-
-			"modifier_imba_enigma_gravity_stack"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
 			}
 		}
 	}
@@ -13658,7 +13658,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"enigma_black_hole"
@@ -13699,7 +13699,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
+				"radius"					"420 440 460"
 			}
 			"02"
 			{
@@ -13709,7 +13709,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_pull_distance"		"20"
+				"stack_pull_distance"		"30"
 			}
 			"04"
 			{
@@ -13719,7 +13719,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_pull_speed"			"5"
+				"stack_pull_speed"			"8"
 			}
 			"06"
 			{
@@ -13729,7 +13729,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"60 120 180"
+				"damage"					"50 100 150"
 			}
 			"08"
 			{
@@ -13806,7 +13806,6 @@
 
 						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
 						"particle_screen"		"particles/hero/enigma/screen_blackhole_indicator.vpcf"
-						"modifier_singularity"	"modifier_imba_enigma_black_hole_singularity"
 					}
 				}
 
@@ -13857,7 +13856,7 @@
 						"Function"				"BlackHoleDebuffStart"
 
 						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-						"modifier_singularity"	"modifier_imba_enigma_black_hole_singularity"
+						"particle_screen"		"particles/hero/enigma/screen_blackhole_indicator.vpcf"
 					}
 				}
 
@@ -13924,7 +13923,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"18 14 10 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14113,7 +14112,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24 22 20 18"
+		"AbilityCooldown"				"30 26 22 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -14152,12 +14151,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-9 -11 -13 -15"
+				"move_slow"				"-10"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-20 -30 -40 -50"
+				"attack_slow"			"-20"
 			}
 			"06"
 			{
@@ -14167,7 +14166,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_bonus"			"8 12 16 20"
+				"attack_bonus"			"5 10 15 20"
 			}
 		}
 
@@ -14198,8 +14197,25 @@
 
 				"Duration"				"%cooldown_increase"
 
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
-				"EffectAttachType"		"follow_origin"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_faceless_void.lua"
+						"Function"				"TimeDilationParticle"
+
+						"particle_debuff"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_faceless_void.lua"
+						"Function"				"TimeDilationParticleEnd"
+					}
+				}
 
 				"Properties"
 				{
@@ -14337,7 +14353,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_increase"			"0.4 0.5 0.6 0.7"
+				"cooldown_increase"			"0.2 0.3 0.4 0.5"
 			}
 			"03"
 			{
@@ -14453,32 +14469,32 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_radius"			"30"
+				"extra_radius"			"25"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"extra_duration"		"0.15"
+				"extra_duration"		"0.0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"0.1"
+				"tick_interval"			"0.03"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"linger_duration"		"0.2"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"20 30 40"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"30 60 90"
+				"slow_scepter"			"-70"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_scepter"			"-80"
+				"chrono_ms"				"1000"
 			}
 		}
 
@@ -14531,7 +14547,6 @@
 						"ScriptFile"	"hero/hero_faceless_void.lua"
 						"Function"		"ChronoBuffEnd"
 					}
-
 					"DestroyTrees"
 					{
 						"Target"		"TARGET"
@@ -14541,7 +14556,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"1000"
+					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"%chrono_ms"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
 				}
 
@@ -14587,7 +14602,7 @@
 				{
 					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"			"%slow_scepter"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_scepter"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-250"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-200"
 				}
 			}
 		}

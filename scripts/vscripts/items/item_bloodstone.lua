@@ -12,20 +12,16 @@ function UpdateCharges( keys )
 	local caster = keys.caster
 	local item = keys.ability
 	local charges_modifier = keys.charges_modifier
-	local dummy_modifier = keys.dummy_modifier
 
+	-- Parameters
+	local respawn_time_reduction = item:GetLevelSpecialValueFor("respawn_time_reduction", item:GetLevel() - 1)
 	local current_charges = item:GetCurrentCharges()
 
 	item:ApplyDataDrivenModifier(caster, caster, charges_modifier, {})
 	caster:SetModifierStackCount(charges_modifier, caster, current_charges)
 	
 	-- Reduce respawn timer
-	local respawn_time_reduction = item:GetLevelSpecialValueFor("respawn_time_reduction", item:GetLevel() - 1)
 	caster.bloodstone_respawn_reduction = current_charges * respawn_time_reduction
-
-	-- Apply a dummy modifier to keep the mana value updated
-	caster:RemoveModifierByName(dummy_modifier)
-	item:ApplyDataDrivenModifier(caster, caster, dummy_modifier, {})
 end
 
 function GainChargesOnKill( keys )

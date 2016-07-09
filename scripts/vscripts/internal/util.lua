@@ -216,6 +216,27 @@ function IsRoshan(unit)
 	end
 end
 
+-- Checks if a given unit is a ward, or Techies bomb
+function IsWardOrBomb(unit)
+
+	local unit_name = unit:GetUnitName()
+	local valid_unit_names = {
+		"npc_dota_observer_wards",
+		"npc_dota_sentry_wards",
+		"npc_imba_techies_land_mine",
+		"npc_imba_techies_stasis_trap",
+		"npc_dota_techies_remote_mine"
+	}
+
+	for _,name in pairs(valid_unit_names) do
+		if unit_name == name then
+			return true
+		end
+	end
+
+	return false
+end
+
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
 	
@@ -1212,7 +1233,8 @@ function IsUninterruptableForcedMovement( unit )
 	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement")
 		or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback")
 		or unit:HasModifier("modifier_item_forcestaff_active") or unit:HasModifier("modifier_shredder_timber_chain")
-		or unit:HasModifier("modifier_batrider_flaming_lasso") or unit:HasModifier("modifier_imba_leap_self_root") then
+		or unit:HasModifier("modifier_batrider_flaming_lasso") or unit:HasModifier("modifier_imba_leap_self_root") 
+		or unit:HasModifier("modifier_faceless_void_chronosphere_freeze") then
 		return true
 	end
 

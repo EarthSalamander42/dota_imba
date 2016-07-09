@@ -213,6 +213,11 @@ function ShadowWave( keys )
 				end
 			end
 
+			-- Do not bounce to couriers
+			if unit:GetUnitName() == "npc_dota_courier" then
+				check_unit = 1
+			end
+
 			-- If its not hit then bounce the wave to it
 			if check_unit == 0 then
 

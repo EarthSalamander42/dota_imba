@@ -7,14 +7,15 @@ function Starfury( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local sound_proc = keys.sound_proc
+	local sound_split = keys.sound_split
 	local particle_proc = keys.particle_proc
-	local modifier_buff = keys.modifier_buff
 	local modifier_dummy = keys.modifier_dummy
+	local modifier_buff = keys.modifier_buff
 
 	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local range = ability:GetLevelSpecialValueFor("range", ability_level)
-	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
 
 	-- Roll for proc chance
 	if RandomInt(1, 100) <= proc_chance then
@@ -27,55 +28,62 @@ function Starfury( keys )
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 	end
 
-	-- If this is an illusion, stop here
-	if caster:IsIllusion() then
+	-- If the ability is on cooldown, stop here
+	if not ability:IsCooldownReady() then
 		return nil
 	end
-	
-	-- Find nearby enemies
-	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_ANY_ORDER, false)
 
-	-- Exclude the target from the enemy count
-	local enemy_count = #nearby_enemies
+	-- Iterate through enemies near the target
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(nearby_enemies) do
-		if enemy == target then
-			enemy_count = enemy_count - 1
-		end
-	end
 
-	-- Calculate damage to be dealt
-	local damage = caster:GetAgility() / math.max(enemy_count, 1)
-
-	-- Iterate through enemies 
-	for _,enemy in pairs(nearby_enemies) do
+		-- Ignore the initial target
 		if enemy ~= target then
 
-			-- Projectile parameters
-			local starfury_projectile = {
+			-- Star projectile parameters
+			local star_projectile = {
 				Target = enemy,
 				Source = target,
 				Ability = ability,
 				EffectName = particle_proc,
 				bDodgeable = true,
 				bProvidesVision = false,
-				iMoveSpeed = speed,
+				iMoveSpeed = projectile_speed,
 			--	iVisionRadius = vision_radius,
 			--	iVisionTeamNumber = caster:GetTeamNumber(),
 				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
 			}
 
-			-- Create the dummy projectile
-			ProjectileManager:CreateTrackingProjectile(starfury_projectile)
-
-			-- Calculate projectile arrival time
-			local projectile_delay = (enemy:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() / speed
-
-			-- Apply damage after the projectile delay
-			Timers:CreateTimer(projectile_delay, function()
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-			end)
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(star_projectile)
 		end
 	end
+
+	-- If at least one star was created, play the sound and put the ability on cooldown
+	if #nearby_enemies > 1 then
+		local cooldown_reduction = GetCooldownReduction(caster)
+		ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
+		target:EmitSound(sound_split)
+	end
+end
+
+function StarfuryHit( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_dmg_penalty = keys.modifier_dmg_penalty
+
+	-- Attack the target
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_dmg_penalty, {})
+	if caster:IsRangedAttacker() then
+		caster:PerformAttack(target, true, true, true, true, false)
+	else
+		local original_loc = caster:GetAbsOrigin()
+		caster:SetAbsOrigin(target:GetAbsOrigin())
+		caster:PerformAttack(target, true, true, true, true, true)
+		caster:SetAbsOrigin(original_loc)
+	end
+	caster:RemoveModifierByName(modifier_dmg_penalty)
 end
 
 function StarfuryBuff( keys )

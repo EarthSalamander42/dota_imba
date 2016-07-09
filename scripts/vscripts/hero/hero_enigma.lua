@@ -21,6 +21,9 @@ function MaleficeTick( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local sound_tick = keys.sound_tick
+	local particle_start = keys.particle_start
+	local particle_travel = keys.particle_travel
+	local particle_end = keys.particle_end
 
 	-- If the ability was unlearned, do nothing
 	if not ability then
@@ -31,17 +34,56 @@ function MaleficeTick( keys )
 	local tick_damage = ability:GetLevelSpecialValueFor("tick_damage", ability_level)
 	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 	local glitch_radius = ability:GetLevelSpecialValueFor("glitch_radius", ability_level)
+	local glitch_pull = ability:GetLevelSpecialValueFor("glitch_pull", ability_level)
+	local pull_delay = ability:GetLevelSpecialValueFor("pull_delay", ability_level)
 	local pull_loc = caster:GetAbsOrigin()
+	local target_loc = target:GetAbsOrigin()
 
 	-- Play sound
 	target:EmitSound(sound_tick)
 
-	-- Choose pull destination
+	-- Choose pull source
 	if caster.black_hole_center then
 		pull_loc = caster.black_hole_center
 	elseif caster.midnight_pulse_center then
 		pull_loc = caster.midnight_pulse_center
 	end
+
+	-- Calculate pull destination
+	local target_distance = (pull_loc - target_loc):Length2D()
+	if target_distance > glitch_pull then
+		pull_loc = target_loc + (pull_loc - target_loc):Normalized() * glitch_pull
+	end
+
+	-- Draw startpoint particle
+	local start_pfx = ParticleManager:CreateParticle(particle_start, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(start_pfx, 0, target_loc)
+	ParticleManager:SetParticleControl(start_pfx, 2, Vector(pull_delay, 0, 0))
+	Timers:CreateTimer(pull_delay, function()
+		ParticleManager:DestroyParticle(start_pfx, false)
+		ParticleManager:ReleaseParticleIndex(start_pfx)
+	end)
+
+	-- Draw traveling particle
+	local travel_pfx = ParticleManager:CreateParticle(particle_travel, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(travel_pfx, 0, target_loc)
+	ParticleManager:SetParticleControl(travel_pfx, 2, Vector(pull_delay, 0, 0))
+	ParticleManager:SetParticleControl(travel_pfx, 1, pull_loc)
+	ParticleManager:ReleaseParticleIndex(travel_pfx)
+	Timers:CreateTimer(pull_delay, function()
+		ParticleManager:DestroyParticle(travel_pfx, false)
+		ParticleManager:ReleaseParticleIndex(travel_pfx)
+	end)
+
+	-- Draw endpoint particle
+	local end_pfx = ParticleManager:CreateParticle(particle_end, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(end_pfx, 1, pull_loc)
+	ParticleManager:SetParticleControl(end_pfx, 2, Vector(pull_delay, 0, 0))
+	ParticleManager:ReleaseParticleIndex(end_pfx)
+	Timers:CreateTimer(pull_delay, function()
+		ParticleManager:DestroyParticle(end_pfx, false)
+		ParticleManager:ReleaseParticleIndex(end_pfx)
+	end)
 
 	-- Iterate through nearby enemies
 	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, glitch_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -53,14 +95,16 @@ function MaleficeTick( keys )
 		-- Stun
 		enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
-		-- Pull
-		local enemy_loc = enemy:GetAbsOrigin()
-		local enemy_distance = (pull_loc - enemy_loc):Length2D()
-		if enemy_distance <= glitch_radius then
+		-- Pull and prevent enemy from getting stuck after [pull_delay]
+		Timers:CreateTimer(pull_delay, function()
 			FindClearSpaceForUnit(enemy, pull_loc, true)
-		else
-			FindClearSpaceForUnit(enemy, enemy_loc + (pull_loc - enemy_loc):Normalized() * glitch_radius, true)
-		end
+			Timers:CreateTimer(0.01, function()
+				local units = FindUnitsInRadius(caster:GetTeamNumber(), pull_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+				for _,unit in pairs(units) do
+					FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+				end
+			end)
+		end)
 	end
 end
 
@@ -194,15 +238,18 @@ function MidnightPulse( keys )
 	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
 	local particle_pulse = keys.particle_pulse
-	local modifier_gravity = keys.modifier_gravity
+	local modifier_singularity = keys.modifier_singularity
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage_per_tick = ability:GetLevelSpecialValueFor("damage_per_tick", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-	local base_pull = ability:GetLevelSpecialValueFor("base_pull", ability_level)
-	local stack_pull = ability:GetLevelSpecialValueFor("stack_pull", ability_level)
+	local pull_distance = ability:GetLevelSpecialValueFor("pull_distance", ability_level)
+	local singularity_radius = ability:GetLevelSpecialValueFor("singularity_radius", ability_level)
 	local elapsed_duration = 0
+
+	-- Increase radius according to singularity stacks
+	radius = radius + singularity_radius * caster:GetModifierStackCount(modifier_singularity, caster)
 
 	-- Set up midnight pulse center position variable
 	caster.midnight_pulse_center = target
@@ -244,12 +291,6 @@ function MidnightPulse( keys )
 			-- Iterate through nearby enemies
 			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(nearby_enemies) do
-				
-				-- Calculate pull strength
-				local pull_distance = base_pull
-				if enemy:HasModifier(modifier_gravity) then
-					pull_distance = base_pull + stack_pull * enemy:GetModifierStackCount(modifier_gravity, nil)
-				end
 
 				-- Pull unit if it is not magic immune
 				if not enemy:IsMagicImmune() and not IsUninterruptableForcedMovement(enemy) then
@@ -279,27 +320,17 @@ function Gravity( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- Parameters
-	local stun_increase = ability:GetLevelSpecialValueFor("stun_increase", ability_level)
-	local stack_time = ability:GetLevelSpecialValueFor("stack_time", ability_level)
+	local stun_increase = ability:GetLevelSpecialValueFor("stun_increase", ability_level) / 100
+	local think_interval = ability:GetLevelSpecialValueFor("think_interval", ability_level)
+
+	-- Calculate adjusted stun increase
+	local corrected_increase = 1 - ( 1 / (1 + stun_increase) )
 
 	-- Increase existing stuns' duration
 	if target:HasModifier("modifier_stunned") then
-		local gravity_stacks = target:GetModifierStackCount(modifier_stacks, nil)
-		local actual_increase = (stun_increase + gravity_stacks) / (stun_increase + gravity_stacks + 100)
 		local modifier_stun = target:FindModifierByName("modifier_stunned")
-		modifier_stun:SetDuration(modifier_stun:GetRemainingTime() + stack_time * actual_increase, false)
+		modifier_stun:SetDuration(modifier_stun:GetRemainingTime() + think_interval * corrected_increase, false)
 	end
-
-	-- Apply a gravity stack
-	AddStacks(ability, caster, target, modifier_stacks, 1, true)
-end
-
-function GravityEnd( keys )
-	local target = keys.target
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Remove all existing gravity stacks
-	target:RemoveModifierByName(modifier_stacks)
 end
 
 function BlackHole( keys )
@@ -331,6 +362,9 @@ function BlackHole( keys )
 
 	-- Verify how many enemies were caught initially
 	local enemies_caught = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+
+	-- Grant singularity stacks to the caster due to heroes caught
+	AddStacks(ability, caster, caster, modifier_singularity, #enemies_caught, true)
 
 	-- Decide particles and sounds to use
 	local blackhole_particle = particle_hole
@@ -444,7 +478,6 @@ function BlackHoleDebuffStart( keys )
 	local ability_level = ability:GetLevel() - 1
 	local particle_target = keys.particle_target
 	local particle_screen = keys.particle_screen
-	local modifier_singularity = keys.modifier_singularity
 	local scepter = HasScepter(caster)
 
 	-- Parameters
@@ -459,16 +492,13 @@ function BlackHoleDebuffStart( keys )
 	ParticleManager:SetParticleControl(target.black_hole_hit_particle, 0, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(target.black_hole_hit_particle, 2, caster.black_hole_center)
 
-	-- If this is a real hero, grant a singularity stack to the caster
+	-- Play particle to hero owners
 	if target:IsRealHero() then
-		AddStacks(ability, caster, caster, modifier_singularity, 1, true)
-
-		-- Play particle to the hero owner
 		target.black_hole_screen_particle = ParticleManager:CreateParticleForPlayer(particle_screen, PATTACH_EYES_FOLLOW, target, PlayerResource:GetPlayer(target:GetPlayerID()))
 	end
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 
 	-- Deal max health-based damage if the caster has a scepter
 	if scepter then
@@ -495,7 +525,7 @@ function BlackHoleDebuffTick( keys )
 	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 
 	-- Deal max health-based damage if the caster has a scepter
 	if scepter then

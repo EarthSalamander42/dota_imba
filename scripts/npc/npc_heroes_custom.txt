@@ -916,11 +916,9 @@
 
 		"AttackRate"				"1.6"
 
-		"AttributeAgilityGain"		"4.0"
+		"AttributeAgilityGain"		"3.5"
 
-		"AttackRange"				"480"
-
-		"MovementSpeed"				"335"
+		"AttackRange"				"400"
 
 		//"Ability1"					"imba_luna_lucent_beam"
 		//"Ability2"					"imba_luna_moon_glaive"

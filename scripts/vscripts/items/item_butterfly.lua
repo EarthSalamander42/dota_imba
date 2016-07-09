@@ -31,9 +31,9 @@ function ButterflyEffect( keys )
 
 	-- Troll Warlord graphical adjustment
 	elseif caster:HasModifier("modifier_imba_berserkers_rage") then
-		caster:SetAttackCapability(2)
+		caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
 		caster:PerformAttack(enemy, true, true, true, true, true)
-		caster:SetAttackCapability(1)
+		caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
 
 	-- Melee attack
 	else

@@ -1649,6 +1649,7 @@
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6.0"
+		"AbilitySharedCooldown"			"phase"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4305,12 +4306,12 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"30"
+				"crit_chance"				"40"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"200"
+				"crit_damage"				"175"
 			}
 			"09"
 			{
@@ -4502,17 +4503,17 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"30"
+				"crit_chance"				"40"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"200"
+				"crit_damage"				"175"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"target_crit_multiplier"	"135"
+				"target_crit_multiplier"	"145"
 			}
 			"10"
 			{
@@ -4603,8 +4604,8 @@
 				{
 					"FireSound"
 					{
-						"EffectName"			"DOTA_Item.Orchid.Activate"
-						"Target"				"TARGET"
+						"EffectName"					"DOTA_Item.Bloodthorn.Activate"
+						"Target"						"TARGET"
 					}
 				}
 
@@ -7208,47 +7209,47 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"250"
+				"bonus_mana"				"525"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"effect_radius"				"2000"
+				"bonus_mana_regen"			"200"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_on_death_base"		"500"
+				"effect_radius"				"1800"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_on_death_per_charge"	"60"
+				"heal_on_death_base"		"500"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"respawn_time_reduction"	"2.5"
+				"var_type"					"FIELD_INTEGER"
+				"heal_on_death_per_charge"	"40"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"on_death_loss"				"0.67" //33% gone
+				"respawn_time_reduction"	"2.0"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_regen_per_charge"		"2"
+				"var_type"					"FIELD_FLOAT"
+				"on_death_loss"				"0.67" //33% gone
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_regen"				"1"
+				"hp_regen_per_charge"		"1"
 			}
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"max_mana_per_charge"		"100"
+				"var_type"					"FIELD_FLOAT"
+				"mana_regen_per_charge"		"0.7"
 			}
 		}
 
@@ -7277,7 +7278,6 @@
 				"ModifierName"				"modifier_item_imba_bloodstone_charges"
 				"Target" 					"CASTER"
 			}
-			
 			"RunScript"
 			{
 				"ScriptFile"				"items/item_bloodstone.lua"
@@ -7298,20 +7298,8 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_BONUS" 					"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS" 						"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 			"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_bloodstone_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsDebuff"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS" 					"%bonus_health"
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mana_regen"
 				}
 			}
 
@@ -7323,8 +7311,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MANA_BONUS" 						"%max_mana_per_charge"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen_per_charge"
+					"MODIFIER_PROPERTY_BASE_MANA_REGEN"					"%mana_regen_per_charge"
 				}
 			}
 
@@ -7361,7 +7349,6 @@
 						"Function"			"UpdateCharges"
 
 						"charges_modifier"	"modifier_item_imba_bloodstone_charges"
-						"dummy_modifier"	"modifier_item_imba_bloodstone_mana_dummy"
 					}
 				}
 
@@ -7431,17 +7418,6 @@
 						"ScriptFile"		"items/item_bloodstone.lua"
 						"Function"			"GainChargesOnAssist"
 					}
-				}
-			}
-
-			"modifier_item_imba_bloodstone_mana_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
 				}
 			}
 		}
@@ -8804,7 +8780,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"140"
+				"bonus_range"			"180"
 			}
 			"05"
 			{
@@ -8969,6 +8945,7 @@
 		"ItemQuality"					"epic"
 		"ItemAliases"					"radiance"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"AbilityCastRange"				"750"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -8982,37 +8959,27 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"700"
+				"aura_radius"			"750"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_damage"			"50"
+				"base_damage"			"60"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stacking_damage"		"10"
+				"extra_damage"			"2.5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_base"				"15"
+				"miss_chance"			"20"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"think_interval"		"1.0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_creep_stacks"		"5"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"miss_stacking"			"3"
 			}
 		}
 
@@ -9082,40 +9049,12 @@
 					{
 						"ScriptFile"		"items/item_radiance.lua"
 						"Function"			"Radiance"
-						"Target"			"TARGET"
-
-						"modifier_stacks"	"modifier_item_imba_radiance_aura_stacks"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_radiance.lua"
-						"Function"			"RadianceEnd"
-						"Target"			"TARGET"
-
-						"modifier_stacks"	"modifier_item_imba_radiance_aura_stacks"
 					}
 				}
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_base"
-				}
-			}
-
-			"modifier_item_imba_radiance_aura_stacks"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_stacking"
+					"MODIFIER_PROPERTY_MISS_PERCENTAGE" 		"%miss_chance"
 				}
 			}
 		}
@@ -9177,7 +9116,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"45"
+				"bonus_agility"			"50"
 			}
 			"02"
 			{
@@ -9192,7 +9131,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"45"
+				"bonus_attack_speed"	"40"
 			}
 			"05"
 			{
@@ -9223,7 +9162,6 @@
 				"ModifierName"			"modifier_item_imba_butterfly"
 				"Target" 				"CASTER"
 			}
-
 			"ApplyModifier"
 			{
 				"ModifierName"			"modifier_item_imba_butterfly_flutter"
@@ -9516,15 +9454,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1145"
-		"BaseClass"						"item_bfury"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE | DOTA_UNIT_TARGET_CUSTOM"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-
+		"ID"							"2141"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_bfury"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 		"AbilityCastRange"				"450"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"4.0"
+		"AOERadius"						"%cleave_radius"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9556,32 +9494,93 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_damage_percent"	"40"
+				"melee_cleave_damage"	"35"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"quelling_bonus"		"200"
+				"ranged_cleave_damage"	"25"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"quelling_bonus_ranged"	"160"
+				"quelling_bonus"		"60"
 			}			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cleave_radius"			"400"
+				"cleave_radius"			"350"
 			}
-			"08"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"450"
+				"ScriptFile"			"items/item_bfury.lua"
+				"Function"				"BattleFury"
+				"Target"				"POINT"
 			}
-			"09"
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_bfury"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_ward"		"450"
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsDebuff"					"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"BattleFuryStackUp"
+
+						"modifier_cleave"	"modifier_item_imba_bfury_cleave"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"BattleFuryStackDown"
+
+						"modifier_cleave"	"modifier_item_imba_bfury_cleave"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_HEALTH_BONUS" 				"%bonus_health_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 		"%bonus_mana_regen"
+				}
+			}
+
+			"modifier_item_imba_bfury_cleave"
+			{
+				"Passive"					"1"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_bfury.lua"
+						"Function"			"BattleFuryHit"
+
+						"modifier_cleave"	"modifier_item_imba_bfury_cleave"
+						"particle_cleave"	"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+					}
+				}
 			}
 		}
 	}
@@ -9819,7 +9818,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"530"	
+		"ItemCost"						"550"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -9854,7 +9853,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2350"
+		"ItemCost"						"2370"
 		"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"armlet of mordiggian"
@@ -9897,12 +9896,12 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"unholy_bonus_armor"		"4"
+				"unholy_bonus_armor"		"5"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"unholy_health_drain"		"40"
+				"unholy_health_drain"		"45"
 			}
 			"09"
 			{
@@ -9922,7 +9921,7 @@
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stack_armor"				"0.4"
+				"stack_armor"				"0.5"
 			}
 		}
 
@@ -9985,7 +9984,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1175"
+		"ItemCost"						"1185"
 		"ItemShopTags"					"damage;attack_speed;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"armlet of mordiggian"
@@ -14414,7 +14413,7 @@
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9"
+		"AbilityCooldown"				"8"
 		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.0"
 
@@ -16363,15 +16362,14 @@
 		"ID"							"2113"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_moon_shard"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CUSTOM"
-
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityCastRange"				"600"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4300"
+		"ItemCost"						"4000"
 		"ItemShopTags"					"attack_speed"
 		"ItemQuality"					"common"
 		"ItemAliases"					"moon shard"
@@ -16384,7 +16382,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"160"
+				"bonus_attack_speed"	"140"
 			}			
 			"02"
 			{
@@ -16394,12 +16392,27 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"consumed_as"			"90"
+				"consume_as_1"			"70"
 			}
-			"02"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"consumed_night_vision"	"250"
+				"consume_vision_1"		"200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"consume_as_2"			"50"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"consume_vision_2"		"100"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"consume_as_3"			"30"
 			}
 		}
 
@@ -16410,8 +16423,11 @@
 				"ScriptFile"			"items/item_moon_shard.lua"
 				"Function"				"MoonShardActive"
 
-				"modifier_as"			"modifier_imba_moon_shard_activated_as"
-				"modifier_vision"		"modifier_imba_moon_shard_activated_vision"
+				"sound_consume"			"Item.MoonShard.Consume"
+				"modifier_consume_1"	"modifier_imba_moon_shard_consume_1"
+				"modifier_consume_2"	"modifier_imba_moon_shard_consume_2"
+				"modifier_consume_3"	"modifier_imba_moon_shard_consume_3"
+				"modifier_stacks"		"modifier_imba_moon_shard_stacks_dummy"
 			}
 		}
 
@@ -16431,32 +16447,60 @@
 				}
 			}
 
-			"modifier_imba_moon_shard_activated_as"
+			"modifier_imba_moon_shard_stacks_dummy"
 			{
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
+				"Passive"			"0"
+				"IsHidden"			"0"
 
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"TextureName"		"item_imba_moon_shard"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consumed_as"
-				}
 			}
 
-			"modifier_imba_moon_shard_activated_vision"
+			"modifier_imba_moon_shard_consume_1"
 			{
+				"Passive"			"0"
+				"IsHidden"			"1"
 				"IsBuff"			"1"
 				"IsPurgable"		"0"
-				"IsHidden"			"1"
 
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consumed_night_vision"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_1"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_1"
+				}
+			}
+
+			"modifier_imba_moon_shard_consume_2"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_2"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%consume_vision_2"
+				}
+			}
+
+			"modifier_imba_moon_shard_consume_3"
+			{
+				"Passive"			"0"
+				"IsHidden"			"1"
+				"IsBuff"			"1"
+				"IsPurgable"		"0"
+
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%consume_as_3"
 				}
 			}
 		}
@@ -16731,6 +16775,17 @@
 						"particle_blast"		"particles/item/octarine_core/octarine_core_active.vpcf"
 						"particle_hit"			"particles/item/octarine_core/octarine_core_hit.vpcf"
 						"sound_blast"			"Hero_Zuus.StaticField"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_octarine_core"
 					}
 				}
 				
@@ -17519,6 +17574,7 @@
 		"ItemShopTags"					"damage;ias;agi"
 		"ItemQuality"					"common"
 		"ItemAliases"					"shotgun"
+		"AbilityCooldown"				"4.0"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -17542,12 +17598,27 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"35"
+				"max_targets"			"1"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_targets"			"1"
+				"proc_radius"			"500"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"projectile_speed"		"1100"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_shotgun.lua"
+				"Function"				"ShotgunHit"
 			}
 		}
 
@@ -17581,8 +17652,22 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"items/item_shotgun.lua"
-						"Function"			"Shotgun"
+						"ScriptFile"			"items/item_shotgun.lua"
+						"Function"				"Shotgun"
+
+						"particle_projectile"	"particles/item/starfury/starfury_projectile.vpcf"
+						"sound_shot"			"Hero_PhantomLancer.Doppelganger.Appear"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_shotgun_unique"
 					}
 				}
 			}
@@ -17634,6 +17719,7 @@
 		"ItemShopTags"					"damage;ias;agi"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"starfury"
+		"AbilityCooldown"				"1.5"
 
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -17672,12 +17758,29 @@
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"					"500"
+				"range"					"700"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"speed"					"1100"
+				"projectile_speed"		"1100"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_reduction"			"-40"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_starfury.lua"
+				"Function"				"StarfuryHit"
+
+				"modifier_dmg_penalty"	"modifier_imba_starfury_dmg_penalty"
 			}
 		}
 
@@ -17715,9 +17818,21 @@
 						"Function"			"Starfury"
 
 						"sound_proc"		"Ability.StarfallImpact"
+						"sound_split"		"Hero_PhantomLancer.Doppelganger.Appear"
 						"particle_proc"		"particles/item/starfury/starfury_projectile.vpcf"
 						"modifier_dummy"	"modifier_item_imba_starfury_buff_dummy"
 						"modifier_buff"		"modifier_item_imba_starfury_buff"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_starfury_unique"
 					}
 				}
 			}
@@ -17755,6 +17870,21 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"1"
+				}
+			}
+
+			"modifier_imba_starfury_dmg_penalty"
+			{
+				"Passive"						"0"
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
+				"IsDebuff"						"1"
+
+				"Duration"						"0.01"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%dmg_reduction"
 				}
 			}
 		}
@@ -17973,7 +18103,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
+		"ItemCost"						"1900"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -17982,7 +18112,7 @@
 		"ItemResult"					"item_imba_phase_boots_2"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_phase_boots;item_imba_claymore;item_imba_hyperstone"
+			"01"						"item_imba_phase_boots;item_imba_phase_boots"
 		}
 	}
 	
@@ -17994,20 +18124,23 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2189"
-		"BaseClass"						"item_phase_boots"
+		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"item_imba_phase_boots_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"Model"							"models/props_gameplay/red_box.vmdl" 
+		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"6.0"
+		"AbilitySharedCooldown"			"phase"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4640"
+		"ItemCost"						"4380"
 		"ItemShopTags"					"damage;move_speed;hard_to_tag"
 		"ItemQuality"					"common"
-		"ItemAliases"					"phase boots"
+		"ItemAliases"					"haste boots"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
@@ -18017,32 +18150,77 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"80"
+				"bonus_movement_speed"	"90"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"60"
-			}			
+				"bonus_damage"			"70"
+			}					
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"70"
-			}			
+				"phase_ms"				"35"
+			}		
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"phase_movement_speed"  "35"
-			}		
+				"var_type"				"FIELD_FLOAT"
+				"phase_duration"		"3.0"
+			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"phase_movement_speed_range"	"28"
+				"var_type"				"FIELD_INTEGER"
+				"new_ms_limit"			"625"
 			}
-			"06"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"phase_duration"		"3.5"
+				"ScriptFile"			"items/item_boots.lua"
+				"Function"				"HasteBoots"
+
+				"modifier_ms"			"modifier_item_imba_phase_boots_2_move_speed"
+				"sound_haste"			"DOTA_Item.PhaseBoots.Activate"
+				"particle_haste"		"particles/econ/events/ti6/phase_boots_ti6_streaks.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_phase_boots_2"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement_speed"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_item_imba_phase_boots_2_move_speed"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%phase_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%phase_ms"
+				}
 			}
 		}
 	}
@@ -18155,6 +18333,6 @@
 		}
 	}
 
-	//rapier freed IDs: 2141-2164, 2196
+	//rapier freed IDs: 2142-2164, 2196
 	//next free ID: 2204
 }

@@ -302,13 +302,14 @@ function EmpowerHit( keys )
 	end
 	ParticleManager:SetParticleControl(cleave_pfx, 0, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(cleave_pfx, 1, Vector(cleave_radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(cleave_pfx)
 
 	-- Find enemies to damage
 	local enemies = FindUnitsInRadius(attacker:GetTeamNumber(), target:GetAbsOrigin(), nil, cleave_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	
 	-- Deal damage
 	for _,enemy in pairs(enemies) do
-		if enemy ~= target then
+		if enemy ~= target and not enemy:IsAttackImmune() then
 			ApplyDamage({attacker = attacker, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 		end
 	end

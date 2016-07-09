@@ -8,7 +8,7 @@ function MonkeyKingBarPassive( keys )
 	local modifier_melee = keys.modifier_melee
 
 	-- Apply the relevant modifier, according to the caster's attack capability
-	if caster:IsRangedAttacker() or caster:HasModifier("modifier_imba_berserkers_rage") then
+	if caster:IsRangedAttacker() or caster:HasModifier("modifier_imba_berserkers_rage") and not (caster:HasModifier("modifier_item_dragon_lance") or caster:HasModifier("modifier_item_hurricane_pike")) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_ranged, {})
 	else
 		caster:RemoveModifierByName(modifier_ranged)

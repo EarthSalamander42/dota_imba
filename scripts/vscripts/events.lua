@@ -775,7 +775,7 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: End game on kills logic
+	-- IMBA: Arena mode logic
 	-------------------------------------------------------------------------------------------------
 
 	if END_GAME_ON_KILLS then
@@ -904,14 +904,19 @@ function GameMode:OnEntityKilled( keys )
 		local hero_level = killed_unit:GetLevel()
 		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
 
-		-- Multiply respawn timer by the lobby options
-		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
+		-- Fetch decreased respawn timer due to Bloodstone charges
+		if killed_unit.bloodstone_respawn_reduction then
+			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
+		end
 
 		-- Decrease respawn timer due to Techies' Suicide Squad, Attack!
 		if killed_unit:HasModifier("modifier_techies_suicide_respawn_time") then
 			killed_unit:RemoveModifierByName("modifier_techies_suicide_respawn_time")
 			respawn_time = math.max( respawn_time * 0.5)
 		end
+
+		-- Multiply respawn timer by the lobby options
+		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
 
 		-- Fetch increased respawn timer due to Reaper's Scythe on this death
 		if killed_unit.scythe_added_respawn then
@@ -922,11 +927,6 @@ function GameMode:OnEntityKilled( keys )
 		-- Fetch stacking increased respawn timer due to Reaper's Scythe
 		if killed_unit.scythe_stacking_respawn_timer then
 			respawn_time = respawn_time + killed_unit.scythe_stacking_respawn_timer
-		end
-
-		-- Fetch decreased respawn timer due to Bloodstone charges
-		if killed_unit.bloodstone_respawn_reduction then
-			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 
 		-- Set up the respawn timer

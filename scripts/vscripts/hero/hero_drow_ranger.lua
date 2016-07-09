@@ -232,8 +232,9 @@ function MarksmanshipSplinter( keys )
 	end
 
 	-- If at least one splinter was created, put the ability on cooldown
-	if #nearby_enemies >1 then
-		ability:StartCooldown(ability:GetCooldown(ability_level))
+	if #nearby_enemies > 1 then
+		local cooldown_reduction = GetCooldownReduction(caster)
+		ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
 	end
 end
 

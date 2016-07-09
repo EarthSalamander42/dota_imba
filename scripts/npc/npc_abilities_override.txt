@@ -288,7 +288,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"maximum_distance"		"750"
+				"maximum_distance"		"700"
 			}
 			"03"
 			{
@@ -483,7 +483,7 @@
 	//=================================================================================================================
 	"item_travel_boots"
 	{
-		"AbilityCooldown"				"30.0"
+		"AbilityCooldown"				"40.0"
 		"AbilityChannelTime"			"2.0"
 		
 		"AbilityManaCost"				"0"
@@ -508,7 +508,7 @@
 	//=================================================================================================================
 	"item_travel_boots_2"
 	{
-		"AbilityCooldown"				"30.0"
+		"AbilityCooldown"				"35.0"
 		"AbilityChannelTime"			"1.5"
 		
 		"AbilityManaCost"				"0"
@@ -582,7 +582,7 @@
 
 		"ItemStockInitial"				"1"
 
-		"ItemStockTime"					"300.0"
+		"ItemStockTime"					"30.0"
 	}
 
 	//=================================================================================================================
@@ -911,7 +911,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_attack_range"		"140"
+				"base_attack_range"		"180"
 			}
 		}
 	}
@@ -1269,7 +1269,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_attack_range"		"140"
+				"base_attack_range"		"180"
 			}
 			"06"
 			{
@@ -1294,7 +1294,12 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_attacks"			"6"
+				"max_attacks"			"5"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"100"
 			}
 		}
 	}
@@ -5939,7 +5944,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"550 575 600 625"
+				"range"						"600"
 			}
 			"02"
 			{
@@ -5949,7 +5954,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_percent"	"25"
+				"damage_reduction_percent"	"30"
 			}
 		}
 	}
@@ -12539,12 +12544,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"6.0"
+				"duration"			"3.5"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"1200"
+				"movement_speed"	"2000"
 			}
 		}
 	}

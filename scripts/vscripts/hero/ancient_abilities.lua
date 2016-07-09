@@ -20,10 +20,14 @@ function AncientThink( keys )
 	if END_GAME_ON_KILLS then
 
 		-- Make the ancient invulnerable
-		caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
+		if not caster.ancient_arena_invulnerable then
+			caster:AddNewModifier(caster, ability, "modifier_fountain_glyph", {})
+			caster:AddNewModifier(caster, ability, "modifier_invulnerable", {})
+			caster.ancient_arena_invulnerable = true
+		end
 
 		-- Kill any nearby creeps (prevents lag)
-		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemy_creeps = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 700, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemy_creeps) do
 			enemy:Kill(ability, caster)
 		end

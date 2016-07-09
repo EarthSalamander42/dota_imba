@@ -208,8 +208,8 @@ function GameMode:DamageFilter( keys )
 		if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and not attacker:HasModifier("modifier_item_imba_bloodthorn_unique") then
 			
 			-- Parameters
-			local crit_chance = 30
-			local crit_damage = 200
+			local crit_chance = 40
+			local crit_damage = 175
 			local distance_taper_start = 2500
 
 			-- Check for a valid target
@@ -238,8 +238,8 @@ function GameMode:DamageFilter( keys )
 		if damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE then
 			
 			-- Parameters
-			local crit_chance = 30
-			local crit_damage = 200
+			local crit_chance = 40
+			local crit_damage = 175
 			local distance_taper_start = 2500
 
 			-- Check for a valid target
@@ -265,7 +265,7 @@ function GameMode:DamageFilter( keys )
 	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
 
 		-- Multiply damage and flag for a crit
-		local target_crit_multiplier = 135
+		local target_crit_multiplier = 145
 		keys.damage = keys.damage * target_crit_multiplier / 100
 		display_red_crit_number = true
 	end
@@ -317,10 +317,12 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			-- Reduce damage
-			keys.damage = keys.damage * 0.94
+			if victim ~= attacker then
+				keys.damage = keys.damage * 0.94
+			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
 
 				-- Calculate damage block
 				local damage_block = 0 + victim:GetLevel()
@@ -347,10 +349,12 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			-- Reduce damage
-			keys.damage = keys.damage * 0.91
+			if victim ~= attacker then
+				keys.damage = keys.damage * 0.91
+			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
 
 				-- Calculate damage block
 				local damage_block = 5 + victim:GetLevel()
@@ -374,10 +378,12 @@ function GameMode:DamageFilter( keys )
 	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 		-- Reduce damage
-		keys.damage = keys.damage * 0.88
+		if victim ~= attacker then
+			keys.damage = keys.damage * 0.88
+		end
 
 		-- Physical damage block
-		if damage_type == DAMAGE_TYPE_PHYSICAL then
+		if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
 
 			-- Calculate damage block
 			local damage_block = 10 + victim:GetLevel()

@@ -235,6 +235,29 @@ function TimeDilation( keys )
 	end
 end
 
+function TimeDilationParticle( keys )
+	local target = keys.target
+	local particle_debuff = keys.particle_debuff
+
+	-- Create the particle, if needed
+	if not target.time_dilation_particle then
+		target.time_dilation_particle = ParticleManager:CreateParticle(particle_debuff, PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControl(target.time_dilation_particle, 0, target:GetAbsOrigin())
+		ParticleManager:SetParticleControl(target.time_dilation_particle, 1, Vector(1, 0, 0))
+	end
+end
+
+function TimeDilationParticleEnd( keys )
+	local target = keys.target
+
+	-- If a particle exists, destroy it
+	if target.time_dilation_particle then
+		ParticleManager:DestroyParticle(target.time_dilation_particle, false)
+		ParticleManager:ReleaseParticleIndex(target.time_dilation_particle)
+		target.time_dilation_particle = nil
+	end
+end
+
 function TimeLock( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -360,11 +383,6 @@ function Chronosphere( keys )
 	local mana_cost = ability:GetManaCost(-1)
 	local caster_mana = caster:GetMana()
 
-	-- Apply diminishing returns to caster's mana pool
-	if caster_mana > 1000 then
-		caster_mana = 1000 + (caster_mana - 1000) * 0.5
-	end
-
 	-- Calculate final chronosphere parameters
 	local total_radius = base_radius + extra_radius * caster_mana / mana_cost / FRANTIC_MULTIPLIER
 	local total_duration = base_duration + extra_duration * caster_mana / mana_cost / FRANTIC_MULTIPLIER
@@ -383,7 +401,7 @@ function Chronosphere( keys )
 	-- Decide which cast sound to play
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
 	if #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
-		EmitGlobalSound(sound_za_warudo)
+		caster:EmitSound(sound_za_warudo)
 	else
 		caster:EmitSound(sound_cast)
 	end
@@ -399,6 +417,7 @@ function Chronosphere( keys )
 		for _,unit in pairs(units) do
 			if unit == caster or unit:GetOwnerEntity() == caster or unit:FindAbilityByName("imba_faceless_void_chronosphere") then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_caster, {})
+				caster:SetModifierStackCount(modifier_caster, caster, #heroes)
 				unit:AddNewModifier(caster, ability, "modifier_imba_speed_limit_break", {})
 			elseif scepter and unit:GetTeam() == caster:GetTeam() then
 				ability:ApplyDataDrivenModifier(caster, unit, modifier_ally, {})
