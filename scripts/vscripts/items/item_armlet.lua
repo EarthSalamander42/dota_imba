@@ -35,6 +35,11 @@ function UnholyStrength( keys )
 	local health_per_stack = ability:GetLevelSpecialValueFor("health_per_stack", ability_level)
 	local health_drain = ability:GetLevelSpecialValueFor("unholy_health_drain", ability_level)
 
+	-- If this is an illusion, do nothing
+	if not caster:IsRealHero() then
+		return nil
+	end
+
 	-- Calculate stacks to apply
 	local unholy_stacks = math.floor( (caster:GetMaxHealth() - caster:GetHealth()) / health_per_stack )
 

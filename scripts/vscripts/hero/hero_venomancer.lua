@@ -140,7 +140,7 @@ function GaleHit( keys )
 
 	-- Apply damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = final_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, final_damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, final_damage, nil)
 end
 
 function GaleTick( keys )
@@ -169,7 +169,7 @@ function GaleTick( keys )
 
 	-- Apply damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = final_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, final_damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, final_damage, nil)
 end
 
 function PoisonSting( keys )
@@ -221,7 +221,7 @@ function PoisonStingTick( keys )
 
 	-- Deal damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = current_stacks * dmg_per_stack, damage_type = DAMAGE_TYPE_PHYSICAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, current_stacks * dmg_per_stack, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, current_stacks * dmg_per_stack, nil)
 
 	-- Remove 10% of the stacks (minimum 2)
 	AddStacks(ability, caster, target, modifier_sting, (-1) * math.max(stack_decay_min, current_stacks * stack_decay / 100), true)
@@ -504,7 +504,7 @@ function PoisonNovaTick( keys )
 
 	-- Deal damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, damage, nil)
 
 	-- If the caster has a scepter, spread the debuff to nearby enemies
 	if scepter then

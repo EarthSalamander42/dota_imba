@@ -136,18 +136,20 @@ function Torrent( keys )
 	end)
 end
 
-function TidebringerCooldown( keys )
+function TidebringerDamage( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local modifier_high_tide = keys.modifier_high_tide
+	local modifier_damage = keys.modifier_damage
 
-	-- Parameters
-	local modifier_name = keys.modifier_name
-	local modifier_tidebringer = keys.modifier_tidebringer
-	local cooldown = ability:GetCooldownTimeRemaining()
+	-- Verify high tide
+	local high_tide = caster:HasModifier(modifier_high_tide)
 
-	-- If the skill has finished its cooldown and no modifiers are present, apply one at random when able
-	if cooldown == 0 and not caster:HasModifier(modifier_name) and not caster:HasModifier(modifier_tidebringer) and not caster:IsOutOfGame() and not caster:IsInvulnerable() then
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_name, {})
+	-- Apply the bonus damage modifier
+	if high_tide then
+		caster:SetModifierStackCount(modifier_damage, caster, 2)
+	else
+		caster:SetModifierStackCount(modifier_damage, caster, 1)
 	end
 end
 
@@ -155,91 +157,245 @@ function Tidebringer( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
+	local ability_level = ability:GetLevel() - 1
 
-	-- Modifiers
-	local modifier_tsunami = keys.modifier_tsunami
-	local modifier_wave_break = keys.modifier_wave_break
-	local modifier_high_tide = keys.modifier_high_tide
-	local modifier_low_tide = keys.modifier_low_tide
-
-	-- If the target was an enemy, start the cooldown
-	if target:GetTeam() ~= caster:GetTeam() then
-		caster:RemoveModifierByName(modifier_tsunami)
-		caster:RemoveModifierByName(modifier_high_tide)
-		caster:RemoveModifierByName(modifier_low_tide)
-
-		-- If the caster has the Wave Break buff, do not start the cooldown
-		if caster:HasModifier(modifier_wave_break) then
-			caster:RemoveModifierByName(modifier_wave_break)
-		else
-			ability:StartCooldown(cooldown * GetCooldownReduction(caster))
-		end
-	end
-end
-
-function TidebringerTsunami( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local target = keys.target
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
-
-	-- If the target being hit is from the same team, do nothing
-	if target:GetTeam() == caster:GetTeam() then
+	-- If the ability is on cooldown, do nothing
+	if not ability:IsCooldownReady() then
 		return nil
 	end
 
-	-- Particles and modifiers
-	local particle_name = keys.particle_name
-	local modifier_knockup = keys.modifier_knockup
-	
-	-- Calculates the AOE's center point and affected enemies
-	local effect_center = caster:GetAbsOrigin() + caster:GetForwardVector() * radius
-	local enemies = FindUnitsInRadius(caster:GetTeam(), effect_center, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), 0, false)
+	-- Parameters
+	local sound_attack = keys.sound_attack
+	local sound_hit = keys.sound_hit
+	local particle_cleave = keys.particle_cleave
+	local particle_tsunami = keys.particle_tsunami
+	local modifier_high_tide = keys.modifier_high_tide
+	local modifier_wave_break = keys.modifier_wave_break
+	local modifier_tsunami = keys.modifier_tsunami
+	local modifier_particle = keys.modifier_particle
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local tsunami_height = ability:GetLevelSpecialValueFor("tsunami_height", ability_level)
+	local tsunami_duration = ability:GetLevelSpecialValueFor("tsunami_duration", ability_level)
+	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 
-	-- Draws the particle only once
-	local torrent_fx = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, caster)
-	ParticleManager:SetParticleControl(torrent_fx, 0, effect_center)
-	ParticleManager:SetParticleControl(torrent_fx, 1, Vector(radius, 0, 0))
+	-- Calculate geometry
+	local caster_loc = caster:GetAbsOrigin()
+	local target_loc = target:GetAbsOrigin()
+	local cleave_center_loc = caster_loc + (target_loc - caster_loc):Normalized() * radius
 
-	-- Applies knockback to each enemy
-	if target:GetTeam() ~= caster:GetTeam() then
-		for _,enemy in pairs(enemies) do
-			ability:ApplyDataDrivenModifier(caster, enemy, modifier_knockup, {})
+	-- Verify and clear tides
+	local wave_break = caster:HasModifier(modifier_wave_break)
+	local tsunami = caster:HasModifier(modifier_tsunami)
+	caster:RemoveModifierByName(modifier_high_tide)
+	caster:RemoveModifierByName(modifier_wave_break)
+	caster:RemoveModifierByName(modifier_tsunami)
+
+	-- Roll for new tides
+	if RandomInt(1, 100) <= proc_chance then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_high_tide, {})
+	end
+	if RandomInt(1, 100) <= proc_chance then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_wave_break, {})
+	end
+	if RandomInt(1, 100) <= proc_chance then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_tsunami, {})
+	end
+
+	-- Fetch the total attack damage
+	local attack_damage = caster:GetAverageTrueAttackDamage()
+
+	-- Play attack sound
+	caster:EmitSound(sound_attack)
+
+	-- Play hit sound
+	target:EmitSound(sound_hit)
+
+	-- Play cleave particle
+	local tidebringer_target_particle_count = 2
+	local tidebringer_pfx = ParticleManager:CreateParticle(particle_cleave, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(tidebringer_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(tidebringer_pfx, 1, target:GetAbsOrigin())
+
+	-- Prepare Tsunami
+	if tsunami then
+
+		-- Play particle
+		local tsunami_pfx = ParticleManager:CreateParticle(particle_tsunami, PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(tsunami_pfx, 0, cleave_center_loc)
+		ParticleManager:ReleaseParticleIndex(tsunami_pfx)
+	end
+
+	-- Initialize knockup
+	local tsunami_knockback =	{
+		should_stun = 1,
+		knockback_duration = tsunami_duration,
+		duration = tsunami_duration,
+		knockback_distance = 0,
+		knockback_height = tsunami_height,
+		center_x = target_loc.x,
+		center_y = target_loc.y,
+		center_z = target_loc.z
+	}
+
+	-- Iterate through enemies in the cleave area
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), cleave_center_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		
+		-- Cleave damage, sound, and particle
+		if enemy ~= target and not enemy:IsAttackImmune() then
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = attack_damage, damage_type = DAMAGE_TYPE_PURE})
+			enemy:EmitSound(sound_hit)
+			if tidebringer_target_particle_count <= 16 then
+				ParticleManager:SetParticleControl(tidebringer_pfx, tidebringer_target_particle_count, enemy:GetAbsOrigin())
+				tidebringer_target_particle_count = tidebringer_target_particle_count + 1
+			end
+		end
+
+		-- Tsunami knock-up
+		if tsunami then
+			enemy:RemoveModifierByName("modifier_knockback")
+			enemy:AddNewModifier(caster, ability, "modifier_knockback", tsunami_knockback)
 		end
 	end
+
+	-- Release Tidebringer particle index
+	ParticleManager:ReleaseParticleIndex(tidebringer_pfx)
+
+	-- Handle Wave Break
+	if not wave_break then
+		local tidebringer_cooldown = ability:GetCooldown(ability_level) * GetCooldownReduction(caster)
+		ability:StartCooldown(tidebringer_cooldown)
+
+		-- Destroy "ability ready" particle and play it again with sound after [tidebringer cooldown]
+		caster:RemoveModifierByName(modifier_particle)
+		Timers:CreateTimer(tidebringer_cooldown, function()
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_particle, {})
+		end)
+	end
+end
+
+function TidebringerParticleCreate( keys )
+	local caster = keys.caster
+	local sound_cooldown = keys.sound_cooldown
+	local particle_weapon = keys.particle_weapon
+
+	-- Play sound on caster's client only
+	caster:EmitSound(sound_cooldown)
+
+	-- Create weapon particle
+	caster.tidebringer_weapon_pfx = ParticleManager:CreateParticle(particle_weapon, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 2, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true)
+end
+
+function TidebringerParticleDestroy( keys )
+	local caster = keys.caster
+
+	-- Destroy particle
+	ParticleManager:DestroyParticle(caster.tidebringer_weapon_pfx, true)
+	ParticleManager:ReleaseParticleIndex(caster.tidebringer_weapon_pfx)
+	caster.tidebringer_weapon_pfx = nil
 end
 
 function XmarksCast( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local target_loc = target:GetAbsOrigin()
-	local return_name = keys.return_name
+	local ability_level = ability:GetLevel() - 1
+	local ability_return = keys.ability_return
+	local modifier_caster = keys.modifier_caster
+	local modifier_duration = modifier_duration
+	local modifier_xmarks = keys.modifier_xmarks
+
+	-- Parameters
+	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+	local allied_duration = ability:GetLevelSpecialValueFor("allied_duration", ability_level)
+	local grace_period = ability:GetLevelSpecialValueFor("grace_period", ability_level)
+
+	-- Initialize mark duration reference point, if necessary
+	if not caster.x_marks_initial_cast_time then
+		caster.x_marks_initial_cast_time = GameRules:GetGameTime()
+	end
+
+	-- Adjust buff durations based on elapsed duration of the grace_period
+	local elapsed_time = GameRules:GetGameTime() - caster.x_marks_initial_cast_time
+	duration = duration - elapsed_time
+	allied_duration = allied_duration - elapsed_time
+	grace_period = math.max(math.min(grace_period - elapsed_time, grace_period), 0)
+
+	-- Apply grace period modifier to the caster
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {duration = grace_period})
+	
+	-- Apply appropriate modifiers according to the target's team
+	if target:GetTeam() == caster:GetTeam() then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_xmarks, {duration = allied_duration})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_duration, {duration = allied_duration})
+	else
+		ability:ApplyDataDrivenModifier(caster, target, modifier_xmarks, {duration = duration})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_duration, {duration = duration})
+	end
+
+	-- Make the return ability active
+	caster:FindAbilityByName(ability_return):SetActivated(true)
+end
+
+function XmarksMark( keys )
+	local caster = keys.caster
+	local target = keys.target
+
+	-- If this target is already marked, do nothing
+	if target.x_marks_origin then
+		return nil
+	end
+
+	-- Initialize Xmarks target table, if necessary
+	if not caster.x_marks_target_table then
+		caster.x_marks_target_table = {}
+	end
+
+	-- Add this target to the table
+	caster.x_marks_target_table[#caster.x_marks_target_table + 1] = target
 	
 	-- Set x marks origin point
-	caster.x_marks_target = target
-	caster.x_marks_origin = target_loc
-	
-	-- Swap x marks with return 
-	caster:SwapAbilities(ability:GetAbilityName(), return_name, false, true)
+	target.x_marks_origin = target:GetAbsOrigin()
 end
 
 function XmarksReturn( keys )
 	local caster = keys.caster
-	local x_marks_name = keys.x_marks_name
-	local return_name = keys.return_name
-	local modifier_name = keys.modifier_name
-	
-	-- Check if there is a target unit
-	if caster.x_marks_target and caster.x_marks_origin then
-		FindClearSpaceForUnit(caster.x_marks_target, caster.x_marks_origin, true)
-		caster.x_marks_target = nil
-		caster.x_marks_origin = nil
+	local target = keys.target
+
+	-- If the target's origin position is unknown, do nothing
+	if not target.x_marks_origin then
+		return nil
 	end
 	
-	-- Swap abilities
-	caster:SwapAbilities(x_marks_name, return_name, true, false )
+	-- Return target to its original position
+	FindClearSpaceForUnit(target, target.x_marks_origin, true)
+	target.x_marks_origin = nil
+
+	-- Prevent nearby units from getting stuck
+	Timers:CreateTimer(0.01, function()
+		local units = FindUnitsInRadius(target:GetTeamNumber(), target:GetAbsOrigin(), nil, 50, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+		for _,unit in pairs(units) do
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		end
+	end)
+end
+
+function XmarksGraceEnd( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
+
+	-- Put the ability on cooldown
+	local remaining_cooldown = cooldown
+	if caster.x_marks_initial_cast_time then
+		remaining_cooldown = cooldown - (GameRules:GetGameTime() - caster.x_marks_initial_cast_time)
+		caster.x_marks_initial_cast_time = nil
+	end
+	ability:StartCooldown(remaining_cooldown * GetCooldownReduction(caster))
 end
 
 function LevelUpReturn( keys )
@@ -247,32 +403,43 @@ function LevelUpReturn( keys )
 	local ability_name = keys.ability_name
 	local ability_handle = caster:FindAbilityByName(ability_name)	
 
-	-- Upgrades Return to level 1 if it hasn't already
-	ability_handle:SetLevel(1)
+	-- Upgrades Return to level 1 and make it inactive, if it hasn't already
+	if ability_handle:GetLevel() < 1 then
+		ability_handle:SetLevel(1)
+		ability_handle:SetActivated(false)
+	end
 end
 
 function XmarksForcedReturn( keys )
 	local caster = keys.caster
-	local ability = caster:FindAbilityByName(keys.x_marks_name)
-	local modifier_name = keys.modifier_name
-	local radius = ability:GetLevelSpecialValueFor("return_range" , ability:GetLevel() - 1 )
+	local ability = keys.ability
+	local modifier_x_mark = keys.modifier_x_mark
+	local modifier_caster = keys.modifier_caster
 
-	if caster.x_marks_target and caster.x_marks_origin then
-		local units
-		local target = caster.x_marks_target
-		local origin = caster.x_marks_origin
-		if target:GetTeam() == caster:GetTeam() then
-			units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-		else
-			units = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
+	-- Iterate through the target list for this cast
+	if caster.x_marks_target_table then
+		for _,unit in pairs(caster.x_marks_target_table) do
+			unit:RemoveModifierByName(modifier_x_mark)
 		end
-		for _,unit in pairs(units) do
-			FindClearSpaceForUnit(unit, origin, true)
-		end
-
-		-- Removes the x marks modifier from the original target, triggering XmarksReturn()
-		target:RemoveModifierByName(modifier_name)
+		caster.x_marks_target_table = nil
 	end
+
+	-- End the caster's grace period
+	caster:RemoveModifierByName(modifier_caster)
+
+	-- Make return inactive again
+	ability:SetActivated(false)
+end
+
+function XmarksDurationEnd( keys )
+	local caster = keys.caster
+	local ability_return = keys.ability_return
+
+	-- Delete the targets hit table, just in case
+	caster.x_marks_target_table = nil
+
+	-- Make return inactive just to be sure
+	caster:FindAbilityByName(ability_return):SetActivated(false)
 end
 
 function GhostShip( keys )

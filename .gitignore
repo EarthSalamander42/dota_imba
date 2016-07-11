@@ -16,3 +16,26 @@ flash source/
 resource/flash3/images/spellicons/mjollnir_arc.000.png
 resource/flash3/images/spellicons/mjollnir_arc.001.png
 resource/flash3/images/spellicons/mjollnir_arc.002.png
+
+# Cache crap that Valve autogenerates
+*.bin
+*.cfg
+
+# Compiled formats
+*.vpcf_c
+*.vtex_c
+*.vsndevts_c
+*.vsnd_c
+*.vmat_c
+*.vjs_c
+*.vxml_c
+*.vcss_c
+
+# Map files
+*.vpk
+
+# Map overviews
+resource/overviews/*
+
+#Github dump
+*.stackdump

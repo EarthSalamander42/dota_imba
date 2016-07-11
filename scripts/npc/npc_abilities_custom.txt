@@ -14474,24 +14474,19 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"extra_duration"		"0.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
 				"tick_interval"			"0.03"
 			}
-			"06"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"20 30 40"
 			}
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_scepter"			"-70"
 			}
-			"08"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"chrono_ms"				"1000"
@@ -14580,6 +14575,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FROZEN"				"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
@@ -14683,7 +14679,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-30 -40 -50 -60"
+				"attack_slow"				"-35 -50 -65 -80"
 			}
 			"08"
 			{
@@ -14693,7 +14689,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1200 1300 1400 1500"
+				"range"						"900 1100 1300 1500"
 			}
 		}
 
@@ -14858,7 +14854,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-20 -30 -40 -50"
+				"attack_slow"				"-15 -20 -25 -30"
 			}
 			"08"
 			{
@@ -14868,7 +14864,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1200 1300 1400 1500"
+				"range"						"900 1100 1300 1500"
 			}
 		}
 
@@ -14966,18 +14962,19 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"				"jakiro_liquid_fire"	
+		"AbilityTextureName"				"jakiro_liquid_fire"
+		"AOERadius"							"%radius"	
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"					"16 12 8 4"
-		"AbilityCastRange"					"700 800 900 1000"
+		"AbilityCastRange"					"600 700 800 900"
 		"AbilityCastPoint"					"0.25"
 		"AbilityCastAnimation"				"ACT_DOTA_ATTACK2"
 
@@ -15004,7 +15001,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325 350 375 400"
+				"radius"					"360"
 			}
 			"03"
 			{
@@ -15029,7 +15026,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"700 800 900 1000"
+				"cast_range_tooltip"		"600 700 800 900"
 			}
 		}
 
@@ -15130,7 +15127,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200 1650 2100"
+		"AbilityCastRange"				"1400 1600 1800"
 		"AbilityCastPoint"				"0.5"	
 
 		// Time		
@@ -15157,33 +15154,33 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0 15.0 20.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"10"
 			}
 			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration_scepter"			"30"
+			}
+			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_time_scepter"			"1.0"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"move_slow_scepter"			"-30"
-			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 75 100"
+				"damage"					"50 70 90"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"75 100 125"
+				"damage_scepter"			"65 90 115"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1200 1650 2100"					
+				"range"						"1400 1600 1800"					
 			}		
 			"07"
 			{
@@ -15198,27 +15195,52 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage"			"100 150 200"
+				"tooltip_damage"			"100 140 180"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage_scepter"	"150 200 250"
+				"tooltip_damage_scepter"	"130 180 230"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"10 9 8"
+				"trail_angle"				"9.0 8.5 8.0"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"7 7 7"
+				"trail_amount"				"7"
 			}
 			"13"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stickyness"				"1.0"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_stack_scepter"		"-5"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_stacks_scepter"	"2"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks_scepter"		"12"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_slow_scepter"		"-10"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_slow_scepter"			"-60"
 			}
 		}
 		
@@ -15233,8 +15255,6 @@
 				"ice_particle"				"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
 				"modifier"					"modifier_imba_macropyre"
 				"modifier_scepter"			"modifier_imba_macropyre_scepter"
-				"modifier_aura"				"modifier_imba_macropyre_aura"
-				"modifier_aura_scepter"		"modifier_imba_macropyre_aura_scepter"
 				"modifier_dummy"			"modifier_imba_macropyre_dummy"
 				"sound_fire"				"Hero_Jakiro.Macropyre.Cast"
 				"sound_ice"					"Hero_Jakiro.IcePath.Cast"
@@ -15293,36 +15313,34 @@
 						"Type"				"DAMAGE_TYPE_MAGICAL"
 						"Damage"			"%damage_scepter"
 					}
-
-					"Stun"
-					{
-						"Duration"			"%stun_time_scepter"
-						"Target"			"TARGET"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_macropyre_scepter_stun"
-						"Target" 			"TARGET"
-						"Duration"			"%stun_time_scepter"
-					}
 				}
 
 				"ThinkInterval"  			"%burn_interval"
 				
 				"OnIntervalThink"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%damage_scepter"
+						"ScriptFile"		"hero/hero_jakiro.lua"
+						"Function"			"MacropyreScepterThink"
+						
+						"modifier_slow"		"modifier_imba_macropyre_scepter_slow"
+						"modifier_stun"		"modifier_imba_macropyre_scepter_stun"
 					}
 				}
+			}
+
+			"modifier_imba_macropyre_scepter_slow"
+			{
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Duration"					"%stickyness"
 
 				"Properties"
 				{
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%move_slow_scepter" 
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack_scepter" 
 				}
 			}
 
@@ -15386,7 +15404,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.0 2.0 3.0 4.0"
+				"slow_duration"				"1.75 2.5 3.25 4.0"
 			}
 			"04"
 			{
@@ -15521,16 +15539,17 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"				"kunkka_tidebringer"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"150"
 		"AbilityCooldown"					"9.0 7.0 5.0 3.0"
 
 		// Precache
@@ -15539,7 +15558,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
 			"particle"						"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+			"particle"						"particles/econ/items/kunkka/kunkka_tidebringer_base/kunkka_spell_tidebringer.vpcf"
 		}
 
 		// Special
@@ -15554,7 +15573,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"25 40 55 70"
+				"damage_bonus"				"25 45 65 85"
 			}
 			"03"
 			{
@@ -15575,238 +15594,124 @@
 		
 		"Modifiers"
 		{
-			"modifier_imba_tidebringer_cooldown"
+			"modifier_imba_tidebringer"
 			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+				
+				"Orb"
+				{
+					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
+					"ProjectileName"			""
+					"CastAttack"				"1"
+				}
 
-				"ThinkInterval"  	"0.1"
+				"OnOrbImpact"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_kunkka.lua"
+						"Function"				"Tidebringer"
+
+						"sound_attack"			"Hero_Kunkka.Tidebringer.Attack"
+						"sound_hit"				"Hero_Kunkka.TidebringerDamage"
+						"particle_cleave"		"particles/econ/items/kunkka/kunkka_tidebringer_base/kunkka_spell_tidebringer.vpcf"
+						"particle_tsunami"		"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
+						"modifier_high_tide"	"modifier_imba_tidebringer_high_tide"
+						"modifier_wave_break"	"modifier_imba_tidebringer_wave_break"
+						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
+						"modifier_particle"		"modifier_imba_tidebringer_particle"
+						"modifier_damage"		"modifier_imba_tidebringer_damage"
+					}
+				}
+			}
+
+			"modifier_imba_tidebringer_particle"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_kunkka.lua"
+						"Function"				"TidebringerParticleCreate"
+
+						"sound_cooldown"		"Hero_Kunkaa.Tidebringer"
+						"particle_weapon"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_kunkka.lua"
+						"Function"				"TidebringerParticleDestroy"
+					}
+				}
+			}
+
+			"modifier_imba_tidebringer_damage"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.1"
 
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"TidebringerCooldown"
+						"Function"				"TidebringerDamage"
 
-						"modifier_name"			"modifier_imba_tidebringer"
-						"modifier_tidebringer"	"modifier_imba_tidebringer_low_tide"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_tidebringer_cooldown"
-					}
-				}
-			}
-
-			"modifier_imba_tidebringer"
-			{
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
-
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"			"modifier_imba_tidebringer_low_tide"
-						"Target" 				"CASTER"
-					}
-
-					"Random"
-					{
-						"Chance"				"%proc_chance"
-
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_imba_tidebringer_wave_break"
-								"Target" 		"CASTER"
-							}
-						}
-					}
-
-					"Random"
-					{
-						"Chance"				"%proc_chance"
-
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_imba_tidebringer_high_tide"
-								"Target" 		"CASTER"
-							}
-						}
-					}
-
-					"Random"
-					{
-						"Chance"				"%proc_chance"
-
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_imba_tidebringer_tsunami"
-								"Target" 		"CASTER"
-							}
-						}
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_tidebringer"
-						"Target"				"CASTER"
-					}
-				}
-			}
-		
-			"modifier_imba_tidebringer_low_tide"
-			{
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"				"CASTER"
-						"EffectName"			"Hero_Kunkaa.Tidebringer"
-					}
-				
-					"AttachEffect"
-					{
-						"Target"				"CASTER"
-						"EffectName"			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
-						"EffectAttachType"		"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"			"attach_sword"
-							"CASTER"			"attach_sword"
-							"CASTER"			"attach_sword"
-						}
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"Hero_Kunkka.Tidebringer.Attack"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"Tidebringer"
-
-						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
-						"modifier_wave_break"	"modifier_imba_tidebringer_wave_break"
 						"modifier_high_tide"	"modifier_imba_tidebringer_high_tide"
-						"modifier_low_tide"		"modifier_imba_tidebringer_low_tide"
-					}
-				
-					"ActOnTargets"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-						
-						"Action"
-						{
-							"FireSound"
-							{
-								"Target"			"TARGET"
-								"EffectName"		"Hero_Kunkka.TidebringerDamage"
-							}
-						
-							"CleaveAttack"
-							{
-								"CleavePercent"		"100"
-								"CleaveRadius"		"%radius"
-								"CleaveEffect"		"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
-							}
-						}
+						"modifier_damage"		"modifier_imba_tidebringer_damage"
 					}
 				}
-				
+
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_bonus"
 				}
 			}
 
 			"modifier_imba_tidebringer_high_tide"
 			{
-				"IsPurgable"					"0"
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
 
-				"TextureName"					"kunkka_tidebringer_high_tide"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
-				}
+				"TextureName"				"kunkka_tidebringer_high_tide"
 			}
 
 			"modifier_imba_tidebringer_wave_break"
 			{
-				"IsPurgable"					"0"
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
 
-				"TextureName"					"kunkka_tidebringer_wave_break"
+				"TextureName"				"kunkka_tidebringer_wave_break"
 			}
 
 			"modifier_imba_tidebringer_tsunami"
 			{
-				"IsPurgable"					"0"
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
 
-				"TextureName"					"kunkka_tidebringer_tsunami"
-				
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"TidebringerTsunami"
-
-						"particle_name"			"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-						"modifier_knockup"		"modifier_imba_tidebringer_knockup"
-					}
-				}
-			}
-
-			"modifier_imba_tidebringer_knockup"
-			{
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"%tsunami_duration"
-				
-				"OnCreated"
-				{
-					"Knockback"
-					{
-						"Target"				"TARGET"
-						"Center"				"CASTER"
-						"Duration"				"%tsunami_duration"
-						"Distance"				"0"
-						"Height"				"%tsunami_height"
-						"IsFixedDistance"		"1"
-						"ShouldStun"			"1"
-					}
-				}
+				"TextureName"				"kunkka_tidebringer_tsunami"
 			}
 		}
 	}
@@ -15829,15 +15734,23 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600 800 1000 1200"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.1"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 16 12 8"
+		"AbilityCooldown"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15871,16 +15784,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"return_range"				"300 400 500 600"
+				"grace_period"				"3"
 			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown"					"20 16 12 8"
+			}
 		}
 		
 		"OnUpgrade"
@@ -15896,26 +15806,15 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"				"modifier_imba_x_marks_the_spot"
-				"Duration"					"%allied_duration"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				}
-			}
-			
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_x_marks_the_spot"
-				"Duration"					"%duration"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				}
+				"ScriptFile"				"hero/hero_kunkka.lua"
+				"Function"					"XmarksCast"
+
+				"ability_return"			"imba_kunkka_return"
+				"modifier_caster"			"modifier_imba_x_marks_the_spot_caster_grace_period"
+				"modifier_duration"			"modifier_imba_x_marks_the_spot_remaining_duration"
+				"modifier_xmarks"			"modifier_imba_x_marks_the_spot"
 			}
 		}
 		
@@ -15923,15 +15822,10 @@
 		{
 			"modifier_imba_x_marks_the_spot"
 			{
-				"IsHidden"					"0"
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
 				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_x_marks_the_spot_secondary"
-				"Aura_Radius"				"%return_range"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
-				"Aura_ApplyToCaster"		"1"
 			
 				"OnCreated"
 				{
@@ -15955,9 +15849,7 @@
 					"RunScript"
 					{
 						"ScriptFile"				"hero/hero_kunkka.lua"
-						"Function"					"XmarksCast"
-
-						"return_name"				"imba_kunkka_return"
+						"Function"					"XmarksMark"
 					}
 				}
 				
@@ -15973,34 +15865,44 @@
 					{
 						"ScriptFile"				"hero/hero_kunkka.lua"
 						"Function"					"XmarksReturn"
-
-						"x_marks_name"				"imba_kunkka_x_marks_the_spot"
-						"return_name"				"imba_kunkka_return"
-						"modifier_name"				"modifier_imba_x_marks_the_spot"
 					}
 				}
 			}
 
-			"modifier_imba_x_marks_the_spot_secondary"
+			"modifier_imba_x_marks_the_spot_caster_grace_period"
 			{
 				"Passive"							"0"
-				"IsBuff"							"0"
+				"IsBuff"							"1"
 				"IsHidden"							"1"
 				"IsPurgable"						"0"
 
-				"OnCreated"
+				"OnDestroy"
 				{
-					"AttachEffect"
+					"RunScript"
 					{
-						"Target"					"TARGET"
-						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
-						"EffectAttachType"			"attach_origin"
-						"ControlPointEntities"
-						{
-							"TARGET"				"attach_origin"
-						}
+						"ScriptFile"				"hero/hero_kunkka.lua"
+						"Function"					"XmarksGraceEnd"
 					}
-				}
+				}	
+			}
+
+			"modifier_imba_x_marks_the_spot_remaining_duration"
+			{
+				"Passive"							"0"
+				"IsBuff"							"1"
+				"IsHidden"							"1"
+				"IsPurgable"						"0"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"hero/hero_kunkka.lua"
+						"Function"					"XmarksDurationEnd"
+
+						"ability_return"			"imba_kunkka_return"
+					}
+				}	
 			}
 		}
 	}
@@ -16013,7 +15915,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"kunkka_return"
 		"MaxLevel"						"1"
@@ -16021,6 +15923,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -16029,17 +15932,6 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"return_range"				"300 400 500 600"
-			}
-		}
 		
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
@@ -16050,8 +15942,8 @@
 				"ScriptFile"			"hero/hero_kunkka.lua"
 				"Function"				"XmarksForcedReturn"
 
-				"modifier_name"			"modifier_imba_x_marks_the_spot"
-				"x_marks_name"			"imba_kunkka_x_marks_the_spot"
+				"modifier_caster"		"modifier_imba_x_marks_the_spot_caster_grace_period"
+				"modifier_x_mark"		"modifier_imba_x_marks_the_spot"
 			}
 		}
 	}
@@ -16077,10 +15969,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_GHOST_SHIP"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0 50.0 40.0"
+		"AbilityCooldown"				"60 50 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16093,7 +15986,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"tooltip_delay"					"3.0 2.0 1.5"
+				"tooltip_delay"					"3.0 2.5 2.0"
 			}
 			"02"
 			{
@@ -16133,12 +16026,12 @@
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5 1.75 2.0"
+				"stun_duration"					"1.5"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"650 1000 1500"
+				"ghostship_speed"				"667 800 1000"
 			}
 			"11"
 			{
@@ -16153,7 +16046,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed_scepter"		"1000 1500 2000"
+				"ghostship_speed_scepter"		"1000 1200 1500"
 			}
 			"14"
 			{

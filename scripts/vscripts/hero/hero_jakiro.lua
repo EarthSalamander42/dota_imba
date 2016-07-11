@@ -155,6 +155,9 @@ function LiquidFire( keys )
 	-- Play sound
 	target:EmitSound(sound_liquid_fire)
 
+	-- Attack the main target
+	caster:PerformAttack(target, true, true, true, true, false)
+
 	-- Play explosion particle
 	local fire_pfx = ParticleManager:CreateParticle( particle_liquid_fire, PATTACH_ABSORIGIN, target )
 	ParticleManager:SetParticleControl( fire_pfx, 0, target:GetAbsOrigin() )
@@ -211,10 +214,13 @@ function Macropyre( keys )
 	local trail_amount = ability:GetLevelSpecialValueFor("trail_amount", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
-	-- Play fire sound, and ice sound if owner has Aghanim's Scepter
+	-- Play cast sound, and ice sound if owner has Aghanim's Scepter
 	caster:EmitSound(sound_fire)
+
+	-- If the owner has a scepter, change the cast sound and increase duration
 	if scepter then
 		caster:EmitSound(sound_ice)
+		duration = ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
 	end
 	
 	-- Initialize effect geometry
@@ -292,5 +298,44 @@ function Macropyre( keys )
 			ParticleManager:SetParticleControl( fire_pfx, 2, Vector( duration, 0, 0 ) )
 			ParticleManager:SetParticleControl( fire_pfx, 3, start_pos )
 		end
+	end
+end
+
+function MacropyreScepterThink( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_slow = keys.modifier_slow
+	local modifier_stun = keys.modifier_stun
+
+	-- Parameters
+	local stun_time_scepter = ability:GetLevelSpecialValueFor("stun_time_scepter", ability_level)
+	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+	local initial_stacks_scepter = ability:GetLevelSpecialValueFor("initial_stacks_scepter", ability_level)
+	local max_stacks_scepter = ability:GetLevelSpecialValueFor("max_stacks_scepter", ability_level)
+
+	-- Apply burn damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_scepter, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- If the target is currently stunned, refresh the slow modifier and exit
+	if target:HasModifier(modifier_stun) then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+		return nil
+	end
+
+	-- If the target is not slowed by this ability yet, apply the initial stacks
+	if not target:HasModifier(modifier_slow) then
+		AddStacks(ability, caster, target, modifier_slow, initial_stacks_scepter, true)
+	end
+
+	-- Else, add a stack of the slow modifier
+	AddStacks(ability, caster, target, modifier_slow, 1, true)
+
+	-- If the maximum stack amount was reached, reset the slow and apply the stun
+	if target:GetModifierStackCount(modifier_slow, caster) >= max_stacks_scepter then
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_time_scepter})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_stun, {})
+		target:SetModifierStackCount(modifier_slow, caster, initial_stacks_scepter)
 	end
 end

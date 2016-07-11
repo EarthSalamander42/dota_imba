@@ -9462,7 +9462,7 @@
 		"AbilityCastRange"				"450"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"4.0"
-		"AOERadius"						"%cleave_radius"
+		"AOERadius"						"%chop_radius"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -9494,7 +9494,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"melee_cleave_damage"	"35"
+				"melee_cleave_damage"	"40"
 			}
 			"05"
 			{
@@ -9510,6 +9510,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cleave_radius"			"350"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chop_radius"			"300"
 			}
 		}
 
@@ -9558,7 +9563,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_HEALTH_BONUS" 				"%bonus_health_regen"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE" 		"%bonus_mana_regen"
 				}
 			}
@@ -9566,7 +9571,7 @@
 			"modifier_item_imba_bfury_cleave"
 			{
 				"Passive"					"1"
-				"IsHidden"					"0"
+				"IsHidden"					"1"
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 

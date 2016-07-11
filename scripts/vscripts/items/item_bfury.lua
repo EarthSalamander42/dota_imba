@@ -8,13 +8,13 @@ function BattleFury( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local cleave_radius = ability:GetLevelSpecialValueFor("cleave_radius", ability_level)
+	local chop_radius = ability:GetLevelSpecialValueFor("chop_radius", ability_level)
 
 	-- Destroy trees in the area
-	GridNav:DestroyTreesAroundPoint(target, cleave_radius, false)
+	GridNav:DestroyTreesAroundPoint(target, chop_radius, false)
 
 	-- Destroy wards in the area
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, cleave_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, chop_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		if IsWardOrBomb(enemy) then
 			enemy:Kill(ability, caster)
