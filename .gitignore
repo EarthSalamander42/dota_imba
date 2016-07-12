@@ -1,21 +1,21 @@
-maps/
-resource/flash3/scaleform
-resource/flash3/ValveLib
-soundevents/soundevents_diagnostics.vsndevts_c
-resource/overviews/
-particles/
-materials/
-tools_thumbnail_cache.bin
-tools_asset_info.bin
-resource/flash3/custom_ui.txt
-resource/flash3/CustomUI.as
-resource/flash3/CustomUI.fla
-resource/flash3/CustomUI.swf
-resource/flash3/StatsCollection.swf
-flash source/
-resource/flash3/images/spellicons/mjollnir_arc.000.png
-resource/flash3/images/spellicons/mjollnir_arc.001.png
-resource/flash3/images/spellicons/mjollnir_arc.002.png
+dota_imba/maps/
+dota_imba/resource/flash3/scaleform
+dota_imba/resource/flash3/ValveLib
+dota_imba/soundevents/soundevents_diagnostics.vsndevts_c
+dota_imba/resource/overviews/
+dota_imba/particles/
+dota_imba/materials/
+dota_imba/tools_thumbnail_cache.bin
+dota_imba/tools_asset_info.bin
+dota_imba/resource/flash3/custom_ui.txt
+dota_imba/resource/flash3/CustomUI.as
+dota_imba/resource/flash3/CustomUI.fla
+dota_imba/resource/flash3/CustomUI.swf
+dota_imba/resource/flash3/StatsCollection.swf
+dota_imba/flash source/
+dota_imba/resource/flash3/images/spellicons/mjollnir_arc.000.png
+dota_imba/resource/flash3/images/spellicons/mjollnir_arc.001.png
+dota_imba/resource/flash3/images/spellicons/mjollnir_arc.002.png
 
 # Cache crap that Valve autogenerates
 *.bin
@@ -35,7 +35,7 @@ resource/flash3/images/spellicons/mjollnir_arc.002.png
 *.vpk
 
 # Map overviews
-resource/overviews/*
+dota_imba/resource/overviews/*
 
 #Github dump
 *.stackdump
