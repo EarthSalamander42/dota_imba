@@ -8,10 +8,16 @@ function Sheepstick( keys )
 	local modifier_debuff = keys.modifier_debuff
 	local modifier_dearmor = keys.modifier_dearmor
 	local modifier_demagic = keys.modifier_demagic
+	local particle_cast = keys.particle_cast
 
 	-- Parameters
 	local duration = ability:GetLevelSpecialValueFor("sheep_duration", ability:GetLevel() - 1 )
 	local armor_max = ability:GetLevelSpecialValueFor("armor_reduction", ability:GetLevel() - 1 )
+
+	-- Play particle
+	local sheep_pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(sheep_pfx, 0, target:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(sheep_pfx)
 
 	-- Kills the target if it is an illusion
 	if target:IsIllusion() then

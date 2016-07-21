@@ -1,0 +1,229 @@
+.AddonLoadingRoot
+{
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	overflow: clip;
+}
+
+.SeqImg
+{
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: 100% 100%;
+}
+
+#TitlePanel
+{
+	horizontal-align: left;
+	vertical-align: bottom;
+	margin-bottom: 50px;
+	margin-left: 420px;
+}
+
+#CustomBg
+{
+	margin-top: 0px;
+	margin-right: 400px;
+		overflow: clip;
+	pre-transform-scale2d: 1.0;
+	animation-name: background_animation;
+	animation-delay: 5s;
+	animation-duration: 180s;
+	animation-timing-function: linear;
+	animation-iteration-count: 3;
+}
+
+#Shopkeeper
+{
+	margin-top: -249px;
+	margin-left: 440px;
+	width: 605px;
+	height: 255px;
+	animation-name: shopkeeper_animation;
+	animation-delay: 15s;
+	animation-duration: 90s;
+	animation-timing-function: linear;
+	animation-iteration-count: 2;
+	transform-origin: 50% 50%;
+}
+
+#Gaben
+{
+	margin-top: -249px;
+	margin-left: 440px;
+	width: 605px;
+	height: 255px;
+	animation-name: shopkeeper_animation;
+	animation-delay: 16s;
+	animation-duration: 90s;
+	animation-timing-function: linear;
+	animation-iteration-count: 2;
+	transform-origin: 50% 50%;
+}
+
+@keyframes 'background_animation'
+{
+	0%
+	{
+		transform: translateX( 0px ) translateY( 0px );
+	}
+
+	44%
+	{
+		transform: translateX( -400px ) translateY( 0px );
+	}
+
+	50%
+	{
+		transform: translateX( -400px ) translateY( 0px );
+	}
+
+	94%
+	{
+		transform: translateX( 0px ) translateY( 0px );
+	}
+
+	100%
+	{
+		transform: translateX( 0px ) translateY( 0px );
+	}
+}
+
+@keyframes 'shopkeeper_animation'
+{
+	0%
+	{
+		transform: translateX( 0px ) translateY( 0px );
+	}
+
+	3%
+	{
+		transform: translateX( 0px ) translateY( 1500px );
+	}
+
+	4%
+	{
+		transform: translateX( 1500px ) translateY( 1500px );
+	}
+
+	15%
+	{
+		transform: translateX( 1500px ) translateY( 140px );
+	}
+
+	21%
+	{
+		transform: translateX( -1200px ) translateY( 140px );
+	}
+
+	30%
+	{
+		transform: translateX( -1200px ) translateY( 500px );
+	}
+
+	35%
+	{
+		transform: translateX( -600px ) translateY( 500px );
+	}
+
+	37%
+	{
+		transform: translateX( -600px ) translateY( 500px );
+	}
+
+	38%
+	{
+		transform: translateX( -1200px ) translateY( 500px );
+	}
+
+	39%
+	{
+		transform: translateX( -1200px ) translateY( 1500px );
+	}
+
+	54%
+	{
+		transform: translateX( -300px ) translateY( 1500px );
+	}
+
+	60%
+	{
+		transform: translateX( -300px ) translateY( 300px );
+	}
+
+	64%
+	{
+		transform: translateX( -300px ) translateY( 300px ) rotateZ(180deg);
+	}
+
+	65%
+	{
+		transform: translateX( 600px ) translateY( -500px );
+	}
+
+	66%
+	{
+		transform: translateX( 600px ) translateY( -100px );
+	}
+
+	77%
+	{
+		transform: translateX( 600px ) translateY( -100px );
+	}
+
+	80%
+	{
+		transform: translateX( 100px ) translateY( 600px );
+	}
+
+	81%
+	{
+		transform: translateX( -100px ) translateY( 400px );
+	}
+
+	82%
+	{
+		transform: translateX( -300px ) translateY( 300px );
+	}
+
+	83%
+	{
+		transform: translateX( 100px ) translateY( 100px );
+	}
+
+	84%
+	{
+		transform: translateX( 250px ) translateY( 300px );
+	}
+
+	85%
+	{
+		transform: translateX( 150px ) translateY( 500px );
+	}
+
+	86%
+	{
+		transform: translateX( -50px ) translateY( 750px );
+	}
+
+	87%
+	{
+		transform: translateX( -250px ) translateY( 550px );
+	}
+
+	88%
+	{
+		transform: translateX( -600px ) translateY( 400px );
+	}
+
+	89%
+	{
+		transform: translateX( -1200px ) translateY( -100px );
+	}
+
+	100%
+	{
+		transform: translateX( 0px ) translateY( 0px );
+	}
+}

@@ -1,0 +1,11 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/spectator_hero_select_overlay.vcss_c" />
+	</styles>
+	<Panel hittest="false" class="HeroSelectOverlayTimer">
+		<Image id="TimerBg" src="s2r://panorama/images/status_icons/timer_background_psd.vtex" />
+		<Image id="TimerRing" src="s2r://panorama/images/status_icons/timer_ring_psd.vtex" />
+		<Label id="Timer" text="#HeroSelectionTimer" />
+	</Panel>
+</root>

@@ -1,0 +1,15 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/spectator_hero_select_overlay.vcss_c" />
+	</styles>
+	<Panel hittest="false" class="HeroSelectPlayerRoot">
+		<Label class="PlayerName" id="PlayerName_Pre" />
+		<Label class="HeroName" id="HeroName_Pre" />
+		<Image id="PlayerPortraitBG" src="s2r://panorama/images/custom_game/unassigned_png.vtex">
+			<Image id="PlayerPortrait" />
+		</Image>
+		<Label class="HeroName" id="HeroName_Post" />
+		<Label class="PlayerName" id="PlayerName_Post" />
+	</Panel>
+</root>

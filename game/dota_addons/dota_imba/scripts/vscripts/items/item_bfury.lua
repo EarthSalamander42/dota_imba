@@ -25,6 +25,7 @@ end
 function BattleFuryHit( keys )
 	local caster = keys.caster
 	local target = keys.target
+	local damage = keys.damage
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_cleave = keys.modifier_cleave
@@ -51,14 +52,13 @@ function BattleFuryHit( keys )
 	cleave_damage = cleave_damage * cleave_stacks
 	quelling_bonus = quelling_bonus * cleave_stacks
 
-	-- Calculate damage to deal
-	local damage = caster:GetAverageTrueAttackDamage()
-	cleave_damage = damage * cleave_damage / 100
-
 	-- If the target is a creep, deal bonus damage
 	if not ( target:IsHero() or target:IsBuilding() or IsRoshan(target) ) then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * quelling_bonus / 100, damage_type = DAMAGE_TYPE_PHYSICAL})
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * quelling_bonus * 0.01, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
+
+	-- Calculate damage to deal
+	damage = damage * cleave_damage * 0.01
 
 	-- Draw particle
 	local cleave_pfx = ParticleManager:CreateParticle(particle_cleave, PATTACH_ABSORIGIN, target)
@@ -70,7 +70,7 @@ function BattleFuryHit( keys )
 	-- Deal damage
 	for _,enemy in pairs(enemies) do
 		if enemy ~= target and not enemy:IsAttackImmune() then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = cleave_damage, damage_type = DAMAGE_TYPE_PURE})
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
 		end
 	end
 end

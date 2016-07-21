@@ -136,6 +136,59 @@ function Torrent( keys )
 	end)
 end
 
+function TidebringerLevelUp( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_tidebringer = keys.modifier_tidebringer
+	local sound_cooldown = keys.sound_cooldown
+	local particle_weapon = keys.particle_weapon
+
+	-- If this is the first time learning the ability, activate Tidebringer
+	if ability:GetLevel() == 1 then
+		
+		-- Play sound on caster's client only
+		caster:EmitSound(sound_cooldown)
+
+		-- Create weapon particle
+		caster.tidebringer_weapon_pfx = ParticleManager:CreateParticle(particle_weapon, PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 2, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true)
+
+		-- Apply the on-hit modifier
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_tidebringer, {})
+	end
+end
+
+function TidebringerToggle( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_tidebringer = keys.modifier_tidebringer
+	local sound_cooldown = keys.sound_cooldown
+	local particle_weapon = keys.particle_weapon
+
+	-- If Tidebringer is inactive, activate it
+	if not caster:HasModifier(modifier_tidebringer) then
+		-- Play sound on caster's client only
+		caster:EmitSound(sound_cooldown)
+
+		-- Create weapon particle
+		caster.tidebringer_weapon_pfx = ParticleManager:CreateParticle(particle_weapon, PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 2, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true)
+
+		-- Apply the on-hit modifier
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_tidebringer, {})
+
+	-- Else, deactivate it
+	else
+		-- Destroy particle
+		ParticleManager:DestroyParticle(caster.tidebringer_weapon_pfx, true)
+		ParticleManager:ReleaseParticleIndex(caster.tidebringer_weapon_pfx)
+		caster.tidebringer_weapon_pfx = nil
+
+		-- Remove the on-hit modifier
+		caster:RemoveModifierByName(modifier_tidebringer)
+	end
+end
+
 function TidebringerDamage( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -177,6 +230,7 @@ function Tidebringer( keys )
 	local tsunami_height = ability:GetLevelSpecialValueFor("tsunami_height", ability_level)
 	local tsunami_duration = ability:GetLevelSpecialValueFor("tsunami_duration", ability_level)
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
+	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
 
 	-- Calculate geometry
 	local caster_loc = caster:GetAbsOrigin()
@@ -237,16 +291,36 @@ function Tidebringer( keys )
 		center_z = target_loc.z
 	}
 
+	-- Put the ability on cooldown
+	local tidebringer_cooldown = cooldown * GetCooldownReduction(caster)
+	if wave_break then
+		tidebringer_cooldown = 0.1
+	end
+	ability:StartCooldown(tidebringer_cooldown)
+
+	-- Destroy "ability ready" particle and play it again with sound after [tidebringer cooldown]
+	caster:RemoveModifierByName(modifier_particle)
+	Timers:CreateTimer(tidebringer_cooldown, function()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_particle, {})
+	end)
+
 	-- Iterate through enemies in the cleave area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), cleave_center_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		
-		-- Cleave damage, sound, and particle
+		-- Affect enemies
 		if enemy ~= target and not enemy:IsAttackImmune() then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = attack_damage, damage_type = DAMAGE_TYPE_PURE})
+
+			-- Perform an attack
+			local enemy_loc = enemy:GetAbsOrigin()
+			caster:SetAbsOrigin(enemy_loc)
+			caster:PerformAttack(enemy, true, true, true, true, true)
+			caster:SetAbsOrigin(caster_loc)
+
+			-- Sound and particle
 			enemy:EmitSound(sound_hit)
 			if tidebringer_target_particle_count <= 16 then
-				ParticleManager:SetParticleControl(tidebringer_pfx, tidebringer_target_particle_count, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(tidebringer_pfx, tidebringer_target_particle_count, enemy_loc)
 				tidebringer_target_particle_count = tidebringer_target_particle_count + 1
 			end
 		end
@@ -260,40 +334,6 @@ function Tidebringer( keys )
 
 	-- Release Tidebringer particle index
 	ParticleManager:ReleaseParticleIndex(tidebringer_pfx)
-
-	-- Handle Wave Break
-	if not wave_break then
-		local tidebringer_cooldown = ability:GetCooldown(ability_level) * GetCooldownReduction(caster)
-		ability:StartCooldown(tidebringer_cooldown)
-
-		-- Destroy "ability ready" particle and play it again with sound after [tidebringer cooldown]
-		caster:RemoveModifierByName(modifier_particle)
-		Timers:CreateTimer(tidebringer_cooldown, function()
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_particle, {})
-		end)
-	end
-end
-
-function TidebringerParticleCreate( keys )
-	local caster = keys.caster
-	local sound_cooldown = keys.sound_cooldown
-	local particle_weapon = keys.particle_weapon
-
-	-- Play sound on caster's client only
-	caster:EmitSound(sound_cooldown)
-
-	-- Create weapon particle
-	caster.tidebringer_weapon_pfx = ParticleManager:CreateParticle(particle_weapon, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(caster.tidebringer_weapon_pfx, 2, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true)
-end
-
-function TidebringerParticleDestroy( keys )
-	local caster = keys.caster
-
-	-- Destroy particle
-	ParticleManager:DestroyParticle(caster.tidebringer_weapon_pfx, true)
-	ParticleManager:ReleaseParticleIndex(caster.tidebringer_weapon_pfx)
-	caster.tidebringer_weapon_pfx = nil
 end
 
 function XmarksCast( keys )
@@ -303,7 +343,7 @@ function XmarksCast( keys )
 	local ability_level = ability:GetLevel() - 1
 	local ability_return = keys.ability_return
 	local modifier_caster = keys.modifier_caster
-	local modifier_duration = modifier_duration
+	local modifier_duration = keys.modifier_duration
 	local modifier_xmarks = keys.modifier_xmarks
 
 	-- Parameters
@@ -362,6 +402,7 @@ end
 function XmarksReturn( keys )
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 
 	-- If the target's origin position is unknown, do nothing
 	if not target.x_marks_origin then
@@ -371,6 +412,11 @@ function XmarksReturn( keys )
 	-- Return target to its original position
 	FindClearSpaceForUnit(target, target.x_marks_origin, true)
 	target.x_marks_origin = nil
+
+	-- If it's an enemy, ministun it
+	if target:GetTeam() ~= caster:GetTeam() then
+		target:AddNewModifier(unit, ability, "modifier_stunned", {duration = 0.01})
+	end
 
 	-- Prevent nearby units from getting stuck
 	Timers:CreateTimer(0.01, function()
@@ -624,21 +670,27 @@ function GhostShipDelayedDamage( keys )
 	-- Deal the prevented damage over time
 	Timers:CreateTimer(damage_interval, function()
 
-		-- Nonlethal HP removal
-		local target_hp = target:GetHealth()
-		if target_hp - damage_per_tick < 1 then
-			target:SetHealth(1)
+		-- If the target has died, do nothing
+		if target:IsAlive() then
+
+			-- Nonlethal HP removal
+			local target_hp = target:GetHealth()
+			if target_hp - damage_per_tick < 1 then
+				target:SetHealth(1)
+			else
+				target:SetHealth(target_hp - damage_per_tick)
+			end
+			
+			-- Check if all the damage has been dealt, if yes, reset the global variable
+			current_ticks = current_ticks + 1
+			if current_ticks >= max_ticks then
+				target.ghostship_damage_prevented = nil
+				return nil
+			else
+				return damage_interval
+			end
 		else
-			target:SetHealth(target_hp - damage_per_tick)
-		end
-		
-		-- Check if all the damage has been dealt, if yes, reset the global variable
-		current_ticks = current_ticks + 1
-		if current_ticks >= max_ticks then
 			target.ghostship_damage_prevented = nil
-			return nil
-		else
-			return damage_interval
 		end
 	end)
 end

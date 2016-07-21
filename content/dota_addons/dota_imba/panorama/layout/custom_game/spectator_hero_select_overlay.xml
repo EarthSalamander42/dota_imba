@@ -1,0 +1,31 @@
+<root>
+    <styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/spectator_hero_select_overlay.vcss_c" />
+    </styles>
+
+    <scripts>
+        <include src="s2r://panorama/scripts/custom_game/spectator_hero_select_overlay.vjs_c" />
+    </scripts>
+
+  <Panel class="HeroSelectOverlayRoot">
+	<Panel id="team_2" hittest="false" class="HeroSelectTeamRoot">
+		<Panel id="TeamHeaderAndPlayers">
+			<Panel id="PlayersContainer" />
+		</Panel>
+	</Panel>
+	<Panel id="team_3" hittest="false" class="HeroSelectTeamRoot">
+		<Panel id="TeamHeaderAndPlayers">
+			<Panel id="PlayersContainer" />
+		</Panel>
+	</Panel>
+	<Panel hittest="false" class="HeroSelectOverlayTimer" id="TimerPanel">
+		<Image id="TimerBg" src="file://{images}/status_icons/timer_background.psd" />
+		<Image id="TimerRing" src="file://{images}/status_icons/timer_ring.psd" />
+		<Label id="Timer" text="#HeroSelectionTimer" />
+	</Panel>
+    <Panel hittest="false" class="DOTAReturnToDashboardOverlay">
+		<Button class="DOTAShowDashboardButton" onactivate="DOTAShowDashboard()" />
+    </Panel>
+  </Panel>
+</root>

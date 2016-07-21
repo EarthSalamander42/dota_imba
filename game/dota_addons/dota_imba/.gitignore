@@ -1,0 +1,41 @@
+maps/
+resource/flash3/scaleform
+resource/flash3/ValveLib
+soundevents/soundevents_diagnostics.vsndevts_c
+resource/overviews/
+particles/
+materials/
+tools_thumbnail_cache.bin
+tools_asset_info.bin
+resource/flash3/custom_ui.txt
+resource/flash3/CustomUI.as
+resource/flash3/CustomUI.fla
+resource/flash3/CustomUI.swf
+resource/flash3/StatsCollection.swf
+flash source/
+resource/flash3/images/spellicons/mjollnir_arc.000.png
+resource/flash3/images/spellicons/mjollnir_arc.001.png
+resource/flash3/images/spellicons/mjollnir_arc.002.png
+
+# Cache crap that Valve autogenerates
+*.bin
+*.cfg
+
+# Compiled formats
+*.vpcf_c
+*.vtex_c
+*.vsndevts_c
+*.vsnd_c
+*.vmat_c
+*.vjs_c
+*.vxml_c
+*.vcss_c
+
+# Map files
+*.vpk
+
+# Map overviews
+resource/overviews/*
+
+#Github dump
+*.stackdump

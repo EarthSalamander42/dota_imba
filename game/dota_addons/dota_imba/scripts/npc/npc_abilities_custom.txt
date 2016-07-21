@@ -3580,8 +3580,8 @@
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"regen_per_stack"				"1"
+				"var_type"						"FIELD_FLOAT"
+				"armor_per_stack"				"0.25"
 			}
 			"04"
 			{
@@ -3633,7 +3633,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regen_per_stack"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%as_per_stack"
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%dmg_per_stack"
 				}
@@ -5914,7 +5914,6 @@
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf"
-			"particle"					"particles/hero/antimage/antimage_spell_shield_glow.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
@@ -6066,7 +6065,6 @@
 						"Function"			"Magehunter"
 
 						"modifier_stacks"	"modifier_imba_antimage_magehunter_stacks"
-						"particle_stacks"	"particles/hero/antimage/antimage_spell_shield_glow.vpcf"
 					}
 				}
 			}
@@ -15539,18 +15537,18 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"AbilityTextureName"				"kunkka_tidebringer"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"				"kunkka_tidebringer"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"150"
-		"AbilityCooldown"					"9.0 7.0 5.0 3.0"
+		"AbilityCastRange"					"0"
+		"AbilityCooldown"					"0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -15590,25 +15588,51 @@
 				"var_type"					"FIELD_INTEGER"
 				"proc_chance"				"35"
 			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown"					"9 7 5 3"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_kunkka.lua"
+				"Function"					"TidebringerLevelUp"
+
+				"modifier_tidebringer"		"modifier_imba_tidebringer"
+				"sound_cooldown"			"Hero_Kunkaa.Tidebringer"
+				"particle_weapon"			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_kunkka.lua"
+				"Function"					"TidebringerToggle"
+
+				"modifier_tidebringer"		"modifier_imba_tidebringer"
+				"sound_cooldown"			"Hero_Kunkaa.Tidebringer"
+				"particle_weapon"			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+			}
 		}
 		
 		"Modifiers"
 		{
 			"modifier_imba_tidebringer"
 			{
-				"Passive"					"1"
+				"Passive"					"0"
 				"IsBuff"					"1"
-				"IsHidden"					"1"
+				"IsHidden"					"0"
 				"IsPurgable"				"0"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			""
-					"CastAttack"				"1"
-				}
 
-				"OnOrbImpact"
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnAttackLanded"
 				{
 					"RunScript"
 					{
@@ -15624,35 +15648,6 @@
 						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
 						"modifier_particle"		"modifier_imba_tidebringer_particle"
 						"modifier_damage"		"modifier_imba_tidebringer_damage"
-					}
-				}
-			}
-
-			"modifier_imba_tidebringer_particle"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"TidebringerParticleCreate"
-
-						"sound_cooldown"		"Hero_Kunkaa.Tidebringer"
-						"particle_weapon"		"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"TidebringerParticleDestroy"
 					}
 				}
 			}
@@ -15691,6 +15686,8 @@
 				"IsHidden"					"0"
 				"IsPurgable"				"0"
 
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
 				"TextureName"				"kunkka_tidebringer_high_tide"
 			}
 
@@ -15701,6 +15698,8 @@
 				"IsHidden"					"0"
 				"IsPurgable"				"0"
 
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
 				"TextureName"				"kunkka_tidebringer_wave_break"
 			}
 
@@ -15710,6 +15709,8 @@
 				"IsBuff"					"1"
 				"IsHidden"					"0"
 				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"TextureName"				"kunkka_tidebringer_tsunami"
 			}
@@ -15733,7 +15734,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600 800 1000 1200"
+		"AbilityCastRange"				"900 1000 1100 1200"
 		"AbilityCastPoint"				"0.1"
 		
 		// Time		
@@ -15769,7 +15770,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"600 800 1000 1200"
+				"tooltip_range"				"900 1000 1100 1200"
 			}
 			"04"
 			{
@@ -16495,7 +16496,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"3.0"
-		"AbilityDuration"				"90.0"	
+		"AbilityDuration"				"60.0"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16523,12 +16524,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-20 -30 -40 -50"
+				"slow_attack_speed"		"-30 -40 -50 -60"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_duration"		"90"
+				"tooltip_duration"		"60"
 			}
 		}	
 
@@ -16733,7 +16734,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"145.0 115.0 60.0"
+		"AbilityCooldown"				"120 90 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16760,12 +16761,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_movement_speed"		"-30"
+				"slow_movement_speed"		"-30 -40 -50"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_attack_speed"			"-30"
+				"slow_attack_speed"			"-30 -40 -50"
 			}
 			"04"
 			{
@@ -16780,37 +16781,47 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"950"
+				"projectile_speed"			"850"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed_scepter"	"1100"
+				"speed_per_bounce"			"5"
 			}
 			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed_per_bounce_scepter"	"10"
+			}
+			"09"
 			{	
 				"var_type"					"FIELD_INTEGER"
 				"vision_radius"				"1000"
 			}
-			"09"
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"280 370 460"
 			}
-			"10"
+			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"370 460 550"
 			}
-			"11"
+			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"mini_stun"					"0.1"
 			}
-			"12"
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bounce_delay"				"0.2"
+			}
+			"14"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_decay"				"10"
+				"speed_fountain"			"300"
 			}
 		}		
 
@@ -16908,8 +16919,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%slow_movement_speed"
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%slow_attack_speed" 
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_movement_speed"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_attack_speed" 
 				}
 			}
 		}
@@ -16941,16 +16952,12 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1100"
 		"AbilityCastPoint"				"0.35"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"110 180 250 320"	
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -16962,28 +16969,43 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_speed"			"1400"
+				"var_type"					"FIELD_INTEGER"
+				"primary_speed"				"1200"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_initial"	"275"
+				"var_type"					"FIELD_INTEGER"
+				"primary_start_width"		"250"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_end"		"250"
+				"var_type"					"FIELD_INTEGER"
+				"primary_end_width"			"300"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_distance"			"1150"
+				"var_type"					"FIELD_INTEGER"
+				"primary_distance"			"1100"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"secondary_damage"				"40 60 80 100"
+				"var_type"					"FIELD_INTEGER"
+				"primary_damage"			"110 180 250 320"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"secondary_damage"			"60 90 120 150"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"secondary_amount"			"2"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"secondary_delay"			"0.25"
 			}
 		}	
 
@@ -16991,63 +17013,37 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"DragonSlaveLevel"
+				"ScriptFile"				"hero/hero_lina.lua"
+				"Function"					"DragonSlaveLevel"
 
-				"ability_name"			"imba_lina_dragon_slave_aux"
+				"ability_aux"				"imba_lina_dragon_slave_aux"
+				"ability_fiery"				"imba_lina_dragon_slave_fiery"
+				"ability_fiery_aux"			"imba_lina_dragon_slave_aux_fiery"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"LinearProjectile"
-			{
-				"Target"				"POINT"
-			    "EffectName"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-			    "MoveSpeed"				"%dragon_slave_speed"
-			    "StartRadius"			"%dragon_slave_width_initial"
-			    "StartPosition"			"attach_origin"
-			    "EndRadius"				"%dragon_slave_width_end"
-			    "FixedDistance"			"%dragon_slave_distance"
-			    "TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			    "TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			    "TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
-			    "HasFrontalCone"		"1"
-			    "ProvidesVision"		"0"
-			}	
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Lina.DragonSlave"
-				"Target"				"CASTER"
-			}
-
 			"RunScript"
 			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"DragonSlave"
-				"Target"				"POINT"
+				"ScriptFile"				"hero/hero_lina.lua"
+				"Function"					"DragonSlave"
+				"Target"					"POINT"
 
-				"ability_name"			"imba_lina_dragon_slave_aux"
-				"particle_name"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-				"sound"					"Hero_Lina.DragonSlave"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"FierySoul"
+				"ability_aux"				"imba_lina_dragon_slave_aux"
+				"particle_projectile"		"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+				"sound_cast"				"Hero_Lina.DragonSlave"
 			}
 		}	
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"				"0"
+			"DeleteOnHit"					"0"
 			"Damage"
 			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%AbilityDamage"
+				"Target"					"TARGET"
+				"Type"						"DAMAGE_TYPE_MAGICAL"
+				"Damage"					"%primary_damage"
 			}
 		}
 	}
@@ -17060,38 +17056,26 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"lina_dragon_slave_fiery"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-			"particle"					"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1100"
 		"AbilityCastPoint"				"0.25"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.0"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"110 180 250 320"	
+		"AbilityCooldown"				"3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"250 285 325 360"	
+		"AbilityManaCost"				"200 230 260 290"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17099,86 +17083,68 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_speed"			"1600"
+				"var_type"					"FIELD_INTEGER"
+				"primary_speed"				"1800"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_initial"	"300"
+				"var_type"					"FIELD_INTEGER"
+				"primary_start_width"		"250"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_end"		"275"
+				"var_type"					"FIELD_INTEGER"
+				"primary_end_width"			"350"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_distance"			"1200"
+				"var_type"					"FIELD_INTEGER"
+				"primary_distance"			"1200"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"secondary_damage"				"40 60 80 100"
+				"var_type"					"FIELD_INTEGER"
+				"primary_damage"			"110 180 250 320"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"secondary_damage"			"60 90 120 150"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"secondary_amount"			"4"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"secondary_delay"			"0.1"
 			}
 		}	
 
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"DragonSlaveLevel"
-
-				"ability_name"			"imba_lina_dragon_slave_aux_fiery"
-			}
-		}
-
 		"OnSpellStart"
 		{
-			"LinearProjectile"
-			{
-				"Target"				"POINT"
-			    "EffectName"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-			    "MoveSpeed"				"%dragon_slave_speed"
-			    "StartRadius"			"%dragon_slave_width_initial"
-			    "StartPosition"			"attach_origin"
-			    "EndRadius"				"%dragon_slave_width_end"
-			    "FixedDistance"			"%dragon_slave_distance"
-			    "TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			    "TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-			    "TargetFlags"			"DOTA_UNIT_TARGET_FLAG_NONE"
-			    "HasFrontalCone"		"1"
-			    "ProvidesVision"		"0"
-			}	
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Lina.DragonSlave"
-				"Target"				"CASTER"
-			}
-
 			"RunScript"
 			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"DragonSlave"
-				"Target"				"POINT"
+				"ScriptFile"				"hero/hero_lina.lua"
+				"Function"					"DragonSlave"
+				"Target"					"POINT"
 
-				"ability_name"			"imba_lina_dragon_slave_aux_fiery"
-				"particle_name"			"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-				"sound"					"Hero_Lina.DragonSlave"
+				"ability_aux"				"imba_lina_dragon_slave_aux_fiery"
+				"particle_projectile"		"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+				"sound_cast"				"Hero_Lina.DragonSlave"
 			}
 		}	
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"				"0"
+			"DeleteOnHit"					"0"
 			"Damage"
 			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%AbilityDamage"
+				"Target"					"TARGET"
+				"Type"						"DAMAGE_TYPE_MAGICAL"
+				"Damage"					"%primary_damage"
 			}
 		}
 	}
@@ -17191,58 +17157,61 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lina_dragon_slave"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"40 60 80 100"	
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"	
+		"AbilityCooldown"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"	
+		"AbilityManaCost"				"0"
 
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_speed"			"1200"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_speed"		"1200"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_initial"	"125"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_start_width"	"125"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_end"		"250"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_end_width"	"250"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_distance"			"600"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_distance"	"700"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"secondary_damage"		"60 90 120 150"
 			}
 		}
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"						"0"
+			"DeleteOnHit"				"0"
 
 			"Damage"
 			{
-				"Target"						"TARGET"
-				"Type"							"DAMAGE_TYPE_MAGICAL"
-				"Damage"						"%AbilityDamage"
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%secondary_damage"
 			}
 		}
 	}
@@ -17255,58 +17224,61 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lina_dragon_slave"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0"
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"40 60 80 100"	
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"	
+		"AbilityCooldown"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"	
+		"AbilityManaCost"				"0"
 
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_speed"			"1400"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_speed"		"1800"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_initial"	"150"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_start_width"	"150"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_width_end"		"275"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_end_width"	"275"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"dragon_slave_distance"			"1000"
+				"var_type"				"FIELD_INTEGER"
+				"secondary_distance"	"1100"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"secondary_damage"		"60 90 120 150"
 			}
 		}
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"						"0"
+			"DeleteOnHit"				"0"
 
 			"Damage"
 			{
-				"Target"						"TARGET"
-				"Type"							"DAMAGE_TYPE_MAGICAL"
-				"Damage"						"%AbilityDamage"
+				"Target"				"TARGET"
+				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"Damage"				"%secondary_damage"
 			}
 		}
 	}
@@ -17329,9 +17301,9 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625"
+		"AbilityCastRange"				"900 1100 1300 1500"
 		"AbilityCastPoint"				"0.35"
-		"AOERadius"						"%light_strike_array_aoe"	
+		"AOERadius"						"%aoe_radius"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17345,12 +17317,11 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0"
-		"AbilityDuration"				"1.6 1.9 2.2 2.5"		
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 100 110 120"	
+		"AbilityManaCost"				"90 100 110 120"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17358,33 +17329,44 @@
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_aoe"			"250"
+				"var_type"				"FIELD_INTEGER"
+				"aoe_radius"			"230"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"light_strike_array_delay_time"		"0.5"
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"			"0.4"
 			}		
 			"03"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"light_strike_array_stun_duration"	"1.6 1.9 2.2 2.5"
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.6 1.9 2.2 2.5"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_damage"			"80 120 160 200"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 120 160 200"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"secondary_delay"					"0.3 0.24 0.18 0.12"
+				"var_type"				"FIELD_FLOAT"
+				"secondary_delay"		"0.09"
 			}
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"3 5 7 9"
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"900 1100 1300 1500"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"BlazingAbilityLevel"
+
+				"ability_fiery"			"imba_lina_light_strike_array_fiery"
 			}
 		}
 
@@ -17392,52 +17374,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"hero/hero_lina.lua"
-				"Function"					"LightStrikeArray"
-
-				"Target"					"POINT"
-				"pre_particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-				"blast_particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-				"pre_sound"					"Ability.PreLightStrikeArray"
-				"blast_sound"				"Ability.LightStrikeArray"
-				"hit_modifier"				"modifier_imba_light_strike_array"
-			}
-
-			"RunScript"
-			{
 				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"FierySoul"
-			}
-		}	
+				"Function"				"LightStrikeArray"
+				"Target"				"POINT"
 
-		"Modifiers"
-		{
-			"modifier_imba_light_strike_array"
-			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
-
-				"Duration"			"%light_strike_array_stun_duration"
-				
-				"OnCreated"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%light_strike_array_damage"
-					}
-				}
-
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"	
-
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"	
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"particle_cast"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+				"particle_blast"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+				"sound_cast"			"Ability.PreLightStrikeArray"
+				"sound_blast"			"Ability.LightStrikeArray"
 			}
 		}
 	}
@@ -17450,7 +17394,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
@@ -17460,28 +17404,17 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625"
+		"AbilityCastRange"				"900 1100 1300 1500"
 		"AbilityCastPoint"				"0.25"
-		"AOERadius"						"%light_strike_array_aoe"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
-		}
+		"AOERadius"						"%aoe_radius"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3.0"
-		"AbilityDuration"				"1.6 1.9 2.2 2.5"
+		"AbilityCooldown"				"3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"225 250 275 300"
+		"AbilityManaCost"				"180 200 220 240"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17489,33 +17422,33 @@
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_aoe"			"250"
+				"var_type"				"FIELD_INTEGER"
+				"aoe_radius"			"230"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"light_strike_array_delay_time"		"0.5"
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"			"0.4"
 			}		
 			"03"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"light_strike_array_stun_duration"	"1.6 1.9 2.2 2.5"
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.6 1.9 2.2 2.5"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"light_strike_array_damage"			"80 120 160 200"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 120 160 200"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_FLOAT"
-				"secondary_delay"					"0.0"
+				"var_type"				"FIELD_FLOAT"
+				"secondary_delay"		"0.0"
 			}
 			"06"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"secondary_amount"					"3 5 7 9"
+				"var_type"				"FIELD_INTEGER"
+				"cast_range"			"900 1100 1300 1500"
 			}
 		}
 
@@ -17523,46 +17456,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"hero/hero_lina.lua"
-				"Function"					"LightStrikeArray"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"LightStrikeArray"
+				"Target"				"POINT"
 
-				"Target"					"POINT"
-				"pre_particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
-				"blast_particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
-				"pre_sound"					"Ability.PreLightStrikeArray"
-				"blast_sound"				"Ability.LightStrikeArray"
-				"hit_modifier"				"modifier_imba_light_strike_array"
-			}		
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_light_strike_array"
-			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
-
-				"Duration"			"%light_strike_array_stun_duration"
-				
-				"OnCreated"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%light_strike_array_damage"
-					}
-				}
-
-				"OverrideAnimation"	"ACT_DOTA_DISABLED"
-
-				"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"	"follow_overhead"	
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"particle_cast"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array_ray_team.vpcf"
+				"particle_blast"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+				"sound_cast"			"Ability.PreLightStrikeArray"
+				"sound_blast"			"Ability.LightStrikeArray"
 			}
 		}
 	}
@@ -17576,7 +17477,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
 		"AbilityTextureName"			"lina_fiery_soul"
 
 		// Time		
@@ -17601,33 +17501,34 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_attack_speed_bonus"	"40 60 80 100"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"45 60 75 90"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_move_speed_bonus"	"5 6 7 8"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"5 6 7 8"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_max_stacks"			"3"
+				"var_type"				"FIELD_INTEGER"
+				"active_stacks"			"3"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_duration"			"10"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
 			}
-			"05"
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"max_attack_speed_bonus"		"120 180 240 300"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_move_speed_bonus"			"15 18 21 24"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"BlazingAbilityLevel"
+
+				"ability_fiery"			"imba_lina_blazing_soul"
 			}
 		}
 
@@ -17635,18 +17536,20 @@
 		{	
 			"RunScript"
 			{
-				"ScriptFile"					"hero/hero_lina.lua"
-				"Function"						"FierySoulActivate"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"FierySoulActivate"
 
-				"activate_sound"				"Hero_Clinkz.Strafe"
-				"dragon_slave"					"imba_lina_dragon_slave"
-				"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
-				"light_strike_array"			"imba_lina_light_strike_array"
-				"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
-				"fiery_soul"					"imba_lina_fiery_soul"
-				"blazing_soul"					"imba_lina_blazing_soul"
-				"laguna_blade"					"imba_lina_laguna_blade"
-				"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+				"sound_cast"			"Hero_Clinkz.Strafe"
+				"modifier_stacks"		"modifier_imba_fiery_soul_stacks"
+				"modifier_active"		"modifier_imba_fiery_soul_active"
+				"ability_q"				"imba_lina_dragon_slave"
+				"ability_q_fiery"		"imba_lina_dragon_slave_fiery"
+				"ability_w"				"imba_lina_light_strike_array"
+				"ability_w_fiery"		"imba_lina_light_strike_array_fiery"
+				"ability_e"				"imba_lina_fiery_soul"
+				"ability_e_fiery"		"imba_lina_blazing_soul"
+				"ability_r"				"imba_lina_laguna_blade"
+				"ability_r_fiery"		"imba_lina_laguna_blade_fiery"
 			}
 		}
 	
@@ -17654,46 +17557,66 @@
 		{
 			"modifier_imba_fiery_soul"
 			{
-				"IsHidden"						"0"
-				"IsPurgable"					"0"
-				"Duration"						"%fiery_soul_duration"
+				"Passive"				"1"
+				"IsBuff"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+
+				"OnSpentMana"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_lina.lua"
+						"Function"			"FierySoul"
+
+						"modifier_stacks"	"modifier_imba_fiery_soul_stacks"
+						"modifier_active"	"modifier_imba_fiery_soul_active"
+					}
+				}
+			}
+
+			"modifier_imba_fiery_soul_stacks"
+			{
+				"Passive"				"0"
+				"IsBuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				
+				"Duration"				"%duration"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_ms"
 				}
 			}
 
 			"modifier_imba_fiery_soul_active"
 			{
-				"IsHidden"						"0"
-				"IsPurgable"					"0"
-				"Duration"						"%fiery_soul_duration"
-				"TextureName"					"lina_fiery_soul_fiery"
+				"Passive"				"0"
+				"IsBuff"				"1"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+
+				"Duration"				"%duration"
+				"TextureName"			"lina_fiery_soul_fiery"
 
 				"OnDestroy"
 				{
 					"RunScript"
 					{
-						"ScriptFile"					"hero/hero_lina.lua"
-						"Function"						"FierySoulEnd"
+						"ScriptFile"		"hero/hero_lina.lua"
+						"Function"			"FierySoulEnd"
 
-						"dragon_slave"					"imba_lina_dragon_slave"
-						"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
-						"light_strike_array"			"imba_lina_light_strike_array"
-						"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
-						"fiery_soul"					"imba_lina_fiery_soul"
-						"blazing_soul"					"imba_lina_blazing_soul"
-						"laguna_blade"					"imba_lina_laguna_blade"
-						"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
+						"ability_q"			"imba_lina_dragon_slave"
+						"ability_q_fiery"	"imba_lina_dragon_slave_fiery"
+						"ability_w"			"imba_lina_light_strike_array"
+						"ability_w_fiery"	"imba_lina_light_strike_array_fiery"
+						"ability_e"			"imba_lina_fiery_soul"
+						"ability_e_fiery"	"imba_lina_blazing_soul"
+						"ability_r"			"imba_lina_laguna_blade"
+						"ability_r_fiery"	"imba_lina_laguna_blade_fiery"
 					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%max_attack_speed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%max_move_speed_bonus"
 				}
 			}
 		}
@@ -17707,16 +17630,8 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lina_fiery_soul_fiery"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
-		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -17724,100 +17639,23 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_attack_speed_bonus"	"40 60 80 100"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"45 60 75 90"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_move_speed_bonus"	"5 6 7 8"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"5 6 7 8"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_max_stacks"			"3"
+				"var_type"				"FIELD_INTEGER"
+				"active_stacks"			"3"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"fiery_soul_duration"			"10"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_attack_speed_bonus"		"120 180 240 300"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_move_speed_bonus"			"15 18 21 24"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_lina.lua"
-				"Function"						"FierySoulActivate"
-
-				"activate_sound"				"Hero_Clinkz.Strafe"
-				"dragon_slave"					"imba_lina_dragon_slave"
-				"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
-				"light_strike_array"			"imba_lina_light_strike_array"
-				"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
-				"fiery_soul"					"imba_lina_fiery_soul"
-				"blazing_soul"					"imba_lina_blazing_soul"
-				"laguna_blade"					"imba_lina_laguna_blade"
-				"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
-			}
-		}
-	
-		"Modifiers"
-		{
-			"modifier_imba_fiery_soul"
-			{
-				"IsHidden"						"0"
-				"IsPurgable"					"0"
-				"Duration"						"%fiery_soul_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%fiery_soul_attack_speed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%fiery_soul_move_speed_bonus"
-				}
-			}
-
-			"modifier_imba_fiery_soul_active"
-			{
-				"IsHidden"						"0"
-				"IsPurgable"					"0"
-				"Duration"						"%fiery_soul_duration"
-				"TextureName"					"lina_fiery_soul_fiery"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_lina.lua"
-						"Function"						"FierySoulEnd"
-
-						"dragon_slave"					"imba_lina_dragon_slave"
-						"dragon_slave_fiery"			"imba_lina_dragon_slave_fiery"
-						"light_strike_array"			"imba_lina_light_strike_array"
-						"light_strike_array_fiery"		"imba_lina_light_strike_array_fiery"
-						"fiery_soul"					"imba_lina_fiery_soul"
-						"blazing_soul"					"imba_lina_blazing_soul"
-						"laguna_blade"					"imba_lina_laguna_blade"
-						"laguna_blade_fiery"			"imba_lina_laguna_blade_fiery"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%max_attack_speed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%max_move_speed_bonus"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
 			}
 		}
 	}
@@ -17850,12 +17688,12 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 850 1000"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.35"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0 60.0 50.0"	
+		"AbilityCooldown"				"70 60 50"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17867,91 +17705,80 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"450 700 950"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"450 650 850"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"700 850 1000"
+				"var_type"				"FIELD_FLOAT"
+				"int_damage_scepter"	"1.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1100"
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"2800"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"int_multiplier_scepter"	"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"start_width"			"125"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"2800"
+				"var_type"				"FIELD_INTEGER"
+				"end_width"				"200"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"start_width"				"100"
+				"var_type"				"FIELD_INTEGER"
+				"total_length"			"900"
 			}
-			"07"
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"end_width"					"175"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"BlazingAbilityLevel"
+
+				"ability_fiery"			"imba_lina_laguna_blade_fiery"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"EffectName"			"Ability.LagunaBlade"
-				"Target"				"CASTER"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"LagunaBladeProjectile"
+				"Function"				"LagunaBlade"
 
-				"Target"				"TARGET"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"FierySoul"
+				"sound_cast"			"Ability.LagunaBlade"
 			}
 		}
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"			"0"
-			
-			"FireSound"
-			{
-				"EffectName"		"Ability.LagunaBladeImpact"
-				"Target"			"TARGET"
-			}
+			"DeleteOnHit"				"0"
 
 			"FireEffect"
 			{
-				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"	"start_at_customorigin"
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
 
 				"ControlPointEntities"
 				{
-					"CASTER"		"attach_attack1"
-					"TARGET"		"attach_hitloc"
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
 				}
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_lina.lua"
-				"Function"			"LagunaBladeDamage"
-				"Target"			"TARGET"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"LagunaBladeHit"
+
+				"sound_hit"				"Ability.LagunaBladeImpact"
 			}
 		}
 	}
@@ -17965,7 +17792,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -17973,27 +17800,19 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"lina_laguna_blade_fiery"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
-			"particle"					"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 850 1000"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.25"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3.0 2.0 1.0"	
+		"AbilityCooldown"				"3.0"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"700 1050 1400"
+		"AbilityManaCost"				"560 840 1120"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18001,85 +17820,69 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"450 700 950"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"450 650 850"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range"				"700 850 1000"
+				"var_type"				"FIELD_FLOAT"
+				"int_damage_scepter"	"1.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1100"
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"2800"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"int_multiplier_scepter"	"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"start_width"			"125"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"2800"
+				"var_type"				"FIELD_INTEGER"
+				"end_width"				"200"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"start_width"				"100"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"end_width"					"175"
+				"var_type"				"FIELD_INTEGER"
+				"total_length"			"900"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"EffectName"			"Ability.LagunaBlade"
-				"Target"				"CASTER"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_lina.lua"
-				"Function"				"LagunaBladeProjectile"
+				"Function"				"LagunaBlade"
 
-				"Target"				"TARGET"
+				"sound_cast"			"Ability.LagunaBlade"
 			}
 		}
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"			"0"
-			
-			"FireSound"
-			{
-				"EffectName"		"Ability.LagunaBladeImpact"
-				"Target"			"TARGET"
-			}
+			"DeleteOnHit"				"0"
 
 			"FireEffect"
 			{
-				"EffectName"		"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
-				"EffectAttachType"	"start_at_customorigin"
+				"EffectName"			"particles/units/heroes/hero_lina/lina_spell_laguna_blade.vpcf"
+				"EffectAttachType"		"start_at_customorigin"
 
 				"ControlPointEntities"
 				{
-					"CASTER"		"attach_attack1"
-					"TARGET"		"attach_hitloc"
+					"CASTER"			"attach_attack1"
+					"TARGET"			"attach_hitloc"
 				}
 			}
 
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_lina.lua"
-				"Function"			"LagunaBladeDamage"
-				"Target"			"TARGET"
+				"ScriptFile"			"hero/hero_lina.lua"
+				"Function"				"LagunaBladeHit"
+
+				"sound_hit"				"Ability.LagunaBladeImpact"
 			}
 		}
 	}
@@ -18196,7 +17999,6 @@
 				"sound_hit"					"Hero_Magnataur.ShockWave.Target"
 				"particle_projectile"		"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 				"particle_hit"				"particles/units/heroes/hero_magnataur/magnataur_shockwave_hit.vpcf"
-				"modifier_magnetize"		"modifier_imba_magnetize_debuff"
 			}
 		}
 	}
@@ -18281,7 +18083,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"1200"
+				"radius_scepter"		"1200"
 			}
 		}
 
@@ -18351,6 +18153,7 @@
 						"modifier_supercharged"	"modifier_imba_supercharged"
 						"particle_cleave"		"particles/hero/magnus/magnus_empower_cleave.vpcf"
 						"particle_red_cleave"	"particles/hero/magnus/magnus_empower_red_cleave.vpcf"
+						"damage"				"%attack_damage"
 					}
 				}
 
@@ -18413,17 +18216,17 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"900"
+				"radius"						"600"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"max_slow"						"30"
+				"ms_slow"						"-10"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"think_interval"				"0.1"
+				"think_interval"				"0.2"
 			}
 		}
 		
@@ -18469,25 +18272,8 @@
 						"ScriptFile"			"hero/hero_magnus.lua"
 						"Function"				"MagnetizeThink"
 
-						"modifier_debuff"		"modifier_imba_magnetize_debuff"
-						"modifier_supercharged"	"modifier_imba_supercharged"
+						"modifier_magnetize"	"modifier_imba_magnetize_debuff"
 						"modifier_slow"			"modifier_imba_magnetize_slow"
-						"modifier_haste"		"modifier_imba_magnetize_haste"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_magnetize_slow"
-						"Target" 				"TARGET"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_magnetize_haste"
-						"Target" 				"TARGET"
 					}
 				}
 			}
@@ -18496,29 +18282,14 @@
 			{
 				"Passive"						"0"
 				"IsDebuff"						"1"
-				"IsPurgable"					"0"
+				"IsPurgable"					"1"
 				"IsHidden"						"1"
 
 				"Duration"						"%think_interval"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1" 
-				}
-			}
-
-			"modifier_imba_magnetize_haste"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-
-				"Duration"						"%think_interval"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"1" 
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow" 
 				}
 			}
 		}
@@ -26855,6 +26626,7 @@
 						"Function"				"GodStrengthCleave"
 
 						"particle_cleave"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
+						"damage"				"%attack_damage"
 					}
 				}
 

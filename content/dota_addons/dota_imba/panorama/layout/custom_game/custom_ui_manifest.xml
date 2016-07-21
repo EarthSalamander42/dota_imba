@@ -1,0 +1,67 @@
+<root>
+	<script>
+	// Uncomment any of the following lines in order to disable that portion of the default UI
+
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );      //Time of day (clock).
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );     //Hero actions UI.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );     //Minimap.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );      //Entire Inventory UI
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_SHOP, false );     //Shop portion of the Inventory.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_ITEMS, false );      //Player items.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_QUICKBUY, false );     //Quickbuy.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_COURIER, false );      //Courier controls.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PROTECT, false );      //Glyph.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_GOLD, false );     //Gold display.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_SHOP_SUGGESTEDITEMS, false );      //Suggested items shop panel.
+	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );     //Top-left menu buttons in the HUD.
+
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );				//Lefthand flyout scoreboard.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
+
+	// These lines set up the panorama colors used by each team (for game select/setup, etc)
+	GameUI.CustomUIConfig().team_colors = {}
+	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#0080D0;";
+	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#D02020;";
+
+	// These lines set up the panorama colors used by each player on the top scoreboard
+	GameUI.CustomUIConfig().player_colors = {}
+	GameUI.CustomUIConfig().player_colors[0] = "#4080D0;";
+	GameUI.CustomUIConfig().player_colors[1] = "#58E0A0;";
+	GameUI.CustomUIConfig().player_colors[2] = "#A000A0;";
+	GameUI.CustomUIConfig().player_colors[3] = "#D0D008;";
+	GameUI.CustomUIConfig().player_colors[4] = "#E06000;";
+	GameUI.CustomUIConfig().player_colors[5] = "#00FC40;";
+	GameUI.CustomUIConfig().player_colors[6] = "#380074;";
+	GameUI.CustomUIConfig().player_colors[7] = "#FC0080;";
+	GameUI.CustomUIConfig().player_colors[8] = "#F47B00;";
+	GameUI.CustomUIConfig().player_colors[9] = "#787800;";
+	GameUI.CustomUIConfig().player_colors[10] = "#DC74A8;";
+	GameUI.CustomUIConfig().player_colors[11] = "#748030;";
+	GameUI.CustomUIConfig().player_colors[12] = "#58BCD4;";
+	GameUI.CustomUIConfig().player_colors[13] = "#00701C;";
+	GameUI.CustomUIConfig().player_colors[14] = "#885400;";
+	GameUI.CustomUIConfig().player_colors[15] = "#F37AF3;";
+	GameUI.CustomUIConfig().player_colors[16] = "#F00000;";
+	GameUI.CustomUIConfig().player_colors[17] = "#F88000;";
+	GameUI.CustomUIConfig().player_colors[18] = "#E0B818;";
+	GameUI.CustomUIConfig().player_colors[19] = "#A0FF60;";
+
+	</script>
+
+	<Panel>
+	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_hud_base.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
+		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
+		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
+		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
+		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
+		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
+	</Panel>
+	
+</root>

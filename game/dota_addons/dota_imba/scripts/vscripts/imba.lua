@@ -74,6 +74,14 @@ function GameMode:OnFirstPlayerLoaded()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Random OMG forced hero selection
+	-------------------------------------------------------------------------------------------------
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		GameRules:SetSameHeroSelectionEnabled(true)
+		GameRules:GetGameModeEntity():SetCustomGameForceHero(RANDOM_OMG_HEROES[tostring(RandomInt(1, 90))])
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
@@ -213,7 +221,7 @@ function GameMode:DamageFilter( keys )
 			local distance_taper_start = 2500
 
 			-- Check for a valid target
-			if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
+			if not (victim:IsBuilding() or victim:IsTower() or victim:GetTeam() == attacker:GetTeam()) then
 
 				-- Ignore crit beyond the effect threshold
 				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
@@ -243,7 +251,7 @@ function GameMode:DamageFilter( keys )
 			local distance_taper_start = 2500
 
 			-- Check for a valid target
-			if not (victim:IsBuilding() or victim:IsTower() or victim == attacker) then
+			if not (victim:IsBuilding() or victim:IsTower() or victim:GetTeam() == attacker:GetTeam()) then
 
 				-- Ignore crit beyond the effect threshold
 				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
@@ -317,12 +325,12 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			-- Reduce damage
-			if victim ~= attacker then
+			if victim:GetTeam() ~= attacker:GetTeam() then
 				keys.damage = keys.damage * 0.94
 			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
 
 				-- Calculate damage block
 				local damage_block = 0 + victim:GetLevel()
@@ -349,12 +357,12 @@ function GameMode:DamageFilter( keys )
 		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			-- Reduce damage
-			if victim ~= attacker then
+			if victim:GetTeam() ~= attacker:GetTeam() then
 				keys.damage = keys.damage * 0.91
 			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
 
 				-- Calculate damage block
 				local damage_block = 5 + victim:GetLevel()
@@ -378,12 +386,12 @@ function GameMode:DamageFilter( keys )
 	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 		-- Reduce damage
-		if victim ~= attacker then
+		if victim:GetTeam() ~= attacker:GetTeam() then
 			keys.damage = keys.damage * 0.88
 		end
 
 		-- Physical damage block
-		if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() then
+		if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
 
 			-- Calculate damage block
 			local damage_block = 10 + victim:GetLevel()
@@ -487,29 +495,6 @@ function GameMode:OnAllPlayersLoaded()
 				print("player "..id.." never connected")
 			end
 
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG setup
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-
-		-- Pick setup
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			Timers:CreateTimer(0, function()
-				--print("attempting to random a hero for player "..id)
-				if self.players[id] and self.players[id] ~= "empty_player_slot" then
-					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
-					PlayerResource:SetHasRepicked(id)
-					PlayerResource:SetHasRandomed(id)
-					--print("succesfully randomed a hero for player "..id)
-				elseif not self.players[id] then
-					--print("player "..id.." still hasn't randomed a hero")
-					return 0.5
-				end
-			end)
 		end
 	end
 
@@ -646,8 +631,16 @@ function GameMode:OnAllPlayersLoaded()
 			if TOWER_UPGRADE_MODE then
 				tower_abilities = "Towers will gain <font color='#FF7800'>upgradable random abilities</font>."
 			else
-				tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>, with abilities being mirrored for both teams."
+				tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>."
 			end
+		end
+
+		-- Comeback gold
+		local comeback_gold = ""
+		if HERO_GLOBAL_BOUNTY_FACTOR > 0 then
+			comeback_gold = " Global comeback gold is <font color='#FF7800'>enabled</font>."
+		else
+			comeback_gold = " Global comeback gold is <font color='#FF7800'>disabled</font>."
 		end
 
 		-- Kills to end the game
@@ -666,7 +659,7 @@ function GameMode:OnAllPlayersLoaded()
 		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cooldown, false)
 		Say(nil, start_status, false)
 		Say(nil, creep_power..tower_power, false)
-		Say(nil, tower_abilities, false)
+		Say(nil, tower_abilities..comeback_gold, false)
 		Say(nil, kills_to_end, false)
 		if frantic_mode ~= "" then
 			Say(nil, frantic_mode, false)
@@ -863,15 +856,17 @@ function GameMode:OnGameInProgress()
 
 			if TOWER_ABILITY_MODE then
 
-				-- Add Spawn Behemoth ability
-				if string.find(building_name, "goodguys") then
-					building:AddAbility("imba_ancient_radiant_spawn_behemoth")
-					ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
-				elseif string.find(building_name, "badguys") then
-					building:AddAbility("imba_ancient_dire_spawn_behemoth")
-					ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
+				-- Add Spawn Behemoth ability, if appropriate
+				if SPAWN_ANCIENT_BEHEMOTHS then
+					if string.find(building_name, "goodguys") then
+						building:AddAbility("imba_ancient_radiant_spawn_behemoth")
+						ancient_ability = building:FindAbilityByName("imba_ancient_radiant_spawn_behemoth")
+					elseif string.find(building_name, "badguys") then
+						building:AddAbility("imba_ancient_dire_spawn_behemoth")
+						ancient_ability = building:FindAbilityByName("imba_ancient_dire_spawn_behemoth")
+					end
+					ancient_ability:SetLevel(1)
 				end
-				ancient_ability:SetLevel(1)
 
 				-- Add Stalwart Defense ability
 				building:AddAbility(ancient_ability_2)

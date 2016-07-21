@@ -1,0 +1,29 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
+	</styles>
+
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/simple_panel_animation.js" /> 
+		<include src="file://{resources}/scripts/custom_game/game_mode.js" />
+	</scripts>
+
+	<script>
+		DrawGameModeUi();
+	</script>
+
+	<Panel class="AddonLoadingRoot">
+		<Panel id="CustomBg" >
+			<Image id="loading_screen_bg" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_bg.png" />
+		</Panel>
+		<Panel id="TitlePanel">
+			<Image id="loading_screen_title" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_title.png" />
+		</Panel>
+		<Panel id="Shopkeeper">
+			<Image id="loading_screen_shopkeeper" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_shopkeeper.png" />
+		</Panel>
+		<Panel id="Gaben">
+			<Image id="loading_screen_gaben" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_gaben.png" />
+		</Panel>
+	</Panel>
+</root>

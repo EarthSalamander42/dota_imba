@@ -146,8 +146,6 @@ DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Diretide Kings' bounty multipli
 DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn time
 DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
 
-ANCIENT_ABILITIES_LIST = {}
-
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -246,6 +244,8 @@ CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 5											-- Creep bounty increase (in %) based on game time
 
+ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
+SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
 TOWER_UPGRADE_MODE = false													-- Should tower abilities be upgradeable?
 TOWER_POWER_FACTOR = 0														-- Tower durability/damage increase factor (0 = default)
@@ -337,6 +337,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
+RANDOM_OMG_HEROES = LoadKeyValues("scripts/npc/KV/random_omg_heroes.kv")
 RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
 RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")

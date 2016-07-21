@@ -43,9 +43,11 @@ function AncientThink( keys )
 	end
 	
 	-- Ancient abilities logic
-	local tier_1_ability = caster:GetAbilityByIndex(4)
-	local tier_2_ability = caster:GetAbilityByIndex(5)
-	local tier_3_ability = caster:GetAbilityByIndex(6)
+	local behemoth_adjustment = 0
+	if SPAWN_ANCIENT_BEHEMOTHS then behemoth_adjustment = -1 end
+	local tier_1_ability = caster:GetAbilityByIndex(4 + behemoth_adjustment)
+	local tier_2_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
+	local tier_3_ability = caster:GetAbilityByIndex(6 + behemoth_adjustment)
 
 	-- If health < 20%, refresh abilities once
 	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then

@@ -1,0 +1,358 @@
+.CustomHudRoot
+{
+	width: 100%;
+	height: 100%;
+}
+
+#TopBarScoreboard
+{
+	margin-top: 1px;
+	margin-left: 212px;
+    horizontal-align: left;
+    vertical-align: top;
+	width: 1495px;
+}
+
+.AspectRatio4x3 #TopBarScoreboard,
+.AspectRatio5x4 #TopBarScoreboard
+{
+	margin-left: 200px;
+	width: 1070px;
+}
+
+.AspectRatio16x10 #TopBarScoreboard
+{
+	margin-left: 200px;
+	width: 1335px;
+}
+
+#ScoreboardContainer
+{
+    horizontal-align: left;
+    vertical-align: top;
+	width: 100%;
+}
+
+#MultiteamScoreboard
+{
+    horizontal-align: left;
+    vertical-align: top;
+    height: 80px;
+	width: 100%;
+}
+
+.ScoreboardTeamWrapper
+{
+	width: 48%;
+    height: 100%;
+}
+
+#ScoreboardTeam
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	flow-children: right;
+}
+
+#_dynamic_team_2
+{
+	horizontal-align: left;
+}
+
+#_dynamic_team_3
+{
+	horizontal-align: right;
+}
+
+.AspectRatio4x3 .ScoreboardTeamWrapper,
+.AspectRatio5x4 .ScoreboardTeamWrapper
+{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.ScoreboardTeamWrapper.local_player_team #ScoreboardTeam
+{
+}
+
+#LogoAndScore
+{
+    height: 100%;
+	width: 64px;
+}
+
+#TeamScore
+{
+	horizontal-align: center;
+	vertical-align: top;
+	margin-top: 3px;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 4px 4px 4px black;
+	margin-bottom: -2px;
+    text-overflow: clip;
+}
+
+#TeamPadding
+{
+	width: fill-parent-flow(1);
+}
+
+#_dynamic_team_2 #TeamScore
+{
+	horizontal-align: left;
+	margin-left: 5px;
+//	color: #70e770;
+}
+
+#_dynamic_team_3 #TeamScore
+{
+	horizontal-align: right;
+	margin-right: 5px;
+//	color: #d16a4f;
+}
+
+#TeamStatus
+{
+    width: 100%;
+    height: 100%;
+}
+
+#PlayersContainer
+{
+    flow-children: right;
+}
+
+#TeamColorBar
+{
+}
+
+#TeamOverlayBar
+{
+    width: 100%;
+    height: 48px;
+}
+
+.ScoreboardTeamWrapper.local_player_team #TeamOverlayBar
+{
+}
+
+#LocalTeamOverlay
+{
+    width: 100%;
+    height: 43px;
+}
+
+.ScoreboardTeamWrapper.local_player_team #LocalTeamOverlay
+{
+	box-shadow: -3px -3px 12px 6px #FFFFFF88;
+}
+
+.ScoreboardPlayer
+{
+}
+
+.AspectRatio4x3 .ScoreboardPlayer
+{
+    margin-top: 2px;
+}
+.AspectRatio16x10 .ScoreboardPlayer
+{
+   margin-top: 4px;
+}
+
+.ScoreboardPlayerWrapper
+{
+}
+
+.FlowDown
+{
+    flow-children: down;
+}
+
+.ScoreboardPlayerWrapper.is_local_player
+{
+}
+
+.PlayerPortraitWrapper
+{
+    flow-children: down;
+}
+
+#PlayerColorBar
+{
+    height: 4px;
+    width: 100%;
+    border-bottom: 1px solid #000000;
+}
+
+
+#HeroIcon
+{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 64px;
+    height: 36px;
+}
+
+.AspectRatio4x3 #HeroIcon,
+.AspectRatio5x4 #HeroIcon
+{
+    border-left: 0px solid black;
+    border-right: 0px solid black;
+    width: 44px;
+    height: 25px;
+}
+
+.AspectRatio16x10 #HeroIcon
+{
+    border-left: 0px solid black;
+    border-right: 0px solid black;
+    width: 55px;
+    height: 30px;
+}
+
+.player_dead #HeroIcon
+{
+	wash-color: #666666;
+	saturation: 0;
+}
+
+.player_connection_abandoned #HeroIcon
+{
+	wash-color: #FF0000;
+	saturation: 0;
+}
+
+#DisconnectionIndicator
+{
+	opacity: 0;
+	width: 100%;
+	height: 18px;
+	vertical-align: top;
+	margin-top: 24px;
+}
+
+.player_connection_abandoned #DisconnectionIndicator,
+.player_connection_failed #DisconnectionIndicator,
+.player_connection_disconnected #DisconnectionIndicator
+{
+	opacity: 1;
+}
+
+#ScoreRow
+{
+    width: 100%;
+}
+
+#RespawnIndicator
+{
+	margin-top: 26px;
+	width: 42px;
+	height: 49px;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("s2r://panorama/images/custom_game/deathtimer_background_psd.vtex");
+	horizontal-align: center;
+	transform: translateY(-30px);
+	opacity: 0;
+	transition-property: transform;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-out;
+}
+
+#HealthIndicatorContainer
+{
+//	margin-top: 54px;
+	margin-top: 40px;
+	width: 100%;
+	background-color: black;
+	height: 13px;
+	horizontal-align: center;
+	border-radius: 2px;
+	box-shadow: -1px -1px 2px 2px black;
+	visibility: collapse;
+}
+
+.AspectRatio4x3 #HealthIndicatorContainer
+{
+    margin-top: 32px;
+}
+
+.local_player_is_spectator #HealthIndicatorContainer
+{
+	visibility: visible;
+}
+
+.ScoreboardPlayerWrapper.player_dead #HealthIndicatorContainer
+{
+	opacity: 0;
+}
+
+#HealthIndicatorHealth
+{
+	background-color: white;
+	height: 100%;
+	horizontal-align: left;
+}
+
+#_dynamic_team_2 #HealthIndicatorHealth
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #529a52 ), color-stop( 0.5, #0d570d ), color-stop( 0.75, #186510 ), to( #084e08 ) );
+}
+
+#_dynamic_team_3 #HealthIndicatorHealth
+{
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #b06652 ), color-stop( 0.5, #88270d ), color-stop( 0.75, #852c1b ), to( #631609 ) );
+}
+
+#RespawnTimer
+{
+    color: #e5460e;
+    width: 100%;
+	text-align: center;
+    vertical-align: bottom;
+	margin-bottom: 4px;
+    font-size: 18px;
+    text-shadow: 2px 2px 2px black;
+}
+
+.ScoreboardPlayerWrapper.player_dead #RespawnIndicator
+{
+	opacity: 1;
+	transform: translateY(0px);
+}
+
+#UltimateIndicatorContainer
+{
+	horizontal-align: center;
+	width: 20px;
+	height: 20px;
+	margin-top: 32px;
+}
+
+.player_ultimate_not_leveled #UltimateIndicatorContainer
+{
+	visibility: collapse;
+}
+
+.not_local_player_team #UltimateIndicatorContainer
+{
+	visibility: collapse;
+}
+
+.UltimateIndicatorShared
+{
+	width: 100%;
+	height: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.is_local_player #LocalPlayerIndicator
+{
+    visibility: visible;
+}

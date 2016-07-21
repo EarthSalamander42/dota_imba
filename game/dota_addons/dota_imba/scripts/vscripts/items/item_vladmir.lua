@@ -15,7 +15,7 @@ function VladmirOffering( keys )
 	local lifesteal_pct = ability:GetLevelSpecialValueFor("vampiric_aura", ability_level)
 
 	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() or target == attacker then
+	if target:IsBuilding() or target:IsTower() or target == attacker or target:IsIllusion() then
 		return nil
 	end
 
@@ -24,17 +24,20 @@ function VladmirOffering( keys )
 		attacker:Heal(damage * lifesteal_pct / 100, caster)
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 
 	-- If the attacker is an illusion, only draw the particle
 	elseif attacker:IsHero() then
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 
 	-- If the attacker is a creep, heal and draw its appropriate particle
 	elseif attacker:IsCreep() then
 		attacker:Heal(damage * lifesteal_pct / 100, caster)
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_creeps, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 	end
 end
 
@@ -53,7 +56,7 @@ function VladmirBlood( keys )
 	local creep_lifesteal = ability:GetLevelSpecialValueFor("creep_lifesteal", ability_level)
 
 	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() or target == attacker then
+	if target:IsBuilding() or target:IsTower() or target == attacker or target:IsIllusion() then
 		return nil
 	end
 
@@ -71,11 +74,13 @@ function VladmirBlood( keys )
 
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 
 	-- If the attacker is an illusion, only draw the particle
 	elseif attacker:IsHero() then
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 
 	-- If the attacker is a creep, heal and draw its appropriate particle
 	elseif attacker:IsCreep() then
@@ -88,5 +93,6 @@ function VladmirBlood( keys )
 		
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_creeps, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 	end
 end

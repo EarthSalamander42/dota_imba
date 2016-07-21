@@ -54,7 +54,6 @@ function ShockwaveHit( keys )
 	local sound_hit = keys.sound_hit
 	local particle_projectile = keys.particle_projectile
 	local particle_hit = keys.particle_hit
-	local modifier_magnetize= keys.modifier_magnetize
 	local scepter = HasScepter(caster)
 	
 	-- Parameters
@@ -222,7 +221,7 @@ function EmpowerAura( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_empower = keys.modifier_empower
 	local sound_target = keys.sound_target
-	local radius = ability:GetLevelSpecialValueFor("scepter_radius", ability_level)
+	local radius = ability:GetLevelSpecialValueFor("radius_scepter", ability_level)
 	local empower_duration = ability:GetLevelSpecialValueFor("supercharge_duration", ability_level)
 
 	-- Iterate through nearby allies
@@ -273,6 +272,7 @@ end
 function EmpowerHit( keys )
 	local caster = keys.caster
 	local attacker = keys.attacker
+	local damage = keys.damage
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -288,10 +288,6 @@ function EmpowerHit( keys )
 	-- Parameters
 	local cleave_damage_pct = ability:GetLevelSpecialValueFor("cleave_damage_pct", ability_level)
 	local cleave_radius = ability:GetLevelSpecialValueFor("cleave_radius", ability_level)
-	
-	-- Calculate damage to deal
-	local damage = attacker:GetAverageTrueAttackDamage()
-	damage = damage * cleave_damage_pct / 100
 
 	-- Draw particle
 	local cleave_pfx
@@ -303,6 +299,14 @@ function EmpowerHit( keys )
 	ParticleManager:SetParticleControl(cleave_pfx, 0, target:GetAbsOrigin())
 	ParticleManager:SetParticleControl(cleave_pfx, 1, Vector(cleave_radius, 0, 0))
 	ParticleManager:ReleaseParticleIndex(cleave_pfx)
+
+	-- If this is an illusion, only play the particle
+	if not attacker:IsRealHero() then
+		return nil
+	end
+
+	-- Calculate damage to deal
+	damage = damage * cleave_damage_pct * 0.01
 
 	-- Find enemies to damage
 	local enemies = FindUnitsInRadius(attacker:GetTeamNumber(), target:GetAbsOrigin(), nil, cleave_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -337,46 +341,30 @@ function MagnetizeThink( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_debuff = keys.modifier_debuff
-	local modifier_supercharged = keys.modifier_supercharged
+	local modifier_magnetize = keys.modifier_magnetize
 	local modifier_slow = keys.modifier_slow
-	local modifier_haste = keys.modifier_haste
 	
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local max_slow = ability:GetLevelSpecialValueFor("max_slow", ability_level)
 	local target_pos = target:GetAbsOrigin()
 
-	-- Remove previously existing slow stacks
-	target:RemoveModifierByName(modifier_slow)
-	target:RemoveModifierByName(modifier_haste)
-
 	-- Check for nearby magnetized heroes
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
-	-- Iterate through nearby heroes
+	-- Count nearby magnetized heroes
+	local magnetized_count = 0
 	for _,hero in pairs(heroes) do
 
-		-- If this hero has the magnetize debuff and is not the target, modify its movement speed
-		if hero ~= target and hero:HasModifier(modifier_debuff)then
-
-			-- Calculate movement direction
-			local position = hero:GetAbsOrigin() - target_pos
-			local direction = position:Normalized()
-			local distance = position:Length2D()
-			local forward_vector = target:GetForwardVector()
-			local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-			local movement_amount = math.floor((radius - distance) / radius * max_slow)
-
-			-- If facing towards the hero, apply haste
-			if angle < 60 then
-				AddStacks(ability, caster, target, modifier_haste, movement_amount, true)
-
-			-- Else, apply slow
-			else
-				AddStacks(ability, caster, target, modifier_slow, movement_amount, true)
-			end
+		-- If this hero has the magnetize debuff and is not the target, increase the magnetized hero count
+		if hero ~= target and ( hero:HasModifier(modifier_magnetize) or hero == caster ) then
+			magnetized_count = magnetized_count + 1
 		end
+	end
+
+	-- Apply stacks of slow according to the number of nearby magnetized heroes
+	if magnetized_count > 0 then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+		target:SetModifierStackCount(modifier_slow, nil, magnetized_count)
 	end
 end
 
@@ -417,7 +405,6 @@ function ReversePolarity( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local tree_radius = ability:GetLevelSpecialValueFor("tree_radius", ability_level)
 	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local ministun_scepter = ability:GetLevelSpecialValueFor("ministun_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 
 	-- Play cast sound
@@ -440,9 +427,6 @@ function ReversePolarity( keys )
 
 		-- Play hit sound
 		enemy:EmitSound(sound_stun)
-
-		-- Ministun enemies
-		enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = ministun_scepter})
 
 		-- Play pull particle
 		local pull_pfx = ParticleManager:CreateParticle(particle_pull, PATTACH_CUSTOMORIGIN, nil)

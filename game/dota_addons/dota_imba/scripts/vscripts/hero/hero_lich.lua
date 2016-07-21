@@ -115,8 +115,10 @@ end
 function ChainFrostStart( keys )
 	local caster = keys.caster
 
-	-- Resets bounce count
-	caster.chain_frost_bounces = 0
+	-- Resets bounce count if there is no currently ongoing projectile
+	if not caster.chain_frost_bounces then
+		caster.chain_frost_bounces = 0
+	end
 end
 
 function ChainFrost( keys )
@@ -134,27 +136,28 @@ function ChainFrost( keys )
 	-- Parameters
 	local jump_range = ability:GetLevelSpecialValueFor("jump_range", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
+	local speed_per_bounce = ability:GetLevelSpecialValueFor("speed_per_bounce", ability_level)
+	local bounce_delay = ability:GetLevelSpecialValueFor("bounce_delay", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
-	local speed_decay = ability:GetLevelSpecialValueFor("speed_decay", ability_level)
 	local target_pos = target:GetAbsOrigin()
 	local bounce_target = target
 
 	if scepter then
 		jump_range = ability:GetLevelSpecialValueFor("jump_range_scepter", ability_level)
-		projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed_scepter", ability_level)
+		speed_per_bounce = ability:GetLevelSpecialValueFor("speed_per_bounce_scepter", ability_level)
 	end
 
 	local particle_name = keys.particle_name
 
-	-- Track the number of bounces (lazy count)
-	if caster.chain_frost_bounces < 40 then
+	-- Increase the number of bounces if this is a hero
+	if target:IsRealHero() then
 		caster.chain_frost_bounces = caster.chain_frost_bounces + 1
 	end
 
 	-- Emit the sound, Creep or Hero depending on the type of the enemy hit
 	if target:IsRealHero() then
 		target:EmitSound("Hero_Lich.ChainFrostImpact.Hero")
-	elseif not caster.chain_frost_bounces or caster.chain_frost_bounces < 60 then
+	elseif not caster.chain_frost_bounces or caster.chain_frost_bounces < 20 then
 		target:EmitSound("Hero_Lich.ChainFrostImpact.Creep")
 	end
 
@@ -182,12 +185,12 @@ function ChainFrost( keys )
 		end
 	end
 	
-	-- Prevent bouncing if inside the enemy fountain
-	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
+	-- Calculate new bounce speed
+	projectile_speed = projectile_speed + speed_per_bounce * caster.chain_frost_bounces
 
-		-- Clear the bounce count
-		caster.chain_frost_bounces = 0
-		should_bounce = false
+	-- Bounce slower inside the enemy fountain
+	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
+		projectile_speed = ability:GetLevelSpecialValueFor("speed_fountain", ability_level)
 	end
 
 	-- If there's a target to bounce to, find it and jump
@@ -212,15 +215,17 @@ function ChainFrost( keys )
 			EffectName = particle_name,
 			bDodgeable = false,
 			bProvidesVision = false,
-			iMoveSpeed = projectile_speed - caster.chain_frost_bounces * speed_decay,
+			iMoveSpeed = projectile_speed,
 		--	iVisionRadius = vision_radius,
 			iVisionTeamNumber = caster:GetTeamNumber(), -- Vision still belongs to the one that casted the ability
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
 		}
-		ProjectileManager:CreateTrackingProjectile( info )
+		Timers:CreateTimer(math.max(bounce_delay - caster.chain_frost_bounces * 0.01, 0), function()
+			ProjectileManager:CreateTrackingProjectile( info )
+		end)
 	else
 
 		-- Clear the bounce count
-		caster.chain_frost_bounces = 0
+		caster.chain_frost_bounces = nil
 	end
 end

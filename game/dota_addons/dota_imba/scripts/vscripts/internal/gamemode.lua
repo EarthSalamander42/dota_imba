@@ -188,7 +188,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- IMBA: Pick mode selection
 	-------------------------------------------------------------------------------------------------
 
-	print("starting game setup TESTTEST")
 	-- Retrieve information
 	if tonumber(mode_info.all_random) == 1 then
 		IMBA_PICK_MODE_ALL_RANDOM = true
@@ -197,8 +196,7 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Enable same hero mode
 	if tonumber(mode_info.allow_same_hero) == 1 then
-		ALLOW_SAME_HERO_SELECTION = true
-		GameRules:SetSameHeroSelectionEnabled( ALLOW_SAME_HERO_SELECTION )
+		GameRules:SetSameHeroSelectionEnabled(true)
 		print("Same-hero selection enabled!")
 	end
 
@@ -246,7 +244,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Gold/bounties setup
 	-------------------------------------------------------------------------------------------------
-
+	
 	-- Starting gold information
 	if mode_info.gold_start == "2000" then
 		HERO_INITIAL_GOLD = 2000
@@ -277,6 +275,12 @@ function OnSetGameMode( eventSourceIndex, args )
 	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
 	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
 
+	-- Comeback gold adjustment
+	if tonumber(mode_info.comeback_gold) == 0 then
+		HERO_GLOBAL_BOUNTY_FACTOR = 0
+		print("Global comeback gold deactivated!")
+	end
+
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creeps and buildings setup
 	-------------------------------------------------------------------------------------------------
@@ -291,6 +295,12 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Random tower abilities enabled!")
 	else
 		TOWER_ABILITY_MODE = false
+	end
+
+	-- Ancient Behemoth setup
+	if tonumber(mode_info.spawn_behemoths) == 0 then
+		SPAWN_ANCIENT_BEHEMOTHS = false
+		print("Ancient Behemoths deactivated!")
 	end
 
 	-- Creep and tower power adjustment

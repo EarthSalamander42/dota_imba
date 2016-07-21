@@ -328,13 +328,14 @@ end
 function GodStrengthCleave( keys )
 	local caster = keys.caster
 	local attacker = keys.attacker
+	local damage = keys.damage
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local particle_cleave = keys.particle_cleave
 
-	-- If the target is a building, do nothing
-	if target:IsBuilding() then
+	-- If the target is a building, or this is an illusion, do nothing
+	if target:IsBuilding() or not attacker:IsRealHero() then
 		return nil
 	end
 
@@ -343,8 +344,7 @@ function GodStrengthCleave( keys )
 	local cleave_radius = ability:GetLevelSpecialValueFor("ally_cleave_radius_scepter", ability_level)
 
 	-- Calculate damage to deal
-	local damage = attacker:GetAverageTrueAttackDamage()
-	damage = damage * cleave_pct / 100
+	damage = damage * cleave_pct * 0.01
 
 	-- Draw particle
 	local cleave_pfx = ParticleManager:CreateParticle(particle_cleave, PATTACH_ABSORIGIN, target)

@@ -132,15 +132,15 @@ function VampiricAura( keys )
 		return nil
 	end
 
+	-- If there's no valid target, do nothing
+	if target:IsBuilding() or target:IsTower() or target == attacker or target:IsIllusion() then
+		return nil
+	end
+
 	-- Parameters
 	local ability_level = ability:GetLevel() - 1
 	local lifesteal_hero = ability:GetLevelSpecialValueFor("lifesteal_hero", ability_level)
 	local lifesteal_creep = ability:GetLevelSpecialValueFor("lifesteal_creep", ability_level)
-
-	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() or target == attacker then
-		return nil
-	end
 
 	-- If the attacker is a real hero, heal and draw the particle
 	if attacker:IsRealHero() then

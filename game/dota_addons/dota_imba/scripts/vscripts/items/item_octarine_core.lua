@@ -24,7 +24,7 @@ function OctarineLifesteal( keys )
 	local modifier_prevent = keys.modifier_prevent
 
 	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() or target == caster or target:HasModifier(modifier_prevent) then
+	if target:IsBuilding() or target:IsTower() or target == caster or target:HasModifier(modifier_prevent) or target:IsIllusion() then
 		return nil
 	end
 
@@ -86,6 +86,7 @@ function OctarineBlast( keys )
 		local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(blast_pfx, 0, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(100,0,blast_speed))
+		ParticleManager:ReleaseParticleIndex(blast_pfx)
 			
 		-- Find units in the blast radius
 		local blast_targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, blast_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -102,8 +103,7 @@ function OctarineBlast( keys )
 			-- Fire particle
 			local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
-			ParticleManager:SetParticleControl(hit_pfx, 1, Vector(100,0,blast_speed))
-			ParticleManager:SetParticleControl(hit_pfx, 2, Vector(1,0,0))
+			ParticleManager:ReleaseParticleIndex(hit_pfx)
 			
 			-- Print overhead message
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)

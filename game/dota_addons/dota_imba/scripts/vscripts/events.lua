@@ -613,24 +613,24 @@ function GameMode:OnPlayerLevelUp(keys)
 			end
 
 		-- Arc Warden is also tricky
-		elseif hero:GetName() == "npc_dota_hero_arc_warden" then
+		--elseif hero:GetName() == "npc_dota_hero_arc_warden" then
 
 			-- If the generic powerup isn't present, apply it
-			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-			if not ability_powerup then
-				hero:AddAbility("imba_unlimited_level_powerup")
-				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-				ability_powerup:SetLevel(1)
-			end
+		--	local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		--	if not ability_powerup then
+		--		hero:AddAbility("imba_unlimited_level_powerup")
+		--		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		--		ability_powerup:SetLevel(1)
+		--	end
 
 			-- Apply the relevant amount of stacks of the high level power-up
-			local buff_stacks = hero_level - 25
-			if buff_stacks > 0 then
-				ability_powerup:ApplyDataDrivenModifier(hero, hero, "modifier_imba_unlimited_level_powerup", {})
-				hero:SetModifierStackCount("modifier_imba_unlimited_level_powerup", hero, buff_stacks)
-			else
-				hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
-			end
+		--	local buff_stacks = hero_level - 25
+		--	if buff_stacks > 0 then
+		--		ability_powerup:ApplyDataDrivenModifier(hero, hero, "modifier_imba_unlimited_level_powerup", {})
+		--		hero:SetModifierStackCount("modifier_imba_unlimited_level_powerup", hero, buff_stacks)
+		--	else
+		--		hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
+		--	end
 		else
 
 			-- Prevent the hero from gaining further ability points after level 25
@@ -1194,7 +1194,7 @@ function GameMode:OnEntityKilled( keys )
 			end
 		end
 
-		if killer_team_networth < killed_team_networth then
+		if killer_team_networth < killed_team_networth and HERO_GLOBAL_BOUNTY_FACTOR > 0 then
 			local networth_difference = math.max( killed_team_networth - killer_team_networth, 0)
 			local welfare_gold = networth_difference * ( HERO_GLOBAL_BOUNTY_FACTOR / 100 ) / PlayerResource:GetPlayerCountForTeam(killer:GetTeam())
 			for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do

@@ -66,7 +66,6 @@ function Magehunter( keys )
 	local ability_level = ability:GetLevel() - 1
 	local cast_ability = keys.event_ability
 	local modifier_stacks = keys.modifier_stacks
-	local particle_stacks = keys.particle_stacks
 
 	-- If the ability is disabled by Break, do nothing
 	if ability_level < 0 then
@@ -93,12 +92,6 @@ function Magehunter( keys )
 		for i = 1, stacks_to_add do
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_stacks, {})
 		end
-	end
-
-	-- If there's no currently active particle, create it
-	if not caster.magehunter_particle then
-		caster.magehunter_particle = ParticleManager:CreateParticle(particle_stacks, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControl(caster.magehunter_particle, 1, Vector(30, 0, 0))
 	end
 end
 
@@ -127,10 +120,6 @@ function MagehunterDestroy( keys )
 	-- If this is the last stack, remove the counter modifier
 	if caster:GetModifierStackCount(modifier_counter, caster) <= 1 then
 		caster:RemoveModifierByName(modifier_counter)
-
-		-- Destroy particle
-		ParticleManager:DestroyParticle(caster.magehunter_particle, false)
-		caster.magehunter_particle = nil
 	else
 		AddStacks(ability, caster, caster, modifier_counter, -1, false)
 	end

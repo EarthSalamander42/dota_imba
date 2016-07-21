@@ -1,0 +1,46 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/multiteam_top_scoreboard.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/shared_scoreboard_styles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/scoreboard_timer.vcss_c" />
+	</styles>
+
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/shared_scoreboard_updater.vjs_c" />
+		<include src="s2r://panorama/scripts/custom_game/multiteam_top_scoreboard.vjs_c" />
+	</scripts>
+	<script>
+		$( "#_dynamic_team_2" ).SetAttributeInt( "team_id", 2 );
+		$( "#_dynamic_team_3" ).SetAttributeInt( "team_id", 3 );
+	</script>
+
+	<Panel hittest="false" class="CustomHudRoot">
+		<Panel hittest="false" id="TopBarScoreboard">
+			<Panel hittest="false" id="ScoreboardContainer">
+				<Panel hittest="false" id="MultiteamScoreboard">
+					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_2">
+						<Panel hittest="false" id="ScoreboardTeam">
+							<Panel hittest="false" id="TeamPadding"/>
+							<Panel hittest="false" id="PlayersContainer"/>
+							<Panel hittest="false" id="LogoAndScore">
+								<Panel hittest="false" id="TeamLogo" />
+								<Label hittest="false" id="TeamScore" text="999"/>
+							</Panel>
+						</Panel>
+					</Panel>
+					<Panel hittest="false" class="ScoreboardTeamWrapper" id="_dynamic_team_3">
+						<Panel hittest="false" id="ScoreboardTeam">
+							<Panel hittest="false" id="LogoAndScore">
+								<Panel hittest="false" id="TeamLogo" />
+								<Label hittest="false" id="TeamScore" text="999"/>
+							</Panel>
+							<Panel hittest="false" id="PlayersContainer"/>
+							<Panel hittest="false" id="TeamPadding"/>
+						</Panel>
+					</Panel>
+				</Panel>
+			</Panel>
+		</Panel>
+	</Panel>
+</root>

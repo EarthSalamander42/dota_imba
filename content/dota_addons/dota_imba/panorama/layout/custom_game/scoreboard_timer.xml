@@ -1,0 +1,12 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="s2r://panorama/styles/custom_game/scoreboard_timer.vcss_c" />
+	</styles>
+	<scripts>
+		<include src="s2r://panorama/scripts/custom_game/scoreboard_timer.vjs_c" />
+	</scripts>
+	<Panel class="TimerContainer">
+		<Label id="Timer" text="--:--" />
+	</Panel>
+</root>

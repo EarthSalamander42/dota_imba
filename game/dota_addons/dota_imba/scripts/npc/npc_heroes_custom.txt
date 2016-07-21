@@ -417,9 +417,6 @@
 
 		"ArmorPhysical"				"2"
 
-		"AttributeBaseStrength"		"18"
-		"AttributeStrengthGain"		"2.5"
-
 		"ProjectileModel"			"particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf"
 	}
 
@@ -755,6 +752,7 @@
 	{
 		"override_hero"				"npc_dota_hero_keeper_of_the_light"
 
+		"MovementSpeed"				"350"
 		"AttackDamageMin"			"28"
 
 		//"Ability1"					"imba_keeper_of_the_light_illuminate"
@@ -854,8 +852,6 @@
 
 		"AttributeAgilityGain"		"3.0"
 
-		"MovementSpeed"				"320"
-
 		//"Ability1"				"imba_life_stealer_rage"
 		//"Ability2"				"imba_life_stealer_feast"
 		//"Ability3"				"imba_life_stealer_open_wounds"
@@ -875,10 +871,6 @@
 		"override_hero"				"npc_dota_hero_lina"
 
 		"AttackDamageMin"			"21"
-
-		"AttackRange"				"700"
-
-		"ProjectileSpeed"			"1150"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
@@ -886,7 +878,11 @@
 		"Ability4"					"imba_lina_laguna_blade"
 		"Ability5"					"attribute_bonus_int"
 		"Ability6"					"imba_lina_dragon_slave_aux"
-		"Ability7"					"imba_lina_dragon_slave_aux_fiery"
+		"Ability7"					"imba_lina_dragon_slave_fiery"
+		"Ability8"					"imba_lina_dragon_slave_aux_fiery"
+		"Ability9"					"imba_lina_light_strike_array_fiery"
+		"Ability10"					"imba_lina_blazing_soul"
+		"Ability11"					"imba_lina_laguna_blade_fiery"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}
@@ -1023,6 +1019,8 @@
 
 		"AttackDamageMin"			"19"
 
+		"AttributeAgilityGain"		"4.0"
+
 		//"Ability1"					"imba_morphling_waveform"
 		//"Ability2"					"imba_morphling_adaptive_strike"
 		//"Ability3"					"imba_morphling_morph_agi"
@@ -1046,9 +1044,6 @@
 		"AttackDamageMin"			"33"
 		"AttackDamageMax"			"35"
 
-		"AttributeBaseIntelligence"	"22"
-		"AttributeIntelligenceGain"	"2.0"	
-
 		//"Ability1"				"imba_naga_siren_mirror_image"
 		//"Ability2"				"imba_naga_siren_ensnare"
 		//"Ability3"				"imba_naga_siren_rip_tide"
@@ -1068,7 +1063,7 @@
 
 		"AttackDamageMin"			"28"
 		"AttackDamageMax"			"38"
-		"AttackRate"				"1.5"
+		"AttackRate"				"1.4"
 
 		"AttributeBaseIntelligence"	"25"
 		"AttributeIntelligenceGain"	"3.0"
@@ -1152,7 +1147,7 @@
 	{
 		"override_hero"				"npc_dota_hero_ogre_magi"
 
-		"ArmorPhysical"				"8.0"
+		"ArmorPhysical"				"9.0"
 
 		"AttributeBaseIntelligence"	"22"
 
@@ -1379,6 +1374,8 @@
 	{
 		"override_hero"				"npc_dota_hero_razor"
 
+		"AttackRate"				"1.6"
+
 		//"Ability1"					"imba_razor_plasma_field"
 		//"Ability2"					"imba_razor_static_link"
 		//"Ability3"					"imba_razor_unstable_current"
@@ -1451,6 +1448,8 @@
 
 		"AttackDamageMin"			"23"
 		"AttackDamageMax"			"25"
+
+		"ArmorPhysical"				"-1"
 
 		//"Ability1"					"imba_nevermore_shadowraze1"
 		//"Ability2"					"imba_nevermore_shadowraze2"
@@ -1545,8 +1544,6 @@
 
 		"ModelScale"				"0.97"
 
-		"ArmorPhysical"				"4"
-
 		//"Ability1"					"imba_slardar_sprint"
 		//"Ability2"					"imba_slardar_slithereen_crush"
 		//"Ability3"					"imba_slardar_bash"
@@ -1564,8 +1561,6 @@
 		"override_hero"				"npc_dota_hero_slark"
 
 		"AttackRate"				"1.6"
-
-		"AttributeAgilityGain"		"2.0"
 
 		//"Ability1"					"imba_slark_dark_pact"
 		//"Ability2"					"imba_slark_pounce"
@@ -1827,6 +1822,9 @@
 
 		"AttackRate"				"1.6"
 
+		"AttributeBaseAgility"		"15"
+		"AttributeAgilityGain"		"1.5"
+
 		"RingRadius"				"130"
 		"HealthBarOffset"			"350"
 
@@ -1848,8 +1846,8 @@
 
 		"ModelScale"				"0.92"
 
-		"AttackDamageMin"			"86"
-		"AttackDamageMax"			"94"
+		"AttackDamageMin"			"94"
+		"AttackDamageMax"			"102"
 
 		"AttributeBaseStrength"		"29"
 		"AttributeStrengthGain"		"4.0"
