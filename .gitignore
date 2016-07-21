@@ -1,21 +1,18 @@
-dota_imba/maps/
-dota_imba/resource/flash3/scaleform
-dota_imba/resource/flash3/ValveLib
-dota_imba/soundevents/soundevents_diagnostics.vsndevts_c
-dota_imba/resource/overviews/
-dota_imba/particles/
-dota_imba/materials/
-dota_imba/tools_thumbnail_cache.bin
-dota_imba/tools_asset_info.bin
-dota_imba/resource/flash3/custom_ui.txt
-dota_imba/resource/flash3/CustomUI.as
-dota_imba/resource/flash3/CustomUI.fla
-dota_imba/resource/flash3/CustomUI.swf
-dota_imba/resource/flash3/StatsCollection.swf
-dota_imba/flash source/
-dota_imba/resource/flash3/images/spellicons/mjollnir_arc.000.png
-dota_imba/resource/flash3/images/spellicons/mjollnir_arc.001.png
-dota_imba/resource/flash3/images/spellicons/mjollnir_arc.002.png
+# Ignore everything
+/*
+
+# Except the relevant folders
+!content/
+content/*
+!content/dota_addons/
+content/dota_addons/*
+!content/dota_addons/dota_imba/
+
+!game/
+game/*
+!game/dota_addons/
+game/dota_addons/*
+!game/dota_addons/dota_imba/
 
 # Cache crap that Valve autogenerates
 *.bin
@@ -35,7 +32,7 @@ dota_imba/resource/flash3/images/spellicons/mjollnir_arc.002.png
 *.vpk
 
 # Map overviews
-dota_imba/resource/overviews/*
+resource/overviews/*
 
 #Github dump
 *.stackdump
