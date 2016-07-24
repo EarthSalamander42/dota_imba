@@ -21,7 +21,7 @@ function VladmirOffering( keys )
 
 	-- If the attacker is a real hero, heal and draw the particle
 	if attacker:IsRealHero() then
-		attacker:Heal(damage * lifesteal_pct / 100, caster)
+		attacker:Heal(damage * lifesteal_pct * 0.01, caster)
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_hero, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
@@ -34,7 +34,7 @@ function VladmirOffering( keys )
 
 	-- If the attacker is a creep, heal and draw its appropriate particle
 	elseif attacker:IsCreep() then
-		attacker:Heal(damage * lifesteal_pct / 100, caster)
+		attacker:Heal(damage * lifesteal_pct * 0.01, caster)
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_creeps, PATTACH_ABSORIGIN_FOLLOW, attacker)
 		ParticleManager:SetParticleControl(lifesteal_fx, 0, attacker:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(lifesteal_fx)
@@ -66,9 +66,9 @@ function VladmirBlood( keys )
 		-- Delay the lifesteal for one game tick to prevent blademail interaction
 		Timers:CreateTimer(0.01, function()
 			if target:IsRealHero() then
-				attacker:Heal(damage * hero_lifesteal / 100, caster)
+				attacker:Heal(damage * hero_lifesteal * 0.01, caster)
 			else
-				attacker:Heal(damage * creep_lifesteal / 100, caster)
+				attacker:Heal(damage * creep_lifesteal * 0.01, caster)
 			end
 		end)
 
@@ -86,9 +86,9 @@ function VladmirBlood( keys )
 	elseif attacker:IsCreep() then
 
 		if target:IsRealHero() then
-			attacker:Heal(damage * hero_lifesteal / 100, caster)
+			attacker:Heal(damage * hero_lifesteal * 0.01, caster)
 		else
-			attacker:Heal(damage * creep_lifesteal / 100, caster)
+			attacker:Heal(damage * creep_lifesteal * 0.01, caster)
 		end
 		
 		local lifesteal_fx = ParticleManager:CreateParticle(particle_creeps, PATTACH_ABSORIGIN_FOLLOW, attacker)

@@ -1710,7 +1710,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"300"	
+		"ItemCost"						"450"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -1719,7 +1719,7 @@
 		"ItemResult"					"item_imba_vladmir_2"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_vladmir;item_imba_lesser_crit"
+			"01"						"item_imba_vladmir;item_ultimate_orb"
 		}
 	}
 	
@@ -1768,7 +1768,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"25"
+				"damage_aura"			"30"
 			}
 			"04"
 			{
@@ -1862,7 +1862,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4700"
+		"ItemCost"						"4800"
 		"ItemShopTags"					"lifesteal;damage;armor;regen_mana;damage;crit"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"vladmir's blood;vlads"
@@ -1893,7 +1893,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aura"			"30"
+				"damage_aura"			"55"
 			}
 			"04"
 			{
@@ -1913,22 +1913,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"36"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"crit_damage"			"180"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stat_bonus"			"3"
+				"stat_bonus"			"16"
 			}
 		}
 
@@ -1945,7 +1930,6 @@
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%stat_bonus"
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%stat_bonus"
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stat_bonus"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage"
 				}
 			}
 
@@ -1985,43 +1969,6 @@
 						"particle_hero"		"particles/item/vladmir/vladmir_blood_lifesteal.vpcf"
 						"particle_creeps"	"particles/item/vladmir/vladmir_offering_lifesteal_creeps.vpcf"
 					}
-				}
-
-				"OnAttack"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_item_imba_vladmir_2_crit"
-						"Target" 			"ATTACKER"
-					}
-
-					"Random"
-					{
-						"Chance"			"%crit_chance"
-
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_item_imba_vladmir_2_crit"
-								"Target" 		"ATTACKER"
-							}
-						}
-					}
-				}
-			}
-
-			"modifier_item_imba_vladmir_2_crit"
-			{
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"1.0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_damage"
 				}
 			}	
 		}
@@ -8021,8 +7968,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1141"
-		"BaseClass"						"item_greater_crit"
+		"ID"							"2147"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_greater_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -8045,12 +7993,80 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"35"
+				"crit_chance"			"30"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_multiplier"		"250"
+				"base_crit"				"225"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_increase"			"25"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_greater_crit"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+				}
+			}
+
+			"modifier_item_imba_greater_crit_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_crit.lua"
+						"Function"		"DaedalusAttackStart"
+
+						"modifier_crit"	"modifier_item_imba_greater_crit_crit"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"items/item_crit.lua"
+						"Function"		"DaedalusAttackHit"
+
+						"sound_crit"	"DOTA_Item.Daedelus.Crit"
+						"modifier_crit"	"modifier_item_imba_greater_crit_crit"
+					}
+				}
+			}
+
+			"modifier_item_imba_greater_crit_crit"
+			{
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"1.0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"1"
+				}
 			}
 		}
 	}
@@ -17102,6 +17118,6 @@
 		}
 	}
 
-	//rapier freed IDs: 2147-2164, 2196
+	//rapier freed IDs: 2148-2164, 2196
 	//next free ID: 2204
 }
