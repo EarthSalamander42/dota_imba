@@ -6,6 +6,7 @@ function DaedalusAttackStart( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local modifier_crit = keys.modifier_crit
+	local modifier_dummy = keys.modifier_dummy
 
 	-- If the target is a building or an ally, do nothing
 	if target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
@@ -22,8 +23,8 @@ function DaedalusAttackStart( keys )
 		
 		-- If there's no crit multiplier counter, use the base value
 		local crit_damage = base_crit
-		if caster.current_daedalus_crit_multiplier then
-			crit_damage = caster.current_daedalus_crit_multiplier
+		if caster:HasModifier(modifier_dummy) then
+			crit_damage = crit_damage + caster:GetModifierStackCount(modifier_dummy, caster)
 		end
 
 		-- Add the appropriate amount of crit stacks
@@ -38,6 +39,8 @@ function DaedalusAttackHit( keys )
 	local ability = keys.ability
 	local sound_crit = keys.sound_crit
 	local modifier_crit = keys.modifier_crit
+	local modifier_item = keys.modifier_item
+	local modifier_dummy = keys.modifier_dummy
 
 	-- If the target is a building or an ally, do nothing
 	if target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
@@ -53,15 +56,42 @@ function DaedalusAttackHit( keys )
 		target:EmitSound(sound_crit)
 		Timers:CreateTimer(0.01, function()
 			caster:RemoveModifierByName(modifier_crit)
-			caster.current_daedalus_crit_multiplier = nil
+			caster:RemoveModifierByName(modifier_dummy)
 		end)
 
 	-- Else, increase the crit damage count
 	else
-		if not caster.current_daedalus_crit_multiplier then
-			caster.current_daedalus_crit_multiplier = base_crit
-		else
-			caster.current_daedalus_crit_multiplier = caster.current_daedalus_crit_multiplier + crit_increase
-		end
+
+		-- Increase crit bonus if there is more than one Daedalus
+		local item_stacks = caster:GetModifierStackCount(modifier_item, caster)
+		crit_increase = crit_increase * item_stacks
+
+		-- Add stacks of crit damage increase counter
+		AddStacks(ability, caster, caster, modifier_dummy, crit_increase, true)
+	end
+end
+
+function DaedalusStackUp( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_crit = keys.modifier_crit
+
+	-- Apply a stack of the cleave modifier
+	AddStacks(ability, caster, caster, modifier_crit, 1, true)
+end
+
+function DaedalusStackDown( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_crit = keys.modifier_crit
+
+	-- If this is the last stack, remove cleave modifier
+	local current_stacks = caster:GetModifierStackCount(modifier_crit, caster)
+	if current_stacks <= 1 then
+		caster:RemoveModifierByName(modifier_crit)
+
+	-- Else, reduce stack count by 1
+	else
+		caster:SetModifierStackCount(modifier_crit, caster, current_stacks - 1)
 	end
 end

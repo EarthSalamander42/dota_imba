@@ -5223,7 +5223,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1300"	
+		"ItemCost"						"550"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -5235,7 +5235,7 @@
 			"01"						"item_platemail;item_imba_hyperstone;item_chainmail"
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Assault Cuirass
 	//=================================================================================================================
@@ -5243,18 +5243,19 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1112"
-		"BaseClass"						"item_assault"
+		"ID"							"2151"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_assault"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5250"
+		"ItemCost"						"4500"
 		"ItemShopTags"					"attack_speed;armor;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"ac;assault cuirass"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5262,7 +5263,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"30"
+				"bonus_as"				"30"
 			}
 			"02"
 			{
@@ -5272,22 +5273,479 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"aura_as_ally"			"40"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_attack_speed"		"45"
+				"aura_armor_ally"		"8"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_positive_armor"	"8"
+				"aura_armor_enemy"		"-8"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_negative_armor"	"-8"
+				"radius"				"1200"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_assault"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+				}
+			}
+
+			"modifier_item_imba_assault_positive_aura_emitter"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_item_imba_assault_positive_aura_dummy"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster"		"1"
+			}
+
+			"modifier_item_imba_assault_positive_aura_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"AssaultAllyAuraThink"
+
+						"modifier_aura"		"modifier_item_imba_assault_positive_aura"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"AssaultAllyAuraDestroy"
+
+						"modifier_aura"		"modifier_item_imba_assault_positive_aura"
+					}
+				}
+			}
+
+			"modifier_item_imba_assault_positive_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aura_as_ally"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%aura_armor_ally"
+				}
+			}
+
+			"modifier_item_imba_assault_negative_aura_emitter"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_item_imba_assault_negative_aura_dummy"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster"		"0"
+			}
+
+			"modifier_item_imba_assault_negative_aura_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"AssaultEnemyAuraThink"
+
+						"modifier_aura"		"modifier_item_imba_assault_negative_aura"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"AssaultEnemyAuraDestroy"
+
+						"modifier_aura"		"modifier_item_imba_assault_negative_aura"
+					}
+				}
+			}
+
+			"modifier_item_imba_assault_negative_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%aura_armor_enemy"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Siege Cuirass
+	//=================================================================================================================
+	"item_recipe_imba_siege_cuirass"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2149"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1600"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_siege_cuirass"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_ancient_janggo;item_imba_assault"
+		}
+	}
+
+	//=================================================================================================================
+	// Siege Cuirass
+	//=================================================================================================================
+	"item_imba_siege_cuirass"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2150"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_imba_siege_cuirass"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30.0"
+		"AbilityCastRange"				"1200"
+		"AbilitySharedCooldown"			"drums"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"7600"
+		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;armor;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"siege cuirass"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_int"					"12"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_str"					"12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_agi"					"12"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"12"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_as"					"30"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_hp_regen"			"5"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_armor"				"12"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_as_ally"				"55"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_ms_ally"				"10"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_armor_ally"			"10"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_as_enemy"				"-55"
+			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_ms_enemy"				"-10"
+			}
+			"13"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_armor_enemy"			"-10"
+			}
+			"14"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_as_per_hero"		"15"
+			}
+			"15"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_ms_per_hero"		"5"
+			}
+			"16"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_as_per_creep"		"5"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"active_ms_per_creep"		"2"
+			}
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"10"
+			}
+			"19"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_drums.lua"
+				"Function"					"Drums"
+
+				"sound_cast"				"DOTA_Item.DoE.Activate"
+				"modifier_buff_hero"		"modifier_item_imba_siege_cuirass_buff_hero"
+				"modifier_buff_creep"		"modifier_item_imba_siege_cuirass_buff_creep"
+				"modifier_particle"			"modifier_item_imba_siege_cuirass_particle"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_siege_cuirass"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_str"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_int"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agi"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
+				}
+			}
+
+			"modifier_item_imba_siege_cuirass_positive_aura_emitter"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_item_imba_siege_cuirass_positive_aura"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster"		"1"
+			}
+
+			"modifier_item_imba_siege_cuirass_positive_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aura_as_ally"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%aura_ms_ally"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%aura_armor_ally"
+				}
+			}
+
+			"modifier_item_imba_siege_cuirass_negative_aura_emitter"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_item_imba_siege_cuirass_negative_aura"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+				"Aura_ApplyToCaster"		"0"
+			}
+
+			"modifier_item_imba_siege_cuirass_negative_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aura_as_enemy"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%aura_ms_enemy"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%aura_armor_enemy"
+				}
+			}
+
+			"modifier_item_imba_siege_cuirass_particle"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"SiegeCuirassParticleStart"
+
+						"particle_buff"		"particles/items_fx/drum_of_endurance_buff.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"SiegeCuirassParticleEnd"
+
+						"particle_buff"		"particles/items_fx/drum_of_endurance_buff.vpcf"
+					}
+				}
+			}
+
+			"modifier_item_imba_siege_cuirass_buff_hero"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%active_as_per_hero"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms_per_hero" 
+				}
+			}
+
+			"modifier_item_imba_siege_cuirass_buff_creep"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%active_as_per_creep"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms_per_creep" 
+				}
 			}
 		}
 	}
@@ -8018,6 +8476,28 @@
 				
 				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_crit.lua"
+						"Function"			"DaedalusStackUp"
+
+						"modifier_crit"		"modifier_item_imba_greater_crit_unique"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_crit.lua"
+						"Function"			"DaedalusStackDown"
+
+						"modifier_crit"		"modifier_item_imba_greater_crit_unique"
+					}
+				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
@@ -8035,10 +8515,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"items/item_crit.lua"
-						"Function"		"DaedalusAttackStart"
+						"ScriptFile"		"items/item_crit.lua"
+						"Function"			"DaedalusAttackStart"
 
-						"modifier_crit"	"modifier_item_imba_greater_crit_crit"
+						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
+						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
 					}
 				}
 
@@ -8046,13 +8527,25 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"items/item_crit.lua"
-						"Function"		"DaedalusAttackHit"
+						"ScriptFile"		"items/item_crit.lua"
+						"Function"			"DaedalusAttackHit"
 
-						"sound_crit"	"DOTA_Item.Daedelus.Crit"
-						"modifier_crit"	"modifier_item_imba_greater_crit_crit"
+						"sound_crit"		"DOTA_Item.Daedelus.Crit"
+						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
+						"modifier_item"		"modifier_item_imba_greater_crit_unique"
+						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
 					}
 				}
+			}
+
+			"modifier_item_imba_greater_crit_increase_dummy"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT"
 			}
 
 			"modifier_item_imba_greater_crit_crit"
@@ -10250,8 +10743,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
 				}
 			}
@@ -12803,7 +13296,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"525"	
+		"ItemCost"						"625"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -12813,7 +13306,6 @@
 		"ItemRequirements"
 		{
 			"01"						"item_ring_of_regen;item_imba_bracer;item_wind_lace"
-			"02"						"item_imba_ancient_janggo"
 		}
 	}
 
@@ -12824,24 +13316,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2097"
-		"BaseClass"						"item_ancient_janggo"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"ItemPermanent"					"1"
+		"ID"							"2148"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"item_ancient_janggo"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"30.0"
+		"AbilityCastRange"				"1200"
+		"AbilitySharedCooldown"			"drums"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1400"
+		"ItemCost"						"1500"
 		"ItemShopTags"					"str;agi;int;damage;move_speed;attack_speed;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"drum of endurance"
-		"ItemInitialCharges"			"7"
-		"ItemDisplayCharges"			"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		// Special	
@@ -12850,58 +13342,229 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_int"						"13"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"10"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_str"						"13"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_str"				"10"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_agi"						"13"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"10"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage"					"10"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"10"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_health_regen"			"4"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_hp_regen"		"4"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_aura_attack_speed_pct"	"10"
+				"var_type"				"FIELD_INTEGER"
+				"aura_as"				"16"
 			}
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_aura_movement_speed_pct"	"10"
+				"var_type"				"FIELD_INTEGER"
+				"aura_ms"				"8"
 			}
 			"08"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attack_speed_pct"		"40"
+				"var_type"				"FIELD_INTEGER"
+				"active_as_per_hero"	"15"
 			}
 			"09"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_movement_speed_pct"		"16"
+				"var_type"				"FIELD_INTEGER"
+				"active_ms_per_hero"	"5"
 			}
 			"10"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"10"
+				"var_type"				"FIELD_INTEGER"
+				"active_as_per_creep"	"5"
 			}
 			"11"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
+				"var_type"				"FIELD_INTEGER"
+				"active_ms_per_creep"	"2"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_drums.lua"
+				"Function"					"Drums"
+
+				"sound_cast"				"DOTA_Item.DoE.Activate"
+				"modifier_buff_hero"		"modifier_item_imba_drums_buff_hero"
+				"modifier_buff_creep"		"modifier_item_imba_drums_buff_creep"
+				"modifier_particle"			"modifier_item_imba_drums_particle"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_drums"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_str"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_int"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agi"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+				}
+			}
+
+			"modifier_item_imba_drums_aura_emitter"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_item_imba_drums_aura_dummy"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
+				"Aura_ApplyToCaster"		"1"
+			}
+
+			"modifier_item_imba_drums_aura_dummy"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"DrumsAuraThink"
+
+						"modifier_aura"		"modifier_item_imba_drums_aura"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"DrumsAuraDestroy"
+
+						"modifier_aura"		"modifier_item_imba_drums_aura"
+					}
+				}
+			}
+
+			"modifier_item_imba_drums_aura"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aura_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%aura_ms" 
+				}
+			}
+
+			"modifier_item_imba_drums_particle"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"DrumsParticleStart"
+
+						"particle_buff"		"particles/items_fx/drum_of_endurance_buff.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_drums.lua"
+						"Function"			"DrumsParticleEnd"
+
+						"particle_buff"		"particles/items_fx/drum_of_endurance_buff.vpcf"
+					}
+				}
+			}
+
+			"modifier_item_imba_drums_buff_hero"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%active_as_per_hero"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms_per_hero" 
+				}
+			}
+
+			"modifier_item_imba_drums_buff_creep"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%active_as_per_creep"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms_per_creep" 
+				}
 			}
 		}
 	}
@@ -17118,6 +17781,6 @@
 		}
 	}
 
-	//rapier freed IDs: 2148-2164, 2196
+	//rapier freed IDs: 2151-2164, 2196
 	//next free ID: 2204
 }

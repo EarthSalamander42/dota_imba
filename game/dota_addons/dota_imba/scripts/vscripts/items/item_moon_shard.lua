@@ -30,9 +30,11 @@ function MoonShardActive( keys )
 	AddStacks(ability, caster, target, modifier_stacks, 1, true)
 	
 	-- Play cast sound locally for the caster and the target
-	local caster_id = caster:GetPlayerID()
-	if caster_id then
-		EmitSoundOnClient(sound_consume, PlayerResource:GetPlayer(caster_id))
+	if caster:IsRealHero() then
+		local caster_id = caster:GetPlayerID()
+		if caster_id then
+			EmitSoundOnClient(sound_consume, PlayerResource:GetPlayer(caster_id))
+		end
 	end
 	local target_id = target:GetPlayerID()
 	if target_id then
