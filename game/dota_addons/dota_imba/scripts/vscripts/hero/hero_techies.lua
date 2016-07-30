@@ -59,7 +59,7 @@ function LandMineCharges( keys )
 	-- Parameters
 	local levels_per_charge = ability:GetLevelSpecialValueFor("levels_per_charge", ability_level)
 	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
-	local max_charges = math.floor( caster:GetLevel() / levels_per_charge + 1 )
+	local max_charges = math.floor((caster:GetLevel() * 2) / levels_per_charge + 1 )
 	local current_charges = caster:GetModifierStackCount(modifier_charges, caster)
 	local actual_cooldown = math.ceil( charge_cooldown / max_charges)
 
@@ -75,9 +75,9 @@ function LandMineCharges( keys )
 	-- Increment the timer and add charges if appropriate
 	else
 
-		-- If the caster has a scepter, increment the timer twice as fast
+		-- If the caster has a scepter, increment the timer four times as fast
 		if scepter then
-			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 2
+			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 4
 		else
 			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 1
 		end
@@ -87,8 +87,12 @@ function LandMineCharges( keys )
 			-- Reset timer
 			caster.land_mine_charge_counter = 0
 
-			-- If possible, add a charge
-			AddStacks(ability, caster, caster, modifier_charges, 1, true)
+			-- If possible, add a charge, add two if they've got a scepter.
+			if scepter then
+				AddStacks(ability, caster, caster, modifier_charges, 2, true)
+			else
+				AddStacks(ability, caster, caster, modifier_charges, 1, true)
+			end
 		end
 	end
 end
