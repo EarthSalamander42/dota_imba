@@ -829,7 +829,8 @@ function InitializeInnateAbilities( hero )
 		"imba_magnus_magnetize",
 		"imba_enigma_gravity",
 		"imba_troll_warlord_berserkers_rage",
-		"imba_antimage_magehunter"
+		"imba_antimage_magehunter",
+		"imba_necrolyte_death_pulse_aux"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them

@@ -7742,10 +7742,10 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"10"
-		"AbilityManaCost"				"120"	
+		"AbilityManaCost"				"90 100 110 120"	
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -7779,7 +7779,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength_tooltip"		"275 350 425 500"
+				"pull_strength_tooltip"		"450"
 			}
 		}	
 
@@ -7908,7 +7908,7 @@
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"65"
+		"AbilityManaCost"				"50"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8104,7 +8104,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self"				"150 200 250"
+				"bonus_gold_self"				"150 250 350"
 			}
 			"05"
 			{
@@ -8114,7 +8114,7 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_gold"					"40 80 120"
+				"bonus_gold"					"60 90 120"
 			}
 			"07"
 			{
@@ -8407,7 +8407,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"15 12 9"
+		"AbilityCooldown"				"15 11 7"
 		"AbilityManaCost"				"0"	
 			
 		// Special
@@ -9420,6 +9420,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
+		"CastFilterRejectCaster"		"1"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -18954,16 +18955,16 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20 30 40 50"
+		"AbilityManaCost"				"120 140 160 180"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18972,52 +18973,82 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"550"
+				"area_of_effect"		"500"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 45 60 75"
+				"base_damage"			"100 150 200 250"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"18 27 36 45"
+				"base_damage_pct"		"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"8"
+				"base_heal"				"70 90 110 130"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"amp_power"				"-8"
+				"base_heal_pct"			"5"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"3.5"
+				"var_type"				"FIELD_INTEGER"
+				"self_heal_hero_pct"	"1"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"600"
+				"var_type"				"FIELD_FLOAT"
+				"self_heal_creep_pct"	"0.25"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_cap"				"5 10 15 20"
+				"toggle_damage"			"30 40 50 60"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cast_cooldown"			"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"toggle_damage_pct"		"1"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_mana_cost"		"20 30 40 50"
+				"toggle_heal"			"15 20 25 30"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"toggle_heal_pct"		"1"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_power"			"5"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"400"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"toggle_cooldown"		"1.0"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"toggle_mana_cost"		"20 25 30 35"
+			}
+			"16"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown"				"5.0"
 			}
 		}
 
@@ -19026,13 +19057,14 @@
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulse"
+				"Function"				"DeathPulseStart"
 
+				"ability_aux"			"imba_necrolyte_death_pulse_aux"
 				"sound_cast"			"Hero_Necrolyte.DeathPulse"
 				"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
 				"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
 				"modifier_caster"		"modifier_imba_death_pulse_caster"
-				"mana_cost"				"0"
+				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
 			}
 		}
 
@@ -19052,10 +19084,9 @@
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulseHit"
+				"Function"				"DeathPulseHeroHit"
 
-				"stack_buff"			"modifier_imba_death_pulse_buff_stack"
-				"stack_debuff"			"modifier_imba_death_pulse_debuff_stack"
+				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
 			}
 		}
 
@@ -19068,47 +19099,76 @@
 				"IsBuff"			"1"
 				"IsPurgable"		"0"
 
-				"ThinkInterval"		"%cast_cooldown"
+				"ThinkInterval"		"%toggle_cooldown"
 
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"			"hero/hero_necrolyte.lua"
-						"Function"				"DeathPulse"
+						"Function"				"DeathPulseThink"
 
+						"ability_aux"			"imba_necrolyte_death_pulse_aux"
 						"sound_cast"			"Imba.NecroDeathPulseRepeat"
 						"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
 						"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
 						"modifier_caster"		"modifier_imba_death_pulse_caster"
-						"mana_cost"				"%cast_mana_cost"
+						"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
 					}
 				}
 			}
+		}
+	}
 
-			"modifier_imba_death_pulse_buff_stack"
+	//=================================================================================================================
+	// Necrolyte's Death Pulse Creep Projectile (aux ability)
+	//=================================================================================================================
+	"imba_necrolyte_death_pulse_aux"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"necrolyte_death_pulse"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Duration"			"%stack_duration"
+				"var_type"				"FIELD_FLOAT"
+				"self_heal_creep_pct"	"0.25"
 			}
-
-			"modifier_imba_death_pulse_debuff_stack"
+			"02"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
+				"var_type"				"FIELD_INTEGER"
+				"stack_power"			"5"
+			}
+		}
 
-				"Duration"			"%stack_duration"
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_necrolyte.lua"
+				"Function"				"DeathPulseCreepHit"
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%amp_power"
-				}
+				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
 			}
 		}
 	}
@@ -19130,7 +19190,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"700 800 900 1000"
+		"AbilityCastRange"					"900"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19139,58 +19199,77 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"700 800 900 1000"
+				"aura_radius"				"900"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aura_damage"				"0.6 0.9 1.2 1.5" 
+				"aura_damage"				"0.6 1.0 1.4 1.8" 
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_power"				"20"
+				"heal_bonus_per_stack"		"5"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
+				"damage_amp_per_stack"		"-5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
 				"max_stacks"				"10"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"06"
 			{
-				"ScriptFile"				"hero/hero_necrolyte.lua"
-				"Function"					"HeartstopperUpdate"
-
-				"modifier_aura"				"modifier_imba_heartstopper_aura"
+				"var_type"					"FIELD_INTEGER"
+				"stacks_tooltip"			"5"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks_tooltip"		"50"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_heartstopper_aura"
+			"modifier_imba_heartstopper_aura_emitter_enemy"
 			{
 				"Passive"					"1"
 				"IsBuff"					"1"
 				"IsHidden"					"1"
 				"IsPurgable"				"0"
 
-				"Aura" 						"modifier_imba_heartstopper"
+				"Aura" 						"modifier_imba_heartstopper_aura_enemy"
 				"Aura_Radius" 				"%aura_radius"
 				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 			}
 
-			"modifier_imba_heartstopper"
+			"modifier_imba_heartstopper_aura_emitter_ally"
 			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Aura" 						"modifier_imba_heartstopper_aura_ally"
+				"Aura_Radius" 				"%aura_radius"
+				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Aura_ApplyToCaster"		"1"
+			}
+
+			"modifier_imba_heartstopper_aura_enemy"
+			{
+				"Passive"			"0"
 				"IsDebuff"			"1"
 				"IsHidden"			"1"
-				"IsPurgable"		"0"
-				"Passive"			"0"
+				"IsPurgable"		"1"
 
 				"ThinkInterval"				"1.0"
 
@@ -19199,11 +19278,20 @@
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"Heartstopper"
+						"Function"			"HeartstopperEnemy"
 
-						"stack_modifier"	"modifier_imba_heartstopper_stack"
-						"damage_modifier"	"modifier_imba_heartstopper_damage"
-						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
+						"modifier_debuff"	"modifier_imba_heartstopper_debuff"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"HeartstopperEnemy"
+
+						"modifier_debuff"	"modifier_imba_heartstopper_debuff"
 					}
 				}
 
@@ -19214,27 +19302,73 @@
 						"ScriptFile"		"hero/hero_necrolyte.lua"
 						"Function"			"HeartstopperEnd"
 
-						"stack_modifier"	"modifier_imba_heartstopper_stack"
-						"damage_modifier"	"modifier_imba_heartstopper_damage"
-						"visible_modifier"	"modifier_imba_heartstopper_visibility_dummy"
+						"modifier_stacks"	"modifier_imba_heartstopper_debuff"
 					}
 				}
 			}
 
-			"modifier_imba_heartstopper_stack"
+			"modifier_imba_heartstopper_aura_ally"
 			{
-				"IsDebuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"0"
 				"Passive"			"0"
+				"IsBuff"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"1"
+
+				"ThinkInterval"				"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"HeartstopperAlly"
+
+						"modifier_buff"		"modifier_imba_heartstopper_heal_bonus"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"HeartstopperAlly"
+
+						"modifier_buff"		"modifier_imba_heartstopper_heal_bonus"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"HeartstopperEnd"
+
+						"modifier_stacks"	"modifier_imba_heartstopper_heal_bonus"
+					}
+				}
 			}
 
-			"modifier_imba_heartstopper_visibility_dummy"
+			"modifier_imba_heartstopper_debuff"
 			{
+				"Passive"			"0"
 				"IsDebuff"			"1"
 				"IsHidden"			"0"
-				"IsPurgable"		"0"
+				"IsPurgable"		"1"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%damage_amp_per_stack"
+				}
+			}
+
+			"modifier_imba_heartstopper_heal_bonus"
+			{
 				"Passive"			"0"
+				"IsBuff"			"1"
+				"IsHidden"			"0"
+				"IsPurgable"		"1"
 			}
 		}
 	}
@@ -19261,72 +19395,62 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_regen"		"2 3 4 6"
+				"mana_regen"		"2 4 6 12"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"hero_multiplier"	"10"
+				"health_regen"		"1 2 3 6"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_regen"		"1 2 3 5"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"regen_duration"	"6.0"
+				"hero_multiplier"	"10"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"death_radius"		"1200"
+				"regen_duration"	"10"
 			}
-
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_sadist_aura"
+			"modifier_imba_sadist"
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
 				"IsBuff"			"1"
 				"IsPurgable"		"0"
 
-				"Aura"          		"modifier_imba_sadist_debuff"
-				"Aura_Radius"   		"%death_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster" 	"0"
-
 				"OnCreated"
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
 
-						"modifier"		"modifier_imba_sadist_aura"
+						"modifier"			"modifier_imba_sadist"
 					}
 				}
-			}
 
-			"modifier_imba_sadist_debuff"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"0"
-				"IsPurgable"		"0"
-
-				"OnDeath"
+				"OnKill"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"Sadist"
+						"Function"			"SadistKill"
+
+						"regen_modifier"	"modifier_imba_sadist_regen"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"SadistHit"
 
 						"regen_modifier"	"modifier_imba_sadist_regen"
 					}
@@ -19437,32 +19561,37 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 30 40"
+				"damage"					"24 32 40"
 			}
 			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"30 40 50"
-			}
-			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stun_duration"				"1.5"
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"animation_delay"			"0.8"		//stun duration -0.7 seconds
 			}
-			"05"
+			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"respawn_base"				"10 15 20"
 			}
-			"06"
+			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"respawn_stack"				"3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stacks_scepter"			"10"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"sadist_aoe_scepter"		"900"
 			}
 		}
 
@@ -19497,8 +19626,10 @@
 				"ScriptFile"				"hero/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
 
+				"ability_sadist"			"imba_necrolyte_sadist"
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+				"modifier_regen"			"modifier_imba_sadist_regen"
 			}
 		}
 
@@ -19522,9 +19653,9 @@
 				{
 					"AttachEffect"
 					{
-						"EffectName"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
-						"EffectAttachType"			"follow_origin"
-						"Target"					"TARGET"
+						"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
 					}
 				}
 
@@ -22185,6 +22316,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1400"
 		"AbilityCastPoint"				"0.2"
+		"CastFilterRejectCaster"		"1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -24193,6 +24325,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"900"
 		"AbilityCastPoint"					"0.2"
+		"CastFilterRejectCaster"			"1"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------

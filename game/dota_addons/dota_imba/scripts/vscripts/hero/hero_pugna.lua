@@ -625,13 +625,6 @@ function LifeDrain( keys )
 	local modifier_ally = keys.modifier_ally
 	local scepter = HasScepter(caster)
 
-	-- If the target is the caster, do nothing
-	--if target == caster then
-	--	ability:RefundManaCost()
-	--	ability:EndCooldown()
-	--	return nil
-	--end
-
 	-- Parameters
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 

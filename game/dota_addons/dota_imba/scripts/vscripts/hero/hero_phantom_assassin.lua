@@ -49,13 +49,6 @@ function PhantomStrike( keys )
 	local sound_end = keys.sound_end
 	local particle_end = keys.particle_end
 
-	-- If cast on self, refund mana cost and cooldown
-	if caster == target then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return nil
-	end
-
 	-- Remove crit chance bonus modifier
 	caster:RemoveModifierByName(modifier_stacks)
 

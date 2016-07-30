@@ -172,13 +172,6 @@ function DeathPact( keys )
 	local modifier_target = keys.modifier_target
 	local scepter = HasScepter(caster)
 
-	-- If the target is the caster, do nothing
-	if target == caster then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return nil
-	end
-
 	-- Parameters
 	local duration_creep = ability:GetLevelSpecialValueFor("duration_creep", ability_level)
 	local duration_hero = ability:GetLevelSpecialValueFor("duration_hero", ability_level)

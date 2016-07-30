@@ -8466,7 +8466,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_crit_increase"		"300"
+				"max_crit_increase"		"400"
 			}
 		}
 

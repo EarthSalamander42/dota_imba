@@ -1,3 +1,13 @@
+.invisible
+{
+	opacity: 0;
+	visibility: collapse;
+	transition-property: opacity;
+	transition-delay: 0.0s;
+	transition-duration: 0.8s;
+	transition-timing-function: ease-in-out;
+}
+
 .AddonLoadingRoot
 {
 	width: 100%;
@@ -62,24 +72,58 @@
 	transform-origin: 50% 50%;
 }
 
+#ShowCommunityPanel
+{
+	width: 400px;
+	height: 35px;
+	margin-top: 35px;
+	margin-left: 500px;
+	flow-children: down;
+	background-color: #111111;
+	box-shadow: black -3px -3px 6px 6px;
+	color: #ffffff;
+}
+
+#show_community_panel_button
+{
+	border-width: 0px;
+	width: 100%;
+	height: 100%;
+	horizontal-align: center;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2d2cc836 ), to( #4844ab4e ) );
+	box-shadow: fill #486ca922 -4px -4px 8px 8px;
+	border-top: 1px solid #ffffff03;
+	border-left: 1px solid #ffffff03;
+}
+
+#show_community_panel_button:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2d2cc836 ), to( #06ee2c ) );
+	box-shadow: fill #486ca966 -4px -4px 18px 8px;
+}
+
+#show_community_panel_button:active
+{
+	sound: "ui_team_select_lock_and_start";
+}
+
 #Community
 {
-	width: 300px;
-	margin-top: 25px;
-	margin-left: 450px;
+	width: 350px;
+	margin-top: 80px;
+	margin-left: 525px;
 	flow-children: down;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.01, #202327 ), color-stop( 0.2, #141619ff ), to( #000000dd ) );
 	box-shadow: black -3px -3px 6px 6px;
-	color: #FFFFFF;
+	color: #ffffff;
 }
 
 .Header
 {
-	font-size: 28px;
-	font-weight: bold;
-	margin-top: 15px;
+	font-size: 24px;
 	horizontal-align: center;
-	color: #FF7800;
+	vertical-align: center;
+	color: #ffffff;
 }
 
 .CommunityImg
@@ -87,6 +131,11 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	horizontal-align: center;
+}
+
+.CommunityImg:active
+{
+	sound: "ui_team_select_lock_and_start";
 }
 
 .CommunityText

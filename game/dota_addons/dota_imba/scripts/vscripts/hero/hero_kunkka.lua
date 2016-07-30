@@ -1,7 +1,7 @@
 --[[	Authors: Hewdraw & Firetoad
 		Date: 05.05.2015			]]
 
-function TorrentBubble( keys )\
+function TorrentBubble( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target_points[1]

@@ -295,6 +295,12 @@ function Set10v10ModeC()
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 }
 
+function ShowCommunityButton() {
+	var community_panel = $.GetContextPanel().FindChildTraverse("Community");
+	
+	community_panel.ToggleClass("invisible");
+}
+
 function OnRandomSkillsClick()
 {
 	//$.Msg($.GetContextPanel());
