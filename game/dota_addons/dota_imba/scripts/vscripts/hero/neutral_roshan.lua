@@ -264,6 +264,18 @@ function RoshanDeath( keys )
 	end)
 end
 
+function EvadeCourier( keys )
+	local caster = keys.caster
+	local roshan_loc = caster:GetAbsOrigin()
+	local nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, 600, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for _,potential_courier in pairs(nearby_targets) do
+		if potential_courier:GetUnitName() == "npc_dota_courier" then
+			local courier_loc = potential_courier:GetAbsOrigin()
+			FindClearSpaceForUnit(potential_courier, courier_loc + (courier_loc - roshan_loc):Normalized() * 300, true)
+		end
+	end
+end
+
 function RoshanAI( keys )
 	local caster = keys.caster
 	local attacker = keys.attacker
@@ -350,8 +362,11 @@ function RoshanAI( keys )
 
 		-- Update current target
 		nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, leash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
-		if nearby_targets[1] then
-			caster.ai_current_target = nearby_targets[1]
+		for _,potential_target in pairs(nearby_targets) do
+			if not potential_target:GetUnitName() == "npc_dota_courier" then
+				caster.ai_current_target = potential_target
+				break
+			end
 		end
 
 		-- Check for cast conditions

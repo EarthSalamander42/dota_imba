@@ -62,6 +62,42 @@
 	transform-origin: 50% 50%;
 }
 
+#Community
+{
+	width: 300px;
+	margin-top: 25px;
+	margin-left: 450px;
+	flow-children: down;
+	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.01, #202327 ), color-stop( 0.2, #141619ff ), to( #000000dd ) );
+	box-shadow: black -3px -3px 6px 6px;
+	color: #FFFFFF;
+}
+
+.Header
+{
+	font-size: 28px;
+	font-weight: bold;
+	margin-top: 15px;
+	horizontal-align: center;
+	color: #FF7800;
+}
+
+.CommunityImg
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	horizontal-align: center;
+}
+
+.CommunityText
+{
+	width: 95%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+	horizontal-align: left;
+}
+
 @keyframes 'background_animation'
 {
 	0%

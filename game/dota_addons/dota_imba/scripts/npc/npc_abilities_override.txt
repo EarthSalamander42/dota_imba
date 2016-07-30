@@ -5306,12 +5306,14 @@
 	{
 		"AbilityCooldown"					"12 9 6 3"
 
+		"AbilityCastRange"					"825"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"375 450 525 600"
+				"radius"					"450 500 550 600"
 			}
 			"02"
 			{
@@ -5345,28 +5347,28 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"30.0"
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"30.0"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"500"
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
 			}	
 			"03"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"absorb_amount"					"200 300 400 500"
+				"var_type"					"FIELD_INTEGER"
+				"absorb_amount"				"300 400 500 600"
 			}				
 			"04"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"tick_interval"					"0.2"
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.2"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_second"				"30 45 60 75"
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"45 60 75 90"
 			}
 		}
 	}
@@ -6864,6 +6866,34 @@
 	}
 
 	//=================================================================================================================
+	// Mirana: Moonlight Shadow
+	//=================================================================================================================
+	"mirana_invis"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		"AbilityCastRange"				"0"
+
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"110 90 70"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"2.0 1.6 1.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"16"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Morphling: Waveform
 	//=================================================================================================================
 	"morphling_waveform"
@@ -8172,7 +8202,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"dps"				"30 45 60 75"
+				"damage_per_second"	"30 50 70 90"
 			}
 			"08"
 			{
@@ -8206,12 +8236,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_dmg"					"20 25 30 35"
+				"base_damage"				"20 25 30 35"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hp_perc_dmg"				"2.5 3.5 4.5 5.5"
+				"hp_perc_damage"			"2.5 3.5 4.5 5.5"
 			}
 			"04"
 			{
@@ -8352,7 +8382,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"dps"				"30 45 60 75"
+				"damage_per_second"	"30 50 70 90"
 			}
 			"08"
 			{
@@ -8458,7 +8488,7 @@
 	//=================================================================================================================
 	"puck_dream_coil"
 	{
-		"AbilityCooldown"					"70.0 55.0 40.0"
+		"AbilityCooldown"					"55 45 35"
 
 		"AbilitySpecial"
 		{
@@ -10667,7 +10697,7 @@
 	{
 		"AbilityCastPoint"			"0.2"
 
-		"AbilityCastRange"			"1200 1500 1800 2100"
+		"AbilityCastRange"			"2000"
 		
 		"AbilityCooldown"			"3.0"
 		
@@ -10681,12 +10711,12 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1200 1500 1800 2100"
+				"range"				"2000"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_radius"		"275"
+				"radius"			"300"
 			}
 			"04"
 			{	
@@ -10711,17 +10741,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_armor"			"1.0 1.25 1.5 1.75"
+				"bonus_armor"			"1.8 2.0 2.2 2.4"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"1.0 1.25 1.5 1.75"
+				"bonus_hp_regen"		"1.8 2.0 2.2 2.4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"12 20 28 36"
+				"stack_limit"			"5 10 15 20"
 			}
 			"04"
 			{

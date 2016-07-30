@@ -549,6 +549,9 @@ function GameMode:OnAllPlayersLoaded()
 			local swipes_ability = building:FindAbilityByName("imba_tower_grievous_wounds")
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(1)
+		elseif string.find(building_name, "tower") then
+			building:SetDayTimeVisionRange(1900)
+			building:SetNightTimeVisionRange(800)
 		end
 	end
 

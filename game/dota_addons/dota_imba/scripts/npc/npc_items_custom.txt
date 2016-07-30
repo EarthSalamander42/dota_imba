@@ -8463,6 +8463,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"crit_increase"			"25"
 			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_crit_increase"		"300"
+			}
 		}
 
 		"Modifiers"

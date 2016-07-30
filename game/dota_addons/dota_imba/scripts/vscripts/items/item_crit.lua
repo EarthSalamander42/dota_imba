@@ -16,15 +16,17 @@ function DaedalusAttackStart( keys )
 	-- Parameters
 	local crit_chance = ability:GetSpecialValueFor("crit_chance")
 	local base_crit = ability:GetSpecialValueFor("base_crit")
+	local max_crit_increase = ability:GetSpecialValueFor("max_crit_increase")
+	local current_increase = caster:GetModifierStackCount(modifier_dummy, caster)
 
 	-- Roll for a crit
 	local rnd = math.random
-	if rnd(100) <= crit_chance then
+	if rnd(100) <= crit_chance or current_increase >= max_crit_increase then
 		
 		-- If there's no crit multiplier counter, use the base value
 		local crit_damage = base_crit
 		if caster:HasModifier(modifier_dummy) then
-			crit_damage = crit_damage + caster:GetModifierStackCount(modifier_dummy, caster)
+			crit_damage = crit_damage + current_increase
 		end
 
 		-- Add the appropriate amount of crit stacks
@@ -50,6 +52,7 @@ function DaedalusAttackHit( keys )
 	-- Parameters
 	local base_crit = ability:GetSpecialValueFor("base_crit")
 	local crit_increase = ability:GetSpecialValueFor("crit_increase")
+	local max_crit_increase = ability:GetSpecialValueFor("max_crit_increase")
 
 	-- If this is a crit, remove the modifier and reset the counter after a small delay
 	if caster:HasModifier(modifier_crit) then
@@ -66,8 +69,11 @@ function DaedalusAttackHit( keys )
 		local item_stacks = caster:GetModifierStackCount(modifier_item, caster)
 		crit_increase = crit_increase * item_stacks
 
-		-- Add stacks of crit damage increase counter
-		AddStacks(ability, caster, caster, modifier_dummy, crit_increase, true)
+		-- Add stacks of crit damage increase counter, if appropriate
+		local current_increase = caster:GetModifierStackCount(modifier_dummy, caster)
+		if current_increase < max_crit_increase then
+			AddStacks(ability, caster, caster, modifier_dummy, math.min(crit_increase, max_crit_increase - current_increase), true)
+		end
 	end
 end
 

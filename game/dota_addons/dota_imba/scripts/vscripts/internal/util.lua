@@ -829,7 +829,6 @@ function InitializeInnateAbilities( hero )
 		"imba_magnus_magnetize",
 		"imba_enigma_gravity",
 		"imba_troll_warlord_berserkers_rage",
-		"imba_mirana_cosmic_dust",
 		"imba_antimage_magehunter"
 	}
 

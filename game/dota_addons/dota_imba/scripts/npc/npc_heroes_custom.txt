@@ -994,7 +994,7 @@
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"
 		"Ability4"					"imba_mirana_cosmic_dust"
-		"Ability5"					"imba_mirana_invis"
+		"Ability5"					"mirana_invis"
 		"Ability6"					"attribute_bonus_agi"
 
 		"AttackDamageMin"			"26"

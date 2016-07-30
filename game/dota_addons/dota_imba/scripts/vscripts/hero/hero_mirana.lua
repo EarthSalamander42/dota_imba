@@ -1,6 +1,17 @@
 --[[ 	Author: D2imba
 		Date: 27.04.2015	]]
 
+function CosmicDustUpgrade( keys )
+	local caster = keys.caster
+	local ability_starfall = keys.ability
+	local ability_cosmic_dust = caster:FindAbilityByName(keys.ability_cosmic_dust)
+
+	-- Upgrade the Cosmic Dust ability
+	if ability_cosmic_dust then
+		ability_cosmic_dust:SetLevel(ability_starfall:GetLevel())
+	end
+end
+
 function Starfall( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -28,16 +39,18 @@ function Starfall( keys )
 	local ambient_pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(ambient_pfx, 0, caster_pos)
 	ParticleManager:SetParticleControl(ambient_pfx, 1, Vector(radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(ambient_pfx)
 
 	-- Find nearby enemies and apply the particle, damage, debuff, and hit sound
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
 	for _,enemy in pairs(enemies) do
 		local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(star_pfx)
 		Timers:CreateTimer(hit_delay, function()
 			enemy:EmitSound(hit_sound)
-			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
+			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		end)
 	end
 end
@@ -55,32 +68,25 @@ function StarfallSecondary( keys )
 	local secondary_radius = ability:GetLevelSpecialValueFor("secondary_radius", ability_level)
 	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local secondary_count = ability:GetLevelSpecialValueFor("secondary_count", ability_level)
-
-	-- Add another hit during the night
-	if scepter or not GameRules:IsDaytime() then
-		secondary_count = ability:GetLevelSpecialValueFor("secondary_count_night", ability_level)
-	end
 
 	-- Iterate through eligible targets
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, secondary_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
+	local delay_count = 0
 	for _,enemy in pairs(enemies) do
-		if secondary_count > 0 then
-			
-			Timers:CreateTimer((secondary_count - 1) * 0.3, function()
+		Timers:CreateTimer(delay_count * 0.3, function()
 
-				-- Fire particle, sound, and apply damage
-				local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
-				ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
-				Timers:CreateTimer(hit_delay, function()
-					enemy:EmitSound(hit_sound)
-					ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-				end)
+			-- Fire particle, sound, and apply damage
+			local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
+			ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(star_pfx)
+			Timers:CreateTimer(hit_delay, function()
+				enemy:EmitSound(hit_sound)
+				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 			end)
+		end)
 
-			-- Decrease available target count
-			secondary_count = secondary_count - 1
-		end
+		-- Decrease available target count
+		delay_count = delay_count + 1
 	end
 end
 
@@ -341,6 +347,7 @@ function CosmicDust( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_starfall = caster:FindAbilityByName("imba_mirana_starfall")
+
 	local scepter = HasScepter(caster)
 
 	-- Is it night time?
@@ -361,6 +368,7 @@ function CosmicDust( keys )
 	local hit_sound = keys.hit_sound
 	local ambient_particle = keys.ambient_particle
 	local hit_particle = keys.hit_particle
+	local modifier_debuff = keys.modifier_debuff
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -377,14 +385,17 @@ function CosmicDust( keys )
 	local ambient_pfx = ParticleManager:CreateParticle(ambient_particle, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(ambient_pfx, 0, caster_pos)
 	ParticleManager:SetParticleControl(ambient_pfx, 1, Vector(radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(ambient_pfx)
 
 	-- Find nearby enemies and apply the particle, damage, debuff, and hit sound
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false )
 	for _,enemy in pairs(enemies) do
 		local star_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
 		ParticleManager:SetParticleControl(star_pfx, 0, enemy:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(star_pfx)
 		Timers:CreateTimer(hit_delay, function()
 			enemy:EmitSound(hit_sound)
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		end)
 	end

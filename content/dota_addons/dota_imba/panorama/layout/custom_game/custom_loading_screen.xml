@@ -25,5 +25,20 @@
 		<Panel id="Gaben">
 			<Image id="loading_screen_gaben" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_gaben.png" />
 		</Panel>
+		<Panel id="Community">
+			<Label id="community_header" class="Header" html="true" text="#imba_community_header"/>
+			<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description"/>
+
+			<Image id="community_steam_group_header" class="CommunityImg" src="file://{images}/custom_game/loading_screen/community_steam_group_header.png" />
+			<Label id="community_steam_group_description" class="CommunityText" html="true" text="#community_steam_group_description"/>
+
+			<Image id="community_discord_header" class="CommunityImg" src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
+			<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
+
+			<Image id="community_esl_header" class="CommunityImg" src="file://{images}/custom_game/loading_screen/community_esl_header.png" />
+			<Label id="community_esl_description" class="CommunityText" html="true" text="#community_esl_description"/>
+
+			<Label id="community_post_description" class="CommunityText" html="true" text="#community_post_description"/>
+		</Panel>
 	</Panel>
 </root>
