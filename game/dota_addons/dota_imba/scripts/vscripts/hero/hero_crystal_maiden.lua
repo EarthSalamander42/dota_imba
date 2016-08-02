@@ -12,7 +12,6 @@ function CrystalNova( keys )
 	
 	local good_aura_modifier = keys.good_aura_modifier
 	local bad_aura_modifier = keys.bad_aura_modifier
-	local scepter = caster:HasScepter()
 
 	-- Creates flying vision area
 	ability:CreateVisibilityNode(target, vision_radius, duration)
@@ -35,15 +34,9 @@ function CrystalNova( keys )
 
 	-- Destroys the dummy and particle when the effect expires
 	Timers:CreateTimer(duration, function()
-		if scepter then
-			Timers:CreateTimer(duration * 4, function()
-				dummy:Destroy()
-				ParticleManager:DestroyParticle(fxIndex, false)
-			end)
-		else
-			dummy:Destroy()
-			ParticleManager:DestroyParticle(fxIndex, false)
-		end
+		dummy:Destroy()
+		ParticleManager:DestroyParticle(fxIndex, false)
+		ReleaseParticleIndex(fxIndex)
 	end)
 end
 

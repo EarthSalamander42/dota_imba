@@ -6413,7 +6413,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"0 40 80 120"
+				"bonus_as"				"30 60 90 120"
 			}
 		}
 	}
@@ -7057,7 +7057,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"16 15 14 13"
-		"AbilityDuration"				"4.5 6.0 7.5 9.0"	
+		"AbilityDuration"				"5.0 6.0 7.0 8.0"	
 
 		// Damage
 		//-------------------------------------------------------------------------------------------------------------
@@ -7744,7 +7744,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"9"
 		"AbilityManaCost"				"90 100 110 120"	
 			
 		// Special
@@ -11254,11 +11254,6 @@
 			}
 			"05"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"passive_cooldown_scepter"				"30.0"
-			}
-			"06"
-			{
 				"var_type"								"FIELD_INTEGER"
 				"passive_duration"						"3"
 			}
@@ -11515,7 +11510,7 @@
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_healing"							"10"
+				"bonus_healing"							"7 8 9 10"
 			}
 		}
 
@@ -13688,7 +13683,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"400"
+		"AbilityCastRange"					"300"
 		"AbilityCastPoint"					"0.3"
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
@@ -13708,7 +13703,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"420 440 460"
+				"radius"					"420"
 			}
 			"02"
 			{
@@ -13723,7 +13718,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_pull_speed"			"100 150 200"
+				"base_pull_speed"			"100 140 180"
 			}
 			"05"
 			{
@@ -14698,7 +14693,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"900 1100 1300 1500"
+				"range"						"950 1100 1250 1400"
 			}
 		}
 
@@ -14873,7 +14868,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"900 1100 1300 1500"
+				"range"						"950 1100 1250 1400"
 			}
 		}
 
@@ -14983,7 +14978,7 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"					"16 12 8 4"
-		"AbilityCastRange"					"600 700 800 900"
+		"AbilityCastRange"					"750"
 		"AbilityCastPoint"					"0.25"
 		"AbilityCastAnimation"				"ACT_DOTA_ATTACK2"
 
@@ -15005,7 +15000,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"-50"
+				"attack_slow" 				" -30 -40 -50 -60"
 			}
 			"02"
 			{
@@ -15035,7 +15030,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"600 700 800 900"
+				"cast_range_tooltip"		"750"
 			}
 		}
 
@@ -15234,7 +15229,7 @@
 			"15"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_stacks_scepter"	"2"
+				"initial_stacks_scepter"	"1"
 			}
 			"16"
 			{
@@ -15244,7 +15239,7 @@
 			"17"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_slow_scepter"		"-10"
+				"initial_slow_scepter"		"-5"
 			}
 			"18"
 			{
@@ -18983,7 +18978,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage_pct"		"5"
+				"base_damage_pct"		"2 3 4 5"
 			}
 			"04"
 			{
@@ -18993,7 +18988,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_heal_pct"			"5"
+				"base_heal_pct"			"2 3 4 5"
 			}
 			"06"
 			{
@@ -19028,7 +19023,7 @@
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"5"
+				"stack_power"			"4"
 			}
 			"13"
 			{
@@ -19157,7 +19152,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"5"
+				"stack_power"			"4"
 			}
 		}
 
@@ -19209,12 +19204,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_bonus_per_stack"		"5"
+				"heal_bonus_per_stack"		"4"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_amp_per_stack"		"-5"
+				"damage_amp_per_stack"		"-4"
 			}
 			"05"
 			{
@@ -19224,12 +19219,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stacks_tooltip"			"5"
+				"stacks_tooltip"			"4"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_stacks_tooltip"		"50"
+				"max_stacks_tooltip"		"40"
 			}
 		}
 
@@ -19561,7 +19556,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"24 32 40"
+				"damage"					"12 16 20"
 			}
 			"02"
 			{
@@ -19743,6 +19738,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"vision_loss"			"-400"
 			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_loss_tooltip"	"400"
+			}
 		}
 
 		"OnSpellStart"
@@ -19839,20 +19839,25 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_day"			"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration_day"			"3"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_night"		"5.0 6.0 7.0 8.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration_night"		"5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_rate_day"			"20"
+				"duration_mute"			"2 3 4 5"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"miss_rate_day"			"20"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"miss_rate_night"		"60"
@@ -19874,6 +19879,7 @@
 
 				"modifier_day"			"modifier_imba_crippling_fear_day"
 				"modifier_night"		"modifier_imba_crippling_fear_night"
+				"modifier_mute"			"modifier_imba_crippling_fear_night_mute"
 			}
 		}
 
@@ -19882,6 +19888,7 @@
 			"modifier_imba_crippling_fear_day"
 			{
 				"Duration"				"%duration_day"
+				"IsHidden"				"0"
 				"IsDebuff"				"1"
 				"IsPurgable"			"1"
 
@@ -19902,6 +19909,7 @@
 			"modifier_imba_crippling_fear_night"
 			{
 				"Duration"				"%duration_night"
+				"IsHidden"				"0"
 				"IsDebuff"				"1"
 				"IsPurgable"			"1"
 
@@ -19916,6 +19924,18 @@
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_crippling_fear_night_mute"
+			{
+				"Duration"				"%duration_mute"
+				"IsHidden"				"0"
+				"IsDebuff"				"1"
+				"IsPurgable"			"1"
+
+				"States"
+				{
 					"MODIFIER_STATE_MUTED"					"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
@@ -19948,23 +19968,23 @@
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_movement_speed_pct_night"	"20 25 30 35"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_ms"			"20 25 30 35"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_attack_speed_night"			"45 60 75 90"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_as"			"45 60 75 90"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"stacking_move_speed"				"2"
+				"var_type"			"FIELD_INTEGER"
+				"stacking_ms"		"2"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"stacking_attack_speed"				"20"
+				"var_type"			"FIELD_INTEGER"
+				"stacking_as"		"20"
 			}
 		}
 
@@ -20036,8 +20056,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed_pct_night"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed_night"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
 				}
 			}
 
@@ -20048,8 +20068,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_move_speed"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_attack_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
 				}
 			}
 		}
@@ -20104,33 +20124,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_radius_scepter"		"600"
+				"enemy_vision_duration"		"5 6 7"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_duration"		"5 6 7"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"bonus_vision"				"200 400 600"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"25000"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Nightstalker.Darkness"
-				"Target"					"CASTER"
-			}
-
 			"FireEffect"
 			{
 				"EffectName"				"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
@@ -20149,7 +20153,8 @@
 				"ScriptFile"				"hero/hero_night_stalker.lua"
 				"Function"					"Darkness"
 
-				"modifier"					"modifier_imba_darkness_enemy"
+				"sound_cast"				"Hero_Nightstalker.Darkness"
+				"modifier_enemy"			"modifier_imba_darkness_enemy"
 				"modifier_enemy_vision"		"modifier_imba_darkness_enemy_vision"
 			}
 		}
@@ -20160,6 +20165,8 @@
 			{
 				"IsDebuff"					"1"
 				"IsPurgable"				"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"OnCreated"
 				{
@@ -20198,6 +20205,9 @@
 					{
 						"ScriptFile"		"hero/hero_night_stalker.lua"
 						"Function"			"DarknessLimitBreak"
+
+						"modifier_enemy"	"modifier_imba_darkness_enemy"
+						"modifier_caster"	"modifier_imba_darkness_owner_vision"
 					}
 				}
 

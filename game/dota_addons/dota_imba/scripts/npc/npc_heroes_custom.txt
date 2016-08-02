@@ -65,7 +65,7 @@
 		"Ability5"					"imba_antimage_mana_void"
 		"Ability6"					"attribute_bonus_agi"
 
-		"AttackRate"				"1.4"
+		"AttackRate"				"1.35"
 
 		"ProjectileSpeed"			"900"
 	}

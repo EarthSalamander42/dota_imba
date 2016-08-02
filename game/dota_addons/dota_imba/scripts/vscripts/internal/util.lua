@@ -761,6 +761,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_vampiric_aura")
 	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
 	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
+	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -1333,4 +1334,63 @@ function IsHeroCreep( unit )
 	end
 
 	return false
+end
+
+-- Changes the time of the day temporarily, memorizing the original time of the day to return to
+function SetTimeOfDayTemp(time, duration)
+
+	-- Store the original time of the day, if necessary
+	local game_entity = GameRules:GetGameModeEntity()
+	if not game_entity.tod_original_time then
+		game_entity.tod_original_time = GameRules:GetTimeOfDay()
+	end
+
+	-- Initialize the time modification states, if necessary
+	if not game_entity.tod_future_seconds then
+		game_entity.tod_future_seconds = {}
+
+		-- Start loop function
+		Timers:CreateTimer(1, function()
+			SetTimeOfDayTempLoop()
+		end)
+	end
+
+	-- Store future time modification states
+	for i = 1, duration do
+		game_entity.tod_future_seconds[i] = time
+	end
+
+	-- Set the time of the day
+	GameRules:SetTimeOfDay(time)
+end
+
+-- Auxiliary function to the one above
+function SetTimeOfDayTempLoop()
+
+	-- If there are no future time modification states, stop looping
+	local game_entity = GameRules:GetGameModeEntity()
+	if not game_entity.tod_future_seconds then
+		return nil
+
+	-- Else, move states one second forward
+	elseif #game_entity.tod_future_seconds > 1 then
+		for i = 1, (#game_entity.tod_future_seconds - 1) do
+			game_entity.tod_future_seconds[i] = game_entity.tod_future_seconds[i + 1]
+		end
+		game_entity.tod_future_seconds[#game_entity.tod_future_seconds] = nil
+
+		-- Keep the loop going
+		GameRules:SetTimeOfDay(game_entity.tod_future_seconds[1])
+		Timers:CreateTimer(1, function()
+			SetTimeOfDayTempLoop()
+		end)
+
+	-- Else, the duration is over; restore the original time of the day, and exit the loop
+	else
+		game_entity.tod_future_seconds = nil
+		Timers:CreateTimer(1, function()
+			GameRules:SetTimeOfDay(game_entity.tod_original_time)
+			game_entity.tod_original_time = nil
+		end)
+	end
 end

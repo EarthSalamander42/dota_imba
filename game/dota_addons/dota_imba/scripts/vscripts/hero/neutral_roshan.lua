@@ -362,11 +362,8 @@ function RoshanAI( keys )
 
 		-- Update current target
 		nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, leash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
-		for _,potential_target in pairs(nearby_targets) do
-			if not potential_target:GetUnitName() == "npc_dota_courier" then
-				caster.ai_current_target = potential_target
-				break
-			end
+		if nearby_targets[1] then
+			caster.ai_current_target = nearby_targets[1]
 		end
 
 		-- Check for cast conditions

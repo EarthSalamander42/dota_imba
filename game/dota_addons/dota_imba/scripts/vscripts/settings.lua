@@ -332,6 +332,8 @@ for i = 14, MAX_LEVEL do
 	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
 end
 
+USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: Keyvalue tables
 -------------------------------------------------------------------------------------------------

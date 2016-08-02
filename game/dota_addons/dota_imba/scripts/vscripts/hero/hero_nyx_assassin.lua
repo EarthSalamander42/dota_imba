@@ -72,12 +72,14 @@ function ImpaleDamage ( keys )
 	Timers:CreateTimer(damage_delay, function()
 
 		-- Calculates damage to repeat and total damage
-		local damage_to_repeat = target.impale_damage_taken * damage_pct / 100
+		local damage_to_repeat = target.impale_damage_taken * damage_pct *0.01
 
 		-- Applies damage and plays landing sound
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_to_repeat, damage_type = DAMAGE_TYPE_PURE})
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage + damage_to_repeat, nil)
+		if damage_to_repeat > 0 then
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage_to_repeat, nil)
+		end
 		target:EmitSound(land_sound)
 	end)
 end

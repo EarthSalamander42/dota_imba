@@ -325,8 +325,8 @@ function Magnetize( keys )
 	local ability = keys.ability
 	local modifier_debuff = keys.modifier_debuff
 
-	-- If the ability was unlearned, do nothing
-	if ability:GetLevel() == 0 then
+	-- If the ability was unlearned or broken, do nothing
+	if ability:GetLevel() == 0 or caster.break_duration_left then
 		return nil
 	end
 	

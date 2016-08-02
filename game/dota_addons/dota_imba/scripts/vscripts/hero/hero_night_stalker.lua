@@ -24,11 +24,13 @@ function CripplingFear( keys )
 
 	local modifier_day = keys.modifier_day
 	local modifier_night = keys.modifier_night
+	local modifier_mute = keys.modifier_mute
 
 	if GameRules:IsDaytime() then
 		ability:ApplyDataDrivenModifier(caster, target, modifier_day, {})
 	else
 		ability:ApplyDataDrivenModifier(caster, target, modifier_night, {})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_mute, {})
 	end
 end
 
@@ -83,66 +85,47 @@ end
 function Darkness( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifier = keys.modifier
+	local sound_cast = keys.sound_cast
+	local modifier_enemy = keys.modifier_enemy
 	local modifier_enemy_vision = keys.modifier_enemy_vision
 	local duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() - 1 )
-	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel() - 1 )
 
-	-- Increases the hunter in the night stack bonuses
+	-- Play meme sounds if appropriate
+	local rand = RandomInt
+	if USE_MEME_SOUNDS and rand(1, 100) <= 10 then
+		caster:EmitSound("Imba.NightStalkerDarknessAlt0"..rand(1, 2))
+
+	-- Else, use normal sound
+	else
+		caster:EmitSound(sound_cast)
+	end
+
+	-- Increase the hunter in the night stack bonuses
 	if not caster.hunter_in_the_night_stacks then
 		caster.hunter_in_the_night_stacks = 0
 	end
-
 	caster.hunter_in_the_night_stacks = caster.hunter_in_the_night_stacks + 1
 
-	-- Grants vision of all enemies for a duration on cast
-	local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for k,v in pairs(enemy_heroes) do
-		ability:ApplyDataDrivenModifier(caster, v, modifier_enemy_vision, {})
+	-- Apply vision reduction to all enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemy, {duration = duration})
+
+		-- If this is a hero, grant vision of it for some seconds
+		if enemy:IsRealHero() then
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemy_vision, {})
+		end
 	end
 
-	-- Time variables
-	local darkness_was_refreshed = false
-	if caster.darkness_time_elapsed and caster.darkness_time_elapsed > 0 then
-		darkness_was_refreshed = true
-	end
-	caster.darkness_time_elapsed = 1
-
-	-- Set the clock to  [dawn - Darkness' duration]
-	GameRules:SetTimeOfDay(0.25 * (1 - duration / 120))
-
-	-- Use a timer to keep enemies debuffed and once Darkness is over, normal day resumes
-	if not darkness_was_refreshed then
-
-		-- Calculate what time of the day will it be after Darkness ends
-		local start_time_of_day = GameRules:GetTimeOfDay()
-		local end_time_of_day = start_time_of_day + duration / 480
-
-		if end_time_of_day >= 1 then end_time_of_day = end_time_of_day - 1 end
-
-		Timers:CreateTimer(1, function()
-			enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-			for k,v in pairs(enemy_heroes) do
-				ability:ApplyDataDrivenModifier(caster, v, modifier, {})
-			end
-			if caster.darkness_time_elapsed <= duration then
-				caster.darkness_time_elapsed = caster.darkness_time_elapsed + 1
-				return 1
-			else
-				GameRules:SetTimeOfDay(end_time_of_day)
-				caster.darkness_time_elapsed = 0
-				for k,v in pairs(enemy_heroes) do
-					v:RemoveModifierByName(modifier)
-				end
-				return nil
-			end
-		end)
-	end
+	-- Make it night for [duration] seconds
+	SetTimeOfDayTemp(0, duration)
 end
 
 function DarknessLimitBreak( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local modifier_enemy = keys.modifier_enemy
+	local modifier_caster = keys.modifier_caster
 
 	-- Removes movement speed cap
 	if not caster:HasModifier("modifier_imba_speed_limit_break") then
@@ -151,6 +134,15 @@ function DarknessLimitBreak( keys )
 
 	-- Simulate attack speed cap removal
 	IncreaseAttackSpeedCap(caster, 10000)
+
+	-- Apply the enemy Darkness modifier to any enemies without it
+	local remaining_duration = caster:FindModifierByName(modifier_caster):GetRemainingTime()
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		if not enemy:HasModifier(modifier_enemy) then
+			ability:ApplyDataDrivenModifier(caster, enemy, modifier_enemy, {duration = remaining_duration})
+		end
+	end
 end
 
 function DarknessLimitBreakEnd( keys )
@@ -168,11 +160,6 @@ function ReduceVision( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability:GetLevel() - 1 )
-	
-	-- Checks for Aghanim's Scepter
-	if HasScepter(caster) then
-		vision_radius = ability:GetLevelSpecialValueFor("vision_radius_scepter", ability:GetLevel() - 1 )
-	end
 
 	-- Saves the target's original vision range
 	target.darkness_original_vision = target:GetBaseNightTimeVisionRange()

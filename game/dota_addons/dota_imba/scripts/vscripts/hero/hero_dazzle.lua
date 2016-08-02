@@ -74,11 +74,6 @@ function ShallowGraveDamageCheck( keys )
 	local passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown", ability_level)
 	local passive_duration = ability:GetLevelSpecialValueFor("passive_duration", ability_level)
 
-	-- Change duration if scepter is present
-	if scepter then
-		passive_cooldown = ability:GetLevelSpecialValueFor("passive_cooldown_scepter", ability_level)
-	end
-
 	-- Apply Shallow Grave buff
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_grave, {duration = passive_duration})
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_particle_short, {})
@@ -93,7 +88,7 @@ function ShallowGraveDamageStorage( keys )
 	local health = unit:GetHealth()
 	local damage = keys.DamageTaken
 
-	-- creates unit.grave_damage if it doesn't exist
+	-- Creates unit.grave_damage if it doesn't exist
 	if not unit.grave_damage then
 		unit.grave_damage = 0
 	end

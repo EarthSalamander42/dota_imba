@@ -283,6 +283,11 @@ function SadistKill( keys )
 	local ability_level = ability:GetLevel() - 1
 	local regen_modifier = keys.regen_modifier
 
+	-- If the ability is disabled by Break, do nothing
+	if caster.break_duration_left then
+		return nil
+	end
+
 	-- Parameters
 	local hero_multiplier = ability:GetLevelSpecialValueFor("hero_multiplier", ability_level)
 
@@ -301,6 +306,11 @@ function SadistHit( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local regen_modifier = keys.regen_modifier
+
+	-- If the ability is disabled by Break, do nothing
+	if caster.break_duration_left then
+		return nil
+	end
 
 	-- Apply a stack of the regen buff
 	if target:IsHero() and caster:GetTeam() ~= target:GetTeam() then
@@ -382,8 +392,8 @@ function ReapersScythe( keys )
 		ParticleManager:ReleaseParticleIndex(reap_fx)
 
 		-- Calculates and deals damage
-		local damage_bonus = 1 - target:GetHealth() / target:GetMaxHealth() 
-		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) / 100
+		local damage_bonus = ( 1 - target:GetHealth() / target:GetMaxHealth() ) * 3
+		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) * 0.01
 
 		-- Removes relevant debuffs and deals damage
 		if target:HasModifier("modifier_aphotic_shield") then
