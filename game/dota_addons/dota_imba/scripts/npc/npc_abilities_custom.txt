@@ -4731,8 +4731,6 @@
 				"EffectName"					"particles/generic_gameplay/generic_silenced.vpcf"
 				"EffectAttachType"				"follow_overhead"
 
-				"ThinkInterval"					"1.0"
-
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -15993,7 +15991,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"tooltip_delay"					"3.0 2.5 2.0"
+				"tooltip_delay"					"2.4 2.0 1.6"
 			}
 			"02"
 			{
@@ -16038,7 +16036,7 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"667 800 1000"
+				"ghostship_speed"				"834 1000 1250"
 			}
 			"11"
 			{
@@ -16053,7 +16051,7 @@
 			"13"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed_scepter"		"1000 1200 1500"
+				"ghostship_speed_scepter"		"1200 1500 1875"
 			}
 			"14"
 			{
@@ -21012,15 +21010,23 @@
 				"IsHidden"				"0"
 				"IsPurgable"			"0"
 
-				"EffectName"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
-				"EffectAttachType"		"attach_origin"
-
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_outhouse_decorator.lua"
+						"Function"		"AstralImprisonmentParticle"
+
+						"particle_imprisonment"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+					}
 				}
 
 				"OnDestroy"
@@ -21330,13 +21336,14 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"omniknight_purification"
+		"AOEradius"						"%radius"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -21368,27 +21375,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_min"				"90 180 270 360"
+				"heal_base"				"90 180 270 360"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_pct"				"10 15 20 25"
+				"heal_pct"				"14 16 18 20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_tooltip"		"90 180 270 360"
+				"damage_factor"			"50"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"radius"				"300"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"passive_cooldown"		"30 25 20 15"
+				"passive_cooldown"		"25"
 			}
 		}
 
@@ -21396,12 +21403,13 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"hero/hero_omniknight.lua"
-				"Function"					"Purification"
+				"ScriptFile"			"hero/hero_omniknight.lua"
+				"Function"				"Purification"
 
-				"cast_sound"				"Hero_Omniknight.Purification"
-				"aoe_particle"				"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-				"target_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+				"cast_sound"			"Hero_Omniknight.Purification"
+				"aoe_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+				"cast_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+				"hit_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
 			}
 		}
 
@@ -21439,10 +21447,10 @@
 						"ScriptFile"		"hero/hero_omniknight.lua"
 						"Function"			"PurificationDeath"
 
-						"damage"			"%attack_damage"
 						"cast_sound"		"Hero_Omniknight.Purification"
 						"aoe_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-						"target_particle"	"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+						"cast_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+						"hit_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
 						"passive_modifier"	"modifier_imba_purification_passive"
 						"cooldown_modifier"	"modifier_imba_purification_passive_cooldown"
 					}
@@ -21501,6 +21509,14 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21516,107 +21532,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"self_duration"			"3"
 			}
-		}
-
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_Omniknight.Repel"
-				"Target"				"TARGET"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"TARGET"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 				"TARGET"
-				"ModifierName"			"modifier_omniknight_repel"
-				"Duration"				"%duration"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 				"CASTER"
-				"ModifierName"			"modifier_omniknight_repel"
-				"Duration"				"%self_duration"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_omniknight.lua"
-				"Function"				"Repel"
-				"Target"				"TARGET"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Omniknight's Repel (scepter version)
-	//=================================================================================================================
-	"imba_omniknight_repel_scepter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"omniknight_repel"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.4"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14.0"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"6 8 10 12"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"self_duration"			"3"
-			}
-		}
-
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
 		}
 
 		"OnSpellStart"
@@ -21679,7 +21594,15 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"350 400 450 500"
+		"AbilityCastRange"				"475"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21688,17 +21611,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_bonus"			"-20 -25 -30 -35"
+				"ms_reduction"			"-18 -24 -30 -36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_bonus_tooltip"	"-20 -25 -30 -35"
+				"as_reduction"			"-18 -24 -30 -36"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"350 400 450 500"
+				"radius"				"475"
 			}
 			"04"
 			{
@@ -21708,33 +21631,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sticky_time"			"1.1"
+				"sticky_time"			"2.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_reduction_pct"	"4 5 6 7"
+				"stack_reduction_pct"	"-4 -5 -6 -7"
 			}
-		}
-
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"					"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
-		}
-
-		"OnUpgrade"
-		{
-			"RemoveModifier"
+			"07"
 			{
-				"ModifierName"			"modifier_imba_degen_aura"
-				"Target" 				"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_degen_aura"
-				"Target" 				"CASTER"
+				"var_type"				"FIELD_INTEGER"
+				"reduction_tooltip"		"4 5 6 7"
 			}
 		}
 
@@ -21791,8 +21698,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_bonus"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus_tooltip"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_reduction"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%as_reduction"
 				}
 			}
 
@@ -21806,7 +21713,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"-1"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%stack_reduction_pct"
 				}
 			}
 		}
@@ -21836,6 +21743,18 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"					"125 175 225"
+		"AbilityCastRange"					"1000"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
+			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+			"particle"						"particles/status_fx/status_effect_guardian_angel.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -21843,55 +21762,41 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"6.0 7.0 8.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"6 7 8"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hp_regen"					"40 50 60"
+				"duration_scepter"			"8 9 10"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"25000"
+				"repel_duration"			"3 4 5"
 			}
-		}
-
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-			"particle"						"particles/status_fx/status_effect_guardian_angel.vpcf"
-			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen"					"40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1000"
+			}
 		}
 
 		"OnSpellStart"
 		{
-			"FireSound"
+			"RunScript"
 			{
-				"EffectName"				"Hero_Omniknight.GuardianAngel.Cast"
-				"Target"					"CASTER"
-			}
+				"ScriptFile"				"hero/hero_omniknight.lua"
+				"Function"					"GuardianAngel"
 
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  				"CASTER"
-					"Radius"				"%radius"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"Target" 			"TARGET"
-						"ModifierName"		"modifier_imba_guardian_angel"
-					}
-				}
+				"sound_cast"				"Hero_Omniknight.GuardianAngel.Cast"
+				"modifier_buff"				"modifier_imba_guardian_angel"
+				"modifier_repel"			"modifier_omniknight_repel"
 			}
 		}
 
@@ -21899,28 +21804,33 @@
 		{
 			"modifier_imba_guardian_angel"
 			{
+				"Passive"					"0"
+				"IsHidden"					"0"
 				"IsBuff"					"1"
 				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
 
 				"StatusEffectName"    		"particles/status_fx/status_effect_guardian_angel.vpcf"
 				"StatusEffectPriority" 		"10"
 
 				"OnCreated"
 				{
-					"AttachEffect"
+					"RunScript"
 					{
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"			"CASTER"
-					}
+						"ScriptFile"		"hero/hero_omniknight.lua"
+						"Function"			"GuardianAngelParticle"
 
-				 	"AttachEffect"
+						"particle_wings"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
+						"particle_halo"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"particle_ally"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-						"EffectAttachType"	"follow_origin"
+						"ScriptFile"		"hero/hero_omniknight.lua"
+						"Function"			"GuardianAngelParticleDestroy"
 					}
 				}
 
@@ -21928,193 +21838,6 @@
 				{
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen"
-				}
-			}
-
-			"modifier_imba_guardian_angel_scepter_check"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"  						"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_omniknight.lua"
-						"Function"						"ScepterCheck"
-
-						"modifier"						"modifier_imba_guardian_angel_scepter_check"
-						"repel_name"					"imba_omniknight_repel"
-						"guardian_angel_name"			"imba_omniknight_guardian_angel"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_guardian_angel_scepter_check"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Omniknight's Guardian Angel (scepter version)
-	//=================================================================================================================
-	"imba_omniknight_guardian_angel_scepter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ALLIES_YES"
-		"FightRecapLevel"					"2"
-		"AbilityTextureName"				"omniknight_guardian_angel"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"150.0"
-		"AbilityCastPoint"					"0.4"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 175 225"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"8.0 9.0 10.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"hp_regen"					"60"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"25000"
-			}
-		}
-
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-			"particle"						"particles/status_fx/status_effect_guardian_angel.vpcf"
-			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Omniknight.GuardianAngel.Cast"
-				"Target"					"CASTER"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  				"CASTER"
-					"Radius"				"%radius"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-				}
-
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"Target" 			"TARGET"
-						"ModifierName"		"modifier_imba_guardian_angel"
-					}
-				}
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_guardian_angel"
-			{
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"StatusEffectName"    		"particles/status_fx/status_effect_guardian_angel.vpcf"
-				"StatusEffectPriority" 		"10"
-
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"			"CASTER"
-					}
-
-				 	"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-						"EffectAttachType"	"follow_origin"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen"
-				}
-			}
-
-			"modifier_imba_guardian_angel_scepter_check"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"  						"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_omniknight.lua"
-						"Function"						"ScepterLostCheck"
-
-						"modifier"						"modifier_imba_guardian_angel_scepter_check"
-						"repel_name"					"imba_omniknight_repel"
-						"guardian_angel_name"			"imba_omniknight_guardian_angel"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_guardian_angel_scepter_check"
-					}
 				}
 			}
 		}
@@ -22142,7 +21865,6 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-			"particle"					"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
 		}
 
@@ -22182,12 +21904,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"0.1"
+				"silence_duration"		"0.1"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_creep_dmg"		"80 120 160 200"
+				"bonus_damage"			"25 50 75 100"
 			}
 		}
 
@@ -22218,10 +21940,10 @@
 				"Target"
 				{
 					"Center"			"TARGET"
-					"Types"				"DOTA_UNIT_TARGET_BASIC"
+					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				}
-				"Type"					"DAMAGE_TYPE_PURE"
-				"Damage"				"%bonus_creep_dmg"
+				"Type"					"DAMAGE_TYPE_PHYSICAL"
+				"Damage"				"%bonus_damage"
 			}
 
 			"FireSound"
@@ -22238,7 +21960,7 @@
 
 			"ApplyModifier"
 			{
-				"ModifierName"			"modifier_imba_stifling_dagger_disarm"
+				"ModifierName"			"modifier_imba_stifling_dagger_silence"
 				"Target"				"TARGET"
 			}
 
@@ -22279,20 +22001,20 @@
 				}
 			}
 
-			"modifier_imba_stifling_dagger_disarm"
+			"modifier_imba_stifling_dagger_silence"
 			{
 				"IsDebuff"				"1"
 				"IsHidden"				"1"
 				"IsPurgable"			"1"
 
-				"Duration"				"%disarm_duration"
+				"Duration"				"%silence_duration"
 
-				"EffectName"			"particles/units/heroes/hero_silencer/silencer_last_word_disarm.vpcf"
+				"EffectName"			"particles/generic_gameplay/generic_silenced.vpcf"
 				"EffectAttachType"		"follow_overhead"
 
 				"States"
 				{
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -22347,13 +22069,13 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"1400"
+				"var_type"					"FIELD_FLOAT"
+				"buff_duration"				"3.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"3.0"
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_range"				"1400"
 			}
 			"04"
 			{
@@ -22442,12 +22164,14 @@
 		"BaseClass"							"ability_datadriven"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"				"phantom_assassin_blur"
+		"AbilityCastRange"					"1600"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"particle"						"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+			"particle"						"particles/hero/phantom_assassin/blur_status_fx.vpcf"
 		}
 
 		// Special
@@ -22457,32 +22181,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_evasion"				"20 30 40 50"
+				"evasion"					"25 35 45 55"
 			}
 			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"transparency_fade"			"0.75"
-			}
-			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"1600"
 			}
-			"04"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_evasion"				"10"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stack_ms"					"3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"2.0"
+				"blur_ms"					"12"
 			}
 		}
 
@@ -22492,10 +22201,62 @@
 			{
 				"Passive"					"1"
 				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"ThinkInterval"				"0.2"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
+						"Function"			"Blur"
+
+						"modifier_blur"		"modifier_imba_blur_blur"
+					}
+				}
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion"
+				}
+			}
+
+			"modifier_imba_blur_blur"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+
+				"StatusEffectName"			"particles/hero/phantom_assassin/blur_status_fx.vpcf"
+				"StatusEffectPriority"		"11"
+
+				"EffectName"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
+				"EffectAttachType"			"follow_origin"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
+						"Function"			"BlurStart"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
+						"Function"			"BlurEnd"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blur_ms"
 				}
 
 				"States"
@@ -22503,52 +22264,6 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-
-			"modifier_imba_blur_stacking"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"Blur"
-
-						"damage"			"%attack_damage"
-						"stack_modifier"	"modifier_imba_blur_stacks"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_blur_stacking"
-					}
-				}
-			}
-
-			"modifier_imba_blur_stacks"
-			{
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"Passive"					"0"
-				"IsPurgable"				"0"
-
-				"Duration"					"%stack_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%stack_evasion"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stack_ms"
-				}
-			}
-
 		}
 	}
 	//=================================================================================================================

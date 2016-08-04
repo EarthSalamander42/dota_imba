@@ -282,7 +282,7 @@ function GameMode:DamageFilter( keys )
 	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
 
 		-- If the target is Roshan, a building, or an ally, or this was an autoattack, do nothing
-		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or victim:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") ) then
+		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or attacker:IsInvulnerable() or attacker:IsOutOfGame() or victim:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") ) then
 			
 			-- Calculate damage amplification
 			local damage_amp = 0

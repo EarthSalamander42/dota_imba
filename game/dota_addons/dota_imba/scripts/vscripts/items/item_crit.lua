@@ -1,80 +1,65 @@
 --[[	Author: Firetoad
 		Date:	21.07.2016	]]
 
-function DaedalusAttackStart( keys )
+function DaedalusHit( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local modifier_crit = keys.modifier_crit
+	local modifier_item = keys.modifier_item
 	local modifier_dummy = keys.modifier_dummy
 
-	-- If the target is a building or an ally, do nothing
-	if target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
+	-- If the target is a building or an ally, or this is a crit, do nothing
+	if target:IsBuilding() or target:GetTeam() == caster:GetTeam() or caster:HasModifier(modifier_crit) then
 		return nil
 	end
 
 	-- Parameters
 	local crit_chance = ability:GetSpecialValueFor("crit_chance")
 	local base_crit = ability:GetSpecialValueFor("base_crit")
-	local max_crit_increase = ability:GetSpecialValueFor("max_crit_increase")
+	local crit_increase = ability:GetSpecialValueFor("crit_increase")
 	local current_increase = caster:GetModifierStackCount(modifier_dummy, caster)
+
+	-- Increase crit bonus if there is more than one Daedalus
+	local item_stacks = caster:GetModifierStackCount(modifier_item, caster)
+	crit_increase = crit_increase * item_stacks
 
 	-- Roll for a crit
 	local rnd = math.random
-	if rnd(100) <= crit_chance or current_increase >= max_crit_increase then
-		
+	if rnd(100) <= crit_chance then
+
 		-- If there's no crit multiplier counter, use the base value
-		local crit_damage = base_crit
+		local crit_damage = base_crit + crit_increase
 		if caster:HasModifier(modifier_dummy) then
-			crit_damage = crit_damage + current_increase
+			crit_damage = crit_damage + current_increase + crit_increase
 		end
 
 		-- Add the appropriate amount of crit stacks
-		caster:RemoveModifierByName(modifier_crit)
 		AddStacks(ability, caster, caster, modifier_crit, crit_damage, true)
 	end
+
+	-- Add stacks of crit damage increase counter
+	AddStacks(ability, caster, caster, modifier_dummy, crit_increase, true)
 end
 
-function DaedalusAttackHit( keys )
+function DaedalusCrit( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local sound_crit = keys.sound_crit
 	local modifier_crit = keys.modifier_crit
-	local modifier_item = keys.modifier_item
 	local modifier_dummy = keys.modifier_dummy
 
-	-- If the target is a building or an ally, do nothing
-	if target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
-		return nil
-	end
+	-- Play the crit sound
+	target:EmitSound(sound_crit)
 
-	-- Parameters
-	local base_crit = ability:GetSpecialValueFor("base_crit")
-	local crit_increase = ability:GetSpecialValueFor("crit_increase")
-	local max_crit_increase = ability:GetSpecialValueFor("max_crit_increase")
+	-- Reset the crit damage stacks
+	caster:RemoveModifierByName(modifier_dummy)
 
-	-- If this is a crit, remove the modifier and reset the counter after a small delay
-	if caster:HasModifier(modifier_crit) then
-		target:EmitSound(sound_crit)
-		Timers:CreateTimer(0.01, function()
-			caster:RemoveModifierByName(modifier_crit)
-			caster:RemoveModifierByName(modifier_dummy)
-		end)
-
-	-- Else, increase the crit damage count
-	else
-
-		-- Increase crit bonus if there is more than one Daedalus
-		local item_stacks = caster:GetModifierStackCount(modifier_item, caster)
-		crit_increase = crit_increase * item_stacks
-
-		-- Add stacks of crit damage increase counter, if appropriate
-		local current_increase = caster:GetModifierStackCount(modifier_dummy, caster)
-		if current_increase < max_crit_increase then
-			AddStacks(ability, caster, caster, modifier_dummy, math.min(crit_increase, max_crit_increase - current_increase), true)
-		end
-	end
+	-- Remove the crit modifier after a slight delay
+	Timers:CreateTimer(0.01, function()
+		caster:RemoveModifierByName(modifier_crit)
+	end)
 end
 
 function DaedalusStackUp( keys )

@@ -11,6 +11,7 @@ function StiflingDaggerHit( keys )
 	local scepter = HasScepter(caster)
 
 	-- If coup de grace is learned, roll for crits and instant kills
+	local rand = math.random
 	if ability_crit and ability_crit:GetLevel() > 0 then
 
 		-- Crit parameters
@@ -23,9 +24,9 @@ function StiflingDaggerHit( keys )
 		crit_chance = crit_chance + crit_increase * caster:GetModifierStackCount(modifier_stacks, caster)
 
 		-- Roll for crits
-		if scepter and RandomInt(1,100) < kill_chance then
+		if scepter and rand(100) < kill_chance then
 			ability_crit:ApplyDataDrivenModifier(caster, caster, modifier_kill, {})
-		elseif RandomInt(1,100) < crit_chance then
+		elseif rand(100) < crit_chance then
 			ability_crit:ApplyDataDrivenModifier(caster, caster, modifier_crit, {})
 		end
 	end
@@ -94,6 +95,9 @@ function PhantomStrike( keys )
 	FindClearSpaceForUnit(caster, target_pos, true)
 	caster:SetForwardVector( (target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized() )
 
+	-- Disjoint projectiles
+	ProjectileManager:ProjectileDodge(caster)
+
 	-- Fire blink particle
 	local blink_pfx = ParticleManager:CreateParticle(particle_end, PATTACH_ABSORIGIN_FOLLOW, caster)
 
@@ -129,6 +133,7 @@ function PhantomStrikeHit( keys )
 	end
 
 	-- If coup de grace is learned, roll for crits and instant kills
+	local rand = math.random
 	if ability_crit then
 
 		-- Crit parameters
@@ -150,7 +155,7 @@ function PhantomStrikeHit( keys )
 		end
 
 		-- Roll for kill chance if the caster has a scepter
-		if scepter and RandomInt(1, 100) <= kill_chance then
+		if scepter and rand(100) <= kill_chance then
 			TrueKill(caster, target, ability_crit)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, 999999, nil)
 
@@ -171,7 +176,7 @@ function PhantomStrikeHit( keys )
 		end
 
 		-- Roll for normal crit chance
-		if RandomInt(1, 100) <= crit_chance then
+		if rand(100) <= crit_chance then
 			ability_crit:ApplyDataDrivenModifier(caster, caster, modifier_crit, {})
 		end
 	end
@@ -189,14 +194,32 @@ end
 function Blur( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local attacker = keys.attacker
-	local stack_modifier = keys.stack_modifier
+	local ability_level = ability:GetLevel() - 1
+	local modifier_blur = keys.modifier_blur
 
-	-- Increase amount of evasion stacks if damage was done by a hero
-	if attacker and attacker:IsHero() then
-		AddStacks(ability, caster, caster, stack_modifier, 1, true)
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+
+	-- Detect nearby enemies
+	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+	-- If there is at least one, apply the blur modifier
+	if #nearby_enemies > 0 and not caster:HasModifier(modifier_blur) then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_blur, {})
+
+	-- Else, if there are no enemies, remove the modifier
+	elseif #nearby_enemies == 0 and caster:HasModifier(modifier_blur) then
+		caster:RemoveModifierByName(modifier_blur)
 	end
 end
+
+function BlurStart( keys )
+	--local caster = keys.caster
+end
+
+function BlurEnd( keys )
+	--local caster = keys.caster
+end	
 	
 function CoupDeGrace( keys )
 	local caster = keys.caster
@@ -206,7 +229,7 @@ function CoupDeGrace( keys )
 	local scepter = HasScepter(caster)
 
 	-- If the target is not a hero, creep, or siege unit, do nothing
-	if not target:IsHero() and not target:IsCreep() and not target:IsMechanical() then
+	if not target:IsHero() and not target:IsCreep() then
 		return nil
 	end
 
@@ -218,7 +241,8 @@ function CoupDeGrace( keys )
 	local kill_modifier = keys.kill_modifier
 
 	-- Roll for scepter instant kill
-	if scepter and RandomInt(1, 100) <= kill_chance then
+	local rand = math.random
+	if scepter and rand(100) <= kill_chance then
 		ability:ApplyDataDrivenModifier(caster, caster, kill_modifier, {})
 		return nil
 	end
@@ -230,7 +254,7 @@ function CoupDeGrace( keys )
 	end
 
 	-- RNGESUS ES MI PASTOR
-	if RandomInt(1, 100) <= actual_crit_chance then
+	if rand(100) <= actual_crit_chance then
 		ability:ApplyDataDrivenModifier(caster, caster, crit_modifier, {})
 	end
 end

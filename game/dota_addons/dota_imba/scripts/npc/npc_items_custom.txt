@@ -54,12 +54,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"10"
+				"max_charges"			"12"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_radius"			"25000"
+				"charge_radius"			"3000"
 			}
 			"03"
 			{
@@ -168,7 +168,7 @@
 		"ItemShopTags"					"regen_health;regen_mana;boost_health;boost_mana;int;agi;str"
 		"ItemQuality"					"common"
 		"ItemAliases"					"magic wand"
-		"ItemInitialCharges"			"10"
+		"ItemInitialCharges"			"12"
 		"ItemPermanent"					"1"
 		"ItemRequiresCharges"			"1"
 		"ItemDisplayCharges"			"1"
@@ -180,12 +180,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"20"
+				"max_charges"			"24"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_radius"			"25000"
+				"charge_radius"			"3000"
 			}
 			"03"
 			{
@@ -1010,7 +1010,7 @@
 		"ItemResult"					"item_imba_poor_mans_shield"
 		"ItemRequirements"
 		{
-			"01"						"item_slippers;item_slippers;item_stout_shield"
+			"01"						"item_slippers;item_stout_shield"
 		}
 	}
 	
@@ -1027,10 +1027,11 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
+		"ItemCost"						"250"
 		"ItemShopTags"					"agi;block"
 		"ItemQuality"					"common"
 		"ItemAliases"					"pms;poor man's shield"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -1059,7 +1060,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"8"
+				"bonus_agility"			"6"
 			}
 		}
 	}
@@ -2375,7 +2376,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"250"	
+		"ItemCost"						"100"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -2384,7 +2385,7 @@
 		"ItemResult"					"item_imba_urn_of_shadows"
 		"ItemRequirements"
 		{
-			"01"						"item_sobi_mask;item_gauntlets;item_gauntlets"
+			"01"						"item_sobi_mask;item_gauntlets"
 		}
 	}
 	
@@ -2420,11 +2421,12 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"875"
+		"ItemCost"						"575"
 		"ItemShopTags"					"regen_mana;str;boost_health"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"urn of shadows"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -2438,12 +2440,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"8"
+				"bonus_strength"		"6"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"soul_radius"			"1200"
+				"soul_radius"			"1400"
 			}
 			"04"
 			{
@@ -3184,7 +3186,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"	
+		"ItemCost"						"315"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -3207,13 +3209,14 @@
 		"ID"							"1100"
 		"BaseClass"						"item_cyclone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CUSTOM"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
 
 		// Stats		
@@ -3222,8 +3225,8 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175"
-		"ItemCost"						"2735"
+		"AbilityManaCost"				"100"
+		"ItemCost"						"2400"
 		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
@@ -3252,6 +3255,11 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cyclone_duration"		"2.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"1000"
 			}
 		}
 	}
@@ -7336,7 +7344,7 @@
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"45.0"
+		"AbilityCooldown"				"30.0"
 		"AbilityManaCost"				"50"
 
 		// Item Info
@@ -7354,7 +7362,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_spell_resist"	"35"
+				"bonus_spell_resist"	"36"
 			}
 			"02"
 			{
@@ -7364,7 +7372,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_resist"		"35"
+				"tooltip_resist"		"36"
 			}
 			"04"
 			{
@@ -7446,7 +7454,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_damage"				"161"
+				"stack_damage"				"322"
 			}
 		}
 
@@ -7644,7 +7652,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pure_amp"					"40"
+				"pure_amp"					"30"
 			}
 			"04"
 			{
@@ -8456,17 +8464,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"225"
+				"base_crit"				"200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_increase"			"25"
+				"base_crit_tooltip"		"225"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_crit_increase"		"400"
+				"crit_increase"			"25"
 			}
 		}
 
@@ -8516,26 +8524,13 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusAttackStart"
-
-						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
-						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
-					}
-				}
-
 				"OnAttackLanded"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusAttackHit"
+						"Function"			"DaedalusHit"
 
-						"sound_crit"		"DOTA_Item.Daedelus.Crit"
 						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
 						"modifier_item"		"modifier_item_imba_greater_crit_unique"
 						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
@@ -8559,7 +8554,19 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"Duration"				"1.0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_crit.lua"
+						"Function"			"DaedalusCrit"
+
+						"sound_crit"		"DOTA_Item.Daedelus.Crit"
+						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
+						"modifier_item"		"modifier_item_imba_greater_crit_unique"
+						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
+					}
+				}
 
 				"Properties"
 				{
@@ -14176,6 +14183,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName" 			"item_imba_heavens_halberd"
 
@@ -14247,7 +14255,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_melee"			"3.5"
+				"disarm_melee"			"4.5"
 			}
 			"11"
 			{
@@ -14273,7 +14281,7 @@
 					"Center"  			"TARGET"
 					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 
@@ -14286,7 +14294,7 @@
 					"Center"  			"TARGET"
 					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY"
+					"Flags"     		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
 		}
@@ -15739,22 +15747,22 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_evasion"					"30"
+				"bonus_evasion"					"35"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"allied_armor"					"12"
+				"allied_armor"					"18"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"allied_evasion"				"30"
+				"allied_evasion"				"35"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"armor_reduction"				"-16"
+				"armor_reduction"				"-18"
 			}
 			"07"
 			{
@@ -15764,7 +15772,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"miss_chance"					"30"
+				"miss_chance"					"35"
 			}
 			"09"
 			{
@@ -16766,7 +16774,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1950"
+		"ItemCost"						"1850"
 		"ItemShopTags"					""
 		"ItemQuality"					"rare"
 		"ItemAliases"					"glimmer cape"
@@ -16784,17 +16792,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_magical_armor"	"20"
+				"bonus_magical_armor"	"30"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"0.5"
+				"fade_delay"			"0.3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_magical_armor"	"70"
+				"active_magical_armor"	"90"
 			}
 			"05"
 			{
@@ -17210,7 +17218,7 @@
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"range"					"700"
 			}
 			"08"

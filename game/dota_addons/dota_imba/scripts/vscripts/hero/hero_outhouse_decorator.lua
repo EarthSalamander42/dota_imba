@@ -143,9 +143,18 @@ function AstralImprisonment( keys )
 		caster:CalculateStatBonus()
 		target:CalculateStatBonus()
 	end
+end
+
+function AstralImprisonmentParticle( keys )
+	local target = keys.target
+	local particle_imprisonment = keys.particle_imprisonment
 
 	-- Remove the target's model from the game
 	target:AddNoDraw()
+
+	-- Draw the imprisonment particle in the target's position
+	target.astral_imprisonment_pfx = ParticleManager:CreateParticle(particle_imprisonment, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(target.astral_imprisonment_pfx, 0, target:GetAbsOrigin())
 end
 
 function AstralImprisonmentEnd( keys )
@@ -163,6 +172,11 @@ function AstralImprisonmentEnd( keys )
 	-- Stop the looping sound when the modifier ends
 	target:StopSound(sound_name)
 
+	-- Delete the particle
+	ParticleManager:DestroyParticle(target.astral_imprisonment_pfx, false)
+	ParticleManager:ReleaseParticleIndex(target.astral_imprisonment_pfx)
+	target.astral_imprisonment_pfx = nil
+
 	-- Redraw the target's model
 	target:RemoveNoDraw()
 
@@ -179,6 +193,7 @@ function AstralImprisonmentEnd( keys )
 			-- Play particle
 			local damage_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, enemy)
 			ParticleManager:SetParticleControl(damage_pfx, 0, enemy:GetAbsOrigin())
+			ParticleManager:ReleaseParticleIndex(damage_pfx)
 		end
 	end)
 end

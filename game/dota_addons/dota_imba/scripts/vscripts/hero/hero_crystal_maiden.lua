@@ -36,7 +36,7 @@ function CrystalNova( keys )
 	Timers:CreateTimer(duration, function()
 		dummy:Destroy()
 		ParticleManager:DestroyParticle(fxIndex, false)
-		ReleaseParticleIndex(fxIndex)
+		ParticleManager:ReleaseParticleIndex(fxIndex)
 	end)
 end
 
