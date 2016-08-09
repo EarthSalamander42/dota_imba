@@ -3421,7 +3421,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_multiplier"		"175 200 225 250"
+				"crit_multiplier"		"170 200 230 260"
 			}
 			"02"
 			{
@@ -3548,12 +3548,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"side_damage_reduction"			"18 24 30 36"
+				"side_damage_reduction"			"22 28 34 40"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"back_damage_reduction"			"26 34 42 50"
+				"back_damage_reduction"			"27 36 45 54"
 			}
 			"03"
 			{
@@ -5013,7 +5013,7 @@
 
 		"AbilityCooldown"				"11"
 
-		"AbilityCastRange"				"625"
+		"AbilityCastRange"				"550"
 		
 		"AbilitySpecial"
 		{
@@ -5025,12 +5025,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"625"
+				"radius"				"550"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sleep_duration"		"5.0"
+				"sleep_duration"		"3.5 4.0 4.5 5.0"
 			}
 			"04"
 			{
@@ -5057,7 +5057,7 @@
 	{
 		"AbilityCooldown"				"11"
 
-		"AbilityCastRange"				"625"
+		"AbilityCastRange"				"550"
 		
 		"AbilitySpecial"
 		{
@@ -5069,12 +5069,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"625"
+				"radius"				"550"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sleep_duration"		"5.0"
+				"sleep_duration"		"3.5 4.0 4.5 5.0"
 			}
 			"04"
 			{
@@ -5110,7 +5110,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"pass_damage"				"75 125 175 225"
 			}
-						
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
@@ -5169,12 +5168,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"armor_reduction_pct"	    "50 80 110 140"
+				"armor_reduction_pct"	    "50 75 100 125"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"20 30 40 50"
+				"magic_resistance_pct"		"15 25 35 45"
 			}
 		}
 	}
@@ -5224,7 +5223,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_pct"				"35 45 55"
+				"damage_pct"				"30 40 50"
 			}
 			"08"
 			{
@@ -6217,7 +6216,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 160 200"
+				"damage"				"135 180 225"
 			}
 			"04"
 			{
@@ -10494,7 +10493,7 @@
 	//=================================================================================================================
 	"terrorblade_reflection"
 	{
-		"AbilityCastRange"					"900 1000 1100 1200"
+		"AbilityCastRange"					"1200"
 
 		"AbilityCooldown"					"21 18 15 12"
 
@@ -10530,7 +10529,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"900 1000 1100 1200"
+				"range"						"1200"
 			}
 		}
 	}
@@ -16203,7 +16202,7 @@
 		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityDamage"					"250 500 750 1000"
+		"AbilityDamage"					"400 600 800 1000"
 		
 		"AbilitySpecial"
 		{
@@ -16296,7 +16295,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fire_rate"				"0.8"
+				"fire_rate"				"0.4"
 			}
 			"05"
 			{

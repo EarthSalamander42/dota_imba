@@ -66,6 +66,7 @@ function ShurikenTossImpact( keys )
 		-- Delete previously spawned chain if it still exists
 		if target.shuriken_particle then
 			ParticleManager:DestroyParticle(target.shuriken_particle,true)
+			ParticleManager:ReleaseParticleIndex(target.shuriken_particle)
 		end
 
 		-- Retrieve the impact position
@@ -75,9 +76,9 @@ function ShurikenTossImpact( keys )
 		target.shuriken_toss_dummy:SetAbsOrigin(target.shuriken_position)
 
 		-- Spawn a chain attached to the target and the impact point
-		target.shuriken_particle = ParticleManager:CreateParticle(chain_particle, PATTACH_RENDERORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 6, target.shuriken_toss_dummy, 5, "attach_attack1", target.shuriken_position, false)
-		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 0, target, 5, "attach_hitloc", target_position, false)
+		target.shuriken_particle = ParticleManager:CreateParticle(chain_particle, PATTACH_CUSTOMORIGIN, target)
+		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 6, target.shuriken_toss_dummy, PATTACH_POINT_FOLLOW, "attach_hitloc", target.shuriken_position, false)
+		ParticleManager:SetParticleControlEnt(target.shuriken_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_position, false)
 	end
 end
 
@@ -106,6 +107,7 @@ function ShurikenTossChainEnd( keys )
 
 	-- Destroy the shuriken toss chain and dummy unit
 	ParticleManager:DestroyParticle(target.shuriken_particle, true)
+	ParticleManager:ReleaseParticleIndex(target.shuriken_particle)
 	target.shuriken_toss_dummy:Destroy()
 end
 
@@ -115,12 +117,11 @@ function WindWalk( keys )
 	local ability = keys.ability
 	local modifier_invis = keys.modifier
 	local ability_track = caster:FindAbilityByName("imba_bounty_hunter_track")
-	local ability_jaunt = caster:FindAbilityByName("imba_bounty_hunter_shadow_jaunt")
 
-	-- checks which ability is currently being cast
+	-- Check which ability is currently being cast
 	local current_ability = caster:GetCurrentActiveAbility()
 
-	-- if it's track, reapply invisibility as soon as the cast is concluded
+	-- If it's track, reapply invisibility as soon as the cast is concluded
 	if current_ability == ability_track then
 		Timers:CreateTimer(0.01, function() caster:AddNewModifier(caster, ability, "modifier_invisible", {})	end)
 	else
@@ -232,19 +233,29 @@ end
 function UpgradeJaunt( keys )
 	local caster = keys.caster
 	local ability_jaunt = caster:FindAbilityByName(keys.ability_jaunt)
-	local track_level = keys.ability:GetLevel()
 
 	-- Upgrade the Shadow Jaunt ability
-	if ability_jaunt then
-		ability_jaunt:SetLevel(track_level)
+	if ability_jaunt and ability_jaunt:GetLevel() < 1 then
+		ability_jaunt:SetLevel(1)
 	end
+end
+
+function ShadowJauntInitialize( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
+	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
+
+	InitializeAbillityCharges(caster, ability:GetName(), max_charges, max_charges, charge_cooldown)
 end
 
 function ShadowJaunt( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_jinada = caster:FindAbilityByName(keys.ability_jinada)
 	local modifier_track = keys.modifier_track
 	local modifier_track_scepter = keys.modifier_track_scepter
 	local sound_cast = keys.sound_cast
@@ -252,23 +263,41 @@ function ShadowJaunt( keys )
 	-- Blink geometry
 	local caster_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
-	local direction = ( target_pos - caster_pos ):Normalized()
-	target_pos = target_pos + direction * 50
+	local blink_direction = (target_pos - caster_pos):Normalized()
+	target_pos = target_pos + blink_direction * 50
 
-	-- If the target is tracked, blink to it and proc Jinada.
+	-- Play sound
+	caster:EmitSound(sound_cast)
+
+	-- Blink
+	FindClearSpaceForUnit(caster, target_pos, false)
+	if caster:GetTeam() ~= target:GetTeam() then
+		caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized())
+	else
+		caster:SetForwardVector(blink_direction)
+	end
+
+	-- If the target is tracked, refresh abilities other than this one
 	if target:HasModifier(modifier_track) or target:HasModifier(modifier_track_scepter) then
 
-		-- Play sound
-		caster:EmitSound(sound_cast)
+		-- Refresh abilities other than this one
+		local current_ability
+		for i = 0, 15 do
+			current_ability = caster:GetAbilityByIndex(i)
 
-		-- Blink
-		FindClearSpaceForUnit(caster, target_pos, false)
-		caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized() )
-		
-		-- Refresh Jinada and attack
-		ability_jinada:EndCooldown()
+			-- Refresh
+			if current_ability then
+				current_ability:EndCooldown()
+			end
+		end
+	end
+
+	-- If the target is an enemy, start attacking it
+	if caster:GetTeam() ~= target:GetTeam() then
 		caster:SetAttacking(target)
-	else
-		ability:EndCooldown()
+		caster:SetForceAttackTarget(target)
+		Timers:CreateTimer(0.01, function()
+			caster:SetForceAttackTarget(nil)
+		end)
 	end
 end

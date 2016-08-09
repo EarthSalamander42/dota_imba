@@ -7728,7 +7728,7 @@
 			"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
 			"particle"    				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
-			"particle"					"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+			"particle"					"particles/econ/items/pudge/pudge_trapper_beam_chain/pudge_nx_meathook_chain.vpcf"
 		}
 		
 		// Unit Targeting
@@ -7833,7 +7833,7 @@
 	        	"ScriptFile"				"hero/hero_bounty_hunter.lua"
 				"Function"					"ShurikenTossImpact"
 
-				"chain_particle"			"particles/units/heroes/hero_pudge/pudge_meathook_chain.vpcf"
+				"chain_particle"			"particles/econ/items/pudge/pudge_trapper_beam_chain/pudge_nx_meathook_chain.vpcf"
 	        }
 
 	        "ApplyModifier"
@@ -8056,6 +8056,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"3.0"
+		"AbilityManaCost"				"25"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8067,18 +8074,6 @@
 			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
 			"particle"  				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
 		}
-		
-		// Unit Targeting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"4.0"
-		"AbilityManaCost"				"25"
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8122,7 +8117,7 @@
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"duration"						"30"
+				"duration"						"40"
 			}
 			"09"
 			{
@@ -8388,11 +8383,12 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityTextureName"			"imba_bounty_hunter_shadow_jaunt"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"						"3"
+		"MaxLevel"						"1"
 		"FightRecapLevel"				"1"
+		"CastFilterRejectCaster"		"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8405,7 +8401,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"15 11 7"
+		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"	
 			
 		// Special
@@ -8417,7 +8413,26 @@
 				"var_type"				"FIELD_INTEGER"
 				"range"					"1200"
 			}
-		}	
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_charges"			"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_cooldown"		"15"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_bounty_hunter.lua"
+				"Function"					"ShadowJauntInitialize"
+			}
+		}
 
 		"OnSpellStart"
 		{
@@ -8428,7 +8443,6 @@
 
 				"modifier_track"			"modifier_imba_track"
 				"modifier_track_scepter"	"modifier_imba_track_scepter"
-				"ability_jinada"			"bounty_hunter_jinada"
 				"sound_cast"				"Hero_Riki.Blink_Strike"
 			}
 		}
@@ -11665,12 +11679,12 @@
 			"10"
 			{	
 				"var_type"								"FIELD_FLOAT"
-				"armor_bonus"							"3 6 9"
+				"armor_bonus"							"3 5 7"
 			}
 			"11"
 			{	
 				"var_type"								"FIELD_FLOAT"
-				"negative_armor"						"-3 -6 -9"
+				"negative_armor"						"-3 -5 -7"
 			}
 		}
 
@@ -17692,7 +17706,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"700 850 1000"
 		"AbilityCastPoint"				"0.35"	
 
 		// Time		
@@ -17720,7 +17734,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2800"
+				"projectile_speed"		"4000"
 			}
 			"04"
 			{
@@ -17735,7 +17749,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_length"			"900"
+				"total_length"			"900 1050 1200"
 			}
 		}
 
@@ -17807,7 +17821,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"700 850 1000"
 		"AbilityCastPoint"				"0.25"	
 
 		// Time		
@@ -17835,7 +17849,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"2800"
+				"projectile_speed"		"4000"
 			}
 			"04"
 			{
@@ -17850,7 +17864,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_length"			"900"
+				"total_length"			"900 1050 1200"
 			}
 		}
 
@@ -21380,12 +21394,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_pct"				"14 16 18 20"
+				"heal_pct"				"12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_factor"			"50"
+				"damage_factor"			"70"
 			}
 			"04"
 			{
@@ -21773,7 +21787,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"repel_duration"			"3 4 5"
+				"repel_duration"			"3"
 			}
 			"04"
 			{
@@ -22509,7 +22523,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_speed"			"20"
+				"stack_speed"			"15"
 			}
 			"03"
 			{
@@ -22559,7 +22573,12 @@
 			"12"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown_cap_scepter"	"4.0"
+				"cooldown_cap_scepter"	"3.0"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"enemy_disable_linger"	"0.2"
 			}
 		}
 
@@ -22797,17 +22816,17 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rot_slow"				"-24 -26 -28 -30"
+				"rot_slow"				"-30"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"35 60 85 110"
+				"base_damage"			"30 60 90 120"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_damage"			"5"
+				"bonus_damage"			"3"
 			}
 			"06"
 			{
@@ -22823,6 +22842,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"max_stacks"			"25"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_radius_tooltip"	"500"
 			}
 		}
 
@@ -22951,7 +22975,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"1.0 1.5 2.0 2.5"
+				"stack_str"							"1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
@@ -23120,6 +23144,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"15"
 			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"0.1"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_cap_scepter"		"3"
+			}
 		}
 
 		"OnToggleOn"
@@ -23205,12 +23239,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_speed"				"20"
+				"stack_speed"				"15"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_range"				"40"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"10"
 			}
 		}
 
@@ -23315,7 +23354,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"dismember_damage"			"60 100 140"
+				"dismember_damage"			"60 90 120"
 			}
 			"02"
 			{
@@ -23407,8 +23446,8 @@
 
 					"FireSound"
 					{
-						"EffectName"				"Hero_Pudge.Dismember"
-						"Target"						"CASTER"
+						"EffectName"		"Hero_Pudge.Dismember"
+						"Target"			"CASTER"
 					}
 				}
 
@@ -23444,7 +23483,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.5"
+		"AbilityCooldown"				"5.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -23512,7 +23551,7 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp_tooltip"			"15"
+				"magic_amp_tooltip"			"20"
 			}
 			"11"
 			{
@@ -23619,7 +23658,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blast_damage"				"50"
+				"blast_damage"				"60"
 			}
 			"05"
 			{
@@ -23634,7 +23673,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blast_radius"				"425"
+				"blast_radius"				"500"
 			}
 		}
 
@@ -23794,7 +23833,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_health"			"16 20 24 28"
+				"ward_health"			"20 24 28 32"
 			}
 			"05"
 			{
@@ -23881,7 +23920,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_health"			"16 20 24 28"
+				"ward_health"			"20 24 28 32"
 			}
 			"05"
 			{
@@ -24119,10 +24158,7 @@
 				"Function"					"LifeDrain"
 
 				"sound_cast"				"Hero_Pugna.LifeDrain.Cast"
-				"sound_target"				"Hero_Pugna.LifeDrain.Target"
-				"sound_loop"				"Hero_Pugna.LifeDrain.Loop"
-				"particle_enemy"			"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
-				"particle_ally"				"particles/units/heroes/hero_pugna/pugna_life_give.vpcf"
+				"sound_target"				"Imba.PugnaLifeDrainTarget"
 				"modifier_enemy"			"modifier_imba_life_drain_enemy"
 				"modifier_ally"				"modifier_imba_life_drain_ally"
 			}
@@ -24152,6 +24188,18 @@
 					}
 				}
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pugna.lua"
+						"Function"			"LifeDrainEnemyStart"
+
+						"particle_drain"	"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+						"sound_loop"		"Imba.PugnaLifeDrainLoop"
+					}
+				}
+
 				"OnDestroy"
 				{
 					"RunScript"
@@ -24159,7 +24207,7 @@
 						"ScriptFile"		"hero/hero_pugna.lua"
 						"Function"			"LifeDrainEnemyEnd"
 
-						"sound_loop"		"Hero_Pugna.LifeDrain.Loop"
+						"sound_loop"		"Imba.PugnaLifeDrainLoop"
 						"sound_target"		"Hero_Pugna.LifeDrain.Target"
 					}
 				}
@@ -24187,6 +24235,18 @@
 					}
 				}
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pugna.lua"
+						"Function"			"LifeDrainAllyStart"
+
+						"particle_drain"	"particles/units/heroes/hero_pugna/pugna_life_give.vpcf"
+						"sound_loop"		"Imba.PugnaLifeDrainLoop"
+					}
+				}
+
 				"OnDestroy"
 				{
 					"RunScript"
@@ -24194,7 +24254,7 @@
 						"ScriptFile"		"hero/hero_pugna.lua"
 						"Function"			"LifeDrainAllyEnd"
 
-						"sound_loop"		"Hero_Pugna.LifeDrain.Loop"
+						"sound_loop"		"Imba.PugnaLifeDrainLoop"
 						"sound_target"		"Hero_Pugna.LifeDrain.Target"
 					}
 				}
@@ -24230,16 +24290,16 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.36"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
+		"AbilityCooldown"				"10 8 6 4"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110"
+		"AbilityManaCost"				"90"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -24248,17 +24308,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"strike_damage"			"30 60 90 120"
+				"strike_damage"			"50 75 100 125"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_damage"		"30 35 40 45"
+				"duration_damage"		"15 25 35 45"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-29 -36 -43 -50"
+				"movement_slow"			"-20 -30 -40 -50"
 			}
 			"04"
 			{
@@ -24267,49 +24327,31 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_tooltip"		"15.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration_tooltip"		"16"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_slow"				"-15"
+				"base_slow"				"-5"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_slow"			"-2 -3 -4 -5"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"strike_chance"			"10 15 20 25"
+				"var_type"				"FIELD_FLOAT"
+				"stack_slow"			"-2.0 -3.0 -4.5 -5.5"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"TrackingProjectile"
+			"RunScript"
 			{
-				"Target"				"TARGET"
-			    "EffectName"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
-			    "Dodgeable"				"1"
-			    "ProvidesVision"		"0"
-			    "MoveSpeed"				"%projectile_speed"
-			    "SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
+				"ScriptFile"			"hero/hero_queen_of_pain.lua"
+				"Function"				"ShadowStrikeCast"
 
-			"FireSound"
-			{
-				"EffectName"			"Hero_QueenOfPain.ShadowStrike"
-				"Target"				"CASTER"
-			}
-
-			"AttachEffect"
-			{
-				"Target"				"CASTER"
-				"EffectAttachType"		"attach_origin"
-				"EffectName"			"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+				"sound_cast"			"Hero_QueenOfPain.ShadowStrike"
+				"particle_caster"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+				"particle_projectile"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
 			}
 		}
 
@@ -24331,7 +24373,7 @@
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"ShadowStrike"
+				"Function"				"ShadowStrikeHit"
 				"Target"				"TARGET"
 
 				"stack_modifier"		"modifier_imba_shadow_strike_stacking_slow"
@@ -24345,43 +24387,17 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"OnAttack"
+				"OnAttackLanded"
 				{
-					"Random"
+					"RunScript"
 					{
-						"Chance"					"%strike_chance"
+						"ScriptFile"			"hero/hero_queen_of_pain.lua"
+						"Function"				"ShadowStrikeAttack"
 
-						"OnSuccess"
-						{
-							"TrackingProjectile"
-							{
-								"Target"
-								{
-									"Center"  		"TARGET"
-									"Teams" 		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-								}
-
-							    "EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
-							    "Dodgeable"			"1"
-							    "ProvidesVision"	"0"
-							    "MoveSpeed"			"%projectile_speed"
-							    "SourceAttachment"	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-							}
-
-							"FireSound"
-							{
-								"EffectName"		"Hero_QueenOfPain.ShadowStrike"
-								"Target"			"CASTER"
-							}
-
-							"AttachEffect"
-							{
-								"Target"			"CASTER"
-								"EffectAttachType"	"attach_origin"
-								"EffectName"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
-							}
-						}
+						"sound_hit"				"Imba.QopShadowStrikeCreep"
+						"particle_caster"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
+						"particle_projectile"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+						"modifier_debuff"		"modifier_imba_shadow_strike_base_slow"
 					}
 				}
 
@@ -24389,10 +24405,10 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
 
-						"modifier"					"modifier_imba_shadow_strike_passive"
+						"modifier"				"modifier_imba_shadow_strike_passive"
 					}
 				}
 			}
@@ -24405,7 +24421,7 @@
 				"Duration"							"%duration_tooltip"
 
 				"EffectName"						"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-				"EffectAttachType"					"follow_chest"
+				"EffectAttachType"					"follow_overhead"
 
 				"ThinkInterval"						"2.0"
 
@@ -24477,7 +24493,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0 10.0 8.0 6.0"
+		"AbilityCooldown"				"12 10 8 6"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24500,12 +24516,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scream_damage"			"45 85 120 150"
+				"scream_damage"			"50 90 125 165"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"confused_duration"		"1.5"
+				"var_type"				"FIELD_INTEGER"
+				"nausea_duration"		"3"
 			}
 		}
 
@@ -24589,10 +24605,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"7.0 6.5 6.0 5.5"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"75 150 225 300"
-
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"110 120 130 140"
@@ -24609,17 +24621,27 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"900"
+				"damage"				"100 175 250 325"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"confusion_duration"	"1.5 2.0 2.5 3.0"
+				"var_type"				"FIELD_INTEGER"
+				"nausea_duration"		"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"confusion_damage"		"50 75 100 125"
+				"nausea_base_dmg"		"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"nausea_bonus_dmg"		"1 2 3 4"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
 			}
 		}
 
@@ -24669,14 +24691,14 @@
 			{
 				"Target"				"TARGET"
 				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%AbilityDamage"
+				"Damage"				"%damage"
 			}
 
 			"ApplyModifier"
 			{
 				"ModifierName"			"modifier_imba_confusion"
 				"Target" 				"TARGET"
-				"Duration"				"%confusion_duration"
+				"Duration"				"%nausea_duration"
 			}
 		}
 
@@ -24691,21 +24713,19 @@
 		
 				"OnAbilityExecuted"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"		"UNIT"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%confusion_damage"
+						"ScriptFile"	"hero/hero_queen_of_pain.lua"
+						"Function"		"NauseaCast"
 					}
 				}
 
 				"OnAttackStart"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"		"ATTACKER"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%confusion_damage"
+						"ScriptFile"	"hero/hero_queen_of_pain.lua"
+						"Function"		"NauseaAttack"
 					}
 				}
 			}
@@ -24830,8 +24850,8 @@
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"debuff_duration"		"4.0 5.0 6.0"
+				"var_type"				"FIELD_INTEGER"
+				"debuff_duration"		"5"
 			}
 			"08"
 			{
@@ -24885,20 +24905,17 @@
 				"IsHidden"				"0"
 				"IsDebuff"				"1"
 				"IsPurgable"			"1"
-		
-				"OnUnitMoved"
+
+				"Duration"				"%debuff_duration"
+
+				"ThinkInterval"			"0.1"
+
+				"OnIntervalThink"
 				{
-					"Random"
+					"RunScript"
 					{
-						"Chance"			"25"
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"	"hero/hero_queen_of_pain.lua"
-								"Function"		"Daze"
-							}
-						}
+						"ScriptFile"	"hero/hero_queen_of_pain.lua"
+						"Function"		"Daze"
 					}
 				}
 

@@ -618,9 +618,6 @@ function LifeDrain( keys )
 	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
 	local sound_target = keys.sound_target
-	local sound_loop = keys.sound_loop
-	local particle_enemy = keys.particle_enemy
-	local particle_ally = keys.particle_ally
 	local modifier_enemy = keys.modifier_enemy
 	local modifier_ally = keys.modifier_ally
 	local scepter = HasScepter(caster)
@@ -633,48 +630,67 @@ function LifeDrain( keys )
 		ability:EndCooldown()
 	end
 
-	-- Play cast sound
+	-- Play cast sounds
 	caster:EmitSound(sound_cast)
-
-	-- Stop any ongoing looping sound and start another
-	target:StopSound(sound_target)
-	target:StopSound(sound_loop)
 	target:EmitSound(sound_target)
-	target:EmitSound(sound_loop)
-
+	
 	-- Animate the caster during the drain
 	StartAnimation(caster, {duration = duration,activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
 
 	-- Determine if the target is a friend or ally
 	if caster:GetTeam() == target:GetTeam() then
 
-		-- End any pre-existing particle
-		if target.life_give_particle then
-			ParticleManager:DestroyParticle(target.life_give_particle, false)
-		end
-		
-		-- Play ally particle
-		target.life_give_particle = ParticleManager:CreateParticle(particle_ally, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControlEnt(target.life_give_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(target.life_give_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-
 		-- Apply ally modifier
 		ability:ApplyDataDrivenModifier(caster, target, modifier_ally, {})
 	else
 
-		-- End any pre-existing particle
-		if target.life_drain_particle then
-			ParticleManager:DestroyParticle(target.life_drain_particle, false)
-		end
-
-		-- Play enemy particle
-		target.life_drain_particle = ParticleManager:CreateParticle(particle_enemy, PATTACH_ABSORIGIN, caster)
-		ParticleManager:SetParticleControlEnt(target.life_drain_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(target.life_drain_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-
 		-- Apply enemy modifier
 		ability:ApplyDataDrivenModifier(caster, target, modifier_enemy, {})
 	end
+end
+
+function LifeDrainAllyStart( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local particle_drain = keys.particle_drain
+	local sound_loop = keys.sound_loop
+
+	-- Stop any ongoing looping sound on the target
+	target:StopSound(sound_loop)
+	target:EmitSound(sound_loop)
+
+	-- End any pre-existing particle
+	if target.life_give_particle then
+		ParticleManager:DestroyParticle(target.life_give_particle, false)
+		ParticleManager:ReleaseParticleIndex(target.life_give_particle)
+	end
+	
+	-- Play ally particle
+	target.life_give_particle = ParticleManager:CreateParticle(particle_drain, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControlEnt(target.life_give_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(target.life_give_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+end
+
+function LifeDrainEnemyStart( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local particle_drain = keys.particle_drain
+	local sound_loop = keys.sound_loop
+
+	-- Stop any ongoing looping sound on the target
+	target:StopSound(sound_loop)
+	target:EmitSound(sound_loop)
+
+	-- End any pre-existing particle
+	if target.life_drain_particle then
+		ParticleManager:DestroyParticle(target.life_drain_particle, false)
+		ParticleManager:ReleaseParticleIndex(target.life_drain_particle)
+	end
+	
+	-- Play ally particle
+	target.life_drain_particle = ParticleManager:CreateParticle(particle_drain, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControlEnt(target.life_drain_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(target.life_drain_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 end
 
 function LifeDrainTickEnemy( keys )
@@ -736,7 +752,7 @@ function LifeDrainTickEnemy( keys )
 	end
 
 	-- Break the link if this target is out of the world or no longer visible
-	if not caster:CanEntityBeSeenByMyTeam(target) or target:IsOutOfGame() then
+	if target:IsOutOfGame() then
 		should_break = true
 	end
 
@@ -856,6 +872,7 @@ function LifeDrainEnemyEnd( keys )
 
 	-- End the particle
 	ParticleManager:DestroyParticle(target.life_drain_particle, false)
+	ParticleManager:ReleaseParticleIndex(target.life_drain_particle)
 	target.life_drain_particle = nil
 
 	-- Stop the looping sound
@@ -874,6 +891,7 @@ function LifeDrainAllyEnd( keys )
 
 	-- End the particle
 	ParticleManager:DestroyParticle(target.life_give_particle, false)
+	ParticleManager:ReleaseParticleIndex(target.life_give_particle)
 	target.life_give_particle = nil
 
 	-- Stop the looping sound

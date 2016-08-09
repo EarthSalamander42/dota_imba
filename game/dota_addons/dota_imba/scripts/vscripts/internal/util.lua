@@ -1394,3 +1394,22 @@ function SetTimeOfDayTempLoop()
 		end)
 	end
 end
+
+-- Initializes a charge-based system for an ability
+function InitializeAbillityCharges(unit, ability_name, max_charges, initial_charges, cooldown)
+
+	-- Find the passed ability
+	local ability = unit:FindAbilityByName(ability_name)
+
+	-- Procees only if the relevant ability was found
+	if ability then
+
+		local extra_parameters = {
+			max_count = max_charges,
+			start_count = initial_charges,
+			replenish_time = cooldown
+		}
+
+		unit:AddNewModifier(unit, ability, "modifier_charges", extra_parameters)
+	end
+end

@@ -120,6 +120,7 @@ function MeatHook( keys )
 	local cooldown_cap_scepter = ability:GetLevelSpecialValueFor("cooldown_cap_scepter", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
+	local enemy_disable_linger = ability:GetLevelSpecialValueFor("enemy_disable_linger", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 	local start_loc = caster_loc + caster:GetForwardVector() * hook_width
 
@@ -145,7 +146,7 @@ function MeatHook( keys )
 	caster:EmitSound(sound_extend)
 
 	-- Create and set up the Hook dummy unit
-	local hook_dummy = CreateUnitByName("npc_dummy_blank", start_loc, false, caster, caster, caster:GetTeam())
+	local hook_dummy = CreateUnitByName("npc_dummy_blank", start_loc + Vector(0, 0, 150), false, caster, caster, caster:GetTeam())
 	hook_dummy:AddNewModifier(caster, nil, "modifier_phased", {})
 	ability:ApplyDataDrivenModifier(caster, hook_dummy, modifier_dummy, {})
 	hook_dummy:SetForwardVector(caster:GetForwardVector())
@@ -160,7 +161,8 @@ function MeatHook( keys )
 	ParticleManager:SetParticleControlEnt(hook_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_weapon_chain_rt", caster_loc, true)
 	ParticleManager:SetParticleControl(hook_pfx, 1, start_loc)
 	ParticleManager:SetParticleControl(hook_pfx, 2, Vector(hook_speed, hook_range, hook_width) )
-	ParticleManager:SetParticleControlEnt(hook_pfx, 6, hook_dummy, 5, "attach_hitloc", start_loc, false)
+	ParticleManager:SetParticleControl(hook_pfx, 6, start_loc)
+	--ParticleManager:SetParticleControlEnt(hook_pfx, 6, hook_dummy, PATTACH_POINT_FOLLOW, "attach_overhead", start_loc, false)
 	ParticleManager:SetParticleControlEnt(hook_pfx, 7, caster, PATTACH_CUSTOMORIGIN, nil, caster_loc, true)
 
 	-- Remove the caster's hook
@@ -214,6 +216,9 @@ function MeatHook( keys )
 
 			-- Grant vision on the hook hit area
 			ability:CreateVisibilityNode(hook_loc, vision_radius, vision_duration)
+
+			-- Increase hook return speed
+			hook_speed = math.max(hook_speed, 3000 * tick_rate)
 		end
 
 		-- If no target was hit and the maximum range is not reached, move the hook and keep going
@@ -224,6 +229,7 @@ function MeatHook( keys )
 
 			-- Recalculate position and distance
 			hook_loc = hook_dummy:GetAbsOrigin()
+			ParticleManager:SetParticleControl(hook_pfx, 6, hook_loc + Vector(0, 0, 90))
 			travel_distance = (hook_loc - caster_loc):Length2D()
 			return tick_rate
 		end
@@ -270,12 +276,17 @@ function MeatHook( keys )
 
 					-- Remove the target's modifiers
 					target:RemoveModifierByName(modifier_target_ally)
-					target:RemoveModifierByName(modifier_target_enemy)
+
+					-- Enemies have a small extra duration on their stun
+					Timers:CreateTimer(enemy_disable_linger, function()
+						target:RemoveModifierByName(modifier_target_enemy)
+					end)
 				end
 
 				-- Destroy the hook dummy and particles
 				hook_dummy:Destroy()
 				ParticleManager:DestroyParticle(hook_pfx, false)
+				ParticleManager:ReleaseParticleIndex(hook_pfx)
 
 				-- Stop playing the reeling sound
 				caster:StopSound(sound_retract)
@@ -302,6 +313,7 @@ function MeatHook( keys )
 
 				-- Move the hook and an eventual target
 				hook_dummy:SetAbsOrigin(hook_loc + hook_step)
+				ParticleManager:SetParticleControl(hook_pfx, 6, hook_loc + hook_step + Vector(0, 0, 90))
 
 				if target_hit then
 					target:SetAbsOrigin(hook_loc + hook_step)
@@ -431,7 +443,7 @@ function Rot( keys )
 
 	-- Parameters
 	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local stack_damage = ability:GetLevelSpecialValueFor("stack_damage", ability_level)
+	local bonus_damage = ability:GetLevelSpecialValueFor("bonus_damage", ability_level) * 0.01
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local stack_radius = ability:GetLevelSpecialValueFor("stack_radius", ability_level)
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
@@ -444,7 +456,7 @@ function Rot( keys )
 	end
 
 	-- Calculate damage and radius
-	local damage = base_damage * ( ( 100 + heap_stacks * stack_damage ) * rot_tick ) / 100
+	local damage = (base_damage + caster:GetMaxHealth() * bonus_damage) * rot_tick
 	local radius = base_radius + stack_radius * heap_stacks
 
 	-- Damage the caster

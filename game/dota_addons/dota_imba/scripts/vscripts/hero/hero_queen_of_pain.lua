@@ -1,7 +1,91 @@
---[[	Author: Hewdraw
-		Date: 22.06.2015	]]
+--[[	Author: Firetoad & Hewdraw
+		Date: 22.06.2015			]]
 
-function ShadowStrike( keys )
+function ShadowStrikeCast( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local particle_caster = keys.particle_caster
+	local particle_projectile = keys.particle_projectile
+
+	-- Parameters
+	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
+
+	-- Play cast sound
+	caster:EmitSound(sound_cast)
+
+	-- Play caster particle
+	local caster_pfx = ParticleManager:CreateParticle(particle_caster, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(caster_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 1, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 3, Vector(projectile_speed, 0, 0))
+	ParticleManager:ReleaseParticleIndex(caster_pfx)
+
+	-- Launch homing projectile
+	local shadow_projectile = {
+		Target = target,
+		Source = caster,
+		Ability = ability,
+		EffectName = particle_projectile,
+		bDodgeable = true,
+		bProvidesVision = false,
+		iMoveSpeed = projectile_speed,
+	--	iVisionRadius = vision_radius,
+	--	iVisionTeamNumber = caster:GetTeamNumber(),
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+	}
+	ProjectileManager:CreateTrackingProjectile(shadow_projectile)
+end
+
+function ShadowStrikeAttack( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_hit = keys.sound_hit
+	local particle_caster = keys.particle_caster
+	local particle_projectile = keys.particle_projectile
+	local modifier_debuff = keys.modifier_debuff
+
+	-- If the target is a building, Roshan, an ally, already affected by the debuff, or magic immune, do nothing
+	if target:IsMagicImmune() or target:IsBuilding() or IsRoshan(target) or (caster:GetTeam() == target:GetTeam()) or target:HasModifier(modifier_debuff) then
+		return nil
+	end
+
+	-- Parameters
+	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level) * 2
+	local attack_count = ability:GetLevelSpecialValueFor("attack_count", ability_level)
+	local should_cast = false
+
+	-- Play hit sound
+	caster:EmitSound(sound_hit)
+
+	-- Play caster particle
+	local caster_pfx = ParticleManager:CreateParticle(particle_caster, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(caster_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 1, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(caster_pfx, 3, Vector(projectile_speed, 0, 0))
+	ParticleManager:ReleaseParticleIndex(caster_pfx)
+
+	-- Throw the projectile
+	local shadow_projectile = {
+		Target = target,
+		Source = caster,
+		Ability = ability,
+		EffectName = particle_projectile,
+		bDodgeable = true,
+		bProvidesVision = false,
+		iMoveSpeed = projectile_speed,
+	--	iVisionRadius = vision_radius,
+	--	iVisionTeamNumber = caster:GetTeamNumber(),
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+	}
+	ProjectileManager:CreateTrackingProjectile(shadow_projectile)
+end	
+
+function ShadowStrikeHit( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
@@ -10,13 +94,16 @@ function ShadowStrike( keys )
 	local stack_modifier = keys.stack_modifier
 
 	target:RemoveModifierByName(stack_modifier)
-	AddStacks(ability, caster, target, stack_modifier, 7, true)
+	AddStacks(ability, caster, target, stack_modifier, 8, true)
+
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, ability:GetLevelSpecialValueFor("strike_damage", ability_level), nil)
 end
 
 function ShadowStrikeDecay( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local stack_modifier = keys.stack_modifier
 
 	-- If the ability was unlearned, remove all stacks
@@ -31,6 +118,9 @@ function ShadowStrikeDecay( keys )
 	else
 		target:SetModifierStackCount(stack_modifier, caster, current_charges - 1 )
 	end
+
+	-- Play damage message
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, ability:GetLevelSpecialValueFor("duration_damage", ability_level), nil)
 end
 
 function Blink(keys)
@@ -121,10 +211,44 @@ function BlinkScream(keys)
 	local target = keys.target
 
 	local scream_damage = ability:GetLevelSpecialValueFor("scream_damage", ability_scream_level)
-	local confused_duration = ability:GetLevelSpecialValueFor("confused_duration", ability_scream_level)
+	local nausea_duration = ability:GetLevelSpecialValueFor("nausea_duration", ability_scream_level)
 
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = scream_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-	ability_scream:ApplyDataDrivenModifier(caster, target, modifier_confusion, {duration = confused_duration})
+	ability_scream:ApplyDataDrivenModifier(caster, target, modifier_confusion, {duration = nausea_duration})
+end
+
+function NauseaCast( keys )
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local nausea_base_dmg = ability:GetLevelSpecialValueFor("nausea_base_dmg", ability_level)
+	local nausea_bonus_dmg = ability:GetLevelSpecialValueFor("nausea_bonus_dmg", ability_level) * 0.01
+
+	-- Calculate damage
+	local damage = nausea_base_dmg + target:GetMaxHealth() * nausea_bonus_dmg
+
+	-- Deal damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+end
+
+function NauseaAttack( keys )
+	local caster = keys.caster
+	local target = keys.attacker
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+
+	-- Parameters
+	local nausea_base_dmg = ability:GetLevelSpecialValueFor("nausea_base_dmg", ability_level)
+	local nausea_bonus_dmg = ability:GetLevelSpecialValueFor("nausea_bonus_dmg", ability_level) * 0.01
+
+	-- Calculate damage
+	local damage = nausea_base_dmg + target:GetMaxHealth() * nausea_bonus_dmg
+
+	-- Deal damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end
 
 function Torment( keys )
@@ -152,15 +276,15 @@ function Torment( keys )
 end	
 
 function Daze( keys )
-	local unit = keys.unit
+	local target = keys.target
 	
-	local fv = unit:GetForwardVector()
+	local fv = target:GetForwardVector()
 	local radius = QAngle(0, RandomInt(1, 360), 0)
-	local unit_position = unit:GetAbsOrigin()
-	local front_position = unit_position + fv * 1000
+	local unit_position = target:GetAbsOrigin()
+	local front_position = unit_position + fv * 500
 	local vector = RotatePosition(unit_position, radius, front_position)
 
-	unit:MoveToPosition(vector)
+	target:MoveToPosition(vector)
 end
 
 function SonicWave( keys )
@@ -187,8 +311,10 @@ function SonicWave( keys )
 	-- Deal damage
 	ApplyDamage({attacker = caster, victim = unit, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 
-	-- Apply daze modifier
-	ability:ApplyDataDrivenModifier(caster, unit, modifier_daze, {duration = debuff_duration})
+	-- Apply daze modifier on non-magic-immune targets
+	if not unit:IsMagicImmune() then
+		ability:ApplyDataDrivenModifier(caster, unit, modifier_daze, {duration = debuff_duration})
+	end
 
 	-- If scepter, echo screams off each target
 	if scepter then
