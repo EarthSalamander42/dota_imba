@@ -22589,7 +22589,6 @@
 				"ModifierName"			"modifier_imba_meat_hook_cast_check"
 				"Target" 				"CASTER"
 			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_pudge.lua"
@@ -22628,11 +22627,11 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"hero/hero_pudge.lua"
-				"Function"					"HookUpgrade"
+				"ScriptFile"			"hero/hero_pudge.lua"
+				"Function"				"HookUpgrade"
 
-				"ability_sharp"				"imba_pudge_sharp_hook"
-				"ability_light"				"imba_pudge_light_hook"
+				"ability_sharp"			"imba_pudge_sharp_hook"
+				"ability_light"			"imba_pudge_light_hook"
 			}
 		}
 
@@ -22651,11 +22650,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"hero/hero_pudge.lua"
-						"Function"					"HookStacksUpdater"
+						"ScriptFile"		"hero/hero_pudge.lua"
+						"Function"			"HookStacksUpdater"
 
-						"modifier_sharp"			"modifier_imba_hook_sharp_stack"
-						"modifier_light"			"modifier_imba_hook_light_stack"
+						"modifier_sharp"	"modifier_imba_hook_sharp_stack"
+						"modifier_light"	"modifier_imba_hook_light_stack"
 					}
 				}
 
@@ -22663,10 +22662,10 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
 
-						"modifier"					"modifier_imba_hook_stack_controller"
+						"modifier"			"modifier_imba_hook_stack_controller"
 					}
 				}
 			}
@@ -22806,7 +22805,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"250"
+				"base_radius"			"300"
 			}
 			"02"
 			{
@@ -22826,12 +22825,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"3"
+				"bonus_damage"			"6"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_radius"			"10"
+				"stack_radius"			"20"
 			}
 			"07"
 			{
@@ -22975,7 +22974,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"1.5 2.0 2.5 3.0"
+				"stack_str"							"4.0"
 			}
 			"03"
 			{
@@ -22985,7 +22984,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stack_magic_resist"				"2"
+				"stack_magic_resist"				"4"
 			}
 			"05"
 			{
@@ -23343,7 +23342,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityChannelTime"				"3.0"
-		"AbilityCooldown"					"30.0 25.0 20.0"
+		"AbilityCooldown"					"20.0 15.0 10.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -23359,7 +23358,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strength_damage"			"100"
+				"strength_damage"			"100 150 200"
 			}
 			"03"
 			{
