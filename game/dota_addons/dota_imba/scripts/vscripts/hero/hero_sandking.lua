@@ -6,29 +6,19 @@ function Burrowstrike( keys )
 	local target = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_caster = keys.modifier_caster
 
 	-- Parameters
 	local speed = ability:GetLevelSpecialValueFor("burrow_speed", ability_level)
-	local burrow_time = (target - caster:GetAbsOrigin()):Length2D() / speed
 
 	-- Store burrowstrike start/endpoints
 	caster.burrow_start_point = caster:GetAbsOrigin()
 	caster.burrow_end_point = target
 
-	-- Remove caster from the world
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
-	caster:AddNoDraw()
-
 	-- Disjoint projectiles
 	ProjectileManager:ProjectileDodge(caster)
 
-	-- After the burrow time, reappear on the other side
-	Timers:CreateTimer(burrow_time, function()
-		FindClearSpaceForUnit(caster, target, true)
-		caster:RemoveModifierByName(modifier_caster)
-		caster:RemoveNoDraw()
-	end)
+	-- Reappear on the other side
+	FindClearSpaceForUnit(caster, target, true)
 end
 
 function BurrowstrikeHit( keys )
@@ -37,18 +27,19 @@ function BurrowstrikeHit( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_caustic = keys.modifier_caustic
+	local modifier_sands = keys.modifier_sands
 	local ability_caustic = caster:FindAbilityByName(keys.ability_caustic)
 
 	-- Parameters
 	local knockback_duration = ability:GetLevelSpecialValueFor("burrow_anim_time", ability_level)
 	local stun_duration = ability:GetLevelSpecialValueFor("burrow_duration", ability_level)
-	local knockback_distance = ability:GetLevelSpecialValueFor("knockback_distance", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
-	-- Knockback geometry
-	local knockback_height = 400
-	local target_pos = target:GetAbsOrigin()
-	local knockback_center = target_pos + ( caster.burrow_start_point - caster.burrow_end_point ):Normalized() * 1000
+	-- Knockback towards end point if Treacherous Sands is on, initial point otherwise
+	local knockback_target_loc = caster.burrow_start_point
+	if caster:HasModifier(modifier_sands) then
+		knockback_target_loc = caster.burrow_end_point
+	end
 
 	-- Apply stun
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
@@ -59,7 +50,18 @@ function BurrowstrikeHit( keys )
 	end
 	
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- If the knockback target location is inside the enemy fountain, do nothing
+	if IsNearEnemyFountain(knockback_target_loc, target:GetTeam(), 1700) then
+		return nil
+	end
+
+	-- Knockback geometry
+	local target_loc = target:GetAbsOrigin()
+	local knockback_height = 350
+	local knockback_center = target_loc + ( target_loc - knockback_target_loc ):Normalized() * 1000
+	local knockback_distance = (knockback_target_loc - target_loc):Length2D()
 
 	-- Knockback
 	local burrow_knockback = {
@@ -84,134 +86,161 @@ function SandStorm( keys )
 	local sound_loop = keys.sound_loop
 	local sound_darude = keys.sound_darude
 	local particle_sandstorm = keys.particle_sandstorm
-	local modifier_aura = keys.modifier_aura
+	local modifier_caster = keys.modifier_caster
 
 	-- Parameters
-	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local radius_step = ability:GetLevelSpecialValueFor("radius_step", ability_level)
-	local damage_step = ability:GetLevelSpecialValueFor("damage_step", ability_level)
-	local max_radius = ability:GetLevelSpecialValueFor("max_radius", ability_level)
-	local max_damage = ability:GetLevelSpecialValueFor("max_damage", ability_level)
-	local invis_duration = ability:GetLevelSpecialValueFor("invis_duration", ability_level)
-	local wind_force = ability:GetLevelSpecialValueFor("wind_force", ability_level)
-
-	-- Sandstorm variables
-	local caster_pos = caster:GetAbsOrigin()
-	local current_radius = base_radius
-	local current_time = 0
-	local tick_rate = 0.03
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local max_duration = ability:GetLevelSpecialValueFor("max_duration", ability_level)
+	local caster_loc = caster:GetAbsOrigin()
 	
 	-- Create particle/sound dummy
-	local sandstorm_dummy = CreateUnitByName("npc_dummy_unit", caster_pos, false, nil, nil, caster:GetTeamNumber())
+	caster.sandstorm_dummy = CreateUnitByName("npc_dummy_unit", caster_loc, false, nil, nil, caster:GetTeamNumber())
 
 	-- Play sounds
-	sandstorm_dummy:EmitSound(sound_cast)
-	if RandomInt(1,100) <= 30 then
-		sandstorm_dummy:EmitSound(sound_darude)
+	caster.sandstorm_dummy:EmitSound(sound_cast)
+	if USE_MEME_SOUNDS and RandomInt(1, 100) <= 20 then
+		caster.sandstorm_dummy:EmitSound(sound_darude)
 	else
-		sandstorm_dummy:EmitSound(sound_loop)
+		caster.sandstorm_dummy:EmitSound(sound_loop)
 	end
 
 	-- Play particle
-	local sandstorm_pfx = ParticleManager:CreateParticle(particle_sandstorm, PATTACH_ABSORIGIN, sandstorm_dummy)
-	ParticleManager:SetParticleControl(sandstorm_pfx, 0, caster_pos)
-	ParticleManager:SetParticleControl(sandstorm_pfx, 1, Vector(base_radius, base_radius, 0))
+	caster.sandstorm_pfx = ParticleManager:CreateParticle(particle_sandstorm, PATTACH_ABSORIGIN, caster.sandstorm_dummy)
+	ParticleManager:SetParticleControl(caster.sandstorm_pfx, 0, caster_loc)
+	ParticleManager:SetParticleControl(caster.sandstorm_pfx, 1, Vector(radius, radius, 0))
 
-	-- Make the caster invisible
-	caster:AddNewModifier(caster, ability, "modifier_invisible", {})
-	caster:AddNewModifier(caster, ability, "modifier_phased", {})
+	-- Make the caster invisible and phased
+	caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = max_duration})
+	caster:AddNewModifier(caster, ability, "modifier_phased", {duration = max_duration})
 
 	-- Play channeling animation
-	StartAnimation(caster, {duration = 80, activity = ACT_DOTA_OVERRIDE_ABILITY_2, rate = 1.0})
+	StartAnimation(caster, {duration = max_duration, activity = ACT_DOTA_OVERRIDE_ABILITY_2, rate = 1.0})
 
-	-- Set ability as inactive
-	ability:SetActivated(false)
+	-- Destroy trees in the skill radius
+	GridNav:DestroyTreesAroundPoint(caster_loc, radius + 50, false)
 
-	-- Size update loop
-	Timers:CreateTimer(0, function()
-
-		-- If the ability is still being channeled, continue
-		if ability and ability:IsChanneling() then
-
-			current_time = GameRules:GetGameTime() - ability:GetChannelStartTime()
-
-			-- Update radius
-			current_radius = math.min( base_radius + radius_step * current_time, max_radius)
-
-			-- Destroy trees in the skill radius
-			GridNav:DestroyTreesAroundPoint(caster_pos, current_radius, false)
-
-			-- Update particle
-			ParticleManager:SetParticleControl(sandstorm_pfx, 1, Vector(current_radius, current_radius, 0))
-
-			-- Find enemies to damage
-			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-			-- Apply damage according to distance from the center
-			for _,enemy in pairs(enemies) do
-				local distance_to_center = ( enemy:GetAbsOrigin() - caster_pos ):Length2D()
-				local damage = math.min(base_damage + current_time * damage_step - math.max( ( distance_to_center - base_radius ) * damage_step / radius_step, 0), max_damage)
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage / 2, damage_type = DAMAGE_TYPE_MAGICAL})
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_aura, {duration = 0.5})
-			end
-
-			-- Loop again
-			return 0.5
-
-		-- Else, stop particle/sound and make the caster visible
-		else
-			sandstorm_dummy:StopSound(sound_loop)
-			sandstorm_dummy:StopSound(sound_darude)
-			sandstorm_dummy:Destroy()
-			ParticleManager:DestroyParticle(sandstorm_pfx, false)
-			caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = invis_duration})
-			caster:RemoveModifierByName("modifier_phased")
-			EndAnimation(caster)
-		end
-	end)
-	
-	-- Forced movement loop
-	Timers:CreateTimer(0, function()
-
-		-- Find enemies to move
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-		-- Move targets according to distance from the center
-		for _,enemy in pairs(enemies) do
-			local distance_to_center = ( enemy:GetAbsOrigin() - caster_pos ):Length2D()
-			local enemy_wind_force = ( wind_force - math.max( ( distance_to_center - base_radius ) / ( max_radius - base_radius ) * wind_force, 0) ) * tick_rate
-			local enemy_pos = enemy:GetAbsOrigin()
-			local target_pos = RotatePosition(caster_pos, QAngle(0, -5, 0), caster_pos + ( enemy_pos - caster_pos ))
-			if not IsUninterruptableForcedMovement(enemy) then
-				if distance_to_center > 150 then
-					FindClearSpaceForUnit(enemy, enemy_pos + ( target_pos - enemy_pos ):Normalized() * enemy_wind_force, true)
-				else
-					target_pos = RotatePosition(caster_pos, QAngle(0, -3, 0), caster_pos + ( enemy_pos - caster_pos ))
-					FindClearSpaceForUnit(enemy, target_pos, true)
-				end
-			end			
-		end
-
-		if ability:IsChanneling() then
-			return tick_rate
-		end
-	end)
+	-- Apply caster modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
 end
 
-function SandStormEnd( keys )
+function SandStormChannelEnd( keys )
 	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_loop = keys.sound_loop
+	local sound_darude = keys.sound_darude
+	local modifier_caster = keys.modifier_caster
+
+	-- Parameters
+	local invis_duration = ability:GetLevelSpecialValueFor("invis_duration", ability_level)
+
+	-- Stop sounds
+	caster.sandstorm_dummy:StopSound(sound_loop)
+	caster.sandstorm_dummy:StopSound(sound_darude)
+	caster.sandstorm_dummy:Destroy()
+	caster.sandstorm_dummy = nil
+
+	-- Stop channeling animation
+	EndAnimation(caster)
+
+	-- Destroy particle
+	ParticleManager:DestroyParticle(caster.sandstorm_pfx, false)
+	ParticleManager:ReleaseParticleIndex(caster.sandstorm_pfx)
+	caster.sandstorm_pfx = nil
+
+	-- Add residual invisibility and phased movement
+	caster:RemoveModifierByName("modifier_invisible")
+	caster:RemoveModifierByName("modifier_phased")
+	caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = invis_duration})
+	caster:AddNewModifier(caster, ability, "modifier_phased", {duration = invis_duration})
+
+	-- Remove caster thinker modifier
+	caster:RemoveModifierByName(modifier_caster)
+end
+
+function SandStormMovementTick( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_sandstorm = keys.modifier_sandstorm
+
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	-- Apply sandstorm modifier to enemies
+	for _,enemy in pairs(enemies) do
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_sandstorm, {})
+	end
+end
+
+function SandStormDamageTick( keys )
+	local caster = keys.caster
+	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+	local damage_tick = ability:GetLevelSpecialValueFor("damage_tick", ability_level)
 
-	-- Activate ability
-	ability:SetActivated(true)
+	-- Deal damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * damage_tick, damage_type = DAMAGE_TYPE_MAGICAL})
+end
 
-	-- Trigger forced cooldown
-	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
+function SandStormMovementStart( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_sands = keys.modifier_sands
+	local modifier_storm = keys.modifier_storm
+
+	-- Parameters
+	local wind_force = ability:GetLevelSpecialValueFor("wind_force", ability_level)
+	local movement_tick = ability:GetLevelSpecialValueFor("movement_tick", ability_level)
+	local caster_loc = caster:GetAbsOrigin()
+	local target_loc = target:GetAbsOrigin()
+
+	-- Initialize Physics library on this target, if necessary
+	InitializePhysicsParameters(target)
+
+	-- Calculate movement direction
+	local direction = caster_loc - target_loc
+	if not caster:HasModifier(modifier_sands) then
+		direction = target_loc - caster_loc
+	end
+
+	-- Continuously adjust movement direction
+	target:SetPhysicsVelocity(direction:Normalized() * wind_force)
+	target:OnPhysicsFrame(function(target)
+
+		-- Update acceleration vector
+		caster_loc = caster:GetAbsOrigin()
+		target_loc = target:GetAbsOrigin()
+		local distance = caster_loc - target_loc
+		if not caster:HasModifier(modifier_sands) then
+			distance = target_loc - caster_loc
+		end
+		local direction = distance:Normalized()
+		target:SetPhysicsVelocity(direction * wind_force)
+
+		-- If the target is being moved by something else, do nothing
+		if IsUninterruptableForcedMovement(target) then
+			target:RemoveModifierByName("modifier_imba_sandstorm")
+		end
+	end)
+end
+
+function SandStormMovementEnd( keys )
+	local target = keys.target
+
+	-- Stop forced movement
+	target:SetPhysicsVelocity(Vector(0,0,0))
+	target:OnPhysicsFrame(nil)
 end
 
 function CausticFinale( keys )
@@ -221,15 +250,12 @@ function CausticFinale( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_prevent = keys.modifier_prevent
 	local modifier_slow = keys.modifier_slow
-	local particle_1 = keys.particle_1
-	local particle_2 = keys.particle_2
+	local particle_pulse = keys.particle_pulse
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local creep_damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
-	local initial_slow = ability:GetLevelSpecialValueFor("initial_slow", ability_level)
-	local stacking_slow = ability:GetLevelSpecialValueFor("stacking_slow", ability_level)
 	local target_pos = target:GetAbsOrigin()
 
 	-- If recently affected by caustic, do nothing
@@ -241,13 +267,9 @@ function CausticFinale( keys )
 	ability:ApplyDataDrivenModifier(caster, target, modifier_prevent, {})
 
 	-- Fire particles
-	local pulse_pfx_1 = ParticleManager:CreateParticle(particle_1, PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControl(pulse_pfx_1, 0, target_pos + Vector(0,0,100))
-	Timers:CreateTimer(0.1, function()
-		local pulse_pfx_2 = ParticleManager:CreateParticle(particle_2, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(pulse_pfx_2, 0, target_pos)
-		ParticleManager:SetParticleControl(pulse_pfx_2, 1, Vector(radius * 2, 0, 425))
-	end)
+	local pulse_pfx = ParticleManager:CreateParticle(particle_pulse, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(pulse_pfx, 0, target_pos + Vector(0,0,100))
+	ParticleManager:ReleaseParticleIndex(pulse_pfx)
 
 	-- Find and iterate through nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -261,12 +283,23 @@ function CausticFinale( keys )
 		end
 
 		-- Slow
-		if enemy:HasModifier(modifier_slow) then
-			AddStacks(ability, caster, enemy, modifier_slow, stacking_slow, true)
-		else
-			AddStacks(ability, caster, enemy, modifier_slow, initial_slow, true)
-		end
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 	end
+end
+
+function SandsOn( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_sands = keys.modifier_sands
+
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_sands, {})
+end
+
+function SandsOff( keys )
+	local caster = keys.caster
+	local modifier_sands = keys.modifier_sands
+
+	caster:RemoveModifierByName(modifier_sands)
 end
 
 function EpicenterChannel( keys )
@@ -289,7 +322,9 @@ function EpicenterChannel( keys )
 
 	-- Play cast sounds
 	caster:EmitSound(sound_cast)
-	caster:EmitSound(sound_darude)
+	if USE_MEME_SOUNDS then
+		caster:EmitSound(sound_darude)
+	end
 
 	-- Store channeling start time
 	caster.epicenter_channel_start_time = GameRules:GetGameTime()
@@ -301,6 +336,7 @@ function Epicenter( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_caster = keys.modifier_caster
 	local modifier_slow = keys.modifier_slow
+	local modifier_sands = keys.modifier_sands
 	local sound_epicenter = keys.sound_epicenter
 	local sound_darude = keys.sound_darude
 	local particle_epicenter = keys.particle_epicenter
@@ -309,10 +345,12 @@ function Epicenter( keys )
 	-- Parameters
 	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
 	local step_radius = ability:GetLevelSpecialValueFor("step_radius", ability_level)
+	local max_radius = ability:GetLevelSpecialValueFor("max_radius", ability_level)
 	local max_pulses = ability:GetLevelSpecialValueFor("max_pulses", ability_level)
 	local pulse_duration = ability:GetLevelSpecialValueFor("pulse_duration", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local pull_scepter = ability:GetLevelSpecialValueFor("pull_scepter", ability_level)
+	pull_scepter = 120
 	local pull_radius_scepter = ability:GetLevelSpecialValueFor("pull_radius_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 	local bonus_pulses = 0
@@ -345,25 +383,25 @@ function Epicenter( keys )
 	-- Pulse parameters
 	local current_pulse = 0
 	local total_pulses = math.floor( max_pulses * channel_time / 4 ) + bonus_pulses
-	local pulse_interval = pulse_duration / total_pulses
-	local pulse_ended = false
+	local pulse_interval = math.max( pulse_duration / total_pulses, 0.2)
 
 	-- Make caster and particle visible for the duration
 	caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, total_pulses * pulse_interval)
 	caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, total_pulses * pulse_interval)
 
 	-- Pulse creation loop
-	Timers:CreateTimer(0.25, function()
+	Timers:CreateTimer(0.01, function()
 
 		-- Update pulse size, position and count
 		current_pulse = current_pulse + 1
 		caster_loc = caster:GetAbsOrigin()
-		local current_radius = base_radius + current_pulse * step_radius
+		local current_radius = math.min( base_radius + current_pulse * step_radius, max_radius)
 
 		-- Play particle
 		local epicenter_pfx = ParticleManager:CreateParticle(particle_epicenter, PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(epicenter_pfx, 0, caster_loc)
 		ParticleManager:SetParticleControl(epicenter_pfx, 1, Vector(current_radius, current_radius, 0))
+		ParticleManager:ReleaseParticleIndex(epicenter_pfx)
 
 		-- Apply damage and slow to nearby enemies
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, current_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -374,52 +412,26 @@ function Epicenter( keys )
 			end
 		end
 
-		-- Scepter pull
-		if scepter then
+		-- If Treacherous Sands is toggled on, and the caster has a scepter, pull enemies inwards
+		if scepter and caster:HasModifier(modifier_sands) then
 			local scepter_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, pull_radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(scepter_enemies) do
-				if ( enemy:GetAbsOrigin() - caster_loc ):Length2D() > 100 and not IsUninterruptableForcedMovement(enemy) then
-					FindClearSpaceForUnit(enemy, enemy:GetAbsOrigin() + (caster_loc - enemy:GetAbsOrigin()):Normalized() * pull_scepter, true)
+				local enemy_loc = enemy:GetAbsOrigin()
+				local enemy_distance = (enemy_loc - caster_loc):Length2D()
+				if not IsUninterruptableForcedMovement(enemy) then
+					FindClearSpaceForUnit(enemy, enemy_loc + (caster_loc - enemy_loc):Normalized() * math.min(pull_scepter, math.max(enemy_distance - 150, 0)), true)
 				end
 			end
 		end
+
+		-- Destroy trees in the effect radius
+		GridNav:DestroyTreesAroundPoint(caster_loc, current_radius + 50, false)
 
 		-- If there were enough pulses, stop
 		if ability and current_pulse < total_pulses then
 			return pulse_interval
 		else
-			pulse_ended = true
 			caster:StopSound(sound_epicenter)
 		end
 	end)
-end
-
-function ScepterCheck( keys )
-	local caster = keys.caster
-	local scepter = HasScepter(caster)
-
-	if scepter then
-		local modifier_check = keys.modifier_check
-		local epicenter_name = keys.epicenter_name
-
-		caster:RemoveModifierByName(modifier_check)
-		SwitchAbilities(caster, epicenter_name.."_scepter", epicenter_name, true, true)
-	else
-		return nil
-	end
-end
-
-function ScepterLostCheck( keys )
-	local caster = keys.caster
-	local scepter = HasScepter(caster)
-
-	if scepter then
-		return nil
-	else
-		local modifier_check = keys.modifier_check
-		local epicenter_name = keys.epicenter_name
-
-		caster:RemoveModifierByName(modifier_check)
-		SwitchAbilities(caster, epicenter_name, epicenter_name.."_scepter", true, true)
-	end
 end

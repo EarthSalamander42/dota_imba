@@ -164,7 +164,10 @@ function ReduceVision( keys )
 	-- Saves the target's original vision range
 	target.darkness_original_vision = target:GetBaseNightTimeVisionRange()
 
-	target:SetNightTimeVisionRange(vision_radius)
+	-- If the target has more vision radius than Darkness' limit, reduce it
+	if target:GetBaseNightTimeVisionRange() > vision_radius then
+		target:SetNightTimeVisionRange(vision_radius)
+	end
 end
 
 function RevertVision( keys )

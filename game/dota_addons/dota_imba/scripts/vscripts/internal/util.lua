@@ -761,7 +761,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_vampiric_aura")
 	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
 	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
-	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
+	hero:RemoveModifierByName("modifier_charges")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -831,7 +831,8 @@ function InitializeInnateAbilities( hero )
 		"imba_enigma_gravity",
 		"imba_troll_warlord_berserkers_rage",
 		"imba_antimage_magehunter",
-		"imba_necrolyte_death_pulse_aux"
+		"imba_necrolyte_death_pulse_aux",
+		"imba_sandking_treacherous_sands"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1231,12 +1232,26 @@ function ChangeAttackProjectileImba( unit )
 end
 
 function IsUninterruptableForcedMovement( unit )
-	if unit:HasModifier("modifier_spirit_breaker_charge_of_darkness") or unit:HasModifier("modifier_magnataur_skewer_movement")
-		or unit:HasModifier("modifier_invoker_deafening_blast_knockback") or unit:HasModifier("modifier_knockback")
-		or unit:HasModifier("modifier_item_forcestaff_active") or unit:HasModifier("modifier_shredder_timber_chain")
-		or unit:HasModifier("modifier_batrider_flaming_lasso") or unit:HasModifier("modifier_imba_leap_self_root") 
-		or unit:HasModifier("modifier_faceless_void_chronosphere_freeze") then
-		return true
+	
+	-- List of uninterruptable movement modifiers
+	local modifier_list = {
+		"modifier_spirit_breaker_charge_of_darkness",
+		"modifier_magnataur_skewer_movement",
+		"modifier_invoker_deafening_blast_knockback",
+		"modifier_knockback",
+		"modifier_item_forcestaff_active",
+		"modifier_shredder_timber_chain",
+		"modifier_batrider_flaming_lasso",
+		"modifier_imba_leap_self_root",
+		"modifier_faceless_void_chronosphere_freeze",
+		"modifier_storm_spirit_ball_lightning"
+	}
+
+	-- Iterate through the list
+	for _,modifier_name in pairs(modifier_list) do
+		if unit:HasModifier(modifier_name) then
+			return true
+		end
 	end
 
 	return false
@@ -1412,4 +1427,31 @@ function InitializeAbillityCharges(unit, ability_name, max_charges, initial_char
 
 		unit:AddNewModifier(unit, ability, "modifier_charges", extra_parameters)
 	end
+end
+
+-- Initialize Physics library on this target
+function InitializePhysicsParameters(unit)
+
+	if not IsPhysicsUnit(unit) then
+		Physics:Unit(unit)
+		unit:SetPhysicsVelocityMax(600)
+		unit:PreventDI()
+	end
+end
+
+-- Check if an unit is near the enemy fountain
+function IsNearEnemyFountain(location, team, distance)
+
+	local fountain_loc
+	if team == DOTA_TEAM_GOODGUYS then
+		fountain_loc = Vector(7472, 6912, 512)
+	else
+		fountain_loc = Vector(-7456, -6938, 528)
+	end
+
+	if (fountain_loc - location):Length2D() <= distance then
+		return true
+	end
+
+	return false
 end

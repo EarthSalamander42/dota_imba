@@ -4534,7 +4534,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"force_distance"				"300 350 400"
+				"force_distance"				"300 400 500"
 			}
 			"03"
 			{
@@ -21625,12 +21625,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_reduction"			"-18 -24 -30 -36"
+				"ms_reduction"			"-12 -20 -28 -36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_reduction"			"-18 -24 -30 -36"
+				"as_reduction"			"-12 -20 -28 -36"
 			}
 			"03"
 			{
@@ -21650,12 +21650,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_reduction_pct"	"-4 -5 -6 -7"
+				"stack_reduction_pct"	"-5"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reduction_tooltip"		"4 5 6 7"
+				"reduction_tooltip"		"5"
 			}
 		}
 
@@ -21792,7 +21792,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hp_regen"					"40"
+				"hp_regen"					"30"
 			}
 			"05"
 			{
@@ -24908,17 +24908,6 @@
 
 				"Duration"				"%debuff_duration"
 
-				"ThinkInterval"			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_queen_of_pain.lua"
-						"Function"		"Daze"
-					}
-				}
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_increase"
@@ -27353,13 +27342,14 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_burrowstrike"
+		"AOERadius"						"%burrow_width"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -27389,7 +27379,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burrow_width"			"200"
+				"burrow_width"			"150"
 			}
 			"02"
 			{
@@ -27399,7 +27389,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burrow_speed"			"3000"
+				"burrow_speed"			"5000"
 			}
 			"04"
 			{
@@ -27415,11 +27405,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"100 160 220 280"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"knockback_distance"	"110 140 170 200"
 			}
 		}
 		
@@ -27457,8 +27442,6 @@
 				"ScriptFile"				"hero/hero_sandking.lua"
 				"Function"					"Burrowstrike"
 				"TARGET"					"POINT"
-
-				"modifier_caster"			"modifier_imba_burrowstrike_caster"
 			}
 		}
 		
@@ -27472,26 +27455,8 @@
 				"Function"					"BurrowstrikeHit"
 
 				"modifier_caustic"			"modifier_imba_caustic_finale"
+				"modifier_sands"			"modifier_imba_sandking_treacherous_sands"
 				"ability_caustic"			"imba_sandking_caustic_finale"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_burrowstrike_caster"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-			
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -27514,12 +27479,12 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"525 550 575 600"
+		"AbilityCastPoint"				"0.01"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"22 18 14 10"
 		"AbilityChannelTime"			"50.0"
 
 		// Cost
@@ -27547,47 +27512,32 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"500"
+				"radius"				"525 550 575 600"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"20 40 60 80"
+				"damage"				"25 50 75 100"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_step"			"50"
+				"wind_force"			"150 180 210 240"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_step"			"10"
+				"max_duration"			"50"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"wind_force"			"150 210 270 330"
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick"			"0.5"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"max_duration"			"80"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"1000"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"80 120 160 200"
-			}
-			"10"
-			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown"				"13 11 9 7"
+				"movement_tick"			"0.03"
 			}
 		}
 		
@@ -27602,7 +27552,7 @@
 				"sound_loop"			"Ability.SandKing_SandStorm.loop"
 				"sound_darude"			"Imba.SandKingSandStorm"
 				"particle_sandstorm"	"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
-				"modifier_aura"			"modifier_imba_sand_storm"
+				"modifier_caster"		"modifier_imba_sandstorm_caster"
 			}
 		}
 
@@ -27611,18 +27561,77 @@
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"SandStormEnd"
+				"Function"				"SandStormChannelEnd"
+
+				"sound_loop"			"Ability.SandKing_SandStorm.loop"
+				"sound_darude"			"Imba.SandKingSandStorm"
+				"modifier_caster"		"modifier_imba_sandstorm_caster"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_sand_storm"
+			"modifier_imba_sandstorm_caster"
 			{
 				"Passive"				"0"
-				"IsHidden"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"ThinkInterval"			"%movement_tick"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_sandking.lua"
+						"Function"				"SandStormMovementTick"
+
+						"modifier_sandstorm"	"modifier_imba_sandstorm"
+					}
+				}
+			}
+
+			"modifier_imba_sandstorm"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
 				"IsDebuff"				"1"
 				"IsPurgable"			"0"
+
+				"Duration"				"0.05"
+
+				"ThinkInterval"			"%damage_tick"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sandking.lua"
+						"Function"			"SandStormDamageTick"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sandking.lua"
+						"Function"			"SandStormMovementStart"
+
+						"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
+						"modifier_storm"	"modifier_imba_sandstorm"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sandking.lua"
+						"Function"			"SandStormMovementEnd"
+					}
+				}
 			}
 		}
 	}
@@ -27649,7 +27658,6 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
 			"particle"						"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
-			"particle"						"particles/hero/sand_king/sandking_caustic_dust.vpcf"
 		}
 		
 		// Special
@@ -27659,42 +27667,37 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
+				"radius"					"325"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"16 24 32 40"
+				"damage"					"12 18 24 30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"40 60 80 100"
+				"creep_damage"				"35 50 65 80"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"debuff_duration"			"7.0"
+				"var_type"					"FIELD_INTEGER"
+				"debuff_duration"			"6"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_slow"				"10"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stacking_slow"				"2"
+				"ms_slow"					"-20"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"2.5"
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration"				"3"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"prevent_time"				"0.3"
+				"prevent_time"				"0.1"
 			}
 		}
 		
@@ -27780,8 +27783,7 @@
 
 						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
 						"modifier_slow"		"modifier_imba_caustic_finale_slow"
-						"particle_1"		"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
-						"particle_2"		"particles/hero/sand_king/sandking_caustic_dust.vpcf"
+						"particle_pulse"	"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
 					}
 				}
 			}
@@ -27807,8 +27809,58 @@
 
 				"Properties"
 				{
-				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1"
+				    "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Sand King's Treacherous Sands
+	//=================================================================================================================
+	"imba_sandking_treacherous_sands"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"sandking_treacherous_sands"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"hero/hero_sandking.lua"
+				"Function"			"SandsOn"
+
+				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"hero/hero_sandking.lua"
+				"Function"			"SandsOff"
+
+				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_sandking_treacherous_sands"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
 			}
 		}
 	}
@@ -27832,14 +27884,14 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120.0 110.0 100.0"
-		"AbilityCastRange"				"675"
+		"AbilityCooldown"				"120 100 80"
+		"AbilityCastRange"				"725"
 		"AbilityChannelTime"			"4.0"
 		"AbilityCastPoint"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 225 275"
+		"AbilityManaCost"				"150 200 250"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -27859,47 +27911,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"650"
+				"damage"				"110"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"step_radius"			"25"
+				"max_pulses"			"12 16 20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_pulses"			"12 16 20"
+				"base_radius"			"275"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"110"
+				"step_radius"			"50"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-30"
+				"max_radius"			"725"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"-30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"levels_per_pulse"		"5"
+				"slow_duration"			"3"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_pulses_scepter"	"5"
+				"levels_per_pulse"		"5"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"80.0"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_pulses_scepter"	"5"
 			}
 			"10"
 			{
@@ -27909,12 +27961,12 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_scepter"			"150"
+				"pull_scepter"			"120"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_radius_scepter"	"2000"
+				"pull_radius_scepter"	"1500"
 			}
 		}	
 			
@@ -27940,6 +27992,7 @@
 
 				"modifier_caster"		"modifier_imba_epicenter_caster"
 				"modifier_slow"			"modifier_imba_epicenter_slow"
+				"modifier_sands"		"modifier_imba_sandking_treacherous_sands"
 				"sound_epicenter"		"Ability.SandKing_Epicenter"
 				"sound_darude"			"Imba.SandKingEpicenter"
 				"particle_epicenter"	"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
@@ -27948,249 +28001,6 @@
 		
 		"Modifiers"
 		{
-			"modifier_imba_epicenter_scepter_check"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"ThinkInterval"			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_sandking.lua"
-						"Function"				"ScepterCheck"
-
-						"modifier_check"		"modifier_imba_epicenter_scepter_check"
-						"epicenter_name"		"imba_sandking_epicenter"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_epicenter_scepter_check"
-					}
-				}
-			}
-
-			"modifier_imba_epicenter_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
-						"EffectAttachType"	"start_at_custom_origin"
-
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-						}
-					}
-				}
-			}
-			
-			"modifier_imba_epicenter_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sand King's Epicenter (scepter version)
-	//=================================================================================================================
-	"imba_sandking_epicenter_scepter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"sandking_epicenter"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80.0"
-		"AbilityChannelTime"			"4.0"
-		"AbilityCastPoint"				"0.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 225 275"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
-			"soundfile"					"soundevents/imba_soundevents.vsndevts"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
-			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
-		}
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"650"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"step_radius"			"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_pulses"			"12 16 20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"110"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow"					"-30"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"levels_per_pulse"		"5"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_pulses_scepter"	"5"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_scepter"		"80.0"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"pulse_duration"		"3.0"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_scepter"			"25"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius_scepter"	"2000"
-			}
-		}	
-			
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"EpicenterChannel"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"sound_cast"			"Ability.SandKing_Epicenter.spell"
-				"sound_darude"			"Imba.SandKingEpicenter"
-			}
-		}
-			
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"Epicenter"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"modifier_slow"			"modifier_imba_epicenter_slow"
-				"sound_epicenter"		"Ability.SandKing_Epicenter"
-				"sound_darude"			"Imba.SandKingEpicenter"
-				"particle_epicenter"	"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_epicenter_scepter_check"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"ThinkInterval"			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_sandking.lua"
-						"Function"				"ScepterLostCheck"
-
-						"modifier_check"		"modifier_imba_epicenter_scepter_check"
-						"epicenter_name"		"imba_sandking_epicenter"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_epicenter_scepter_check"
-					}
-				}
-			}
-
 			"modifier_imba_epicenter_caster"
 			{
 				"Passive"				"0"

@@ -16295,7 +16295,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fire_rate"				"0.4"
+				"fire_rate"				"0.6"
 			}
 			"05"
 			{

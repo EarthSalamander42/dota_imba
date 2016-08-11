@@ -275,18 +275,6 @@ function Torment( keys )
 	end
 end	
 
-function Daze( keys )
-	local target = keys.target
-	
-	local fv = target:GetForwardVector()
-	local radius = QAngle(0, RandomInt(1, 360), 0)
-	local unit_position = target:GetAbsOrigin()
-	local front_position = unit_position + fv * 500
-	local vector = RotatePosition(unit_position, radius, front_position)
-
-	target:MoveToPosition(vector)
-end
-
 function SonicWave( keys )
 	local caster = keys.caster
 	local scepter = caster:HasScepter()

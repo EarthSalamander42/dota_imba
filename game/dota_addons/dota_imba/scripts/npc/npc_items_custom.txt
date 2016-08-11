@@ -7518,11 +7518,6 @@
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
 					}
 				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%stack_damage"
-				}
 			}
 
 			"modifier_item_imba_rapier_stacks_phys"

@@ -177,8 +177,74 @@ function GameMode:OrderFilter( keys )
 	--position_y	 ==> 	-6381.1127929688
 	--issuer_player_id_const	 ==> 	0
 
-	--local units = keys["units"]
-	--local unit = EntIndexToHScript(units["0"])
+	local units = keys["units"]
+	local unit = EntIndexToHScript(units["0"])
+
+	-- Queen of Pain's Sonic Wave confusion
+	if unit:HasModifier("modifier_imba_sonic_wave_daze") then
+
+		-- Determine order type
+		local rand = math.random
+			
+		-- Change "move to target" to "move to position"
+		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_TARGET then
+			local target = EntIndexToHScript(keys["entindex_target"])
+			local target_loc = target:GetAbsOrigin()
+			keys.position_x = target_loc.x
+			keys.position_y = target_loc.y
+			keys.position_z = target_loc.z
+			keys.entindex_target = 0
+			keys.order_type = DOTA_UNIT_ORDER_MOVE_TO_POSITION
+		end
+
+		-- Change "attack target" to "attack move"
+		if keys.order_type == DOTA_UNIT_ORDER_ATTACK_TARGET then
+			local target = EntIndexToHScript(keys["entindex_target"])
+			local target_loc = target:GetAbsOrigin()
+			keys.position_x = target_loc.x
+			keys.position_y = target_loc.y
+			keys.position_z = target_loc.z
+			keys.entindex_target = 0
+			keys.order_type = DOTA_UNIT_ORDER_ATTACK_MOVE
+		end
+
+		-- Change "cast on target" target
+		if keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET or keys.order_type == DOTA_UNIT_ORDER_CAST_TARGET_TREE then
+			
+			local target = EntIndexToHScript(keys["entindex_target"])
+			local caster_loc = unit:GetAbsOrigin()
+			local target_loc = target:GetAbsOrigin()
+			local target_distance = (target_loc - caster_loc):Length2D()
+			local found_new_target = false
+			local nearby_units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, caster_loc, nil, target_distance, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			if #nearby_units >= 1 then
+				keys.entindex_target = nearby_units[1]:GetEntityIndex()
+
+			-- If no target was found, change to "cast on position" order
+			else
+				keys.position_x = target_loc.x
+				keys.position_y = target_loc.y
+				keys.position_z = target_loc.z
+				keys.entindex_target = 0
+				keys.order_type = DOTA_UNIT_ORDER_CAST_POSITION
+			end
+		end
+
+		-- Spin positional orders a random angle
+		if keys.order_type == DOTA_UNIT_ORDER_MOVE_TO_POSITION or keys.order_type == DOTA_UNIT_ORDER_ATTACK_MOVE or keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
+			
+			-- Calculate new order position
+			local target_loc = Vector(keys.position_x, keys.position_y, keys.position_z)
+			local origin_loc = unit:GetAbsOrigin()
+			local order_vector = target_loc - origin_loc
+			local new_order_vector = RotatePosition(origin_loc, QAngle(0, rand(45, 315), 0), origin_loc + order_vector)
+
+			-- Override order
+			keys.position_x = new_order_vector.x
+			keys.position_y = new_order_vector.y
+			keys.position_z = new_order_vector.z
+		end
+	end
 
 	return true
 end
@@ -294,7 +360,7 @@ function GameMode:DamageFilter( keys )
 			elseif damage_type == DAMAGE_TYPE_MAGICAL then
 				damage_amp = 40 + 40 * amp_stacks
 			elseif damage_type == DAMAGE_TYPE_PURE then
-				damage_amp = 20 + 20 * amp_stacks
+				damage_amp = 15 + 15 * amp_stacks
 			end
 
 			-- Reduce damage amplification if the target is too far away
