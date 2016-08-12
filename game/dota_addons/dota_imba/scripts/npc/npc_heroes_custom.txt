@@ -1305,8 +1305,6 @@
 
 		"MovementTurnRate"			"1.0"
 
-		"AttributeStrengthGain"		"5.0"
-
 		"AbilityLayout"				"6"
 
 		"Ability1"					"imba_pudge_meat_hook"

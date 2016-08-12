@@ -352,7 +352,7 @@ function HookStacksUpdater( keys )
 	local caster_level = caster:GetLevel()
 
 	-- Check if caster level is greater than twice the amount of stacks
-	if (caster_level * 6) > ( sharp_stacks + light_stacks ) then
+	if (caster_level * 2) > ( sharp_stacks + light_stacks ) then
 		AddStacks(ability, caster, caster, modifier_sharp, 1, true)
 		AddStacks(ability, caster, caster, modifier_light, 1, true)
 	end

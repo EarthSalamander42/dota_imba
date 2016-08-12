@@ -22805,7 +22805,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"300"
+				"base_radius"			"250"
 			}
 			"02"
 			{
@@ -22825,12 +22825,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"6"
+				"bonus_damage"			"3"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_radius"			"20"
+				"stack_radius"			"10"
 			}
 			"07"
 			{
@@ -22974,7 +22974,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"stack_str"							"4.0"
+				"stack_str"							"1.5 2.0 2.5 3.0"
 			}
 			"03"
 			{
@@ -22984,7 +22984,7 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"stack_magic_resist"				"4"
+				"stack_magic_resist"				"2"
 			}
 			"05"
 			{
@@ -23342,7 +23342,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityChannelTime"				"3.0"
-		"AbilityCooldown"					"20.0 15.0 10.0"
+		"AbilityCooldown"					"30.0 25.0 20.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -23358,7 +23358,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strength_damage"			"100 150 200"
+				"strength_damage"			"100"
 			}
 			"03"
 			{
