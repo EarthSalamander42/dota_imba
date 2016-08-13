@@ -24994,7 +24994,7 @@
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"far_knockback"					"80 120 160 200"
+				"far_knockback"					"80 100 120 140"
 			}
 			"12"
 			{
@@ -25028,12 +25028,6 @@
 				"Target"						"TARGET"
 				"Type"							"DAMAGE_TYPE_PHYSICAL"
 				"Damage"						"%far_damage"
-			}
-
-			"FireSound"
-			{
-				"EffectName"					"Hero_Sniper.AssassinateDamage"
-				"Target" 						"TARGET"
 			}
 
 			"RunScript"
@@ -25144,12 +25138,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"-25 -35 -45 -55"
+				"damage_reduction"			"-30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"BAT"						"1.0 0.8 0.65 0.5"
+				"BAT"						"0.9 0.8 0.7 0.6"
 			}
 			"04"
 			{
@@ -25525,6 +25519,11 @@
 				"var_type"					"FIELD_INTEGER"
 				"knockback_speed_scepter"	"900"
 			}
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"knockback_dist_scepter"	"1200"
+			}
 		}
 		
 		"OnAbilityPhaseStart"
@@ -25571,12 +25570,6 @@
 		"OnProjectileHitUnit"
 		{
 			"DeleteOnHit"					"0"
-
-			"FireSound"
-			{
-				"Target"					"TARGET"
-				"EffectName"				"Hero_Sniper.AssassinateDamage"
-			}
 		
 			"RunScript"
 			{
@@ -25595,7 +25588,7 @@
 				"Duration"					"%charge_time"
 				"IsPurgable"				"0"
 				"IsHidden"					"0"
-			
+
 				"OnOrder"
 				{
 					"RemoveModifier"
@@ -25620,10 +25613,7 @@
 				"IsPurgeble"			"0"
 				"IsDebuff"				"1"
 				"Duration"				"2.2"
-				
-				"EffectName"			"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
-				"EffectAttachType"		"follow_overhead"
-				
+
 				"States"
 				{
 					"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
@@ -25637,10 +25627,10 @@
 				"IsPurgeble"			"1"
 				"IsDebuff"				"1"
 				"Duration"				"%slow_duration_scepter"
-				
+
 				"EffectName"			"particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
 				"EffectAttachType"		"follow_overhead"
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%slow_pct_scepter"
@@ -25731,7 +25721,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275 300 325 350"
+				"radius"				"325"
 			}
 			"05"
 			{
@@ -26018,37 +26008,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"passive_armor"			"2 3 4 5"		
+				"bonus_armor"			"8 12 16 20"		
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"8 12 16 20"		
+				"bonus_str"				"14 21 28 35"		
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"passive_str"			"4 6 8 10"		
+				"active_ms"				"12"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_str"			"10 15 20 25"		
+				"radius"				"1200"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_ms"				"12"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0"
+				"duration"				"8"
 			}
 		}
 
@@ -26061,55 +26041,12 @@
 
 				"particle_warcry"		"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
 				"sound_cast"			"Hero_Sven.WarCry"
-				"modifier_active"		"modifier_imba_warcry_active_aura"
-				"modifier_passive"		"modifier_imba_warcry_passive_aura"
-				"modifier_buff"			"modifier_imba_warcry_passive"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sven.lua"
-				"Function"				"WarcryLevelUp"
-
-				"modifier_active"		"modifier_imba_warcry_active_aura"
-				"modifier_passive"		"modifier_imba_warcry_passive_aura"
-				"modifier_buff"			"modifier_imba_warcry_passive"
+				"modifier_aura"			"modifier_imba_warcry_active_aura"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_warcry_passive_aura"
-			{
-				"Passive"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Aura"					"modifier_imba_warcry_passive"
-				"Aura_Radius"			"%radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"	"1"
-			}
-
-			"modifier_imba_warcry_passive"
-			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%passive_str"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%passive_armor"
-				}
-			}
-
 			"modifier_imba_warcry_active_aura"
 			{
 				"Passive"				"0"
@@ -26124,18 +26061,6 @@
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				"Aura_ApplyToCaster"	"1"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_sven.lua"
-						"Function"				"WarcryEnd"
-
-						"modifier_passive"		"modifier_imba_warcry_passive_aura"
-						"modifier_buff"			"modifier_imba_warcry_active"
-					}
-				}
 			}
 
 			"modifier_imba_warcry_active"
@@ -26150,8 +26075,8 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%active_str"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_str"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms" 
 				}
 			}
@@ -26432,29 +26357,24 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"throw_chance"				"9 11 13 15"
+				"throw_speed"				"1200"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"throw_speed"				"1200"
+				"levels_per_charge"			"5"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"levels_per_charge"			"5"
+				"charge_cooldown"			"35"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_cooldown"			"75"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"damage_scepter"			"5"
 			}
-			"10"
+			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"600"
@@ -26522,6 +26442,7 @@
 
 						"throw_sound"		"Hero_Techies.LandMine.Plant"
 						"modifier_state"	"modifier_imba_land_mines_state"
+						"modifier_charges"	"modifier_imba_land_mines_charge"
 					}
 				}
 			}
@@ -28948,7 +28869,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_self"		"30 40 50 60"
+				"lifesteal_self"		"20 30 40 50"
 			}
 		}
 

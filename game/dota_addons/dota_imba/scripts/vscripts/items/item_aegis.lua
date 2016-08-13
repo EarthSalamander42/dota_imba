@@ -86,7 +86,7 @@ function AegisDamage( keys )
 	local sound_aegis = keys.sound_aegis
 
 	-- If health is not 1, do nothing
-	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_reincarnation") then
+	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_reincarnation") or caster:HasModifier("modifier_imba_reincarnation_scepter") or caster:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
 		return nil
 	end
 

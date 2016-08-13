@@ -50,8 +50,8 @@ function Headshot( keys )
 		end
 
 		if #units > 0 then
-			caster:EmitSound("Ability.Assassinate")
-			caster:EmitSound("Hero_Sniper.AssassinateProjectile")
+			caster:EmitSound("Imba.SniperLongRangeHeadshot")
+			caster:EmitSound("Imba.SniperLongRangeHeadshotProjectile")
 		end
 
 	-- Normal mode headshot, deals damage + slows target
@@ -78,6 +78,9 @@ function HeadshotKnockback( keys )
 	local knockback_distance = ability:GetLevelSpecialValueFor("far_knockback", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("knockback_speed", ability_level)
 	local caster_pos = caster:GetAbsOrigin()
+
+	-- Play sound
+	target:EmitSound("Imba.SniperLongRangeHeadshot0"..RandomInt(1, 2))
 
 	-- Knockback
 	local headshot_knockback =	{
@@ -313,6 +316,8 @@ function AssassinateCast( keys )
 
 	-- Mark the target with the crosshair
 	ability:ApplyDataDrivenModifier(caster, target, modifier_target, {})
+	target.assassinate_crosshair_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_sniper/sniper_crosshair.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
+	ParticleManager:SetParticleControl(target.assassinate_crosshair_pfx, 0, target:GetAbsOrigin())
 
 	-- Apply the caster modifiers
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
@@ -332,6 +337,8 @@ function AssassinateStop( keys )
 	local caster = keys.caster
 	local target_modifier = keys.target_modifier
 	caster.assassinate_target:RemoveModifierByName(target_modifier)
+	ParticleManager:DestroyParticle(caster.assassinate_target.assassinate_crosshair_pfx, true)
+	ParticleManager:ReleaseParticleIndex(caster.assassinate_target.assassinate_crosshair_pfx)
 	caster.assassinate_target = nil
 end
 
@@ -349,6 +356,10 @@ function Assassinate( keys )
 	bullet_direction = Vector(bullet_direction.x, bullet_direction.y, 0)
 	local bullet_distance = ( target:GetAbsOrigin() - caster:GetAbsOrigin() ):Length2D() + spill_range
 	local bullet_speed = bullet_distance / bullet_duration
+
+	-- Destroy the crosshair particle
+	ParticleManager:DestroyParticle(target.assassinate_crosshair_pfx, true)
+	ParticleManager:ReleaseParticleIndex(target.assassinate_crosshair_pfx)
 
 	-- Create the real, invisible projectile
 	local assassinate_projectile = {
@@ -407,29 +418,25 @@ function AssassinateHit( keys )
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
+	-- Play sound
+	target:EmitSound("Hero_Sniper.AssassinateDamage")
+
 	-- Scepter damage and debuff
 	if scepter then
 
 		-- Scepter parameters
 		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 		local knockback_speed = ability:GetLevelSpecialValueFor("knockback_speed_scepter", ability_level)
-
-		-- Knockback geometry calculations
+		local knockback_distance = ability:GetLevelSpecialValueFor("knockback_dist_scepter", ability_level)
 		local caster_pos = caster:GetAbsOrigin()
-		local caster_range = caster:GetAttackRange()
-		local target_pos = target:GetAbsOrigin()
-		local knockback_pos = caster_pos + ( target_pos - caster_pos ):Normalized() * caster_range
-		local knockback_distance = ( knockback_pos - target_pos ):Length2D()
-		if ( target_pos - caster_pos ):Length2D() > caster_range then
-			knockback_distance = 50
-		end
-		
+
+		-- Knockback parameters
 		local assassinate_knockback =	{
 			should_stun = 1,
 			knockback_duration = math.min( knockback_distance / knockback_speed, 0.6),
 			duration = math.min( knockback_distance / knockback_speed, 0.6),
 			knockback_distance = knockback_distance,
-			knockback_height = knockback_distance * 0.3,
+			knockback_height = 200,
 			center_x = caster_pos.x,
 			center_y = caster_pos.y,
 			center_z = caster_pos.z

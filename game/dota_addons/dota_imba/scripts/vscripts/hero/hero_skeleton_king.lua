@@ -360,7 +360,7 @@ function ReincarnationWraithDamage( keys )
 	local target = keys.unit
 
 	-- If health is not 2, do nothing
-	if target:GetHealth() > 2 or (target.has_aegis and not target:HasModifier("modifier_imba_reincarnation")) or target:HasModifier("modifier_imba_shallow_grave") or target:HasModifier("modifier_imba_shallow_grave_passive") then
+	if target:GetHealth() > 2 or target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_shallow_grave") or target:HasModifier("modifier_imba_shallow_grave_passive") then
 		return nil
 	end
 
@@ -425,7 +425,7 @@ function ReincarnationDamage( keys )
 	local caster = keys.caster
 
 	-- If health is not 1, do nothing
-	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") or caster:HasModifier("modifier_imba_reincarnation_scepter") or caster:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
+	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") then
 		return nil
 	end
 

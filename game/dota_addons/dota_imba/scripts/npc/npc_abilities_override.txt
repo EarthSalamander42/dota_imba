@@ -9768,7 +9768,7 @@
 		"AbilityCastRange"				"25000"
 		"AbilityCastPoint"				"0.3"
 
-		"AbilityDamage"					"24 36 48 60"
+		"AbilityDamage"					"15 35 55 75"
 
 		"AbilityManaCost"				"50"
 
@@ -9777,7 +9777,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-30"
+				"slow_movement_speed"	"-15 -20 -25 -30"
 			}
 			"02"
 			{
@@ -9806,8 +9806,8 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"25.0"
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"25"
 			}
 		}
 	}

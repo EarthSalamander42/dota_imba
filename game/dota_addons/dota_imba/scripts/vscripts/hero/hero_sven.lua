@@ -200,9 +200,7 @@ function Warcry( keys )
 	local ability_level = ability:GetLevel() - 1
 	local particle_warcry = keys.particle_warcry
 	local sound_cast = keys.sound_cast
-	local modifier_active = keys.modifier_active
-	local modifier_passive = keys.modifier_passive
-	local modifier_buff = keys.modifier_buff
+	local modifier_aura = keys.modifier_aura
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
@@ -211,8 +209,7 @@ function Warcry( keys )
 	caster:Purge(false, true, false, true, false)
 
 	-- Remove the passive aura and apply the active one
-	caster:RemoveModifierByName(modifier_passive)
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_active, {})
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
 
 	-- Play the sound
 	caster:EmitSound(sound_cast)
@@ -227,60 +224,11 @@ function Warcry( keys )
 		-- Play particle
 		local warcry_pfx = ParticleManager:CreateParticle(particle_warcry, PATTACH_ABSORIGIN_FOLLOW, ally)
 		ParticleManager:SetParticleControl(warcry_pfx, 0, ally:GetAbsOrigin())
-
-		-- Remove the aura modifier prematurely
-		ally:RemoveModifierByName(modifier_buff)
+		ParticleManager:ReleaseParticleIndex(warcry_pfx)
 	end
 
 	-- Toggle the skill off
 	ability:ToggleAbility()
-end
-
-function WarcryLevelUp( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_active = keys.modifier_active
-	local modifier_passive = keys.modifier_passive
-	local modifier_buff = keys.modifier_buff
-
-	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-
-	-- If the skill is active, remove the passive aura modifier
-	if caster:HasModifier(modifier_active) then
-		caster:RemoveModifierByName(modifier_passive)
-
-		-- Find nearby allies
-		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
-		for _,ally in pairs(allies) do
-
-			-- Remove the aura modifier prematurely
-			ally:RemoveModifierByName(modifier_buff)
-		end
-	end
-end
-
-function WarcryEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_passive = keys.modifier_passive
-	local modifier_buff = keys.modifier_buff
-
-	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-
-	-- Apply the passive aura
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_passive, {})
-
-	-- Find nearby allies
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
-	for _,ally in pairs(allies) do
-
-		-- Remove the aura modifier prematurely
-		ally:RemoveModifierByName(modifier_buff)
-	end
 end
 
 function GodStrength( keys )

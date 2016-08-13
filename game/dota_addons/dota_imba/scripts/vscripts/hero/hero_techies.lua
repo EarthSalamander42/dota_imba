@@ -100,19 +100,27 @@ function LandMineThrow( keys )
 	local ability_level = ability:GetLevel() - 1
 	local throw_sound = keys.throw_sound
 	local modifier_state = keys.modifier_state
+	local modifier_charges = keys.modifier_charges
 	local scepter = HasScepter(caster)
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
-	local throw_chance = ability:GetLevelSpecialValueFor("throw_chance", ability_level)
 	local throw_speed = ability:GetLevelSpecialValueFor("throw_speed", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 	local step_duration = 0.03
 
 	-- Verify proc condition
-	if RandomInt(1, 100) > throw_chance or not target:IsAlive() or target:GetTeam() == caster:GetTeam() then
+	if not caster:HasModifier(modifier_charges) or not target:IsAlive() or target:GetTeam() == caster:GetTeam() then
 		return nil
+
+	-- If there is a proc, reduce charge modifier stacks
+	else
+		if caster:GetModifierStackCount(modifier_charges, caster) <= 1 then
+			caster:RemoveModifierByName(modifier_charges)
+		else
+			AddStacks(ability, caster, caster, modifier_charges, -1, true)
+		end
 	end
 
 	-- Create the mine at the specified place
@@ -239,11 +247,12 @@ function LandMineExplode( keys )
 	ability:CreateVisibilityNode(caster_loc, vision_radius, vision_duration)
 
 	-- Play sound
-	caster:EmitSound(sound_explode)
+	EmitSoundOnLocationWithCaster(caster_loc, sound_explode, caster:GetOwnerEntity())
 
 	-- Fire particle
-	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, caster)
+	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(explosion_pfx, 0, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(explosion_pfx)
 		
 	-- Find nearby enemies
 	local near_units = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, small_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
@@ -465,11 +474,12 @@ function StasisTrapExplode( keys )
 	ability:CreateVisibilityNode(caster_loc, vision_radius, vision_duration)
 
 	-- Play sound
-	caster:EmitSound(sound_explode)
+	EmitSoundOnLocationWithCaster(caster_loc, sound_explode, caster_owner)
 
 	-- Fire particle
-	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, caster)
+	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(explosion_pfx, 0, caster_loc)
+	ParticleManager:ReleaseParticleIndex(explosion_pfx)
 		
 	-- Find nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -524,8 +534,9 @@ function StasisTrapExplode( keys )
 				current_enemy:EmitSound(sound_explode)
 
 				-- Fire particle
-				local chain_reaction_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, current_enemy)
+				local chain_reaction_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(chain_reaction_pfx, 0, current_enemy:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(chain_reaction_pfx)
 
 				-- Find nearby enemies
 				local chain_enemies = FindUnitsInRadius(caster_owner:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -572,8 +583,9 @@ function StasisTrapExplodeCreep( keys )
 	creep:EmitSound(sound_explode)
 
 	-- Fire particle
-	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, creep)
+	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(explosion_pfx, 0, creep_loc)
+	ParticleManager:ReleaseParticleIndex(explosion_pfx)
 		
 	-- Find nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), creep_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
@@ -628,8 +640,9 @@ function StasisTrapExplodeCreep( keys )
 				current_enemy:EmitSound(sound_explode)
 
 				-- Fire particle
-				local chain_reaction_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_ABSORIGIN, current_enemy)
+				local chain_reaction_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, nil)
 				ParticleManager:SetParticleControl(chain_reaction_pfx, 0, current_enemy:GetAbsOrigin())
+				ParticleManager:ReleaseParticleIndex(chain_reaction_pfx)
 
 				-- Find nearby enemies
 				local chain_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_enemy:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)

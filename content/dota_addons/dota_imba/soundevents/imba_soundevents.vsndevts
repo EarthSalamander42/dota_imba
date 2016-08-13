@@ -779,3 +779,131 @@
 		}
 	}
 }
+
+"Imba.SniperLongRangeHeadshot"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "weapons/hero/sniper/sniper_assassinate.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.400000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.050000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.SniperLongRangeHeadshotProjectile"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "weapons/hero/sniper/assasinate_projectile.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.400000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.050000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.SniperLongRangeHeadshot01"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "weapons/hero/sniper/assasinate_damage01.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.400000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.050000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Imba.SniperLongRangeHeadshot02"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"    "weapons/hero/sniper/assasinate_damage01.vsnd"
+						}
+					}
+					"volume"			{   "value"     "0.400000"  }
+					"pitch_rand_min"	{   "value"     "-0.05000"  }
+					"pitch_rand_max"	{   "value"     "0.050000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
