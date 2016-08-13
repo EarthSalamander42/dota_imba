@@ -403,7 +403,7 @@ function ReapersScythe( keys )
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
 
 		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
-		if target:GetHealth() <= 3 then
+		if target:GetHealth() <= 4 then
 
 			-- Initialize or increase scythe respawn timer stacking penalty
 			if target.scythe_stacking_respawn_timer then

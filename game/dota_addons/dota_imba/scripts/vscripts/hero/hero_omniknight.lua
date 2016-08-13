@@ -61,7 +61,7 @@ function PurificationDeath( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- If fatal damage was not dealt, do nothing
-	if caster:GetHealth() > 2 then
+	if caster:GetHealth() > 5 then
 		return nil
 	end
 

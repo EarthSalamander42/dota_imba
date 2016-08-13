@@ -289,6 +289,11 @@ function EmpowerHit( keys )
 	local cleave_damage_pct = ability:GetLevelSpecialValueFor("cleave_damage_pct", ability_level)
 	local cleave_radius = ability:GetLevelSpecialValueFor("cleave_radius", ability_level)
 
+	-- If this unit is ranged, change the cleave damage percentage
+	if attacker:IsRangedAttacker() then
+		cleave_damage_pct = ability:GetLevelSpecialValueFor("cleave_damage_ranged", ability_level)
+	end
+
 	-- Draw particle
 	local cleave_pfx
 	if attacker:HasModifier(modifier_supercharged) then

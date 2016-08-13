@@ -292,6 +292,7 @@ function SandsOn( keys )
 	local ability = keys.ability
 	local modifier_sands = keys.modifier_sands
 
+	caster.treacherous_sands_toggle_state = 1
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_sands, {})
 end
 
@@ -299,7 +300,25 @@ function SandsOff( keys )
 	local caster = keys.caster
 	local modifier_sands = keys.modifier_sands
 
-	caster:RemoveModifierByName(modifier_sands)
+	if caster:IsAlive() then
+		caster.treacherous_sands_toggle_state = 0
+		caster:RemoveModifierByName(modifier_sands)
+	end
+end
+
+function SandsRespawnToggle( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Create the toggle state variable, if necessary
+	if not caster.treacherous_sands_toggle_state then
+		caster.treacherous_sands_toggle_state = 1
+	end
+
+	-- Turns the ability back on after death, if appropriate
+	if caster.treacherous_sands_toggle_state == 1 then
+		ability:ToggleAbility()
+	end
 end
 
 function EpicenterChannel( keys )

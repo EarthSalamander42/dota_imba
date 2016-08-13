@@ -61,6 +61,16 @@ function AegisHeal( keys )
 	-- Remove this item
 	caster:RemoveItem(ability)
 
+	-- Refresh all your abilities
+	for i = 0, 15 do
+		local current_ability = caster:GetAbilityByIndex(i)
+
+		-- Refresh
+		if current_ability then
+			current_ability:EndCooldown()
+		end
+	end
+
 	-- Flag caster as no longer having aegis
 	caster.has_aegis = false
 end
