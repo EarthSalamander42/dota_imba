@@ -14127,7 +14127,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_chance_damage"	"150"
-			}	
+			}
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
@@ -14137,6 +14137,31 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"2"
+			}
+			"13"
+			{
+			"var_type"						"FIELD_INTEGER"
+				"damage_reduction"		"6"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_item_abyssal_blade_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"			"1"
+				"IsBuff"				"1"
+				"IsPurgable"		"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+						"modifier"			"modifier_item_abyssal_blade_unique"
+					}
+				}
 			}
 		}
 	}
