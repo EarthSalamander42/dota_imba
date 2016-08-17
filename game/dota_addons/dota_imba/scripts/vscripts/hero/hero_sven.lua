@@ -134,8 +134,12 @@ function StormBoltHit( keys )
 	end
 	
 	
-	if ability_god_str and caster:HasModifier(modifier_god_str) and #enemies >= 4 then
-		target:EmitSound(sound_berserk)
+	if ability_god_str and caster:HasModifier(modifier_god_str) then
+        -- only if 4 or more heroes are hit.
+	    local enemy_heroes = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+        if #enemy_heroes >= 4 then
+			target:EmitSound(sound_berserk)
+		end
 	end
 	
 end
