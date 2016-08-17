@@ -80,6 +80,7 @@ function StormBoltHit( keys )
 	local ability_god_str = caster:FindAbilityByName(keys.ability_god_str)
 	local sound_impact = keys.sound_impact
 	local particle_impact = keys.particle_impact
+	local sound_berserk = keys.sound_berserk	
 
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -131,6 +132,12 @@ function StormBoltHit( keys )
 		-- Apply damage
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
 	end
+	
+	
+	if ability_god_str and caster:HasModifier(modifier_god_str) and #enemies >= 4 then
+		target:EmitSound(sound_berserk)
+	end
+	
 end
 
 function GreatCleave( keys )

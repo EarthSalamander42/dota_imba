@@ -25775,6 +25775,8 @@
 				"modifier_god_str"		"modifier_imba_god_strength"
 				"ability_god_str"		"imba_sven_gods_strength"
 				"sound_impact"			"Hero_Sven.StormBoltImpact"
+				"sound_berserk"			"Imba.SvenBerserk"
+
 				"particle_impact"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			}
 		}
