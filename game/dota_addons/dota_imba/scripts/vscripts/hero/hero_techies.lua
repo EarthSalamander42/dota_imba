@@ -693,7 +693,8 @@ function RemoteMineAutoCreep( keys )
 	Timers:CreateTimer(0, function()
 		local nearby_enemies = FindUnitsInRadius(mine:GetTeamNumber(), mine:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		if #nearby_enemies > 0 then
-			mine:ForceKill(false)
+			local self_detonate = mine:FindAbilityByName("techies_remote_mines_self_detonate")
+			mine:CastAbilityImmediately(self_detonate, mine:GetOwnerEntity():GetPlayerID())
 			mine.auto_creep_exploding = nil
 		end
 		if mine:IsAlive() and mine.auto_creep_exploding then

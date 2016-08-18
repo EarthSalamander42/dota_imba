@@ -162,7 +162,7 @@ function MeatHook( keys )
 	ParticleManager:SetParticleControl(hook_pfx, 1, start_loc)
 	ParticleManager:SetParticleControl(hook_pfx, 2, Vector(hook_speed, hook_range, hook_width) )
 	ParticleManager:SetParticleControl(hook_pfx, 6, start_loc)
-	--ParticleManager:SetParticleControlEnt(hook_pfx, 6, hook_dummy, PATTACH_POINT_FOLLOW, "attach_overhead", start_loc, false)
+	ParticleManager:SetParticleControlEnt(hook_pfx, 6, hook_dummy, PATTACH_POINT_FOLLOW, "attach_overhead", start_loc, false)
 	ParticleManager:SetParticleControlEnt(hook_pfx, 7, caster, PATTACH_CUSTOMORIGIN, nil, caster_loc, true)
 
 	-- Remove the caster's hook
@@ -229,7 +229,6 @@ function MeatHook( keys )
 
 			-- Recalculate position and distance
 			hook_loc = hook_dummy:GetAbsOrigin()
-			ParticleManager:SetParticleControl(hook_pfx, 6, hook_loc + Vector(0, 0, 90))
 			travel_distance = (hook_loc - caster_loc):Length2D()
 			return tick_rate
 		end

@@ -2130,22 +2130,22 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
+				"bonus_armor"			"0"
 			}
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"1200"
+			}
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aura_mana_regen"		"0.8"
 			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_bonus_armor"		"3"
-			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"0"
+				"aura_bonus_armor"		"3"
 			}
 		}
 	}
@@ -5831,23 +5831,23 @@
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_regen"			"1"
+				"var_type"				"FIELD_FLOAT"
+				"base_regen"			"1.5"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"noncombat_regen"		"3"
+				"var_type"				"FIELD_FLOAT"
+				"noncombat_regen"		"3.5"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_cooldown"		"6"
+				"regen_cooldown"		"4"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_tooltip"			"4"
+				"regen_tooltip"			"5"
 			}
 		}
 
@@ -14504,7 +14504,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"aura_bonus_armor"		"3"
-			}			
+			}
 		}		
 	}
 
@@ -15625,7 +15625,7 @@
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"14"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -16247,7 +16247,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"			"%bonus_cooldown"
+					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"		"%bonus_cooldown"
 				}
 			}
 
@@ -16302,47 +16302,47 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"550"
+				"bonus_health"			"525"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"500"
+				"bonus_mana"			"525"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"8"
+				"bonus_mana_regen"		"75"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"175"
+				"bonus_cooldown"		"25"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cooldown"		"25"
-			}
+				"hero_lifesteal"		"30"
+			}			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hero_lifesteal"		"30"
-			}			
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"creep_lifesteal"		"8"
+				"creep_lifesteal"		"10"
 			}	
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_radius"			"900"
 			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"minimum_mana"			"140"
+			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dmg_per_mana"			"30"
+				"blast_dmg"				"100"
 			}
 		}
 
@@ -16371,7 +16371,6 @@
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
 					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
 				}
@@ -16404,6 +16403,17 @@
 
 						"damage"				"%attack_damage"
 						"modifier_prevent"		"modifier_item_imba_octarine_core_prevent_lifesteal"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_octarine_core"
 					}
 				}
 				

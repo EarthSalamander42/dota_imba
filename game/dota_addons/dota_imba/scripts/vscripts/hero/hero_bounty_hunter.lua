@@ -286,7 +286,7 @@ function ShadowJaunt( keys )
 			current_ability = caster:GetAbilityByIndex(i)
 
 			-- Refresh
-			if current_ability then
+			if current_ability and current_ability ~= ability then
 				current_ability:EndCooldown()
 			end
 		end

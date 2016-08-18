@@ -93,7 +93,7 @@ function ShallowGraveDamageStorage( keys )
 		unit.grave_damage = 0
 	end
 
-	if health <= 2 then
+	if health <= 3 then
 		unit.grave_damage = unit.grave_damage + damage
 	end
 end

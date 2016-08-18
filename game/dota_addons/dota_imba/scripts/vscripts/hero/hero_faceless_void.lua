@@ -190,9 +190,11 @@ function TimeDilation( keys )
 	-- Play cast particles
 	local cast_pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(cast_pfx, 0, caster_pos)
-	ParticleManager:SetParticleControl(cast_pfx, 1, Vector(radius, 0, 0))
+	ParticleManager:SetParticleControl(cast_pfx, 1, Vector(radius * 2, 0, 0))
+	ParticleManager:ReleaseParticleIndex(cast_pfx)
 	local cast_pfx_2 = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(cast_pfx, 0, caster_pos)
+	ParticleManager:SetParticleControl(cast_pfx_2, 0, caster_pos)
+	ParticleManager:ReleaseParticleIndex(cast_pfx_2)
 
 	-- Iterate through affected enemies
 	local abilities_affected = 0
@@ -205,6 +207,7 @@ function TimeDilation( keys )
 		-- Play hit particle
 		local hit_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, target)
 		ParticleManager:SetParticleControl(hit_pfx, 0, target:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(hit_pfx)
 
 		-- Iterate through the target's abilities
 		local abilities_on_cooldown = 0
@@ -212,7 +215,9 @@ function TimeDilation( keys )
 			local current_ability = target:GetAbilityByIndex(i)
 			if current_ability then
 				if current_ability:IsCooldownReady() then
-					current_ability:StartCooldown(cooldown_start)
+					if not current_ability:IsPassive() then
+						current_ability:StartCooldown(cooldown_start)
+					end
 				else
 					current_ability:StartCooldown( current_ability:GetCooldownTimeRemaining() + cooldown_increase )
 					abilities_on_cooldown = abilities_on_cooldown + 1

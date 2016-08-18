@@ -7054,12 +7054,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 15 14 13"
-		"AbilityDuration"				"5.0 6.0 7.0 8.0"	
-
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"30"	
+		"AbilityCooldown"				"16 15 14 13"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7092,12 +7087,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"500 550 600 650"
+				"aura_radius"				"3000"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"3000"
+				"damage_per_second"			"30"
 			}
 		}	
 
@@ -7155,16 +7150,6 @@
 	            		"Target" 			"TARGET"
 	            		"Duration"			"%nightmare_invuln_time"
 	            	}	
-
-	            	"RunScript"
-	            	{
-	            		"ScriptFile"		"hero/hero_bane.lua"
-	            		"Function"			"NightmareStart"
-
-	            		"invul_modifier"	"modifier_imba_bane_nightmare_invul"
-	            		"nightmare"			"imba_bane_nightmare"
-        				"nightmare_end"		"imba_bane_nightmare_end"
-	            	}
 	            }	
 
 	            "OnDestroy"
@@ -7181,13 +7166,11 @@
 
 	               	"RunScript"
 	            	{
-	            		"ScriptFile"			"hero/hero_bane.lua"
-	            		"Function"				"NightmareEnd"
+	            		"ScriptFile"		"hero/hero_bane.lua"
+	            		"Function"			"NightmareEnd"
 
-	            		"loop_sound"			"Hero_Bane.Nightmare.Loop"
-	            		"nightmare"				"imba_bane_nightmare"
-        				"nightmare_end"			"imba_bane_nightmare_end"
-	            	}            		
+	            		"loop_sound"		"Hero_Bane.Nightmare.Loop"
+	            	}
 	            }
 
 	            "ThinkInterval"  			"%nightmare_dot_interval"
@@ -7245,6 +7228,17 @@
 				"IsDebuff"		"1"
 				"IsPurgable"	"1"
 
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_bane.lua"
+						"Function"				"NightmareInvulEnd"
+
+						"nightmare_modifier"	"modifier_imba_bane_nightmare"
+					}
+				}
+
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -7262,37 +7256,38 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 		"MaxLevel"						"1"
-		"AbilityTextureName"			"bane_nightmare_end"	
+		"AbilityTextureName"			"bane_nightmare_end"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"25000"	
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
-		"OnToggleOn"
+		"OnSpellStart"
 		{
-			"RemoveModifier"
+			"RunScript"
 			{
-	        	"ModifierName"		"modifier_imba_bane_nightmare"
-	        	"Target"
-				{
-	        		"Center"  		"CASTER"
-	        		"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	        		"Types" 		"DOTA_UNIT_TARGET_HERO"
-	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
-	        }	
+				"ScriptFile"			"hero/hero_bane.lua"
+				"Function"				"NightmareEndCast"
 
-	        "RemoveModifier"
-	        {
-	        	"ModifierName"		"modifier_imba_bane_nightmare_invul"
-	        	"Target"
-				{
-	        		"Center"  		"CASTER"
-	        		"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	        		"Types" 		"DOTA_UNIT_TARGET_HERO"
-	        		"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
-	        }	
+				"modifier_nightmare"	"modifier_imba_bane_nightmare"
+				"modifier_invul"		"modifier_imba_bane_nightmare_invul"
+			}
 		}
 	}
 
@@ -19259,6 +19254,17 @@
 				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_heartstopper_aura_emitter_enemy"
+					}
+				}
 			}
 
 			"modifier_imba_heartstopper_aura_emitter_ally"
@@ -19274,6 +19280,17 @@
 				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 				"Aura_ApplyToCaster"		"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_imba_heartstopper_aura_emitter_ally"
+					}
+				}
 			}
 
 			"modifier_imba_heartstopper_aura_enemy"
@@ -21608,7 +21625,6 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"omniknight_degen_aura"
 		
 		// Casting
@@ -25614,6 +25630,26 @@
 				"IsDebuff"				"1"
 				"Duration"				"2.2"
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"AssassinateParticleStart"
+
+						"particle_debuff"	"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sniper.lua"
+						"Function"			"AssassinateParticleEnd"
+					}
+				}
+
 				"States"
 				{
 					"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
@@ -29215,6 +29251,17 @@
 						"modifier_reincarnation"	"modifier_imba_reincarnation"
 						"modifier_scepter"			"modifier_imba_reincarnation_scepter"
 						"modifier_wraith"			"modifier_imba_reincarnation_scepter_wraith"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"				"internal/util.lua"
+						"Function"					"IllusionPassiveRemover"
+
+						"modifier"					"modifier_imba_reincarnation_detector"
 					}
 				}
 			}

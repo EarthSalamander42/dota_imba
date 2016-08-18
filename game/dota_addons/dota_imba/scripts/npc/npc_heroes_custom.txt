@@ -122,14 +122,16 @@
 
 		"ProjectileSpeed"			"500"
 
-		"Ability1"					"imba_bane_enfeeble"							
-		"Ability2"					"imba_bane_brain_sap"
-		"Ability3"					"imba_bane_nightmare"												
-		"Ability4"					"imba_bane_fiends_grip"						
-		"Ability5"					"attribute_bonus_int"
-		"Ability6"					"imba_bane_nightmare_end"	
+		"AbilityLayout"				"5"
 
-		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"							
+		"Ability1"					"imba_bane_enfeeble"
+		"Ability2"					"imba_bane_brain_sap"
+		"Ability3"					"imba_bane_nightmare"
+		"Ability4"					"imba_bane_nightmare_end"
+		"Ability5"					"imba_bane_fiends_grip"
+		"Ability6"					"attribute_bonus_int"
+
+		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
 
 	//=================================================================================================================

@@ -832,7 +832,8 @@ function InitializeInnateAbilities( hero )
 		"imba_troll_warlord_berserkers_rage",
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
-		"imba_sandking_treacherous_sands"
+		"imba_sandking_treacherous_sands",
+		"imba_bane_nightmare_end"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1244,7 +1245,8 @@ function IsUninterruptableForcedMovement( unit )
 		"modifier_batrider_flaming_lasso",
 		"modifier_imba_leap_self_root",
 		"modifier_faceless_void_chronosphere_freeze",
-		"modifier_storm_spirit_ball_lightning"
+		"modifier_storm_spirit_ball_lightning",
+		"modifier_morphling_waveform"
 	}
 
 	-- Iterate through the list

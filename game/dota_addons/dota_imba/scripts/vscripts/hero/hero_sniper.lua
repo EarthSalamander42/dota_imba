@@ -316,8 +316,6 @@ function AssassinateCast( keys )
 
 	-- Mark the target with the crosshair
 	ability:ApplyDataDrivenModifier(caster, target, modifier_target, {})
-	target.assassinate_crosshair_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_sniper/sniper_crosshair.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
-	ParticleManager:SetParticleControl(target.assassinate_crosshair_pfx, 0, target:GetAbsOrigin())
 
 	-- Apply the caster modifiers
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
@@ -325,7 +323,6 @@ function AssassinateCast( keys )
 
 	-- Memorize the target
 	caster.assassinate_target = target
-
 end
 
 function AssassinateCastCheck( keys )
@@ -337,9 +334,26 @@ function AssassinateStop( keys )
 	local caster = keys.caster
 	local target_modifier = keys.target_modifier
 	caster.assassinate_target:RemoveModifierByName(target_modifier)
-	ParticleManager:DestroyParticle(caster.assassinate_target.assassinate_crosshair_pfx, true)
-	ParticleManager:ReleaseParticleIndex(caster.assassinate_target.assassinate_crosshair_pfx)
 	caster.assassinate_target = nil
+end
+
+function AssassinateParticleStart( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local particle_debuff = keys.particle_debuff
+	
+	-- Create the crosshair particle
+	target.assassinate_crosshair_pfx = ParticleManager:CreateParticleForTeam(particle_debuff, PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
+	ParticleManager:SetParticleControl(target.assassinate_crosshair_pfx, 0, target:GetAbsOrigin())
+end
+
+function AssassinateParticleEnd( keys )
+	local target = keys.target
+	
+	-- Destroy the crosshair particle
+	ParticleManager:DestroyParticle(target.assassinate_crosshair_pfx, true)
+	ParticleManager:ReleaseParticleIndex(target.assassinate_crosshair_pfx)
+	target.assassinate_crosshair_pfx = nil
 end
 
 function Assassinate( keys )
@@ -356,10 +370,6 @@ function Assassinate( keys )
 	bullet_direction = Vector(bullet_direction.x, bullet_direction.y, 0)
 	local bullet_distance = ( target:GetAbsOrigin() - caster:GetAbsOrigin() ):Length2D() + spill_range
 	local bullet_speed = bullet_distance / bullet_duration
-
-	-- Destroy the crosshair particle
-	ParticleManager:DestroyParticle(target.assassinate_crosshair_pfx, true)
-	ParticleManager:ReleaseParticleIndex(target.assassinate_crosshair_pfx)
 
 	-- Create the real, invisible projectile
 	local assassinate_projectile = {

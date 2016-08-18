@@ -235,7 +235,7 @@ function NightmareDamage( keys )
 	local target = keys.target
 
 	local target_health = target:GetHealth()
-	local damage = ability:GetAbilityDamage()
+	local damage = ability:GetLevelSpecialValueFor("damage_per_second", ability:GetLevel() - 1)
 
 	-- Check if the damage would be lethal.
 	if target_health <= damage then
@@ -257,51 +257,38 @@ function NightmareSpread( keys )
 
 	-- Check if it has the Nightmare debuff
 	if target:HasModifier(nightmare_modifier) then
+
 		-- If it does then apply it to the attacker
 		ability:ApplyDataDrivenModifier(caster, attacker, nightmare_modifier, {})
 	end
 end
 
-function NightmareEnd( keys )
+function NightmareInvulEnd( keys )
 	local caster = keys.caster
 	local target = keys.target
-	local loop_sound = keys.loop_sound
-	local nightmare_name = keys.nightmare
-	local nightmare_end_name = keys.nightmare_end
-	local ability_nightmare = keys.ability
+	local nightmare_modifier = keys.nightmare_modifier
 
-	-- Stops playing sound
-	StopSoundEvent(loop_sound, target)
-
-	-- If this is the caster, toggles Nightmare End off
+	-- If this is the caster, remove the nightmare modifier
 	if caster == target then
-		local ability_nightmare_end = caster:FindAbilityByName(nightmare_end_name)
-		if ability_nightmare_end:GetToggleState() then
-			ability_nightmare_end:ToggleAbility()
-		end
-		caster:SwapAbilities(nightmare_name, nightmare_end_name, true, false)
+		target:RemoveModifierByName(nightmare_modifier)
 	end
 end
 
-function NightmareStart( keys )
+function NightmareEnd( keys )
 	local target = keys.target
-	local caster = keys.caster
+	local loop_sound = keys.loop_sound
+
+	-- Stops playing sound
+	StopSoundEvent(loop_sound, target)
+end
+
+function NightmareEndCast( keys )
 	local ability = keys.ability
-	local invul_modifier = keys.invul_modifier
-	local nightmare_name = keys.nightmare
-	local nightmare_end_name = keys.nightmare_end
-	local invul_duration = ability:GetLevelSpecialValueFor("duration", ability:GetLevel() - 1)
+	local target = keys.target
+	local modifier_nightmare = keys.modifier_nightmare
+	local modifier_invul = keys.modifier_invul
 
-	if target == caster then
-
-		-- Apply invulnerability for the whole duration
-		ability:ApplyDataDrivenModifier(caster, caster, invul_modifier, {duration = invul_duration})
-
-		-- Swaps abilities
-		caster:SwapAbilities(nightmare_name, nightmare_end_name, false, true)
-
-		-- Upgrade Nightmare End to level 1
-		local nightmare_end_ability = caster:FindAbilityByName(nightmare_end_name)
-		nightmare_end_ability:SetLevel(1)
-	end
+	-- Remove Nightmare modifiers
+	target:RemoveModifierByName(modifier_nightmare)
+	target:RemoveModifierByName(modifier_invul)
 end

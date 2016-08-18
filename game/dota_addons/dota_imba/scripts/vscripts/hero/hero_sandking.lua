@@ -294,15 +294,32 @@ function SandsOn( keys )
 
 	caster.treacherous_sands_toggle_state = 1
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_sands, {})
+
+	-- Re-apply invisibility if channeling sandstorm
+	if caster:HasModifier("modifier_imba_sandstorm_caster") then
+		local duration = caster:FindModifierByName("modifier_phased"):GetRemainingTime()
+		if duration > 0 then
+			caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = duration})
+		end
+	end
 end
 
 function SandsOff( keys )
 	local caster = keys.caster
+	local ability = keys.ability
 	local modifier_sands = keys.modifier_sands
 
 	if caster:IsAlive() then
 		caster.treacherous_sands_toggle_state = 0
 		caster:RemoveModifierByName(modifier_sands)
+	end
+
+	-- Re-apply invisibility if channeling sandstorm
+	if caster:HasModifier("modifier_imba_sandstorm_caster") then
+		local duration = caster:FindModifierByName("modifier_phased"):GetRemainingTime()
+		if duration > 0 then
+			caster:AddNewModifier(caster, ability, "modifier_invisible", {duration = duration})
+		end
 	end
 end
 
@@ -402,7 +419,7 @@ function Epicenter( keys )
 	-- Pulse parameters
 	local current_pulse = 0
 	local total_pulses = math.floor( max_pulses * channel_time / 4 ) + bonus_pulses
-	local pulse_interval = math.max( pulse_duration / total_pulses, 0.2)
+	local pulse_interval = math.max( pulse_duration / total_pulses, 0.17)
 
 	-- Make caster and particle visible for the duration
 	caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, total_pulses * pulse_interval)
