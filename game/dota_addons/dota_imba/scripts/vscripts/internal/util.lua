@@ -762,6 +762,7 @@ function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_reincarnation_detector")
 	hero:RemoveModifierByName("modifier_imba_time_walk_damage_counter")
 	hero:RemoveModifierByName("modifier_charges")
+	hero:RemoveModifierByName("modifier_imba_reincarnation")
 
 	while hero:HasModifier("modifier_imba_flesh_heap_bonus") do
 		hero:RemoveModifierByName("modifier_imba_flesh_heap_bonus")
@@ -1456,4 +1457,237 @@ function IsNearEnemyFountain(location, team, distance)
 	end
 
 	return false
+end
+
+-- Reaper's Scythe kill credit redirection
+function TriggerNecrolyteReaperScytheDeath(target, caster)
+
+	-- Find the Reaper's Scythe ability
+	local ability = caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
+	if not ability then return nil end
+
+	-- Attempt to kill the target
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
+end
+
+-- Reincarnation death trigger
+function TriggerWraithKingReincarnation(caster, ability)
+
+	-- Keyvalues
+	local ability_level = ability:GetLevel() - 1
+	local modifier_death = "modifier_imba_reincarnation_death"
+	local modifier_slow = "modifier_imba_reincarnation_slow"
+	local modifier_kingdom_ms = "modifier_imba_reincarnation_kingdom_ms"
+	local particle_wait = "particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+	local particle_kingdom = "particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell.vpcf"
+	local sound_death = "Hero_SkeletonKing.Reincarnate"
+	local sound_reincarnation = "Hero_SkeletonKing.Reincarnate.Stinger"
+	local sound_kingdom_start = "Hero_WraithKing.EruptionCast"
+
+	-- Parameters
+	local slow_radius = ability:GetLevelSpecialValueFor("slow_radius", ability_level)
+	local reincarnate_delay = ability:GetLevelSpecialValueFor("reincarnate_delay", ability_level)
+	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("kingdom_damage", ability_level)
+	local stun_duration = ability:GetLevelSpecialValueFor("kingdom_stun", ability_level)
+	local caster_loc = caster:GetAbsOrigin()
+
+	-- Put the ability on cooldown and play out the reincarnation
+	local cooldown_reduction = GetCooldownReduction(caster)
+	ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
+
+	-- Play initial sound
+	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+	if USE_MEME_SOUNDS and #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
+		caster:EmitSound("Hero_WraithKing.IllBeBack")
+	else
+		caster:EmitSound(sound_death)
+	end
+
+	-- Create visibility node
+	ability:CreateVisibilityNode(caster_loc, vision_radius, reincarnate_delay)
+
+	-- Apply simulated death modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_death, {})
+
+	-- Remove caster's model from the game
+	caster:AddNoDraw()
+
+	-- Play initial particle
+	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleAlwaysSimulate(wait_pfx)
+	ParticleManager:SetParticleControl(wait_pfx, 0, caster_loc)
+	ParticleManager:SetParticleControl(wait_pfx, 1, Vector(reincarnate_delay, 0, 0))
+	ParticleManager:SetParticleControl(wait_pfx, 11, Vector(200, 0, 0))
+	ParticleManager:ReleaseParticleIndex(wait_pfx)
+
+	-- Slow all nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
+	end
+
+	-- Heal, even through healing prevention debuffs
+	caster:SetHealth(caster:GetMaxHealth())
+	caster:SetMana(caster:GetMaxMana())
+
+	-- Play Kingdom Come particle
+	local kingdom_pfx = ParticleManager:CreateParticle(particle_kingdom, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleAlwaysSimulate(kingdom_pfx)
+	ParticleManager:SetParticleControl(kingdom_pfx, 0, caster_loc)
+
+	-- Play Kingdom Come sound
+	Timers:CreateTimer(0.9, function()
+		caster:EmitSound(sound_kingdom_start)
+	end)
+
+	-- After the respawn delay
+	Timers:CreateTimer(reincarnate_delay, function()
+
+		-- Purge most debuffs
+		caster:Purge(false, true, false, true, false)
+
+		-- Heal, even through healing prevention debuffs
+		caster:SetHealth(caster:GetMaxHealth())
+		caster:SetMana(caster:GetMaxMana())
+
+		-- Redraw caster's model
+		caster:RemoveNoDraw()
+
+		-- Play reincarnation stinger
+		caster:EmitSound(sound_reincarnation)
+
+		-- Stop Kingdom Come particles
+		ParticleManager:DestroyParticle(kingdom_pfx, false)
+		ParticleManager:ReleaseParticleIndex(kingdom_pfx)
+
+		-- Iterate through nearby enemies
+		enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemies) do
+			
+			-- If this is a real hero, damage and stun it
+			if enemy:IsRealHero() or IsRoshan(enemy) then
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+
+				-- Increase caster's movement speed temporarily
+				AddStacks(ability, caster, caster, modifier_kingdom_ms, 1, true)
+			
+			-- Else, kill it
+			else
+				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = enemy:GetMaxHealth(), damage_type = DAMAGE_TYPE_PURE})
+			end
+		end
+	end)
+end
+
+-- Reincarnation Wraith Form trigger
+function TriggerWraithKingWraithForm(target, attacker)
+
+	-- Keyvalues
+	local reincarnation_modifier = target:FindModifierByName("modifier_imba_reincarnation_scepter")
+	local caster = reincarnation_modifier:GetCaster()
+	local ability = reincarnation_modifier:GetAbility()
+	local modifier_scepter = "modifier_imba_reincarnation_scepter"
+	local modifier_wraith = "modifier_imba_reincarnation_scepter_wraith"
+	local sound_wraith = "Hero_SkeletonKing.Reincarnate.Ghost"
+
+	-- Store the attacker which killed this unit's ID
+	local killer_id
+	local killer_type = "hero"
+	if attacker:GetOwnerEntity() then
+		killer_id = attacker:GetOwnerEntity():GetPlayerID()
+	elseif attacker:IsHero() then
+		killer_id = attacker:GetPlayerID()
+	else
+		killer_id = attacker
+		killer_type = "creature"
+	end
+
+	-- If there is a player-owned killer, store it
+	if killer_type == "hero" then
+		target.reincarnation_scepter_killer = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
+
+	-- Else, assign the kill to the unit which dealt the finishing blow
+	else
+		target.reincarnation_scepter_killer = attacker
+	end
+
+	-- Play transformation sound
+	target:EmitSound(sound_wraith)
+
+	-- Apply wraith form modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_wraith, {})
+
+	-- Remove the scepter aura modifier
+	target:RemoveModifierByName(modifier_scepter)
+
+	-- Purge all debuffs
+	target:Purge(false, true, false, true, false)
+end
+
+-- Aegis Reincarnation trigger
+function TriggerAegisReincarnation(caster)
+
+	-- Keyvalues
+	local aegis_modifier = caster:FindModifierByName("modifier_item_imba_aegis")
+	local ability = aegis_modifier:GetAbility()
+	local modifier_aegis = "modifier_item_imba_aegis"
+	local modifier_death = "modifier_item_imba_aegis_death"
+	local particle_wait = "particles/items_fx/aegis_timer.vpcf"
+	local particle_respawn = "particles/items_fx/aegis_respawn_timer.vpcf"
+	local sound_aegis = "Imba.AegisStinger"
+	local caster_loc = caster:GetAbsOrigin()
+
+	-- Parameters
+	local respawn_delay = ability:GetSpecialValueFor("reincarnate_time")
+	local vision_radius = ability:GetSpecialValueFor("vision_radius")
+
+	-- Play sound
+	caster:EmitSound(sound_aegis)
+
+	-- Create visibility node
+	ability:CreateVisibilityNode(caster_loc, vision_radius, respawn_delay)
+
+	-- Apply simulated death modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_death, {})
+
+	-- Remove caster's model from the game
+	caster:AddNoDraw()
+
+	-- Play initial particle
+	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleAlwaysSimulate(wait_pfx)
+	ParticleManager:SetParticleControl(wait_pfx, 0, caster_loc)
+	ParticleManager:SetParticleControl(wait_pfx, 1, Vector(respawn_delay, 0, 0))
+	ParticleManager:ReleaseParticleIndex(wait_pfx)
+
+	-- After the respawn delay, play reincarnation particle
+	local respawn_pfx = ParticleManager:CreateParticle(particle_respawn, PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(respawn_pfx, 0, caster_loc)
+	ParticleManager:SetParticleControl(respawn_pfx, 1, Vector(respawn_delay, 0, 0))
+	ParticleManager:ReleaseParticleIndex(respawn_pfx)
+
+	-- After the respawn delay
+	Timers:CreateTimer(respawn_delay, function()
+
+		-- Heal, even through healing prevention debuffs
+		caster:SetHealth(caster:GetMaxHealth())
+		caster:SetMana(caster:GetMaxMana())
+
+		-- Purge all debuffs
+		caster:Purge(false, true, false, true, false)
+
+		-- Remove Aegis modifier
+		caster:RemoveModifierByName(modifier_aegis)
+
+		-- Destroy the Aegis
+		caster:RemoveItem(ability)
+
+		-- Flag caster as no longer having aegis
+		caster.has_aegis = false
+
+		-- Redraw caster's model
+		caster:RemoveNoDraw()
+	end)
 end

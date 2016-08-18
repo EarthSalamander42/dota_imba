@@ -59,9 +59,10 @@ function PurificationDeath( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local passive_threshold = ability:GetLevelSpecialValueFor("passive_threshold", ability_level) * 0.01
 
 	-- If fatal damage was not dealt, do nothing
-	if caster:GetHealth() > 5 then
+	if caster:GetHealth() > (caster:GetMaxHealth() * passive_threshold) then
 		return nil
 	end
 

@@ -318,16 +318,15 @@ function MortalStrikeStackDown( keys )
 	end
 end
 
-function ReincarnationUpdate( keys )
+function ReincarnationScepterAura( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifier_reincarnation = keys.modifier_reincarnation
 	local modifier_scepter = keys.modifier_scepter
 	local modifier_wraith = keys.modifier_wraith
 	local scepter = HasScepter(caster)
 
-	-- If the ability was unlearned, do nothing
-	if not ability then
+	-- If the ability was unlearned, or the caster has no scepter, do nothing
+	if not ability or not scepter then
 		return nil
 	end
 
@@ -335,80 +334,28 @@ function ReincarnationUpdate( keys )
 	local ability_level = ability:GetLevel() - 1
 	local aura_radius_scepter = ability:GetLevelSpecialValueFor("aura_radius_scepter", ability_level)
 
-	-- Add reincarnation modifier if it's missing
-	if ability:IsCooldownReady() and not caster:HasModifier(modifier_reincarnation) then
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_reincarnation, {})
-	end
-
-	-- Remove reincarnation modifier if it shouldn't be there
-	if not ability:IsCooldownReady() and caster:HasModifier(modifier_reincarnation) then
-		caster:RemoveModifierByName(modifier_reincarnation)
-	end
-
-	-- If the caster has a scepter, apply its aura to all nearby teammates
+	-- Apply the scepter modifier to all nearby teammates
 	if scepter then
 		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, aura_radius_scepter, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for _,ally in pairs(allies) do
-			if not ally:HasModifier(modifier_wraith) then
+			if ally:IsRealHero() and not ally:HasModifier(modifier_wraith) then
 				ability:ApplyDataDrivenModifier(caster, ally, modifier_scepter, {})
 			end
 		end
 	end
 end
 
-function ReincarnationWraithDamage( keys )
-	local target = keys.unit
-
-	-- If health is not 2, do nothing
-	if target:GetHealth() > 2 or target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_shallow_grave") or target:HasModifier("modifier_imba_shallow_grave_passive") then
-		return nil
-	end
-
-	-- Keyvalues
-	local caster = keys.caster
-	local attacker = keys.attacker
-	local ability = keys.ability
-	local modifier_scepter = keys.modifier_scepter
-	local modifier_wraith = keys.modifier_wraith
-	local sound_wraith = keys.sound_wraith
-
-	-- Store the attacker which killed this unit's ID
-	local killer_id
-	local killer_type = "hero"
-	if attacker:GetOwnerEntity() then
-		killer_id = attacker:GetOwnerEntity():GetPlayerID()
-	elseif attacker:IsHero() then
-		killer_id = attacker:GetPlayerID()
-	else
-		killer_id = attacker
-		killer_type = "creature"
-	end
-
-	-- If there is a player-owned killer, store it
-	if killer_type == "hero" then
-		target.reincarnation_scepter_killer = PlayerResource:GetPlayer(killer_id):GetAssignedHero()
-
-	-- Else, assign the kill to the unit which dealt the finishing blow
-	else
-		target.reincarnation_scepter_killer = attacker
-	end
-
-	-- Play transformation sound
-	target:EmitSound(sound_wraith)
-
-	-- Apply wraith form modifier
-	ability:ApplyDataDrivenModifier(caster, target, modifier_wraith, {})
-
-	-- Remove the scepter aura modifier
-	target:RemoveModifierByName(modifier_scepter)
-
-	-- Purge all debuffs
-	target:Purge(false, true, false, true, false)
-end
-
 function ReincarnationWraithEnd( keys )
 	local target = keys.target
 	local ability = keys.ability
+
+	-- If this is an unit with Reincarnation off-cooldown, do nothing
+	local ability_reincarnation = target:FindAbilityByName("imba_wraith_king_reincarnation")
+	if ability_reincarnation and ability_reincarnation:IsCooldownReady() then
+		TriggerWraithKingReincarnation(target, ability_reincarnation)
+		target.reincarnation_scepter_killer_id = nil
+		return nil
+	end
 	
 	-- Kill the target, granting credit to the original killer
 	if target.reincarnation_scepter_killer then
@@ -419,95 +366,4 @@ function ReincarnationWraithEnd( keys )
 
 	-- Clear the killer variable
 	target.reincarnation_scepter_killer_id = nil
-end
-
-function ReincarnationDamage( keys )
-	local caster = keys.caster
-
-	-- If health is not 1, do nothing
-	if caster:GetHealth() > 1 or caster:HasModifier("modifier_imba_shallow_grave") or caster:HasModifier("modifier_imba_shallow_grave_passive") then
-		return nil
-	end
-
-	-- Keyvalues
-	local attacker = keys.attacker
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_reincarnation = keys.modifier_reincarnation
-	local modifier_death = keys.modifier_death
-	local modifier_slow = keys.modifier_slow
-	local particle_wait = keys.particle_wait
-	local sound_death = keys.sound_death
-	local sound_reincarnation = keys.sound_reincarnation
-
-	-- Parameters
-	local slow_radius = ability:GetLevelSpecialValueFor("slow_radius", ability_level)
-	local reincarnate_delay = ability:GetLevelSpecialValueFor("reincarnate_delay", ability_level)
-	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
-	local caster_loc = caster:GetAbsOrigin()
-
-	-- If health is minimal, but the ability is on cooldown, die to the original attacker
-	if not ability:IsCooldownReady() then
-		caster:RemoveModifierByName(modifier_reincarnation)
-		ApplyDamage({attacker = attacker, victim = caster, ability = ability, damage = 3, damage_type = DAMAGE_TYPE_PURE})
-		return nil
-	end
-
-	-- Else, put the ability on cooldown and play out the reincarnation
-	local cooldown_reduction = GetCooldownReduction(caster)
-	ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
-
-	-- Play initial sound
-	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
-	if USE_MEME_SOUNDS and #heroes >= IMBA_PLAYERS_ON_GAME * 0.35 then
-		caster:EmitSound("Hero_WraithKing.IllBeBack")
-	else
-		caster:EmitSound(sound_death)
-	end
-
-	-- Create visibility node
-	ability:CreateVisibilityNode(caster_loc, vision_radius, reincarnate_delay)
-
-	-- Apply simulated death modifier
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_death, {})
-
-	-- Remove caster's model from the game
-	caster:AddNoDraw()
-
-	-- Play initial particle
-	local wait_pfx = ParticleManager:CreateParticle(particle_wait, PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleAlwaysSimulate(wait_pfx)
-	ParticleManager:SetParticleControl(wait_pfx, 0, caster_loc)
-	ParticleManager:SetParticleControl(wait_pfx, 1, Vector(reincarnate_delay, 0, 0))
-	ParticleManager:SetParticleControl(wait_pfx, 11, Vector(200, 0, 0))
-
-	-- Slow all enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slow_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
-		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
-	end
-
-	-- Heal, even through healing prevention debuffs
-	caster:SetHealth(caster:GetMaxHealth())
-	caster:SetMana(caster:GetMaxMana())
-
-	-- After the respawn delay
-	Timers:CreateTimer(reincarnate_delay, function()
-
-		-- Purge most debuffs
-		caster:Purge(false, true, false, true, false)
-
-		-- Heal, even through healing prevention debuffs
-		caster:SetHealth(caster:GetMaxHealth())
-		caster:SetMana(caster:GetMaxMana())
-
-		-- Remove reincarnation modifier
-		caster:RemoveModifierByName(modifier_reincarnation)
-
-		-- Redraw caster's model
-		caster:RemoveNoDraw()
-
-		-- Play reincarnation stinger
-		caster:EmitSound(sound_reincarnation)
-	end)
 end

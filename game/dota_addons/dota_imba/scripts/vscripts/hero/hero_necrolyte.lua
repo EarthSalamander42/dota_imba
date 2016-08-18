@@ -355,21 +355,13 @@ function ReapersScythe( keys )
 	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
 	local damage_delay = ability:GetLevelSpecialValueFor("stun_duration", ability_level) - 0.05
 	local particle_delay = ability:GetLevelSpecialValueFor("animation_delay", ability_level)
-	local ability_sadist = caster:FindAbilityByName(keys.ability_sadist)
 	local reap_particle = keys.reap_particle
 	local scythe_particle = keys.scythe_particle
-	local modifier_regen = keys.modifier_regen
 	local scepter = HasScepter(caster)
 
 	-- Initializes the respawn time variable if necessary
 	if not target.scythe_added_respawn then
 		target.scythe_added_respawn = 0
-	end
-
-	-- Checks if the target is not wraith king, and does not have aegis
-	local should_increase_respawn_time = true
-	if target:GetUnitName() == "npc_dota_hero_skeleton_king" or HasAegis(target) then
-		should_increase_respawn_time = false
 	end
 
 	-- Scythe model particle
@@ -391,50 +383,55 @@ function ReapersScythe( keys )
 		ParticleManager:SetParticleControlEnt(reap_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target_loc, true)
 		ParticleManager:ReleaseParticleIndex(reap_fx)
 
-		-- Calculates and deals damage
+		-- Calculates damage
 		local damage_bonus = ( 1 - target:GetHealth() / target:GetMaxHealth() ) * 3
 		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) * 0.01
 
-		-- Removes relevant debuffs and deals damage
-		if target:HasModifier("modifier_aphotic_shield") then
-			target:RemoveModifierByName("modifier_aphotic_shield")
-		end
+		-- Deals damage
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
+	end)
+end
 
-		-- If the target is at 1 HP (i.e. only alive due to the Reaper's Scythe debuff), kill it
-		if target:GetHealth() <= 4 then
+function ReapersScytheKill( keys )
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 
-			-- Initialize or increase scythe respawn timer stacking penalty
-			if target.scythe_stacking_respawn_timer then
-				target.scythe_stacking_respawn_timer = target.scythe_stacking_respawn_timer + respawn_stack
-			else
-				target.scythe_stacking_respawn_timer = respawn_stack
-			end
+	-- Parameters
+	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
+	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
+	local scepter = HasScepter(caster)
 
-			-- Flag this as a scythe death, increasing respawn timer by respawn_base
-			target.scythe_added_respawn = respawn_base
-			target:RemoveModifierByName("modifier_imba_reapers_scythe")
-			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = 30, damage_type = DAMAGE_TYPE_PURE})
+	-- Initialize or increase scythe respawn timer stacking penalty
+	if target.scythe_stacking_respawn_timer then
+		target.scythe_stacking_respawn_timer = target.scythe_stacking_respawn_timer + respawn_stack
+	else
+		target.scythe_stacking_respawn_timer = respawn_stack
+	end
 
-			-- Scepter on-kill effects
-			if scepter then
+	-- Flag this as a scythe death, increasing respawn timer by respawn_base
+	target.scythe_added_respawn = respawn_base
+	target:RemoveModifierByName("modifier_imba_reapers_scythe")
 
-				-- Prevent buyback
-				target:SetBuyBackDisabledByReapersScythe(true)
+	-- Scepter on-kill effects
+	if scepter then
 
-				-- Apply sadist stacks to nearby allies
-				if ability_sadist and ability_sadist:GetLevel() > 0 then
-					local stacks_scepter = ability:GetLevelSpecialValueFor("stacks_scepter", ability_level)
-					local sadist_aoe_scepter = ability:GetLevelSpecialValueFor("sadist_aoe_scepter", ability_level)
-					local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, sadist_aoe_scepter, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-					for _,ally in pairs(nearby_allies) do
-						for i = 1, stacks_scepter do
-							ability_sadist:ApplyDataDrivenModifier(caster, ally, modifier_regen, {})
-						end
-					end
+		-- Prevent buyback
+		target:SetBuyBackDisabledByReapersScythe(true)
+
+		-- Apply sadist stacks to nearby allies, if appropriate
+		local ability_sadist = caster:FindAbilityByName("imba_necrolyte_sadist")
+		if ability_sadist and ability_sadist:GetLevel() > 0 then
+			local stacks_scepter = ability:GetLevelSpecialValueFor("stacks_scepter", ability_level)
+			local sadist_aoe_scepter = ability:GetLevelSpecialValueFor("sadist_aoe_scepter", ability_level)
+			local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, sadist_aoe_scepter, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,ally in pairs(nearby_allies) do
+				for i = 1, stacks_scepter do
+					ability_sadist:ApplyDataDrivenModifier(caster, ally, "modifier_imba_sadist_regen", {})
 				end
 			end
 		end
-	end)
+	end
 end

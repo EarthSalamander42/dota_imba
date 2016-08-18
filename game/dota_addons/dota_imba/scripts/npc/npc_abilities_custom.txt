@@ -11252,7 +11252,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"min_health"							"3"
+				"min_health"							"1"
 			}
 			"04"
 			{
@@ -19655,10 +19655,8 @@
 				"ScriptFile"				"hero/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
 
-				"ability_sadist"			"imba_necrolyte_sadist"
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
-				"modifier_regen"			"modifier_imba_sadist_regen"
 			}
 		}
 
@@ -19688,15 +19686,18 @@
 					}
 				}
 
-				"Properties"
+				"OnDeath"
 				{
-					"MODIFIER_PROPERTY_MIN_HEALTH" 					"4"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"				"1"
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_necrolyte.lua"
+						"Function"			"ReapersScytheKill"
+					}
 				}
 
 				"States"
 				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -21433,6 +21434,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"passive_cooldown"		"25"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"passive_threshold"		"20"
+			}
 		}
 
 		"OnSpellStart"
@@ -21469,11 +21475,6 @@
 
 						"modifier"			"modifier_imba_purification_passive"
 					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"		"5" 
 				}
 
 				"OnTakeDamage"
@@ -26398,19 +26399,14 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"levels_per_charge"			"5"
+				"throw_chance"				"15"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"charge_cooldown"			"35"
+				"levels_per_mine"			"8"
 			}
 			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"5"
-			}
-			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"600"
@@ -26453,19 +26449,6 @@
 						"Function"			"IllusionPassiveRemover"
 
 						"modifier"			"modifier_imba_land_mines_caster"
-					}
-				}
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_techies.lua"
-						"Function"			"LandMineCharges"
-
-						"modifier_charges"	"modifier_imba_land_mines_charge"
 					}
 				}
 		
@@ -26625,7 +26608,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"-95"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"-80"
 				}
 			}
 		}
@@ -28905,7 +28888,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_self"		"20 30 40 50"
+				"lifesteal_self"		"25 30 35 40"
 			}
 		}
 
@@ -29026,7 +29009,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"20"
+				"crit_chance"			"15"
 			}
 			"02"
 			{
@@ -29036,7 +29019,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"str_drain_pct"			"1.5"
+				"str_drain_pct"			"2.0"
 			}
 			"04"
 			{
@@ -29173,7 +29156,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"150 90 50"
+		"AbilityCooldown"				"140 100 60"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -29182,6 +29165,7 @@
 			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
 			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
 			"particle"					"particles/status_fx/status_effect_wraithking_ghosts.vpcf"
+			"particle"					"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell.vpcf"
 		}
 
 		// Special
@@ -29196,7 +29180,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_amount"			"-100"
+				"slow_amount"			"-75"
 			}
 			"03"
 			{
@@ -29216,14 +29200,29 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius_scepter"	"1200"
+				"kingdom_damage"		"100 150 200"
 			}
 			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"kingdom_stun"			"1.0"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kingdom_ms"			"12"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius_scepter"	"1200"
+			}
+			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"wraith_duration_scepter"	"7"
 			}
-			"08"
+			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aura_linger"			"0.5"
@@ -29232,7 +29231,7 @@
 
 		"Modifiers"
 		{
-			"modifier_imba_reincarnation_detector"
+			"modifier_imba_reincarnation"
 			{
 				"Passive"							"1"
 				"IsHidden"							"1"
@@ -29246,9 +29245,8 @@
 					"RunScript"
 					{
 						"ScriptFile"				"hero/hero_skeleton_king.lua"
-						"Function"					"ReincarnationUpdate"
+						"Function"					"ReincarnationScepterAura"
 
-						"modifier_reincarnation"	"modifier_imba_reincarnation"
 						"modifier_scepter"			"modifier_imba_reincarnation_scepter"
 						"modifier_wraith"			"modifier_imba_reincarnation_scepter_wraith"
 					}
@@ -29261,7 +29259,7 @@
 						"ScriptFile"				"internal/util.lua"
 						"Function"					"IllusionPassiveRemover"
 
-						"modifier"					"modifier_imba_reincarnation_detector"
+						"modifier"					"modifier_imba_reincarnation"
 					}
 				}
 			}
@@ -29274,35 +29272,6 @@
 				"IsPurgable"						"0"
 
 				"Duration"							"%aura_linger"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_imba_reincarnation_scepter"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_skeleton_king.lua"
-						"Function"					"ReincarnationWraithDamage"
-
-						"modifier_scepter"			"modifier_imba_reincarnation_scepter"
-						"modifier_wraith"			"modifier_imba_reincarnation_scepter_wraith"
-						"sound_wraith"				"Hero_SkeletonKing.Reincarnate.Ghost"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"	"2"
-				}
 			}
 
 			"modifier_imba_reincarnation_scepter_wraith"
@@ -29339,46 +29308,6 @@
 					"MODIFIER_STATE_NO_HEALTH_BAR"						"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"					"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_reincarnation"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_reincarnation"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_skeleton_king.lua"
-						"Function"					"ReincarnationDamage"
-
-						"modifier_reincarnation"	"modifier_imba_reincarnation"
-						"modifier_death"			"modifier_imba_reincarnation_death"
-						"modifier_slow"				"modifier_imba_reincarnation_slow"
-						"particle_wait"				"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
-						"sound_death"				"Hero_SkeletonKing.Reincarnate"
-						"sound_reincarnation"		"Hero_SkeletonKing.Reincarnate.Stinger"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"	"1"
 				}
 			}
 
@@ -29426,6 +29355,24 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_amount" 
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_amount"
+				}
+			}
+
+			"modifier_imba_reincarnation_kingdom_ms"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%slow_duration"
+
+				"EffectName"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
+				"EffectAttachType"			"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%kingdom_ms" 
 				}
 			}
 		}
@@ -29495,7 +29442,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_reduction"		"-1800"
+				"vision_reduction"		"-1000"
 			}
 			"06"
 			{
@@ -29616,7 +29563,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"vision_duration"		"2.0"
 			}
 			"06"
 			{
@@ -29786,7 +29733,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_scepter"		"250"
+				"movement_scepter"		"200"
 			}
 			"12"
 			{
@@ -29899,7 +29846,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 1.25 0.5"
+		"AbilityCooldown"				"2.5 1.5 0.75"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -29919,8 +29866,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cooldown_tooltip"		"3 2 1"
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_tooltip"		"2.5 1.5 0.75"
 			}
 			"02"
 			{
@@ -30297,20 +30244,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage_bonus"				"16 24 32 40"
 			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"20"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"base_crit_damage"			"140"
-			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rancor_crit_damage"		"10"
+				"rancor_damage_bonus"		"5"
 			}
 			"06"
 			{
@@ -30342,30 +30279,24 @@
 				"IsHidden"					"0"
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
-		
-				"OnAttackStart"
+
+				"ThinkInterval"				"1.0"
+				
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_vengeful.lua"
-						"Function"			"VengeanceAuraCritCleanup"
+						"Function"			"VengeanceAuraUpdate"
 
-						"modifier_crit"		"modifier_imba_command_aura_positive_crit"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_vengeful.lua"
-						"Function"			"VengeanceAuraCrit"
-
-						"modifier_crit"		"modifier_imba_command_aura_positive_crit"
+						"modifier_stack"	"modifier_imba_command_aura_positive_stack"
 						"modifier_rancor"	"modifier_imba_rancor"
 					}
 				}
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus"
 				}
 			}
 
@@ -30395,11 +30326,11 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%negative_damage"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%negative_damage"
 				}
 			}
 
-			"modifier_imba_command_aura_positive_crit"
+			"modifier_imba_command_aura_positive_stack"
 			{
 				"Passive"					"0"
 				"IsHidden"					"1"
@@ -30410,7 +30341,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"1"
+					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%rancor_damage_bonus"
 				}
 			}
 		}

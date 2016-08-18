@@ -5,7 +5,11 @@ function Suicide( keys )
 	local caster = keys.caster
 	local item = keys.ability
 
-	TrueKill(caster, caster, item)
+	if caster:HasModifier("modifier_imba_reincarnation") then
+		caster:Kill(item, caster)
+	else
+		TrueKill(caster, caster, item)
+	end
 end
 
 function UpdateCharges( keys )

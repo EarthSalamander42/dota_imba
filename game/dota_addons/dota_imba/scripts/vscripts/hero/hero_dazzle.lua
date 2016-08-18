@@ -61,7 +61,7 @@ function ShallowGraveDamageCheck( keys )
 	local modifier_grave = keys.modifier_grave
 
 	-- If the ability was unlearned, or it's not time to trigger shallow grave, do nothing
-	if not ability or caster:GetHealth() > 3 or caster:HasModifier(modifier_grave) or caster.has_aegis then
+	if not ability or caster:GetHealth() > 1 or caster:HasModifier(modifier_grave) or caster.has_aegis then
 		return nil
 	end
 
@@ -93,7 +93,7 @@ function ShallowGraveDamageStorage( keys )
 		unit.grave_damage = 0
 	end
 
-	if health <= 3 then
+	if health <= 1 then
 		unit.grave_damage = unit.grave_damage + damage
 	end
 end

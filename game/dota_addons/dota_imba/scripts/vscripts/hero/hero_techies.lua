@@ -12,14 +12,17 @@ function LandMinePlant( keys )
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
+	local levels_per_mine = ability:GetLevelSpecialValueFor("levels_per_mine", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 
 	-- Calculate amount of mines to place
-	local mine_amount = 1
-	if caster:HasModifier(modifier_charges) then
-		mine_amount = 1 + math.max(caster:GetModifierStackCount(modifier_charges, caster), 1)
-		caster:RemoveModifierByName(modifier_charges)
+	local mine_amount = 1 + math.floor( caster:GetLevel() / levels_per_mine )
+
+	-- Add a stack of mine charges, if appropriate
+	local current_stacks = caster:GetModifierStackCount(modifier_charges, caster)
+	if current_stacks < mine_amount then
+		AddStacks(ability, caster, caster, modifier_charges, 1, true)
 	end
 
 	-- Create the mines at the specified place
@@ -49,50 +52,6 @@ function LandMinePlant( keys )
 	end
 end
 
-function LandMineCharges( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_charges = keys.modifier_charges
-	local scepter = HasScepter(caster)
-	
-	-- Parameters
-	local levels_per_charge = ability:GetLevelSpecialValueFor("levels_per_charge", ability_level)
-	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
-	local max_charges = math.floor( caster:GetLevel() / levels_per_charge + 1 )
-	local current_charges = caster:GetModifierStackCount(modifier_charges, caster)
-	local actual_cooldown = math.ceil( charge_cooldown / max_charges)
-
-	-- If charges are already at their maximum, do nothing
-	if current_charges >= max_charges then
-		return nil
-	end
-	
-	-- Initialize charge counter if necessary
-	if not caster.land_mine_charge_counter then
-		caster.land_mine_charge_counter = 0
-
-	-- Increment the timer and add charges if appropriate
-	else
-
-		-- If the caster has a scepter, increment the timer twice as fast
-		if scepter then
-			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 2
-		else
-			caster.land_mine_charge_counter = caster.land_mine_charge_counter + 1
-		end
-
-		if caster.land_mine_charge_counter >= actual_cooldown then
-			
-			-- Reset timer
-			caster.land_mine_charge_counter = 0
-
-			-- If possible, add a charge
-			AddStacks(ability, caster, caster, modifier_charges, 1, true)
-		end
-	end
-end
-
 function LandMineThrow( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -106,21 +65,39 @@ function LandMineThrow( keys )
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)
 	local throw_speed = ability:GetLevelSpecialValueFor("throw_speed", ability_level)
+	local throw_chance = ability:GetLevelSpecialValueFor("throw_chance", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local player_id = caster:GetPlayerID()
 	local step_duration = 0.03
 
-	-- Verify proc condition
-	if not caster:HasModifier(modifier_charges) or not target:IsAlive() or target:GetTeam() == caster:GetTeam() then
+	-- If this target is invalid, do nothing
+	if not target:IsAlive() or target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
 		return nil
+	end
 
-	-- If there is a proc, reduce charge modifier stacks
-	else
+	-- Verify proc condition
+	local should_proc = false
+
+	-- Proc if there are charges
+	if caster:HasModifier(modifier_charges) then
+		should_proc = true
+
+		-- Reduce charge count
 		if caster:GetModifierStackCount(modifier_charges, caster) <= 1 then
 			caster:RemoveModifierByName(modifier_charges)
 		else
 			AddStacks(ability, caster, caster, modifier_charges, -1, true)
 		end
+	end
+
+	-- If there aren't any charges, proc by chance
+	if RandomInt(1, 100) <= throw_chance then
+		should_proc = true
+	end
+
+	-- If a proc hasn't happened, exit
+	if not should_proc then
+		return nil
 	end
 
 	-- Create the mine at the specified place
@@ -176,7 +153,6 @@ function LandMineThink( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_slow = keys.modifier_slow
-	local scepter = HasScepter(caster:GetOwnerEntity())
 
 	-- Parameters
 	local small_radius = ability:GetLevelSpecialValueFor("small_radius", ability_level)
@@ -197,11 +173,7 @@ function LandMineThink( keys )
 		if #far_units > 0 then
 			caster:RemoveModifierByName("modifier_rooted")
 			caster:MoveToPosition(far_units[1]:GetAbsOrigin())
-			if scepter then
-				AddStacks(ability, caster, caster, modifier_slow, -2, true)
-			else
-				AddStacks(ability, caster, caster, modifier_slow, -1, true)
-			end
+			AddStacks(ability, caster, caster, modifier_slow, -1, true)
 		end
 
 		-- If any enemy is inside the small blast range, explode
@@ -229,7 +201,6 @@ function LandMineExplode( keys )
 	local particle_explode = keys.particle_explode
 	local modifier_invis = keys.modifier_invis
 	local modifier_debuff = keys.modifier_debuff
-	local scepter = HasScepter(caster:GetOwnerEntity())
 
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -237,7 +208,6 @@ function LandMineExplode( keys )
 	local big_radius = ability:GetLevelSpecialValueFor("big_radius", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("vision_radius", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
-	local damage_scepter = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
 
 	-- Make the mine visible
@@ -261,14 +231,8 @@ function LandMineExplode( keys )
 	-- Damage small radius enemies
 	for _,enemy in pairs(near_units) do
 
-		-- Scepter bonus damage
-		local bonus_damage = 0
-		if scepter and not enemy:IsBuilding() then
-			bonus_damage = enemy:GetMaxHealth() * damage_scepter / 100
-		end
-
 		-- Damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage + bonus_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 
 		-- Building damage debuff
 		if enemy:IsBuilding() then
@@ -290,14 +254,8 @@ function LandMineExplode( keys )
 		-- If not, apply half damage
 		if not already_damaged then
 
-			-- Scepter bonus damage
-			local bonus_damage = 0
-			if scepter and not enemy:IsBuilding() then
-				bonus_damage = enemy:GetMaxHealth() * damage_scepter / 100
-			end
-
 			-- Damage
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = (damage + bonus_damage) / 2, damage_type = DAMAGE_TYPE_PHYSICAL})
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage / 2, damage_type = DAMAGE_TYPE_PHYSICAL})
 
 			-- Building damage debuff
 			if enemy:IsBuilding() then

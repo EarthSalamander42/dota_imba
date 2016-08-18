@@ -808,19 +808,15 @@ function GameMode:OnEntityKilled( keys )
 			local caster = killed_unit				
 			local ability_level = ability_land_mine:GetLevel() - 1
 			local modifier_state = "modifier_imba_land_mines_state"
-			local modifier_charges = "modifier_imba_land_mines_charge"
 			
 			-- Parameters
 			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
+			local levels_per_mine = ability_land_mine:GetLevelSpecialValueFor("levels_per_mine", ability_level)
 			local duration = ability_land_mine:GetLevelSpecialValueFor("duration", ability_level)
 			local player_id = caster:GetPlayerID()
 
 			-- Calculate amount of mines to drop
-			local mine_amount = 1
-			if caster:HasModifier(modifier_charges) then
-				mine_amount = 1 + math.max(caster:GetModifierStackCount(modifier_charges, caster), 1)
-				caster:RemoveModifierByName(modifier_charges)
-			end
+			local mine_amount = 1 + math.floor( caster:GetLevel() / levels_per_mine )
 
 			-- Drop the mines
 			for i = 1, mine_amount do

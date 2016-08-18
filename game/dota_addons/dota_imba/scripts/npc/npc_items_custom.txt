@@ -2663,6 +2663,7 @@
 				"modifier_debuff"		"modifier_item_imba_sheepstick_disable"
 				"modifier_dearmor"		"modifier_item_imba_sheepstick_dearmor"
 				"modifier_demagic"		"modifier_item_imba_sheepstick_demagic"
+				"modifier_prevent"		"modifier_item_imba_sheepstick_prevent"
 				"particle_cast"			"particles/items_fx/item_sheepstick.vpcf"
 			}
 		}
@@ -2691,8 +2692,6 @@
 				"IsPurgable"							"1"
 				"IsHidden"								"1"
 
-				"Duration"								"%sheep_duration"
-
 				"States"
 				{
 					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
@@ -2716,8 +2715,6 @@
 				"IsPurgable"							"1"
 				"IsHidden"								"1"
 
-				"Duration"								"%sheep_duration"
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 		"-1"
@@ -2730,12 +2727,20 @@
 				"IsPurgable"							"1"
 				"IsHidden"								"1"
 
-				"Duration"								"%sheep_duration"
-
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
 				}
+			}
+
+			"modifier_item_imba_sheepstick_prevent"
+			{
+				"Passive"								"0"
+				"IsBuff"								"1"
+				"IsPurgable"							"0"
+				"IsHidden"								"0"
+
+				"TextureName"		"imba_sheepstick_recast"
 			}
 		}
 	}
@@ -16897,26 +16902,6 @@
 
 						"sound_heal"		"DOTA_Item.ClarityPotion.Activate"
 					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_aegis.lua"
-						"Function"			"AegisDamage"
-
-						"modifier_aegis"	"modifier_item_imba_aegis"
-						"modifier_death"	"modifier_item_imba_aegis_death"
-						"particle_wait"		"particles/items_fx/aegis_timer.vpcf"
-						"particle_respawn"	"particles/items_fx/aegis_respawn_timer.vpcf"
-						"sound_aegis"		"Imba.AegisStinger"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"		"1" 
 				}
 			}
 
