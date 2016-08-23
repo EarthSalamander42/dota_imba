@@ -907,3 +907,35 @@
 		}
 	}
 }
+
+"Imba.JuggOmnislashWindUp01"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/vo/juggernaut/jug_rare_06.vsnd"
+						}
+					}
+					"volume"			{	"value"		"1.200000"	}
+					"pitch_rand_min"	{	"value"		"-0.05000"	}
+					"pitch_rand_max"	{	"value"		"0.050000"	}
+					"pitch"				{	"value"		"1.000000"	}
+					"soundlevel"		{	"value"		"100.0000"	}
+					"distance_max"		{	"value"		"20000.00"	}
+					"event_type"		{	"value"		"2.000000"	}
+				}
+			}
+		}
+	}
+}

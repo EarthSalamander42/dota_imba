@@ -15369,6 +15369,426 @@
 	}
 
 	//=================================================================================================================
+	// Juggernaut's Blade Fury
+	//=================================================================================================================
+	"imba_juggernaut_blade_fury"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"juggernaut_blade_fury"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"325 350 375 400"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30 25 20 15"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 110 100 90"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"effect_radius"			"325 350 375 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_sec"		"80 105 130 155"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tick"			"0.2"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow"				"-15"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_juggernaut.lua"
+				"Function"				"Bladefury"
+
+				"modifier_caster"		"modifier_imba_blade_fury_caster"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_blade_fury_caster"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%duration"
+
+				"ThinkInterval"			"%damage_tick"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"BladefuryTick"
+
+						"particle_hit"		"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf"
+						"sound_hit"			"Hero_Juggernaut.BladeFury.Impact"
+						"modifier_debuff"	"modifier_imba_blade_fury_debuff"
+					}
+				}
+		
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"BladefuryParticleStart"
+
+						"particle_spin"		"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf"
+						"sound_spin"		"Hero_Juggernaut.BladeFuryStart"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"BladefuryParticleEnd"
+
+						"sound_spin"		"Hero_Juggernaut.BladeFuryStart"
+						"sound_stop"		"Hero_Juggernaut.BladeFuryStop"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_blade_fury_debuff"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%damage_tick"
+			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%ms_slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Blade Dance
+	//=================================================================================================================
+	"imba_juggernaut_blade_dance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityTextureName"			"juggernaut_blade_dance"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"particle"					"particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_chance"			"20 25 30 35"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"crit_damage"			"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"3 4 5 6"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_duration"		"2.25"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_blade_dance"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"BladedanceHit"
+
+						"modifier_crit"		"modifier_imba_blade_dance_crit"
+						"modifier_stacks"	"modifier_imba_blade_dance_stacks"
+					}
+				}
+			}
+
+			"modifier_imba_blade_dance_crit"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"BladedanceCrit"
+
+						"particle_crit"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf"
+						"sound_hit"			"Hero_Juggernaut.BladeDance"
+						"modifier_crit"		"modifier_imba_blade_dance_crit"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_damage"
+				}
+			}
+
+			"modifier_imba_blade_dance_stacks"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsBuff"				"1"
+				"IsPurgable"			"1"
+
+				"Duration"				"%bonus_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agi"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Omnislash
+	//=================================================================================================================
+	"imba_juggernaut_omni_slash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"			"juggernaut_omni_slash"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"350"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120 110 100"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150 225 300"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"particle"					"particles/econ/items/juggernaut/pw_blossom_sword/juggernaut_omni_slash_trail.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"125"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_amount"			"5 10 15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"700"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_delay"			"0.35 0.30 0.25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"agi_per_jump"			"20"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range_scepter"	"25000"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cooldown_scepter"		"70"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay_scepter"	"2.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_juggernaut.lua"
+				"Function"				"Omnislash"
+
+				"modifier_caster"		"modifier_imba_omni_slash_caster"
+				"modifier_scepter"		"modifier_imba_omni_slash_caster_scepter"
+				"sound_cast"			"Hero_Juggernaut.OmniSlash"
+				"sound_hit"				"Hero_Juggernaut.OmniSlash.Damage"
+				"particle_trail"		"particles/econ/items/juggernaut/pw_blossom_sword/juggernaut_omni_slash_trail.vpcf"
+				"particle_self"			"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash.vpcf"
+				"particle_hit"			"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_omni_slash_caster"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+		
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-100"
+				}
+			}
+
+			"modifier_imba_omni_slash_caster_scepter"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%cast_delay_scepter"
+		
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Kunkka's Torrent
 	//=================================================================================================================
 	"imba_kunkka_torrent"
