@@ -15432,6 +15432,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"ms_slow"				"-15"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_tooltip"		"15"
+			}
 		}
 
 		"OnSpellStart"
@@ -15513,6 +15518,403 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%ms_slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Healing Ward
+	//=================================================================================================================
+	"imba_juggernaut_healing_ward"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"juggernaut_healing_ward"
+		"AOERadius"						"%heal_radius"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120 125 130 135"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"particle"					"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf"
+			"particle"					"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_radius"			"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_per_sec"			"2 3 4 5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health"				"3 3 6 9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"25"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_bonus_totem"	"250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_bonus_totem"		"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_bonus_totem"	"9"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_juggernaut.lua"
+				"Function"				"HealingWard"
+				"Target"				"POINT"
+
+				"sound_cast"			"Hero_Juggernaut.HealingWard.Cast"
+				"sound_loop"			"Hero_Juggernaut.HealingWard.Loop"
+				"particle_ward"			"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
+				"particle_eruption"		"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Healing Ward passive
+	//=================================================================================================================
+	"imba_juggernaut_healing_ward_passive"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"juggernaut_healing_ward"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_radius"			"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_per_sec"			"2 3 4 5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health"				"3 3 6 9"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_healing_ward"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_imba_healing_ward_buff"
+				"Aura_Radius"				"%heal_radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"		"0"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"HealingWardDamage"
+					}
+				}
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"HealingWardEnd"
+
+						"sound_loop"		"Hero_Juggernaut.HealingWard.Loop"
+						"sound_end"			"Hero_Juggernaut.HealingWard.Stop"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_healing_ward_buff"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+
+				"EffectName"				"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+				"EffectAttachType"			"attach_hitloc"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_per_sec"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Healing Ward upgrade
+	//=================================================================================================================
+	"imba_juggernaut_healing_ward_upgrade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"imba_healing_ward_upgrade"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health"				"12 12 15 18"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_radius"			"750"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_bonus_totem"	"250"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_bonus_totem"		"2"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_bonus_totem"	"9"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_juggernaut.lua"
+				"Function"				"HealingWardUpgrade"
+
+				"sound_cast"			"Hero_Juggernaut.HealingWard.Cast"
+				"sound_loop"			"Hero_Juggernaut.HealingWard.Loop"
+				"particle_ward"			"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf"
+				"particle_eruption"		"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut's Healing Totem passive
+	//=================================================================================================================
+	"imba_juggernaut_healing_totem_passive"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityTextureName"			"imba_healing_ward_upgrade"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_radius"			"750"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_per_sec"			"4 5 6 7"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health"				"12 12 15 18"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_healing_totem"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				"IsPurgable"				"0"
+
+				"Aura"						"modifier_imba_healing_totem_buff"
+				"Aura_Radius"				"%heal_radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster"		"0"
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"HealingWardDamage"
+					}
+				}
+
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_juggernaut.lua"
+						"Function"			"HealingWardEnd"
+
+						"sound_loop"		"Hero_Juggernaut.HealingWard.Loop"
+						"sound_end"			"Hero_Juggernaut.HealingWard.Stop"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
+					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_healing_totem_buff"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsHidden"					"0"
+				"IsPurgable"				"0"
+
+				"EffectName"				"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+				"EffectAttachType"			"attach_hitloc"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_per_sec"
 				}
 			}
 		}
@@ -15681,8 +16083,8 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
-			"particle"					"particles/econ/items/juggernaut/pw_blossom_sword/juggernaut_omni_slash_trail.vpcf"
-			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash.vpcf"
+			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
+			"particle"					"particles/status_fx/status_effect_omnislash.vpcf"
 			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
 		}
 		
@@ -15698,7 +16100,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_amount"			"5 10 15"
+				"jump_amount"			"3 6 9"
 			}
 			"03"
 			{
@@ -15708,27 +16110,22 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.35 0.30 0.25"
+				"bounce_delay"			"0.40 0.35 0.30"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_per_jump"			"20"
+				"agi_per_jump"			"12"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"25000"
+				"bounce_range_scepter"	"1400"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_scepter"		"70"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cast_delay_scepter"	"2.0"
 			}
 		}
 
@@ -15743,8 +16140,7 @@
 				"modifier_scepter"		"modifier_imba_omni_slash_caster_scepter"
 				"sound_cast"			"Hero_Juggernaut.OmniSlash"
 				"sound_hit"				"Hero_Juggernaut.OmniSlash.Damage"
-				"particle_trail"		"particles/econ/items/juggernaut/pw_blossom_sword/juggernaut_omni_slash_trail.vpcf"
-				"particle_self"			"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash.vpcf"
+				"particle_trail"		"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
 				"particle_hit"			"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
 			}
 		}
@@ -15754,9 +16150,12 @@
 			"modifier_imba_omni_slash_caster"
 			{
 				"Passive"				"0"
-				"IsHidden"				"1"
+				"IsHidden"				"0"
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
+
+				"StatusEffectName"		"particles/status_fx/status_effect_omnislash.vpcf"
+				"StatusEffectPriority"	"10"
 		
 				"States"
 				{
@@ -15768,21 +16167,6 @@
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-100"
-				}
-			}
-
-			"modifier_imba_omni_slash_caster_scepter"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%cast_delay_scepter"
-		
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -24421,7 +24805,7 @@
 			"modifier_imba_nether_ward_debuff"
 			{
 				"Passive"					"0"
-				"IsDevuff"					"1"
+				"IsDebuff"					"1"
 				"IsHidden"					"0"
 				"IsPurgable"				"0"
 
@@ -29184,11 +29568,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_range"			"700"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_stun"		"1"
 			}
 		}
 

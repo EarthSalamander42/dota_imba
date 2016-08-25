@@ -61,16 +61,14 @@ function HellfireBlastHit( keys )
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local secondary_stun = ability:GetLevelSpecialValueFor("secondary_stun", ability_level)
 	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
 	local bounce_range = ability:GetLevelSpecialValueFor("bounce_range", ability_level)
 
 	-- Play the impact sound
 	caster:EmitSound(sound_hit)
 
-	-- Stun and debuff the target if it is not magic immune
+	-- Debuff the target if it is not magic immune
 	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = secondary_stun})
 		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
 	end
 
@@ -80,7 +78,7 @@ function HellfireBlastHit( keys )
 	-- Only bounce and spawn a summon if this is the main target
 	if caster.wraithfire_blast_main_target and caster.wraithfire_blast_main_target == target then
 
-		-- Stun the main target for longer
+		-- Stun the main target
 		if not target:IsMagicImmune() then
 			target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 		end
@@ -358,6 +356,7 @@ function ReincarnationWraithEnd( keys )
 	end
 	
 	-- Kill the target, granting credit to the original killer
+	target:SetHealth(5)
 	if target.reincarnation_scepter_killer then
 		TrueKill(target.reincarnation_scepter_killer, target, ability)
 	else

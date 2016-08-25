@@ -318,6 +318,7 @@ function NetherWardZap( keys )
 		"ancient_apparition_ice_blast",
 		"furion_teleportation",
 		"furion_wrath_of_nature",
+		"imba_juggernaut_healing_ward",
 		"imba_juggernaut_omni_slash",
 		"imba_kunkka_x_marks_the_spot",
 		"imba_lich_dark_ritual",

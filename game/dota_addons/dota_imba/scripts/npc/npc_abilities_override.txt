@@ -2425,7 +2425,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"850 1000 1150 1300"
+				"break_distance"		"800 900 1000 1100"
 			}
 			"03"
 			{
@@ -5636,46 +5636,6 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut: Healing Ward
-	//=================================================================================================================
-	"juggernaut_healing_ward"
-	{
-		"AbilityUnitTargetTeam"						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-
-		"AbilityCastRange"							"525 575 625 675"
-		"AbilityCastPoint"							"0.2"
-		
-		"AbilityCooldown"							"60.0"
-		"AbilityDuration"							"25.0"
-	
-		"AbilityManaCost"							"120"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_heal_amount"			"3 4.5 6 7.5"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_aura_radius"			"525 575 625 675"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_movespeed_tooltip"	"420"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_duration_tooltip"		"25"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Keeper of the Light: Illuminate
 	//=================================================================================================================
 	"keeper_of_the_light_illuminate"
@@ -8790,12 +8750,12 @@
 			"05"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"illusion_incoming_damage"					"-80.0"
+				"illusion_incoming_damage"					"50.0 20.0 -10.0 -40.0"
 			}
 			"06"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"tooltip_total_illusion_incoming_damage"	"20.0"
+				"tooltip_total_illusion_incoming_damage"	"150.0 120.0 90.0 60.0"
 			}			
 		}
 	}
@@ -11727,9 +11687,9 @@
 	{
 		"AbilityCastPoint"				"0.4"
 
-		"AbilityCooldown"				"120 100 80"
+		"AbilityCooldown"				"90 80 70"
 
-		"AbilityManaCost"				"75 125 175"
+		"AbilityManaCost"				"75"
 
 		"AbilitySpecial"
 		{
