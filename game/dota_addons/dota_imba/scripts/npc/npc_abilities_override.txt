@@ -8870,7 +8870,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3 4 5"
+				"max_charges"			"5"
 			}
 			"05"
 			{
