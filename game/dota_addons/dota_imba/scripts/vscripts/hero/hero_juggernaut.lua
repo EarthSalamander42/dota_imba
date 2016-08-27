@@ -284,15 +284,21 @@ function BladedanceHit( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_crit = keys.modifier_crit
 	local modifier_stacks = keys.modifier_stacks
+	local target = keys.target
+
+
 	
+
 	-- Parameters
 	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
 
 	-- Roll for a crit
 	if RandomInt(1, 100) <= crit_chance then
 
-		-- Increase stacks
-		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+		-- Increase stacks, unless target is a building or a tower.
+		if not (target:IsBuilding() or target:IsTower()) then
+			AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+		end
 
 		-- Grant a crit on the next hit
 		Timers:CreateTimer(0.02, function()
