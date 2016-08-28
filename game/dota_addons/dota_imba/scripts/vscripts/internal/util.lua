@@ -257,7 +257,8 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_borrowed_time")
-
+	target:RemoveModifierByName("modifier_imba_centaur_return")
+	
 	-- Kills the target
 	target:Kill(ability, caster)
 end
