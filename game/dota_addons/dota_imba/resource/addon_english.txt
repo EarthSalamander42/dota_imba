@@ -8,7 +8,7 @@
 		// Gamemode strings
 		//=================================================================================================================
 
-		"addon_game_name"															"Dota IMBA"
+		"addon_game_name"													"Dota IMBA"
 		"game_mode_15_desc"															"Everything is overpowered!"
 
 		"imba_introduction_line_01"															"Welcome to "
