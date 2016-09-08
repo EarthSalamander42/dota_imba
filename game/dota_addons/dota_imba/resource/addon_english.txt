@@ -2724,7 +2724,7 @@
 		"DOTA_Tooltip_ability_imba_sven_storm_bolt_duration"						"STUN DURATION:"
 
 		"DOTA_Tooltip_ability_imba_sven_great_cleave"						"Great Cleave"
-		"DOTA_Tooltip_ability_imba_sven_great_cleave_Description"					"Sven strikes with incredible force, cleaving all nearby enemy units with his attack.\n<font color='#FF7800'>Overkill:</font> can be activated to focus all of Sven's considerable strength on a single target. In this state, the cleave attack is lost, but Sven gains true strike, and each of his attacks cause the enemy to take bonus damage from all sources."
+		"DOTA_Tooltip_ability_imba_sven_great_cleave_Description"					"Sven strikes with incredible force, cleaving all nearby enemy units with his attack.\n<font color='#FF7800'>Overkill:</font> Can be activated to focus all of Sven's considerable strength on a single target. In this state, the cleave attack is lost, but Sven gains True Strike, and each of his attacks cause the enemy to take bonus damage from all sources."
 		"DOTA_Tooltip_ability_imba_sven_great_cleave_Lore"							"The Vigil Knights still seek to reclaim the stolen Outcast Blade from Sven, a weapon capable of cutting wide swaths through lesser warriors."
 		"DOTA_Tooltip_ability_imba_sven_great_cleave_radius"						"CLEAVE RADIUS:"
 		"DOTA_Tooltip_ability_imba_sven_great_cleave_cleave_pct"					"%CLEAVE DAMAGE:"
@@ -2732,7 +2732,7 @@
 		"DOTA_Tooltip_ability_imba_sven_great_cleave_active_duration"					"OVERKILL DURATION:"
 
 		"DOTA_Tooltip_ability_imba_sven_warcry"							"Warcry"
-		"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor.\n<font color='#FF7800'>Knightly presence:</font> Warcry also increases allies' strength."
+		"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor.\n<font color='#FF7800'>Knightly Presence:</font> Warcry also increases allies' strength."
 		"DOTA_Tooltip_ability_imba_sven_warcry_Note0"							"The bonus is lost when going out of Sven's effect radius."
 		"DOTA_Tooltip_ability_imba_sven_warcry_Lore"								"Calling a few lines from the Vigil Codex fortifies Sven's obedience to his rogue code. So poetic!"
 		"DOTA_Tooltip_ability_imba_sven_warcry_bonus_armor"						"BONUS ARMOR:"
@@ -2742,7 +2742,7 @@
 		"DOTA_Tooltip_ability_imba_sven_warcry_radius"							"EFFECT RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_sven_gods_strength"						"God's Strength"
-		"DOTA_Tooltip_ability_imba_sven_gods_strength_Description"					"Sven channels his rogue strength, granting himself bonus damage.\n<font color='#FF7800'>GET PUMPED!!!:</font> Sven's manly display of strength emboldens nearby allies, granting them increased damage.\n<font color='#FF7800'>Tempest bolt:</font> increases Storm Bolt's radius by %storm_bolt_radius% and damage by %storm_bolt_damage% while active.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> improves the allied damage bonus, and grants allies %ally_cleave_pct_scepter%%% cleave on their attacks."
+		"DOTA_Tooltip_ability_imba_sven_gods_strength_Description"					"Sven channels his rogue strength, granting himself bonus damage.\n<font color='#FF7800'>GET PUMPED!!!:</font> Sven's manly display of strength emboldens nearby allies, granting them increased damage.\n<font color='#FF7800'>Tempest Bolt:</font> Increases Storm Bolt's radius by %storm_bolt_radius% and damage by %storm_bolt_damage% while active.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Improves the allied damage bonus, and grants allies %ally_cleave_pct_scepter%%% cleave on their attacks."
 		"DOTA_Tooltip_ability_imba_sven_gods_strength_Note0"						"The allied bonus damage is an aura."
 		"DOTA_Tooltip_ability_imba_sven_gods_strength_Lore"							"With the strength that shattered the Sacred Helm, the Rogue Knight stands unopposed in melee combat."
 		"DOTA_Tooltip_ability_imba_sven_gods_strength_self_damage_bonus"				"%DAMAGE BONUS:"
@@ -2754,11 +2754,11 @@
 		"DOTA_Tooltip_ability_imba_sven_gods_strength_ally_cleave_radius_scepter"			"SCEPTER CLEAVE RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_techies_land_mines"						"Land Mines"
-		"DOTA_Tooltip_ability_imba_techies_land_mines_Description"					"Plant an invisible mine that explodes when an enemy steps near. Deals half damage to targets further away.\n<font color='#FF7800'>Tremorsense:</font> mines move towards nearby enemy heroes.\n<font color='#FF7800'>Stack 'em high:</font> increases amount of mines planted by one every %levels_per_mine% levels.\n<font color='#FF7800'>Big boom:</font> gain a charge of Big Boom when you use Land Mines. Attacking an enemy will spend the charge to throw a mine at their feet. Has a %throw_chance%%% chance to throw mines when out of charges."
-		"DOTA_Tooltip_ability_imba_techies_land_mines_Note0"						"Land mines explode when enemies (including invisible ones) enter their activation radius, dealing damage to all enemies in the larger explosion radius."
+		"DOTA_Tooltip_ability_imba_techies_land_mines_Description"					"Plant an invisible mine that explodes when an enemy steps near. Deals half damage to targets further away.\n<font color='#FF7800'>Tremorsense:</font> Mines move towards nearby enemy heroes.\n<font color='#FF7800'>Stack 'Em High:</font> Increases amount of mines planted by one every %levels_per_mine% levels.\n<font color='#FF7800'>Big Boom:</font> Gain a charge of Big Boom when you use Land Mines. Attacking an enemy will spend the charge to throw a mine at their feet. Has a %throw_chance%%% chance to throw mines when out of charges."
+		"DOTA_Tooltip_ability_imba_techies_land_mines_Note0"						"Land Mines explode when enemies (including invisible ones) enter their activation radius, dealing damage to all enemies in the larger explosion radius."
 		"DOTA_Tooltip_ability_imba_techies_land_mines_Note1"						"Tremorsense activates when heroes step inside the explosion radius."
 		"DOTA_Tooltip_ability_imba_techies_land_mines_Note2"						"Big Boom can have a number of charges equal to the amount of mines you plant with a cast of Land Mines."
-		"DOTA_Tooltip_ability_imba_techies_land_mines_Note3"						"Hitting buildings with multiple mines at the same time causes every mine but the first to have greatly reduced effect."
+		"DOTA_Tooltip_ability_imba_techies_land_mines_Note3"						"Hitting buildings with multiple mines at the same time causes every mine (except the first) to have greatly reduced effect."
 		"DOTA_Tooltip_ability_imba_techies_land_mines_Lore"							"The bane of Toterin!"
 		"DOTA_Tooltip_ability_imba_techies_land_mines_damage"						"FULL DAMAGE:"
 		"DOTA_Tooltip_ability_imba_techies_land_mines_small_radius"					"ACTIVATION RADIUS:"
@@ -2766,9 +2766,9 @@
 		"DOTA_Tooltip_ability_imba_techies_land_mines_activation_time"					"ACTIVATION DELAY:"
 
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap"						"Stasis Trap"
-		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Description"					"Plant an invisible trap that stuns nearby enemy units when triggered.\n<font color='#FF7800'>Living trap:</font> target any creep to plant a stasis trap inside it. Living traps will only trigger when an enemy hero steps into their activation range, or their owner creep dies.\n<font color='#FF7800'>Chain reaction:</font> targets affected by stasis trap will trigger further explosions, extending the stun duration.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> burns %mana_burn_scepter% mana with each detonation."
+		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Description"					"Plant an invisible trap that stuns nearby enemy units when triggered.\n<font color='#FF7800'>Living Trap:</font> Target any creep to plant a stasis trap inside it. Living traps will only trigger when an enemy hero steps into their activation range, or their owner creep dies.\n<font color='#FF7800'>Chain Reaction:</font> Targets affected by stasis trap will trigger further explosions, extending the stun duration.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Burns %mana_burn_scepter% mana with each detonation."
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Lore"							"The scourge of Trapper Town!"
-		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note0"						"Chain reaction does not trigger twice for the same unit on the same cast of Stasis Trap."
+		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note0"						"Chain Reaction does not trigger twice for the same unit on the same cast of Stasis Trap."
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note1"						"Triggers and stuns invisible units, but not magic immune units."
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_stun_duration"					"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_radius"						"EFFECT RADIUS:"
@@ -2777,7 +2777,7 @@
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_secondary_delay"					"CHAIN REACTION DELAY:"
 
 		"DOTA_Tooltip_ability_techies_suicide"							"Suicide Squad, Attack!"
-		"DOTA_Tooltip_ability_techies_suicide_Description"						"Techies sacrifice themselves for the greater good, dealing massive area of effect damage. More damage is dealt to units closer to Techies when they explode. Techies' respawn time is reduced by %respawn_time_percentage_tooltip%%% when killed by this ability.\n<font color='#FF7800'>Parting gift:</font> techies drop a Stasis Trap and a pack of Land Mines (as if casting it) when dying."
+		"DOTA_Tooltip_ability_techies_suicide_Description"						"Techies sacrifice themselves for the greater good, dealing massive area of effect damage. More damage is dealt to units closer to Techies when they explode. Techies' respawn time is reduced by %respawn_time_percentage_tooltip%%% when killed by this ability.\n<font color='#FF7800'>Parting Gift:</font> Techies drop a Stasis Trap and a pack of Land Mines (as if casting it) when dying."
 		"DOTA_Tooltip_ability_techies_suicide_Note0"							"Using this ability counts as suicide, and does not award gold or experience to the enemy team."
 		"DOTA_Tooltip_ability_techies_suicide_Note1"							"Techies still earn experience for kills made with this ability."
 		"DOTA_Tooltip_ability_techies_suicide_Note2"							"This ability destroys trees."
@@ -2788,7 +2788,7 @@
 		"DOTA_Tooltip_ability_techies_suicide_big_radius"						"PARTIAL DAMAGE RADIUS:"
 
 		"DOTA_Tooltip_ability_techies_remote_mines"						"Remote Mines"
-		"DOTA_Tooltip_ability_techies_remote_mines_Description"						"Plant an invisible explosive that will only detonate when triggered. Does not damage buildings.\n<font color='#FF7800'>Smart mines:</font> mines can be set to automatically trigger, be it on any unit stepping nearby, or only enemy heroes.\n<font color='#00FF40'>Smart mines will be planted with the last used auto-detonation setting already active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> improves cast range and mine damage, and grants all your mines the Blastopolis ability, allowing them to be teleported to your minefield sign."
+		"DOTA_Tooltip_ability_techies_remote_mines_Description"						"Plant an invisible explosive that will only detonate when triggered. Does not damage buildings.\n<font color='#FF7800'>Smart Mines:</font> Remote Mines can be set to automatically trigger, be it on any unit stepping nearby, or only enemy heroes.\n<font color='#00FF40'>Smart mines will be planted with the last used auto-detonation setting already active.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Improves cast range and mine damage, and grants all your mines the Blastopolis ability, allowing them to be teleported to your Minefield Sign."
 		"DOTA_Tooltip_ability_techies_remote_mines_Lore"							"The downfall of Dredger's Bight!"
 		"DOTA_Tooltip_ability_techies_remote_mines_radius"						"EXPLOSION RADIUS:"
 		"DOTA_Tooltip_ability_techies_remote_mines_damage"						"DAMAGE:"
@@ -2810,7 +2810,7 @@
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero_Lore"						"Mine smarter, not harder."
 
 		"DOTA_Tooltip_ability_imba_techies_minefield_sign"					"Minefield Sign"
-		"DOTA_Tooltip_ability_imba_techies_minefield_sign_Description"					"Plant a warning sign to remind enemies to step lightly. <font color='#FF7800'>Lasts forever,</font> but only one sign can exist at a time.\n<font color='#FF0000'>Cannot be planted near enemy structures, including their fountain.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> hides all nearby mines from True Sight."
+		"DOTA_Tooltip_ability_imba_techies_minefield_sign_Description"					"Plant a warning sign to remind enemies to step lightly. <font color='#FF7800'>Lasts forever,</font> but only one sign can exist at a time.\n<font color='#FF0000'>Cannot be planted near enemy structures, including their fountain.</font>\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Hides all nearby mines from True Sight."
 		"DOTA_Tooltip_ability_imba_techies_minefield_sign_Lore"							"Watch your step!"
 
 		"DOTA_Tooltip_ability_imba_techies_minefield_teleport"					"Minefield Teleport"
@@ -2818,7 +2818,7 @@
 		"DOTA_Tooltip_ability_imba_techies_minefield_teleport_Lore"						"A big minefield is a happy minefield!"
 
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike"					"Burrowstrike"
-		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"					"Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces.\n<font color='#FF7800'>Desert rush:</font> disjoints projectiles, and applies Desert Sting on enemies hit.\n<font color='#FF7800'>Treacherous sands effect:</font> pushes enemies towards the <font color='#00FF40'>destination</font> when toggled <font color='#00FF40'>on</font>, and towards the <font color='#00FF40'>origin</font> when toggled <font color='#00FF40'>off</font>."
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"					"Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces.\n<font color='#FF7800'>Desert Rush:</font> Disjoints projectiles, and applies Desert Sting on enemies hit.\n<font color='#FF7800'>Treacherous Sands Effect:</font> Pushes enemies towards the <font color='#00FF40'>destination</font> when toggled <font color='#00FF40'>on</font>, and towards the <font color='#00FF40'>origin</font> when toggled <font color='#00FF40'>off</font>."
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Lore"							"Crixalis often lies in wait, burrowing under the surface to ambush his adversaries."
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_damage"					"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_burrow_duration"				"STUN DURATION:"
@@ -2826,7 +2826,7 @@
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_burrow_width"					"WIDTH:"
 
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm"						"Sand Storm"
-		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Description"					"Sand King creates a fearsome sandstorm, damaging enemies while hiding him from vision. The invisibility remains for %invis_duration% seconds after the sandstorm ends.\n<font color='#FF7800'>Treacherous sands effect:</font> pulls enemies <font color='#00FF40'>inwards</font> when toggled <font color='#00FF40'>on</font>, and pushes them <font color='#00FF40'>outwards</font> when toggled <font color='#00FF40'>off</font>."
+		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Description"					"Sand King creates a fearsome sandstorm, damaging enemies while hiding him from vision. The invisibility remains for %invis_duration% seconds after the sandstorm ends.\n<font color='#FF7800'>Treacherous Sands Effect:</font> Pulls enemies <font color='#00FF40'>inwards</font> when toggled <font color='#00FF40'>on</font>, and pushes them <font color='#00FF40'>outwards</font> when toggled <font color='#00FF40'>off</font>."
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Lore"							"Some say Crixalis is a mirage; his carapace appearing then vanishing between the whirling sands of the Scintillant Waste."
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm_radius"						"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm_damage"						"DAMAGE PER SECOND:"
@@ -2845,12 +2845,12 @@
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"				"SLOW DURATION:"
 
 		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands"					"Treacherous Sands"
-		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Description"				"Causes enemies hit by Sand King's abilities to be moved around by powerful desert winds.\n<font color='#FF7800'>Dust devils:</font> when toggled <font color='#00FF40'>off</font>, pushes enemies away from Sand King.\n<font color='#FF7800'>Quicksand:</font> when toggled <font color='#00FF40'>on</font>, pulls enemies towards Sand King."
+		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Description"				"Causes enemies hit by Sand King's abilities to be moved around by powerful desert winds.\n<font color='#FF7800'>Dust Devils:</font> When toggled <font color='#00FF40'>off</font>, pushes enemies away from Sand King.\n<font color='#FF7800'>Quicksand:</font> When toggled <font color='#00FF40'>on</font>, pulls enemies towards Sand King."
 		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Note0"					"Does not affect spell immune enemies."
 		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Lore"						"An injection from Crixalis makes one hated by the land itself, constantly having to walk on shifting, treacherous ground."
 
 		"DOTA_Tooltip_ability_imba_sandking_epicenter"						"Epicenter"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"					"After channeling Epicenter, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %step_radius%, up to %max_radius%.\n<font color='#FF7800'>Unstoppable:</font> can be channeled for up to 4 seconds, launching %max_pulses% pulses. If interrupted early, will launch an amount of pulses proportional to the channeling time.\n<font color='#FF7800'>Richter's nightmare:</font> pulses one additional time per %levels_per_pulse% levels.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> adds %bonus_pulses_scepter% extra pulses, and causes enemies in %pull_radius_scepter% radius to be <font color='#00FF40'>pulled</font> towards you if Treacherous Sands is toggled <font color='#00FF40'>on</font>."
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"					"After channeling Epicenter, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %step_radius%, up to %max_radius%.\n<font color='#FF7800'>Unstoppable:</font> Can be channeled for up to 4 seconds, launching %max_pulses% pulses. If interrupted early, will launch an amount of pulses proportional to the channeling time.\n<font color='#FF7800'>Richter's Nightmare:</font> Pulses one additional time per %levels_per_pulse% levels.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Adds %bonus_pulses_scepter% extra pulses, and causes enemies in %pull_radius_scepter% radius to be <font color='#00FF40'>pulled</font> towards you if Treacherous Sands is toggled <font color='#00FF40'>on</font>."
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_Lore"							"Many an explorer was lost to the quicksands of the Scintillant Waste."
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_damage"						"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_max_pulses"					"BASE PULSES:"
@@ -2861,7 +2861,7 @@
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_pull_radius_scepter"				"SCEPTER PULL RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_tinker_laser"						"Laser"
-		"DOTA_Tooltip_ability_imba_tinker_laser_Description"						"Fires an intense energy beam, dealing pure damage to the target.\n<font color='#FF7800'>Glare:</font> blinds enemies in a short radius, causing them to miss all attacks and lose 1000 vision for the duration.\n<font color='#FF7800'>Overdrive:</font> increases damage by 50 and blind duration by 0.25 seconds per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> now refracts, bouncing to enemies in %bounce_range_scepter% range."
+		"DOTA_Tooltip_ability_imba_tinker_laser_Description"						"Fires an intense energy beam, dealing pure damage to the target.\n<font color='#FF7800'>Glare:</font> Blinds enemies in a short radius, causing them to miss all attacks and lose 1000 vision for the duration.\n<font color='#FF7800'>Overdrive:</font> Increases damage by 50 and blind duration by 0.25 seconds per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Now refracts, bouncing to enemies in %bounce_range_scepter% range."
 		"DOTA_Tooltip_ability_imba_tinker_laser_Lore"								"Boush perfected this rock cutting laser in his subterranean laboratory, never considering its combat utility."
 		"DOTA_Tooltip_ability_imba_tinker_laser_damage"							"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_tinker_laser_base_duration"						"DURATION:"
@@ -2869,14 +2869,14 @@
 		"DOTA_Tooltip_ability_imba_tinker_laser_bounce_range_scepter"					"SCEPTER BOUNCE RANGE:"
 
 		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile"					"Heat-Seeking Missiles"
-		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Description"				"Launches a pair of tracking rockets at two random enemy units in 2500 range, prioritizing heroes.\n<font color='#FF7800'>Flare:</font> On impact, grants vision of the target for a short duration.\n<font color='#FF7800'>Overdrive:</font> launches one extra rocket per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> adds two extra missiles per cast."
-		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Note0"						"Can only hit heroes once per cast."
-		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Lore"					"The last contraption Boush was able to save was a retrofitted rocket launcher with a homing mechanism."
+		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Description"				"Launches a pair of tracking rockets at two random enemy units in 2500 range, prioritizing heroes.\n<font color='#FF7800'>Flare:</font> On impact, grants vision of the target for a short duration.\n<font color='#FF7800'>Overdrive:</font> Launches one extra rocket per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Adds two extra missiles per cast."
+		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Note0"					"Can only hit heroes once per cast."
+		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_Lore"						"The last contraption Boush was able to save was a retrofitted rocket launcher with a homing mechanism."
 		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_damage"					"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_tinker_heat_seeking_missile_vision_duration"				"FLARE DURATION:"
 
 		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines"				"March of the Machines"
-		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_Description"				"Deploys %spawner_amount% robots to continuously spawn attack drones, which travel for %spawn_length% units and deal damage to any enemies they hit. The robots spawn up to %max_spawns% drones, or less if damaged. Each one can be destroyed in %spawner_amount% hero-based attacks.\n<font color='#FF7800'>Overdrive:</font> deploys an extra robot per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> machine spawners will now slowly travel forward when released."
+		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_Description"				"Deploys %spawner_amount% robots to continuously spawn attack drones, which travel for %spawn_length% units and deal damage to any enemies they hit. The robots spawn up to %max_spawns% drones, or less if damaged. Each one can be destroyed in %spawner_amount% hero-based attacks.\n<font color='#FF7800'>Overdrive:</font> Deploys an extra robot per stack.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Machine spawners will now slowly travel forward when released."
 		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_Note0"					"Non-hero-based attacks will deal only 1 damage to the robots."
 		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_Lore"						"Even though the laboratory has since been sealed off, the ability to radio in robotic drones is still in working order."
 		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_damage"					"DRONE DAMAGE:"
@@ -2886,7 +2886,7 @@
 		"DOTA_Tooltip_ability_imba_tinker_march_of_the_machines_movement_scepter"			"SCEPTER MOVE SPEED:"
 
 		"DOTA_Tooltip_ability_imba_tinker_rearm"						"Rearm"
-		"DOTA_Tooltip_ability_imba_tinker_rearm_Description"						"Resets the cooldown on most of Tinker's items and abilities.\n<font color='#FF7800'>Overdrive:</font> each time Rearm is used, gain a stack of Overdrive, continuously spending mana in order to increase your other abilities' power. Using your abilities refreshes all Overdrive stacks. Entering the Fountain area cools down your machinery, ending any currently active stacks."
+		"DOTA_Tooltip_ability_imba_tinker_rearm_Description"						"Resets the cooldown on most of Tinker's items and abilities.\n<font color='#FF7800'>Overdrive:</font> Each time Rearm is used, gain a stack of Overdrive, continuously spending mana in order to increase your other abilities' power. Using your abilities refreshes all Overdrive stacks. Entering the Fountain area cools down your machinery, ending any currently active stacks."
 		"DOTA_Tooltip_ability_imba_tinker_rearm_Note0"							"Does not rearm Arcane Boots, Mekansm, Guardian Greaves, Bloodstone, Hand of Midas, White Queen's Cape, Black King Bar, Necronomicon, Eye of Skadi, or Refresher Orb."
 		"DOTA_Tooltip_ability_imba_tinker_rearm_Note1"							"Overdrive's mana cost per second increases dramatically with each stack."
 		"DOTA_Tooltip_ability_imba_tinker_rearm_Note2"							"Rearm's cooldown cannot be reduced by any means."
@@ -2894,7 +2894,7 @@
 		"DOTA_Tooltip_ability_imba_tinker_rearm_stack_duration"						"OVERDRIVE DURATION:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee"				"Whirling Axes"
-		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"			"Continuously hurls axes nearby, damaging enemies.\n<font color='#FF7800'>Infuriating:</font> each time enemies are hit by whirling axes, they gain a stack of Blind Rage; each stack causes one of their attacks to miss."
+		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Description"			"Continuously hurls axes nearby, damaging enemies.\n<font color='#FF7800'>Infuriating:</font> Each time enemies are hit by Whirling Axes, they gain a stack of Blind Rage; each stack causes one of their attacks to miss."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note0"				"Hits once on cast and twice per second for the duration, for a total of 7 hits."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Note1"				"Can only damage units once per cast."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_Lore"					"The Troll's attacks are obnoxious to the point of madness."
@@ -2904,7 +2904,7 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_radius"				"RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged"				"Throwing Axes"
-		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Description"			"Hurls a fistful of axes in a cone, damaging and slowing enemies. Getting hit by more axes increases damage and slow.\n<font color='#FF7800'>Troll physics:</font> throws one extra axe for each 20 agility you have."
+		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Description"			"Hurls a fistful of axes in a cone, damaging and slowing enemies. Getting hit by more axes increases damage and slow.\n<font color='#FF7800'>Troll Physics:</font> Throws one extra axe for each 20 agility you have."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Note0"				"The axes' spread increases as their number grows, up to a 72 degree cone."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Lore"					"And by adding magnets to this time machine, we get... INFINITE AXES!"
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_range"				"RANGE:"
@@ -2915,7 +2915,7 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_base_axes"			"NUMBER OF AXES:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_fervor"					"Fervor"
-		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"					"Gain bonus attack speed for a short duration whenever you perform an attack.\n<font color='#FF7800'>Faster, faster:</font> learning this ability removes Troll Warlord's attack speed limit."
+		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Description"					"Gain bonus attack speed for a short duration whenever you perform an attack.\n<font color='#FF7800'>Faster, Faster:</font> Learning this ability removes Troll Warlord's attack speed limit."
 		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note0"						"Still limited to a maximum of 10 attacks per second."
 		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Note1"						"Break will disable Fervor and remove any currently existing stacks."
 		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_Lore"							"The Warlord's most common strategy is to insist until his opponent is too tired to fight back."
@@ -2923,13 +2923,13 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_fervor_duration"					"DURATION:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage"				"Hax"
-		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage_Description"				"Troll Warlord is considered both melee and ranged for all item and attack effects, receiving all possible benefits from both situations at the same time.\n<font color='#FF7800'>UMADBRO:</font> grants attacks a chance to bash, dealing %bash_damage%%% extra damage and stunning the target for %bash_duration% seconds."
+		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage_Description"				"Troll Warlord is considered both melee and ranged for all item and attack effects, receiving all possible benefits from both situations at the same time.\n<font color='#FF7800'>UMADBRO:</font> Grants attacks a chance to bash, dealing %bash_damage%%% extra damage and stunning the target for %bash_duration% seconds."
 		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage_Note0"					"Bash deals magical damage."
 		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage_Lore"						"Troll Warlord himself convinced the game's developer that this is how his axes work, in an overly long rules lawyering session that would make Satan proud."
 		"DOTA_Tooltip_ability_imba_troll_warlord_berserkers_rage_bash_chance"				"%BASH CHANCE:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance"					"Battle Trance"
-		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Description"				"Troll's presence on the battlefield increases the attack speed of his allies.\n<font color='#FF7800'>Global annoyance:</font> Battle Trance's bonuses extends to allied creeps and structures.\n<font color='#FF7800'>Flame war:</font> allied heroes affected by Battle Trance gain Rage stacks with every successful attack, granting them extra attack speed."
+		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Description"				"Troll's presence on the battlefield increases the attack speed of his allies.\n<font color='#FF7800'>Global Annoyance:</font> Battle Trance's bonuses extends to allied creeps and structures.\n<font color='#FF7800'>Flame War:</font> Allied heroes affected by Battle Trance gain Rage stacks with every successful attack, granting them extra attack speed."
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Note0"					"Rage stacks can be gained, but not refreshed, even after Battle Trance ends."
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_Lore"						"Trololololo, trololo, lololo... TROLOLOLOLOLOOH!"
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bonus_as"				"ATTACK SPEED:"
@@ -2937,10 +2937,10 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_trance_as"				"RAGE ATTACK SPEED PER HIT:"
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_trance_duration"				"RAGE DURATION:"
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bat_scepter"				"%BAT REDUCTION:"
-		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"			"Further enhances allied heroes' attack speed by reducing their Base Attack Time for the trance's duration."
+		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"			"Further enhances allied heroes' attack speed by reducing their Base Attack Time during the Battle Trance's duration."
 
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile"					"Magic Missile"
-		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Description"					"Fires a magic missile at an enemy unit, stunning and dealing damage.\n<font color='#FF7800'>Spite:</font> deals bonus damage to the initial target based on its current Rancor stacks.\n<font color='#FF7800'>Share the pain:</font> launches extra magic missiles to any enemy with Rancor stacks in %rancor_radius% radius of each target."
+		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Description"					"Fires a magic missile at an enemy unit, stunning and dealing damage.\n<font color='#FF7800'>Spite:</font> Deals bonus damage to the initial target based on its current Rancor stacks.\n<font color='#FF7800'>Share the Pain:</font> Launches extra Magic Missiles to any enemy with Rancor stacks in %rancor_radius% radius of each target."
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Note0"					"If the target has Rancor stacks, the magic missile becomes undisjointable."
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Lore"							"A simple Skywrath technique, the magic missile is Shendel's primary tool for vengeance."
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_base_damage"					"BASE DAMAGE:"
@@ -2948,7 +2948,7 @@
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_stun_duration"				"STUN DURATION:"
 
 		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror"					"Wave of Terror"
-		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_Description"					"Lets loose a wicked cry, weakening the armor of enemies and giving vision of the path ahead.\n<font color='#FF7800'>Terrorize:</font> enemies hit which have Rancor stacks become <font color='#FF7800'>terrified</font>. Terrified units take extra damage from all sources if they stare directly at the Vengeful Spirit."
+		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_Description"					"Lets loose a wicked cry, weakening the armor of enemies and giving vision of the path ahead.\n<font color='#FF7800'>Terrorize:</font> Enemies hit who have Rancor stacks become <font color='#FF7800'>terrified</font>. Terrified units take extra damage from all sources if they stare directly at the Vengeful Spirit."
 		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_Note0"					"Terrorize's bonus damage increases with Rancor Stacks."
 		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_Note1"					"Terrorize's bonus damage triggers if the target can see Vengeful Spirit, and is facing towards her."
 		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_Lore"						"Shendelzare's haunting voice hints at her approaching vindication."
@@ -2960,7 +2960,7 @@
 		"DOTA_Tooltip_ability_imba_vengeful_wave_of_terror_duration"					"DURATION:"
 
 		"DOTA_Tooltip_ability_imba_vengeful_command_aura"					"Vengeance Aura"
-		"DOTA_Tooltip_ability_imba_vengeful_command_aura_Description"					"Vengeful Spirit's bloodlust empowers her nearby allies' strikes.\n<font color='#FF7800'>Avenger:</font> the damage bonus is based on all your attack damage.\n<font color='#FF7800'>Vindication:</font> each Rancor stack in Vengeance Aura's area of effect increases its effect by %rancor_damage_bonus%%%.\n<font color='#FF7800'>Martyrdom:</font> enemies which kill the Vengeful Spirit will gain a negative version of Vengeance Aura, which reduces its nearby allies' damage."
+		"DOTA_Tooltip_ability_imba_vengeful_command_aura_Description"					"Vengeful Spirit's bloodlust empowers her nearby allies' strikes.\n<font color='#FF7800'>Avenger:</font> The damage bonus is based on all your attack damage.\n<font color='#FF7800'>Vindication:</font> Each Rancor stack in Vengeance Aura's area of effect increases its effect by %rancor_damage_bonus%%%.\n<font color='#FF7800'>Martyrdom:</font> Enemies which kill the Vengeful Spirit will gain a negative version of Vengeance Aura, which reduces its nearby allies' damage."
 		"DOTA_Tooltip_ability_imba_vengeful_command_aura_Lore"							"Although they may not share her undying passion for revenge, allies do draw on her fanaticism in combat."
 		"DOTA_Tooltip_ability_imba_vengeful_command_aura_radius"					"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_vengeful_command_aura_damage_bonus"					"%DAMAGE BONUS:"
@@ -2975,7 +2975,7 @@
 		"DOTA_Tooltip_ability_imba_vengeful_rancor_Lore"							"Vengeance is a dish best served... NOW."
 
 		"DOTA_Tooltip_ability_imba_vengeful_nether_swap"					"Nether Swap"
-		"DOTA_Tooltip_ability_imba_vengeful_nether_swap_Description"					"Instantaneously swaps positions with a target hero.\n<font color='#FF7800'>Hatred:</font> briefly stuns and damages enemies which have Rancor stacks in %rancor_radius% radius of the start and end points.\n<font color='#FF7800'>Swapback:</font> allows the Vengeful Spirit to go back to her initial position up to %swapback_max_time% seconds after Swap happens. Swapback needs %swapback_min_time% second to activate.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> reduces cooldown, and causes a Vengeance Illusion to spawn when you die. The illusion deals 50% damage, takes 50% increased damage, can use your abilities, and lasts until you respawn."
+		"DOTA_Tooltip_ability_imba_vengeful_nether_swap_Description"					"Instantaneously swaps positions with a target hero.\n<font color='#FF7800'>Hatred:</font> Briefly stuns and damages enemies which have Rancor stacks in %rancor_radius% radius of the start and end points.\n<font color='#FF7800'>Swapback:</font> Allows the Vengeful Spirit to go back to her initial position up to %swapback_max_time% seconds after Swap happens. Swapback needs %swapback_min_time% second to activate.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Reduces cooldown, and causes a Vengeance Illusion to spawn when you die. The illusion deals 50% damage, takes 50% increased damage, can use your abilities, and lasts until you respawn."
 		"DOTA_Tooltip_ability_imba_vengeful_nether_swap_Note0"						"Hatred projectiles are undisjointable."
 		"DOTA_Tooltip_ability_imba_vengeful_nether_swap_Lore"							"Martyrdom is a small price to pay for vengeance."
 		"DOTA_Tooltip_ability_imba_vengeful_nether_swap_range"						"RANGE:"
@@ -2991,10 +2991,10 @@
 		"DOTA_Tooltip_ability_imba_vengeful_swap_back_Lore"							"The Venegeful Spirit navigates the spirit world's shortcuts with practiced grace."
 
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale"					"Venomous Gale"
-		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Description"				"Launches a ball of venom which poisons enemies on its way, slowing them and dealing damage <font color='#FF7800'>based on their maximum HP</font> every %tick_interval% seconds.\n<font color='#FF7800'>Scourge Spit:</font> when Venomancer uses Venomous Gale, all Scourge Wards in %ward_radius% radius will do the same."
+		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Description"				"Launches a ball of venom which poisons enemies on its way, slowing them and dealing damage <font color='#FF7800'>based on their maximum HP</font> every %tick_interval% seconds.\n<font color='#FF7800'>Scourge Spit:</font> When Venomancer uses Venomous Gale, all Scourge Wards in %ward_radius% radius will do the same."
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note0"					"Does not allow the target to be denied."
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note1"					"The slow's effect gradually weakens during the spell's effect."
-		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note2"					"Separate Gales do not stack, but the initial damage can be dealt multiple times to the same target."
+		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Note2"					"Separate Venomous Gales do not stack, but the initial damage can be dealt multiple times to the same target."
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_Lore"						"A concoction of various stings, poisons, and toxins gathered from the jungles of Jidi Isle, victims surviving it are rare."
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_duration"					"DURATION:"
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_initial_slow"				"%INITIAL SLOW:"
@@ -3004,7 +3004,7 @@
 		"DOTA_Tooltip_ability_imba_venomancer_venomous_gale_tick_damage"				"MINIMUM TICK DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_venomancer_poison_sting"					"Poison Sting"
-		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"					"Adds poison damage to Venomancer's normal attacks, dealing physical damage, reducing armor, and slowing movement speed.\n<font color='#FF7800'>Infinite poison:</font> Poison Sting can stack with itself indefinitely. Each attack from Venomancer or his wards will add more stacks, which decay at a rate of 10% per second (minimum 2)."
+		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Description"					"Adds poison damage to Venomancer's normal attacks, dealing physical damage, reducing armor, and slowing movement speed.\n<font color='#FF7800'>Infinite Poison:</font> Poison Sting can stack with itself indefinitely. Each attack from Venomancer or his wards will add more stacks, which decay at a rate of 10% per second (minimum 2)."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note0"					"Venomancer's first attack adds a minimum number of stacks of Poison Sting to the target. Each subsequent attack also adds stacks, but at a lower rate."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Note1"					"Wards add one stack per attack."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_Lore"						"The paralytic sting of the creature which caused his transformation now belongs to the Venomancer."
@@ -3015,7 +3015,7 @@
 		"DOTA_Tooltip_ability_imba_venomancer_poison_sting_slow_per_stack"				"%SLOW PER STACK:"
 
 		"DOTA_Tooltip_ability_imba_venomancer_plague_ward"					"Plague Wards"
-		"DOTA_Tooltip_ability_imba_venomancer_plague_ward_Description"					"Summons <font color='#FF7800'>%plague_amount%</font> plague wards, which are spell immune and can be destroyed in 2 attacks (1 attack by heroes or towers).\nWards apply one stack of Poison Sting on each attack.\n<font color='#FF7800'>Scourge ward:</font> also summons a strong Scourge Ward, which attacks all nearby enemies and has twice the normal health."
+		"DOTA_Tooltip_ability_imba_venomancer_plague_ward_Description"					"Summons <font color='#FF7800'>%plague_amount%</font> Plague Wards, which are spell immune and can be destroyed in 2 attacks (1 attack by heroes or towers).\nWards apply one stack of Poison Sting on each attack.\n<font color='#FF7800'>Scourge Ward:</font> Also summons a strong Scourge Ward, which attacks all nearby enemies and has twice the normal health."
 		"DOTA_Tooltip_ability_imba_venomancer_plague_ward_Lore"							"A mixture of his old herbalist talents and newfound toxic mastery creates a living embodiment of plague."
 		"DOTA_Tooltip_ability_imba_venomancer_plague_ward_duration"					"DURATION:"
 		"DOTA_Tooltip_ability_imba_venomancer_plague_ward_plague_damage"				"PLAGUE WARD DAMAGE:"
@@ -3033,7 +3033,7 @@
 		"DOTA_Tooltip_ability_imba_venomancer_toxicity_move_slow"					"%MOVEMENT SLOW:"
 
 		"DOTA_Tooltip_ability_imba_venomancer_poison_nova"					"Poison Nova"
-		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Description"					"Launches a ring of lethal poison which does damage over time to enemies around the Venomancer.\n<font color='#FF7800'>Bubonic AIDSbolapox:</font> deals damage per second equal to %damage_pct%%% of the target's current health, or %damage_min%, whichever is higher.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> increases minimum damage per tick, and makes Poison Nova contagious. Contagious poison will spread to uninfected enemies if they come too close to affected ones. When spreading, the debuff's duration will increase by 3 seconds."
+		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Description"					"Launches a ring of lethal poison which does damage over time to enemies around the Venomancer.\n<font color='#FF7800'>Bubonic AIDSbolapox:</font> Deals damage per second equal to %damage_pct%%% of the target's current health, or %damage_min%, whichever is higher.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases minimum damage per tick, and makes Poison Nova contagious. Contagious poison will spread to uninfected enemies if they come too close to affected ones. When spreading, the debuff's duration will increase by 3 seconds."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Note0"					"Despite the animation, all targets in 900 range are affected immediately."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Note1"					"Poison Nova stacks with itself."
 		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_Lore"							"The Venomancer's ultimate creation, this virulent poison only grows stronger as its host fights it."
@@ -3045,7 +3045,7 @@
 		"DOTA_Tooltip_ability_imba_venomancer_poison_nova_contagion_radius_scepter"			"SCEPTER CONTAGION RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_warlock_shadow_word"						"Shadow Word"
-		"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"					"Whispers an incantation, healing a friendly unit or damaging an enemy unit over time.\n<font color='#FF7800'>Crippling Word:</font> affects the target's damage, move speed, and attack speed. The effect grows stronger over time. Benefits allies, hinders enemies.\n<font color='#FF7800'>Eternal Word:</font> when Shadow Word's effect ends, it explodes, affecting all units in %spread_aoe% radius of the original target (except the target itself)."
+		"DOTA_Tooltip_ability_imba_warlock_shadow_word_Description"					"Whispers an incantation, healing a friendly unit or damaging an enemy unit over time.\n<font color='#FF7800'>Crippling Word:</font> Affects the target's damage, movement speed, and attack speed. The effect grows stronger over time. Benefits allies, hinders enemies.\n<font color='#FF7800'>Eternal Word:</font> When Shadow Word's effect ends, it explodes, affecting all units in %spread_aoe% radius of the original target (except the target itself)."
 		"DOTA_Tooltip_ability_imba_warlock_shadow_word_Note0"						"Crippling Word's effect will continue to grow stronger if Shadow Word is re-applied before its duration ends, but it cannot grow stronger than the listed maximum power."
 		"DOTA_Tooltip_ability_imba_warlock_shadow_word_Note1"						"Eternal Word's explosion can be triggered through any means of ending Shadow Word, including purges or the death of its original host."
 		"DOTA_Tooltip_ability_imba_warlock_shadow_word_Lore"							"Warlock arcane arts have a myriad of uses, allowing them to be powerful friendly enchantments or damaging curses."
@@ -3067,9 +3067,9 @@
 		"DOTA_Tooltip_ability_imba_warlock_upheaval_hero_attacks_to_kill"				"HERO ATTACKS TO KILL:"
 
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos"					"Chaotic Offering"
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Description"					"Summons a powerful golem to do Warlock's bidding, while briefly stunning enemies in a large area.\n<font color='#FF7800'>Hellish synergy:</font> the golem gains %health_per_level% health per Warlock level.\n<font color='#FF7800'>Arsenal Golem:</font> the golem can use items as if it was a hero.\n<font color='#FF0000'>Summoned units cannot have their own summons or illusions.\nCannot use Hand of Midas or Moon Shard.</font>"
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note0"						"\nWhen the golem dies, its items will not drop; they will return with it the next time it is summoned."
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note1"						"\nSummoning additional golems (through usage of, for example, Refresher Orb) clones the first golem's items to them; these cloned items cannot be sold or used by any other unit."
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Description"					"Summons a powerful golem to do Warlock's bidding, while briefly stunning enemies in a large area.\n<font color='#FF7800'>Hellish Synergy:</font> The Golem gains %health_per_level% health per Warlock level.\n<font color='#FF7800'>Arsenal Golem:</font> The Golem can use items as if it was a hero.\n<font color='#FF0000'>Summoned units cannot have their own summons or illusions.\nCannot use Hand of Midas or Moon Shard.</font>"
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note0"						"\nWhen the Golem dies, its items will not drop; they will return with it the next time it is summoned."
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Note1"						"\nSummoning additional Golems (through usage of, for example, Refresher Orb) clones the first Golem's items to them; these cloned items cannot be sold or used by any other unit."
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_Lore"							"Hell's strongest marches down the field of battle, blazing destruction in its wake."
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_stun_radius"					"STUN RADIUS:"
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_stun_duration"					"STUN DURATION:"
@@ -3079,9 +3079,9 @@
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_aghanim_description"				"Becomes a channeled spell; each second of channeling (up to 5) will stun enemies again and summon an additional, weaker golem, which cannot equip items."
 
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter"				"Rain of Chaos"
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Description"				"Summons a powerful golem to do Warlock's bidding, while briefly stunning enemies in a large area.\n<font color='#FF7800'>Hellish synergy:</font> the golem gains %health_per_level% health per Warlock level.\n<font color='#FF7800'>Arsenal Golem:</font> the golem can use items as if it was a hero.\n<font color='#FF0000'>Summoned units cannot have their own summons or illusions.\nCannot use Hand of Midas or Moon Shard.</font>"
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Note0"					"\nWhen the golem dies, its items will not drop; they will return with it the next time it is summoned."
-		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Note1"					"\nSummoning additional golems (through usage of, for example, Refresher Orb) clones the first golem's items to them; these cloned items cannot be sold or used by any other unit."
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Description"				"Summons a powerful golem to do Warlock's bidding, while briefly stunning enemies in a large area.\n<font color='#FF7800'>Hellish Synergy:</font> The Golem gains %health_per_level% health per Warlock level.\n<font color='#FF7800'>Arsenal Golem:</font> The Golem can use items as if it was a hero.\n<font color='#FF0000'>Summoned units cannot have their own summons or illusions.\nCannot use Hand of Midas or Moon Shard.</font>"
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Note0"					"\nWhen the Golem dies, its items will not drop; they will return with it the next time it is summoned."
+		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Note1"					"\nSummoning additional Golems (through usage of, for example, Refresher Orb) clones the first Golem's items to them; these cloned items cannot be sold or used by any other unit."
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_Lore"						"Hell's strongest marches down the field of battle, blazing destruction in its wake."
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_stun_radius"				"STUN RADIUS:"
 		"DOTA_Tooltip_ability_imba_warlock_rain_of_chaos_scepter_stun_duration"				"STUN DURATION:"
