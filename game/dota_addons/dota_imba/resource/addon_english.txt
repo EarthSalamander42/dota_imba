@@ -478,7 +478,7 @@
 		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_bonus_lifesteal"			"%BONUS LIFESTEAL:"
 
 		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura"					"Vampiric Aura"
-		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"				"Nearby allies will restore health based on the damage they deal. Toggle to affect creeps.\n<font color='#FF7800'>Feed the Wraith:</font> The effect is increased on Wraith King himself.\n<font color='#FF7800'>Blood, by any Other Name:</font> Can lifesteal from any source of damage."
+		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Description"				"Nearby allies will restore health based on the damage they deal. Toggle to affect creeps.\n<font color='#FF7800'>Feed the Wraith:</font> The effect is increased on Wraith King himself.\n<font color='#FF7800'>Blood, by Any Other Name:</font> Can lifesteal from any source of damage."
 		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Note0"					"Heals based on damage dealt after reductions."
 		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_Lore"						"Wraith King's blade drains his enemies' essence to feed his aura."
 		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_radius"					"AURA RADIUS:"
