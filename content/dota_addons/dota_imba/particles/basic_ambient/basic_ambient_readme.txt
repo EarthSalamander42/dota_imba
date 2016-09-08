@@ -1,4 +1,5 @@
-basic_ambient is a barebones starting point for effects that emit continuously over time and never stop playing on their own. The example featured here is a small column of ambient environmental smoke or steam.
+basic_ambient is a barebones starting point for effects that emit continuously over time and never stop playing on their own.
+The example featured here is a small column of ambient environmental smoke or steam.
 
 This is a very simple effect with just one component and no children.
 
