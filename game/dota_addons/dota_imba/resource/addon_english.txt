@@ -467,7 +467,7 @@
 		//=================================================================================================================
 
 		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast"				"Wraithfire Blast"
-		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Description"				"Sears an enemy unit with spectral fire, dealing damage and stunning. The wraithfire blast then splits, seeking enemies in up to %bounce_range% range.\n<font color='#FF7800'>Wraithgrasp:</font> slows all enemies hit for %slow_duration% seconds. While slowed, enemies will take %damage_per_second% damage per second, and Wraith King's allies will gain extra %bonus_lifesteal%%% lifesteal when attacking them."
+		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Description"				"Sears an enemy unit with spectral fire, dealing damage and stunning. The Wraithfire Blast then splits, seeking enemies in up to %bounce_range% range.\n<font color='#FF7800'>Wraithgrasp:</font> Slows all enemies hit for %slow_duration% seconds. While slowed, enemies will take %damage_per_second% damage per second, and Wraith King's allies will gain extra %bonus_lifesteal%%% lifesteal when attacking them."
 		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Note0"					"Lifesteal is granted to allied heroes only. Based on damage dealt, from any source. Does not work on illusions."
 		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_Lore"						"The one true king calls on his damned lineage, laying waste to his opponents."
 		"DOTA_Tooltip_ability_imba_wraith_king_wraithfire_blast_damage"					"DAMAGE:"
@@ -495,8 +495,8 @@
 		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_drain_duration"				"BONUS STRENGTH DURATION:"
 
 		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation"					"Reincarnation"
-		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"				"The One True King's form regroups, allowing him to resurrect when killed in battle. Upon death, slows all enemies in %slow_radius% range.\n<font color='#FF7800'>Kingdom Come:</font> Upon resurrection, kills all creeps and illusions in the area. Enemy heroes take %kingdom_damage% damage and are stunned for %kingdom_stun% second. The King gains %kingdom_ms%%% move speed for each hero hit.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> When near the Wraith King, allies will enter Wraith Form after being dealt a fatal blow, becoming unkillable for a short duration. When Wraith Form expires, allies will die normally."
-		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"					"Auras and buffs affecting by the owner will persist through the reincarnation's duration."
+		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Description"				"The One True King's form regroups, allowing him to resurrect when killed in battle. Upon death, slows all enemies in %slow_radius% range.\n<font color='#FF7800'>Kingdom Come:</font> Upon resurrection, kills all creeps and illusions in the area. Enemy heroes take %kingdom_damage% damage and are stunned for %kingdom_stun% seconds. The King gains %kingdom_ms%%% move speed for each hero hit.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> When near the Wraith King, allies will enter Wraith Form after being dealt a fatal blow, becoming unkillable for a short duration. When Wraith Form expires, allies will die normally."
+		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Note0"					"Auras and buffs affecting by the owner will persist through Reincarnation's duration."
 		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_Lore"						"Conspirators against the Wraith King wonder why he never stays dead."
 		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_slow_amount"				"%SLOW:"
 		"DOTA_Tooltip_ability_imba_wraith_king_reincarnation_slow_duration"				"SLOW DURATION:"
@@ -556,7 +556,7 @@
 		"DOTA_Tooltip_modifier_imba_tower_self_repair_aura_Description"					"Increased health regeneration."
 
 		"DOTA_Tooltip_modifier_imba_tower_mindblast_silence"					"Mindblast"
-		"DOTA_Tooltip_modifier_imba_tower_mindblast_silence_Description"				"Silenced by a Mindblast tower."
+		"DOTA_Tooltip_modifier_imba_tower_mindblast_silence_Description"				"Silenced by a Mindblast Tower."
 
 		"DOTA_Tooltip_modifier_imba_tower_atrophy_aura"						"Atrophy"
 		"DOTA_Tooltip_modifier_imba_tower_atrophy_aura_Description"					"Attack damage reduced."
@@ -603,7 +603,7 @@
 		"DOTA_Tooltip_ability_imba_roshan_slam_slam_radius"						"EFFECT RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_roshan_summon"						"Summon Roshlings"
-		"DOTA_Tooltip_ability_imba_roshan_summon_Description"						"Summons lesser versions of Roshan, whose presence empowers himself."
+		"DOTA_Tooltip_ability_imba_roshan_summon_Description"						"Summons lesser versions of Roshan, whose presences empowers himself."
 		"DOTA_Tooltip_ability_imba_roshan_summon_Note0"							"Roshlings also grow stronger as the game progresses."
 		"DOTA_Tooltip_ability_imba_roshan_summon_Lore"								"When in need, Roshan summons future, not fully mature versions of himself to help in battle."
 		"DOTA_Tooltip_ability_imba_roshan_summon_summon_duration"					"ROSHLING DURATION:"
@@ -619,7 +619,7 @@
 		"DOTA_Tooltip_ability_imba_roshling_bash_debuff_duration"					"DEBUFF DURATION:"
 
 		"DOTA_Tooltip_ability_imba_roshling_aura"						"Protection Instinct"
-		"DOTA_Tooltip_ability_imba_roshling_aura_Description"						"Increases nearby allies' armor, hp regeneration, and damage."
+		"DOTA_Tooltip_ability_imba_roshling_aura_Description"						"Increases nearby allies' armor, HP regeneration, and damage."
 		"DOTA_Tooltip_ability_imba_roshling_aura_Note0"							"Does not affect the aura owner."
 		"DOTA_Tooltip_ability_imba_roshling_aura_Lore"								"As his brothers rally to battle, Roshan's power grows."
 		"DOTA_Tooltip_ability_imba_roshling_aura_dmg_bonus"						"%DAMAGE:"
@@ -635,7 +635,7 @@
 		"DOTA_Tooltip_ability_imba_roshan_rage_armor_bonus"						"ARMOR:"
 
 		"DOTA_Tooltip_ability_imba_roshan_fury"							"Fury of the Immortal"
-		"DOTA_Tooltip_ability_imba_roshan_fury_Description"						"Charge up, then throw out a devastating roar which damages, knockbacks and stuns enemies."
+		"DOTA_Tooltip_ability_imba_roshan_fury_Description"						"Charge up, then throw out a devastating roar that damages, knockbacks, and stuns enemies."
 		"DOTA_Tooltip_ability_imba_roshan_fury_Note0"							"Damage increases as the game progresses."
 		"DOTA_Tooltip_ability_imba_roshan_fury_Lore"								"Get off my lawn!"
 		"DOTA_Tooltip_ability_imba_roshan_fury_base_damage"						"BASE DAMAGE:"
@@ -659,7 +659,7 @@
 
 		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys"					"Radiant Enmity"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_Description"					"Grants massive combat bonuses to all nearby allies."
-		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_Lore"							"A shard of the ancient itself takes the field, its unyielding hate for the Dire inspiring allies to transcend their limits."
+		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_Lore"							"A shard of the Radiant Ancient itself takes the field, its unyielding hate for the Dire inspiring allies to transcend their limits."
 		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_move_speed"					"%MOVE SPEED:"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_attack_speed"					"ATTACK SPEED:"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_goodguys_damage"					"%DAMAGE:"
@@ -670,7 +670,7 @@
 
 		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys"					"Dire Enmity"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_Description"					"Grants massive combat bonuses to all nearby allies."
-		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_Lore"							"A shard of the ancient itself takes the field, its unyielding hate for the Radiant inspiring allies to transcend their limits."
+		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_Lore"							"A shard of the Dire Ancient itself takes the field, its unyielding hate for the Radiant inspiring allies to transcend their limits."
 		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_move_speed"					"%MOVE SPEED:"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_attack_speed"					"ATTACK SPEED:"
 		"DOTA_Tooltip_ability_imba_behemoth_aura_badguys_damage"					"%DAMAGE:"
@@ -799,7 +799,7 @@
 		"DOTA_Tooltip_ability_imba_tower_fervor_max_stacks"						"MAXIMUM STACKS:"
 
 		"DOTA_Tooltip_ability_imba_tower_berserk"						"Berserker Tower"
-		"DOTA_Tooltip_ability_imba_tower_berserk_Description"						"Hits harder and faster when on low health."
+		"DOTA_Tooltip_ability_imba_tower_berserk_Description"						"Hits harder and faster based on missing health."
 		"DOTA_Tooltip_ability_imba_tower_berserk_Lore"								"What doesn't take you down, makes you stronger."
 		"DOTA_Tooltip_ability_imba_tower_berserk_hp_per_stack"						"%HP LOSS PER STACK:"
 		"DOTA_Tooltip_ability_imba_tower_berserk_stack_as"						"ATTACK SPEED PER STACK:"
@@ -817,13 +817,13 @@
 		"DOTA_Tooltip_ability_imba_tower_multihit_bonus_attacks"					"BONUS ATTACKS:"
 
 		"DOTA_Tooltip_ability_imba_tower_spell_shield"						"Spell Dampener"
-		"DOTA_Tooltip_ability_imba_tower_spell_shield_Description"					"This tower is magic immune, and increases magic resistance of all allies in range."
+		"DOTA_Tooltip_ability_imba_tower_spell_shield_Description"					"This tower is magic immune, and grants all allies in its range a bonus to their magic resistance."
 		"DOTA_Tooltip_ability_imba_tower_spell_shield_Lore"							"Spellcasters feel sick just being near it."
 		"DOTA_Tooltip_ability_imba_tower_spell_shield_magic_resistance_aura"				"%BONUS MAGIC RESISTANCE:"
 
 		"DOTA_Tooltip_ability_imba_tower_plague"						"Plague Tower"
 		"DOTA_Tooltip_ability_imba_tower_plague_Description"						"Deals damage and slows all nearby enemies."
-		"DOTA_Tooltip_ability_imba_tower_plague_Lore"								"Death, decay and the smell of rotten meat surround this disgusting tower."
+		"DOTA_Tooltip_ability_imba_tower_plague_Lore"								"Death, decay, and the smell of rotten meat surround this disgusting tower."
 		"DOTA_Tooltip_ability_imba_tower_plague_damage_per_second"					"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_tower_plague_slow"							"MOVE/ATTACK SLOW:"
 		"DOTA_Tooltip_ability_imba_tower_plague_area_of_effect"						"AREA OF EFFECT:"
@@ -838,7 +838,7 @@
 
 		"DOTA_Tooltip_ability_imba_tower_self_repair"						"Regeneration Tower"
 		"DOTA_Tooltip_ability_imba_tower_self_repair_Description"					"This tower slowly repairs itself, and increases nearby allies' health regeneration."
-		"DOTA_Tooltip_ability_imba_tower_self_repair_Lore"							"Blessed by Verodicia, protected by a certain clan of Treants."
+		"DOTA_Tooltip_ability_imba_tower_self_repair_Lore"							"Blessed by Verodicia, this tower is protected by a certain clan of Treants."
 		"DOTA_Tooltip_ability_imba_tower_self_repair_hp_regen"						"REPAIR RATE (HP/SEC):"
 		"DOTA_Tooltip_ability_imba_tower_self_repair_hp_regen_aura"					"%AURA HEALTH PER SECOND:"
 		"DOTA_Tooltip_ability_imba_tower_self_repair_aura_radius"					"AREA OF EFFECT:"
@@ -949,7 +949,7 @@
 		"DOTA_Tooltip_modifier_buyback_gold_penalty_Description"					"Gold earnings reduced by 60%%, further buybacks will have increased cost."
 
 		"DOTA_Tooltip_modifier_imba_unlimited_level_powerup"					"War Veteran"
-		"DOTA_Tooltip_modifier_imba_unlimited_level_powerup_Description"				"Attributes, damage, move and attack speed increase every time you level up."
+		"DOTA_Tooltip_modifier_imba_unlimited_level_powerup_Description"				"Attributes, damage, movement speed, and attack speed increase every time you level up."
 
 		"DOTA_Tooltip_modifier_charges"								"Ability Charges"
 		"DOTA_Tooltip_modifier_charges_Description"							"Can cast the ability as long as charges remain."
@@ -958,7 +958,7 @@
 		"DOTA_Tooltip_modifier_frostmourne_debuff_Description"						"Slowed and granting bonus attack speed to attackers."
 
 		"DOTA_Tooltip_modifier_frostmourne_buff"						"Curse of Avernus"
-		"DOTA_Tooltip_modifier_frostmourne_buff_Description"						"Gaining bonus move and attack speed due to attacking Abaddon's target."
+		"DOTA_Tooltip_modifier_frostmourne_buff_Description"						"Gaining bonus movement and attack speed due to attacking Abaddon's target."
 
 		"DOTA_Tooltip_modifier_aphotic_shield"							"Aphotic Shield"
 		"DOTA_Tooltip_modifier_aphotic_shield_Description"						"Incoming damage blocked by Aphotic Shield's protection."
@@ -1012,16 +1012,16 @@
 		"DOTA_Tooltip_modifier_imba_shuriken_toss_chain_Description"					"Chained to the ground by Bounty Hunter's Shuriken."
 
 		"DOTA_Tooltip_modifier_imba_wind_walk_fade"						"Shadow Walk"
-		"DOTA_Tooltip_modifier_imba_wind_walk_fade_Description"						"Invisible to enemies, gaining damage and move speed."
+		"DOTA_Tooltip_modifier_imba_wind_walk_fade_Description"						"Invisible to enemies; gaining damage and movement speed."
 
 		"DOTA_Tooltip_modifier_imba_wind_walk"							"Shadow Walk"
-		"DOTA_Tooltip_modifier_imba_wind_walk_Description"						"Invisible to enemies, gaining damage and move speed."
+		"DOTA_Tooltip_modifier_imba_wind_walk_Description"						"Invisible to enemies; gaining damage and movement speed."
 
 		"DOTA_Tooltip_modifier_imba_track"							"Track"
 		"DOTA_Tooltip_modifier_imba_track_Description"							"Unable to go invisible, and granting vision to the enemy team."
 
 		"DOTA_Tooltip_modifier_imba_track_speed"						"Track"
-		"DOTA_Tooltip_modifier_imba_track_speed_Description"						"Gaining move speed due to a nearby tracked target."
+		"DOTA_Tooltip_modifier_imba_track_speed_Description"						"Gaining movement speed due to a nearby Tracked target."
 
 		"DOTA_Tooltip_modifier_imba_hoof_stomp_caster"						"Gladiator's Pride"
 		"DOTA_Tooltip_modifier_imba_hoof_stomp_caster_Description"					"Taking reduced damage while inside the arena."
@@ -1036,7 +1036,7 @@
 		"DOTA_Tooltip_modifier_imba_crystal_nova_slow_Description"					"Slowed by Crystal Maiden's icy blast."
 
 		"DOTA_Tooltip_modifier_imba_frostbite_root"						"Frostbite"
-		"DOTA_Tooltip_modifier_imba_frostbite_root_Description"						"Frozen! Rooted in place, unable to attack."
+		"DOTA_Tooltip_modifier_imba_frostbite_root_Description"						"Frozen! Rooted in place, and unable to attack."
 
 		"DOTA_Tooltip_modifier_imba_frostbite_passive"						"Icy Touch"
 		"DOTA_Tooltip_modifier_imba_frostbite_passive_Description"					"The next enemy to attack Crystal Maiden will be frozen."
@@ -1102,7 +1102,7 @@
 		"DOTA_Tooltip_modifier_imba_fire_breath_Description"						"Turn and attack rate slowed, and taking damage."
 
 		"DOTA_Tooltip_modifier_imba_ice_breath"							"Frost Breath"
-		"DOTA_Tooltip_modifier_imba_ice_breath_Description"						"Move and attack speed reduced, and taking damage."
+		"DOTA_Tooltip_modifier_imba_ice_breath_Description"						"Movement and attack speed reduced, and taking damage."
 
 		"DOTA_Tooltip_modifier_imba_liquid_fire"						"Liquid Fire"
 		"DOTA_Tooltip_modifier_imba_liquid_fire_Description"						"Attacking slower and taking damage."
@@ -1174,7 +1174,7 @@
 		"DOTA_Tooltip_modifier_imba_fiery_soul_active_Description"					"Spells cool down faster, but cost more mana."
 
 		"DOTA_Tooltip_modifier_imba_leap"							"Leap"
-		"DOTA_Tooltip_modifier_imba_leap_Description"							"Increased move and attack speed."
+		"DOTA_Tooltip_modifier_imba_leap_Description"							"Increased movement and attack speed."
 
 		"DOTA_Tooltip_modifier_imba_starfall_debuff"						"Seed of the Moon"
 		"DOTA_Tooltip_modifier_imba_starfall_debuff_Description"					"Will trigger a Starstorm after expiring."
@@ -1234,7 +1234,7 @@
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter_Description"			"Total bonus intelligence."
 
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal"				"FUCK YOUR INT"
-		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal_Description"				"Total intelligence stolen by Outhouse Dumpster."
+		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal_Description"				"Total intelligence stolen by Outhouse Dishwasher."
 
 		"DOTA_Tooltip_modifier_imba_astral_imprisonment"					"Astral Imprisonment"
 		"DOTA_Tooltip_modifier_imba_astral_imprisonment_Description"					"Invulnerable, but unable to act."
@@ -1288,10 +1288,10 @@
 		"DOTA_Tooltip_modifier_imba_headshot_far_debuff_Description"					"Armor temporarily reduced."
 
 		"DOTA_Tooltip_modifier_imba_take_aim_near"						"Submachine Gun"
-		"DOTA_Tooltip_modifier_imba_take_aim_near_Description"						"Reduced damage and range, dramatically increased attack speed."
+		"DOTA_Tooltip_modifier_imba_take_aim_near_Description"						"Reduced damage and range; dramatically increased attack speed."
 
 		"DOTA_Tooltip_modifier_imba_take_aim_far"						"Anti-Material Rifle"
-		"DOTA_Tooltip_modifier_imba_take_aim_far_Description"						"Unable to move, attacking slower, increased damage and range."
+		"DOTA_Tooltip_modifier_imba_take_aim_far_Description"						"Unable to move, and attacking slower; increased damage and range."
 
 		"DOTA_Tooltip_modifier_imba_assassinate_caster"						"Aiming Assassinate"
 		"DOTA_Tooltip_modifier_imba_assassinate_caster_Description"					"Aiming a devastating shot."
@@ -1378,7 +1378,7 @@
 		"DOTA_Tooltip_modifier_imba_poison_nova_Description"						"Taking extreme damage over time."
 
 		"DOTA_Tooltip_modifier_imba_wave_of_terror_armor"					"Wave of Terror"
-		"DOTA_Tooltip_modifier_imba_wave_of_terror_armor_Description"					"Reduced armor, subject to Terror."
+		"DOTA_Tooltip_modifier_imba_wave_of_terror_armor_Description"					"Reduced armor, and subject to Terror."
 
 		"DOTA_Tooltip_modifier_imba_command_aura_positive"					"Vengeance Aura"
 		"DOTA_Tooltip_modifier_imba_command_aura_positive_Description"					"Increased damage, and chance to deal critical hits."
@@ -1444,7 +1444,7 @@
 		"DOTA_Tooltip_modifier_imba_supercharged_Description"						"Increased movement and attack speed."
 
 		"DOTA_Tooltip_modifier_imba_magnetize_debuff"						"Polarized"
-		"DOTA_Tooltip_modifier_imba_magnetize_debuff_Description"					"Magnetized, and attracted to other polarized targets."
+		"DOTA_Tooltip_modifier_imba_magnetize_debuff_Description"					"Magnetized, and attracted to other Polarized targets."
 
 		"DOTA_Tooltip_modifier_imba_reverse_polarity_slow"					"Reverse Polarity"
 		"DOTA_Tooltip_modifier_imba_reverse_polarity_slow_Description"					"Movement speed slowed."
