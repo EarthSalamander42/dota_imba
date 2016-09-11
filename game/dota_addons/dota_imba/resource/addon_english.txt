@@ -3,7 +3,7 @@
 	"Language"		"English"
 
 	"Tokens"
-	{	
+	{
 		//=================================================================================================================
 		// Gamemode strings
 		//=================================================================================================================
@@ -25,7 +25,7 @@
 
 		"imba_tutorial_intro_01"									"Dota IMBA is the answer to the question: What would happen if Icefrog went mad, and buffed every hero 100 patches in a row?"
 		"imba_tutorial_intro_02"									"Everything in IMBA is stronger: heroes, items, even your buildings and creeps.\nThe game is faster paced: you will gain more gold and experience than normal, learn powerful abilities, and fights will be fast and furious.\nCan you prevail over the enemy ancient, in this battle of strategy, teamwork and reflex?"
-		
+
 		"imba_tutorial_heroes_title"								"HEROES"
 		"imba_tutorial_heroes_01"									"Your hero is stronger than normal. You might hit harder, be sturdier, take less time to attack, or move faster."
 		"imba_tutorial_heroes_02"									"\nYour hero's abilities will have some extra effects. Hover over your ability buttons to see them <font color='#FF7800'>in this color.</font>"
@@ -85,7 +85,7 @@
 		"imba_gamemode_game_option_tower_upgrades"						"Upgrade tower abilities"
 		"imba_gamemode_game_option_comeback_gold"						"Global comeback gold"
 		"imba_gamemode_game_option_spawn_behemoths"						"Spawn Ancient behemoths"
-		
+
 		"imba_gamemode_random_omg_number_of_abilities_3a1u"					"3 abilities + 1 ultimate"
 		"imba_gamemode_random_omg_number_of_abilities_3a2u"					"3 abilities + 2 ultimates"
 		"imba_gamemode_random_omg_number_of_abilities_4a1u"					"4 abilities + 1 ultimate"
@@ -145,7 +145,7 @@
 		"tower_abilities_dire_upgrade"								"<font color='#FF0000'>Dire's</font> Ancient feels threatened, and upgrades all its towers!"
 
 		"coup_de_grace_fatality"								"FATALITY!!"
-		
+
 		//=================================================================================================================
 		// Hero names
 		//=================================================================================================================
@@ -261,7 +261,7 @@
 		"npc_imba_hero_wisp"									"Wisp"
 		"npc_imba_hero_witch_doctor"								"Witch Doctor"
 		"npc_imba_hero_zuus"									"Zeus"
-		
+
 		//
 		// Dota Hero names
 		//
@@ -373,7 +373,7 @@
 		"npc_dota_hero_wisp"									"Wisp"
 		"npc_dota_hero_witch_doctor"								"Witch Doctor"
 		"npc_dota_hero_zuus"									"Zeus"
-		
+
 		//=================================================================================================================
 		// Other units' names
 		//=================================================================================================================
@@ -454,7 +454,7 @@
 		"DOTA_Tooltip_modifier_imba_vampiric_aura_effect_creep_Description"				"Absorbing health from damage done."
 
 		"DOTA_Tooltip_modifier_imba_mortal_strike_drain_stacks_dummy"				"Mortal Strike"
-		"DOTA_Tooltip_modifier_imba_mortal_strike_drain_stacks_dummy_Description"			"Increased strength."
+		"DOTA_Tooltip_modifier_imba_mortal_strike_drain_stacks_dummy_Description"			"Increased Strength."
 
 		"DOTA_Tooltip_modifier_imba_reincarnation_scepter_wraith"				"Wraith Form"
 		"DOTA_Tooltip_modifier_imba_reincarnation_scepter_wraith_Description"				"Unable to die for a short duration. Guaranteed to die after the buff expires."
@@ -486,8 +486,8 @@
 		"DOTA_Tooltip_ability_imba_wraith_king_vampiric_aura_lifesteal_self"				"%SELF LIFESTEAL:"
 
 		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike"					"Mortal Strike"
-		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"				"The King's strikes have a chance to crit, increasing damage and granting him part of the damage done as bonus strength.\n<font color='#FF7800'>Destroy Lesser Beings:</font> Deals bonus damage to creeps and illusions equal to their maximum health."
-		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"					"Drains strength based on damage before reductions."
+		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Description"				"The King's strikes have a chance to crit, increasing damage and granting him part of the damage done as bonus Strength.\n<font color='#FF7800'>Destroy Lesser Beings:</font> Deals bonus damage to creeps and illusions equal to their maximum health."
+		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Note0"					"Drains Strength based on damage before reductions."
 		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_Lore"						"One blow to crush a foe."
 		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_chance"				"%CRITICAL CHANCE:"
 		"DOTA_Tooltip_ability_imba_wraith_king_mortal_strike_crit_power"				"%CRITICAL DAMAGE:"
@@ -708,8 +708,8 @@
 
 		"DOTA_Tooltip_ability_axe_berserkers_call"						"Berserker's Call"
 		"DOTA_Tooltip_ability_axe_berserkers_call_Description"						"Taunts nearby enemy units, forcing them to stay in place and attack, but gaining massive armor for the duration.\n<font color='#00FF40'>Usable when below 60%% health.</font>"
-		"DOTA_Tooltip_ability_axe_berserkers_call_Lore"								"Mimicry is the oldest form of flattery, and the Axe was flattered indeed when he witnessed an Ancient performing his patented taunt." 
-		
+		"DOTA_Tooltip_ability_axe_berserkers_call_Lore"								"Mimicry is the oldest form of flattery, and the Axe was flattered indeed when he witnessed an Ancient performing his patented taunt."
+
 		"DOTA_Tooltip_ability_nyx_assassin_spiked_carapace"					"Spiked Carapace"
 		"DOTA_Tooltip_ability_nyx_assassin_spiked_carapace_Description"					"Prevents damage and reflects the first instance of damage done back to each attacker.\n<font color='#00FF40'>Usable when below 60%% health.</font>"
 		"DOTA_Tooltip_ability_nyx_assassin_spiked_carapace_Lore"						"The Ancient's destructive single-mindedness hasn't completely erased its ability to appreciate irony; it is with a malignant glee that it springs this spiked trap to punish its enemies."
@@ -723,7 +723,7 @@
 		"DOTA_Tooltip_ability_venomancer_poison_nova_damage_scepter"					"SCEPTER DAMAGE:"
 		"DOTA_Tooltip_ability_venomancer_poison_nova_cooldown_scepter"					"SCEPTER COOLDOWN:"
 		"DOTA_Tooltip_ability_venomancer_poison_nova_aghanim_description"				""
-		
+
 		"DOTA_Tooltip_ability_imba_tower_laser"							"Laser Tower"
 		"DOTA_Tooltip_ability_imba_tower_laser_Description"						"Periodically blinds all enemies in its range."
 		"DOTA_Tooltip_ability_imba_tower_laser_Note0"							"Activates when at least four creeps, or one enemy hero, enters its range."
@@ -757,7 +757,7 @@
 
 		"DOTA_Tooltip_ability_imba_tower_permabash"						"Bashlord Tower"
 		"DOTA_Tooltip_ability_imba_tower_permabash_Description"						"Bashes its current target, dealing damage and stunning it. Cannot bash while the ability is on cooldown."
-		"DOTA_Tooltip_ability_imba_tower_permabash_Note0"						"Pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_tower_permabash_Note0"						"Pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_tower_permabash_Lore"							"Always has a bash for you at the worst possible time."
 		"DOTA_Tooltip_ability_imba_tower_permabash_bash_damage"						"BASH DAMAGE:"
 		"DOTA_Tooltip_ability_imba_tower_permabash_bash_duration"					"BASH DURATION:"
@@ -765,7 +765,7 @@
 		"DOTA_Tooltip_ability_imba_tower_chrono"						"Chronotower"
 		"DOTA_Tooltip_ability_imba_tower_chrono_Description"						"Periodically freezes all nearby enemies in time, stunning them."
 		"DOTA_Tooltip_ability_imba_tower_chrono_Note0"							"Activates when at least four creeps, or one enemy hero, enters its range."
-		"DOTA_Tooltip_ability_imba_tower_chrono_Note1"							"Pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_tower_chrono_Note1"							"Pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_tower_chrono_Lore"								"STOP! Hammertime."
 		"DOTA_Tooltip_ability_imba_tower_chrono_stun_radius"						"STUN RADIUS:"
 		"DOTA_Tooltip_ability_imba_tower_chrono_stun_duration"						"STUN DURATION:"
@@ -817,7 +817,7 @@
 		"DOTA_Tooltip_ability_imba_tower_multihit_bonus_attacks"					"BONUS ATTACKS:"
 
 		"DOTA_Tooltip_ability_imba_tower_spell_shield"						"Spell Dampener"
-		"DOTA_Tooltip_ability_imba_tower_spell_shield_Description"					"This tower is magic immune, and grants all allies in its range a bonus to their magic resistance."
+		"DOTA_Tooltip_ability_imba_tower_spell_shield_Description"					"This tower is magic-immune, and grants all allies in its range a bonus to their magic resistance."
 		"DOTA_Tooltip_ability_imba_tower_spell_shield_Lore"							"Spellcasters feel sick just being near it."
 		"DOTA_Tooltip_ability_imba_tower_spell_shield_magic_resistance_aura"				"%BONUS MAGIC RESISTANCE:"
 
@@ -856,7 +856,7 @@
 
 		"DOTA_Tooltip_ability_imba_tower_spacecow"						"Greater Bash Tower"
 		"DOTA_Tooltip_ability_imba_tower_spacecow_Description"						"Knockbacks its current target, dealing damage to it. Cannot trigger while the ability is on cooldown."
-		"DOTA_Tooltip_ability_imba_tower_spacecow_Note0"						"Pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_tower_spacecow_Note0"						"Pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_tower_spacecow_Lore"								"Universally considered greater than the Bash Tower."
 		"DOTA_Tooltip_ability_imba_tower_spacecow_knockback_damage"					"KNOCKBACK DAMAGE:"
 		"DOTA_Tooltip_ability_imba_tower_spacecow_knockback_distance"					"KNOCKBACK DISTANCE:"
@@ -1090,7 +1090,7 @@
 		"DOTA_Tooltip_modifier_imba_trueshot_damage_stack_Description"					"Drow Ranger's presence grants you bonus damage."
 
 		"DOTA_Tooltip_modifier_imba_trueshot_aura_owner_creep"					"True Shot"
-		"DOTA_Tooltip_modifier_imba_trueshot_aura_owner_creep_Description"				"Gaining bonus agility for the duration."
+		"DOTA_Tooltip_modifier_imba_trueshot_aura_owner_creep_Description"				"Gaining bonus Agility for the duration."
 
 		"DOTA_Tooltip_modifier_imba_marksmanship_effect"					"Marksmanship"
 		"DOTA_Tooltip_modifier_imba_marksmanship_effect_Description"					"Supreme calm and concentration improves Traxex's archery prowess."
@@ -1114,7 +1114,7 @@
 		"DOTA_Tooltip_modifier_imba_macropyre_scepter_Description"					"You're on fire, and frozen! Jakiro doesn't give a fuck. Taking damage per second and slowed."
 
 		"DOTA_Tooltip_modifier_imba_blade_dance_stacks"						"Blade Dance"
-		"DOTA_Tooltip_modifier_imba_blade_dance_stacks_Description"					"Increased agility and movement speed."
+		"DOTA_Tooltip_modifier_imba_blade_dance_stacks_Description"					"Increased Agility and movement speed."
 
 		"DOTA_Tooltip_modifier_imba_healing_ward_buff"						"Healing Ward"
 		"DOTA_Tooltip_modifier_imba_healing_ward_buff_Description"					"Increased health regeneration."
@@ -1231,10 +1231,10 @@
 		"DOTA_Tooltip_modifier_imba_vendetta_damage_stacks_Description"					"Each stack adds 10 damage to the next Vendetta strike."
 
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter"			"Ill Omens"
-		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter_Description"			"Total bonus intelligence."
+		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter_Description"			"Total bonus Intelligence."
 
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal"				"FUCK YOUR INT"
-		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal_Description"				"Total intelligence stolen by Outhouse Dishwasher."
+		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_steal_Description"				"Total Intelligence stolen by Outhouse Dishwasher."
 
 		"DOTA_Tooltip_modifier_imba_astral_imprisonment"					"Astral Imprisonment"
 		"DOTA_Tooltip_modifier_imba_astral_imprisonment_Description"					"Invulnerable, but unable to act."
@@ -1243,7 +1243,7 @@
 		"DOTA_Tooltip_modifier_imba_essence_aura_buff_Description"					"Casting a spell will recover part of your total mana."
 
 		"DOTA_Tooltip_modifier_imba_essence_aura_int_gain_stacks"				"Essence Sinergy"
-		"DOTA_Tooltip_modifier_imba_essence_aura_int_gain_stacks_Description"				"Bonus intelligence gained from allies' spells."
+		"DOTA_Tooltip_modifier_imba_essence_aura_int_gain_stacks_Description"				"Bonus Intelligence gained from allies' spells."
 
 		"DOTA_Tooltip_modifier_imba_purification_passive"					"Omniguard"
 		"DOTA_Tooltip_modifier_imba_purification_passive_Description"					"Automatically healed by Purification when dealt a fatal hit."
@@ -1318,7 +1318,7 @@
 		"DOTA_Tooltip_modifier_imba_rot_slow_Description"						"Slowed and taking damage."
 
 		"DOTA_Tooltip_modifier_imba_flesh_heap_stacks"						"Flesh Heap"
-		"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"					"Gaining bonus strength and magic resistance."
+		"DOTA_Tooltip_modifier_imba_flesh_heap_stacks_Description"					"Gaining bonus Strength and magic resistance."
 
 		"DOTA_Tooltip_modifier_imba_dismember"							"Dismember"
 		"DOTA_Tooltip_modifier_imba_dismember_Description"						"FRESH MEAT!!!"
@@ -1330,7 +1330,7 @@
 		"DOTA_Tooltip_modifier_imba_great_cleave_active_Description"					"Focusing on a single target to deal bonus damage."
 
 		"DOTA_Tooltip_modifier_imba_warcry_active"						"Warcry!!!"
-		"DOTA_Tooltip_modifier_imba_warcry_active_Description"						"Sven's here to pump you up! Increased armor, movement speed, and strength."
+		"DOTA_Tooltip_modifier_imba_warcry_active_Description"						"Sven's here to pump you up! Increased armor, movement speed, and Strength."
 
 		"DOTA_Tooltip_modifier_imba_god_strength"						"God's Strength"
 		"DOTA_Tooltip_modifier_imba_god_strength_Description"						"PUMPED UP! Increased damage."
@@ -1414,10 +1414,10 @@
 		"DOTA_Tooltip_modifier_imba_skeleton_walk_extra_Description"					"Movement speed greatly increased."
 
 		"DOTA_Tooltip_modifier_imba_death_pact_caster_damage"					"Death Pact"
-		"DOTA_Tooltip_modifier_imba_death_pact_caster_damage_Description"				"Increased strength and agility."
+		"DOTA_Tooltip_modifier_imba_death_pact_caster_damage_Description"				"Increased Strength and Agility."
 
 		"DOTA_Tooltip_modifier_imba_death_pact_caster_permanent"				"Death Pact"
-		"DOTA_Tooltip_modifier_imba_death_pact_caster_permanent_Description"				"Permanently increased strength and agility."
+		"DOTA_Tooltip_modifier_imba_death_pact_caster_permanent_Description"				"Permanently increased Strength and Agility."
 
 		"DOTA_Tooltip_modifier_imba_death_pact_target"						"Death Pact"
 		"DOTA_Tooltip_modifier_imba_death_pact_target_Description"					"Dying will fulfill Clinkz's Death Pact, making him stronger."
@@ -1516,7 +1516,7 @@
 
 		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave"					"Sonic Wave"
 		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Description"					"Creates a gigantic wave of sound in front of Queen of Pain, heavily damaging all enemies in its wake.\n<font color='#FF7800'>Deafening Sound:</font> Enemies hit by Sonic Wave become confused for %debuff_duration% seconds, causing them to take increased damage from all sources, and move erratically.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Enemy heroes hit by the Sonic Wave generate a Scream of Pain, which hits all nearby enemies, except themselves."
-		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Note0"					"Confusion does not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Note0"					"Confusion does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_Lore"							"Her most exquisite of all of torments, Akasha's Sonic Wave puts her poor foes out of their misery."
 		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_distance"					"TRAVEL DISTANCE:"
 		"DOTA_Tooltip_ability_imba_queenofpain_sonic_wave_starting_aoe"					"STARTING RADIUS:"
@@ -1564,7 +1564,7 @@
 
 		"DOTA_Tooltip_ability_imba_antimage_mana_break"						"Mana Break"
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_Description"					"With every attack, burns up to %max_mana_percent%%% of the enemy's mana, limited to a maximum of %maximum_mana_burn%. Deals physical damage equal to 50%% of the mana burned.\n<font color='#FF7800'>Soulbroken:</font> If the target is out of mana, Mana Break will deal pure damage instead of physical.\n\nIllusions carry a weaker version of Mana Break, burning %illusion_factor_tooltip%%% less mana.\n\n<font color='#00FF40'>Not a unique attack modifier.</font>"
-		"DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"						"Does not work on structures, units naturally without mana, or magic immune targets."
+		"DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"						"Does not work on structures, units naturally without mana, or magic-immune targets."
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_Lore"							"Thy mana's weight, in life pay."
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_max_mana_percent"				"%MANA BURNED:"
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_maximum_mana_burn"				"MANA BURN CAP:"
@@ -1609,7 +1609,7 @@
 		"DOTA_Tooltip_ability_imba_axe_battle_hunger_damage"						"DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_axe_counter_helix"						"Counter Helix"
-		"DOTA_Tooltip_ability_imba_axe_counter_helix_Description"					"When attacked, Axe performs a helix counter attack, dealing damage to all nearby enemies.\n<font color='#FF7800'>Brutal Helix:</font> Increases Counter Helix's damage by %str_as_damage%%% of Axe's strength."
+		"DOTA_Tooltip_ability_imba_axe_counter_helix_Description"					"When attacked, Axe performs a helix counter attack, dealing damage to all nearby enemies.\n<font color='#FF7800'>Brutal Helix:</font> Increases Counter Helix's damage by %str_as_damage%%% of Axe's Strength."
 		"DOTA_Tooltip_ability_imba_axe_counter_helix_Lore"							"Axe is the only reinforcement this army needs."
 		"DOTA_Tooltip_ability_imba_axe_counter_helix_radius"						"RADIUS:"
 		"DOTA_Tooltip_ability_imba_axe_counter_helix_proc_chance"					"%PROC CHANCE:"
@@ -1656,7 +1656,7 @@
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip"						"Fiend's Grip"
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip_Description"					"Grips an enemy unit, disabling it and causing heavy damage over time, while stealing mana based on its maximum.\n<font color='#FF7800'>Unrelenting Grip:</font> Fiend's Grip lasts for an extra %fiends_grip_extra_duration% seconds after the channeling ends.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases damage, mana drain, and extra duration. Causes enemies looking at Bane from under %fiends_grip_scepter_radius% range during channeling to also be affected by Fiend's Grip."
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip_Note0"						"Damage is dealt in 0.1 second increments."
-		"DOTA_Tooltip_ability_imba_bane_fiends_grip_Note1"						"The secondary scepter effect has a 900 range limit, and does not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_bane_fiends_grip_Note1"						"The secondary scepter effect has a 900 range limit, and does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip_Lore"							"Victims of Atropos are frequently torn apart by vivid conjurations of their own nightmares."
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_damage_tooltip"				"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_bane_fiends_grip_fiends_grip_mana_drain_tooltip"			"%MANA DRAIN PER SECOND:"
@@ -1673,11 +1673,11 @@
 		"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_damage"					"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_chain_duration"				"CHAIN DURATION:"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_shuriken_toss_pull_strength_tooltip"			"PULL STRENGTH:"
-		
+
 		// Jinada
 		"DOTA_Tooltip_ability_bounty_hunter_jinada_Note0"						"Multiplies bonus damage from Shadow Walk."
 		//
-		
+
 		"DOTA_Tooltip_ability_imba_bounty_hunter_wind_walk"					"Shadow Walk"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_wind_walk_Description"					"Bounty Hunter becomes invisible and gains the ability to move through other units. If he breaks the invisibility with an attack, it will deal bonus damage.\n<font color='#FF7800'>Shadow Sprint:</font> Gains bonus movement speed while invisible.\n\n<font color='#00FF40'>Casting Track does not break Shadow Walk's invisibility.</font>"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_wind_walk_Note0"					"Bonus damage can be multiplied by Jinada."
@@ -1732,7 +1732,7 @@
 		"DOTA_Tooltip_ability_imba_centaur_return_dmg_ignore"						"IGNORED DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_centaur_stampede"						"Stampede"
-		"DOTA_Tooltip_ability_imba_centaur_stampede_Description"					"Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases duration, and allows Stampeding units to ignore cliffs and obstacles, while reducing the damage they take."
+		"DOTA_Tooltip_ability_imba_centaur_stampede_Description"					"Centaur leads all allies into a vicious charge, causing them to move through units at max speed. Trampled enemies take damage based on the Warrunner's Strength.\n<font color='#FF7800'>Charging Impact:</font> Stuns any enemies hit by the Stampede.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases duration, and allows Stampeding units to ignore cliffs and obstacles, while reducing the damage they take."
 		"DOTA_Tooltip_ability_imba_centaur_stampede_Lore"							"rumblerumbleRUMBLERUMBLE"
 		"DOTA_Tooltip_ability_imba_centaur_stampede_strength_damage"					"%CENTAUR'S STRENGTH AS DAMAGE:"
 		"DOTA_Tooltip_ability_imba_centaur_stampede_duration"						"DURATION:"
@@ -1768,7 +1768,7 @@
 		"DOTA_Tooltip_ability_imba_clinkz_skeleton_walk_ms_bonus"					"%BONUS MOVEMENT SPEED:"
 
 		"DOTA_Tooltip_ability_imba_clinkz_death_pact"						"Death Pact"
-		"DOTA_Tooltip_ability_imba_clinkz_death_pact_Description"					"Makes a Death Pact with the target unit (allied or enemy), gaining bonus strength and agility based on its maximum health. Death Pact's effects depend on the target it is used on.\n<font color='#FF7800'>Creeps</font> are instantly killed, providing a longer-lasting pact.\n<font color='#FF7800'>Heroes</font> provide a shorter-lived, but potentially stronger pact, and take %damage_hero%%% of their maximum health as damage if they are an enemy.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes enemy heroes to grant Clinkz some permanent strength and agility if they die while the Pact is active. One stack is lost on death."
+		"DOTA_Tooltip_ability_imba_clinkz_death_pact_Description"					"Makes a Death Pact with the target unit (allied or enemy), gaining bonus Strength and Agility based on its maximum health. Death Pact's effects depend on the target it is used on.\n<font color='#FF7800'>Creeps</font> are instantly killed, providing a longer-lasting pact.\n<font color='#FF7800'>Heroes</font> provide a shorter-lived, but potentially stronger pact, and take %damage_hero%%% of their maximum health as damage if they are an enemy.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes enemy heroes to grant Clinkz some permanent Strength and Agility if they die while the Pact is active. One stack is lost on death."
 		"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note0"						"Does not affect ancients."
 		"DOTA_Tooltip_ability_imba_clinkz_death_pact_Note1"						"Not blocked by Spell Immunity."
 		"DOTA_Tooltip_ability_imba_clinkz_death_pact_Lore"							"Sutherex' bond of life and death has become a part of Clinkz, and his old bones are refreshed with repetition of the pact on lesser beings."
@@ -1803,7 +1803,7 @@
 		"DOTA_Tooltip_ability_imba_crystal_maiden_frostbite_creep_chance"				"%ICY TOUCH CREEP CHANCE:"
 
 		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura"				"Brilliance Aura"
-		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"				"Grants all allied heroes mana regeneration based on their maximum mana.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus intelligence.\n<font color='#FF7800'>Blue Heart:</font> Grants Rylai bonus movement speed when her mana is full.\n\n<font color='#00FF40'>Mana regeneration and intelligence are doubled on Crystal Maiden.</font>"
+		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Description"				"Grants all allied heroes mana regeneration based on their maximum mana.\n<font color='#FF7800'>True Brilliance:</font> Also grants allied heroes bonus Intelligence.\n<font color='#FF7800'>Blue Heart:</font> Grants Rylai bonus movement speed when her mana is full.\n\n<font color='#00FF40'>Mana regeneration and Intelligence are doubled on Crystal Maiden.</font>"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_Lore"						"Cold temperatures promote the essence of magic, causing Rylai's presence to allow spell usage in abundance."
 		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_mana_regen"				"%MANA REGEN PER SECOND:"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_brilliance_aura_bonus_int"				"BONUS INTELLIGENCE:"
@@ -1811,7 +1811,7 @@
 
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field"				"Freezing Field"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Description"				"Surrounds Crystal Maiden with random icy explosions that slow enemies and deal massive damage. Channeled, lasts up to 10 seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts Frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Improves damage and slow, and allows Freezing Field to be cast on a target area up to 900 range away."
-		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"					"The slow effect pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Note0"					"The slow effect pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_Lore"						"Once the place of her exile, Icewrack has become an anchor for Rylai's frigid onslaught."
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_damage"				"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_damage_scepter"			"SCEPTER DAMAGE:"
@@ -1824,7 +1824,7 @@
 
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter"			"Freezing Field"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_Description"			"Surrounds an area with random icy explosions that slow enemies and deal massive damage. Channeled, lasts up to 10 seconds.\n<font color='#FF7800'>Heart of the Glacier:</font> Also briefly inflicts Frostbite to enemies in the area.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Improves damage and slow, and allows Freezing Field to be cast on a target area up to 900 range away."
-		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_Note0"				"The slow effect pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_Note0"				"The slow effect pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_Lore"					"Once the place of her exile, Icewrack has become an anchor for Rylai's frigid onslaught."
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_damage"			"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_damage_scepter"		"SCEPTER DAMAGE:"
@@ -1840,7 +1840,7 @@
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Note0"						"Damage taken while stunned will not make the slow stronger."
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Note1"						"Requires 8/7/6/5 damage instances to trigger the stun."
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Lore"							"One of the few Dezun rites used for offensive purposes, the paralytic enchantment often proves useful."
-		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_damage"						"DAMAGE PER SECOND:"		
+		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_damage"						"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_slow_duration"					"DURATION:"
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_initial_slow"					"%INITIAL SLOW:"
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_slow_per_hit"					"%SLOW PER HIT:"
@@ -1851,7 +1851,7 @@
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Description"					"An ally protected by Shallow Grave, no matter how close to death, cannot die.\n<font color='#FF7800'>Gravely Mistaken:</font> When Shallow Grave ends, any lethal damage dealt to the target is granted to it as healing.\n<font color='#FF7800'>Nothl Protection:</font> If Dazzle is mortally wounded, a shorter duration Shallow Grave will trigger automatically. Nothl Protection needs to cool down for some time after activation."
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Note0"						"Damage which would not kill the target is not counted for Gravely Mistaken."
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_Lore"							"Only a seasoned acolyte of the Shadow can properly perform the rite of preventing death."
-		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_range_tooltip"					"CAST RANGE:"		
+		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_range_tooltip"					"CAST RANGE:"
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_duration_tooltip"				"DURATION:"
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_passive_cooldown"				"NOTHL PROTECTION COOLDOWN:"
 		"DOTA_Tooltip_ability_imba_dazzle_shallow_grave_passive_duration"				"NOTHL PROTECTION DURATION:"
@@ -1861,7 +1861,7 @@
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note0"						"Armor reduction from multiple nearby allies stacks."
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note1"						"Dazzle is always healed by Shadow Wave."
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Lore"							"While it is a simplistic and routine rite among Shadow Priests, the Shadow Wave is also the most critical for success."
-		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage"						"DAMAGE & HEAL:"		
+		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage"						"DAMAGE & HEAL:"
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_bounce_radius"					"BOUNCE DISTANCE:"
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage_radius"					"DAMAGE RADIUS:"
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_armor_bonus"					"BONUS ARMOR:"
@@ -1872,7 +1872,7 @@
 		"DOTA_Tooltip_ability_imba_dazzle_weave_Description"						"Gradually increases affected allies' armor, while also decreasing affected enemies' armor by the same amount.\n<font color='#FF7800'>Dazzling Darkness:</font> Also increases/decreases some armor instantly.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases the armor shift per second, and allows Weave to apply its instant bonus to buildings."
 		"DOTA_Tooltip_ability_imba_dazzle_weave_Note0"							"Affects Heroes and Creeps. Grants vision in the cast area for some seconds."
 		"DOTA_Tooltip_ability_imba_dazzle_weave_Lore"								"His ethereal journey into the Nothl realm has allowed Dazzle to mend together the powers of light and dark, creating shifting waves of enchantments."
-		"DOTA_Tooltip_ability_imba_dazzle_weave_armor_bonus"						"INSTANT ARMOR SHIFT:"		
+		"DOTA_Tooltip_ability_imba_dazzle_weave_armor_bonus"						"INSTANT ARMOR SHIFT:"
 		"DOTA_Tooltip_ability_imba_dazzle_weave_armor_per_second"					"ARMOR PER SECOND:"
 		"DOTA_Tooltip_ability_imba_dazzle_weave_armor_per_second_scepter"				"SCEPTER ARMOR PER SECOND:"
 		"DOTA_Tooltip_ability_imba_dazzle_weave_radius"							"RADIUS:"
@@ -1920,15 +1920,15 @@
 		"DOTA_Tooltip_ability_imba_drow_ranger_gust_wave_range_tooltip"					"RANGE:"
 
 		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot"					"Trueshot Aura"
-		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_Description"					"Adds bonus damage to the attacks of allied, ranged heroes based on a percentage of Drow's agility. Can be activated to also affect ranged creeps.\n<font color='#FF7800'>Quickshot:</font> Activating Trueshot Aura will grant Drow bonus agility for its duration."
-		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_Note0"						"Bonus damage is calculated based on Drow Ranger's agility, not the target's."
+		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_Description"					"Adds bonus damage to the attacks of allied, ranged heroes based on a percentage of Drow's Agility. Can be activated to also affect ranged creeps.\n<font color='#FF7800'>Quickshot:</font> Activating Trueshot Aura will grant Drow bonus Agility for its duration."
+		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_Note0"						"Bonus damage is calculated based on Drow Ranger's Agility, not the target's."
 		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_Lore"							"Traxex' time spent alone in the forests of her Drow home has allowed her to teach other archers how to improve their bow skills."
 		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_trueshot_ranged_damage"				"%AGILITY AS DAMAGE:"
 		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_active_duration"				"ACTIVE DURATION:"
 		"DOTA_Tooltip_ability_imba_drow_ranger_trueshot_bonus_agi"					"ACTIVE AGILITY:"
 
 		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship"					"Marksmanship"
-		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Description"				"Drow's experience in battle is unmatched, providing a passive bonus to agility as long as there are no enemy heroes in %radius% radius.\n<font color='#FF7800'>Perfect Ranger:</font> Also increases move speed and night vision when active. Passively grants bonus attack range.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes your attacks to splinter, hitting all enemies in %splinter_radius_scepter% radius of your target. Splinters deal reduced damage."
+		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Description"				"Drow's experience in battle is unmatched, providing a passive bonus to Agility as long as there are no enemy heroes in %radius% radius.\n<font color='#FF7800'>Perfect Ranger:</font> Also increases move speed and night vision when active. Passively grants bonus attack range.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes your attacks to splinter, hitting all enemies in %splinter_radius_scepter% radius of your target. Splinters deal reduced damage."
 		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note0"					"Drow's attack range is increased regardless of enemy presence. Invisible enemies can also end Marksmanship's effects."
 		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Note1"					"Splinters are regular attacks, able to trigger any on-attack effect normally, but can only trigger once per second."
 		"DOTA_Tooltip_ability_imba_drow_ranger_marksmanship_Lore"						"The Drow Ranger is the epitome of archery prowess."
@@ -1941,7 +1941,7 @@
 
 		"DOTA_Tooltip_ability_imba_enigma_malefice"						"Malefice"
 		"DOTA_Tooltip_ability_imba_enigma_malefice_Description"						"Focuses Enigma's power on a target, causing it to repeatedly take damage and become stunned.\n<font color='#FF7800'>Reality Glitch:</font> Each time Malefice triggers, all enemies near the target will be displaced a short distance towards the strongest existing gravity source: Black Holes are the strongest, followed by Midnight Pulse, followed by Enigma himself."
-		"DOTA_Tooltip_ability_imba_enigma_malefice_Note0"						"Damage, stun and displacement do not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_enigma_malefice_Note0"						"Damage, stun and displacement do not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_enigma_malefice_Note1"						"Activates a total of 4 times."
 		"DOTA_Tooltip_ability_imba_enigma_malefice_Lore"							"Strange gravities pull at the core of those who would oppose you, holding them in place."
 		"DOTA_Tooltip_ability_imba_enigma_malefice_tick_damage"						"DAMAGE:"
@@ -1967,7 +1967,7 @@
 
 		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse"					"Midnight Pulse"
 		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Description"					"Steeps an area in dark resonance, damaging enemy units based on their max HP.\n<font color='#FF7800'>Gravity Well:</font> Periodically pulses, pulling units towards its center.\n<font color='#FF7800'>Ever-Growing Void:</font> Black Hole's singularity stacks increase Midnight Pulse's radius."
-		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note0"						"The pull does not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Note0"						"The pull does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_Lore"							"A section of the world slowly descends into the void."
 		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_radius"					"RADIUS:"
 		"DOTA_Tooltip_ability_imba_enigma_midnight_pulse_singularity_radius"				"SINGULARITY BONUS RADIUS:"
@@ -1983,7 +1983,7 @@
 
 		"DOTA_Tooltip_ability_imba_enigma_black_hole"						"Black Hole"
 		"DOTA_Tooltip_ability_imba_enigma_black_hole_Description"					"Summons a vortex that sucks in nearby enemy units, disabling and damaging the closest ones.\n<font color='#FF7800'>Gaze into the Abyss:</font> Every time Enigma catches an enemy hero in the Black Hole, he gains a permanent stack of <font color='#00FF40'>Singularity</font>, which increases Black Hole's pull radius and strength.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Adds Midnight Pulse's damage to Black Hole, and increases its pull speed by 100."
-		"DOTA_Tooltip_ability_imba_enigma_black_hole_Note0"						"Completely disables, even through spell immunity."
+		"DOTA_Tooltip_ability_imba_enigma_black_hole_Note0"						"Completely disables, even through Spell Immunity."
 		"DOTA_Tooltip_ability_imba_enigma_black_hole_Lore"							"The ground trembles as Enigma channels his ultimate vortex of destruction, a singularity with the power to end worlds."
 		"DOTA_Tooltip_ability_imba_enigma_black_hole_radius"						"RADIUS:"
 		"DOTA_Tooltip_ability_imba_enigma_black_hole_base_pull_distance"				"BASE PULL DISTANCE:"
@@ -1996,7 +1996,7 @@
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk"					"Time Walk"
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Description"					"Opens a rift in space-time, quickly moving towards the target position.\n<font color='#FF7800'>Rift:</font> Creates a dimensional rift along the Time Walk's path. Enemies will be ministunned and slowed, while granting Faceless Void bonus movement and attack speed.\n<font color='#FF7800'>Foresight:</font> Undoes all damage taken in the last 2 seconds."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Note0"					"Only gains bonus move/attack speed from enemy heroes."
-		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Note1"					"The stun does not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Note1"					"The stun does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Note2"					"Healing-preventing effects will prevent Foresight from undoing damage."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_Lore"						"Darkterror tears a hole in time, passing through Claszureme, and appearing back in an instant."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_walk_range"					"RANGE:"
@@ -2008,7 +2008,7 @@
 
 		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation"					"Chronotheft"
 		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Description"				"Steals nearby heroes' immediate future, slowing their movement and ability cooldowns.\nEach <font color='#00FF40'>on cooldown</font> ability will have its cooldown increased by %cooldown_increase% seconds, slow its owner, and grant Faceless Void move and attack speed.\nEach <font color='#00FF40'>out of cooldown</font> ability will go on a brief %cooldown_start% second cooldown, but will not slow its owner or buff Void."
-		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note0"					"Does not pierce spell immunity."
+		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note0"					"Does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Note1"					"Does not affect item cooldowns."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_Lore"						"Time is just another currency for Darkterror's race, and he isn't above pilfering some from his enemies in the heat of battle."
 		"DOTA_Tooltip_ability_imba_faceless_void_time_dilation_radius"					"RANGE:"
@@ -2068,7 +2068,7 @@
 		// Ice Path
 		"DOTA_Tooltip_ability_jakiro_ice_path_Description"						"Creates a path of ice that stuns and damages enemies that touch it. 1200/1400/1600/1800 range."
 		//
-		
+
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire"						"Liquid Fire"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Description"					"Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their own attacks.\n<font color='#FF7800'>Dragon Reach:</font> Can attack from bonus range.\n\n<font color='#00FF40'>Not a unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Note0"						"Can affect buildings and structures."
@@ -2092,7 +2092,7 @@
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_max_slow_scepter"					"%MAX SCEPTER SLOW:"
 
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury"					"Blade Fury"
-		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"					"Spin your sword around for %duration% seconds, becoming magic immune and dealing damage to all nearby enemies.\n<font color='#FF7800'>Whirlwind:</font> Slows affected enemies' movement by %ms_slow_tooltip%%%.\n<font color='#FF7800'>Multitasker:</font> Can attack, use items, and abilities while in Blade Fury. Can be used during Omnislash."
+		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"					"Spin your sword around for %duration% seconds, becoming magic-immune and dealing damage to all nearby enemies.\n<font color='#FF7800'>Whirlwind:</font> Slows affected enemies' movement by %ms_slow_tooltip%%%.\n<font color='#FF7800'>Multitasker:</font> Can attack, use items, and abilities while in Blade Fury. Can be used during Omnislash."
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Lore"							"A simple move, the first taught in the Isle of Masks' strict training regimen - but one the Juggernaut refined to incredible heights."
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_effect_radius"					"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_damage_per_sec"				"DAMAGE PER SECOND:"
@@ -2119,13 +2119,13 @@
 		"DOTA_Tooltip_ability_imba_juggernaut_healing_totem_passive_heal_per_sec"			"%HEALING PER SECOND:"
 
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance"					"Blade Dance"
-		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"					"Grants you a chance to crit on every attack.\n<font color='#FF7800'>Wind Dance:</font> Gains %bonus_agi% agility and %bonus_ms%%% movement speed for %bonus_duration% seconds every time you land a critical hit (stackable). Attacking any enemy refreshes the bonus, whether you crit or not."
+		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Description"					"Grants you a chance to crit on every attack.\n<font color='#FF7800'>Wind Dance:</font> Gains %bonus_agi% Agility and %bonus_ms%%% movement speed for %bonus_duration% seconds every time you land a critical hit (stackable). Attacking any enemy refreshes the bonus, whether you crit or not."
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_Lore"							"Years of training have made the Juggernaut's fighting moves akin to a swift, furious dance."
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_chance"					"%CRIT CHANCE:"
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_dance_crit_damage"					"%CRIT DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash"					"Omnislash"
-		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Description"					"Become invulnerable, while slashing enemies %jump_amount% times continuously. Creeps aren't counted towards the slash total, and are instantly killed.\n<font color='#FF7800'>Chokyubushinhazan:</font> Gain %bonus_damage% bonus damage while Omnislashing.\n<font color='#FF7800'>Blade of the Wind:</font> Gain an extra slash for every %agi_per_jump% agility you have.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Reduces cooldown to %cooldown_scepter% seconds, increases jump range to %bounce_range_scepter%, and allows you to jump to enemies hidden in fog."
+		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Description"					"Become invulnerable, while slashing enemies %jump_amount% times continuously. Creeps aren't counted towards the slash total, and are instantly killed.\n<font color='#FF7800'>Chokyubushinhazan:</font> Gain %bonus_damage% bonus damage while Omnislashing.\n<font color='#FF7800'>Blade of the Wind:</font> Gain an extra slash for every %agi_per_jump% Agility you have.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Reduces cooldown to %cooldown_scepter% seconds, increases jump range to %bounce_range_scepter%, and allows you to jump to enemies hidden in fog."
 		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_Lore"							"The ultimate move of the ultimate swordsman."
 		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_bonus_damage"					"BONUS DAMAGE:"
 		"DOTA_Tooltip_ability_imba_juggernaut_omni_slash_jump_amount"					"BASE JUMPS:"
@@ -2272,13 +2272,13 @@
 		"DOTA_Tooltip_ability_imba_lina_blazing_soul_duration"						"DURATION:"
 
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade"						"Laguna Blade"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"					"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces spell immunity, and adds your intelligence to the damage."
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"					"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces Spell Immunity, and adds your Intelligence to the damage."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"							"The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"						"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_int_damage_scepter"				"SCEPTER INT MULTIPLIER:"
 
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_fiery"					"LAGOONA BLAZE IT"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"					"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces spell immunity, and adds your intelligence to the damage."
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"					"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces Spell Immunity, and adds your Intelligence to the damage."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"							"420, BLAZE IT."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"						"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_int_damage_scepter"				"SCEPTER INT MULTIPLIER:"
@@ -2451,7 +2451,7 @@
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_movement_speed"				"MOVEMENT SPEED BONUS:"
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_bonus_damage"					"BASE BONUS DAMAGE:"
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_damage_storage"				"STORED DAMAGE LIMIT:"
-		
+
 		"DOTA_Tooltip_ability_nyx_assassin_burrow"						"Burrow"
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_Description"						"Nyx Assasssin buries himself beneath the battlefield over %burrow_delay% seconds, becoming stationary, unable to attack, and invisible, but gaining increased health and mana regeneration, %damage_reduction%%% damage reduction, and bonuses to all his abilities:\n<font color='#00FF40'>Spiked Carapace</font> instantly stuns nearby enemies when cast.\n<font color='#00FF40'>Mana Burn</font> and <font color='#00FF40'>Impale</font>'s ranges are increased by %impale_burn_range_increase_pct_tooltip%%%.\n<font color='#00FF40'>Vendetta</font> can be activated to unburrow instantly, while staying invisible."
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_Note0"						"Casting Vendetta will cancel Burrow."
@@ -2460,11 +2460,11 @@
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_damage_reduction"					"BURROW DAMAGE REDUCTION:"
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_mana_burn_burrow_range_tooltip"			"BURROW MANA BURN RANGE:"
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_impale_burrow_range_tooltip"				"BURROW IMPALE RANGE:"
-		"DOTA_Tooltip_ability_nyx_assassin_burrow_carapace_burrow_range_tooltip"			"BURROW SPIKED CARAPACE RANGE:"		
+		"DOTA_Tooltip_ability_nyx_assassin_burrow_carapace_burrow_range_tooltip"			"BURROW SPIKED CARAPACE RANGE:"
 
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb"				"Arcane Orb"
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Description"				"Adds pure damage to basic attacks, based on the caster's total mana.\n<font color='#FF7800'>Occam's Razor:</font> Instantly destroys illusions and summoned units.\n<font color='#FF7800'>Ill Omens:</font> Each attack steals intelligence from enemy heroes."
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Note0"					"Each instance of bonus intelligence has a separate duration."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Description"				"Adds pure damage to basic attacks, based on the caster's total mana.\n<font color='#FF7800'>Occam's Razor:</font> Instantly destroys illusions and summoned units.\n<font color='#FF7800'>Ill Omens:</font> Each attack steals Intelligence from enemy heroes."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Note0"					"Each instance of bonus Intelligence has a separate duration."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_Lore"						"Harbinger's outworldly knowledge allows it to tap into the ebb and flow of all spiritual energy, infusing it into his being."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_mana_pool_damage_pct"			"%% OF MANA POOL AS DAMAGE:"
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_int_gain"				"INT STOLEN:"
@@ -2472,16 +2472,16 @@
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_arcane_orb_int_debuff_duration"			"INT LOSS DURATION:"
 
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment"			"Astral Imprisonment"
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"			"Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to nearby enemies.\n<font color='#FF7800'>Imprison Sanity:</font> Steals intelligence from enemy heroes, as if they were hit by Arcane Orb %orb_stacks% times."
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Note0"			"Each instance of bonus intelligence has a separate duration."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Description"			"Places a target hero into an astral prison, where it is invulnerable and disabled. When the prison implodes, it deals damage to nearby enemies.\n<font color='#FF7800'>Imprison Sanity:</font> Steals Intelligence from enemy heroes, as if they were hit by Arcane Orb %orb_stacks% times."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Note0"			"Each instance of bonus Intelligence has a separate duration."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_Lore"					"Locked away in the pocket between this world and the Outworld, victims realize their infantile knowledge and mortality."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage"			"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_damage_aoe"			"DAMAGE RADIUS:"
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_astral_imprisonment_prison_duration"		"IMPRISONMENT DURATION:"
 
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura"				"Essence Aura"
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"				"Restores a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Boundless Intellect:</font> Passively gains extra mana from every point of intelligence.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus intelligence based on the mana spent."
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note0"				"Essence Synergy can grant a maximum bonus equal to half of the aura owner's base intelligence."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Description"				"Restores a percentage of nearby allies' mana pool whenever they cast a spell.\n<font color='#FF7800'>Boundless Intellect:</font> Passively gains extra mana from every point of Intelligence.\n<font color='#FF7800'>Essence Synergy:</font> Whenever an ally triggers Essence Aura, its owner will temporarily gain bonus Intelligence based on the mana spent."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Note0"				"Essence Synergy can grant a maximum bonus equal to half of the aura owner's base Intelligence."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_Lore"					"The crystals of the Outworld produce arcane power, and the Harbinger channels it into the world of mortals."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_restore_amount"			"%MANA RESTORED:"
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_bonus_mana"				"EXTRA MANA PER POINT OF INT:"
@@ -2489,8 +2489,8 @@
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_essence_aura_radius"				"AURA RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse"				"Sanity's Eclipse"
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Description"			"Unleashes a psychic blast that damages enemies based on the difference between their intelligence and your own. Can hit units trapped by Astral Imprisonment.\n<font color='#FF7800'>Psychic Obliteration:</font> Causes affected enemies to lose %mana_burn_pct%%% of their total mana.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Applies Astral Imprisonment to all targets hit by Sanity's Eclipse before calculating damage."
-		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note0"				"Enemy heroes which have the same or higher intelligence than Outworld Devourer will take no damage."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Description"			"Unleashes a psychic blast that damages enemies based on the difference between their Intelligence and your own. Can hit units trapped by Astral Imprisonment.\n<font color='#FF7800'>Psychic Obliteration:</font> Causes affected enemies to lose %mana_burn_pct%%% of their total mana.\n<font color='#FF7800'>Occam's Bazooka:</font> Instantly kills illusions.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Applies Astral Imprisonment to all targets hit by Sanity's Eclipse before calculating damage."
+		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note0"				"Enemy heroes which have the same or higher Intelligence than Outworld Devourer will take no damage."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Note1"				"Units affected by Astral Imprisonment take HP removal damage instead of Pure. Does not affect Spell Immune units."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_Lore"					"When an Outworld crystal ruptures, cataclysmic energies are released, and the reverberations of this power are felt interdimensionally."
 		"DOTA_Tooltip_ability_imba_obsidian_destroyer_sanity_eclipse_damage_multiplier"			"DAMAGE MULTIPLIER:"
@@ -2539,7 +2539,7 @@
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"			"BONUS DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike"				"Phantom Strike"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"				"Teleports to a unit, friendly or enemy, while gaining bonus attack speed.\n<font color='#FF7800'>Phantom Slash:</font> Attacks each enemy between you and the target once.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
+		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"				"Teleports to a unit, friendly or enemy, while gaining bonus attack speed.\n<font color='#FF7800'>Phantom Slash:</font> Attacks each enemy between you and the target once.\n<font color='#00FF40'>Can be cast on structures and magic-immune units.</font>"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Note0"				"Phantom slash's attacks can trigger on-hit effects like critical hits, cleaves, and orb effects."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Lore"					"Mortred's silken veil is the last thing her unfortunate target sees."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_attack_speed"			"ATTACK SPEED BONUS:"
@@ -2630,7 +2630,7 @@
 		"DOTA_Tooltip_ability_imba_pudge_rot_bonus_damage"						"%HEALTH-BASED DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_pudge_flesh_heap"						"Flesh Heap"
-		"DOTA_Tooltip_ability_imba_pudge_flesh_heap_Description"					"Gives Pudge resistance to magic damage, as well as bonus strength that increases each time Pudge kills an enemy Hero or it dies in his vicinity. Flesh Heap is retroactive, meaning it can gain charges before it is skilled, which then become active.\n<font color='#FF7800'>He's a Big Guy (For You):</font> Each stack of Flesh Heap (up to %max_stacks%) increases Pudge's size and magic resistance by %stack_magic_resist%%%."
+		"DOTA_Tooltip_ability_imba_pudge_flesh_heap_Description"					"Gives Pudge resistance to magic damage, as well as bonus Strength that increases each time Pudge kills an enemy Hero or it dies in his vicinity. Flesh Heap is retroactive, meaning it can gain charges before it is skilled, which then become active.\n<font color='#FF7800'>He's a Big Guy (For You):</font> Each stack of Flesh Heap (up to %max_stacks%) increases Pudge's size and magic resistance by %stack_magic_resist%%%."
 		"DOTA_Tooltip_ability_imba_pudge_flesh_heap_Note0"						"Stacks multiplicatively with other spell resistance sources and with itself."
 		"DOTA_Tooltip_ability_imba_pudge_flesh_heap_Lore"							"The Butcher gives new meaning to the words 'meat shield.'"
 		"DOTA_Tooltip_ability_imba_pudge_flesh_heap_base_magic_resist"					"%BASE MAGIC RESIST:"
@@ -2659,7 +2659,7 @@
 		"DOTA_Tooltip_ability_imba_pudge_dismember_Note1"						"If a unit becomes invisible while Dismembered, it will still be under the effects of Dismember."
 		"DOTA_Tooltip_ability_imba_pudge_dismember_Lore"							"'When I'm through with these vermin, they'll be fit for a pie!'"
 		"DOTA_Tooltip_ability_imba_pudge_dismember_dismember_damage"					"DAMAGE PER SECOND:"
-		
+
 		"DOTA_Tooltip_ability_imba_pugna_nether_blast"						"Nether Blast"
 		"DOTA_Tooltip_ability_imba_pugna_nether_blast_Description"					"<font color='#FF7800'>Immediately</font> blasts an area, dealing damage. After a %secondary_delay% second delay, launches %secondary_blasts% secondary blasts, which deal less damage.\n<font color='#FF7800'>Lingering Nether:</font> Enemies hit by the blast are slowed by %slow_tooltip%%% and take %magic_amp_tooltip%%% increased magic damage for %duration% seconds."
 		"DOTA_Tooltip_ability_imba_pugna_nether_blast_Note0"						"Lingering Nether stacks with any other sources of magic damage amplification."
@@ -2732,7 +2732,7 @@
 		"DOTA_Tooltip_ability_imba_sven_great_cleave_active_duration"					"OVERKILL DURATION:"
 
 		"DOTA_Tooltip_ability_imba_sven_warcry"							"Warcry"
-		"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor.\n<font color='#FF7800'>Knightly Presence:</font> Warcry also increases allies' strength."
+		"DOTA_Tooltip_ability_imba_sven_warcry_Description"						"Sven's Warcry heartens his allies for battle, increasing their movement speed and armor.\n<font color='#FF7800'>Knightly Presence:</font> Warcry also increases allies' Strength."
 		"DOTA_Tooltip_ability_imba_sven_warcry_Note0"							"The bonus is lost when going out of Sven's effect radius."
 		"DOTA_Tooltip_ability_imba_sven_warcry_Lore"								"Calling a few lines from the Vigil Codex fortifies Sven's obedience to his rogue code. So poetic!"
 		"DOTA_Tooltip_ability_imba_sven_warcry_bonus_armor"						"BONUS ARMOR:"
@@ -2769,7 +2769,7 @@
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Description"					"Plant an invisible trap that stuns nearby enemy units when triggered.\n<font color='#FF7800'>Living Trap:</font> Target any creep to plant a stasis trap inside it. Living traps will only trigger when an enemy hero steps into their activation range, or their owner creep dies.\n<font color='#FF7800'>Chain Reaction:</font> Targets affected by stasis trap will trigger further explosions, extending the stun duration.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Burns %mana_burn_scepter% mana with each detonation."
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Lore"							"The scourge of Trapper Town!"
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note0"						"Chain Reaction does not trigger twice for the same unit on the same cast of Stasis Trap."
-		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note1"						"Triggers and stuns invisible units, but not magic immune units."
+		"DOTA_Tooltip_ability_imba_techies_stasis_trap_Note1"						"Triggers and stuns invisible units, but not magic-immune units."
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_stun_duration"					"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_radius"						"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_techies_stasis_trap_activation_delay"				"ACTIVATION DELAY:"
@@ -2794,19 +2794,19 @@
 		"DOTA_Tooltip_ability_techies_remote_mines_damage"						"DAMAGE:"
 		"DOTA_Tooltip_ability_techies_remote_mines_activation_time"					"FADE TIME:"
 		"DOTA_Tooltip_ability_techies_remote_mines_duration"						"MINE DURATION:"
-		"DOTA_Tooltip_ability_techies_remote_mines_cast_range_tooltip"					"CAST RANGE:"		
+		"DOTA_Tooltip_ability_techies_remote_mines_cast_range_tooltip"					"CAST RANGE:"
 		"DOTA_Tooltip_ability_techies_remote_mines_cast_range_scepter"					"SCEPTER CAST RANGE:"
 		"DOTA_Tooltip_ability_techies_remote_mines_damage_scepter"					"SCEPTER DAMAGE:"
 		"DOTA_Tooltip_ability_techies_remote_mines_aghanim_description"					""
 
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_creep"					"Smart Mine"
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_creep_Description"				"When toggled on, will detonate when any enemy enters the activation radius.\n<font color='#00FF40'>After you toggle this ability on, all the Remote Mines you plant will have it toggled on by default.</font>"
-		"DOTA_Tooltip_ability_imba_techies_remote_auto_creep_Note0"					"Triggers and damages invisible units, but not magic immune ones."
+		"DOTA_Tooltip_ability_imba_techies_remote_auto_creep_Note0"					"Triggers and damages invisible units, but not magic-immune ones."
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_creep_Lore"						"Mine smart, not hard."
 
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero"					"Smart Mine (Heroes)"
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero_Description"				"When toggled on, will detonate when an enemy hero enters the activation radius.\n<font color='#00FF40'>After you toggle this ability on, all the Remote Mines you plant will have it toggled on by default.</font>"
-		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero_Note0"					"Triggers and damages invisible heroes, but not magic immune ones."
+		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero_Note0"					"Triggers and damages invisible heroes, but not magic-immune ones."
 		"DOTA_Tooltip_ability_imba_techies_remote_auto_hero_Lore"						"Mine smarter, not harder."
 
 		"DOTA_Tooltip_ability_imba_techies_minefield_sign"					"Minefield Sign"
@@ -2904,7 +2904,7 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_melee_radius"				"RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged"				"Throwing Axes"
-		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Description"			"Hurls a fistful of axes in a cone, damaging and slowing enemies. Getting hit by more axes increases damage and slow.\n<font color='#FF7800'>Troll Physics:</font> Throws one extra axe for each 20 agility you have."
+		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Description"			"Hurls a fistful of axes in a cone, damaging and slowing enemies. Getting hit by more axes increases damage and slow.\n<font color='#FF7800'>Troll Physics:</font> Throws one extra axe for each 20 Agility you have."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Note0"				"The axes' spread increases as their number grows, up to a 72 degree cone."
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_Lore"					"And by adding magnets to this time machine, we get... INFINITE AXES!"
 		"DOTA_Tooltip_ability_imba_troll_warlord_whirling_axes_ranged_range"				"RANGE:"
@@ -3093,7 +3093,7 @@
 
 		"DOTA_Tooltip_ability_imba_warlock_flaming_fists"					"Flaming Fists"
 		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Description"					"Deals extra damage to enemies near the target with each attack.\n\nDamage is based on the Golem's auto-attack damage."
-		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Note0"						"Flaming Fists' damage is pure, and pierces spell immunity."
+		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Note0"						"Flaming Fists' damage is pure, and pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_Lore"							"Hell hath no fury like a flaming fist to the face."
 		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_damage_pct"					"%DAMAGE:"
 		"DOTA_Tooltip_ability_imba_warlock_flaming_fists_radius"					"EFFECT RADIUS:"
@@ -3130,7 +3130,7 @@
 		"DOTA_Tooltip_ability_winter_wyvern_splinter_blast_Description"				"Launches a ball of brittle ice toward an enemy <font color='#FF7800'>or ally</font>. The ice shatters on impact, leaving the primary target completely unaffected, while hurling damaging splinters into nearby enemies in a %split_radius% radius. Enemies struck by these splinters are slowed by %movespeed_slow_tooltip%%%."
 
 		"DOTA_Tooltip_ability_zuus_lightning_bolt_Description"					"Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a <font color='#FF7800'>1200</font> radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Cast range increases by 200 with each level in this ability.</font>"
-		
+
 		"DOTA_Tooltip_ability_shadow_demon_demonic_purge_aghanim_description"			"Cooldown is removed, replaced with <font color='#FF7800'>5</font> charges that replenish every <font color='#FF7800'>30</font> seconds. Also causes Demonic Purge to break its target's passive abilities while active."
 
 		//=================================================================================================================
@@ -3451,13 +3451,13 @@
 		"DOTA_Tooltip_modifier_item_imba_silver_edge_maim_Description"					"Attack and movement speed reduced."
 
 		"DOTA_Tooltip_modifier_item_imba_starfury_buff_dummy"					"Lightspeed"
-		"DOTA_Tooltip_modifier_item_imba_starfury_buff_dummy_Description"				"Temporarily increased agility."
+		"DOTA_Tooltip_modifier_item_imba_starfury_buff_dummy_Description"				"Temporarily increased Agility."
 
 		"DOTA_Tooltip_modifier_item_imba_soul_of_truth"						"Soul of Truth"
 		"DOTA_Tooltip_modifier_item_imba_soul_of_truth_Description"					"Gaining True Sight, bonus armor, and health regeneration."
 
 		"DOTA_Tooltip_modifier_item_heart_aura_effect"						"Tarrasque Breath"
-		"DOTA_Tooltip_modifier_item_heart_aura_effect_Description"					"Increased strength."
+		"DOTA_Tooltip_modifier_item_heart_aura_effect_Description"					"Increased Strength."
 
 		"DOTA_Tooltip_modifier_item_imba_skadi_slow"						"Wintergrasp"
 		"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"					"Movement and attack speed slowed."
@@ -3510,7 +3510,7 @@
 
 		"DOTA_Tooltip_ability_item_imba_aegis_Description"					"Passive: Reincarnation - Brings you to life with full health, mana, and refreshed cooldowns %reincarnate_time% seconds after you die, at the location where you died. Reincarnation must be used within %disappear_time_tooltip% minutes or the Aegis of the Immortal disappears, healing its owner to full health and mana."
 		"DOTA_Tooltip_ability_item_imba_aegis_Lore"							"The Immortal was said to own a shield that protected him from death itself."
-		
+
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_Description"				"Active: Overwhelm - Stuns a target enemy unit for %stun_duration% seconds. Pierces Spell Immunity.\nPassive: Bash - Grants each attack a chance to stun the target for %bash_duration% seconds and deal %bonus_chance_damage% bonus damage, based on whether the equipped hero is ranged or melee.\nPassive: Damage Block - Makes the wielder block damage from each incoming attack based on whether the equipped hero is melee or ranged."
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_Note0"					"The stun is melee range."
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_Note1"					"Doesn't stack with other bashes."
@@ -3525,26 +3525,26 @@
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_bash_chance_ranged"			"%RANGED BASH RANGED:"
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_bash_duration"				"BASH STUN DURATION:"
 		"DOTA_Tooltip_ability_item_imba_abyssal_blade_bonus_chance_damage"			"BASH DAMAGE:"
-		"DOTA_Tooltip_ability_item_imba_abyssal_blade_stun_duration"				"OVERWHELM STUN DURATION:"	
-		
-		"DOTA_Tooltip_ability_item_imba_armlet_Description"					"Active: <font color='#FF7800'>Unholy Strength</font> - Increases the damage bonus to 50, the armor bonus to 9, and grants 32 bonus strength, but continuously drains 40 health per second.\n<font color='#FF7800'>Blood Price:</font> While active, each %health_per_stack% missing health will grant a stack of Unholy Strength, adding %stack_damage% damage, %stack_as% attack speed, and %stack_armor% armor."
-		"DOTA_Tooltip_ability_item_imba_armlet_Note0"						"The bonus strength affects both maximum and current HP."
-		"DOTA_Tooltip_ability_item_imba_armlet_Note1"						"You cannot die from the health loss when the bonus strength is gone, or due to the health drain."
+		"DOTA_Tooltip_ability_item_imba_abyssal_blade_stun_duration"				"OVERWHELM STUN DURATION:"
+
+		"DOTA_Tooltip_ability_item_imba_armlet_Description"					"Active: <font color='#FF7800'>Unholy Strength</font> - Increases the damage bonus to 50, the armor bonus to 9, and grants 32 bonus Strength, but continuously drains 40 health per second.\n<font color='#FF7800'>Blood Price:</font> While active, each %health_per_stack% missing health will grant a stack of Unholy Strength, adding %stack_damage% damage, %stack_as% attack speed, and %stack_armor% armor."
+		"DOTA_Tooltip_ability_item_imba_armlet_Note0"						"The bonus Strength affects both maximum and current HP."
+		"DOTA_Tooltip_ability_item_imba_armlet_Note1"						"You cannot die from the health loss when the bonus Strength is gone, or due to the health drain."
 		"DOTA_Tooltip_ability_item_imba_armlet_Lore"							"Weapon of choice among brutes, the bearer sacrifices his life energy to gain immense strength and power."
 		"DOTA_Tooltip_ability_item_imba_armlet_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_armlet_bonus_attack_speed"				"+$attack"
 		"DOTA_Tooltip_ability_item_imba_armlet_bonus_armor"					"+$armor"
 		"DOTA_Tooltip_ability_item_imba_armlet_bonus_health_regen"				"+$hp_regen"
 
-		"DOTA_Tooltip_ability_item_imba_armlet_active_Description"				"Active: <font color='#FF7800'>Unholy Strength</font> - Increases the damage bonus to 50, the armor bonus to 9, and grants 32 bonus strength, but continuously drains 40 health per second.\n<font color='#FF7800'>Blood Price:</font> While active, each %health_per_stack% missing health will grant a stack of Unholy Strength, adding %stack_damage% damage, %stack_as% attack speed, and %stack_armor% armor."
-		"DOTA_Tooltip_ability_item_imba_armlet_active_Note0"					"The bonus strength affects both maximum and current HP."
-		"DOTA_Tooltip_ability_item_imba_armlet_active_Note1"					"You cannot die from the health loss when the bonus strength is gone, or due to the health drain."
+		"DOTA_Tooltip_ability_item_imba_armlet_active_Description"				"Active: <font color='#FF7800'>Unholy Strength</font> - Increases the damage bonus to 50, the armor bonus to 9, and grants 32 bonus Strength, but continuously drains 40 health per second.\n<font color='#FF7800'>Blood Price:</font> While active, each %health_per_stack% missing health will grant a stack of Unholy Strength, adding %stack_damage% damage, %stack_as% attack speed, and %stack_armor% armor."
+		"DOTA_Tooltip_ability_item_imba_armlet_active_Note0"					"The bonus Strength affects both maximum and current HP."
+		"DOTA_Tooltip_ability_item_imba_armlet_active_Note1"					"You cannot die from the health loss when the bonus Strength is gone, or due to the health drain."
 		"DOTA_Tooltip_ability_item_imba_armlet_active_Lore"						"Weapon of choice among brutes, the bearer sacrifices his life energy to gain immense strength and power."
 		"DOTA_Tooltip_ability_item_imba_armlet_active_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_armlet_active_bonus_attack_speed"			"+$attack"
 		"DOTA_Tooltip_ability_item_imba_armlet_active_bonus_armor"				"+$armor"
 		"DOTA_Tooltip_ability_item_imba_armlet_active_bonus_health_regen"			"+$hp_regen"
-		
+
 		"DOTA_Tooltip_ability_item_imba_basher_Description"					"Passive: Bash - Gives a chance to stun for 1.4 seconds."
 		"DOTA_Tooltip_ability_item_imba_basher_Note0"						"Doesn't stack with other sources of bash."
 		"DOTA_Tooltip_ability_item_imba_basher_Lore"							"A feared weapon in the right hands, this maul's ability to shatter the defenses of its opponents should not be underestimated."
@@ -3552,9 +3552,9 @@
 		"DOTA_Tooltip_ability_item_imba_basher_bash_chance_ranged"				"%RANGED CHANCE:"
 		"DOTA_Tooltip_ability_item_imba_basher_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_basher_bonus_strength"					"+$str"
-		
+
 		"DOTA_Tooltip_ability_item_imba_bfury_Description"					"Active: <font color='#FF7800'>Chop</font> - Destroys all trees, wards, and mines in %chop_radius% radius of the target point.\nPassive: <font color='#FF7800'>Quell</font> - Increases attack damage against creeps by %quelling_bonus%%%.\nPassive: <font color='#FF7800'>Cleave</font> - Deals %melee_cleave_damage%%% of your attack damage to enemies in %cleave_radius% radius of the target (%ranged_cleave_damage%%% for ranged wielders)."
-		"DOTA_Tooltip_ability_item_imba_bfury_Note0"						"Cleave damage goes through spell immunity."
+		"DOTA_Tooltip_ability_item_imba_bfury_Note0"						"Cleave damage goes through Spell Immunity."
 		"DOTA_Tooltip_ability_item_imba_bfury_Note1"						"Quell and Cleave stack fully with themselves."
 		"DOTA_Tooltip_ability_item_imba_bfury_Lore"							"The bearer of this mighty axe gains the ability to cut down swaths of enemies at once."
 		"DOTA_Tooltip_ability_item_imba_bfury_bonus_damage"					"+$damage"
@@ -3564,7 +3564,7 @@
 		"DOTA_Tooltip_ability_item_imba_bfury_ranged_cleave_damage"				"%RANGED CLEAVE:"
 		"DOTA_Tooltip_ability_item_imba_bfury_quelling_bonus"					"%QUELL BONUS DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_bfury_cleave_radius"					"CLEAVE RADIUS:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_black_king_bar_Description"				"Active: Avatar - Grants Spell Immunity and 100% magic damage resistance. Duration and cooldown decrease with each use. Some Ultimate abilities are able to disable through Black King Bar."
 		"DOTA_Tooltip_ability_item_imba_black_king_bar_Note1"					"Using Black King Bar may remove some positive buffs."
 		"DOTA_Tooltip_ability_item_imba_black_king_bar_Lore"						"A powerful staff imbued with the strength of giants."
@@ -3578,7 +3578,7 @@
 		"DOTA_Tooltip_ability_item_imba_white_queen_cape_bonus_strength"			"+$str"
 		"DOTA_Tooltip_ability_item_imba_white_queen_cape_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_white_queen_cape_duration"				"DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_blade_mail_Description"					"Active: Damage Return - Activate to return any damage received to the unit that dealt the damage. Lasts %duration% seconds."
 		"DOTA_Tooltip_ability_item_imba_blade_mail_Note0"					"Damage Return is calculated after reductions."
 		"DOTA_Tooltip_ability_item_imba_blade_mail_Note1"					"Damage Return doesn't reflect damage from other Blademails."
@@ -3586,18 +3586,18 @@
 		"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_armor"					"+$armor"
 		"DOTA_Tooltip_ability_item_imba_blade_mail_bonus_intellect"				"+$int"
-		
+
 		"DOTA_Tooltip_ability_item_imba_bloodstone_Description"					"Active: <font color='#FF7800'>Sudoku</font> - Instantly causes you to die.\nPassive: <font color='#FF7800'>Bloodpact</font> - Gains a charge each time an enemy hero dies within %effect_radius% range. Each charge grants +%hp_regen_per_charge% HP regeneration, +%mana_regen_per_charge% base mana regen, and reduces respawn time by %respawn_time_reduction% seconds. If the bearer dies, nearby allies are healed for %heal_on_death_base% + %heal_on_death_per_charge% per charge, and the Bloodstone loses a third of its charges."
 		"DOTA_Tooltip_ability_item_imba_bloodstone_Note0"					"Bloodpact grants base mana regeneration, meaning it can be enhanced by percentage-based mana regeneration items."
 		"DOTA_Tooltip_ability_item_imba_bloodstone_Lore"						"The Bloodstone's bright ruby color is unmistakable on the battlefield, as the owner seems to have infinite vitality and spirit."
 		"DOTA_Tooltip_ability_item_imba_bloodstone_bonus_health"				"+$health"
 		"DOTA_Tooltip_ability_item_imba_bloodstone_bonus_mana"					"+$mana"
 		"DOTA_Tooltip_ability_item_imba_bloodstone_bonus_mana_regen"				"%+$mana_regen"
-				
+
 		"DOTA_Tooltip_ability_item_imba_boots_Description"					"Flat movement speed bonuses from multiple pairs of boots do not stack."
 		"DOTA_Tooltip_ability_item_imba_boots_Lore"							"Fleet footwear, increasing movement."
-		"DOTA_Tooltip_ability_item_imba_boots_bonus_movement_speed"				"+$move_speed"	
-		
+		"DOTA_Tooltip_ability_item_imba_boots_bonus_movement_speed"				"+$move_speed"
+
 		"DOTA_Tooltip_ability_item_imba_bottle_Description"					"Use: Regenerate - Restores HP and Mana over time. Effect is lost if unit is attacked. Empty Bottle refills near town fountain. You can also store Runes in the Bottle, to save for later use. After 2 minutes, stored Runes will be activated automatically. If Bottle does not have full charges and is placed on a courier, the courier will move 30%% slower.\n\nHold Control to use your Bottle on an allied hero."
 		"DOTA_Tooltip_ability_item_imba_bottle_Note0"						"Bottle is shareable."
 		"DOTA_Tooltip_ability_item_imba_bottle_Lore"							"An old bottle that survived the ages, the contents placed inside become enchanted."
@@ -3610,12 +3610,12 @@
 		"DOTA_Tooltip_ability_item_imba_bracer_bonus_agility"					"+$agi"
 		"DOTA_Tooltip_ability_item_imba_bracer_bonus_intellect"					"+$int"
 		"DOTA_Tooltip_ability_item_imba_bracer_bonus_damage"					"+$damage"
-		
+
 		"DOTA_Tooltip_ability_item_imba_buckler_Description"					"Active: Armor Bonus - Gives +%bonus_aoe_armor% armor to all nearby allied units. Lasts 60 seconds."
 		"DOTA_Tooltip_ability_item_imba_buckler_Lore"							"A powerful shield that imbues the bearer with the strength of heroes past, it is capable of protecting entire armies in battle."
 		"DOTA_Tooltip_ability_item_imba_buckler_bonus_armor"					"+$armor"
 		"DOTA_Tooltip_ability_item_imba_buckler_bonus_all_stats"				"+$all"
-		
+
 		"DOTA_Tooltip_ability_item_imba_butterfly_Description"					"Active: <font color='#FF7800'>Flutter</font> - Trade evasion for %bonus_move_speed%%% additional movement speed for %duration% seconds.\nPassive: <font color='#FF7800'>Butterfly Effect</font> - Every time you land an attack, there is a chance to attack another random enemy in your attack range.\n\n<font color='#00FF40'>Butterfly Effect's minimum search radius is 600.</font>"
 		"DOTA_Tooltip_ability_item_imba_butterfly_Lore"							"Only the mightiest and most experienced of warriors can wield the Butterfly, but it provides incredible dexterity in combat."
 		"DOTA_Tooltip_ability_item_imba_butterfly_bonus_agility"				"+$agi"
@@ -3623,9 +3623,9 @@
 		"DOTA_Tooltip_ability_item_imba_butterfly_bonus_evasion"				"%+$evasion"
 		"DOTA_Tooltip_ability_item_imba_butterfly_bonus_attack_speed"				"+$attack"
 		"DOTA_Tooltip_ability_item_imba_butterfly_proc_chance"					"%BUTTERFLY EFFECT CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_butterfly_bonus_move_speed"				"%FLUTTER BONUS MOVE SPEED:"	
+		"DOTA_Tooltip_ability_item_imba_butterfly_bonus_move_speed"				"%FLUTTER BONUS MOVE SPEED:"
 		"DOTA_Tooltip_ability_item_imba_butterfly_duration"					"FLUTTER DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_cheese_Description"					"Use: Instantly restores <font color='#FF7800'>all</font> health and mana. <font color='#FF7800'>Can be used on allies.</font>"
 		"DOTA_Tooltip_ability_item_imba_cheese_Lore"							"ROSHAN'S CHEESE IS THE BEST IN THE GODDAMN UNIVERSE."
 
@@ -3634,11 +3634,11 @@
 		"DOTA_Tooltip_ability_item_imba_mango_mana_percent"					"%MANA RESTORED:"
 		"DOTA_Tooltip_ability_item_imba_mango_minimum_mana"					"MINIMUM MANA RESTORED:"
 		"DOTA_Tooltip_ability_item_imba_mango_health_regen"					"BONUS HP REGEN:"
-		
+
 		"DOTA_Tooltip_ability_item_courier_Lore"						"Losing the donkey is punishable by death."
-		
+
 		"DOTA_Tooltip_ability_item_flying_courier_Description"					"Fast flying creature that carries items to and from your base.  Requires Animal Courier."
-		
+
 		"DOTA_Tooltip_ability_item_imba_cyclone_Description"					"Active: Cyclone - A target unit is swept up in a cyclone and made invulnerable for %cyclone_duration% seconds. Can be used on yourself.\nEnemy units take 50 magical damage upon landing."
 		"DOTA_Tooltip_ability_item_imba_cyclone_Note0"						"You can cyclone allies."
 		"DOTA_Tooltip_ability_item_imba_cyclone_Note1"						"Cyclones cast on yourself go through Spell Immunity."
@@ -3646,8 +3646,8 @@
 		"DOTA_Tooltip_ability_item_imba_cyclone_Lore"							"A mysterious scepter passed down through the ages, its disruptive winds can be used for good or evil."
 		"DOTA_Tooltip_ability_item_imba_cyclone_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_cyclone_bonus_mana_regen"				"%+$mana_regen"
-		"DOTA_Tooltip_ability_item_imba_cyclone_bonus_movement_speed"				"+$move_speed"			
-		
+		"DOTA_Tooltip_ability_item_imba_cyclone_bonus_movement_speed"				"+$move_speed"
+
 		"DOTA_Tooltip_ability_item_imba_dagon_Description"					"Active: Energy Burst - Burst of damage to target enemy unit. Upgradable."
 		"DOTA_Tooltip_ability_item_imba_dagon_Lore"							"A lesser wand that grows in power the longer it is used, it brings magic to the fingertips of the user."
 		"DOTA_Tooltip_ability_item_imba_dagon_damage"					       	"BURST DAMAGE:"
@@ -3737,7 +3737,7 @@
 		"DOTA_Tooltip_ability_item_imba_dagon_10_bonus_all_stats"				"+$all"
 		"DOTA_Tooltip_ability_item_imba_dagon_10_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_dagon_10_range_tooltip"					"CAST RANGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_demon_edge_Lore"						"One of the oldest weapons forged by the Demon-Smith Abzidian, it killed its maker when he tested its edge."
 		"DOTA_Tooltip_ability_item_imba_demon_edge_bonus_damage"				"+$damage"
 
@@ -3746,7 +3746,7 @@
 		"DOTA_Tooltip_ability_item_imba_shiv_Lore"							"A small, but deceptively deadly blade. Pierces through light armor with ease."
 		"DOTA_Tooltip_ability_item_imba_shiv_armor_ignore"					"ARMOR PIERCING:"
 		"DOTA_Tooltip_ability_item_imba_shiv_damage"						"+$damage"
-		
+
 		"DOTA_Tooltip_ability_item_imba_desolator_Description"					"Active: <font color='#FF7800'>Desolation</font> - Throws out several rays of destructive energy, which apply maximum Corruption stacks and deal damage to enemies hit.\nPassive: <font color='#FF7800'>Corruption</font> - Your attacks reduce the target's armor and vision radius. Applies %base_stacks% stacks initially, and then one more every attack.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_desolator_Note0"					"Vision reduction does not work on buildings or spell immune units."
 		"DOTA_Tooltip_ability_item_imba_desolator_Lore"							"A wicked weapon, used in torturing political criminals."
@@ -3767,10 +3767,10 @@
 		"DOTA_Tooltip_ability_item_imba_desolator_2_duration"					"DURATION:"
 		"DOTA_Tooltip_ability_item_imba_desolator_2_active_range"				"DESOLATION RANGE:"
 		"DOTA_Tooltip_ability_item_imba_desolator_2_active_damage"				"DESOLATION DAMAGE:"
-		"DOTA_Tooltip_ability_item_imba_desolator_2_damage"					"+$damage"	
-		
+		"DOTA_Tooltip_ability_item_imba_desolator_2_damage"					"+$damage"
+
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_Description"				"Active: <font color='#FF7800'>Purge</font> - Purges a target unit, removing its buffs and slowing it. Instantly kills summoned units and illusions.\nPassive: <font color='#FF7800'>Manabreak</font> - Your attacks burn up to %mana_burn% mana and deal the same amount of physical damage."
-		"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note0"					"Manabreak works partially on your illusions, burning only 20 mana. Does not pierce spell immunity."
+		"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note0"					"Manabreak works partially on your illusions, burning only 20 mana. Does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_Note1"					"Manabreak does not stack between different versions of Diffusal Blade."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_Lore"						"An enchanted blade that allows the user to cut straight into the enemy's soul."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_tooltip_duration"			"PURGE SLOW DURATION:"
@@ -3780,7 +3780,7 @@
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_bonus_int"				"+$int"
 
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Description"				"Active: <font color='#FF7800'>Purge</font> - Purges a target unit, removing its buffs and slowing it. Instantly kills summoned units and illusions.\nPassive: <font color='#FF7800'>Manabreak</font> - Your attacks burn up to %mana_burn% mana and deal the same amount of physical damage.\nPassive: <font color='#FF7800'>Dispel</font> - Has a chance to Purge one buff from the enemy with every hit."
-		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note0"					"Manabreak works partially on your illusions, burning only 40 mana. Does not pierce spell immunity."
+		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note0"					"Manabreak works partially on your illusions, burning only 40 mana. Does not pierce Spell Immunity."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Note1"					"Manabreak does not stack between different versions of Diffusal Blade."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_Lore"						"The fabled Sword of Godec."
 		"DOTA_Tooltip_ability_item_imba_diffusal_blade_2_tooltip_duration"			"PURGE SLOW DURATION:"
@@ -3803,10 +3803,10 @@
 
 		"DOTA_Tooltip_ability_item_imba_eagle_Lore"							"Capturing the majestic call of an eagle, this mystical horn brings limitless dexterity to those who hear it."
 		"DOTA_Tooltip_ability_item_imba_eagle_bonus_agility"					"+$agi"
-		
+
 		"DOTA_Tooltip_ability_item_imba_energy_booster_Lore"						"This lapis gemstone is commonly added to the collection of wizards seeking to improve their presence in combat."
 		"DOTA_Tooltip_ability_item_imba_energy_booster_bonus_mana"				"+$mana"
-		
+
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_Description"				"Active: Ether Blast - Launches a projectile which converts your target into ethereal form, increasing incoming magic damage. Target unit is slowed and cannot attack or be attacked, and takes %blast_agility_multiplier%x of your primary attribute + 75 as damage."
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_Note0"					"Shares cooldown with Ghost Scepter."
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_Note1"					"Ethereal units take 40% bonus magic damage."
@@ -3818,7 +3818,7 @@
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_duration"				"BLAST ENEMY DURATION:"
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_duration_ally"				"BLAST ALLY/SELF DURATION:"
 		"DOTA_Tooltip_ability_item_imba_ethereal_blade_ethereal_damage_bonus"			"%INCREASED MAGIC DAMAGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_force_staff_Description"				"Active: Force - Pushes any target unit %push_length% units in the direction it is facing. Double click to self-cast."
 		"DOTA_Tooltip_ability_item_imba_force_staff_Note0"					"Quick-cast will cause you to use Force on yourself."
 		"DOTA_Tooltip_ability_item_imba_force_staff_Note1"					"Force Staff doesn't interrupt the target's actions."
@@ -3826,7 +3826,7 @@
 		"DOTA_Tooltip_ability_item_imba_force_staff_Lore"						"Allows you to manipulate others, for good or evil."
 		"DOTA_Tooltip_ability_item_imba_force_staff_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_force_staff_bonus_health_regen"				"+$hp_regen"
-		
+
 		"DOTA_Tooltip_ability_item_gem_Note1"							"Gives vision in a 1400 radius."
 
 		"DOTA_Tooltip_ability_item_imba_greater_crit_Description"				"Passive: <font color='#FF7800'>Fairy-todo Kyanon</font> - Grants a chance to deal critical damage on your attacks.\nPassive: <font color='#FF7800'>Power Overwhelming</font> - Every time your attacks do not crit, your critical hit multiplier increases by %crit_increase%%%. This bonus resets after you crit once."
@@ -3840,9 +3840,9 @@
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_Note0"					"Guardian Aura's power increase applies only to heroes."
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_Lore"						"One of many holy instruments constructed to honor the Omniscience."
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_movement"			"+$move_speed"
-		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_all_stats"			"+$all"		
-		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_mana"				"+$mana"		
-		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_armor"				"+$armor"		
+		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_all_stats"			"+$all"
+		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_mana"				"+$mana"
+		"DOTA_Tooltip_ability_item_imba_guardian_greaves_bonus_armor"				"+$armor"
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_replenish_health"			"MEND HEAL:"
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_replenish_mana"			"MEND MANA RESTORE:"
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_base_regen"				"AURA HEALTH REGEN:"
@@ -3851,25 +3851,25 @@
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_armor_per_pct_tooltip"			"MAXIMUM BONUS ARMOR:"
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_heal_threshold"			"HEALTH THRESHOLD:"
 		"DOTA_Tooltip_ability_item_imba_guardian_greaves_aura_radius"				"EFFECT RADIUS:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_hand_of_midas_Description"				"Active: Transmute - Kills a non-hero target for 190 gold and 3x experience. Cannot be used on Ancient Creeps.<font color='#FF7800'>\nPassively grants the bearer 1 gold per second.</font>"
 		"DOTA_Tooltip_ability_item_imba_hand_of_midas_Note0"					"All gold granted by the Hand of Midas is reliable."
 		"DOTA_Tooltip_ability_item_imba_hand_of_midas_Lore"						"Preserved through unknown magical means, the Hand of Midas is a weapon of greed, sacrificing animals to line the owner's pockets."
 		"DOTA_Tooltip_ability_item_imba_hand_of_midas_bonus_attack_speed"			"+$attack"
-		
+
 		"DOTA_Tooltip_ability_item_imba_headdress_Description"					"Passive: Regeneration Aura - Restores HP to allies in a %aura_radius% unit radius.\n\nMultiple instances of Regeneration Aura do not stack."
 		"DOTA_Tooltip_ability_item_imba_headdress_Lore"							"Creates a soothing aura that restores allies in battle."
 		"DOTA_Tooltip_ability_item_imba_headdress_aura_health_regen"				"BONUS REGEN:"
 		"DOTA_Tooltip_ability_item_imba_headdress_bonus_all_stats"				"+$all"
-		
-		"DOTA_Tooltip_ability_item_imba_heart_Description"					"Passively restores %regen_tooltip%%% of the bearer's max health every second. The regeneration is reduced to <font color='#FF7800'>%base_regen%%%</font> for %regen_cooldown% seconds after taking damage from heroes or Roshan.\nPassive: <font color='#FF7800'>Tarrasque Breath</font> - Increases nearby heroes' strength by %aura_str%."
+
+		"DOTA_Tooltip_ability_item_imba_heart_Description"					"Passively restores %regen_tooltip%%% of the bearer's max health every second. The regeneration is reduced to <font color='#FF7800'>%base_regen%%%</font> for %regen_cooldown% seconds after taking damage from heroes or Roshan.\nPassive: <font color='#FF7800'>Tarrasque Breath</font> - Increases nearby heroes' Strength by %aura_str%."
 		"DOTA_Tooltip_ability_item_imba_heart_Note0"						"Tarrasque Breath and the passive regeneration do not stack."
 		"DOTA_Tooltip_ability_item_imba_heart_Lore"							"Preserved heart of an extinct monster, it bolsters the bearer's fortitude."
 		"DOTA_Tooltip_ability_item_imba_heart_aura_str"						"AURA BONUS STRENGTH:"
 		"DOTA_Tooltip_ability_item_imba_heart_aura_radius"					"AURA RANGE:"
 		"DOTA_Tooltip_ability_item_imba_heart_bonus_strength"					"+$str"
 		"DOTA_Tooltip_ability_item_imba_heart_bonus_health"					"+$health"
-		
+
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_Description"			"Active: Dominate - Take control of a non-hero, non-ancient target unit. Dominated units gain %health_bonus% bonus health.\nPassive: Lifesteal - Gives lifesteal on attacks.\n\nHelm of the Dominator is a Unique Attack Modifier, and does not stack with other Unique Attack Modifiers."
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_Note0"				"Cannot dominate more than one unit at a time.  If a new unit is dominated, the old one will die."
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_Lore"					"The powerful headpiece of a dead necromancer."
@@ -3877,7 +3877,7 @@
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_bonus_armor"			"+$armor"
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_bonus_regen"			"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_helm_of_the_dominator_lifesteal_percent"		"%LIFESTEAL:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Description"    			"Active: Creates a spell shield that absorbs up to %barrier_block% magical damage."
 		"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Note0"					"Stacks multiplicatively with other sources of spell resistance."
 		"DOTA_Tooltip_ability_item_imba_hood_of_defiance_Lore"			    			"A furred, magic resistant headpiece that is feared by wizards."
@@ -3890,10 +3890,10 @@
 		"DOTA_Tooltip_Ability_item_wind_lace_Note0"						"Multiple instances do not stack."
 		"DOTA_Tooltip_Ability_item_wind_lace_Lore"							"Said to have originated near the village of Lyralei's youth, this unique plant blesses its user with the swiftness of the wind."
 		"DOTA_Tooltip_Ability_item_wind_lace_movement_speed"					"+$move_speed"
-		
+
 		"DOTA_Tooltip_ability_item_imba_hyperstone_Lore"						"A mystical, carved stone that boosts the fervor of the holder."
 		"DOTA_Tooltip_ability_item_imba_hyperstone_bonus_attack_speed"				"+$attack"
-		
+
 		"DOTA_Tooltip_ability_item_imba_shadow_blade_Description"				"Active: <font color='#FF7800'>Shadow Walk</font> - Makes you invisible for %invis_duration% seconds or until you attack or cast a spell. While invisible, you move %invis_ms%%% faster, can move through units and terrain, and have %invis_night_vision% extra night vision range. If attacking to break the invisibility, you gain %invis_damage% bonus damage on that attack.\n<font color='#FF7800'>Upon taking hero-based damage, you will lose terrain-ignoring capability for 2 seconds.</font>"
 		"DOTA_Tooltip_ability_item_imba_shadow_blade_Note0"					"Has a 0.3 second fade time."
 		"DOTA_Tooltip_ability_item_imba_shadow_blade_Note1"					"If the invisibility ends without attacking, the bonus damage is lost."
@@ -3916,18 +3916,18 @@
 		"DOTA_Tooltip_ability_item_imba_silver_edge_break_slow"					"%BACKSTAB SLOW:"
 		"DOTA_Tooltip_ability_item_imba_silver_edge_break_duration"				"BACKSTAB DURATION:"
 		"DOTA_Tooltip_ability_item_imba_silver_edge_detection_radius"				"SHADOW SENSE RADIUS:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_lesser_crit_Description"				"Passive: Critical Strike - Grants a chance to deal critical damage on an attack."
 		"DOTA_Tooltip_ability_item_imba_lesser_crit_Lore"						"A blade forged from rare crystals, it seeks weak points in enemy armor."
 		"DOTA_Tooltip_ability_item_imba_lesser_crit_crit_chance"				"%CRITICAL CHANCE:"
 		"DOTA_Tooltip_ability_item_imba_lesser_crit_crit_multiplier"				"%CRITICAL DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_lesser_crit_bonus_damage"				"+$damage"
-		
+
 		"DOTA_Tooltip_ability_item_imba_sphere_Description"					"Spellblock - Passively blocks most targeted spells once every 10 seconds. Can be cast on an allied unit to temporarily transfer the buff."
 		"DOTA_Tooltip_ability_item_imba_sphere_Lore"							"This magical sphere once protected one of the most famous heroes in history."
-		"DOTA_Tooltip_ability_item_imba_sphere_bonus_damage"					"+$damage"						
+		"DOTA_Tooltip_ability_item_imba_sphere_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_sphere_bonus_all_stats"					"+$all"
-		"DOTA_Tooltip_ability_item_imba_sphere_bonus_health_regen"				"+$hp_regen"	
+		"DOTA_Tooltip_ability_item_imba_sphere_bonus_health_regen"				"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_sphere_bonus_mana_regen"				"%+$mana_regen"
 
 		"DOTA_Tooltip_ability_item_imba_lotus_orb_Description"					"Active: Echo Shell - Applies a shield to the target unit which re-casts most targeted spells back to their caster. The shielded unit will still take damage from the spell. Dispels negative buffs when applied."
@@ -3938,7 +3938,7 @@
 		"DOTA_Tooltip_ability_item_imba_lotus_orb_bonus_mana_regen"				"%+$mana_regen"
 		"DOTA_Tooltip_ability_item_imba_lotus_orb_active_duration"				"ECHO DURATION:"
 		"DOTA_Tooltip_ability_item_imba_lotus_orb_cast_range_tooltip"				"ECHO CAST RANGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_maelstrom_Description"					"Passive: <font color='#FF7800'>Chain Lightning</font> - Grants a chance on every attack to release a Chain Lightning, which bounces between enemies in up to %bounce_radius% range, dealing damage. Bounces until running out of targets.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_maelstrom_Lore"							"A hammer forged for the gods themselves, Maelstrom allows its user to harness the power of lightning."
 		"DOTA_Tooltip_ability_item_imba_maelstrom_proc_chance"					"%CHANCE TO CHAIN:"
@@ -3951,14 +3951,14 @@
 		"DOTA_Tooltip_ability_item_imba_magic_stick_Note1"					"Certain abilities and item abilities will not add charges."
 		"DOTA_Tooltip_ability_item_imba_magic_stick_Lore"						"A simple wand used to channel magic energies, it is favored by apprentice wizards and great warlocks alike."
 		"DOTA_Tooltip_ability_item_imba_magic_stick_restore_per_charge"				"RESTORE PER CHARGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_magic_wand_Description"					"Energy Charge: Gains charges (max %max_charges%) whenever a visible enemy in <font color='#FF7800'>%charge_radius%</font> range casts a spell.\nWhen activated, restores health and mana based on the number of charges stored."
 		"DOTA_Tooltip_ability_item_imba_magic_wand_Note0"					"Gains charges for spells cast by visible enemies anywhere on the map."
 		"DOTA_Tooltip_ability_item_imba_magic_wand_Note1"					"Certain abilities and item abilities will not add charges."
 		"DOTA_Tooltip_ability_item_imba_magic_wand_Lore"						"A simple wand used to channel magic energies, it is favored by apprentice wizards and great warlocks alike."
 		"DOTA_Tooltip_ability_item_imba_magic_wand_bonus_all_stats"				"+$all"
 		"DOTA_Tooltip_ability_item_imba_magic_wand_restore_per_charge"				"RESTORE PER CHARGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_manta_Description"					"Active: Mirror Image - Creates %images_count% images of your hero that last 20 seconds.\n\nMelee images deal %tooltip_outgoing_melee%%% damage and take %tooltip_damage_incoming_melee_total_pct%%% damage, while Ranged images deal %tooltip_outgoing_range%%% and take %tooltip_damage_incoming_ranged_total_pct%%% damage.\n\nYasha-based movement speed bonuses from multiple items do not stack."
 		"DOTA_Tooltip_ability_item_imba_manta_Note0"						"Has a 0.1 second cast time during which you are invulnerable."
 		"DOTA_Tooltip_ability_item_imba_manta_Note1"						"Many effects are removed upon using Manta."
@@ -3974,11 +3974,11 @@
 		"DOTA_Tooltip_ability_item_imba_manta_tooltip_damage_incoming_ranged_total_pct"		"%RANGED IMAGE DAMAGE TAKEN:"
 		"DOTA_Tooltip_ability_item_imba_manta_tooltip_outgoing_range"				"%RANGED IMAGE DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_manta_tooltip_illusion_duration"			"IMAGE DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_mask_of_madness_Description"				"Active: Berserk - Gives %berserk_bonus_attack_speed% attack speed and %berserk_bonus_movement_speed%%% movement speed but causes you to take extra %berserk_extra_damage%%% damage. Lasts 12 seconds.\nPassive: Lifesteal - Grants lifesteal on attacks.\n\nMask of Madness is a Unique Attack Modifier, and does not stack with other Unique Attack Modifiers."
 		"DOTA_Tooltip_ability_item_imba_mask_of_madness_Lore"						"Once this mask is worn, its bearer becomes an uncontrollable aggressive force."
 		"DOTA_Tooltip_ability_item_imba_mask_of_madness_lifesteal_percent"			"%LIFESTEAL:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_mekansm_Description"					"Active: Restore - Heals %heal_amount% HP and gives +%heal_bonus_armor% armor in an area. <font color='#FF7800'>Heals %hot_percentage%%% of the target's maximum HP per second for %hot_duration% seconds after the heal.</font>\nPassive: Mekansm Aura - Bonus HP Regen in an area.\n\nMultiple instances of Mekansm Aura do not stack."
 		"DOTA_Tooltip_ability_item_imba_mekansm_Lore"						    	"A glowing jewel formed out of assorted parts that somehow fit together perfectly."
 		"DOTA_Tooltip_ability_item_imba_mekansm_aura_health_regen"				"BONUS HP REGEN:"
@@ -4010,10 +4010,10 @@
 		"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_str"				"+$str"
 		"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_agi"				"+$agi"
 		"DOTA_Tooltip_ability_item_imba_monkey_king_bar_bonus_as"				"+$attack"
-		
+
 		"DOTA_Tooltip_ability_item_imba_mystic_staff_Lore"						"Enigmatic staff made of only the most expensive crystals."
 		"DOTA_Tooltip_ability_item_imba_mystic_staff_bonus_intellect"				"+$int"
-		
+
 		"DOTA_Tooltip_ability_item_imba_necronomicon_Description"				"Active: <font color='#FF7800'>Summon Lesser Undead</font> - Activate to summon a durable Necrowarrior and a damaging Necroarcher to fight for you.\n<font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, and has True Sight.\n<font color='#00FF40'>Necroarcher:</font> Grants bonus movement and attack speed to nearby allies, and can burn enemies' mana on command.\nUpgrading the Necronomicon allows its bearer to summon stronger minions."
 		"DOTA_Tooltip_ability_item_imba_necronomicon_Lore"						"Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
 		"DOTA_Tooltip_ability_item_imba_necronomicon_bonus_intellect"				"+$int"
@@ -4021,7 +4021,7 @@
 		"DOTA_Tooltip_ability_item_imba_necronomicon_summon_duration"				"DURATION:"
 		"DOTA_Tooltip_ability_item_imba_necronomicon_warrior_health"				"WARRIOR HEALTH:"
 		"DOTA_Tooltip_ability_item_imba_necronomicon_archer_health"				"ARCHER HEALTH:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_necronomicon_2_Description"				"Active: <font color='#FF7800'>Summon Undead</font> - Activate to summon a durable Necrowarrior and a damaging Necroarcher to fight for you.\n<font color='#00FF40'>Necrowarrior:</font> Burns mana on every attack, deals high magical damage to its killer, and has True Sight.\n<font color='#00FF40'>Necroarcher:</font> Grants bonus movement and attack speed to nearby allies, and can burn enemies' mana on command.\nUpgrading the Necronomicon allows its bearer to summon stronger minions."
 		"DOTA_Tooltip_ability_item_imba_necronomicon_2_Lore"						"Considered the holy grail of necromancy and demonology, a powerful malefic force is locked within its pages."
 		"DOTA_Tooltip_ability_item_imba_necronomicon_2_bonus_intellect"				"+$int"
@@ -4053,7 +4053,7 @@
 		"DOTA_Tooltip_ability_item_imba_necronomicon_5_summon_duration"				"DURATION:"
 		"DOTA_Tooltip_ability_item_imba_necronomicon_5_warrior_health"				"PIT FIEND HEALTH:"
 		"DOTA_Tooltip_ability_item_imba_necronomicon_5_archer_health"				"FELL GARGOYLE HEALTH:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_null_talisman_Lore"						"A small gemstone attached to several chains."
 		"DOTA_Tooltip_ability_item_imba_null_talisman_bonus_strength"				"+$str"
 		"DOTA_Tooltip_ability_item_imba_null_talisman_bonus_agility"				"+$agi"
@@ -4067,8 +4067,8 @@
 		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_health"				"+$health"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_mana"				"+$mana"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_health_regen"			"+$hp_regen"
-		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_mana_regen"				"%+$mana_regen"		
-		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_cooldown"				"%COOLDOWN REDUCTION:"		
+		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_mana_regen"				"%+$mana_regen"
+		"DOTA_Tooltip_ability_item_imba_octarine_core_bonus_cooldown"				"%COOLDOWN REDUCTION:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_hero_lifesteal"				"%HERO SPELL LIFESTEAL:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_creep_lifesteal"				"%CREEP SPELL LIFESTEAL:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_blast_dmg"				"MAGUS' PRESENCE DAMAGE:"
@@ -4080,18 +4080,18 @@
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_health"				"+$health"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_mana"				"+$mana"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_health_regen"			"+$hp_regen"
-		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_mana_regen"			"%+$mana_regen"		
-		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_cooldown"			"%COOLDOWN REDUCTION:"		
+		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_mana_regen"			"%+$mana_regen"
+		"DOTA_Tooltip_ability_item_imba_octarine_core_off_bonus_cooldown"			"%COOLDOWN REDUCTION:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_hero_lifesteal"			"%HERO SPELL LIFESTEAL:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_creep_lifesteal"			"%CREEP SPELL LIFESTEAL:"
 		"DOTA_Tooltip_ability_item_imba_octarine_core_off_blast_dmg"				"MAGUS' PRESENCE DAMAGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_oblivion_staff_Lore"						"Deceptively hidden as an ordinary quarterstaff, it is actually very powerful, much like the Eldritch who originally possessed it."
 		"DOTA_Tooltip_ability_item_imba_oblivion_staff_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_oblivion_staff_bonus_attack_speed"			"+$attack"
 		"DOTA_Tooltip_ability_item_imba_oblivion_staff_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_oblivion_staff_bonus_mana_regen"			"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_imba_orchid_Description"					"Active: <font color='#FF7800'>Soul Burn</font> - Silences target unit for %silence_duration% seconds and amplifies the damage it takes by %silence_damage_percent%%%.\nPassive: <font color='#FF7800'>Malevolent Power</font> - Grants a %crit_chance%%% chance to double any magical or pure damage you deal.\nMalevolent Power's damage bonus does not work on targets further than %distance_taper_start% distance away."
 		"DOTA_Tooltip_ability_item_imba_orchid_Note0"						"Amplified damage is dealt at the end of the duration as magical damage."
 		"DOTA_Tooltip_ability_item_imba_orchid_Note1"						"Malevolent Power does not stack with itself."
@@ -4116,7 +4116,7 @@
 		"DOTA_Tooltip_ability_item_imba_bloodthorn_silence_damage_percent"			"%ACTIVE DAMAGE AMPLIFICATION:"
 		"DOTA_Tooltip_ability_item_imba_bloodthorn_silence_duration"				"ACTIVE DURATION:"
 		"DOTA_Tooltip_ability_item_imba_bloodthorn_target_crit_multiplier"			"%ACTIVE CRITICAL DAMAGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_pers_Description"					""
 		"DOTA_Tooltip_ability_item_imba_pers_Note0"						"Perseverance is shareable."
 		"DOTA_Tooltip_ability_item_imba_pers_Lore"							"A gem that grants heart to the bearer."
@@ -4131,7 +4131,7 @@
 		"DOTA_Tooltip_ability_item_imba_phase_boots_2_new_ms_limit"				"HASTE MOVE SPEED LIMIT:"
 		"DOTA_Tooltip_ability_item_imba_phase_boots_2_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_phase_boots_2_bonus_movement_speed"			"+$move_speed"
-		
+
 		"DOTA_Tooltip_ability_item_imba_pipe_Description"					"Active: Barrier - Gives nearby friendly units a shield that <font color='#FF7800'>blocks %barrier_resist%%% of all incoming spell damage.</font>\nPassive: Insight Aura - Gives nearby friendly units <font color='#FF7800'>%aura_magic_resist%%% magic resistance</font> and %aura_health_regen% health regeneration."
 		"DOTA_Tooltip_ability_item_imba_pipe_Note0"						"Barrier does not stack with itself."
 		"DOTA_Tooltip_ability_item_imba_pipe_Note1"						"Stacks multiplicatively with non-item sources of spell resistance."
@@ -4142,12 +4142,12 @@
 		"DOTA_Tooltip_ability_item_imba_pipe_aura_magic_resist"					"%AURA MAGIC RESIST:"
 		"DOTA_Tooltip_ability_item_imba_pipe_barrier_resist"					"%BARRIER MAGIC RESIST:"
 		"DOTA_Tooltip_ability_item_imba_pipe_barrier_duration"					"BARRIER DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_point_booster_Description"				""
 		"DOTA_Tooltip_ability_item_imba_point_booster_Lore"						"A perfectly formed amethyst that nourishes body and mind when held."
 		"DOTA_Tooltip_ability_item_imba_point_booster_bonus_mana"				"+$mana"
 		"DOTA_Tooltip_ability_item_imba_point_booster_bonus_health"				"+$health"
-		
+
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Description"				"Passive: Damage Block - Blocks physical attack damage based on whether the equipped hero is ranged or melee. Poor Man's Shield will always block attacks from enemy Heroes, but has a chance to block damage from creeps."
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Note0"					"Multiple sources of damage block don't stack."
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_Lore"						"A busted old shield that seems to block more than it should."
@@ -4155,7 +4155,7 @@
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_damage_block_melee"			"MELEE BLOCK:"
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_damage_block_ranged"			"RANGED BLOCK:"
 		"DOTA_Tooltip_ability_item_imba_poor_mans_shield_bonus_agility"				"+$agi"
-		
+
 		"DOTA_Tooltip_ability_item_imba_power_treads_Description"				"Active: Switch Attribute - Changes selected attribute between Strength, Agility and Intelligence.\n\nPower Treads can be built using a Belt of Strength, Band of Elvenskin, or a Robe of the Magi. Flat movement speed bonuses from multiple pairs of boots do not stack, nor does the attack speed bonus from multiple Power Treads."
 		"DOTA_Tooltip_ability_item_imba_power_treads_Lore"						"A pair of tough-skinned boots that change to meet the demands of the wearer."
 		"DOTA_Tooltip_ability_item_imba_power_treads_bonus_movement_speed"			"+$move_speed"
@@ -4167,16 +4167,16 @@
 		"DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_movement_speed"			"+$move_speed"
 		"DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_stat"				"+$selected_attrib"
 		"DOTA_Tooltip_ability_item_imba_power_treads_2_bonus_attack_speed"			"+$attack"
-		
+
 		"DOTA_Tooltip_ability_item_quelling_blade_Description"					"Active: Chop - Destroy a target tree or ward.\nPassive: Quell - Increases attack damage against non-hero units, based on whether the equipped hero is ranged or melee. Does not provide bonus damage against Roshan."
-		
-		"DOTA_Tooltip_ability_item_imba_radiance_Description"					"Deals damage per second and blinds enemies in a %aura_radius% radius.\n<font color='#FF7800'>Sunburn:</font> Deals bonus damage equal to %extra_damage%%% of the target's current health.\n\n<font color='#00FF40'>Can be toggled on/off.</font>"	
+
+		"DOTA_Tooltip_ability_item_imba_radiance_Description"					"Deals damage per second and blinds enemies in a %aura_radius% radius.\n<font color='#FF7800'>Sunburn:</font> Deals bonus damage equal to %extra_damage%%% of the target's current health.\n\n<font color='#00FF40'>Can be toggled on/off.</font>"
 		"DOTA_Tooltip_ability_item_imba_radiance_Lore"							"A divine weapon that causes damage and a bright burning effect that lays waste to nearby enemies."
 		"DOTA_Tooltip_ability_item_imba_radiance_base_damage"					"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_item_imba_radiance_extra_damage"					"%EXTRA DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_radiance_miss_chance"					"%MISS CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_radiance_bonus_damage"					"+$damage"		
-		
+		"DOTA_Tooltip_ability_item_imba_radiance_bonus_damage"					"+$damage"
+
 		"DOTA_Tooltip_ability_item_imba_rapier_Description"					"Drops on death.\nPassive: <font color='#FF7800'>Divinity</font> - Increases owner's damage by a great amount.\nPassive: <font color='#FF7800'>Infinite Power</font> - Buying or picking up additional Divine Rapiers concentrates their power, increasing the damage bonus.\n\n<font color='#00FF40'>Activate to change form.</font>"
 		"DOTA_Tooltip_ability_item_imba_rapier_Note0"						"\nExtra rapiers on separate slots provide no additional benefit."
 		"DOTA_Tooltip_ability_item_imba_rapier_Lore"							"So powerful, it cannot have a single owner."
@@ -4190,37 +4190,37 @@
 		"DOTA_Tooltip_ability_item_imba_rapier_magic_physical_amp"				"%PHYSICAL DAMAGE AMP:"
 		"DOTA_Tooltip_ability_item_imba_rapier_magic_magic_amp"					"%MAGIC DAMAGE AMP:"
 		"DOTA_Tooltip_ability_item_imba_rapier_magic_pure_amp"					"%PURE DAMAGE AMP:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_reaver_Lore"							"A massive axe capable of tearing whole mountains down."
 		"DOTA_Tooltip_ability_item_imba_reaver_bonus_strength"					"+$str"
-		
+
 		"DOTA_Tooltip_ability_item_imba_refresher_Description"					"Active: Reset Cooldowns - Resets the cooldowns of all your items and abilities."
 		"DOTA_Tooltip_ability_item_imba_refresher_Lore"							"A powerful artifact created for wizards."
 		"DOTA_Tooltip_ability_item_imba_refresher_bonus_health_regen"				"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_refresher_bonus_mana_regen"				"%+$mana_regen"
 		"DOTA_Tooltip_ability_item_imba_refresher_bonus_damage"					"+$damage"
-		
+
 		"DOTA_Tooltip_ability_item_imba_relic_Lore"							"An ancient weapon that often turns the tides of war."
 		"DOTA_Tooltip_ability_item_imba_relic_bonus_damage"					"+$damage"
-		
+
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_Description"				"Active: Toggle whether the aura affects other non-hero units.\nPassive: Basilius Aura - Grants mana regeneration and armor in a %aura_radius% area of effect.\n\nMultiple instances of Basilius Aura do not stack."
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_Note0"					"Does not stack with armor auras from Ring of Basilius, Ring of Aquila, or Vladmir's Offering."
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_Lore"						"Ring given as a reward to the greatest mages."
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_bonus_damage"				"+$damage"
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_aura_mana_regen"			"AURA MANA REGEN:"
 		"DOTA_Tooltip_ability_item_imba_ring_of_basilius_aura_bonus_armor"			"AURA BONUS ARMOR:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_ring_of_health_Note0"					"Ring of Health is shareable."
 		"DOTA_Tooltip_ability_item_imba_ring_of_health_Lore"						"A shiny ring found beneath a fat halfling's corpse."
 		"DOTA_Tooltip_ability_item_imba_ring_of_health_bonus_health_regen"			"+$hp_regen"
-		
+
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_Description"				"Active: Cripple - Slows the target's movement speed."
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_Lore"						"Atos, the Lord of Blight, has his essence stored in this deceptively simple wand."
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_bonus_health"				"+$health"
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_slow"					"%CRIPPLE SLOW:"
 		"DOTA_Tooltip_ability_item_imba_rod_of_atos_duration"					"DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_sange_Description"					"Passive: Maim - <font color='#FF7800'>With every attack,</font> slows the target's attack and movement for %maim_duration% seconds.\nPassive: <font color='#FF7800'>Disarming Strike</font> - Has a chance to briefly disarm the target on every attack."
 		"DOTA_Tooltip_ability_item_imba_sange_Lore"							"Sange is an unusually accurate weapon, seeking weak points automatically."
 		"DOTA_Tooltip_ability_item_imba_sange_maim_base"					"%MAIM BASE SLOW:"
@@ -4230,7 +4230,7 @@
 		"DOTA_Tooltip_ability_item_imba_sange_disarm_duration"					"DISARM DURATION:"
 		"DOTA_Tooltip_ability_item_imba_sange_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_sange_bonus_strength"					"+$str"
-		
+
 		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"				"Active: Disarms the target for %disarm_range% seconds. Lasts %disarm_melee% on Melee targets.\nPassive: Maim - <font color='#FF7800'>With every attack,</font> slows the target's attack and movement for %maim_duration% seconds.\nPassive: <font color='#FF7800'>Disarming Strike</font> - Has a chance to briefly disarm the target on every attack."
 		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"						"Disarm cannot be purged."
 		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"					"This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
@@ -4291,14 +4291,14 @@
 		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_agility"		"+$agi"
 		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_attack_speed"		"+$attack"
 		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_movement_speed_percent_bonus"	"%+$move_speed"
-		
+
 		"DOTA_Tooltip_ability_item_imba_satanic_Description"					"Active: Unholy Rage - Increases Lifesteal by %unholy_lifesteal_percent%%% for %unholy_duration% seconds.\nPassive: Lifesteal - Gives Lifesteal on attacks.\n\nSatanic is a Unique Attack Modifier, and does not stack with other Unique Attack Modifier."
 		"DOTA_Tooltip_ability_item_imba_satanic_Lore"							"Immense power at the cost of your soul."
 		"DOTA_Tooltip_ability_item_imba_satanic_bonus_damage"					"+$damage"
 		"DOTA_Tooltip_ability_item_imba_satanic_bonus_strength"					"+$str"
-		"DOTA_Tooltip_ability_item_imba_satanic_bonus_armor"					"+$armor"		
+		"DOTA_Tooltip_ability_item_imba_satanic_bonus_armor"					"+$armor"
 		"DOTA_Tooltip_ability_item_imba_satanic_lifesteal_percent"				"%LIFESTEAL:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_sheepstick_Description"					"Active: Hex - Turns a target unit into a harmless critter for %sheep_duration% seconds. Destroys illusions.\n<font color='#FF7800'>Helpless:</font> Negates up to %armor_reduction% of the target's armor, all its magic resistance, evasion, damage block and parry for the duration.\n<font color='#00FF40'>Using Hex on a target builds up Hex Resistance; each stack of resistance halves Hex's duration on the target.</font>"
 		"DOTA_Tooltip_ability_item_imba_sheepstick_Note0"					"Instantly destroys illusions."
 		"DOTA_Tooltip_ability_item_imba_sheepstick_Note1"					"The target will have a base movement speed of 100, but buffs granting maximum movement speed won't be disabled."
@@ -4307,7 +4307,7 @@
 		"DOTA_Tooltip_ability_item_imba_sheepstick_bonus_agility"				"+$agi"
 		"DOTA_Tooltip_ability_item_imba_sheepstick_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_sheepstick_bonus_mana_regen"				"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_Description"				"Active: <font color='#FF7800'>Arctic Blast</font> - Emits a freezing wave that does %damage% damage to enemies and slows their movement and attack speed by %initial_slow_tooltip%%%/%initial_slow_tooltip%. The slow decays over the next %slow_duration_tooltip% seconds.\nPassive: <font color='#FF7800'>Freezing Aura</font> - Reduces the attack speed of enemies in %aura_radius% range by %aura_as_reduction%%%.\n\n<font color='#00FF40'>Multiple instances of Freezing Aura do not stack.</font>"
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_Note0"					"The wave extends at a speed of 350 to a max size of 900."
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_Note1"					"The Arctic Blast follows its caster."
@@ -4318,11 +4318,11 @@
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_damage"					"BLAST DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_initial_slow_tooltip"			"%BLAST MOVEMENT SLOW:"
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_slow_duration_tooltip"			"BLAST SLOW DURATION:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_skadi_Description"					"Active: <font color='#FF7800'>Dead Winter Reigns</font> - Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Range is based on Strength, damage is based on Agility, and root duration is based on Intelligence.\nPassive: <font color='#FF7800'>Wintergrasp</font> - Damaging an enemy through any means will slow them. The slow lasts longer on enemies closer to you.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_skadi_Note0"						"Slow lasts at most 5, at least 0.75 seconds."
 		"DOTA_Tooltip_ability_item_imba_skadi_Note1"						"Minimum slow duration happens beyond 1200 range."
-		"DOTA_Tooltip_ability_item_imba_skadi_Note2"						"100 strength gives 200 extra range, 100 agility grants 150 extra damage, and 100 intelligence grants 1 extra second of root duration."
+		"DOTA_Tooltip_ability_item_imba_skadi_Note2"						"100 Strength gives 200 extra range, 100 Agility grants 150 extra damage, and 100 Intelligence grants 1 extra second of root duration."
 		"DOTA_Tooltip_ability_item_imba_skadi_Note3"						"Activation grants flying vision in the same radius as the effect for 3 seconds."
 		"DOTA_Tooltip_ability_item_imba_skadi_Lore"							"Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
 		"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"						"%MOVE SLOW:"
@@ -4331,23 +4331,23 @@
 		"DOTA_Tooltip_ability_item_imba_skadi_base_duration"					"BASE ACTIVE DURATION:"
 		"DOTA_Tooltip_ability_item_imba_skadi_base_damage"					"BASE ACTIVE DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"					"+$all"
-		
+
 		"DOTA_Tooltip_ability_item_imba_soul_booster_Lore"						"Regain lost courage."
 		"DOTA_Tooltip_ability_item_imba_soul_booster_bonus_health"				"+$health"
 		"DOTA_Tooltip_ability_item_imba_soul_booster_bonus_mana"				"+$mana"
 		"DOTA_Tooltip_ability_item_imba_soul_booster_bonus_health_regen"			"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_soul_booster_bonus_mana_regen"				"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_imba_soul_ring_Description"					"Active: Sacrifice - Consume %health_sacrifice% HP to temporarily gain %mana_gain% Mana. Lasts 15 seconds."
 		"DOTA_Tooltip_ability_item_imba_soul_ring_Note0"					"If the mana gain cannot fit in your mana pool, it creates a buffer of mana that is used before your mana pool. If this mana is not used before the duration, the extra mana is lost."
 		"DOTA_Tooltip_ability_item_imba_soul_ring_Lore"							"A ring that feeds on the souls of those around it."
 		"DOTA_Tooltip_ability_item_imba_soul_ring_health_regen"					"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_soul_ring_mana_regen"					"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_tango_Lore"								"Treant Protector glares sternly at your lack of respect for the forest."
-				
+
 		"DOTA_Tooltip_ability_item_tango_single_Lore"							"Treant Protector glares sternly at your lack of respect for the forest."
-		
+
 		"DOTA_Tooltip_ability_item_imba_tranquil_boots_Description"				"Passive: Break - Whenever you attack or are attacked, the health regeneration and 30 movement speed are lost for 6 seconds."
 		"DOTA_Tooltip_ability_item_imba_tranquil_boots_Lore"						"While they increase the longevity of the wearer, this boot is not particularly reliable."
 		"DOTA_Tooltip_ability_item_imba_tranquil_boots_bonus_movement_speed"			"+$move_speed"
@@ -4368,17 +4368,17 @@
 		"DOTA_Tooltip_ability_item_travel_boots_2_Description"					"Active: Teleport - Teleports you to any allied structure or unit, including heroes. Double-click to teleport to your team's base fountain.\n\nFlat movement speed bonuses from multiple pairs of boots do not stack."
 		"DOTA_Tooltip_ability_item_travel_boots_2_Note0"					"Shares cooldown with Town Portal Scrolls."
 		"DOTA_Tooltip_ability_item_travel_boots_Lore"							"Winged boots that grant omnipresence."
-		"DOTA_Tooltip_ability_item_travel_boots_2_bonus_movement_speed"				"+$move_speed"		
-		
-		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_Description"				"Gains charges every time an enemy hero dies within %soul_radius% units. Only the closest Urn to the dying hero will gain a charge.\nActive: Soul Release - Heals HP over time to friendly units, but deals pure damage over time to enemy units. The healing effect is lost if the affected unit takes damage from an enemy hero or tower." 
-		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_Note0"					"Empty urns gain 2 charges." 
+		"DOTA_Tooltip_ability_item_travel_boots_2_bonus_movement_speed"				"+$move_speed"
+
+		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_Description"				"Gains charges every time an enemy hero dies within %soul_radius% units. Only the closest Urn to the dying hero will gain a charge.\nActive: Soul Release - Heals HP over time to friendly units, but deals pure damage over time to enemy units. The healing effect is lost if the affected unit takes damage from an enemy hero or tower."
+		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_Note0"					"Empty urns gain 2 charges."
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_Lore"						"Contains the ashes of powerful demons."
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_soul_heal_amount"			"RELEASE ALLY TOTAL HEAL:"
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_soul_damage_amount"			"RELEASE ENEMY TOTAL DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_soul_heal_duration"			"SOUL RELEASE DURATION:"
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_mana_regen"				"%+$mana_regen"
 		"DOTA_Tooltip_ability_item_imba_urn_of_shadows_bonus_strength"				"+$str"
-		
+
 		"DOTA_Tooltip_ability_item_imba_vanguard_Description"					"Blocks part of all incoming physical damage. Damage block is equal to the wielder's level.\nPassive: <font color='#FF7800'>Parry</font> - Also reduces all incoming damage by 6%%.\n\n<font color='#00FF40'>Damage block is calculated after all other reductions.</font>"
 		"DOTA_Tooltip_ability_item_imba_vanguard_Note0"						"Multiple Vanguard-based items' damage block and parry chance do not stack."
 		"DOTA_Tooltip_ability_item_imba_vanguard_Lore"							"A powerful shield that defends its wielder from even the most vicious of attacks."
@@ -4411,10 +4411,10 @@
 		"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_active_armor"				"BULWARK ARMOR:"
 		"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_duration"				"BULWARK DURATION:"
 		"DOTA_Tooltip_ability_item_imba_greatwyrm_plate_active_radius"				"BULWARK RANGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_vitality_booster_Lore"						"A ruby gemstone that has been passed down through generations of warrior kin."
 		"DOTA_Tooltip_ability_item_imba_vitality_booster_bonus_health"				"+$health"
-		
+
 		"DOTA_Tooltip_ability_item_imba_vladmir_Description"					"Passive: <font color='#FF7800'>Vladmir's Aura</font> - Grants bonus damage, mana regeneration, and armor to nearby allies, and allows them to lifesteal from regular attacks."
 		"DOTA_Tooltip_ability_item_imba_vladmir_Note0"						"Vladmir's Offering's damage, lifesteal, and mana regen auras stack with those from a Vladmir's Blood; however, the armor aura does not stack with itself or with Ring of Aquila/Basilius."
 		"DOTA_Tooltip_ability_item_imba_vladmir_Lore"							"An eerie mask that is haunted with the malice of a fallen vampire."
@@ -4435,25 +4435,25 @@
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_armor_aura"					"AURA BONUS ARMOR:"
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_hp_regen"					"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"					"+$all"
-		
+
 		"DOTA_Tooltip_ability_item_imba_void_stone_Description"					""
 		"DOTA_Tooltip_ability_item_imba_void_stone_Note0"					"Void Stone is shareable."
 		"DOTA_Tooltip_ability_item_imba_void_stone_Lore"						"Jewelry that was once used to channel nether realm magic, this ring pulses with energy."
 		"DOTA_Tooltip_ability_item_imba_void_stone_bonus_mana_regen"				"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_ward_observer_Description"					"Use: Places an Observer Ward to give sight of the surrounding area. Lasts 7 minutes.\n\nHold Control to give one Observer Ward to an allied hero."
 
 		"DOTA_Tooltip_ability_item_ward_sentry_Description"					"Use: Places a Sentry Ward to give True Sight of the surrounding area. Lasts 5 minutes.\n\nHold Control to give one Sentry Ward to an allied hero."
-		
+
 		"DOTA_Tooltip_ability_item_imba_wraith_band_Lore"						"A circlet with faint whispers echoing about it."
 		"DOTA_Tooltip_ability_item_imba_wraith_band_bonus_strength"				"+$str"
 		"DOTA_Tooltip_ability_item_imba_wraith_band_bonus_agility"				"+$agi"
 		"DOTA_Tooltip_ability_item_imba_wraith_band_bonus_intellect"				"+$int"
 		"DOTA_Tooltip_ability_item_imba_wraith_band_bonus_damage"				"+$damage"
-		
-		"DOTA_Tooltip_ability_item_imba_yasha_Description"					"Passive: <font color='#FF7800'>Battle Rhythm</font> - Gains movement and attack speed with every attack.\nPassive: <font color='#FF7800'>Afterimage</font> - Has a chance to repeat a previous attack.\nYasha-based movement speed bonuses from multiple items do not stack."	
+
+		"DOTA_Tooltip_ability_item_imba_yasha_Description"					"Passive: <font color='#FF7800'>Battle Rhythm</font> - Gains movement and attack speed with every attack.\nPassive: <font color='#FF7800'>Afterimage</font> - Has a chance to repeat a previous attack.\nYasha-based movement speed bonuses from multiple items do not stack."
 		"DOTA_Tooltip_ability_item_imba_yasha_Note0"						"Afterimage only factors your base damage, plus any additional damage from your primary attribute."
-		"DOTA_Tooltip_ability_item_imba_yasha_Lore"							"Yasha is regarded as the swiftest weapon ever created."	
+		"DOTA_Tooltip_ability_item_imba_yasha_Lore"							"Yasha is regarded as the swiftest weapon ever created."
 		"DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"					"+$agi"
 		"DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"				"+$attack"
 		"DOTA_Tooltip_ability_item_imba_yasha_movement_speed_percent_bonus"			"%+$move_speed"
@@ -4461,7 +4461,7 @@
 		"DOTA_Tooltip_ability_item_imba_yasha_stacking_ms"					"%BATTLE RHYTHM MOVE SPEED:"
 		"DOTA_Tooltip_ability_item_imba_yasha_max_stacks"					"BATTLE RHYTHM MAX STACKS:"
 		"DOTA_Tooltip_ability_item_imba_yasha_proc_chance"					"%AFTERIMAGE CHANCE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"				"Active: Replenish Mana - <font color='#FF7800'>Instantly restores a flat amount of mana to all nearby units, then slowly replenishes a %% of their maximum mana over the next few seconds.</font>\n\nFlat movement speed bonuses from multiple pairs of boots do not stack."
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Note0"					"Does not work on Meepo clones."
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Lore"						"Magi equipped with these boots are valued in battle."
@@ -4469,7 +4469,7 @@
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_replenish_percent"				"%MANA REPLENISHED PER SECOND:"
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_replenish_duration"			"REPLENISH DURATION:"
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_movement"				"+$move_speed"
-		"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_mana"				"+$mana"	
+		"DOTA_Tooltip_ability_item_imba_arcane_boots_bonus_mana"				"+$mana"
 
 		"DOTA_Tooltip_ability_item_imba_orb_of_venom_Description"				"Passive: Poison Attack - Poisons the target, dealing damage over time and slowing, depending on whether your hero is melee or ranged.\n\nOrb of Venom is a Unique Attack Modifier, and does not stack with other Unique Attack Modifiers. Orb of Venom can be combined with Lifesteal Attack Modifiers."
 		"DOTA_Tooltip_ability_item_imba_orb_of_venom_Lore"						"Envenoms your weapon with the venom of a venomous viper."
@@ -4519,13 +4519,13 @@
 		"DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_armor" 				"+$armor"
 		"DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_hp_regen"				"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_siege_cuirass_bonus_as"					"+$attack"
-				
+
 		"DOTA_Tooltip_ability_item_imba_medallion_of_courage_Description"			"Active: Valor - If cast on an ally, increases their armor while reducing the caster's. If cast on an enemy, reduces the armor of both the enemy and the caster. Lasts 7 seconds."
 		"DOTA_Tooltip_ability_item_imba_medallion_of_courage_Lore"					"The bearer has no fear of combat."
 		"DOTA_Tooltip_ability_item_imba_medallion_of_courage_armor_reduction"			"ARMOR REDUCTION:"
 		"DOTA_Tooltip_ability_item_imba_medallion_of_courage_bonus_armor"			"+$armor"
 		"DOTA_Tooltip_ability_item_imba_medallion_of_courage_bonus_mana_regen_pct"		"%+$mana_regen"
-		
+
 		"DOTA_Tooltip_ability_item_smoke_of_deceit_Description"					"Use: Upon activation, the user and all nearby allied player-controlled units gain invisiblity and bonus movement speed for a brief time. Minimap icons will also be hidden. Upon moving within 750 range of an enemy hero or tower, the invisibility is lost."
 
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_Description"				"Active: <font color='#FF7800'>Soulrend</font> - Focuses the Veil of Discord's enmity on a single enemy, dealing %target_damage% magic damage and doubling the aura's effects on the target for %debuff_duration% seconds.\nPassive: <font color='#FF7800'>Discord</font> - Increases magic damage taken by all nearby enemies."
@@ -4536,7 +4536,7 @@
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_aura_resist"				"%BONUS MAGIC DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_debuff_duration"			"SOULREND DURATION:"
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_target_damage"				"SOULREND DAMAGE:"
-		
+
 		"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Description"				"Active: Toggle whether the aura affects other non-hero units.\nPassive: Aquila Aura - Grants mana regeneration and armor in a %aura_radius% area of effect.\n\nMultiple instances of Aquila Aura do not stack."
 		"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Note0"					"Does not stack with armor auras from Ring of Basilius, Ring of Aquila, or Vladmir's Offering."
 		"DOTA_Tooltip_ability_item_imba_ring_of_aquila_Lore"						"The ring of the fallen Warlord Aquila continues to support armies in battle."
@@ -4556,10 +4556,10 @@
 		"DOTA_Tooltip_ability_item_imba_glimmer_cape_bonus_attack_speed"			"+$attack"
 		"DOTA_Tooltip_ability_item_imba_glimmer_cape_bonus_magical_armor"			"%+$spell_resist"
 		"DOTA_Tooltip_ability_item_imba_glimmer_cape_fade_delay"				"GLIMMER FADE TIME:"
-		"DOTA_Tooltip_ability_item_imba_glimmer_cape_active_magical_armor"			"%GLIMMER MAGIC RESISTANCE:"	
+		"DOTA_Tooltip_ability_item_imba_glimmer_cape_active_magical_armor"			"%GLIMMER MAGIC RESISTANCE:"
 		"DOTA_Tooltip_ability_item_imba_glimmer_cape_duration"					"GLIMMER DURATION:"
 
-		"DOTA_Tooltip_ability_item_imba_azura_Description"					"Passive: <font color='#FF7800'>Soul Rend</font> - Each attack applies a stack of Soul Rend, making the target more vulnerable to magical damage.\nPassive: <font color='#FF7800'>Soulstrike</font> - Each attack has a chance to cut directly to the target's spirit, dealing %proc_damage% bonus damage."	
+		"DOTA_Tooltip_ability_item_imba_azura_Description"					"Passive: <font color='#FF7800'>Soul Rend</font> - Each attack applies a stack of Soul Rend, making the target more vulnerable to magical damage.\nPassive: <font color='#FF7800'>Soulstrike</font> - Each attack has a chance to cut directly to the target's spirit, dealing %proc_damage% bonus damage."
 		"DOTA_Tooltip_ability_item_imba_azura_Lore"							"Azura is a sword attuned to the spirit world, able to cut both flesh and soul with each strike."
 		"DOTA_Tooltip_ability_item_imba_azura_bonus_int"					"+$int"
 		"DOTA_Tooltip_ability_item_imba_azura_damage_amp_tooltip"				"%MAGIC AMP PER STACK:"
@@ -4591,7 +4591,7 @@
 		"DOTA_Tooltip_ability_item_imba_shotgun_bonus_as"					"+$attack"
 		"DOTA_Tooltip_ability_item_imba_shotgun_bonus_agi"					"+$agi"
 
-		"DOTA_Tooltip_ability_item_imba_starfury_Description"					"Thori'dal, the Stars' Fury is an ancient, enchanted bow, which grants its owner unparalleled swiftness in combat.\nPassive: <font color='#FF7800'>Lightspeed</font> - Grants a %proc_chance%%% chance per attack to briefly increase your agility by %proc_bonus%%%.\nPassive: <font color='#FF7800'>Stars' Fury</font> - With each attack, launches angry shooting stars towards all enemies in %range% range of the original target. Each star is an attack with 40%% reduced damage."
+		"DOTA_Tooltip_ability_item_imba_starfury_Description"					"Thori'dal, the Stars' Fury is an ancient, enchanted bow, which grants its owner unparalleled swiftness in combat.\nPassive: <font color='#FF7800'>Lightspeed</font> - Grants a %proc_chance%%% chance per attack to briefly increase your Agility by %proc_bonus%%%.\nPassive: <font color='#FF7800'>Stars' Fury</font> - With each attack, launches angry shooting stars towards all enemies in %range% range of the original target. Each star is an attack with 40%% reduced damage."
 		"DOTA_Tooltip_ability_item_imba_starfury_Note0"						"Stars' Fury does not hit the original target."
 		"DOTA_Tooltip_ability_item_imba_starfury_Note1"						"Extra attacks can proc on-hit effects normally."
 		"DOTA_Tooltip_ability_item_imba_starfury_Lore"							"The energy of the Sunwell courses through Thori'dal."
