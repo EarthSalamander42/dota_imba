@@ -12,13 +12,11 @@
 ```
 "CustomEvents"
 {
-	
 	"custom_error_show"
 	{
 		"player_ID"		"short"
 		"_error"		"string"
 	}
-	
 }
 ```
 
