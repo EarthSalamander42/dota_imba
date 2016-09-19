@@ -15004,7 +15004,7 @@
 	//=================================================================================================================
 	"invoker_tornado"
 	{
-		"AbilityCastRange"				"2000"
+		"AbilityCastRange"				"20000"
 		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"150"
 			
@@ -15135,7 +15135,7 @@
 	//=================================================================================================================
 	"invoker_chaos_meteor"
 	{
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"20000"
 		"AbilityCooldown"				"35"
 
 		"AbilitySpecial"
