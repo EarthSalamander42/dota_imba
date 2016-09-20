@@ -257,7 +257,14 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_borrowed_time")
-
+	target:RemoveModifierByName("modifier_imba_centaur_return")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_active")
+	target:RemoveModifierByName("modifier_item_crimson_guard_unique")
+	target:RemoveModifierByName("modifier_item_crimson_guard_active")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_vanguard_unique")
+	
 	-- Kills the target
 	target:Kill(ability, caster)
 end
