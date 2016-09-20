@@ -13710,7 +13710,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"420"
+				"radius"					"425 450 475"
 			}
 			"02"
 			{
@@ -15388,7 +15388,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 25 20 15"
+		"AbilityCooldown"				"36 30 24 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -15970,7 +15970,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"3 4 5 6"
+				"bonus_agi"				"2 3 4 5"
 			}
 			"04"
 			{
@@ -16095,7 +16095,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"125"
+				"bonus_damage"			"55 90 125"
 			}
 			"02"
 			{
@@ -16105,22 +16105,22 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"700"
+				"bounce_range"			"600"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.40 0.35 0.30"
+				"bounce_delay"			"0.40 0.33 0.25"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_per_jump"			"12"
+				"agi_per_jump"			"15"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"1400"
+				"bounce_range_scepter"	"1000"
 			}
 			"07"
 			{
@@ -16161,6 +16161,7 @@
 				{
 					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 
 				"Properties"
@@ -19291,7 +19292,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_radius"			"275"
+				"secondary_radius"			"250"
 			}
 			"05"
 			{
@@ -19416,7 +19417,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_max_stunrange"	"3000"
+				"arrow_max_stunrange"	"1500"
 			}
 			"04"
 			{
@@ -19426,12 +19427,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"arrow_max_stun"		"10.0"
+				"arrow_max_stun"		"5.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_bonus_damage"	"70 90 110 130"
+				"arrow_bonus_damage"	"3 4 5 6"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"arrow_max_damage"		"50"
 			}
 			"07"
 			{
@@ -19446,7 +19452,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"50 140 230 320"
+				"base_damage"			"180 270 360 450"
 			}
 		}
 
@@ -19675,21 +19681,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"90 160 230 300"
 			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"secondary_radius"			"275"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"secondary_duration"		"2"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_duration"			"3"
-			}
 		}
 
 		"OnSpellStart"
@@ -19703,37 +19694,6 @@
 				"hit_sound"					"Ability.StarfallImpact"
 				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-				"modifier_debuff"			"modifier_imba_cosmic_dust_debuff"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_cosmic_dust_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%secondary_duration"
-
-				"EffectName"				"particles/hero/mirana/mirana_cosmic_dust.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_mirana.lua"
-						"Function"			"StarfallSecondary"
-
-						"hit_sound"			"Ability.StarfallImpact"
-						"hit_particle"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-					}
-				}
 			}
 		}
 	}
@@ -24325,12 +24285,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"60 100 140 180"
+				"damage"					"80 120 160 200"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"25 40 55 70"
+				"secondary_damage"			"30 45 60 75"
 			}
 			"03"
 			{
@@ -24439,7 +24399,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 12 9 6"
+		"AbilityCooldown"				"12 10 8 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24607,12 +24567,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"500"
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0"
+		"AbilityCooldown"				"30.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24667,7 +24627,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"
+				"duration"				"35"
 			}
 			"08"
 			{
@@ -30903,27 +30863,17 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rancor_amp"			"6 7 8 9"
+				"duration"				"8"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"8"
+				"vision_aoe"			"600"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"			"600"
-			}
-			"08"
-			{
 				"var_type"				"FIELD_FLOAT"
 				"vision_duration"		"5.0"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"terror_angle"			"70"
 			}
 		}
 
@@ -30950,7 +30900,7 @@
 				"Function"				"WaveOfTerrorHit"
 
 				"modifier_armor"		"modifier_imba_wave_of_terror_armor"
-				"modifier_terror"		"modifier_imba_wave_of_terror_debuff"
+				"modifier_terror"		"modifier_imba_wave_of_terror_stacks"
 				"modifier_rancor"		"modifier_imba_rancor"
 			}
 		}
@@ -30975,7 +30925,7 @@
 				}
 			}
 
-			"modifier_imba_wave_of_terror_debuff"
+			"modifier_imba_wave_of_terror_stacks"
 			{
 				"Passive"				"0"
 				"IsHidden"				"1"
@@ -30984,23 +30934,9 @@
 
 				"Duration"				"%duration"
 
-				"ThinkInterval"			"0.25"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_vengeful.lua"
-						"Function"				"WaveOfTerrorTerror"
-
-						"modifier_terror"		"modifier_imba_wave_of_terror_debuff"
-						"modifier_rancor"		"modifier_imba_rancor"
-					}
-				}
-
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"1"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
 				}
 			}
 		}
@@ -31046,12 +30982,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rancor_damage_bonus"		"5"
+				"rancor_damage_bonus"		"2"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"negative_damage"			"-20 -30 -40 -50"
+				"negative_damage"			"-16 -24 -32 -40"
 			}
 		}
 
@@ -31588,7 +31524,7 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"venomancer_poison_sting"
 		
@@ -31609,12 +31545,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"caster_stacks"				"2 3 4 5"
+				"caster_stacks"				"3 4 5 6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_stacks"			"8 10 12 14"
+				"initial_stacks"			"10 12 14 16"
 			}
 			"05"
 			{
@@ -31859,13 +31795,22 @@
 		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"	
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"				"venomancer_poison_sting"
 		"MaxLevel"							"1"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"initial_stacks"			"5 6 7 8"
+			}
+		}
+
 		"OnProjectileHitUnit"
 		{
 			"DeleteOnHit"					"1"

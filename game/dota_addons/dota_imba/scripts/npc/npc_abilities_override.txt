@@ -4683,7 +4683,7 @@
 	//=================================================================================================================
 	"earthshaker_echo_slam"
 	{
-		"AbilityCastRange"				"600 750 900"
+		"AbilityCastRange"				"900"
 
 		"AbilityDamage"					"160 215 270"
 
@@ -4694,17 +4694,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_damage_range"		"600 750 900"
+				"echo_slam_damage_range"		"900"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_search_range"	"600 750 900"
+				"echo_slam_echo_search_range"	"900"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_range"			"600 750 900"
+				"echo_slam_echo_range"			"900"
 			}
 			"04"
 			{
@@ -5962,7 +5962,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 275 300 325"
+				"radius"				"300"
 			}
 			
 			"03"
@@ -5982,7 +5982,7 @@
 
 		"AbilityCastPoint"				"0.0"
 		
-		"AbilityCooldown"				"19 17 15 13"
+		"AbilityCooldown"				"12"
 
 		"AbilityManaCost"				"95 115 135 155"
 		
@@ -6022,25 +6022,25 @@
 	"leshrac_lightning_storm"
 	{
 		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.35"
 		
-		"AbilityCooldown"				"3.5"
+		"AbilityCooldown"				"2.5"
 
 		"AbilityManaCost"				"90"
 		
-		"AbilityDamage"					"50 100 150 200"
+		"AbilityDamage"					"80 120 160 200"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"8 10 12 14"
+				"jump_count"			"20"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"700"
+				"radius"				"750"
 			}
 			"03"
 			{
@@ -6077,7 +6077,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"650"
 			}
 			"03"
 			{
@@ -8713,6 +8713,181 @@
 	}
 
 	//=================================================================================================================
+	// Rubick: Telekinesis
+	//=================================================================================================================
+	"rubick_telekinesis"
+	{
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+
+		"AbilityCooldown"				"20 18 16 14"
+
+		"AbilityManaCost"				"110"
+		
+		"AbilityCastRange"				"550 600 650 700"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"lift_duration"				"2.25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0 1.25 1.5 1.75"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_land_distance"			"700"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fall_duration"				"0.3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"550 600 650 700"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_land_distance_allied"	"700"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Rubick: Telekinesis Land
+	//=================================================================================================================
+	"rubick_telekinesis_land"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick: Fade Bolt
+	//=================================================================================================================
+	"rubick_fade_bolt"
+	{
+		"AbilityCooldown"				"14 12 10 8"
+
+		"AbilityManaCost"				"120"
+		
+		"AbilityCastRange"				"800"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"100 175 250 325"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"jump_damage_reduction_pct"		"0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hero_attack_damage_reduction"	"25 40 55 70"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creep_attack_damage_reduction"	"16 24 32 40"
+			}			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"10.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"600"
+			}			
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"jump_delay"					"0.25"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Rubick: Null Field
+	//=================================================================================================================
+	"rubick_null_field"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_damage_reduction_pct"	"12 18 24 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick: Spell Steal
+	//=================================================================================================================
+	"rubick_spell_steal"
+	{
+		"AbilityCooldown"				"14.0 10.0 6.0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilityCastRange"				"1100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"300.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1500"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Shadow Demon: Disruption
 	//=================================================================================================================
 	"shadow_demon_disruption"
@@ -10463,7 +10638,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.5"
+				"base_attack_time"		"1.4"
 			}
 			"04"
 			{
@@ -11751,7 +11926,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"14"
+				"str_steal_scepter"			"18"
 			}				
 		}
 	}
@@ -14918,7 +15093,7 @@
 	"invoker_cold_snap"
 	{
 		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"18"
+		"AbilityCooldown"				"16"
 		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
@@ -14999,8 +15174,8 @@
 	//=================================================================================================================
 	"invoker_tornado"
 	{
-		"AbilityCastRange"				"2000"
-		"AbilityCooldown"				"25"
+		"AbilityCastRange"				"3000"
+		"AbilityCooldown"				"21"
 		"AbilityManaCost"				"150"
 			
 		"AbilitySpecial"
@@ -15063,7 +15238,7 @@
 	"invoker_emp"
 	{
 		"AbilityCastRange"				"1200"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"21"
 		"AbilityManaCost"				"125"
 			
 		"AbilitySpecial"
@@ -15101,7 +15276,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"8"
 
 		"AbilitySpecial"
 		{
@@ -15131,7 +15306,7 @@
 	"invoker_chaos_meteor"
 	{
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"35"
+		"AbilityCooldown"				"30"
 
 		"AbilitySpecial"
 		{
@@ -15236,6 +15411,7 @@
 	"invoker_forge_spirit"
 	{
 		"AbilityManaCost"				"50"
+		"AbilityCooldown"				"20"
 		
 		"AbilitySpecial"
 		{
@@ -15308,6 +15484,8 @@
 	//=================================================================================================================
 	"invoker_ice_wall"
 	{
+		"AbilityCooldown"				"20"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -15362,7 +15540,7 @@
 	"invoker_deafening_blast"
 	{
 		"AbilityCastRange"				"1600"
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"250"
 
 		"AbilitySpecial"
@@ -15425,7 +15603,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"10 15 20 25"
+				"heal"					"20 25 30 35"
 			}
 			"02"
 			{

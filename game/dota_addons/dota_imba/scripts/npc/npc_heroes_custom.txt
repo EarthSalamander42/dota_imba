@@ -1369,7 +1369,7 @@
 	//=================================================================================================================
 	// HERO: Razor
 	//=================================================================================================================
-    "npc_imba_hero_razor"
+	"npc_imba_hero_razor"
 	{
 		"override_hero"				"npc_dota_hero_razor"
 
@@ -1387,7 +1387,7 @@
 	//=================================================================================================================
 	// HERO: Riki
 	//=================================================================================================================
-    "npc_imba_hero_riki"
+	"npc_imba_hero_riki"
 	{
 		"override_hero"				"npc_dota_hero_riki"
 
@@ -1401,6 +1401,28 @@
 		"Ability5"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
+	}
+
+	//=================================================================================================================
+	// HERO: Rubick
+	//=================================================================================================================
+	"npc_imba_hero_rubick"
+	{
+		"override_hero"				"npc_dota_hero_rubick"
+
+		//"Ability1"		"imba_rubick_telekinesis"
+		//"Ability2"		"imba_rubick_telekinesis_land"
+		//"Ability3"		"imba_rubick_fade_bolt"
+		//"Ability4"		"imba_rubick_null_field"
+		//"Ability5"		"imba_rubick_empty1"
+		//"Ability6"		"imba_rubick_empty2"
+		//"Ability7"		"imba_rubick_spell_steal"
+		"Ability8"		"attribute_bonus_int"
+		//"Ability9"		"imba_rubick_hidden1"
+		//"Ability10"		"imba_rubick_hidden2"
+		//"Ability11"		"imba_rubick_hidden3"
+
+		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
 
 	//=================================================================================================================

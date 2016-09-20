@@ -5,6 +5,9 @@ function Bladefury( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_caster = keys.modifier_caster
+
+	-- Purge debuffs
+	caster:Purge(false, true, false, false, false)	
 	
 	-- Apply bladefury modifier to the caster
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
@@ -401,11 +404,7 @@ function Omnislash( keys )
 		previous_position = current_position
 		
 		-- Find eligible targets
-		if scepter then
-			nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
-		else
-			nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
-		end
+		nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
 		
 		-- If there is an eligible target, slash it
 		if nearby_enemies[1] then
@@ -430,14 +429,13 @@ function Omnislash( keys )
 			-- Perform the slash
 			caster:PerformAttack(current_target, true, true, true, true, true)
 
-			-- If the target is Roshan or a hero, count down one slash
-			if current_target:IsHero() or IsRoshan(current_target) then
-				jumps_remaining = jumps_remaining - 1
-
-			-- Else, do not count this slash, and instantly kill the target
-			else
+			-- If the target is not Roshan or a hero, instantly kill it
+			if not ( current_target:IsHero() or IsRoshan(current_target) ) then
 				ApplyDamage({attacker = caster, victim = current_target, ability = ability, damage = current_target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
 			end
+
+			-- Count down amount of slashes
+			jumps_remaining = jumps_remaining - 1
 
 			-- Play hit sound
 			current_target:EmitSound(sound_hit)

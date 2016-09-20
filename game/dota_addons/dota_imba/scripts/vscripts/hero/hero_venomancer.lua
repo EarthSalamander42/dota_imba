@@ -220,7 +220,7 @@ function PoisonStingTick( keys )
 	local current_stacks = target:GetModifierStackCount(modifier_sting, caster)
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = current_stacks * dmg_per_stack, damage_type = DAMAGE_TYPE_PHYSICAL})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = current_stacks * dmg_per_stack, damage_type = DAMAGE_TYPE_MAGICAL})
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, current_stacks * dmg_per_stack, nil)
 
 	-- Remove 10% of the stacks (minimum 2)
@@ -359,15 +359,26 @@ function WardSting( keys )
 	local caster = keys.caster:GetOwnerEntity()
 	local target = keys.target
 	local ability = caster:FindAbilityByName(keys.ability_sting)
+	local ability_level = ability:GetLevel() - 1
 	local modifier_sting = keys.modifier_sting
 
 	-- If the target is a building, or the ability was unlearned, do nothing
 	if target:IsBuilding() or not ability then
 		return nil
 	end
-	
-	-- Add a stack of the modifier
-	AddStacks(ability, caster, target, modifier_sting, 1, true)
+
+	-- Parameters
+	local initial_stacks = ability:GetLevelSpecialValueFor("initial_stacks", ability_level)
+
+	-- Fetch current stack amount
+	local current_stacks = target:GetModifierStackCount(modifier_sting, caster)
+
+	-- Add stacks according to the current amount
+	if (current_stacks + 1) < initial_stacks then
+		AddStacks(ability, caster, target, modifier_sting, initial_stacks - current_stacks, true)
+	else
+		AddStacks(ability, caster, target, modifier_sting, 1, true)
+	end
 end
 
 function ScourgeWardAttack( keys )

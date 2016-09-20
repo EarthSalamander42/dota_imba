@@ -692,6 +692,16 @@ function GameMode:OnAllPlayersLoaded()
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Banned player message
+	-------------------------------------------------------------------------------------------------
+
+	if IS_BANNED_PLAYER then
+		Timers:CreateTimer(1, function()
+			Say(nil, "<font color='#FF0000'>Baumi</font> detected, game will not start. Please disconnect.", false)
+		end)
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Selected game mode confirmation messages
 	-------------------------------------------------------------------------------------------------
 

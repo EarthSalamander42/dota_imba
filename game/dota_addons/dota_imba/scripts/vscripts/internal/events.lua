@@ -44,8 +44,8 @@ function GameMode:_OnEntityKilled( keys )
 
 		--PlayerResource:GetTeamKills
 		if SHOW_KILLS_ON_TOPBAR then
-			GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, GetTeamHeroKills(DOTA_TEAM_BADGUYS) )
-			GameRules:GetGameModeEntity():SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, GetTeamHeroKills(DOTA_TEAM_GOODGUYS) )
+			GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_BADGUYS, GetTeamHeroKills(DOTA_TEAM_BADGUYS))
+			GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, GetTeamHeroKills(DOTA_TEAM_GOODGUYS))
 		end
 	end
 end
@@ -53,4 +53,19 @@ end
 -- This function is called once when the player fully connects and becomes "Ready" during Loading
 function GameMode:_OnConnectFull(keys)
 	GameMode:_CaptureGameMode()
+	
+	-- Store player's player ID
+	local player_id = keys.PlayerID
+	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))
+
+	-- If this is Baumi, end the game
+	if player_steam_id_64 == "76561198003571172" then
+		IS_BANNED_PLAYER = true
+		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+		GameRules:SetHeroSelectionTime(1)
+		GameRules:SetPreGameTime(3)
+		GameRules:SetPostGameTime(2)
+		GameRules:SetCustomGameSetupAutoLaunchDelay(3)
+		GameRules:SetCustomGameSetupRemainingTime(0)
+	end
 end

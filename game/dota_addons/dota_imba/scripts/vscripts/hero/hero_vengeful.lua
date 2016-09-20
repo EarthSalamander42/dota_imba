@@ -226,41 +226,11 @@ function WaveOfTerrorHit( keys )
 	-- Apply armor reduction
 	ability:ApplyDataDrivenModifier(caster, target, modifier_armor, {})
 
-	-- Apply terror if applicable
+	-- Apply extra armor reduction if applicable
 	if target:HasModifier(modifier_rancor) then
+		local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
 		ability:ApplyDataDrivenModifier(caster, target, modifier_terror, {})
-	end
-end
-
-function WaveOfTerrorTerror( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_terror = keys.modifier_terror
-	local modifier_rancor = keys.modifier_rancor
-	
-	-- Parameters
-	local rancor_amp = ability:GetLevelSpecialValueFor("rancor_amp", ability_level)
-	local terror_angle = ability:GetLevelSpecialValueFor("terror_angle", ability_level)
-
-	-- Fetch amount of rancor stacks
-	local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
-
-	-- Check if the caster is in view of the target
-	local caster_loc = caster:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
-	local direction = (caster_loc - target_loc):Normalized()
-	local forward_vector = target:GetForwardVector()
-	local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-
-	-- If yes, apply the extra incoming damage debuff
-	if angle <= ( terror_angle / 2 ) and target:CanEntityBeSeenByMyTeam(caster) then
-		target:SetModifierStackCount(modifier_terror, caster, rancor_amp * rancor_stacks)
-
-	-- Else, remove it
-	else
-		target:SetModifierStackCount(modifier_terror, caster, 0)
+		target:SetModifierStackCount(modifier_terror, caster, rancor_stacks)
 	end
 end
 
