@@ -111,6 +111,7 @@ function LaunchArrow( keys )
 	local arrow_max_stun = ability:GetLevelSpecialValueFor("arrow_max_stun", ability_level)
 	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
 	local arrow_bonus_damage = ability:GetLevelSpecialValueFor("arrow_bonus_damage", ability_level)
+	local arrow_max_damage = ability:GetLevelSpecialValueFor("arrow_max_damage", ability_level)
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 	local vision_radius = ability:GetLevelSpecialValueFor("arrow_vision", ability_level)
 	local enemy_units
@@ -188,7 +189,7 @@ function LaunchArrow( keys )
 
 					-- Calculate and apply stun
 					if distance < arrow_max_stunrange then
-						arrow_stun_duration = distance * stun_per_100 / 100 + arrow_min_stun
+						arrow_stun_duration = distance * stun_per_100 * 0.01 + arrow_min_stun
 					else
 						arrow_stun_duration = arrow_max_stun
 					end
@@ -200,8 +201,15 @@ function LaunchArrow( keys )
 					-- Impact vision
 					ability:CreateVisibilityNode(unit:GetAbsOrigin(), vision_radius, vision_duration)
 
+					-- Calculate damage
+					local actual_bonus_damage = 0
+					if distance > arrow_max_stunrange then
+						local extra_distance = distance - arrow_max_stunrange
+						actual_bonus_damage = math.min(extra_distance * 0.001 * arrow_bonus_damage * 0.01, arrow_max_damage * 0.01) * unit:GetMaxHealth()
+					end
+
 					-- Damage
-					local arrow_damage = base_damage + arrow_bonus_damage * distance / 1000
+					local arrow_damage = base_damage + actual_bonus_damage
 					damage_table.victim = unit
 					damage_table.damage = arrow_damage
 					ApplyDamage(damage_table)
@@ -368,7 +376,6 @@ function CosmicDust( keys )
 	local hit_sound = keys.hit_sound
 	local ambient_particle = keys.ambient_particle
 	local hit_particle = keys.hit_particle
-	local modifier_debuff = keys.modifier_debuff
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local hit_delay = ability:GetLevelSpecialValueFor("hit_delay", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
@@ -395,7 +402,6 @@ function CosmicDust( keys )
 		ParticleManager:ReleaseParticleIndex(star_pfx)
 		Timers:CreateTimer(hit_delay, function()
 			enemy:EmitSound(hit_sound)
-			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 			ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		end)
 	end

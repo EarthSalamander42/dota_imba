@@ -226,83 +226,39 @@ function WaveOfTerrorHit( keys )
 	-- Apply armor reduction
 	ability:ApplyDataDrivenModifier(caster, target, modifier_armor, {})
 
-	-- Apply terror if applicable
+	-- Apply extra armor reduction if applicable
 	if target:HasModifier(modifier_rancor) then
+		local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
 		ability:ApplyDataDrivenModifier(caster, target, modifier_terror, {})
+		target:SetModifierStackCount(modifier_terror, caster, rancor_stacks)
 	end
 end
 
-function WaveOfTerrorTerror( keys )
+function VengeanceAuraUpdate( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_terror = keys.modifier_terror
-	local modifier_rancor = keys.modifier_rancor
-	
-	-- Parameters
-	local rancor_amp = ability:GetLevelSpecialValueFor("rancor_amp", ability_level)
-	local terror_angle = ability:GetLevelSpecialValueFor("terror_angle", ability_level)
-
-	-- Fetch amount of rancor stacks
-	local rancor_stacks = target:GetModifierStackCount(modifier_rancor, caster)
-
-	-- Check if the caster is in view of the target
-	local caster_loc = caster:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
-	local direction = (caster_loc - target_loc):Normalized()
-	local forward_vector = target:GetForwardVector()
-	local angle = math.abs(RotationDelta((VectorToAngles(direction)), VectorToAngles(forward_vector)).y)
-
-	-- If yes, apply the extra incoming damage debuff
-	if angle <= ( terror_angle / 2 ) and target:CanEntityBeSeenByMyTeam(caster) then
-		target:SetModifierStackCount(modifier_terror, caster, rancor_amp * rancor_stacks)
-
-	-- Else, remove it
-	else
-		target:SetModifierStackCount(modifier_terror, caster, 0)
-	end
-end
-
-function VengeanceAuraCritCleanup( keys )
-	local caster = keys.caster
-	local target = keys.attacker
-	local modifier_crit = keys.modifier_crit
-
-	target:RemoveModifierByName(modifier_crit)
-end
-
-function VengeanceAuraCrit( keys )
-	local caster = keys.caster
-	local target = keys.attacker
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_crit = keys.modifier_crit
+	local modifier_stack = keys.modifier_stack
 	local modifier_rancor = keys.modifier_rancor
 	
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
-	local base_crit_damage = ability:GetLevelSpecialValueFor("base_crit_damage", ability_level)
-	local rancor_crit_damage = ability:GetLevelSpecialValueFor("rancor_crit_damage", ability_level)
 
-	-- Roll for the crit
-	if RandomInt(1, 100) <= crit_chance then
+	-- Initialize stack count
+	local rancor_stacks = 0
 
-		-- Initialize stack count
-		local rancor_stacks = 0
+	-- Find enemies in the aura's radius
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
 
-		-- Find enemies in the aura's radius
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-
-		-- Count rancor stacks inside the aura's radius
-		for _,enemy in pairs(enemies) do
-			rancor_stacks = rancor_stacks + enemy:GetModifierStackCount(modifier_rancor, caster)
-		end
-
-		-- Grant appropriate critical damage bonus
-		AddStacks(ability, caster, target, modifier_crit, base_crit_damage + rancor_crit_damage * rancor_stacks, true)
+	-- Count rancor stacks inside the aura's radius
+	for _,enemy in pairs(enemies) do
+		rancor_stacks = rancor_stacks + enemy:GetModifierStackCount(modifier_rancor, caster)
 	end
+
+	-- Grant appropriate damage bonus
+	target:RemoveModifierByName(modifier_stack)
+	AddStacks(ability, caster, target, modifier_stack, rancor_stacks, true)
 end
 
 function UpgradeSwapback( keys )

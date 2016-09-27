@@ -987,6 +987,11 @@
 	//=================================================================================================================
 	"item_tranquil_boots"
 	{
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6.0"
+		"AbilityManaCost"				"0"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -1022,7 +1027,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_time"			"7"
+				"break_time"			"6"
 			}
 			"08"
 			{
@@ -2425,7 +2430,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"850 1000 1150 1300"
+				"break_distance"		"800 900 1000 1100"
 			}
 			"03"
 			{
@@ -4683,7 +4688,7 @@
 	//=================================================================================================================
 	"earthshaker_echo_slam"
 	{
-		"AbilityCastRange"				"600 750 900"
+		"AbilityCastRange"				"900"
 
 		"AbilityDamage"					"160 215 270"
 
@@ -4694,17 +4699,17 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_damage_range"		"600 750 900"
+				"echo_slam_damage_range"		"900"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_search_range"	"600 750 900"
+				"echo_slam_echo_search_range"	"900"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"echo_slam_echo_range"			"600 750 900"
+				"echo_slam_echo_range"			"900"
 			}
 			"04"
 			{
@@ -5636,140 +5641,6 @@
 	}
 
 	//=================================================================================================================
-	//  Juggernaut: Blade Fury
-	//=================================================================================================================
-	"juggernaut_blade_fury"
-	{
-		"AbilityCooldown"					"25 20 15 10"
-		"AbilityDuration"					"5.0"
-
-		"AbilityDamage"						"100 130 160 190"
-
-		"AbilityManaCost"					"90"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"blade_fury_damage_tick"	"0.2"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blade_fury_radius"			"350 400 450 500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//  Juggernaut: Blade Dance
-	//=================================================================================================================
-	"juggernaut_blade_dance"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_mult"		"250"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"blade_dance_crit_chance"	"20 25 30 35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//  Juggernaut: Healing Ward
-	//=================================================================================================================
-	"juggernaut_healing_ward"
-	{
-		"AbilityUnitTargetTeam"						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-
-		"AbilityCastRange"							"525 575 625 675"
-		"AbilityCastPoint"							"0.2"
-		
-		"AbilityCooldown"							"60.0"
-		"AbilityDuration"							"25.0"
-	
-		"AbilityManaCost"							"120"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_heal_amount"			"3 4.5 6 7.5"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_aura_radius"			"525 575 625 675"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_movespeed_tooltip"	"420"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"healing_ward_duration_tooltip"		"25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//  Juggernaut: Omnislash
-	//=================================================================================================================
-	"juggernaut_omni_slash"
-	{
-		"AbilityCastRange"						"350"
-		"AbilityCastPoint"						"0.2"
-	
-		"AbilityManaCost"						"150 175 200"
-
-		"AbilityCooldown"						"100.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"omni_slash_damage"				"240"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"omni_slash_jumps"				"6 15 30"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"omni_slash_radius"				"600"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"omni_slash_bounce_tick"		"0.25 0.15 0.06"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"omni_slash_jumps_scepter"		"10 25 50"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"omni_slash_cooldown_scepter"	"70"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Keeper of the Light: Illuminate
 	//=================================================================================================================
 	"keeper_of_the_light_illuminate"
@@ -6096,7 +5967,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250 275 300 325"
+				"radius"				"300"
 			}
 			
 			"03"
@@ -6116,7 +5987,7 @@
 
 		"AbilityCastPoint"				"0.0"
 		
-		"AbilityCooldown"				"19 17 15 13"
+		"AbilityCooldown"				"12"
 
 		"AbilityManaCost"				"95 115 135 155"
 		
@@ -6156,25 +6027,25 @@
 	"leshrac_lightning_storm"
 	{
 		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.35"
 		
-		"AbilityCooldown"				"3.5"
+		"AbilityCooldown"				"2.5"
 
 		"AbilityManaCost"				"90"
 		
-		"AbilityDamage"					"50 100 150 200"
+		"AbilityDamage"					"80 120 160 200"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"8 10 12 14"
+				"jump_count"			"20"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"700"
+				"radius"				"750"
 			}
 			"03"
 			{
@@ -6211,7 +6082,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"650"
 			}
 			"03"
 			{
@@ -8847,6 +8718,181 @@
 	}
 
 	//=================================================================================================================
+	// Rubick: Telekinesis
+	//=================================================================================================================
+	"rubick_telekinesis"
+	{
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+
+		"AbilityCooldown"				"20 18 16 14"
+
+		"AbilityManaCost"				"110"
+		
+		"AbilityCastRange"				"550 600 650 700"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"lift_duration"				"2.25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0 1.25 1.5 1.75"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_land_distance"			"700"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fall_duration"				"0.3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_tooltip"		"550 600 650 700"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_land_distance_allied"	"700"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Rubick: Telekinesis Land
+	//=================================================================================================================
+	"rubick_telekinesis_land"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick: Fade Bolt
+	//=================================================================================================================
+	"rubick_fade_bolt"
+	{
+		"AbilityCooldown"				"14 12 10 8"
+
+		"AbilityManaCost"				"120"
+		
+		"AbilityCastRange"				"800"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"100 175 250 325"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"jump_damage_reduction_pct"		"0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hero_attack_damage_reduction"	"25 40 55 70"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creep_attack_damage_reduction"	"16 24 32 40"
+			}			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"10.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"600"
+			}			
+			"07"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"jump_delay"					"0.25"
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Rubick: Null Field
+	//=================================================================================================================
+	"rubick_null_field"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"magic_damage_reduction_pct"	"12 18 24 30"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick: Spell Steal
+	//=================================================================================================================
+	"rubick_spell_steal"
+	{
+		"AbilityCooldown"				"14.0 10.0 6.0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilityCastRange"				"1100"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"300.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"projectile_speed"			"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cast_range_scepter"		"1500"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Shadow Demon: Disruption
 	//=================================================================================================================
 	"shadow_demon_disruption"
@@ -8884,12 +8930,12 @@
 			"05"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"illusion_incoming_damage"					"-80.0"
+				"illusion_incoming_damage"					"50.0 20.0 -10.0 -40.0"
 			}
 			"06"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"tooltip_total_illusion_incoming_damage"	"20.0"
+				"tooltip_total_illusion_incoming_damage"	"150.0 120.0 90.0 60.0"
 			}			
 		}
 	}
@@ -9004,7 +9050,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"3 4 5"
+				"max_charges"			"5"
 			}
 			"05"
 			{
@@ -10597,7 +10643,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.5"
+				"base_attack_time"		"1.4"
 			}
 			"04"
 			{
@@ -11676,6 +11722,171 @@
 	}
 
 	//=================================================================================================================
+	// Underlord: Firestorm
+	//=================================================================================================================
+	"abyssal_underlord_firestorm"
+	{
+		"AbilityCastPoint"					"0.4"
+
+		"AbilityCooldown"					"12 11 10 9"
+
+		"AbilityManaCost"					"100 110 120 130"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"525"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"wave_duration"				"7.0"
+			}		
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_count"				"11"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wave_damage"				"25 40 55 70"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"wave_interval"				"0.7"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"burn_damage"				"3"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"burn_interval"				"1.0"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"burn_duration"				"3.0"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"first_wave_delay"			"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Underlord: Pit of Malice
+	//=================================================================================================================
+	"abyssal_underlord_pit_of_malice"
+	{
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"18 15 12 9"
+
+		"AbilityManaCost"				"100 115 130 145"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"275 325 375 425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pit_duration"			"7.0"
+			}		
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pit_interval"			"0.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pit_damage"			"100 140 180 220"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ensnare_duration"		"1.5 2.0 2.5 3.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Underlord: Atrophy Aura
+	//=================================================================================================================
+	"abyssal_underlord_atrophy_aura"
+	{
+		"AbilityCastRange"						"1200"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction_pct"			"24 36 48 60"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_from_creep"		"6 7 8 9"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_from_hero"		"30 40 50 60"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_damage_duration"			"35 50 65 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Underlord: Dark Rift
+	//=================================================================================================================
+	"abyssal_underlord_dark_rift"
+	{
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"90 80 70"
+
+		"AbilityManaCost"				"75"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"625"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"teleport_delay"		"3.0 2.0 1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Undying: Decay
 	//=================================================================================================================
 	"undying_decay"
@@ -11720,7 +11931,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"14"
+				"str_steal_scepter"			"18"
 			}				
 		}
 	}
@@ -14887,7 +15098,7 @@
 	"invoker_cold_snap"
 	{
 		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"18"
+		"AbilityCooldown"				"16"
 		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
@@ -14968,8 +15179,8 @@
 	//=================================================================================================================
 	"invoker_tornado"
 	{
-		"AbilityCastRange"				"2000"
-		"AbilityCooldown"				"25"
+		"AbilityCastRange"				"3000"
+		"AbilityCooldown"				"21"
 		"AbilityManaCost"				"150"
 			
 		"AbilitySpecial"
@@ -15032,7 +15243,7 @@
 	"invoker_emp"
 	{
 		"AbilityCastRange"				"1200"
-		"AbilityCooldown"				"25"
+		"AbilityCooldown"				"21"
 		"AbilityManaCost"				"125"
 			
 		"AbilitySpecial"
@@ -15070,7 +15281,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"8"
 
 		"AbilitySpecial"
 		{
@@ -15100,7 +15311,7 @@
 	"invoker_chaos_meteor"
 	{
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"35"
+		"AbilityCooldown"				"30"
 
 		"AbilitySpecial"
 		{
@@ -15205,6 +15416,7 @@
 	"invoker_forge_spirit"
 	{
 		"AbilityManaCost"				"50"
+		"AbilityCooldown"				"20"
 		
 		"AbilitySpecial"
 		{
@@ -15277,6 +15489,8 @@
 	//=================================================================================================================
 	"invoker_ice_wall"
 	{
+		"AbilityCooldown"				"20"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -15331,7 +15545,7 @@
 	"invoker_deafening_blast"
 	{
 		"AbilityCastRange"				"1600"
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"250"
 
 		"AbilitySpecial"
@@ -15383,145 +15597,6 @@
 	}
 
 	//=================================================================================================================
-	// Abyssal Underlord: Firestorm
-	//=================================================================================================================
-	"abyssal_underlord_firestorm"
-	{
-		"AbilityCastRange"						"900"
-		"AbilityCastPoint"						"0.3"
-		
-		"AbilityCooldown"						"12.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"550"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"wave_duration"					"7.0"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"wave_count"					"6"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"wave_damage"					"30 50 70 90"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"wave_interval"					"1.0"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"burn_damage"					"10 20 30 40"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"burn_interval"					"1.0"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"burn_duration"					"2.0"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"first_wave_delay"				"0.4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Abyssal Underlord: Pit of Malice
-	//=================================================================================================================
-	"abyssal_underlord_pit_of_malice"
-	{
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
-
-		"AbilityManaCost"				"100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"325 375 425 475"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"pit_duration"					"7.0"
-			}		
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"pit_interval"					"0.5"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"pit_damage"					"100"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"ensnare_duration"				"1.0 1.5 2.0 2.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Abyssal Underlord: Atrophy Aura
-	//=================================================================================================================
-	"abyssal_underlord_atrophy_aura"
-	{
-		"AbilityCastRange"						"1200"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_reduction_pct"			"20 30 40 50"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_creep"		"10"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_from_hero"		"30 36 42 48"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_damage_duration"			"45.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Huskar: Inner Vitality
 	//=================================================================================================================
 	"huskar_inner_vitality"
@@ -15533,7 +15608,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"10 15 20 25"
+				"heal"					"20 25 30 35"
 			}
 			"02"
 			{

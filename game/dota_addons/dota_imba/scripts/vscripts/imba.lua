@@ -505,6 +505,76 @@ function GameMode:DamageFilter( keys )
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
 	end
 
+	-- Reaper's Scythe kill credit logic
+	if victim:HasModifier("modifier_imba_reapers_scythe") then
+		
+		-- Check if this is the killing blow
+		local victim_health = victim:GetHealth()
+		if keys.damage >= victim_health then
+
+			-- Prevent death and trigger Reaper's Scythe's on-kill effects
+			local scythe_modifier = victim:FindModifierByName("modifier_imba_reapers_scythe")
+			local scythe_caster = false
+			if scythe_modifier then
+				scythe_caster = scythe_modifier:GetCaster()
+			end
+			if scythe_caster and attacker ~= scythe_caster then
+				keys.damage = 0
+				TriggerNecrolyteReaperScytheDeath(victim, scythe_caster)
+			end
+		end
+	end
+
+	-- Reincarnation death prevention
+	if victim:HasModifier("modifier_imba_reincarnation") or victim:HasModifier("modifier_imba_reincarnation_scepter") then
+
+		-- Check if death is imminent
+		local victim_health = victim:GetHealth()
+		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
+
+			-- If this unit is reincarnation's owner and it is off cooldown, trigger reincarnation sequence
+			if victim:HasModifier("modifier_imba_reincarnation") then
+				local reincarnation_ability = victim:FindAbilityByName("imba_wraith_king_reincarnation")
+				if reincarnation_ability and reincarnation_ability:IsCooldownReady() then
+
+					-- Prevent death
+					keys.damage = 0
+
+					-- Trigger Reincarnation
+					TriggerWraithKingReincarnation(victim, reincarnation_ability)
+
+					-- Exit
+					return true
+				end
+			end
+			
+			-- Else, trigger Wraith Form
+			if victim:HasModifier("modifier_imba_reincarnation_scepter") then
+				keys.damage = 0
+				TriggerWraithKingWraithForm(victim, attacker)
+				return true
+			end
+		end
+	end
+
+	-- Aegis death prevention
+	if victim:HasModifier("modifier_item_imba_aegis") then
+
+		-- Check if death is imminent
+		local victim_health = victim:GetHealth()
+		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
+			
+			-- Prevent death
+			keys.damage = 0
+
+			-- Trigger the Aegis
+			TriggerAegisReincarnation(victim)
+
+			-- Exit
+			return true
+		end
+	end
+
 	return true
 end
 
@@ -619,6 +689,16 @@ function GameMode:OnAllPlayersLoaded()
 			building:SetDayTimeVisionRange(1900)
 			building:SetNightTimeVisionRange(800)
 		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Banned player message
+	-------------------------------------------------------------------------------------------------
+
+	if IS_BANNED_PLAYER then
+		Timers:CreateTimer(1, function()
+			Say(nil, "<font color='#FF0000'>Baumi</font> detected, game will not start. Please disconnect.", false)
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
