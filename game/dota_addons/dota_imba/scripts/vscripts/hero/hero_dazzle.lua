@@ -14,11 +14,19 @@ function PoisonTouch( keys )
 	if not ability then
 		return nil
 	end
-
+	
 	-- Parameters
 	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 	local stacks_to_stun = ability:GetLevelSpecialValueFor("stacks_to_stun", ability_level)
 
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Add a stack of slow if appropriate
 	if attacker:GetTeam() ~= target:GetTeam() and not target:HasModifier(modifier_stun) then
 		AddStacks(ability, caster, target, modifier_slow_stack, 1, true)
@@ -35,6 +43,22 @@ function PoisonTouch( keys )
 	end
 end
 
+function PoisonTouchHit( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local modifier_debuff = keys.modifier_debuff
+	
+	-- Check for Linkens	
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	--Apply Poison Touch
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
 function PoisonTouchEnd( keys )
 	local target = keys.target
 	local modifier_slow_stack = keys.modifier_slow_stack

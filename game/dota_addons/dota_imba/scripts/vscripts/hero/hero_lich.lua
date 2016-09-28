@@ -1,5 +1,41 @@
 --[[ 	Author: D2imba
 		Date: 25.04.2015	]]
+
+function CastFrostNova( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local modifier_debuff = keys.modifier_debuff
+	local modifier_duration = keys.modifier_duration
+	local radius = keys.radius
+	local damage = keys.damage
+	local damage_aoe = keys.damage_aoe
+	
+	-- Check for Linkens	
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	--Apply Frost Nova
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = modifier_duration})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	
+	-- Apply damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_aoe, damage_type = ability:GetAbilityDamageType()})
+	
+	--Find enemy heroes in an Aoe around target
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
+	for _,enemy in pairs(enemies) do
+		
+		-- Apply FrostNova Debuff
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {duration = modifier_duration})
+
+		-- Apply damage
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage_aoe, damage_type = ability:GetAbilityDamageType()})
+	end
+end
 		
 function FrostNova( keys )
 	local caster = keys.caster
@@ -15,7 +51,7 @@ function FrostNova( keys )
 	if not ability then
 		return nil
 	end
-
+		
 	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
@@ -114,11 +150,24 @@ end
 
 function ChainFrostStart( keys )
 	local caster = keys.caster
-
+	local target = keys.target
+	local ability = keys.ability
+	local stun_duration = keys.stun_duration
+	
 	-- Resets bounce count if there is no currently ongoing projectile
 	if not caster.chain_frost_bounces then
 		caster.chain_frost_bounces = 0
 	end
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	-- Ministun the target
+	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 end
 
 function ChainFrost( keys )
@@ -132,7 +181,7 @@ function ChainFrost( keys )
 	if not ability then
 		return nil
 	end
-
+	
 	-- Parameters
 	local jump_range = ability:GetLevelSpecialValueFor("jump_range", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)

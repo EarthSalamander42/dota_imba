@@ -12,7 +12,7 @@ function ShadowStrikeCast( keys )
 
 	-- Parameters
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
-
+	
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
@@ -92,7 +92,22 @@ function ShadowStrikeHit( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	local stack_modifier = keys.stack_modifier
-
+	local modifier_base_slow = keys.modifier_base_slow
+	local damage = keys.damage
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	--Apply damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	
+	--Apply modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_base_slow, {})
+	
 	target:RemoveModifierByName(stack_modifier)
 	AddStacks(ability, caster, target, stack_modifier, 8, true)
 

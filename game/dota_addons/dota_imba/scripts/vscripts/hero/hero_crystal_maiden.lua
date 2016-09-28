@@ -40,6 +40,36 @@ function CrystalNova( keys )
 	end)
 end
 
+function CastFrostBite( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local target = keys.target
+	local modifier_root = keys.modifier_root
+	local modifier_damage = keys.modifier_damage
+	local duration_root = keys.duration_root
+	local duration_root_creep = keys.duration_root_creep
+	local damage_interval = keys.damage_interval
+
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
+	if target:IsHero() or IsRoshan(target) then
+		--There was a .01 second stun here before, it is really necessary?
+		--ability:ApplyDataDrivenModifier(caster, attacker, modifier
+		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration_root})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration_root - damage_interval})
+	elseif not target:IsTower() and not target:IsBuilding() then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration_root_creep})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration_root_creep - damage_interval})
+	end
+end
+	
 function Frostbite( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -56,7 +86,7 @@ function Frostbite( keys )
 	local cooldown = ability:GetLevelSpecialValueFor("hero_cooldown", ability_level)
 	local creep_chance = ability:GetLevelSpecialValueFor("creep_chance", ability_level)
 	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
-
+	
 	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 	if attacker:GetTeam() ~= caster:GetTeam() and not attacker:IsMagicImmune() then
 		if attacker:IsHero() or IsRoshan(attacker) then

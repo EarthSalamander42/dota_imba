@@ -1,21 +1,33 @@
 --[[	Author: Pizzalol
 		Date: 09.02.2015	]]
 
-	-- Updates the value of the stack modifier and applies the movement speed modifier]]
-function BattleHungerStart( keys )
+
+function CastBattleHunger( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-
-	local caster_modifier = keys.caster_modifier
-	local speed_modifier = keys.speed_modifier
-
-	-- Check for Linkens
+	local target = keys.target
+	local modifier_debuff = keys.modifier_debuff	
+	
+	-- Check for Linkens	
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
 			return
 		end
 	end
 	
+	--Apply Battle Hunger
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
+	
+-- Updates the value of the stack modifier and applies the movement speed modifier]]
+function BattleHungerStart( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	
+	local caster_modifier = keys.caster_modifier
+	local speed_modifier = keys.speed_modifier
+
 	-- If the caster doesnt have the stack modifier then we create it, otherwise
 	-- we just update the value
 	if not caster:HasModifier(caster_modifier) then
