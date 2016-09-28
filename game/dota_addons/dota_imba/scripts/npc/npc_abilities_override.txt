@@ -5,7 +5,7 @@
 
 	// Default item removal 
 	// -----------------------------------------------------------
-	//"item_blink"					"REMOVE"
+	"item_blink"					"REMOVE"
 	//"item_blades_of_attack"		"REMOVE"
 	//"item_broadsword"				"REMOVE"
 	//"item_chainmail"				"REMOVE"
@@ -273,10 +273,12 @@
 	"item_blink"
 	{
 		"AbilityCooldown"				"7.0"
+		"AbilitySharedCooldown"			"blink"
 
 		"AbilityManaCost"				"0"
 
 		"ItemCost"						"2250"
+		"ItemAliases"					"blink"
 		
 		"AbilitySpecial"
 		{
@@ -8293,7 +8295,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"orb_speed"					"800"
+				"orb_speed"					"1000"
 			}
 			"04"
 			{
@@ -8324,7 +8326,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"425 450 475 500"
+				"radius"					"600 600 600 600"
 			}
 			"02"
 			{
@@ -10715,7 +10717,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 175 250 325"
+				"whirling_damage"			"100 150 200 250"
 			}
 			"03"
 			{
@@ -10834,12 +10836,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"120 180 240"
+				"pass_damage"			"80 140 200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"70 110 150"
+				"damage_per_second"		"50 90 130"
 			}
 			"05"
 			{
@@ -10897,12 +10899,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"120 180 240"
+				"pass_damage"			"80 140 200"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"70 110 150"
+				"damage_per_second"		"50 90 130"
 			}
 			"05"
 			{
@@ -12539,7 +12541,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"count"						"3 5 7 9"
+				"count"						"5 7 10 30"
 			}
 			"02"
 			{

@@ -988,11 +988,11 @@
 
 		"AbilityLayout"				"5"
 
-		"Ability1"					"imba_mirana_starfall"
+		"Ability1"					"imba_mirana_reap_and_sow"
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"
-		"Ability4"					"imba_mirana_cosmic_dust"
-		"Ability5"					"mirana_invis"
+		"Ability4"					"imba_mirana_sky_seed"
+		"Ability5"					"imba_mirana_invis"
 		"Ability6"					"attribute_bonus_agi"
 
 		"AttackDamageMin"			"26"
@@ -1771,7 +1771,7 @@
 		//"Ability1"					"imba_terrorblade_reflection"
 		//"Ability2"					"imba_terrorblade_conjure_image"
 		//"Ability3"					"imba_terrorblade_metamorphosis"
-		//"Ability4"					"imba_terrorblade_sunder"
+		"Ability4"					"imba_terrorblade_sunder"
 		"Ability5"					"attribute_bonus_agi"
 	}
 
@@ -1819,11 +1819,11 @@
 		"override_hero"				"npc_dota_hero_shredder"
 
 		//"Ability1"					"imba_shredder_whirling_death"
-		//"Ability2"					"imba_shredder_timber_chain"
-		//"Ability3"					"imba_shredder_reactive_armor"
+		"Ability2"					"imba_shredder_timber_chain"
+		"Ability3"					"imba_shredder_reactive_armor"
 		//"Ability4"					"imba_shredder_chakram_2"
 		//"Ability5"					"imba_shredder_return_chakram_2"
-		//"Ability6"					"imba_shredder_chakram"
+		"Ability1"					"imba_shredder_chakram"
 		//"Ability7"					"imba_shredder_return_chakram"
 		"Ability8"					"attribute_bonus_str"
 

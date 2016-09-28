@@ -575,6 +575,39 @@ function GameMode:DamageFilter( keys )
 		end
 	end
 
+	-- Timbersaw's Reactive Armor
+	if victim.reactive_magic_damage_counter and keys.damage > 0 then
+		if damage_type == DAMAGE_TYPE_MAGICAL then
+			victim.reactive_magic_damage_counter = victim.reactive_magic_damage_counter + keys.damage
+		elseif damage_type == DAMAGE_TYPE_PHYSICAL then
+			victim.reactive_phys_damage_counter = victim.reactive_phys_damage_counter + keys.damage
+		end
+	end
+	
+	-- Timbersaw's Dendrophobia Damage Amp
+	if attacker:HasModifier("modifier_imba_shredder_dendrophobia_stacks") then
+
+		-- If the target is a building, or an ally, or this was an autoattack, do nothing
+		if not ( victim:IsBuilding() or victim:GetTeam() == attacker:GetTeam() or attacker:IsInvulnerable() or attacker:IsOutOfGame() or victim:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") ) then
+			
+			-- Calculate damage amplification
+			local damage_amp = 0
+			local amp_stacks = attacker:GetModifierStackCount("modifier_imba_shredder_dendrophobia_stacks", attacker)
+
+			-- Fetch appropriate stacks
+			if damage_type == DAMAGE_TYPE_PHYSICAL then
+				damage_amp = 0.3 * amp_stacks
+			elseif damage_type == DAMAGE_TYPE_MAGICAL then
+				damage_amp = 0.3 * amp_stacks
+			elseif damage_type == DAMAGE_TYPE_PURE then
+				damage_amp = 0.3 * amp_stacks
+			end
+
+			-- Amplify damage
+			keys.damage = keys.damage * (100 + damage_amp) / 100
+		end
+	end
+	
 	return true
 end
 
