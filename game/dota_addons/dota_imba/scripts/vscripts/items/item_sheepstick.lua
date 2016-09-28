@@ -26,7 +26,14 @@ function Sheepstick( keys )
 	local sheep_pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(sheep_pfx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(sheep_pfx)
-
+	
+	--Check for Linkens
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
 	-- Kills the target if it is an illusion
 	if target:IsIllusion() then
 		target:ForceKill(true)

@@ -2860,10 +2860,13 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"					"modifier_item_imba_orchid_debuff"
-				"Target"						"TARGET"
+			"RunScript"
+			{	
+				"ScriptFile"				"items/item_orchid.lua"
+				"Function"					"OrchidCast"
+				
+				"modifier_debuff"			"modifier_item_imba_orchid_debuff"
+				"target"					"TARGET"
 			}
 		}
 
@@ -3062,10 +3065,13 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"					"modifier_item_imba_bloodthorn_debuff"
-				"Target"						"TARGET"
+			"RunScript"
+			{	
+				"ScriptFile"				"items/item_orchid.lua"
+				"Function"					"BloodthornCast"
+				
+				"modifier_debuff"			"modifier_item_imba_bloodthorn_debuff"
+				"target"					"TARGET"				
 			}
 		}
 
@@ -6567,89 +6573,89 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Sphere
+	 //Recipe: Sphere
 	//=================================================================================================================
-	//"item_recipe_imba_sphere"
-	//{
+	"item_recipe_imba_sphere"
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-	//	"ID"							"2057"
-	//	"BaseClass"						"item_datadriven"
-	//	"Model"							"models/props_gameplay/recipe.mdl"
+		"ID"							"2057"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemCost"						"1325"	
-	//	"ItemShopTags"					""
+		"ItemCost"						"1325"	
+		"ItemShopTags"					""
 		
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemRecipe"					"1"
-	//	"ItemResult"					"item_imba_sphere"
-	//	"ItemRequirements"
-	//	{
-	//		"01"						"item_ultimate_orb;item_imba_pers"
-	//	}
-	//}
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_sphere"
+		"ItemRequirements"
+		{
+			"01"						"item_ultimate_orb;item_imba_pers"
+		}
+	}
 	
 	//=================================================================================================================
-	// Sphere
+	//Sphere
 	//=================================================================================================================
-	//"item_imba_sphere"
-	//{
+	"item_imba_sphere"
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-	//	"ID"							"1123"
-	//	"BaseClass"						"item_sphere"
-	//	"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-	//	"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-	//	"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-	//	"FightRecapLevel"				"1"
+		"ID"							"1123"
+		"BaseClass"						"item_sphere"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-	//	"AbilityCastRange"				"1000"
-	//	"AbilityCooldown"				"10.0"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"10.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-	//	"ItemCost"						"5175"
-	//	"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
-	//	"ItemQuality"					"epic"
-	//	"ItemAliases"					"ls;linken's sphere"
-	//	"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemCost"						"5175"
+		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
+		"ItemQuality"					"epic"
+		"ItemAliases"					"ls;linken's sphere"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
-	//	"AbilitySpecial"
-	//	{
-	//		"01"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_all_stats"		"21"
-	//		}
-	//		"02"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_health_regen"	"10"
-	//		}
-	//		"03"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_mana_regen"		"200"
-	//		}
-	//		"04"
-	//		{
-	//			"var_type"				"FIELD_FLOAT"
-	//			"block_cooldown"		"7.0"
-	//		}
-	//		"05"
-	//		{
-	//			"var_type"				"FIELD_INTEGER"
-	//			"bonus_damage"			"15"
-	//		}
-	//	}
-	//}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"21"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"7.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Recipe: Vanguard
@@ -14264,38 +14270,19 @@
 			}
 		}
 
+		
 		"OnSpellStart"
 		{
-			"FireSound"
+			"RunScript"
 			{
-				"EffectName"			"DOTA_Item.HeavensHalberd.Activate"
-				"Target" 				"TARGET"
-			}
+				"ScriptFile"				"items/item_halberd.lua"
+				"Function"					"HalberdCast"
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_item_imba_halberd_disarm"
-				"Duration"				"%disarm_melee"
-				"Target"
-				{
-					"Center"  			"TARGET"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MELEE_ONLY | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_item_imba_halberd_disarm"
-				"Duration"				"%disarm_range"
-				"Target"
-				{
-					"Center"  			"TARGET"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_RANGED_ONLY | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"sound_cast"				"DOTA_Item.HeavensHalberd.Activate"
+				"sound_target"				"DOTA_Item.HeavensHalberd.Target"
+				"modifier_disarm"			"modifier_item_imba_halberd_disarm"
+				"disarm_melee"				"%disarm_melee"
+				"disarm_range"				"%disarm_range"
 			}
 		}
 		
