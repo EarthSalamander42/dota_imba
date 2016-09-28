@@ -9,6 +9,13 @@ function BattleHungerStart( keys )
 	local caster_modifier = keys.caster_modifier
 	local speed_modifier = keys.speed_modifier
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- If the caster doesnt have the stack modifier then we create it, otherwise
 	-- we just update the value
 	if not caster:HasModifier(caster_modifier) then
@@ -183,7 +190,14 @@ function CullingBlade( keys )
  	damage_table.ability = ability
  	damage_table.damage_type = ability:GetAbilityDamageType()
  	damage_table.damage = damage
-
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
  	-- Check if the target HP is equal or below the threshold
 	if target:GetHealth() <= kill_threshold then
 		

@@ -85,7 +85,7 @@ function StormBoltHit( keys )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-
+	
 	-- If God's strength is active, update damage
 	if ability_god_str and caster:HasModifier(modifier_god_str) then
 		local bonus_damage = ability_god_str:GetLevelSpecialValueFor("storm_bolt_damage", ability_god_str:GetLevel() - 1)
@@ -111,10 +111,17 @@ function StormBoltHit( keys )
 	if ( target_pos - caster_pos ):Length2D() > 600 and RandomInt(1, 100) <= 20 then
 		caster:EmitSound("sven_sven_ability_teleport_0"..RandomInt(1,3))
 	end
-
+	
 	-- Start attacking the target
 	caster:SetAttacking(target)
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Find enemies in effect area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do

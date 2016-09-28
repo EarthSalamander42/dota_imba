@@ -8,6 +8,13 @@ function Malefice( keys )
 	local sound_cast = keys.sound_cast
 	local modifier_target = keys.modifier_target
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 

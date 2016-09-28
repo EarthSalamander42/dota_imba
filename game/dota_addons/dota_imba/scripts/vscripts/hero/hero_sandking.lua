@@ -35,6 +35,13 @@ function BurrowstrikeHit( keys )
 	local stun_duration = ability:GetLevelSpecialValueFor("burrow_duration", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Knockback towards end point if Treacherous Sands is on, initial point otherwise
 	local knockback_target_loc = caster.burrow_start_point
 	if caster:HasModifier(modifier_sands) then

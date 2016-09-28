@@ -143,7 +143,14 @@ function ManaVoid( keys )
 	if scepter then
 		secondary_mana_pct = ability:GetLevelSpecialValueFor('secondary_mana_scepter', ability_level)
 	end
-
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Burn main target's mana
 	local target_mana_burn = target:GetMaxMana() * mana_burn_pct / 100
 	target:ReduceMana(target_mana_burn)

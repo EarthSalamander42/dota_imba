@@ -12,6 +12,13 @@ function ShadowWord( keys )
 	local modifier_buff = keys.modifier_buff
 	local modifier_debuff = keys.modifier_debuff
 	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- If the target is an ally, use "good" sound/modifier
 	if caster:GetTeam() == target:GetTeam() then
 
@@ -30,6 +37,7 @@ function ShadowWord( keys )
 		-- Apply modifier
 		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	end
+
 
 	-- Mark target for later explosion
 	target.shadow_word_explosion_target = true
