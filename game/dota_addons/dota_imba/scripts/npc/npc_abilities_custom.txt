@@ -19232,9 +19232,9 @@
 	}
 
 	//=================================================================================================================
-	// Mirana's Starfall
+	// Mirana's Reap and Sow
 	//=================================================================================================================
-	"imba_mirana_starfall"
+	"imba_mirana_reap_and_sow"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -19292,12 +19292,12 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_radius"			"250"
+				"secondary_radius"			"275"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_duration"		"2"
+				"secondary_amount"			"1 2 3 4"
 			}
 			"06"
 			{
@@ -19306,59 +19306,27 @@
 			}
 		}
 
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDustUpgrade"
-
-				"ability_cosmic_dust"		"imba_mirana_cosmic_dust"
-			}
-		}
-
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"Starfall"
+				"Function"					"ReapAndSow"
 
 				"ambient_sound"				"Ability.Starfall"
-				"hit_sound"					"Ability.StarfallImpact"
 				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
 				"modifier_debuff"			"modifier_imba_starfall_debuff"
+				"debuff_stacks"				"modifier_imba_sky_seed_debuff"
+				"stack_counter"				"modifier_imba_sky_seed_debuff_counter"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_starfall_debuff"
+			
+			"RunScript"
 			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%secondary_duration"
-
-				"EffectName"				"particles/hero/mirana/mirana_cosmic_dust.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_mirana.lua"
-						"Function"			"StarfallSecondary"
-
-						"hit_sound"			"Ability.StarfallImpact"
-						"hit_particle"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-					}
-				}
+				"ScriptFile"				"hero/hero_mirana.lua"
+				"Function"					"StarfallPurge"
+				
+				"modifier_purge"			"modifier_imba_starfall_purge"
 			}
 		}
 	}
@@ -19385,6 +19353,13 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 			"particle"					"particles/hero/mirana/mirana_sacred_arrow.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_a.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_b.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_c.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_d.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_e.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_f.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_arrow_g.vpcf"
 		}
 		
 		// Casting
@@ -19417,7 +19392,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_max_stunrange"	"1500"
+				"arrow_max_stunrange"	"3000"
 			}
 			"04"
 			{
@@ -19432,12 +19407,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_bonus_damage"	"3 4 5 6"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_max_damage"		"50"
+				"arrow_bonus_damage"	"30 40 50 60"
 			}
 			"07"
 			{
@@ -19452,7 +19422,17 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"180 270 360 450"
+				"base_damage"			"50 100 150 200"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"25000"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"buff_range"			"800"
 			}
 		}
 
@@ -19479,6 +19459,9 @@
 
 				"modifier_arrow"		"modifier_imba_arrow"
 				"sound_arrow"			"Hero_Mirana.ArrowImpact"
+				
+				"debuff_stacks"			"modifier_imba_sky_seed_debuff"
+				"stack_counter"			"modifier_imba_sky_seed_debuff_counter"
 			}	
 
 			"FireSound"
@@ -19635,32 +19618,17 @@
 	}
 
 	//=================================================================================================================
-	// Mirana's Cosmic Dust
+	// Mirana's Seed of the Sky
 	//=================================================================================================================
-	"imba_mirana_cosmic_dust"
+	"imba_mirana_sky_seed"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"MaxLevel"							"1"
 		"AbilityTextureName"				"mirana_princess_of_the_night"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"					"0.0"
-		"AbilityCastRange"					"900"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"	
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19668,32 +19636,320 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"		
+				"var_type"						"FIELD_INTEGER"
+				"stack_reduction"				"30"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"hit_delay"					"0.57"
+				"var_type"						"FIELD_INTEGER"
+				"default_damage"				"20"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
+				"var_type"						"FIELD_FLOAT"
+				"debuff_duration"				"8.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"interval"						"0.2"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"buff_duration"					"5.0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"minimum_damage_scepter"		"50"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_scepter"				"50"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"secondary_reduction"			"80"
 			}
 		}
-
+		
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDust"
+				"Function"					"Starfall"
 
 				"ambient_sound"				"Ability.Starfall"
 				"hit_sound"					"Ability.StarfallImpact"
 				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+				"modifier_debuff"			"modifier_imba_sky_seed_debuff"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_sky_seed_debuff"
+			{
+				"IsDebuff"								"1"
+				"IsPurgable"							"1"
+				
+				"Duration"								"%debuff_duration"
+				"EffectName"							"particles/hero/mirana/mirana_cosmic_dust.vpcf"
+				"EffectAttachType"						"follow_overhead"
+					
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_mirana.lua"
+						"Function"			"StarFall"
+						"debuff_stacks"		"modifier_imba_sky_seed_debuff"
+						
+						"hit_sound"			"Ability.StarfallImpact"
+						"hit_particle"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
+					}
+				}
+			}
+			
+			"modifier_imba_sky_seed_debuff_counter"
+			{
+				"IsDebuff"								"1"
+				"IsHidden"								"1"
+				"stack_counter"							"modifier_imba_sky_seed_debuff_counter"
+			}
+			
+			"modifier_imba_sky_seed_buff"
+			{
+				"IsBuff"								"1"
+				"IsHidden"								"1"
+				
+				"Duration"								"%buff_duration"
+				"stack_counter"							"modifier_imba_sky_seed_buff"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Mirana's Moonlight Shadow
+	//=================================================================================================================
+	"imba_mirana_invis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"mirana_invis"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4 0.4 0.4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"110 90 70"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"2.0 1.6 1.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16.0"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"EffectName"			"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Target"				"CASTER"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ActOnTargets"
+			{
+				"Target"
+				{
+					"Center" 			"CASTER"
+					"Radius" 			"GLOBAL"
+					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY" 
+					"Types" 			"DOTA_UNIT_TARGET_HERO"
+				}
+
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_moonlight_duration"
+						"Target"			"TARGET"
+					}
+
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_moonlight_fade"
+						"Target"			"TARGET"
+					}
+					
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_mirana/mirana_moonlight_ray.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"TARGET"
+					}
+				}
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Ability.MoonlightShadow"
+				"Target"		"CASTER"
+			}
+		}
+
+
+		"Modifiers"
+		{
+			"modifier_moonlight_duration"
+			{
+				"Duration"	"%duration"
+
+				"EffectName"	"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				
+				"OnAttack"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_moonlight_fade"
+						"Target"		"ATTACKER"
+					}
+				}
+
+				"OnAbilityExecuted"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_moonlight_fade"
+						"Target"		"UNIT"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_moonlight_fade"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_moonlight_invis"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"Function"				"MoonlightScepter"
+						"modifier_stack"		"modifier_moonlight_scepter"
+					}
+				}
+			}
+
+			"modifier_moonlight_fade"
+			{
+				"Duration"	"%fade_delay"
+				"OnCreated"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_moonlight_invis"
+						"Target"		"TARGET"
+					}
+				}
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_moonlight_invis"
+						"Target"		"TARGET"
+					}
+				}
+			}
+
+			"modifier_moonlight_invis"
+			{
+				"IsHidden"	"1"
+
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"		"TARGET"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_invisible"
+						"Target"
+						{
+							"Center"	"TARGET"
+							"Flags" 	"DOTA_UNIT_TARGET_FLAG_DEAD"
+						}
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -28764,6 +29020,801 @@
 	}
 
 	//=================================================================================================================
+	// Terrorblade's Sunder
+	//=================================================================================================================
+	"imba_terrorblade_sunder"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName" 			"terrorblade_sunder"
+				
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.35"
+		"AbilityCooldown" 				"150.0 120.0 90.0"
+		"AbilityManaCost" 				"100 150 200"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"325 375 425"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius_scepter"				"450 500 550"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hit_point_minimum_pct" 		"30 25 20"
+			}
+		}
+		
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+			"particle" 				"particles/units/heroes/hero_terrorblade/terrorblade_sunder.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"hero/hero_terrorblade.lua"
+				"Function"			"Sunder"
+				
+				"sound_target"		"Hero_Terrorblade.Sunder.Target"
+				"sound_caster"		"Hero_Terrorblade.Sunder.Cast"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Timber Chain
+	//=================================================================================================================
+	"imba_shredder_timber_chain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"shredder_timber_chain"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timberchain.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_chain_trail.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_chain_tree.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_dmg.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_dmg_glow.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3 0.3 0.2 0.1"
+		"AbilityCastRange"				"2000"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6 9 9 12"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 70 80 90"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"chain_radius"		"120"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"2000"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_radius"		"300"
+			}
+			"04"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"2000 2500 3000 3500"
+			}
+			"05"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"100 140 180 220"
+			}
+			"06"
+			{	
+				"var_type"			"FIELD_INTEGER"
+				"max_counter"		"2 3 3 4"
+			}
+		}
+		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_shredder.lua"
+				"Function"				"ChainInitialize"
+
+				"modifier_stack"		"modifier_imba_chain_stacks"
+				"modifier_cooldown"		"modifier_imba_chain_cooldown"
+			}
+		}
+		
+		"OnOwnerSpawned"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_shredder.lua"
+				"Function"				"ChainInitialize"
+
+				"modifier_stack"		"modifier_imba_chain_stacks"
+				"modifier_cooldown"		"modifier_imba_chain_cooldown"
+			}
+		}
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_shredder.lua"
+				"Function"				"TimberChain"
+				"Target"				"POINT"
+
+				"sound_cast"			"Hero_Shredder.TimberChain.Cast"
+				"sound_retract"			"Hero_Shredder.TimberChain.Retract"
+				"sound_impact"			"Hero_Shredder.TimberChain.Impact"
+				"sound_damage"			"Hero_Shredder.TimberChain.Damage"
+				"particle_chain"		"particles/units/heroes/hero_shredder/shredder_timberchain.vpcf"
+				"particle_trail"		"particles/units/heroes/hero_shredder/shredder_timber_chain_trail.vpcf"
+				"particle_tree"			"particles/units/heroes/hero_shredder/shredder_timber_chain_tree.vpcf"
+				"modifier_caster"		"modifier_imba_chain_caster"
+				"modifier_dummy"		"modifier_imba_chain_dummy"
+				"modifier_stack"		"modifier_imba_chain_stacks"
+				"modifier_cooldown"		"modifier_imba_chain_cooldown"
+			}
+		}
+		
+		
+		"Modifiers"
+		{
+			"modifier_imba_chain_caster"
+			{
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+
+				"OverrideAnimation"			"ACT_DOTA_FLAIL"
+				
+				"ThinkInterval"				"0.02"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_shredder.lua"
+						"Function"				"TimberChainDamage"
+						
+						"hit_particle"			"particles/units/heroes/hero_shredder/shredder_timber_dmg.vpcf"
+						"hit_particle_glow"		"particles/units/heroes/hero_shredder/shredder_timber_dmg_glow.vpcf"
+						"sound_damage"			"Hero_Shredder.TimberChain.Damage"
+						"modifier_caster"		"modifier_imba_chain_caster"
+					}
+				}
+				
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"modifier_imba_chain_cooldown"
+			{
+				"IsBuff"					"1"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_shredder.lua"
+						"Function"				"TimberChainStack"
+						
+						"modifier_stack"		"modifier_imba_chain_stacks"
+					}
+				}
+			}
+			
+			"modifier_imba_chain_stacks"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"modifier_stack"			"modifier_imba_chain_stacks"
+			}
+
+			"modifier_imba_chain_dummy"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Reactive Armor
+	//=================================================================================================================
+	"imba_shredder_reactive_armor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"shredder_reactive"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_armor"						"1.0 1.3 1.6 1.9"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_hp_regen"					"1.1 1.4 1.7 2.0"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_limit"						"25"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_duration"					"14 16 18 20"
+			}
+			"05"
+            {
+                "var_type"               		   	"FIELD_FLOAT"
+                "damage_amp"            			"0.3"
+            }
+			"06"
+            {
+                "var_type"               		   	"FIELD_FLOAT"
+                "bonus_reduction"            		"2.0 2.5 3.0 3.5"
+            }
+			"07"
+            {
+                "var_type"               		   	"FIELD_INTEGER"
+                "stack_damage"            			"75"
+            }
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_shredder_armor"
+			{
+				"IsHidden"					"1"
+				"Passive"					"1"
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_reactive"
+				
+				"OnCreated"
+				{	
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorInitiliaze"
+					}
+				}
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmor"
+						
+						"damage_taken"					"%attack_damage"
+						
+						"physical_stacks"				"modifier_imba_shredder_armor_physical_stacks"
+						"magical_stacks"				"modifier_imba_shredder_armor_magical_stacks"
+					}
+				}
+				
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorClear"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_armor_magical_counter"
+			{
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_reactive_magic"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveMagicCounter"
+						
+						"damage_taken"					"%attack_damage"
+
+						"particle_armor"				"particles/units/heroes/hero_shredder/shredder_armor_lyr.vpcf"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_armor_magical_stacks"
+			{
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_reactive_magic"
+				
+				"Duration"					"%stack_duration"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_reduction"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorCheck"
+						
+						"physical_stacks"				"modifier_imba_shredder_armor_physical_stacks"
+						"magical_stacks"				"modifier_imba_shredder_armor_magical_stacks"
+						"physical_counter"				"modifier_imba_shredder_armor_physical_counter"
+						"magical_counter"				"modifier_imba_shredder_armor_magical_counter"
+						
+						"particle_armor1"				"particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf"
+						"particle_armor2"				"particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf"
+						"particle_armor3"				"particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf"
+						"particle_armor4"				"particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorCheck"
+						
+						"physical_stacks"				"modifier_imba_shredder_armor_physical_stacks"
+						"magical_stacks"				"modifier_imba_shredder_armor_magical_stacks"
+						"physical_counter"				"modifier_imba_shredder_armor_physical_counter"
+						"magical_counter"				"modifier_imba_shredder_armor_magical_counter"
+						
+						"particle_armor1"				"particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf"
+						"particle_armor2"				"particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf"
+						"particle_armor3"				"particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf"
+						"particle_armor4"				"particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_armor_physical_counter"
+			{
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_reactive_armor"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorCounter"
+						
+						"damage_taken"					"%attack_damage"
+
+						"particle_armor"				"particles/units/heroes/hero_shredder/shredder_armor_lyr.vpcf"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_armor_physical_stacks"
+			{
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_reactive_armor"
+				
+				"Duration"					"%stack_duration"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_hp_regen"
+				}
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorCheck"
+						
+						"physical_stacks"				"modifier_imba_shredder_armor_physical_stacks"
+						"magical_stacks"				"modifier_imba_shredder_armor_magical_stacks"
+						"physical_counter"				"modifier_imba_shredder_armor_physical_counter"
+						"magical_counter"				"modifier_imba_shredder_armor_magical_counter"
+						
+						"particle_armor1"				"particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf"
+						"particle_armor2"				"particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf"
+						"particle_armor3"				"particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf"
+						"particle_armor4"				"particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_shredder.lua"
+						"Function"						"ReactiveArmorCheck"
+						
+						"physical_stacks"				"modifier_imba_shredder_armor_physical_stacks"
+						"magical_stacks"				"modifier_imba_shredder_armor_magical_stacks"
+						"physical_counter"				"modifier_imba_shredder_armor_physical_counter"
+						"magical_counter"				"modifier_imba_shredder_armor_magical_counter"
+						
+						"particle_armor1"				"particles/units/heroes/hero_shredder/shredder_armor_lyr1.vpcf"
+						"particle_armor2"				"particles/units/heroes/hero_shredder/shredder_armor_lyr2.vpcf"
+						"particle_armor3"				"particles/units/heroes/hero_shredder/shredder_armor_lyr3.vpcf"
+						"particle_armor4"				"particles/units/heroes/hero_shredder/shredder_armor_lyr4.vpcf"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_dendrophobia"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsHidden"					"1"
+				
+				"ThinkInterval"				"1"
+				
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_shredder.lua"
+						"Function"			"Dendrophobia"
+						
+						"modifier_stack"	"modifier_imba_shredder_dendrophobia_stacks"
+					}
+				}
+			}
+			
+			"modifier_imba_shredder_dendrophobia_stacks"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				
+				"TextureName"     			"shredder_dendrophobia"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Dendrophobia
+	//=================================================================================================================
+	"imba_shredder_dendrophobia"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"shredder_dendrophobia"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_reduction"		"0.25"
+			}
+			"02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "ability_layout"            "6"
+            }
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_shredder_dendrophobia"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+				
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_shredder.lua"
+						"Function"			"Dendrophobia"
+					}
+				}
+			}
+			"modifier_imba_shredder_layout"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+				
+				
+				"Properties"
+                {
+					"MODIFIER_PROPERTY_ABILITY_LAYOUT"             "%ability_layout"
+                }
+				
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_shredder.lua"
+						"Function"			"SetLayout"
+					}
+				}
+			}
+			"modifier_imba_shredder_layouter"
+			{
+				"Passive"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"0"
+				
+				
+				"Properties"
+                {
+					"MODIFIER_PROPERTY_ABILITY_LAYOUT"             "%ability_layout"
+                }
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Return Chakrams
+	//=================================================================================================================
+	"imba_shredder_return_chakrams"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"MaxLevel"							"1"
+		"AbilityTextureName"				"shredder_return_chakram"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_reduction"		"0.25"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_delightful_torment"
+			{
+				"Passive"					"1"
+				"IsBuff"					"1"
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+				
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_shredder.lua"
+						"Function"			"Dendrophobia"
+					}
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Chakrams
+	//=================================================================================================================
+	"imba_shredder_chakram"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_datadriven"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"	
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"					"1"
+		"AbilityTextureName"				"shredder_chakram"
+		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_chakram.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"1400 1400 1400"
+		"AbilityCastPoint"					"0.2 0.2 0.2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"8.0 7.0 6.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 150 200"
+
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1100 1250 1400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pass_damage"			"80 140 200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_second"		"50 90 130"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_distance"		"5000"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_per_second"		"20"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pass_slow_duration"	"0.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_shredder.lua"
+				"Function"				"ChakramInitiliaze"
+				"Target"				"POINT"
+
+				"particle_chakram"		"particles/units/heroes/hero_shredder/shredder_chakram.vpcf"
+				"modifier_dummy"		"modifier_imba_chakram_dummy"
+				"particle_chakram_stay"	"particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_imba_chakram_dummy"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"				
+					"MODIFIER_STATE_NOT_ON_MINIMAP"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Troll Warlord's Whirling Axes (melee)
 	//=================================================================================================================
 	"imba_troll_warlord_whirling_axes_melee"
@@ -32666,7 +33717,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"165"
+		"AbilityCooldown"				"55"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

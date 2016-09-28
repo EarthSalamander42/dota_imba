@@ -67,7 +67,7 @@
 		"item"		"item_lifesteal"
 		"item"		"item_imba_shadow_amulet"
 		"item"		"item_ghost"
-		"item"		"item_blink"	
+		"item"		"item_imba_blink"	
 	}	
 	
 	// Level 1 - Green Recipes
@@ -85,6 +85,7 @@
 		"item"		"item_imba_pers"
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
+		"item"		"item_imba_blink_boots"
 		"item"		"item_imba_moon_shard"
 	}
 
@@ -213,7 +214,7 @@
 		"item"		"item_quarterstaff"
 		"item"		"item_imba_vitality_booster"
 		"item"		"item_broadsword"
-		"item"		"item_blink"
+		"item"		"item_imba_blink"
 	}
 	
 	"secretshop"

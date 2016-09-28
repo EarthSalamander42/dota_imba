@@ -834,7 +834,9 @@ function InitializeInnateAbilities( hero )
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
 		"imba_sandking_treacherous_sands",
-		"imba_bane_nightmare_end"
+		"imba_bane_nightmare_end",
+		"imba_mirana_sky_seed",
+		"imba_shredder_dendrophobia"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1690,4 +1692,35 @@ function TriggerAegisReincarnation(caster)
 		-- Redraw caster's model
 		caster:RemoveNoDraw()
 	end)
+end
+
+-- "angle" is in radians
+function RotateVector2D(v,angle)
+    local xp = v.x * math.cos(angle) - v.y * math.sin(angle)
+    local yp = v.x * math.sin(angle) + v.y * math.cos(angle)
+    return Vector(xp,yp,v.z):Normalized()
+end
+
+-- Table sorting
+function spairs(t, order)
+    -- collect the keys
+    local keys = {}
+    for k in pairs(t) do keys[#keys+1] = k end
+
+    -- if order function given, sort by it by passing the table and keys a, b,
+    -- otherwise just sort the keys 
+    if order then
+        table.sort(keys, function(a,b) return order(t, a, b) end)
+    else
+        table.sort(keys)
+    end
+
+    -- return the iterator function
+    local i = 0
+    return function()
+        i = i + 1
+        if keys[i] then
+            return keys[i], t[keys[i]]
+        end
+    end
 end
