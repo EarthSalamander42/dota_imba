@@ -28,7 +28,7 @@ function Dagon( keys )
 	ParticleManager:SetParticleControl(dagon_pfx, 2, Vector(damage, 0, 0))
 	
 	--Check for Linkens
-	if caster:GetTeam() != target:GetTeam() then
+	if caster:GetTeam() ~= target:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then 
 			return 
 		end
