@@ -29999,6 +29999,8 @@
 
 				"ThinkInterval"						"0.2"
 
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
+
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -30029,6 +30031,8 @@
 				"IsHidden"							"1"
 				"IsBuff"							"1"
 				"IsPurgable"						"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Duration"							"%aura_linger"
 			}
