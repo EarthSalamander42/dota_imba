@@ -87,6 +87,13 @@ function DoubleEdge( keys )
 	local target_pos = target:GetAbsOrigin()
 	local caster_str = caster:GetStrength()
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Draw the particle
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_centaur/centaur_double_edge.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())

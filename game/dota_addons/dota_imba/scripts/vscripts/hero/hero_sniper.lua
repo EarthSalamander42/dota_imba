@@ -431,6 +431,13 @@ function AssassinateHit( keys )
 	-- Play sound
 	target:EmitSound("Hero_Sniper.AssassinateDamage")
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Scepter damage and debuff
 	if scepter then
 

@@ -26,7 +26,14 @@ function Dagon( keys )
 	ParticleManager:SetParticleControlEnt(dagon_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), false)
 	ParticleManager:SetParticleControlEnt(dagon_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), false)
 	ParticleManager:SetParticleControl(dagon_pfx, 2, Vector(damage, 0, 0))
-
+	
+	--Check for Linkens
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
 	-- Play hit sound
 	target:EmitSound(sound_hit)
 

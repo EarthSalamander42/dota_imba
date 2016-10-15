@@ -111,7 +111,16 @@ function AstralImprisonment( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local arcane_orb_ability = caster:FindAbilityByName(keys.ability_orb)
-
+	local modifier_debuff = keys.modifier_debuff
+	local sound_astral = keys.sound_astral
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+		
 	-- If arcane orb is learned and the target is an enemy, steal its intelligence
 	if arcane_orb_ability and arcane_orb_ability:GetLevel() > 0 and target:GetTeam() ~= caster:GetTeam() and target:IsHero() then
 
@@ -142,7 +151,13 @@ function AstralImprisonment( keys )
 		-- Force update the caster and target's mana
 		caster:CalculateStatBonus()
 		target:CalculateStatBonus()
+
 	end
+				
+	--Apply Astral Debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
+	target:EmitSound(sound_astral)
 end
 
 function AstralImprisonmentParticle( keys )

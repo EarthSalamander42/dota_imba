@@ -26,7 +26,14 @@ function ShurikenToss( keys )
 		iVisionTeamNumber = caster:GetTeamNumber(),
 		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 	}
-
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- shoots the shuriken at the main target
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
 
@@ -141,6 +148,13 @@ function TrackCast( keys )
 	local modifier_track_aura = keys.modifier_track_aura
 	local sound_track = keys.sound_track
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play sound to caster's allies
 	caster:EmitSound(sound_track)
 
@@ -266,6 +280,14 @@ function ShadowJaunt( keys )
 	local blink_direction = (target_pos - caster_pos):Normalized()
 	target_pos = target_pos + blink_direction * 50
 
+		
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play sound
 	caster:EmitSound(sound_cast)
 

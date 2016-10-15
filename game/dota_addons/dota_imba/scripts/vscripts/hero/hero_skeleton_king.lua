@@ -67,6 +67,13 @@ function HellfireBlastHit( keys )
 	-- Play the impact sound
 	caster:EmitSound(sound_hit)
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Debuff the target if it is not magic immune
 	if not target:IsMagicImmune() then
 		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})

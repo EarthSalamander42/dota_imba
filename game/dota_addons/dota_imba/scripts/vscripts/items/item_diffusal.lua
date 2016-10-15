@@ -17,6 +17,13 @@ function DiffusalCast( keys )
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
+	--Check for Linkens	
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
 	-- Play hit sound
 	target:EmitSound(sound_target)
 

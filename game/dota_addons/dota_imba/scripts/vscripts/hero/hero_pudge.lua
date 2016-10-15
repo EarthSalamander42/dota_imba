@@ -646,7 +646,8 @@ function Dismember( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local particle_target = keys.particle_target
-
+	local modifier_debuff = keys.modifier_debuff
+	
 	-- Parameters
 	local dismember_damage = ability:GetLevelSpecialValueFor("dismember_damage", ability_level)
 	local strength_damage = ability:GetLevelSpecialValueFor("strength_damage", ability_level)
@@ -655,6 +656,13 @@ function Dismember( keys )
 		caster_str = caster:GetStrength()
 	end
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Flag the target as such
 	if not caster.dismember_target then
 		caster.dismember_target = target
@@ -663,6 +671,9 @@ function Dismember( keys )
 	-- Calculate damage/heal
 	local damage = dismember_damage + caster_str * strength_damage / 100
 
+	--Apply Dismember debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
 	-- Apply damage/heal
 	caster:Heal(damage, caster)
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, damage, nil)

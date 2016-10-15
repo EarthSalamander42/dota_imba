@@ -6496,12 +6496,15 @@
 			{
 				"EffectName"				"Hero_Axe.Battle_Hunger"
 				"Target" 					"TARGET"
-			}
+			}	
 
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"				"modifier_imba_axe_battle_hunger_enemy"
-				"Target"					"TARGET"
+				"ScriptFile"		"hero/hero_axe.lua"
+				"Function"			"CastBattleHunger"
+				"Target"			"TARGET"
+				
+				"modifier_debuff"	"modifier_imba_axe_battle_hunger_enemy"
 			}
 		}	
 
@@ -6933,17 +6936,13 @@
 					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
-
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"				"modifier_imba_bane_enfeeble"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"ScriptFile"		"hero/hero_bane.lua"
+				"Function"			"CastEnfeeble"
+				"Target"			"TARGET"
+				
+				"modifier_debuff"	"modifier_imba_bane_enfeeble"		
 			}
 		}	
 
@@ -7115,16 +7114,19 @@
 				"Target"					"TARGET"
 			}
 
-			"FireSound"
+			//"FireSound"
+			//{
+			//	"EffectName"				"Hero_Bane.Nightmare.Loop"
+			//	"Target"					"TARGET"
+			//}
+			"RunScript"
 			{
-				"EffectName"				"Hero_Bane.Nightmare.Loop"
-				"Target"					"TARGET"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_bane_nightmare"
-				"Target"					"TARGET"
+				"ScriptFile"		"hero/hero_bane.lua"
+				"Function"			"CastNightmare"
+				"Target"			"TARGET"
+				
+				"modifier_debuff"	"modifier_imba_bane_nightmare"	
+				"loop_sound"		"Hero_Bane.Nightmare.Loop"
 			}
 		}	
 
@@ -7521,48 +7523,58 @@
 
 		"OnSpellStart"
 		{	
-			"FireSound"
+			//"FireSound"
+			//{
+			//	"EffectName"			"Hero_Bane.FiendsGrip.Cast"
+			//	"Target"
+			//	{
+			//		"Center"			"TARGET"
+			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			//	}	
+			//}	
+			"RunScript"
 			{
-				"EffectName"			"Hero_Bane.FiendsGrip.Cast"
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}	
-			}	
-
-			"Damage"
-			{
+				"ScriptFile"			"hero/hero_bane.lua"
+				"Function"				"CastFiendsGrip"
 				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%fiends_grip_damage"
+				
+				"damage"				"%fiends_grip_damage"
+				"modifier_debuff"		"modifier_imba_bane_fiends_grip"
+				"modifier_caster"		"modifier_imba_bane_fiends_grip_caster"
+				"cast_sound"			"Hero_Bane.FiendsGrip.Cast"
 			}
+			//"Damage"
+			//{
+			//	"Target"				"TARGET"
+			//	"Type"					"DAMAGE_TYPE_MAGICAL"
+			//	"Damage"				"%fiends_grip_damage"
+			//}
 
-			"RemoveModifier"
-			{
-				"ModifierName"			"modifier_imba_bane_fiends_grip"
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
+			//"RemoveModifier"
+			//{
+			//	"ModifierName"			"modifier_imba_bane_fiends_grip"
+			//	"Target"
+			//	{
+			//		"Center"			"TARGET"
+			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			//	}
+			//}
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_bane_fiends_grip"
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
+			//"ApplyModifier"
+			//{
+			//	"ModifierName"			"modifier_imba_bane_fiends_grip"
+			//	"Target"
+			//	{
+			//		"Center"			"TARGET"
+			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			//	}
+			//}
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-				"Target"				"CASTER"
-			}
+			//"ApplyModifier"
+			//{
+			//	"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
+			//	"Target"				"CASTER"
+			//}
 		}	
 
 		"OnChannelInterrupted"
@@ -9980,6 +9992,22 @@
 		
 		"OnSpellStart"
 		{
+			
+			"RunScript"
+			{
+				"ScriptFile"					"hero/hero_crystal_maiden.lua"
+				"Function"						"CastFrostBite"
+				"Target"						"TARGET"
+				
+
+				"modifier_root"					"modifier_imba_frostbite_root"
+				"modifier_damage"				"modifier_imba_frostbite_damage"
+				//"duration_stun"				"%stun_duration"
+				"duration_root"					"%duration"
+				"duration_root_creep"			"%creep_duration"
+				"damage_interval"				"%damage_interval"
+				
+			}
 			"TrackingProjectile"
 			{
 				"Target"								"TARGET"
@@ -9987,57 +10015,57 @@
 				"MoveSpeed"								"2000"
 			}
 		
-			"Stun"
-			{
-				"Target"								"TARGET"
-				"Duration"								"%stun_duration"
-			}
+			//"Stun"
+			//{
+			//	"Target"								"TARGET"
+			//	"Duration"								"%stun_duration"
+			//}
 			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"							"TARGET"
-					"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"ModifierName"							"modifier_imba_frostbite_root"
-				"Duration"								"%duration"
-			}
+			//"ApplyModifier"
+			//{
+			//	"Target"
+			//	{
+			//		"Center"							"TARGET"
+			//		"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			//	}
+			//	"ModifierName"							"modifier_imba_frostbite_root"
+			//	"Duration"								"%duration"
+			//}
 			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"							"TARGET"
-					"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"ModifierName"							"modifier_imba_frostbite_damage"
-				"Duration"								"%duration - %damage_interval"
-			}
+			//"ApplyModifier"
+			//{
+			//	"Target"
+			//	{
+			//		"Center"							"TARGET"
+			//		"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			//	}
+			//	"ModifierName"							"modifier_imba_frostbite_damage"
+			//	"Duration"								"%duration - %damage_interval"
+			//}
 			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"							"TARGET"
-					"Types"								"DOTA_UNIT_TARGET_BASIC"
-					"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-				"ModifierName"							"modifier_imba_frostbite_root"
-				"Duration"								"%creep_duration"
-			}
+			//"ApplyModifier"
+			//{
+			//	"Target"
+			//	{
+			//		"Center"							"TARGET"
+			//		"Types"								"DOTA_UNIT_TARGET_BASIC"
+			//		"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+			//	}
+			//	"ModifierName"							"modifier_imba_frostbite_root"
+			//	"Duration"								"%creep_duration"
+			//	}
 			
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"							"TARGET"
-					"Types"								"DOTA_UNIT_TARGET_BASIC"
-					"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-				"ModifierName"							"modifier_imba_frostbite_damage"
-				"Duration"								"%creep_duration - %damage_interval"
-			}
+			//"ApplyModifier"
+			//{
+			//	"Target"
+			//	{
+			//		"Center"							"TARGET"
+			//		"Types"								"DOTA_UNIT_TARGET_BASIC"
+			//		"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+			//	}
+			//	"ModifierName"							"modifier_imba_frostbite_damage"
+			//	"Duration"								"%creep_duration - %damage_interval"
+			//}
 			
 			"FireSound"
 			{
@@ -11103,11 +11131,13 @@
 				"EffectName"							"Hero_Dazzle.Poison_Touch"
 				"Target" 								"TARGET"
 			}
-
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"							"modifier_imba_poison_touch_base_slow"
-				"Target" 								"TARGET"
+				"ScriptFile"					"hero/hero_dazzle.lua"
+				"Function"						"PoisonTouchHit"
+				"Target"						"TARGET"
+				
+				"modifier_debuff"				"modifier_imba_poison_touch_base_slow"
 			}
 		}
 
@@ -17163,40 +17193,17 @@
 				"EffectName"			"Ability.FrostNova"
 				"Target"				"TARGET"
 			}
-
-			"Damage"
+			"RunScript"
 			{
-				"Type"					"DAMAGE_TYPE_MAGICAL"
+				"ScriptFile"			"hero/hero_lich.lua"
+				"Function"				"CastFrostNova"
 				"Target"				"TARGET"
-				"Damage"				"%target_damage"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Radius"			"%radius"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				}
-
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_imba_frost_nova"
-						"Target"		"TARGET"
-						"Duration"		"%AbilityDuration"
-					}
-
-					"Damage"
-					{
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Target"		"TARGET"
-						"Damage"		"%aoe_damage"
-					}
-				}
+				
+				"damage"				"%target_damage"
+				"damage_aoe"			"%aoe_damage"
+				"modifier_debuff"		"modifier_imba_frost_nova"
+				"modifier_duration"		"%AbilityDuration"
+				"radius"				"%radius"
 			}
 		}
 
@@ -17673,20 +17680,23 @@
 			{
 				"ScriptFile"			"hero/hero_lich.lua"
 				"Function"				"ChainFrostStart"
+				
+				"Target"				"TARGET"	
+				"stun_duration"			"%mini_stun"
 			}
 
-			"Stun"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-
-				"Duration"				"%mini_stun"
-			}	
+			//"Stun"
+			//{
+			//	"Target"
+			//	{
+			//		"Center"			"TARGET"
+			//		"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			//		"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+			//		"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			//	}
+			//
+			//	"Duration"				"%mini_stun"
+			//}	
 
 			"TrackingProjectile"
 			{
@@ -20402,17 +20412,17 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_reapers_scythe"
-				"Target"
-				{
-					"Center"  				"TARGET"
-					"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 				"DOTA_UNIT_TARGET_HERO"
-					"Flags"     			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
+			//"ApplyModifier"
+			//{
+			//	"ModifierName"				"modifier_imba_reapers_scythe"
+			//	"Target"
+			//	{
+			//		"Center"  				"TARGET"
+			//		"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			//		"Types" 				"DOTA_UNIT_TARGET_HERO"
+			//		"Flags"     			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			//	}
+			//}
 
 			"FireSound"
 			{
@@ -20430,9 +20440,11 @@
 			{
 				"ScriptFile"				"hero/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
-
+				"Target"					"TARGET"
+				
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+				"modifier_debuff"			"modifier_imba_reapers_scythe"
 			}
 		}
 
@@ -21790,13 +21802,6 @@
 				"EffectName" 			"Hero_ObsidianDestroyer.AstralImprisonment.Cast"
 				"Target"				"CASTER"
 			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_ObsidianDestroyer.AstralImprisonment"
-				"Target"				"TARGET"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_outhouse_decorator.lua"
@@ -21805,14 +21810,10 @@
 				"ability_orb"			"imba_obsidian_destroyer_arcane_orb"
 				"int_gain_counter"		"modifier_imba_obsidian_destroyer_int_gain_counter"
 				"int_gain_modifier"		"modifier_imba_obsidian_destroyer_int_gain"
-				"int_loss_modifier"		"modifier_imba_obsidian_destroyer_int_steal"				
+				"int_loss_modifier"		"modifier_imba_obsidian_destroyer_int_steal"
+				"modifier_debuff"		"modifier_imba_astral_imprisonment"
+				"sound_astral"			"Hero_ObsidianDestroyer.AstralImprisonment"
 			}	
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_astral_imprisonment"
-				"Target"				"TARGET"
-			}
 		}
 
 		"Modifiers"
@@ -22742,34 +22743,34 @@
 
 		"OnProjectileHitUnit"
 		{
-			"Damage"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-				"Type"					"DAMAGE_TYPE_PHYSICAL"
-				"Damage"				"%bonus_damage"
-			}
+			//"Damage"
+			//{
+				//"Target"
+				//{
+				//	"Center"			"TARGET"
+				//	"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				//}
+				//"Type"				"DAMAGE_TYPE_PHYSICAL"
+				//"Damage"				"%bonus_damage"
+			//}
 
-			"FireSound"
-			{
-				"EffectName"			"Hero_PhantomAssassin.Dagger.Target"
-				"Target"				"TARGET"
-			}
+			//"FireSound"
+			//{
+			//	"EffectName"			"Hero_PhantomAssassin.Dagger.Target"
+			//	"Target"				"TARGET"
+			//}
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_stifling_dagger_slow"
-				"Target"				"TARGET"
-			}
+			//"ApplyModifier"
+			//{
+			//	"ModifierName"			"modifier_imba_stifling_dagger_slow"
+			//	"Target"				"TARGET"
+			//}
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_stifling_dagger_silence"
-				"Target"				"TARGET"
-			}
+			//"ApplyModifier"
+			//{
+			//	"ModifierName"			"modifier_imba_stifling_dagger_silence"
+			//	"Target"				"TARGET"
+			//}
 
 			"RunScript"
 			{
@@ -22777,10 +22778,14 @@
 				"Function"				"StiflingDaggerHit"
 				"Target"				"TARGET"
 
+				"sound_hit"				"Hero_PhantomAssassin.Dagger.Target"
 				"ability_crit"			"imba_phantom_assassin_coup_de_grace"
 				"modifier_crit"			"modifier_imba_coup_de_grace_crit"
 				"modifier_stacks"		"modifier_imba_coup_de_grace_stacks"
 				"modifier_kill"			"modifier_imba_coup_de_grace_kill"
+				"modifier_silence"		"modifier_imba_stifling_dagger_silence"
+				"modifier_slow"			"modifier_imba_stifling_dagger_slow"
+				"damage"		"%bonus_damage"
 			}
 		}
 
@@ -24168,20 +24173,8 @@
 				"Function"					"Dismember"
 
 				"particle_target"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
+				"modifier_debuff"			"modifier_imba_dismember"
 			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_dismember"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
 			"FireSound"
 			{
 				"EffectName"				"Hero_Pudge.Dismember"
@@ -25149,19 +25142,6 @@
 
 		"OnProjectileHitUnit"
 		{
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%strike_damage"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_shadow_strike_base_slow"
-				"Target"				"TARGET"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_queen_of_pain.lua"
@@ -25169,6 +25149,8 @@
 				"Target"				"TARGET"
 
 				"stack_modifier"		"modifier_imba_shadow_strike_stacking_slow"
+				"modifier_base_slow"	"modifier_imba_shadow_strike_base_slow"
+				"damage"				"%strike_damage"
 			}
 		}
 

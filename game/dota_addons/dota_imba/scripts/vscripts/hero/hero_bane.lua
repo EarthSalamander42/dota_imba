@@ -1,6 +1,23 @@
 --[[	Author: D2imba
 		Date: 10.03.2015	]]
 
+function CastEnfeeble( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability	
+	local modifier_debuff = keys.modifier_debuff
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end	
+	
+	-- Add Enfeeble Modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
+end
 function Enfeeble( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -9,10 +26,10 @@ function Enfeeble( keys )
 	local modifier_str = keys.modifier_str
 	local modifier_agi = keys.modifier_agi
 	local modifier_int = keys.modifier_int
-
+	
 	-- Parameters
 	local reduce_factor = ability:GetLevelSpecialValueFor("stat_reduction", ability_level) / 100
-
+	
 	-- Remove current stacks and enfeeble debuff
 	target:RemoveModifierByName(modifier_str)
 	target:RemoveModifierByName(modifier_agi)
@@ -47,6 +64,7 @@ function Enfeeble( keys )
 	
 	-- Update the target's stats
 	target:CalculateStatBonus()
+	
 end
 
 function EnfeebleEnd( keys )
@@ -75,6 +93,13 @@ function BrainSap( keys )
 	-- Parameters
 	local heal_amt = ability:GetLevelSpecialValueFor("heal_amt", ability_level)
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play sounds
 	caster:EmitSound(sound_cast)
 	target:EmitSound(sound_target)
@@ -143,6 +168,38 @@ function BrainSapSpellCast( keys )
 	end
 end
 
+function CastFiendsGrip( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local damage = keys.damage
+	local modifier_debuff = keys.modifier_debuff
+	local modifier_caster = keys.modifier_caster
+	local cast_sound = keys.cast_sound
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+
+	--Play the Fiends Grip Cast sound
+	target:EmitSound(cast_sound)
+	
+	--Deal damage to the target
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	
+	--Remove any previously existing instance of FiendsGripDebuff
+	--ability:RemoveModifierByName(modifier_debuff)
+	
+	--Add FiendsGrip Debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
+	--Add Fiendgrip caster modifier to bane
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
+end
+	
 function FiendsGripManaDrain( keys )
 	local target = keys.target
 	local caster = keys.caster
@@ -227,6 +284,27 @@ function FiendsGripTruesight( keys )
 	local target_location = target:GetAbsOrigin()
 	target.fiends_grip_dummy = CreateUnitByName("npc_dummy_unit", target_location, false, nil, nil, caster:GetTeamNumber())
 	ability:ApplyDataDrivenModifier(caster, target.fiends_grip_dummy, "modifier_item_gem_of_true_sight", {radius = 50})
+end
+
+function CastNightmare( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local modifier_debuff = keys.modifier_debuff
+	local loop_sound = keys.loop_sound
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	-- Play Nightmare Sound
+	StartSoundEvent(loop_sound, target)
+	
+	-- Apply Nightmare debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 end
 
 function NightmareDamage( keys )

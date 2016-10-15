@@ -1,6 +1,39 @@
 --[[	Author: d2imba
 		Date:	24.06.2015	]]
 
+function HalberdCast( keys )		
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local sound_cast = keys.sound_cast
+	local sound_target = keys.sound_target
+	local particle_target = keys.particle_target
+	local modifier_disarm = keys.modifier_disarm
+	local disarm_range = keys.disarm_range
+	local disarm_melee = keys.disarm_melee
+	
+	--Check for Linkens	
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
+	-- Play cast sound
+	caster:EmitSound(sound_cast)
+	
+	-- Check if melee or ranged
+	if target:IsRangedAttacker() then
+		target:AddNewModifier(caster, ability, "modifier_halberd_disarm", {duration = disarm_range})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_disarm, {duration = disarm_range})
+	else
+		target:AddNewModifier(caster, ability, "modifier_halberd_disarm", {duration = disarm_melee})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_disarm, {duration = disarm_melee})
+	end
+end
+	
+	
 function Maim( keys )
 	local caster = keys.caster
 	local target = keys.target

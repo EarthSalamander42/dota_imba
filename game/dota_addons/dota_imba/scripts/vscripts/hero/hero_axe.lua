@@ -1,11 +1,30 @@
 --[[	Author: Pizzalol
 		Date: 09.02.2015	]]
 
-	-- Updates the value of the stack modifier and applies the movement speed modifier]]
+
+function CastBattleHunger( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local modifier_debuff = keys.modifier_debuff	
+	
+	-- Check for Linkens	
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	--Apply Battle Hunger
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
+	
+-- Updates the value of the stack modifier and applies the movement speed modifier]]
 function BattleHungerStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-
+	local target = keys.target
+	
 	local caster_modifier = keys.caster_modifier
 	local speed_modifier = keys.speed_modifier
 
@@ -183,7 +202,14 @@ function CullingBlade( keys )
  	damage_table.ability = ability
  	damage_table.damage_type = ability:GetAbilityDamageType()
  	damage_table.damage = damage
-
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
  	-- Check if the target HP is equal or below the threshold
 	if target:GetHealth() <= kill_threshold and not target:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
 		

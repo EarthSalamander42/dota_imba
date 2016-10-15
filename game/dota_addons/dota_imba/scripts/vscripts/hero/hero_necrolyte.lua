@@ -349,7 +349,6 @@ function ReapersScythe( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
 	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
@@ -358,7 +357,18 @@ function ReapersScythe( keys )
 	local reap_particle = keys.reap_particle
 	local scythe_particle = keys.scythe_particle
 	local scepter = HasScepter(caster)
-
+	local modifier_debuff = keys.modifier_debuff
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
+	-- Apply the Reaper's Debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
 	-- Initializes the respawn time variable if necessary
 	if not target.scythe_added_respawn then
 		target.scythe_added_respawn = 0

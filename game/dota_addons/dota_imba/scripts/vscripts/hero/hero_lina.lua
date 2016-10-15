@@ -377,6 +377,14 @@ function LagunaBladeHit( keys )
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play hit sound
 	target:EmitSound(sound_hit)
 

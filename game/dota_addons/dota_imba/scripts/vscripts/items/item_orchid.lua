@@ -1,6 +1,41 @@
 --[[	Author: d2imba
 		Date:	15.08.2015	]]
 
+function OrchidCast( keys )
+	local target = keys.target
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_debuff = keys.modifier_debuff
+	
+	--Check for Linkens	
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
+	-- Add the debuff
+	target:AddNewModifier(caster, ability, "modifier_orchid_debuff", {})
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
+
+function BloodthornCast( keys )
+	local target = keys.target
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_debuff = keys.modifier_debuff
+	
+	--Check for Linkens	
+	if caster:GetTeam() ~= target:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then 
+			return 
+		end
+	end
+	
+	-- Add the debuff
+	target:AddNewModifier(caster, ability, "modifier_bloodthorn_debuff", {})
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	
 function OrchidDamageStorage( keys )
 	local target = keys.unit
 	local damage = keys.damage

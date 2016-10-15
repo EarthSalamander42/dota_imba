@@ -4,12 +4,22 @@
 function StiflingDaggerHit( keys )
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ability_crit = caster:FindAbilityByName(keys.ability_crit)
 	local modifier_crit = keys.modifier_crit
 	local modifier_stacks = keys.modifier_stacks
 	local modifier_kill = keys.modifier_kill
 	local scepter = HasScepter(caster)
-
+	local modifier_silence = keys.modifier_silence
+	local modifier_slow = keys.modifier_slow
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- If coup de grace is learned, roll for crits and instant kills
 	local rand = math.random
 	if ability_crit and ability_crit:GetLevel() > 0 then
@@ -50,6 +60,13 @@ function PhantomStrike( keys )
 	local sound_end = keys.sound_end
 	local particle_end = keys.particle_end
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Remove crit chance bonus modifier
 	caster:RemoveModifierByName(modifier_stacks)
 

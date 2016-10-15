@@ -88,7 +88,14 @@ function MagicMissileHit( keys )
 
 	-- Play the impact sound
 	caster:EmitSound(sound_hit)
-
+	
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Stun the target
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
@@ -302,6 +309,13 @@ function NetherSwap( keys )
 		ability:StartCooldown(cooldown_scepter * GetCooldownReduction(caster))
 	end
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Ministun the target if it's an enemy
 	if target:GetTeam() ~= caster:GetTeam() then
 		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = ministun_duration})		

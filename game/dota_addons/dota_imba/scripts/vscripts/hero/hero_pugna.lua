@@ -104,6 +104,13 @@ function Decrepify( keys )
 	local modifier_ally = keys.modifier_ally
 	local modifier_enemy = keys.modifier_enemy
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play cast sound
 	target:EmitSound(sound_cast)
 
@@ -626,11 +633,19 @@ function LifeDrain( keys )
 	-- Parameters
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 
+	
 	-- Remove cooldown with scepter
 	if scepter then
 		ability:EndCooldown()
 	end
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play cast sounds
 	caster:EmitSound(sound_cast)
 	target:EmitSound(sound_target)

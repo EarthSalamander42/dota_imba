@@ -181,6 +181,13 @@ function DeathPact( keys )
 	local health_mult_creep = ability:GetLevelSpecialValueFor("health_mult_creep", ability_level)
 	local damage_mult_creep = ability:GetLevelSpecialValueFor("damage_mult_creep", ability_level)
 
+	-- Check for Linkens
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		if target:TriggerSpellAbsorb(ability) then
+			return
+		end
+	end
+	
 	-- Play cast sound
 	Timers:CreateTimer(0.01, function()
 		caster:EmitSound(sound_cast)
