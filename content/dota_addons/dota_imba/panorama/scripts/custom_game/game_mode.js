@@ -71,7 +71,7 @@ function SelectDefaultGameMode(panel) {
 		panel.FindChildTraverse("creep_power_dropdown_10v10").SetSelected('2');
 		panel.FindChildTraverse("tower_power_dropdown_10v10").SetSelected('1');
 		panel.FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-		panel.FindChildTraverse("buyback_dropdown_10v10").SetSelected('60');
+		panel.FindChildTraverse("buyback_dropdown_10v10").SetSelected('120');
 		panel.FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 		panel.FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 	}
@@ -260,7 +260,7 @@ function Set10v10ModeA()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('1');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('0');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_normal');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('120');
+	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('180');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('625');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('1');
 }
@@ -275,7 +275,7 @@ function Set10v10ModeB()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('2');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('1');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('60');
+	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('120');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 }
@@ -290,7 +290,7 @@ function Set10v10ModeC()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('3');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('2');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('30');
+	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('60');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 }

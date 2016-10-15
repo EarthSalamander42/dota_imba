@@ -61,6 +61,15 @@ function PurificationDeath( keys )
 	local ability_level = ability:GetLevel() - 1
 	local passive_threshold = ability:GetLevelSpecialValueFor("passive_threshold", ability_level) * 0.01
 
+	-- If this is Rubick and Purification is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_omniknight_purification") then
+			caster:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
+			caster:RemoveModifierByName("modifier_imba_purification_passive")
+			return nil
+		end
+	end
+
 	-- If fatal damage was not dealt, do nothing
 	if caster:GetHealth() > (caster:GetMaxHealth() * passive_threshold) then
 		return nil

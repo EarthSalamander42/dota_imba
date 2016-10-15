@@ -122,7 +122,7 @@ function MeatHook( keys )
 	local vision_duration = ability:GetLevelSpecialValueFor("vision_duration", ability_level)
 	local enemy_disable_linger = ability:GetLevelSpecialValueFor("enemy_disable_linger", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
-	local start_loc = caster_loc + caster:GetForwardVector() * hook_width
+	local start_loc = caster_loc + (keys.target_points[1] - caster_loc):Normalized() * hook_width
 
 	-- Calculate range, speed, and damage
 	local light_stacks = caster:GetModifierStackCount(modifier_light, caster)
@@ -180,7 +180,7 @@ function MeatHook( keys )
 	hook_speed = hook_speed * tick_rate
 
 	local travel_distance = (hook_loc - caster_loc):Length2D()
-	local hook_step = caster:GetForwardVector() * hook_speed
+	local hook_step = (keys.target_points[1] - caster_loc):Normalized() * hook_speed
 
 	local target_hit = false
 	local target
@@ -344,6 +344,15 @@ function HookStacksUpdater( keys )
 	local ability = keys.ability
 	local modifier_sharp = keys.modifier_sharp
 	local modifier_light = keys.modifier_light
+
+	-- If this is Rubick and Meat Hook is no longer present, kill the modifier
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_pudge_meat_hook") then
+			caster:RemoveModifierByName(modifier_sharp)
+			caster:RemoveModifierByName(modifier_light)
+			return nil
+		end
+	end
 
 	-- Parameters
 	local sharp_stacks = caster:GetModifierStackCount(modifier_sharp, caster)

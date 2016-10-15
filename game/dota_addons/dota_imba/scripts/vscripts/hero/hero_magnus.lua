@@ -211,6 +211,16 @@ function EmpowerAura( keys )
 	local caster = keys.caster
 	local scepter = HasScepter(caster)
 
+	-- If this is Rubick and Empower is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_magnus_empower") then
+			caster:RemoveModifierByName("modifier_imba_empower_scepter_check")
+			caster:RemoveModifierByName("modifier_imba_empower")
+			caster:RemoveModifierByName("modifier_imba_supercharged")
+			return nil
+		end
+	end
+
 	-- If the caster has no scepter, do nothing
 	if not scepter then
 		return nil

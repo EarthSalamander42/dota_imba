@@ -30,7 +30,6 @@ function DragonSlave( keys )
 	local ability = keys.ability
 	local ability_aux = caster:FindAbilityByName(keys.ability_aux)
 	local ability_level = ability:GetLevel() - 1
-	local ability_aux_level = ability_aux:GetLevel() - 1
 	local particle_projectile = keys.particle_projectile
 	local sound_cast = keys.sound_cast
 
@@ -41,10 +40,21 @@ function DragonSlave( keys )
 	local primary_distance = ability:GetLevelSpecialValueFor("primary_distance", ability_level) + GetCastRangeIncrease(caster)
 	local secondary_amount = ability:GetLevelSpecialValueFor("secondary_amount", ability_level)
 	local secondary_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
-	local secondary_speed = ability_aux:GetLevelSpecialValueFor("secondary_speed", ability_aux_level)
-	local secondary_start_width = ability_aux:GetLevelSpecialValueFor("secondary_start_width", ability_aux_level)
-	local secondary_end_width = ability_aux:GetLevelSpecialValueFor("secondary_end_width", ability_aux_level)
-	local secondary_distance = ability_aux:GetLevelSpecialValueFor("secondary_distance", ability_aux_level)
+
+	-- Trashy Spell Steal workaround
+	local secondary_speed = primary_speed * 0.5
+	local secondary_start_width = primary_start_width
+	local secondary_end_width = primary_end_width
+	local secondary_distance = primary_distance * 0.5
+	local ability_aux_level
+	if not IsStolenSpell(caster) then
+		ability_aux_level = ability_aux:GetLevel() - 1
+		secondary_speed = ability_aux:GetLevelSpecialValueFor("secondary_speed", ability_aux_level)
+		secondary_start_width = ability_aux:GetLevelSpecialValueFor("secondary_start_width", ability_aux_level)
+		secondary_end_width = ability_aux:GetLevelSpecialValueFor("secondary_end_width", ability_aux_level)
+		secondary_distance = ability_aux:GetLevelSpecialValueFor("secondary_distance", ability_aux_level)
+	end
+	
 	local target_loc = keys.target_points[1]
 	local caster_loc = caster:GetAbsOrigin()
 
@@ -52,7 +62,7 @@ function DragonSlave( keys )
 	caster:EmitSound(sound_cast)
 
 	-- Launch primary projectile
-	local direction_center = caster:GetForwardVector()
+	local direction_center = (target_loc - caster_loc):Normalized()
 	local projectile = {
 		Ability				= ability,
 		EffectName			= particle_projectile,
@@ -132,7 +142,7 @@ function LightStrikeArray( keys )
 	-- Calculate first blast geometry
 	local target_loc = keys.target_points[1]
 	local caster_loc = caster:GetAbsOrigin()
-	local blast_direction = caster:GetForwardVector()
+	local blast_direction = (target_loc - caster_loc):Normalized()
 	local blast_positions = {}
 	blast_positions[1] = caster_loc + blast_direction * aoe_radius
 
@@ -202,6 +212,16 @@ function FierySoul( keys )
 	local modifier_stacks = keys.modifier_stacks
 	local modifier_active = keys.modifier_active
 
+	-- If this is Rubick and Fiery Soul is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_lina_fiery_soul") then
+			caster:RemoveModifierByName("modifier_imba_fiery_soul")
+			caster:RemoveModifierByName("modifier_imba_fiery_soul_stacks")
+			caster:RemoveModifierByName("modifier_imba_fiery_soul_active")
+			return nil
+		end
+	end
+
 	-- If the ability is disabled by Break, do nothing
 	if caster.break_duration_left then
 		return nil
@@ -244,6 +264,11 @@ function FierySoulActivate( keys )
 	local ability_e_fiery = keys.caster:FindAbilityByName(keys.ability_e_fiery)
 	local ability_r = caster:FindAbilityByName(keys.ability_r)
 	local ability_r_fiery = keys.caster:FindAbilityByName(keys.ability_r_fiery)
+
+	-- If this is Rubick, do nothing
+	if IsStolenSpell(caster) then
+		return nil
+	end
 
 	-- If any of the abilities is missing, do nothing
 	if not ability_q or not ability_q_fiery or not ability_w or not ability_w_fiery or not ability_e or not ability_e_fiery or not ability_r or not ability_r_fiery then

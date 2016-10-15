@@ -249,7 +249,7 @@ function ShadowJauntInitialize( keys )
 	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
 	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
 
-	InitializeAbillityCharges(caster, ability:GetName(), max_charges, max_charges, charge_cooldown)
+	InitializeAbilityCharges(caster, ability:GetName(), max_charges, max_charges, charge_cooldown, "shadow_jaunt")
 end
 
 function ShadowJaunt( keys )

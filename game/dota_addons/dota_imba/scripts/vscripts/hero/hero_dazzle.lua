@@ -48,6 +48,16 @@ function ShallowGravePassive( keys )
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
 
+	-- If this is Rubick and Shallow Grave is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_dazzle_shallow_grave") then
+			caster:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
+			caster:RemoveModifierByName("modifier_imba_shallow_grave_passive")
+			caster:RemoveModifierByName("modifier_imba_shallow_grave_passive_cooldown")
+			return nil
+		end
+	end
+
 	if not caster:HasModifier(modifier_cooldown) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_passive, {})
 	else

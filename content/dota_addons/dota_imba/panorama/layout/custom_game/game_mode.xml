@@ -90,8 +90,8 @@
 					<Panel class="DualColumnRight" id="buyback_box">
 						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
 						<DropDown id="buyback_dropdown_standard">
-							<Label text="#imba_gamemode_hero_options_buyback_30" id="30"/>
 							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
+							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
 						</DropDown>
 					</Panel>
 				</Panel>
@@ -190,8 +190,8 @@
 					<Panel class="DualColumnRight" id="buyback_box">
 						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
 						<DropDown id="buyback_dropdown_random_omg">
-							<Label text="#imba_gamemode_hero_options_buyback_30" id="30"/>
 							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
+							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
 						</DropDown>
 					</Panel>
 				</Panel>
@@ -306,9 +306,9 @@
 						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
 						<DropDown id="buyback_dropdown_custom">
 							<Label text="#imba_gamemode_hero_options_buyback_none" id="0"/>
-							<Label text="#imba_gamemode_hero_options_buyback_30" id="30"/>
 							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
 							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
+							<Label text="#imba_gamemode_hero_options_buyback_180" id="180"/>
 						</DropDown>
 					</Panel>
 				</Panel>
@@ -431,10 +431,9 @@
 					<Panel class="DualColumnRight" id="buyback_box">
 						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
 						<DropDown id="buyback_dropdown_10v10">
-							<Label text="#imba_gamemode_hero_options_buyback_none" id="0"/>
-							<Label text="#imba_gamemode_hero_options_buyback_30" id="30"/>
 							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
 							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
+							<Label text="#imba_gamemode_hero_options_buyback_180" id="180"/>
 						</DropDown>
 					</Panel>
 				</Panel>

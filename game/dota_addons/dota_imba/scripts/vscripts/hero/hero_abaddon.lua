@@ -93,8 +93,6 @@ function DeathCoil( keys )
 end
 
 function AphoticShieldInitialize( keys )
-	
-	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -105,6 +103,18 @@ function AphoticShieldInitialize( keys )
 	caster:SetModifierStackCount(stacks_modifier, caster, max_charges)
 	ability:EndCooldown()
 	caster.aphotic_cooldown = 0.0
+end
+
+function AphoticShieldThink( keys )
+	local caster = keys.caster
+
+	-- If this is Rubick and Aphotic Shield is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_abaddon_aphotic_shield") then
+			caster:RemoveModifierByName("modifier_aphotic_shield_stack_counter")
+			return nil
+		end
+	end
 end
 
 function AphoticShield( keys )
@@ -188,7 +198,7 @@ function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charg
 	else
 		Timers:CreateTimer(0.03, function()
 			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, cooldown - 0.03 )
-			end)
+		end)
 	end
 end
 

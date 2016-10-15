@@ -130,22 +130,22 @@ function Blink(keys)
 	local difference = point - casterPos
 	local ability = keys.ability
 	local ability_scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
-	local ability_scream_level = ability_scream:GetLevel()
+	
 	local projectile_speed = 0.0
 	local radius = 0.0
 	local range = ability:GetLevelSpecialValueFor("blink_range", (ability:GetLevel() - 1)) + GetCastRangeIncrease(caster)
 
-	if ability_scream_level ~= 0 then
+	if ability_scream and ability_scream:GetLevel() ~= 0 then
 		caster:EmitSound("Hero_QueenOfPain.ScreamOfPain")
-		projectile_speed = ability_scream:GetLevelSpecialValueFor("projectile_speed", ability_scream_level - 1)
-		radius = ability_scream:GetLevelSpecialValueFor("area_of_effect", ability_scream_level - 1)
+		projectile_speed = ability_scream:GetLevelSpecialValueFor("projectile_speed", ability_scream:GetLevel() - 1)
+		radius = ability_scream:GetLevelSpecialValueFor("area_of_effect", ability_scream:GetLevel() - 1)
 	end
 
 	if difference:Length2D() > range then
 		point = casterPos + (point - casterPos):Normalized() * range
 	end
 
-	if ability_scream_level ~= 0 then
+	if ability_scream and ability_scream:GetLevel() ~= 0 then
 		local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 		for _,enemy in pairs(enemies) do
 			local scream_projectile = {
@@ -174,7 +174,7 @@ function Blink(keys)
 	ProjectileManager:ProjectileDodge(caster)
 
 	Timers:CreateTimer(0.05, function()
-		if ability_scream_level ~= 0 then
+		if ability_scream and ability_scream:GetLevel() ~= 0 then
 			local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(enemies) do
 				local scream_projectile = {
@@ -206,10 +206,16 @@ function BlinkScream(keys)
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local ability_scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
-	local ability_scream_level = ability_scream:GetLevel() - 1
 	local modifier_confusion = keys.modifier_confusion
 	local target = keys.target
 
+	-- If there is no scream ability (random OMG/stolen ability), do nothing
+	if not ability_scream then
+		return nil
+	end
+
+	-- Parameters
+	local ability_scream_level = ability_scream:GetLevel() - 1
 	local scream_damage = ability:GetLevelSpecialValueFor("scream_damage", ability_scream_level)
 	local nausea_duration = ability:GetLevelSpecialValueFor("nausea_duration", ability_scream_level)
 
@@ -282,18 +288,21 @@ function SonicWave( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local ability_scream = caster:FindAbilityByName("imba_queenofpain_scream_of_pain")
-	local ability_scream_level = ability_scream:GetLevel()
 
 	-- Parameters
-	local projectile_speed = ability_scream:GetLevelSpecialValueFor("projectile_speed", ability_scream_level - 1 )
-	local radius = ability_scream:GetLevelSpecialValueFor("area_of_effect", ability_scream_level - 1 )
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local debuff_duration = ability:GetLevelSpecialValueFor("debuff_duration", ability_level)
 	local modifier_daze = keys.modifier_daze
 
 	-- Scepter parameters
-	if scepter then
+	local projectile_speed
+	local radius
+	local ability_scream_level
+	if scepter and ability_scream then
+		ability_scream_level = ability_scream:GetLevel()
 		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+		projectile_speed = ability_scream:GetLevelSpecialValueFor("projectile_speed", ability_scream_level - 1 )
+		radius = ability_scream:GetLevelSpecialValueFor("area_of_effect", ability_scream_level - 1 )
 	end
 
 	-- Deal damage
@@ -305,7 +314,7 @@ function SonicWave( keys )
 	end
 
 	-- If scepter, echo screams off each target
-	if scepter then
+	if scepter and ability_scream then
 		if ability_scream_level ~= 0 then
 			local enemies = FindUnitsInRadius(caster:GetTeam(), unit:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 			for _,enemy in pairs(enemies) do

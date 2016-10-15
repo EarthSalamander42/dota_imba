@@ -11,6 +11,14 @@ function FrostNova( keys )
 	local sound = keys.sound
 	local ability_level = ability:GetLevel() - 1
 
+	-- If this is Rubick and Land Mines is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_lich_frost_nova") then
+			caster:RemoveModifierByName("modifier_imba_frost_nova_aura")
+			return nil
+		end
+	end
+
 	-- If the ability was unlearned, do nothing
 	if not ability then
 		return nil

@@ -1,0 +1,8 @@
+imba_10v10
+{
+	material materials/overviews/imba_10v10.vmat
+	pos_x -8192
+	pos_y 8192
+	scale 16.000
+}
+

@@ -543,93 +543,76 @@ function ChaoticOffering( keys )
 		dummy_unit:AddNewModifier(caster, ability, "modifier_kill", {duration = 3})
 	end)
 
-	-- If the caster has a scepter, spawn lesser infernals until channeling stops
+	-- If the caster has a scepter, spawn lesser infernals after a small delay
 	if scepter then
-
-		-- Setup global variable
-		caster.channeling_chaotic_offering_scepter = true
 
 		-- Parameters
 		local particle_small_1 = keys.particle_small_1
 		local particle_small_2 = keys.particle_small_2
-		local elapsed_time = 0
-		local infernal_count = 0
 		local secondary_delay = ability:GetLevelSpecialValueFor("secondary_delay", ability_level)
 		local stun_scepter = ability:GetLevelSpecialValueFor("stun_scepter", ability_level)
 
-		-- Infernal creation loop
-		Timers:CreateTimer(0.1, function()
+		-- Infernal creation delay
+		Timers:CreateTimer(secondary_delay, function()
+
+			-- Stun nearby enemies again
+			local secondary_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+			for _,enemy in pairs(secondary_enemies) do
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_scepter})
+			end
+
+			-- Impact sound
+			dummy_unit:EmitSound(sound_cast)
 			
-			-- If still channeling, increase elapsed duration
-			if caster.channeling_chaotic_offering_scepter then
-				elapsed_time = elapsed_time + 0.1
+			-- Infernal creation loop
+			for infernal_count = 0,4 do
 
-				-- If elapsed time is over [secondary_delay], spawn an infernal
-				if elapsed_time >= secondary_delay then
+				-- Spawn the infernals in a pentagram around the central one
+				local small_target = RotatePosition(target, QAngle(0, -infernal_count * 360 / 5, 0), target + (target - caster:GetAbsOrigin()):Normalized() * stun_radius / 2)
+
+				-- Particles dummy unit
+				local small_dummy = CreateUnitByName("npc_dummy_unit", small_target, false, nil, nil, caster:GetTeamNumber())
+
+				-- Particle part 1
+				local initial_small_pfx = ParticleManager:CreateParticle(particle_small_1, PATTACH_ABSORIGIN_FOLLOW, small_dummy)
+				ParticleManager:SetParticleControl(initial_small_pfx, 0, small_target)
+
+				-- Destroy the sound/particle dummy after 3 seconds
+				small_dummy:AddNewModifier(caster, ability, "modifier_kill", {duration = 3})
+
+				-- [effect_delay] delay
+				Timers:CreateTimer(effect_delay, function()
 					
-					-- Reset elapsed time counter
-					elapsed_time = elapsed_time - secondary_delay
+					-- Impact particle
+					local impact_small_pfx = ParticleManager:CreateParticle(particle_small_2, PATTACH_ABSORIGIN_FOLLOW, small_dummy)
+					ParticleManager:SetParticleControl(impact_small_pfx, 0, small_target)
+					ParticleManager:SetParticleControl(impact_small_pfx, 1, Vector(stun_radius / 2, 0, 0))
 
-					-- Spawn the infernals in a pentagram around the central one
-					local small_target = RotatePosition(target, QAngle(0, -infernal_count * 360 / 5, 0), target + (target - caster:GetAbsOrigin()):Normalized() * stun_radius / 2)
-					infernal_count = infernal_count + 1
+					-- Spawn the infernal
+					local infernal_small = CreateUnitByName("npc_imba_warlock_golem_extra", small_target, false, caster, caster, caster:GetTeam())
+					FindClearSpaceForUnit(infernal_small, small_target, true)
+					infernal_small:SetControllableByPlayer(player_id, true)
 
-					-- Sound/particles dummy unit
-					local small_dummy = CreateUnitByName("npc_dummy_unit", small_target, false, nil, nil, caster:GetTeamNumber())
+					-- Face the same direction as the caster
+					infernal_small:SetForwardVector(caster:GetForwardVector())
 
-					-- Impact sound
-					small_dummy:EmitSound(sound_cast)
-
-					-- Particle part 1
-					local initial_small_pfx = ParticleManager:CreateParticle(particle_small_1, PATTACH_ABSORIGIN_FOLLOW, small_dummy)
-					ParticleManager:SetParticleControl(initial_small_pfx, 0, small_target)
-
-					-- Destroy the sound/particle dummy after 3 seconds
-					small_dummy:AddNewModifier(caster, ability, "modifier_kill", {duration = 3})
-
-					-- Stun enemies in the drop point
-					local secondary_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-					for _,enemy in pairs(secondary_enemies) do
-						enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_scepter})
-					end
-
-					-- [effect_delay] delay
-					Timers:CreateTimer(effect_delay, function()
-						
-						-- Impact particle
-						local impact_small_pfx = ParticleManager:CreateParticle(particle_small_2, PATTACH_ABSORIGIN_FOLLOW, small_dummy)
-						ParticleManager:SetParticleControl(impact_small_pfx, 0, small_target)
-						ParticleManager:SetParticleControl(impact_small_pfx, 1, Vector(stun_radius / 2, 0, 0))
-
-						-- Spawn the infernal
-						local infernal_small = CreateUnitByName("npc_imba_warlock_golem_extra", small_target, false, caster, caster, caster:GetTeam())
-						FindClearSpaceForUnit(infernal_small, small_target, true)
-						infernal_small:SetControllableByPlayer(player_id, true)
-
-						-- Face the same direction as the caster
-						infernal_small:SetForwardVector(caster:GetForwardVector())
-
-						-- Prevent nearby units from getting stuck
-						Timers:CreateTimer(0.01, function()
-							local units = FindUnitsInRadius(caster:GetTeamNumber(), infernal_small:GetAbsOrigin(), nil, 128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-							for _,unit in pairs(units) do
-								FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-							end
-						end)
-
-						-- Apply the appropriate modifiers
-						infernal_small:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
-
-						-- Level up abilities
-						local ability_flaming_fists = infernal_small:FindAbilityByName("imba_warlock_flaming_fists")
-						ability_flaming_fists:SetLevel(1)
-						local ability_permanent_immolation = infernal_small:FindAbilityByName("imba_warlock_permanent_immolation")
-						ability_permanent_immolation:SetLevel(1)
+					-- Prevent nearby units from getting stuck
+					Timers:CreateTimer(0.01, function()
+						local units = FindUnitsInRadius(caster:GetTeamNumber(), infernal_small:GetAbsOrigin(), nil, 128, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+						for _,unit in pairs(units) do
+							FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+						end
 					end)
-				end
 
-				-- Keep the main loop going
-				return 0.1
+					-- Apply the appropriate modifiers
+					infernal_small:AddNewModifier(caster, ability, "modifier_kill", {duration = duration})
+
+					-- Level up abilities
+					local ability_flaming_fists = infernal_small:FindAbilityByName("imba_warlock_flaming_fists")
+					ability_flaming_fists:SetLevel(1)
+					local ability_permanent_immolation = infernal_small:FindAbilityByName("imba_warlock_permanent_immolation")
+					ability_permanent_immolation:SetLevel(1)
+				end)
 			end
 		end)
 	end
@@ -692,44 +675,6 @@ function ChaoticOfferingGolemDeath( keys )
 	end
 end
 
-function ChaoticOfferingScepterEnd( keys )
-	local caster = keys.caster
-
-	-- Turn off channeling global variable
-	caster.channeling_chaotic_offering_scepter = nil
-end
-
-function ScepterCheck( keys )
-	local caster = keys.caster
-	local scepter = HasScepter(caster)
-
-	if scepter then
-		local modifier_check = keys.modifier_check
-		local ability_name = keys.ability_name
-
-		caster:RemoveModifierByName(modifier_check)
-		SwitchAbilities(caster, ability_name.."_scepter", ability_name, true, true)
-	else
-		return nil
-	end
-end
-
-function ScepterLostCheck( keys )
-	local caster = keys.caster
-	local scepter = HasScepter(caster)
-
-	if scepter then
-		return nil
-	else
-		local modifier_check = keys.modifier_check
-		local ability_name = keys.ability_name
-
-		caster:RemoveModifierByName(modifier_check)
-		caster.channeling_chaotic_offering_scepter = nil
-		SwitchAbilities(caster, ability_name, ability_name.."_scepter", true, true)
-	end
-end
-
 function GolemFlamingFists( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -746,7 +691,7 @@ function GolemFlamingFists( keys )
 	end
 
 	-- Calculate damage
-	local damage = caster:GetAverageTrueAttackDamage() * damage_pct / 100
+	local damage = caster:GetAverageTrueAttackDamage(caster) * damage_pct / 100
 
 	-- Damage enemies in the effect radius
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)

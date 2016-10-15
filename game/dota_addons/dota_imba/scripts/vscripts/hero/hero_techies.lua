@@ -61,6 +61,14 @@ function LandMineThrow( keys )
 	local modifier_state = keys.modifier_state
 	local modifier_charges = keys.modifier_charges
 	local scepter = HasScepter(caster)
+
+	-- If this is Rubick and Land Mines is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_techies_land_mines") then
+			caster:RemoveModifierByName("modifier_imba_land_mines_caster")
+			return nil
+		end
+	end
 	
 	-- Parameters
 	local activation_time = ability:GetLevelSpecialValueFor("activation_time", ability_level)

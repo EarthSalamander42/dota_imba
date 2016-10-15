@@ -101,7 +101,7 @@ function LaunchArrow( keys )
 	local arrow_location = caster:GetAbsOrigin()
 
 	-- Parameters
-	local arrow_direction = caster:GetForwardVector()
+	local arrow_direction = (target - arrow_location):Normalized()
 	local modifier_arrow = keys.modifier_arrow
 	local sound_arrow = keys.sound_arrow
 	local arrow_speed = ability:GetLevelSpecialValueFor("arrow_speed", ability_level)
@@ -364,14 +364,26 @@ function CosmicDust( keys )
 		is_night = true
 	end
 
+	-- Spell Steal exception
+	if IsStolenSpell(caster) then
+		ability_starfall = true
+	end
+
 	-- If starfall was not learned yet, or if it's day, do nothing
 	if not ability_starfall or not is_night then
 		ability:EndCooldown()
 		return nil
 	end
 
+	-- Spell Steal shitty workaround
+	local ability_level
+	if IsStolenSpell(caster) then
+		ability_level = 3
+	else
+		ability_level = ability_starfall:GetLevel() - 1
+	end
+
 	-- Parameters
-	local ability_level = ability_starfall:GetLevel() - 1
 	local ambient_sound = keys.ambient_sound
 	local hit_sound = keys.hit_sound
 	local ambient_particle = keys.ambient_particle

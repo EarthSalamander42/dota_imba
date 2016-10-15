@@ -3,6 +3,7 @@
 
 function Impale ( keys )
 	local caster = keys.caster
+	local target = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
@@ -41,7 +42,7 @@ function Impale ( keys )
 		iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
 	--	fExpireTime			= ,
 		bDeleteOnHit		= false,
-		vVelocity			= caster:GetForwardVector() * speed,
+		vVelocity			= (target - caster:GetAbsOrigin()):Normalized() * speed,
 		bProvidesVision		= false,
 	--	iVisionRadius		= ,
 	--	iVisionTeamNumber	= caster:GetTeamNumber(),
@@ -246,6 +247,16 @@ function VendettaDamageCount( keys )
 	local stack_modifier = keys.stack_modifier
 	local max_damage = ability:GetLevelSpecialValueFor("damage_storage", ability:GetLevel() - 1 )
 	local scepter = HasScepter(caster)
+
+	-- If this is Rubick and Tidebringer is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_nyx_assassin_vendetta") then
+			caster:RemoveModifierByName("modifier_imba_vendetta")
+			caster:RemoveModifierByName("modifier_imba_vendetta_damage_counter")
+			caster:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
+			return nil
+		end
+	end
 
 	-- Initialize the variable if it doesn't exist
 	if not caster.vendetta_stored_damage then

@@ -242,12 +242,13 @@ function DeathPact( keys )
 		-- If the target is not an illusion or an ally, deal damage
 		if target:IsRealHero() then
 			if target:GetTeam() ~= caster:GetTeam() then
-				ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target_health * damage_hero / 100, damage_type = DAMAGE_TYPE_PURE})
 
 				-- If the caster has a scepter, apply the death pact modifier
 				if scepter then
 					ability:ApplyDataDrivenModifier(caster, target, modifier_target, {})
 				end
+
+				ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target_health * damage_hero / 100, damage_type = DAMAGE_TYPE_PURE})
 			end
 		
 		-- If it's an illusion, simply kill it

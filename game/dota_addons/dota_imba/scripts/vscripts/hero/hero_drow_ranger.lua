@@ -124,6 +124,17 @@ function Trueshot( keys )
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 
+	-- If this is Rubick and Trueshot Aura is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_drow_ranger_trueshot") then
+			caster:RemoveModifierByName("modifier_imba_trueshot_aura_owner_hero")
+			caster:RemoveModifierByName("modifier_imba_trueshot_aura_owner_creep")
+			caster:RemoveModifierByName("modifier_imba_trueshot_aura")
+			caster:RemoveModifierByName("modifier_imba_trueshot_damage_stack")
+			return nil
+		end
+	end
+
 	-- If the caster is afflicted by Break, remove all stacks
 	if caster.break_duration_left then
 		target:RemoveModifierByName(modifier_stack)

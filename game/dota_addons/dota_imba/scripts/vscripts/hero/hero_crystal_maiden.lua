@@ -50,6 +50,14 @@ function Frostbite( keys )
 	local modifier_passive = keys.modifier_passive
 	local modifier_cooldown = keys.modifier_cooldown
 
+	-- If this is Rubick and Frostbite is no longer present, do nothing and kill the modifier
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_crystal_maiden_frostbite") then
+			caster:RemoveModifierByName(modifier_passive)
+			return nil
+		end
+	end
+
 	-- Parameters
 	local duration_hero = ability:GetLevelSpecialValueFor("duration", 0)
 	local duration_creep = ability:GetLevelSpecialValueFor("creep_duration", ability_level)

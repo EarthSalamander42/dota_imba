@@ -5416,6 +5416,17 @@
 						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
 					}
 				}
+
+				"ThinkInterval"							"0.5"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/hero_abaddon.lua"
+						"Function"						"AphoticShieldThink"
+					}
+				}
 			}
 
 			"modifier_aphotic_shield"
@@ -6417,7 +6428,7 @@
 	}
 
 	//=================================================================================================================
-	// Axe Battle Hunger
+	// Axe's Battle Hunger
 	//=================================================================================================================
 	"imba_axe_battle_hunger"
 	{
@@ -6485,7 +6496,7 @@
 			{
 				"EffectName"				"Hero_Axe.Battle_Hunger"
 				"Target" 					"TARGET"
-			}	
+			}
 
 			"ApplyModifier"
 			{
@@ -15261,6 +15272,7 @@
 			{
 				"ScriptFile"				"hero/hero_jakiro.lua"
 				"Function"					"Macropyre"
+				"Target"					"POINT"
 				
 				"fire_particle"				"particles/hero/jakiro/jakiro_macropyre.vpcf"
 				"ice_particle"				"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
@@ -21139,6 +21151,7 @@
 			{
 				"ScriptFile"			"hero/hero_nyx_assassin.lua"
 				"Function"				"Impale"
+				"Target"				"POINT"
 
 				"sound_cast"			"Hero_NyxAssassin.Impale"
 				"particle_projectile"	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
@@ -23901,7 +23914,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"pudge_sharp_hook"
 
 		// Special
@@ -23998,7 +24011,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"			"pudge_light_hook"
 
 		// Special
@@ -26094,7 +26107,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"800 950 1100 1250"
+				"range"						"800 900 1000 1100"
 			}
 			"02"
 			{
@@ -26110,6 +26123,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range_tooltip"				"1350 1500 1650 1800"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"self_slow"					"-100"
 			}
 		}
 
@@ -26192,12 +26210,7 @@
 				{
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%range"
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%self_slow"
 				}
 			}
 		}
@@ -29997,6 +30010,8 @@
 				"IsBuff"							"1"
 				"IsPurgable"						"0"
 
+				"Attributes"						"MODIFIER_ATTRIBUTE_PERMANENT"
+
 				"ThinkInterval"						"0.2"
 
 				"OnIntervalThink"
@@ -30029,6 +30044,8 @@
 				"IsHidden"							"1"
 				"IsBuff"							"1"
 				"IsPurgable"						"0"
+
+				"Attributes"						"MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Duration"							"%aura_linger"
 			}
@@ -32666,7 +32683,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"165"
+		"AbilityCooldown"				"120"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -32709,7 +32726,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"60"
+				"duration"				"65"
 			}
 			"05"
 			{
@@ -32724,204 +32741,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"90 130 180"
-			}
-		}
-
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ChaoticOfferingPreCast"
-
-				"sound_precast"			"Hero_Warlock.RainOfChaos_buildup"
-				"particle_precast"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_staff.vpcf"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ChaoticOffering"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_Warlock.RainOfChaos"
-				"particle_initial"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
-				"particle_secondary"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
-				"particle_golem"		"particles/units/heroes/hero_warlock/golem_ambient.vpcf"
-				"particle_golem_4"		"particles/econ/items/warlock/warlock_golem_obsidian/golem_ambient_obsidian.vpcf"
-				"particle_golem_5"		"particles/econ/items/warlock/warlock_golem_dark_curator/golem_ambient_dark_curator.vpcf"
-				"modifier_golem"		"modifier_imba_rain_of_chaos_golem_innate"
-				"modifier_main_golem"	"modifier_imba_rain_of_chaos_main_golem_marker"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_rain_of_chaos_scepter_check"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"ThinkInterval"			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ScepterCheck"
-
-						"modifier_check"		"modifier_imba_rain_of_chaos_scepter_check"
-						"ability_name"			"imba_warlock_rain_of_chaos"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_rain_of_chaos_scepter_check"
-					}
-				}
-			}
-
-			"modifier_imba_rain_of_chaos_golem_innate"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%base_damage"
-				}
-			}
-
-			"modifier_imba_rain_of_chaos_main_golem_marker"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_warlock.lua"
-						"Function"		"ChaoticOfferingItemUpdate"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_warlock.lua"
-						"Function"		"ChaoticOfferingGolemDeath"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Warlock's Rain of Chaos (scepter version)
-	//=================================================================================================================
-	"imba_warlock_rain_of_chaos_scepter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"warlock_rain_of_chaos"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-		"AbilityCastRange"				"1200"
-		"AbilityChannelTime"			"5.0"
-		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_3"
-		"AOERadius"						"%stun_radius"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"165"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
-			"particle"					"particles/units/heroes/hero_warlock/golem_ambient.vpcf"
-			"particle"					"particles/econ/items/warlock/warlock_golem_obsidian/golem_ambient_obsidian.vpcf"
-			"particle"					"particles/econ/items/warlock/warlock_golem_dark_curator/golem_ambient_dark_curator.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_staff.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
-			"particle"					"particles/hero/warlock/warlock_rain_of_chaos_small.vpcf"
-			"particle"					"particles/hero/warlock/warlock_rain_of_chaos_start_small.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_radius"			"600"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"effect_delay"			"0.5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"60"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_health"			"900"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_level"		"50 75 100"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"90 130 180"
+				"base_damage"			"90 150 220"
 			}
 			"08"
 			{
@@ -32931,7 +32751,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_scepter"			"0.5"
+				"stun_scepter"			"1.0"
 			}
 		}
 
@@ -32961,57 +32781,15 @@
 				"particle_golem"		"particles/units/heroes/hero_warlock/golem_ambient.vpcf"
 				"particle_golem_4"		"particles/econ/items/warlock/warlock_golem_obsidian/golem_ambient_obsidian.vpcf"
 				"particle_golem_5"		"particles/econ/items/warlock/warlock_golem_dark_curator/golem_ambient_dark_curator.vpcf"
-				"particle_small_1"		"particles/hero/warlock/warlock_rain_of_chaos_start_small.vpcf"
-				"particle_small_2"		"particles/hero/warlock/warlock_rain_of_chaos_small.vpcf"
 				"modifier_golem"		"modifier_imba_rain_of_chaos_golem_innate"
 				"modifier_main_golem"	"modifier_imba_rain_of_chaos_main_golem_marker"
-			}
-		}
-
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ChaoticOfferingScepterEnd"
+				"particle_small_1"		"particles/hero/warlock/warlock_rain_of_chaos_start_small.vpcf"
+				"particle_small_2"		"particles/hero/warlock/warlock_rain_of_chaos_small.vpcf"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_rain_of_chaos_scepter_check"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"ThinkInterval"			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ScepterLostCheck"
-
-						"modifier_check"		"modifier_imba_rain_of_chaos_scepter_check"
-						"ability_name"			"imba_warlock_rain_of_chaos"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_rain_of_chaos_scepter_check"
-					}
-				}
-			}
-
 			"modifier_imba_rain_of_chaos_golem_innate"
 			{
 				"Passive"				"0"

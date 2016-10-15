@@ -2795,6 +2795,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"10 15 20 25"
+				"CalculateSpellDamageTooltip"		"1"
 			}
 			"02"
 			{
@@ -2845,6 +2846,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_duration"		"7"
+				"CalculateSpellDamageTooltip"		"0"
 			}			
 			"03"
 			{
@@ -4235,6 +4237,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"tooltip_replica_total_damage_incoming"	"300"
+				"CalculateSpellDamageTooltip"	"0"
 			}				
 			"07"
 			{
@@ -5144,11 +5147,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_creeps"				"8 12 16 20"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_heroes"				"20 40 60 80"
+				"CalculateSpellDamageTooltip"	"0"
 			}	
 			"10"
 			{
@@ -8724,11 +8729,13 @@
 	{
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 
+		"CastFilterRejectCaster" 		"1"
+
 		"AbilityCooldown"				"20 18 16 14"
 
 		"AbilityManaCost"				"110"
 		
-		"AbilityCastRange"				"550 600 650 700"
+		"AbilityCastRange"				"800"
 
 		"AbilitySpecial"
 		{
@@ -8750,7 +8757,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_land_distance"			"700"
+				"max_land_distance"			"800"
 			}
 			"05"
 			{
@@ -8760,12 +8767,12 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"550 600 650 700"
+				"cast_range_tooltip"		"800"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_land_distance_allied"	"700"
+				"max_land_distance_allied"	"1400"
 			}
 		}
 	}	
@@ -8792,7 +8799,7 @@
 	{
 		"AbilityCooldown"				"14 12 10 8"
 
-		"AbilityManaCost"				"120"
+		"AbilityManaCost"				"110"
 		
 		"AbilityCastRange"				"800"
 
@@ -8806,17 +8813,20 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"jump_damage_reduction_pct"		"0"
+				"jump_damage_reduction_pct"		"-4"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hero_attack_damage_reduction"	"25 40 55 70"
+				"hero_attack_damage_reduction"	"30 45 60 75"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"creep_attack_damage_reduction"	"16 24 32 40"
+				"creep_attack_damage_reduction"	"18 27 36 45"
+				"CalculateSpellDamageTooltip"	"0"
 			}			
 			"05"
 			{
@@ -8831,7 +8841,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"jump_delay"					"0.25"
+				"jump_delay"					"0.1"
 			}
 		}
 	}	
@@ -8846,12 +8856,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"magic_damage_reduction_pct"	"12 18 24 30"
+				"magic_damage_reduction_pct"	"10 15 20 25"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
+				"radius"						"25000"
 			}
 		}
 	}
@@ -8865,7 +8875,7 @@
 
 		"AbilityManaCost"				"0"
 		
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"1000 1250 1500"
 
 		"AbilitySpecial"
 		{
@@ -8882,7 +8892,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1500"
+				"cast_range_scepter"		"1400 1700 2000"
 			}
 			"04"
 			{
@@ -11586,6 +11596,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"int_multiplier"		"2.0"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -11763,6 +11774,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"burn_damage"				"3"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"07"
 			{
@@ -14876,6 +14888,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"illusion_dmg_pct"		"100"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
 			{
@@ -15340,6 +15353,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_interval"		"0.5"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"06"
 			{
@@ -15367,6 +15381,7 @@
 				"var_type"				"FIELD_FLOAT"
 				"burn_dps"				"15 20 25 30 35 40 45 50 55 60 65 70 75"
 				"levelkey"				"exortlevel"
+				"CalculateSpellDamageTooltip"	"1"
 			}
 		}
 	}
@@ -15724,6 +15739,7 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"tooltip_health_cost_percent"		"35"
+				"CalculateSpellDamageTooltip"		"1"
 			}
 			"07"
 			{

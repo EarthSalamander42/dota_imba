@@ -27,10 +27,6 @@
 			<Image id="loading_screen_shopkeeper" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_shopkeeper.png" />
 		</Panel>
 
-		<Panel id="Gaben">
-			<Image id="loading_screen_gaben" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_gaben.png" />
-		</Panel>
-
 		<Panel id="ShowCommunityPanel">
 			<Button id="show_community_panel_button" onactivate="ShowCommunityButton();" style="" >
 				<Label id="community_header" class="Header" html="true" text="#imba_community_header" />

@@ -195,6 +195,18 @@ function TidebringerDamage( keys )
 	local modifier_high_tide = keys.modifier_high_tide
 	local modifier_damage = keys.modifier_damage
 
+	-- If this is Rubick and Tidebringer is no longer present, do nothing and kill the modifiers
+	if IsStolenSpell(caster) then
+		if not caster:FindAbilityByName("imba_kunkka_tidebringer") then
+			caster:RemoveModifierByName("modifier_imba_tidebringer")
+			caster:RemoveModifierByName("modifier_imba_tidebringer_damage")
+			caster:RemoveModifierByName("modifier_imba_tidebringer_high_tide")
+			caster:RemoveModifierByName("modifier_imba_tidebringer_wave_break")
+			caster:RemoveModifierByName("modifier_imba_tidebringer_tsunami")
+			return nil
+		end
+	end
+
 	-- Verify high tide
 	local high_tide = caster:HasModifier(modifier_high_tide)
 
@@ -256,7 +268,7 @@ function Tidebringer( keys )
 	end
 
 	-- Fetch the total attack damage
-	local attack_damage = caster:GetAverageTrueAttackDamage()
+	local attack_damage = caster:GetAverageTrueAttackDamage(caster)
 
 	-- Play attack sound
 	caster:EmitSound(sound_attack)

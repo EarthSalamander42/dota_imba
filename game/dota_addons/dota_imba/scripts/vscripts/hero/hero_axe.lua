@@ -185,7 +185,7 @@ function CullingBlade( keys )
  	damage_table.damage = damage
 
  	-- Check if the target HP is equal or below the threshold
-	if target:GetHealth() <= kill_threshold then
+	if target:GetHealth() <= kill_threshold and not target:HasModifier("modifier_imba_reincarnation_scepter_wraith") then
 		
 		-- If it is then purge it and manually remove unpurgable modifiers
 		target:Purge(true, true, false, false, true)

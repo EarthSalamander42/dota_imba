@@ -195,6 +195,7 @@ end
 
 function Macropyre( keys )
 	local caster = keys.caster
+	local target_loc = keys.target_points[1]
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local scepter = HasScepter(caster)
@@ -224,7 +225,7 @@ function Macropyre( keys )
 	end
 	
 	-- Initialize effect geometry
-	local direction = caster:GetForwardVector()
+	local direction = (target_loc - caster:GetAbsOrigin()):Normalized()
 	local start_pos = caster:GetAbsOrigin() + direction * path_radius
 	local end_pos = start_pos
 	local trail_start = ( -1 ) * ( trail_amount - 1 ) / 2

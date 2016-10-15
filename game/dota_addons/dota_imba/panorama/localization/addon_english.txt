@@ -1,8 +1,8 @@
 "addon"
 {
 	"Unassigned"      								"Unassigned Team"
-	"Spectator"       								"Spectator Team"
-	"Neutrals"        								"Neutral Team"
+	"Spectator"       								"Spectators"
+	"Neutrals"        								"Neutrals"
 	"NoTeam"          								"No Team"
 
 	"DOTA_GoodGuys"   								"Radiant"

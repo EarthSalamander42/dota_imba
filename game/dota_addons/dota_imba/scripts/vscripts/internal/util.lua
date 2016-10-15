@@ -248,8 +248,10 @@ function TrueKill(caster, target, ability)
 		target:RemoveModifierByName("modifier_imba_purification_passive")
 	end
 
-	-- Deals lethal damage in order to trigger death-preventing abilities
-	target:Kill(ability, caster)
+	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
+	if not ( target:HasModifier("modifier_imba_reincarnation") or target:HasModifier("modifier_imba_reincarnation_scepter") ) then
+		target:Kill(ability, caster)
+	end
 
 	-- Removes the relevant modifiers
 	target:RemoveModifierByName("modifier_invulnerable")
@@ -257,6 +259,13 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_borrowed_time")
+	target:RemoveModifierByName("modifier_imba_centaur_return")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_active")
+	target:RemoveModifierByName("modifier_item_crimson_guard_unique")
+	target:RemoveModifierByName("modifier_item_crimson_guard_active")
+	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
+	target:RemoveModifierByName("modifier_item_vanguard_unique")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -1414,7 +1423,7 @@ function SetTimeOfDayTempLoop()
 end
 
 -- Initializes a charge-based system for an ability
-function InitializeAbillityCharges(unit, ability_name, max_charges, initial_charges, cooldown)
+function InitializeAbilityCharges(unit, ability_name, max_charges, initial_charges, cooldown, modifier_name)
 
 	-- Find the passed ability
 	local ability = unit:FindAbilityByName(ability_name)
@@ -1428,7 +1437,7 @@ function InitializeAbillityCharges(unit, ability_name, max_charges, initial_char
 			replenish_time = cooldown
 		}
 
-		unit:AddNewModifier(unit, ability, "modifier_charges", extra_parameters)
+		unit:AddNewModifier(unit, ability, "modifier_charges_"..modifier_name, extra_parameters)
 	end
 end
 
@@ -1690,4 +1699,15 @@ function TriggerAegisReincarnation(caster)
 		-- Redraw caster's model
 		caster:RemoveNoDraw()
 	end)
+end
+
+-- Checks if this ability is casted by someone with Spell Steal (i.e. Rubick)
+function IsStolenSpell(caster)
+
+	-- If the caster has the Spell Steal ability, return true
+	if caster:FindAbilityByName("rubick_spell_steal") then
+		return true
+	end
+
+	return false
 end
