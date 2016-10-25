@@ -447,14 +447,12 @@
 
 		"ModelScale" 				"1.05"
 
-		"ArmorPhysical"				"1"
-
-		//"Ability1"					"doom_bringer_devour"
-		//"Ability2"					"doom_bringer_scorched_earth"
-		//"Ability3"					"doom_bringer_lvl_death"
-		//"Ability4"					"doom_bringer_empty1"
-		//"Ability5"					"doom_bringer_empty2"
-		//"Ability6"					"doom_bringer_doom"
+		//"Ability1"					"imba_doom_bringer_devour"
+		//"Ability2"					"imba_doom_bringer_scorched_earth"
+		//"Ability3"					"imba_doom_bringer_lvl_death"
+		//"Ability4"					"imba_doom_bringer_empty1"
+		//"Ability5"					"imba_doom_bringer_empty2"
+		//"Ability6"					"imba_doom_bringer_doom"
 		"Ability7"					"attribute_bonus_str"
 
 		"ProjectileSpeed"			"900"
@@ -1410,8 +1408,8 @@
 	{
 		"override_hero"				"npc_dota_hero_rubick"
 
-		//"Ability1"		"imba_rubick_telekinesis"
-		//"Ability2"		"imba_rubick_telekinesis_land"
+		"Ability1"		"imba_rubick_telekinesis"
+		"Ability2"		"imba_rubick_telekinesis_land"
 		//"Ability3"		"imba_rubick_fade_bolt"
 		//"Ability4"		"imba_rubick_null_field"
 		//"Ability5"		"imba_rubick_empty1"

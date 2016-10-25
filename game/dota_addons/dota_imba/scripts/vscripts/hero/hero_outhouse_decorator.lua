@@ -114,10 +114,10 @@ function AstralImprisonment( keys )
 	local modifier_debuff = keys.modifier_debuff
 	local sound_astral = keys.sound_astral
 	
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 		

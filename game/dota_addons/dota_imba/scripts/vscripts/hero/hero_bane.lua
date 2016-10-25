@@ -7,17 +7,17 @@ function CastEnfeeble( keys )
 	local ability = keys.ability	
 	local modifier_debuff = keys.modifier_debuff
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
-	end	
+	end
 	
-	-- Add Enfeeble Modifier
+	-- Apply Enfeeble
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-	
 end
+
 function Enfeeble( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -93,10 +93,10 @@ function BrainSap( keys )
 	-- Parameters
 	local heal_amt = ability:GetLevelSpecialValueFor("heal_amt", ability_level)
 
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
@@ -177,26 +177,28 @@ function CastFiendsGrip( keys )
 	local modifier_caster = keys.modifier_caster
 	local cast_sound = keys.cast_sound
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, break channel and do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			Timers:CreateTimer(0.01, function()
+				ability:EndChannel(true)
+				caster:MoveToPosition(caster:GetAbsOrigin())
+			end)
+			return nil
 		end
 	end
 
-	--Play the Fiends Grip Cast sound
+	-- Play cast sound
 	target:EmitSound(cast_sound)
 	
-	--Deal damage to the target
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
-	
-	--Remove any previously existing instance of FiendsGripDebuff
-	--ability:RemoveModifierByName(modifier_debuff)
-	
-	--Add FiendsGrip Debuff
+	-- Deal damage to the target
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- Apply Fiend's Grip
+	target:RemoveModifierByName(modifier_debuff)
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	
-	--Add Fiendgrip caster modifier to bane
+	-- Apply caster's modifier
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
 end
 	
@@ -293,14 +295,14 @@ function CastNightmare( keys )
 	local modifier_debuff = keys.modifier_debuff
 	local loop_sound = keys.loop_sound
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
-	-- Play Nightmare Sound
+	-- Play sound
 	StartSoundEvent(loop_sound, target)
 	
 	-- Apply Nightmare debuff

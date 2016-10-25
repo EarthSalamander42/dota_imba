@@ -843,7 +843,8 @@ function InitializeInnateAbilities( hero )
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
 		"imba_sandking_treacherous_sands",
-		"imba_bane_nightmare_end"
+		"imba_bane_nightmare_end",
+		"imba_rubick_telekinesis_land"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them

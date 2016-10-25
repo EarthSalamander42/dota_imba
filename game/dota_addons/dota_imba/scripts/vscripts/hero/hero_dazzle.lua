@@ -49,16 +49,17 @@ function PoisonTouchHit( keys )
 	local target = keys.target
 	local modifier_debuff = keys.modifier_debuff
 	
-	-- Check for Linkens	
+	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
-	--Apply Poison Touch
+	-- Apply Poison Touch
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 end
+
 function PoisonTouchEnd( keys )
 	local target = keys.target
 	local modifier_slow_stack = keys.modifier_slow_stack

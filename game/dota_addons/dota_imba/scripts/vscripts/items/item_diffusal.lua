@@ -17,10 +17,10 @@ function DiffusalCast( keys )
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
-	--Check for Linkens	
-	if caster:GetTeam() ~= target:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then 
-			return 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
 		end
 	end
 	

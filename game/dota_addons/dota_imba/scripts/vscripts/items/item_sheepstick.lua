@@ -27,10 +27,10 @@ function Sheepstick( keys )
 	ParticleManager:SetParticleControl(sheep_pfx, 0, target:GetAbsOrigin())
 	ParticleManager:ReleaseParticleIndex(sheep_pfx)
 	
-	--Check for Linkens
-	if caster:GetTeam() ~= target:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then 
-			return 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
 		end
 	end
 	

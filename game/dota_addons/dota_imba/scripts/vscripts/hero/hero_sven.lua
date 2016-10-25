@@ -115,10 +115,10 @@ function StormBoltHit( keys )
 	-- Start attacking the target
 	caster:SetAttacking(target)
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

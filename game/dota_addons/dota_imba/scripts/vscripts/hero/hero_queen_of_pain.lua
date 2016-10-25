@@ -90,28 +90,27 @@ function ShadowStrikeHit( keys )
 	local ability = keys.ability
 	local target = keys.target
 	local ability_level = ability:GetLevel() - 1
-
 	local stack_modifier = keys.stack_modifier
 	local modifier_base_slow = keys.modifier_base_slow
-	local damage = keys.damage
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
+
+	-- Parameters
+	local damage = ability:GetLevelSpecialValueFor("strike_damage", ability_level)
 	
-	--Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	-- Apply damage and play damage notification
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, damage, nil)
 	
-	--Apply modifier
+	-- Apply modifiers
 	ability:ApplyDataDrivenModifier(caster, target, modifier_base_slow, {})
-	
 	target:RemoveModifierByName(stack_modifier)
 	AddStacks(ability, caster, target, stack_modifier, 8, true)
-
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_SPELL_DAMAGE, target, ability:GetLevelSpecialValueFor("strike_damage", ability_level), nil)
 end
 
 function ShadowStrikeDecay( keys )

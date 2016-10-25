@@ -8723,76 +8723,6 @@
 	}
 
 	//=================================================================================================================
-	// Rubick: Telekinesis
-	//=================================================================================================================
-	"rubick_telekinesis"
-	{
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-
-		"CastFilterRejectCaster" 		"1"
-
-		"AbilityCooldown"				"20 18 16 14"
-
-		"AbilityManaCost"				"110"
-		
-		"AbilityCastRange"				"800"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"lift_duration"				"2.25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.0 1.25 1.5 1.75"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_land_distance"			"800"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fall_duration"				"0.3"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"800"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_land_distance_allied"	"1400"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Rubick: Telekinesis Land
-	//=================================================================================================================
-	"rubick_telekinesis_land"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Rubick: Fade Bolt
 	//=================================================================================================================
 	"rubick_fade_bolt"
@@ -16059,16 +15989,16 @@
 		"AbilityCastPoint"				"0.2"
 
 		"AbilityCastRange"				"600"
-		"AbilityCooldown"				"70.0 60.0 50.0 40.0"
+		"AbilityCooldown"				"66 56 46 36"
 
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"6"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"166"
+				"bonus_gold"			"66 96 126 156"
 			}
 			"02"
 			{
@@ -16079,32 +16009,116 @@
 	}
 
 	//=================================================================================================================
-	// Doom Bringer: Lvl? Death
+	// Doom Bringer: Scorched Earth
 	//=================================================================================================================
-	"doom_bringer_lvl_death"
+	"doom_bringer_scorched_earth"
 	{
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"					"666"
 
-		"AbilityCastRange"				"666"
+		"AbilityCooldown"					"56 46 36 26"
 
-		"AbilityCooldown"				"6"
+		"AbilityManaCost"					"66"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"12 24 36 48"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"666"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed_pct"	"18"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"16.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Infernal Blade
+	//=================================================================================================================
+	"doom_bringer_infernal_blade"
+	{
+		"AbilityCooldown"				"16 12 8 4"
+
+		"AbilityManaCost"				"25"
+
+		"AbilityCastRange"				"166"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 180 240 300"
+				"burn_damage"			"25 30 35 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_damage_pct"		"1.0 2.0 3.0 4.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"6.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ministun_duration"		"0.666"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom Bringer: Doom
+	//=================================================================================================================
+	"doom_bringer_doom"
+	{
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCastRange"				"666"
+
+		"AbilityCooldown"				"126 96 66"
+
+		"AbilityManaCost"				"166"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"6.0 12.0 18.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lvl_bonus_damage"		"66"
+				"damage"				"66"
 			}
 			"03"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"duration_scepter"		"12.0 18.0 24.0"
+			}
+			"04"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"lvl_bonus_multiple"	"6 5 4 3"
+				"damage_scepter"		"166"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"25"
 			}
 		}
 	}

@@ -7,10 +7,10 @@ function OrchidCast( keys )
 	local ability = keys.ability
 	local modifier_debuff = keys.modifier_debuff
 	
-	--Check for Linkens	
-	if caster:GetTeam() ~= target:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then 
-			return 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
 		end
 	end
 	
@@ -25,10 +25,10 @@ function BloodthornCast( keys )
 	local ability = keys.ability
 	local modifier_debuff = keys.modifier_debuff
 	
-	--Check for Linkens	
-	if caster:GetTeam() ~= target:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then 
-			return 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
 		end
 	end
 	

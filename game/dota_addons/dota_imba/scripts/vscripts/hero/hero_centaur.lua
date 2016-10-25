@@ -87,10 +87,10 @@ function DoubleEdge( keys )
 	local target_pos = target:GetAbsOrigin()
 	local caster_str = caster:GetStrength()
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

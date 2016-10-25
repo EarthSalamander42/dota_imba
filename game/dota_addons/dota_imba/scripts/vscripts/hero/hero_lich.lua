@@ -4,36 +4,34 @@
 function CastFrostNova( keys )
 	local caster = keys.caster
 	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
 	local target = keys.target
 	local modifier_debuff = keys.modifier_debuff
-	local modifier_duration = keys.modifier_duration
-	local radius = keys.radius
-	local damage = keys.damage
-	local damage_aoe = keys.damage_aoe
 	
-	-- Check for Linkens	
+	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
+
+	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("target_damage", ability_level)
+	local damage_aoe = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
 	
-	--Apply Frost Nova
-	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {duration = modifier_duration})
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+	-- Damage the main target
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 	
-	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage_aoe, damage_type = ability:GetAbilityDamageType()})
-	
-	--Find enemy heroes in an Aoe around target
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), 0, FIND_ANY_ORDER, false)
+	-- Find enemies around the main target
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		
-		-- Apply FrostNova Debuff
-		ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {duration = modifier_duration})
+		-- Apply frost nova slow
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 
-		-- Apply damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage_aoe, damage_type = ability:GetAbilityDamageType()})
+		-- Apply AOE damage
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage_aoe, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
 		
@@ -47,7 +45,7 @@ function FrostNova( keys )
 	local sound = keys.sound
 	local ability_level = ability:GetLevel() - 1
 
-	-- If this is Rubick and Land Mines is no longer present, do nothing and kill the modifiers
+	-- If this is Rubick and Frost Nova is no longer present, do nothing and kill the modifiers
 	if IsStolenSpell(caster) then
 		if not caster:FindAbilityByName("imba_lich_frost_nova") then
 			caster:RemoveModifierByName("modifier_imba_frost_nova_aura")
@@ -167,10 +165,10 @@ function ChainFrostStart( keys )
 		caster.chain_frost_bounces = 0
 	end
 	
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

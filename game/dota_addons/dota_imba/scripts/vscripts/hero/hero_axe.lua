@@ -1,25 +1,24 @@
 --[[	Author: Pizzalol
 		Date: 09.02.2015	]]
 
-
 function CastBattleHunger( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
 	local modifier_debuff = keys.modifier_debuff	
 	
-	-- Check for Linkens	
+	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
-	--Apply Battle Hunger
+	-- Apply Battle Hunger
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 end
 	
--- Updates the value of the stack modifier and applies the movement speed modifier]]
+-- Updates the value of the stack modifier and applies the movement speed modifier
 function BattleHungerStart( keys )
 	local caster = keys.caster
 	local ability = keys.ability

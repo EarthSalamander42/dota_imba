@@ -13,7 +13,6 @@ function DeathCoil( keys )
 	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability_level )
 	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
 	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-	local linkens_trigger = require("linkens_trigger")
 	
 	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
 	local max_stacks = 1
@@ -25,66 +24,65 @@ function DeathCoil( keys )
 	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
 	local modifier_buff = "modifier_imba_frostmourne_buff"
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
 	-- Play the ability sound
 	caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 	target:EmitSound("Hero_Abaddon.DeathCoil.Target")
-
-
 	
 	-- If the target and caster are on a different team, do Damage. Heal otherwise
-		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-			ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
+	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+		ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
 
-			if target:HasModifier(modifier_debuff_base) then
-				local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
+		if target:HasModifier(modifier_debuff_base) then
+			local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 
-				if stack_count < max_stacks then
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-					target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-				else
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-				end
+			if stack_count < max_stacks then
+				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+				target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
 			else
 				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
 				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-				target:SetModifierStackCount(modifier_debuff, ability, 1)
 			end
 		else
-			target:Heal(heal, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-			if target:HasModifier(modifier_buff_base) then
-				local stack_count = target:GetModifierStackCount(modifier_buff, ability)
+			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+			target:SetModifierStackCount(modifier_debuff, ability, 1)
+		end
+	else
+		target:Heal(heal, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+		if target:HasModifier(modifier_buff_base) then
+			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
-				if stack_count < max_stacks then
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-					target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
-				else
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-					ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-					target:SetModifierStackCount(modifier_buff, ability, stack_count)
-				end
+			if stack_count < max_stacks then
+				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
+				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
+				target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
 			else
 				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
 				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-				target:SetModifierStackCount(modifier_buff, ability, 1)
+				target:SetModifierStackCount(modifier_buff, ability, stack_count)
 			end
+		else
+			ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
+			ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
+			target:SetModifierStackCount(modifier_buff, ability, 1)
 		end
+	end
 
-		-- Self Heal
-		if target ~= caster then
-			caster:Heal(self_heal, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
-		end
+	-- Self Heal
+	if target ~= caster then
+		caster:Heal(self_heal, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
+	end
+	
 	-- Create the projectile
 	local info = {
 		Target = target,

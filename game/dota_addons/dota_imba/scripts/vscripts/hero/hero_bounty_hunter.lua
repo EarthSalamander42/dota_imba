@@ -10,7 +10,14 @@ function ShurikenToss( keys )
 	local track_scepter_modifier = keys.track_scepter_modifier
 	local target_location = target:GetAbsOrigin()
 
-	-- shuriken projectile keyvalues
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
+		end
+	end
+
+	-- Shuriken projectile keyvalues
 	local shuriken_particle = keys.shuriken_particle
 	local shuriken_speed = ability:GetLevelSpecialValueFor("speed", ability_level)
 
@@ -26,13 +33,6 @@ function ShurikenToss( keys )
 		iVisionTeamNumber = caster:GetTeamNumber(),
 		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 	}
-	
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
-			return
-		end
-	end
 	
 	-- shoots the shuriken at the main target
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -148,10 +148,10 @@ function TrackCast( keys )
 	local modifier_track_aura = keys.modifier_track_aura
 	local sound_track = keys.sound_track
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
@@ -281,10 +281,10 @@ function ShadowJaunt( keys )
 	target_pos = target_pos + blink_direction * 50
 
 		
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

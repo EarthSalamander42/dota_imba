@@ -359,14 +359,14 @@ function ReapersScythe( keys )
 	local scepter = HasScepter(caster)
 	local modifier_debuff = keys.modifier_debuff
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
-	-- Apply the Reaper's Debuff
+	-- Apply the Reaper's Scythe debuff
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	
 	-- Initializes the respawn time variable if necessary

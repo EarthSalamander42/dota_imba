@@ -13,10 +13,10 @@ function HalberdCast( keys )
 	local disarm_range = keys.disarm_range
 	local disarm_melee = keys.disarm_melee
 	
-	--Check for Linkens	
-	if caster:GetTeam() ~= target:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then 
-			return 
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
 		end
 	end
 	

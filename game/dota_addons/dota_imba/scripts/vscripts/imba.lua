@@ -396,7 +396,7 @@ function GameMode:DamageFilter( keys )
 			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
 
 				-- Calculate damage block
 				local damage_block = 0 + victim:GetLevel()
@@ -428,7 +428,7 @@ function GameMode:DamageFilter( keys )
 			end
 
 			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
+			if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
 
 				-- Calculate damage block
 				local damage_block = 5 + victim:GetLevel()
@@ -457,7 +457,7 @@ function GameMode:DamageFilter( keys )
 		end
 
 		-- Physical damage block
-		if damage_type == DAMAGE_TYPE_PHYSICAL and not attacker:IsBuilding() and not attacker:GetUnitName() == "witch_doctor_death_ward" then
+		if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
 
 			-- Calculate damage block
 			local damage_block = 10 + victim:GetLevel()

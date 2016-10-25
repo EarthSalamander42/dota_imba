@@ -9,15 +9,22 @@ function StiflingDaggerHit( keys )
 	local modifier_crit = keys.modifier_crit
 	local modifier_stacks = keys.modifier_stacks
 	local modifier_kill = keys.modifier_kill
-	local scepter = HasScepter(caster)
 	local modifier_silence = keys.modifier_silence
 	local modifier_slow = keys.modifier_slow
+	local modifier_damage = keys.modifier_damage
+	local scepter = HasScepter(caster)
 	
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
+	end
+
+	-- Apply slow and silence modifiers
+	if not target:IsMagicImmune() then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_silence, {})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
 	end
 	
 	-- If coup de grace is learned, roll for crits and instant kills
@@ -41,6 +48,9 @@ function StiflingDaggerHit( keys )
 		end
 	end
 
+	-- Apply bonus damage modifier to the caster
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_damage, {})
+
 	-- Attack (calculates on-hit procs)
 	local initial_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
@@ -60,10 +70,10 @@ function PhantomStrike( keys )
 	local sound_end = keys.sound_end
 	local particle_end = keys.particle_end
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

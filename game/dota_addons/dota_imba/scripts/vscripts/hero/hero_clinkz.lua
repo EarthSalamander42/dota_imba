@@ -181,10 +181,10 @@ function DeathPact( keys )
 	local health_mult_creep = ability:GetLevelSpecialValueFor("health_mult_creep", ability_level)
 	local damage_mult_creep = ability:GetLevelSpecialValueFor("damage_mult_creep", ability_level)
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

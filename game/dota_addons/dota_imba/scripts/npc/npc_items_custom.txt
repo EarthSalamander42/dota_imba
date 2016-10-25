@@ -6573,7 +6573,7 @@
 	}
 
 	//=================================================================================================================
-	 //Recipe: Sphere
+	//Recipe: Sphere
 	//=================================================================================================================
 	"item_recipe_imba_sphere"
 	{
@@ -6585,7 +6585,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1325"	
+		"ItemCost"						"1325"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -6615,11 +6615,11 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"5.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5175"
+		"ItemCost"						"5125"
 		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"ls;linken's sphere"
@@ -6632,27 +6632,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"21"
+				"bonus_all_stats"		"20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_health_regen"	"7"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"200"
+				"bonus_mana_regen"		"150"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"block_cooldown"		"7.0"
+				"block_cooldown"		"5.0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15"
+				"bonus_damage"			"20"
 			}
 		}
 	}
@@ -14275,14 +14275,14 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"				"items/item_halberd.lua"
-				"Function"					"HalberdCast"
+				"ScriptFile"			"items/item_halberd.lua"
+				"Function"				"HalberdCast"
 
-				"sound_cast"				"DOTA_Item.HeavensHalberd.Activate"
-				"sound_target"				"DOTA_Item.HeavensHalberd.Target"
-				"modifier_disarm"			"modifier_item_imba_halberd_disarm"
-				"disarm_melee"				"%disarm_melee"
-				"disarm_range"				"%disarm_range"
+				"sound_cast"			"DOTA_Item.HeavensHalberd.Activate"
+				"sound_target"			"DOTA_Item.HeavensHalberd.Target"
+				"modifier_disarm"		"modifier_item_imba_halberd_disarm"
+				"disarm_melee"			"%disarm_melee"
+				"disarm_range"			"%disarm_range"
 			}
 		}
 		

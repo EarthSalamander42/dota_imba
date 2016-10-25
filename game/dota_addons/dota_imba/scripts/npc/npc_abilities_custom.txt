@@ -5228,8 +5228,8 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
+						"ScriptFile"					"hero/hero_abaddon.lua"
+						"Function"						"FrostMourneAttacked"
 					}
 				}
 			}
@@ -6500,11 +6500,11 @@
 
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_axe.lua"
-				"Function"			"CastBattleHunger"
-				"Target"			"TARGET"
+				"ScriptFile"				"hero/hero_axe.lua"
+				"Function"					"CastBattleHunger"
+				"Target"					"TARGET"
 				
-				"modifier_debuff"	"modifier_imba_axe_battle_hunger_enemy"
+				"modifier_debuff"			"modifier_imba_axe_battle_hunger_enemy"
 			}
 		}	
 
@@ -6936,13 +6936,14 @@
 					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 			}
+
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_bane.lua"
-				"Function"			"CastEnfeeble"
-				"Target"			"TARGET"
+				"ScriptFile"				"hero/hero_bane.lua"
+				"Function"					"CastEnfeeble"
+				"Target"					"TARGET"
 				
-				"modifier_debuff"	"modifier_imba_bane_enfeeble"		
+				"modifier_debuff"			"modifier_imba_bane_enfeeble"		
 			}
 		}	
 
@@ -7114,19 +7115,14 @@
 				"Target"					"TARGET"
 			}
 
-			//"FireSound"
-			//{
-			//	"EffectName"				"Hero_Bane.Nightmare.Loop"
-			//	"Target"					"TARGET"
-			//}
 			"RunScript"
 			{
-				"ScriptFile"		"hero/hero_bane.lua"
-				"Function"			"CastNightmare"
-				"Target"			"TARGET"
+				"ScriptFile"				"hero/hero_bane.lua"
+				"Function"					"CastNightmare"
+				"Target"					"TARGET"
 				
-				"modifier_debuff"	"modifier_imba_bane_nightmare"	
-				"loop_sound"		"Hero_Bane.Nightmare.Loop"
+				"modifier_debuff"			"modifier_imba_bane_nightmare"	
+				"loop_sound"				"Hero_Bane.Nightmare.Loop"
 			}
 		}	
 
@@ -7523,15 +7519,6 @@
 
 		"OnSpellStart"
 		{	
-			//"FireSound"
-			//{
-			//	"EffectName"			"Hero_Bane.FiendsGrip.Cast"
-			//	"Target"
-			//	{
-			//		"Center"			"TARGET"
-			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			//	}	
-			//}	
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_bane.lua"
@@ -7543,38 +7530,6 @@
 				"modifier_caster"		"modifier_imba_bane_fiends_grip_caster"
 				"cast_sound"			"Hero_Bane.FiendsGrip.Cast"
 			}
-			//"Damage"
-			//{
-			//	"Target"				"TARGET"
-			//	"Type"					"DAMAGE_TYPE_MAGICAL"
-			//	"Damage"				"%fiends_grip_damage"
-			//}
-
-			//"RemoveModifier"
-			//{
-			//	"ModifierName"			"modifier_imba_bane_fiends_grip"
-			//	"Target"
-			//	{
-			//		"Center"			"TARGET"
-			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			//	}
-			//}
-
-			//"ApplyModifier"
-			//{
-			//	"ModifierName"			"modifier_imba_bane_fiends_grip"
-			//	"Target"
-			//	{
-			//		"Center"			"TARGET"
-			//		"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			//	}
-			//}
-
-			//"ApplyModifier"
-			//{
-			//	"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-			//	"Target"				"CASTER"
-			//}
 		}	
 
 		"OnChannelInterrupted"
@@ -9995,77 +9950,20 @@
 			
 			"RunScript"
 			{
-				"ScriptFile"					"hero/hero_crystal_maiden.lua"
-				"Function"						"CastFrostBite"
-				"Target"						"TARGET"
-				
+				"ScriptFile"							"hero/hero_crystal_maiden.lua"
+				"Function"								"CastFrostBite"
+				"Target"								"TARGET"
 
-				"modifier_root"					"modifier_imba_frostbite_root"
-				"modifier_damage"				"modifier_imba_frostbite_damage"
-				//"duration_stun"				"%stun_duration"
-				"duration_root"					"%duration"
-				"duration_root_creep"			"%creep_duration"
-				"damage_interval"				"%damage_interval"
-				
+				"modifier_root"							"modifier_imba_frostbite_root"
+				"modifier_damage"						"modifier_imba_frostbite_damage"
 			}
+
 			"TrackingProjectile"
 			{
 				"Target"								"TARGET"
 				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
 				"MoveSpeed"								"2000"
 			}
-		
-			//"Stun"
-			//{
-			//	"Target"								"TARGET"
-			//	"Duration"								"%stun_duration"
-			//}
-			
-			//"ApplyModifier"
-			//{
-			//	"Target"
-			//	{
-			//		"Center"							"TARGET"
-			//		"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			//	}
-			//	"ModifierName"							"modifier_imba_frostbite_root"
-			//	"Duration"								"%duration"
-			//}
-			
-			//"ApplyModifier"
-			//{
-			//	"Target"
-			//	{
-			//		"Center"							"TARGET"
-			//		"Types"								"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			//	}
-			//	"ModifierName"							"modifier_imba_frostbite_damage"
-			//	"Duration"								"%duration - %damage_interval"
-			//}
-			
-			//"ApplyModifier"
-			//{
-			//	"Target"
-			//	{
-			//		"Center"							"TARGET"
-			//		"Types"								"DOTA_UNIT_TARGET_BASIC"
-			//		"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-			//	}
-			//	"ModifierName"							"modifier_imba_frostbite_root"
-			//	"Duration"								"%creep_duration"
-			//	}
-			
-			//"ApplyModifier"
-			//{
-			//	"Target"
-			//	{
-			//		"Center"							"TARGET"
-			//		"Types"								"DOTA_UNIT_TARGET_BASIC"
-			//		"Flags"								"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-			//	}
-			//	"ModifierName"							"modifier_imba_frostbite_damage"
-			//	"Duration"								"%creep_duration - %damage_interval"
-			//}
 			
 			"FireSound"
 			{
@@ -11131,13 +11029,14 @@
 				"EffectName"							"Hero_Dazzle.Poison_Touch"
 				"Target" 								"TARGET"
 			}
+
 			"RunScript"
 			{
-				"ScriptFile"					"hero/hero_dazzle.lua"
-				"Function"						"PoisonTouchHit"
-				"Target"						"TARGET"
-				
-				"modifier_debuff"				"modifier_imba_poison_touch_base_slow"
+				"ScriptFile"							"hero/hero_dazzle.lua"
+				"Function"								"PoisonTouchHit"
+				"Target"								"TARGET"
+
+				"modifier_debuff"						"modifier_imba_poison_touch_base_slow"
 			}
 		}
 
@@ -17099,7 +16998,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"8.0"
-		"AbilityDuration"				"4.0"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17169,6 +17067,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"tooltip_base_slow"		"-10"
 			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"4.0"
+			}
 		}	
 
 		"precache"
@@ -17193,17 +17096,14 @@
 				"EffectName"			"Ability.FrostNova"
 				"Target"				"TARGET"
 			}
+
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_lich.lua"
 				"Function"				"CastFrostNova"
 				"Target"				"TARGET"
-				
-				"damage"				"%target_damage"
-				"damage_aoe"			"%aoe_damage"
+
 				"modifier_debuff"		"modifier_imba_frost_nova"
-				"modifier_duration"		"%AbilityDuration"
-				"radius"				"%radius"
 			}
 		}
 
@@ -17213,6 +17113,8 @@
 			{
 				"IsDebuff"				"1"
 				"IsPurgable"			"1"
+
+				"Duration"				"%slow_duration"
 
 				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
 				"StatusEffectPriority"	"10"	
@@ -20412,18 +20314,6 @@
 
 		"OnSpellStart"
 		{
-			//"ApplyModifier"
-			//{
-			//	"ModifierName"				"modifier_imba_reapers_scythe"
-			//	"Target"
-			//	{
-			//		"Center"  				"TARGET"
-			//		"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			//		"Types" 				"DOTA_UNIT_TARGET_HERO"
-			//		"Flags"     			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			//	}
-			//}
-
 			"FireSound"
 			{
 				"EffectName"				"Hero_Necrolyte.ReapersScythe.Cast"
@@ -20441,7 +20331,7 @@
 				"ScriptFile"				"hero/hero_necrolyte.lua"
 				"Function"					"ReapersScythe"
 				"Target"					"TARGET"
-				
+
 				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
 				"modifier_debuff"			"modifier_imba_reapers_scythe"
@@ -21802,6 +21692,7 @@
 				"EffectName" 			"Hero_ObsidianDestroyer.AstralImprisonment.Cast"
 				"Target"				"CASTER"
 			}
+
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_outhouse_decorator.lua"
@@ -22743,35 +22634,6 @@
 
 		"OnProjectileHitUnit"
 		{
-			//"Damage"
-			//{
-				//"Target"
-				//{
-				//	"Center"			"TARGET"
-				//	"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				//}
-				//"Type"				"DAMAGE_TYPE_PHYSICAL"
-				//"Damage"				"%bonus_damage"
-			//}
-
-			//"FireSound"
-			//{
-			//	"EffectName"			"Hero_PhantomAssassin.Dagger.Target"
-			//	"Target"				"TARGET"
-			//}
-
-			//"ApplyModifier"
-			//{
-			//	"ModifierName"			"modifier_imba_stifling_dagger_slow"
-			//	"Target"				"TARGET"
-			//}
-
-			//"ApplyModifier"
-			//{
-			//	"ModifierName"			"modifier_imba_stifling_dagger_silence"
-			//	"Target"				"TARGET"
-			//}
-
 			"RunScript"
 			{
 				"ScriptFile"			"hero/hero_phantom_assassin.lua"
@@ -22785,7 +22647,7 @@
 				"modifier_kill"			"modifier_imba_coup_de_grace_kill"
 				"modifier_silence"		"modifier_imba_stifling_dagger_silence"
 				"modifier_slow"			"modifier_imba_stifling_dagger_slow"
-				"damage"		"%bonus_damage"
+				"modifier_damage"		"modifier_imba_stifling_dagger_bonus_damage"
 			}
 		}
 
@@ -22804,7 +22666,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%move_slow"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%move_slow"
 				}
 
 				"States"
@@ -22827,6 +22689,20 @@
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_stifling_dagger_bonus_damage"
+			{
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+				"IsHidden"				"1"
+
+				"Duration"				"0.01"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
 				}
 			}
 		}
@@ -24175,6 +24051,7 @@
 				"particle_target"			"particles/units/heroes/hero_pudge/pudge_dismember.vpcf"
 				"modifier_debuff"			"modifier_imba_dismember"
 			}
+
 			"FireSound"
 			{
 				"EffectName"				"Hero_Pudge.Dismember"
@@ -25150,7 +25027,6 @@
 
 				"stack_modifier"		"modifier_imba_shadow_strike_stacking_slow"
 				"modifier_base_slow"	"modifier_imba_shadow_strike_base_slow"
-				"damage"				"%strike_damage"
 			}
 		}
 
@@ -25686,6 +25562,233 @@
 				{
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_increase"
 				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick's Telekinesis
+	//=================================================================================================================
+	"imba_rubick_telekinesis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"rubick_telekinesis"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.1"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 18 16 14"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_rubick.vsndevts"
+			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
+			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
+			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
+			"particle"					"particles/hero/rubick/rubick_telekinesis.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"enemy_lift_time"			"1.5 1.75 2.0 2.25"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ally_lift_time"			"1.25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"landing_knockup_duration"	"0.4"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"landing_stun_radius"		"425"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"landing_stun_duration"		"1.0 1.25 1.5 1.75"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"enemy_land_distance"		"800"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ally_land_distance"		"1200"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"landing_damage"			"50 100 150 200"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ally_cooldown"				"9 8 7 6"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"hero/hero_rubick.lua"
+				"Function"					"Telekinesis"
+
+				"modifier_ally"				"modifier_imba_telekinesis_ally_lift"
+				"modifier_enemy"			"modifier_imba_telekinesis_enemy_lift"
+				"sound_cast"				"Hero_Rubick.Telekinesis.Cast"
+				"sound_target"				"Hero_Rubick.Telekinesis.Target"
+				"particle_lift"				"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_telekinesis_ally_lift"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%ally_lift_time"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_rubick.lua"
+						"Function"			"TelekinesisLand"
+
+						"sound_land"		"Hero_Rubick.Telekinesis.Stun"
+						"particle_land"		"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
+						"particle_blink"	"particles/hero/rubick/rubick_telekinesis.vpcf"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_imba_telekinesis_enemy_lift"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+
+				"Duration"					"%enemy_lift_time"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_rubick.lua"
+						"Function"			"TelekinesisLand"
+
+						"sound_land"		"Hero_Rubick.Telekinesis.Stun"
+						"particle_land"		"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
+						"particle_blink"	"particles/hero/rubick/rubick_telekinesis.vpcf"
+					}
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rubick's' Telekinesis Land
+	//=================================================================================================================
+	"imba_rubick_telekinesis_land"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AOERadius"						"%landing_stun_radius"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"rubick_telekinesis_land"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"landing_stun_radius"	"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"enemy_land_distance"	"800"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ally_land_distance"	"1200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_rubick.lua"
+				"Function"				"TelekinesisMark"
+				"Target"				"POINT"
+
+				"particle_marker"		"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
 			}
 		}
 	}

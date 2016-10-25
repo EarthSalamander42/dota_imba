@@ -656,10 +656,14 @@ function Dismember( keys )
 		caster_str = caster:GetStrength()
 	end
 
-	-- Check for Linkens
+	-- If the target possesses a ready Linken's Sphere, break channel and do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			Timers:CreateTimer(0.01, function()
+				ability:EndChannel(true)
+				caster:MoveToPosition(caster:GetAbsOrigin())
+			end)
+			return nil
 		end
 	end
 	
@@ -671,7 +675,7 @@ function Dismember( keys )
 	-- Calculate damage/heal
 	local damage = dismember_damage + caster_str * strength_damage / 100
 
-	--Apply Dismember debuff
+	-- Apply Dismember debuff
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 	
 	-- Apply damage/heal
@@ -681,6 +685,7 @@ function Dismember( keys )
 
 	-- Play the particle
 	local blood_pfx = ParticleManager:CreateParticle(particle_target, PATTACH_ABSORIGIN, target)
+	ParticleManager:ReleaseParticleIndex(blood_pfx)
 end
 
 function DismemberEnd( keys )

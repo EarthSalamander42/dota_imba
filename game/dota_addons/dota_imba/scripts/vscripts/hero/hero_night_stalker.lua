@@ -10,10 +10,10 @@ function Void( keys )
 	local duration_day = ability:GetLevelSpecialValueFor("duration_day", (ability:GetLevel() - 1))
 	local duration_night = ability:GetLevelSpecialValueFor("duration_night", (ability:GetLevel() - 1))
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	
@@ -33,10 +33,10 @@ function CripplingFear( keys )
 	local modifier_night = keys.modifier_night
 	local modifier_mute = keys.modifier_mute
 
-	-- Check for Linkens
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
-			return
+			return nil
 		end
 	end
 	

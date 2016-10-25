@@ -267,9 +267,6 @@ function Tidebringer( keys )
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_tsunami, {})
 	end
 
-	-- Fetch the total attack damage
-	local attack_damage = caster:GetAverageTrueAttackDamage(caster)
-
 	-- Play attack sound
 	caster:EmitSound(sound_attack)
 
