@@ -447,6 +447,8 @@
 
 		"ModelScale" 				"1.05"
 
+		"AttackRange"				"166"
+
 		//"Ability1"					"imba_doom_bringer_devour"
 		//"Ability2"					"imba_doom_bringer_scorched_earth"
 		//"Ability3"					"imba_doom_bringer_lvl_death"

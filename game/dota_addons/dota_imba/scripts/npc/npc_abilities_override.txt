@@ -15998,7 +15998,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"66 96 126 156"
+				"bonus_gold"			"66 106 136 166"
 			}
 			"02"
 			{
@@ -16015,7 +16015,7 @@
 	{
 		"AbilityCastRange"					"666"
 
-		"AbilityCooldown"					"56 46 36 26"
+		"AbilityCooldown"					"42 36 30 24"
 
 		"AbilityManaCost"					"66"
 
@@ -16024,7 +16024,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"12 24 36 48"
+				"damage_per_second"			"24 36 48 60"
 			}
 			"02"
 			{
@@ -16034,12 +16034,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"18"
+				"bonus_movement_speed_pct"	"24"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"16.0"
+				"duration"					"10.0 12.0 14.0 16.0"
 			}
 		}
 	}
@@ -16049,9 +16049,9 @@
 	//=================================================================================================================
 	"doom_bringer_infernal_blade"
 	{
-		"AbilityCooldown"				"16 12 8 4"
+		"AbilityCooldown"				"10 8 6 4"
 
-		"AbilityManaCost"				"25"
+		"AbilityManaCost"				"6"
 
 		"AbilityCastRange"				"166"
 
@@ -16060,7 +16060,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"25 30 35 40"
+				"burn_damage"			"24 32 40 48"
 			}
 			"02"
 			{
@@ -16098,12 +16098,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 12.0 18.0"
+				"duration"				"6.0 9.0 12.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"66"
+				"damage"				"66 106 166"
 			}
 			"03"
 			{
@@ -16113,7 +16113,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"166"
+				"damage_scepter"		"66 106 166"
 			}
 			"05"
 			{

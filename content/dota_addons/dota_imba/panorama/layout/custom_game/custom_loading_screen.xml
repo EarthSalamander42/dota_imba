@@ -33,25 +33,18 @@
 			</Button>
 		</Panel>
 
-		<Panel id="Community" class="invisible">
+		<Panel id="Community">
 			<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description" />
-
-			<Button id="community_steam_group_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-steam');" >
-				<Image src="file://{images}/custom_game/loading_screen/community_steam_group_header.png" />
-			</Button>
-			<Label id="community_steam_group_description" class="CommunityText" html="true" text="#community_steam_group_description"/>
 
 			<Button id="community_discord_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" >
 				<Image src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
 			</Button>
 			<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
 
-			<Button id="community_esl_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-esl');" >
-				<Image src="file://{images}/custom_game/loading_screen/community_esl_header.png" />
-			</Button>
-			<Label id="community_esl_description" class="CommunityText" html="true" text="#community_esl_description"/>
-
-			<Label id="community_post_description" class="CommunityText" html="true" text="#community_post_description"/>
+			<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
+			<Label id="community_post_description_02" class="CommunityText" html="true" text="#community_post_description_02"/>
+			<Label id="community_post_description_03" class="CommunityText" html="true" text="#community_post_description_03"/>
+			<Label id="community_post_description_04" class="CommunityText" html="true" text="#community_post_description_04"/>
 		</Panel>
 	</Panel>
 </root>

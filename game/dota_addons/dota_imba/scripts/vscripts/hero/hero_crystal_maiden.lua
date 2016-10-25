@@ -63,12 +63,12 @@ function CastFrostBite( keys )
 	
 	-- Ministuns, roots and damages target according to its type
 	if target:IsHero() or IsRoshan(target) then
-		unit:AddNewModifier(caster, ability, "modifier_stunned", {duration = arrow_stun_duration})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration_root})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration_root - damage_interval})
+		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration - damage_interval})
 	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration_root_creep})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration_root_creep - damage_interval})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = creep_duration})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = creep_duration - damage_interval})
 	end
 end
 	

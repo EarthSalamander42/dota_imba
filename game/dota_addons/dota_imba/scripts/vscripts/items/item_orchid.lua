@@ -15,7 +15,6 @@ function OrchidCast( keys )
 	end
 	
 	-- Add the debuff
-	target:AddNewModifier(caster, ability, "modifier_orchid_debuff", {})
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 end
 
@@ -33,8 +32,8 @@ function BloodthornCast( keys )
 	end
 	
 	-- Add the debuff
-	target:AddNewModifier(caster, ability, "modifier_bloodthorn_debuff", {})
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
 	
 function OrchidDamageStorage( keys )
 	local target = keys.unit

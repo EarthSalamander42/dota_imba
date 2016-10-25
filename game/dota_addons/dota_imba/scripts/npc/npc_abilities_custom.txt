@@ -9947,7 +9947,6 @@
 		
 		"OnSpellStart"
 		{
-			
 			"RunScript"
 			{
 				"ScriptFile"							"hero/hero_crystal_maiden.lua"
