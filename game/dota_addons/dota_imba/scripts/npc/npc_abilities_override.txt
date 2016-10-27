@@ -16013,9 +16013,9 @@
 	//=================================================================================================================
 	"doom_bringer_scorched_earth"
 	{
-		"AbilityCastRange"					"666"
+		"AbilityCastRange"					"666 766 866 966"
 
-		"AbilityCooldown"					"42 36 30 24"
+		"AbilityCooldown"					"24"
 
 		"AbilityManaCost"					"66"
 
@@ -16029,7 +16029,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"666"
+				"radius"					"666 766 866 966"
 			}
 			"03"
 			{
@@ -16053,14 +16053,14 @@
 
 		"AbilityManaCost"				"6"
 
-		"AbilityCastRange"				"166"
+		"AbilityCastRange"				"366"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"24 32 40 48"
+				"burn_damage"			"24 36 48 60"
 			}
 			"02"
 			{
@@ -16085,7 +16085,7 @@
 	//=================================================================================================================
 	"doom_bringer_doom"
 	{
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.3"
 
 		"AbilityCastRange"				"666"
 

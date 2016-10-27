@@ -427,7 +427,8 @@ function Rearm( keys )
 		"item_imba_necronomicon_3",
 		"item_imba_necronomicon_4",
 		"item_imba_necronomicon_5",
-		"item_imba_skadi"
+		"item_imba_skadi",
+		"item_imba_sphere"
 	}
 
 	-- Play sound

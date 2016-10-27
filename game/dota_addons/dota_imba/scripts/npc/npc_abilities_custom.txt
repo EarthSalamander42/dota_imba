@@ -5867,17 +5867,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_burn"			"0.5"
+				"damage_per_burn"			"0.6"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_mana_percent"			"20"
+				"base_mana_burn"			"28 40 52 64"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_mana_burn"			"40 80 120 160"
+				"bonus_mana_burn"			"5 6 7 8"
 			}
 			"04"
 			{
@@ -6244,8 +6244,8 @@
 				"EffectAttachType"	"attach_hitloc"
 				"Target"
 				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+					"Center"		"TARGET"
+					"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 				}
 
 				"ControlPoints"
@@ -6485,8 +6485,13 @@
 			}
 			"03"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"base_damage"				"10"
+			}
+			"04"
+			{
 				"var_type"					"FIELD_FLOAT"
-				"damage"					"12 18 24 30"
+				"extra_damage"				"1.0 1.5 2.0 2.5"
 			}
 		}	
 
@@ -6534,43 +6539,31 @@
 				"IsDebuff"					"1"
 				"IsPurgable"				"1"
 
-				"StatusEffectName" 			"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
-				"StatusEffectPriority"  	"9"	
+				"StatusEffectName"			"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
+				"StatusEffectPriority"		"9"	
 
-				"ThinkInterval"  			"0.5"
+				"ThinkInterval"				"0.5"
 
 				"OnIntervalThink"
 				{
-					"Damage"
-					{
-						"Target"
-						{
-							"Center"  		"TARGET"
-							"Flags"     	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-						
-						"Type"				"DAMAGE_TYPE_PURE"
-						"Damage"			"%damage / 2"
-					}
-
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_axe.lua"
-						"Function"			"BattleHungerAntiRegen"
+						"Function"			"BattleHungerTick"
 						"Target"			"TARGET"
 
 						"modifier_stacks"	"modifier_imba_axe_battle_hunger_stacks"
 						"modifier_enemy"	"modifier_imba_axe_battle_hunger_enemy"
 					}
-				}	
+				}
 
 				"OnCreated"
 				{
 					"AttachEffect"
 					{
-						"EffectName"        "particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
-						"EffectAttachType"  "follow_overhead"
-						"Target"            "TARGET"
+						"EffectName"		"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
 					}	
 
 					"RunScript"
@@ -6581,7 +6574,7 @@
 						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
 						"speed_modifier"	"modifier_imba_axe_battle_hunger_caster_speed"
 					}
-				}	
+				}
 
 				"OnDestroy"
 				{
@@ -6593,7 +6586,7 @@
 						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
 						"speed_modifier"	"modifier_imba_axe_battle_hunger_caster_speed"
 					}
-				}	
+				}
 
 				"OnKill"
 				{
@@ -6604,21 +6597,6 @@
 
 						"modifier"			"modifier_imba_axe_battle_hunger_enemy"
 					}
-				}
-			}
-
-			"modifier_imba_axe_battle_hunger_stacks"
-			{
-				"IsDebuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"1"
-				"Passive"			"0"
-
-				"Duration"			"0.5"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"-0.1"
 				}
 			}
 		}	
@@ -8374,7 +8352,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
 		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"7"
 		"AbilityManaCost"				"0"	
 			
 		// Special
@@ -8385,25 +8363,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"range"					"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_charges"			"4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"charge_cooldown"		"15"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_bounty_hunter.lua"
-				"Function"					"ShadowJauntInitialize"
 			}
 		}
 
@@ -30014,6 +29973,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"140 100 60"
 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"160"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -30082,6 +30045,12 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"aura_linger"			"0.5"
+			}
+			// This has to be changed in the damage filter to have any effect
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_cost"				"160"
 			}
 		}
 

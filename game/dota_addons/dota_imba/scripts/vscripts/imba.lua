@@ -532,8 +532,8 @@ function GameMode:DamageFilter( keys )
 		local victim_health = victim:GetHealth()
 		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
 
-			-- If this unit is reincarnation's owner and it is off cooldown, trigger reincarnation sequence
-			if victim:HasModifier("modifier_imba_reincarnation") then
+			-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
+			if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
 				local reincarnation_ability = victim:FindAbilityByName("imba_wraith_king_reincarnation")
 				if reincarnation_ability and reincarnation_ability:IsCooldownReady() then
 

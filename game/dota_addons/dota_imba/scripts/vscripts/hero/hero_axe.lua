@@ -79,27 +79,30 @@ function BattleHungerKill( keys )
 	end
 end
 
-function BattleHungerAntiRegen( keys )
+function BattleHungerTick( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
 	local modifier_enemy = keys.modifier_enemy
 
 	-- If the ability was unlearned, remove the debuff
 	if not ability then
 		target:RemoveModifierByName(modifier_enemy)
+		return nil
 	end
 
 	-- If the target is near its own fountain, end the debuff
 	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
 		target:RemoveModifierByName(modifier_enemy)
+		return nil
 	end
 
-	-- Else, prevent regeneration this tick
-	target:RemoveModifierByName(modifier_stacks)
-	local hp_regen = target:GetHealthRegen()
-	AddStacks(ability, caster, target, modifier_stacks, hp_regen * 10, true)
+	-- Else, calculate and deal damage
+	local ability_level = ability:GetLevel() - 1
+	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
+	local extra_damage = ability:GetLevelSpecialValueFor('extra_damage', ability_level) * 0.01
+	local damage = (base_damage + extra_damage * target:GetMaxHealth()) * 0.5
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end
 
 function CounterHelix( keys )

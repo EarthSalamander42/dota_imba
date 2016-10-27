@@ -254,18 +254,6 @@ function UpgradeJaunt( keys )
 	end
 end
 
-function ShadowJauntInitialize( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
-	-- Parameters
-	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
-	local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
-
-	InitializeAbilityCharges(caster, ability:GetName(), max_charges, max_charges, charge_cooldown, "shadow_jaunt")
-end
-
 function ShadowJaunt( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -274,19 +262,18 @@ function ShadowJaunt( keys )
 	local modifier_track_scepter = keys.modifier_track_scepter
 	local sound_cast = keys.sound_cast
 
-	-- Blink geometry
-	local caster_pos = caster:GetAbsOrigin()
-	local target_pos = target:GetAbsOrigin()
-	local blink_direction = (target_pos - caster_pos):Normalized()
-	target_pos = target_pos + blink_direction * 50
-
-		
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
 	end
+
+	-- Blink geometry
+	local caster_pos = caster:GetAbsOrigin()
+	local target_pos = target:GetAbsOrigin()
+	local blink_direction = (target_pos - caster_pos):Normalized()
+	target_pos = target_pos + blink_direction * 50
 	
 	-- Play sound
 	caster:EmitSound(sound_cast)
@@ -299,16 +286,14 @@ function ShadowJaunt( keys )
 		caster:SetForwardVector(blink_direction)
 	end
 
-	-- If the target is tracked, refresh abilities other than this one
+	-- If the target is tracked, refresh all abilities
 	if target:HasModifier(modifier_track) or target:HasModifier(modifier_track_scepter) then
 
-		-- Refresh abilities other than this one
+		-- Refresh all abilities
 		local current_ability
 		for i = 0, 15 do
 			current_ability = caster:GetAbilityByIndex(i)
-
-			-- Refresh
-			if current_ability and current_ability ~= ability then
+			if current_ability and ability ~= current_ability then
 				current_ability:EndCooldown()
 			end
 		end

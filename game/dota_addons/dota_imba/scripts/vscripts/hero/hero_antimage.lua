@@ -17,13 +17,6 @@ function ManaBreak( keys )
 		return nil
 	end
 
-	-- Play sound
-	caster:EmitSound("Hero_Antimage.ManaBreak")
-
-	-- Plays the particle
-	local manaburn_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(manaburn_fx, 0, target:GetAbsOrigin() )
-
 	-- If this unit is an illusion, reduce the parameters by illusion_factor
 	local illusion_factor = ability:GetLevelSpecialValueFor("illusion_factor", ability_level)
 	if not caster:IsIllusion() then
@@ -31,33 +24,29 @@ function ManaBreak( keys )
 	end
 
 	-- Parameters
-	local max_mana_percent = ability:GetLevelSpecialValueFor("max_mana_percent", ability_level)
-	local maximum_mana_burn = ability:GetLevelSpecialValueFor('maximum_mana_burn', ability_level) * illusion_factor * FRANTIC_MULTIPLIER
-	local damage_when_empty = ability:GetLevelSpecialValueFor('damage_when_empty', ability_level) * illusion_factor / FRANTIC_MULTIPLIER
+	local base_mana_burn = ability:GetLevelSpecialValueFor("base_mana_burn", ability_level) * illusion_factor * FRANTIC_MULTIPLIER
+	local bonus_mana_burn = ability:GetLevelSpecialValueFor('bonus_mana_burn', ability_level) * illusion_factor * 0.01
 	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level) / FRANTIC_MULTIPLIER
-	local target_current_mana = target:GetMana()
+
+	-- Play sound
+	caster:EmitSound("Hero_Antimage.ManaBreak")
+
+	-- Play the particle
+	local manaburn_pfx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_manaburn.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(manaburn_pfx, 0, target:GetAbsOrigin() )
+	ParticleManager:ReleaseParticleIndex(manaburn_pfx)
+
+	-- Calculate and burn mana
 	local target_max_mana = target:GetMaxMana()
-	local mana_to_burn = math.min( max_mana_percent * target_max_mana / 100, maximum_mana_burn)
-	local damage = mana_to_burn * damage_ratio
-	local mana_is_low
+	local mana_to_burn = base_mana_burn + target_max_mana * bonus_mana_burn
+	target:ReduceMana(mana_to_burn)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_burn, nil)
 
-	-- Burns mana
-	if target_current_mana < mana_to_burn then
-		target:SetMana(0)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, target_current_mana, nil)
-		mana_is_low = true
-	else
-		target:SetMana(target_current_mana - mana_to_burn)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_LOSS, target, mana_to_burn, nil)
-		mana_is_low = false
-	end
-
-	-- If mana is low, deals pure damage. Else, deals physical damage based on the amount of mana burned.
-	if mana_is_low then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-	else
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
-	end
+	-- Calculate and deal damage based on missing mana
+	local target_current_mana = target:GetMana()
+	local missing_mana = math.max(target_max_mana - target_current_mana, 0)
+	local damage = missing_mana * damage_ratio * (1 - math.sqrt(missing_mana) * 0.01)
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end
 
 function Magehunter( keys )
