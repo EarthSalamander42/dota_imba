@@ -4216,7 +4216,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"50.0"
+				"duration"					"100.0"
 			}			
 			"03"
 			{
