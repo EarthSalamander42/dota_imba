@@ -10,8 +10,7 @@ function Burrowstrike( keys )
 	-- Parameters
 	local speed = ability:GetLevelSpecialValueFor("burrow_speed", ability_level)
 
-	-- Store burrowstrike start/endpoints
-	caster.burrow_start_point = caster:GetAbsOrigin()
+	-- Store burrowstrike end point
 	caster.burrow_end_point = target
 
 	-- Disjoint projectiles
@@ -26,9 +25,7 @@ function BurrowstrikeHit( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
-	local modifier_caustic = keys.modifier_caustic
 	local modifier_sands = keys.modifier_sands
-	local ability_caustic = caster:FindAbilityByName(keys.ability_caustic)
 
 	-- Parameters
 	local knockback_duration = ability:GetLevelSpecialValueFor("burrow_anim_time", ability_level)
@@ -42,8 +39,8 @@ function BurrowstrikeHit( keys )
 		end
 	end
 	
-	-- Knockback towards end point if Treacherous Sands is on, initial point otherwise
-	local knockback_target_loc = caster.burrow_start_point
+	-- Knockback towards end point if Treacherous Sands is on, just knock up otherwise
+	local knockback_target_loc = target:GetAbsOrigin()
 	if caster:HasModifier(modifier_sands) then
 		knockback_target_loc = caster.burrow_end_point
 	end
@@ -51,11 +48,6 @@ function BurrowstrikeHit( keys )
 	-- Apply stun
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 
-	-- Apply caustic finale modifier
-	if ability_caustic then
-		ability_caustic:ApplyDataDrivenModifier(caster, target, modifier_caustic, {})
-	end
-	
 	-- Deal damage
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
@@ -166,131 +158,109 @@ function SandStormChannelEnd( keys )
 	caster:RemoveModifierByName(modifier_caster)
 end
 
-function SandStormMovementTick( keys )
+function SandStormTick( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_sandstorm = keys.modifier_sandstorm
-
-	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-
-	-- Find nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-
-	-- Apply sandstorm modifier to enemies
-	for _,enemy in pairs(enemies) do
-		ability:ApplyDataDrivenModifier(caster, enemy, modifier_sandstorm, {})
-	end
-end
-
-function SandStormDamageTick( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local damage_tick = ability:GetLevelSpecialValueFor("damage_tick", ability_level)
-
-	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage * damage_tick, damage_type = DAMAGE_TYPE_MAGICAL})
-end
-
-function SandStormMovementStart( keys )
-	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_sands = keys.modifier_sands
-	local modifier_storm = keys.modifier_storm
 
 	-- Parameters
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	local wind_force = ability:GetLevelSpecialValueFor("wind_force", ability_level)
-	local movement_tick = ability:GetLevelSpecialValueFor("movement_tick", ability_level)
+	local damage_tick = ability:GetLevelSpecialValueFor("damage_tick", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
 
-	-- Initialize Physics library on this target, if necessary
-	InitializePhysicsParameters(target)
+	-- Find nearby enemies
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-	-- Calculate movement direction
-	local direction = caster_loc - target_loc
-	if not caster:HasModifier(modifier_sands) then
-		direction = target_loc - caster_loc
+	-- Affect nearby enemies
+	for _,enemy in pairs(enemies) do
+		
+		-- Deal damage
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage * damage_tick, damage_type = DAMAGE_TYPE_MAGICAL})
+
+		-- Calculate movement, if necessary
+		if caster:HasModifier(modifier_sands) then
+			local enemy_loc = enemy:GetAbsOrigin()
+			local enemy_distance = (enemy_loc - caster_loc):Length2D()
+
+			-- Move enemies who aren't too close, or already moving
+			if enemy_distance > 160 and not IsUninterruptableForcedMovement(enemy) then
+				local enemy_knockback_origin = enemy_loc + (enemy_loc - caster_loc):Normalized() * 100
+				local sand_storm_knockback = {
+					should_stun = 0,
+					knockback_duration = 0.03,
+					duration = 0.03,
+					knockback_distance = wind_force,
+					knockback_height = 0,
+					center_x = enemy_knockback_origin.x,
+					center_y = enemy_knockback_origin.y,
+					center_z = enemy_knockback_origin.z
+				}
+				enemy:RemoveModifierByName("modifier_knockback")
+				enemy:AddNewModifier(caster, ability, "modifier_knockback", sand_storm_knockback)
+			end
+		end
 	end
-
-	-- Continuously adjust movement direction
-	target:SetPhysicsVelocity(direction:Normalized() * wind_force)
-	target:OnPhysicsFrame(function(target)
-
-		-- Update acceleration vector
-		caster_loc = caster:GetAbsOrigin()
-		target_loc = target:GetAbsOrigin()
-		local distance = caster_loc - target_loc
-		if not caster:HasModifier(modifier_sands) then
-			distance = target_loc - caster_loc
-		end
-		local direction = distance:Normalized()
-		target:SetPhysicsVelocity(direction * wind_force)
-
-		-- If the target is being moved by something else, do nothing
-		if IsUninterruptableForcedMovement(target) then
-			target:RemoveModifierByName("modifier_imba_sandstorm")
-		end
-	end)
-end
-
-function SandStormMovementEnd( keys )
-	local target = keys.target
-
-	-- Stop forced movement
-	target:SetPhysicsVelocity(Vector(0,0,0))
-	target:OnPhysicsFrame(nil)
 end
 
 function CausticFinale( keys )
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
+	local modifier_debuff = keys.modifier_debuff
+	local modifier_prevent = keys.modifier_prevent
+
+	-- If the target is an ally, or already has the debuff, or has the prevention debuff, do nothing
+	if target:GetTeam() == caster:GetTeam() or target:HasModifier(modifier_debuff) or target:HasModifier(modifier_prevent) then
+		return nil
+	end
+
+	-- Else, apply it
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
+
+function CausticFinaleEnd( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
+	local modifier_debuff = keys.modifier_debuff
 	local modifier_prevent = keys.modifier_prevent
 	local modifier_slow = keys.modifier_slow
-	local particle_pulse = keys.particle_pulse
+	local particle_explode = keys.particle_explode
+	local sound_explode = keys.sound_explode
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local creep_damage = ability:GetLevelSpecialValueFor("creep_damage", ability_level)
 	local target_pos = target:GetAbsOrigin()
 
-	-- If recently affected by caustic, do nothing
-	if target:HasModifier(modifier_prevent) or not ability then
-		return nil
-	end
+	-- Play sound
+	target:EmitSound(sound_explode)
 
-	-- Apply caustic immunity modifier
-	ability:ApplyDataDrivenModifier(caster, target, modifier_prevent, {})
-
-	-- Fire particles
-	local pulse_pfx = ParticleManager:CreateParticle(particle_pulse, PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControl(pulse_pfx, 0, target_pos + Vector(0,0,100))
-	ParticleManager:ReleaseParticleIndex(pulse_pfx)
+	-- Fire particle
+	local explosion_pfx = ParticleManager:CreateParticle(particle_explode, PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl(explosion_pfx, 0, target_pos)
+	ParticleManager:ReleaseParticleIndex(explosion_pfx)
 
 	-- Find and iterate through nearby enemies
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 
-		-- Damage
-		if enemy:IsHero() then
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		else
-			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = creep_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		end
+		-- Deal damage
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_prevent, {})
+		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		enemy:RemoveModifierByName(modifier_prevent)
 
 		-- Slow
 		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
+
+		-- Chain reaction
+		if enemy:HasModifier(modifier_debuff) then
+			enemy:RemoveModifierByName(modifier_debuff)
+		end
 	end
 end
 
@@ -392,19 +362,19 @@ function Epicenter( keys )
 	local max_pulses = ability:GetLevelSpecialValueFor("max_pulses", ability_level)
 	local pulse_duration = ability:GetLevelSpecialValueFor("pulse_duration", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local pull_scepter = ability:GetLevelSpecialValueFor("pull_scepter", ability_level)
-	pull_scepter = 120
-	local pull_radius_scepter = ability:GetLevelSpecialValueFor("pull_radius_scepter", ability_level)
+	local pull_strength = ability:GetLevelSpecialValueFor("pull_strength", ability_level)
+	local pull_radius = ability:GetLevelSpecialValueFor("pull_radius", ability_level)
 	local caster_loc = caster:GetAbsOrigin()
-	local bonus_pulses = 0
+
 	if scepter then
-		bonus_pulses = bonus_pulses + ability:GetLevelSpecialValueFor("bonus_pulses_scepter", ability_level)
+		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+		pull_radius = ability:GetLevelSpecialValueFor("pull_radius_scepter", ability_level)
 	end
 
 	-- Add level-based pulses
 	if caster:IsHero() then
 		local caster_level = caster:GetLevel()
-		bonus_pulses = bonus_pulses + math.floor( caster_level / ability:GetLevelSpecialValueFor("levels_per_pulse", ability_level) )
+		max_pulses = max_pulses + math.floor( caster_level / ability:GetLevelSpecialValueFor("levels_per_pulse", ability_level) )
 	end
 
 	-- Stop cast animation + particle
@@ -425,7 +395,7 @@ function Epicenter( keys )
 
 	-- Pulse parameters
 	local current_pulse = 0
-	local total_pulses = math.floor( max_pulses * channel_time / 4 ) + bonus_pulses
+	local total_pulses = math.floor( max_pulses * channel_time / 4 )
 	local pulse_interval = math.max( pulse_duration / total_pulses, 0.17)
 
 	-- Make caster and particle visible for the duration
@@ -456,13 +426,28 @@ function Epicenter( keys )
 		end
 
 		-- If Treacherous Sands is toggled on, and the caster has a scepter, pull enemies inwards
-		if scepter and caster:HasModifier(modifier_sands) then
-			local scepter_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, pull_radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,enemy in pairs(scepter_enemies) do
+		if caster:HasModifier(modifier_sands) then
+			local pull_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, pull_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in pairs(pull_enemies) do
+
 				local enemy_loc = enemy:GetAbsOrigin()
 				local enemy_distance = (enemy_loc - caster_loc):Length2D()
-				if not IsUninterruptableForcedMovement(enemy) then
-					FindClearSpaceForUnit(enemy, enemy_loc + (caster_loc - enemy_loc):Normalized() * math.min(pull_scepter, math.max(enemy_distance - 150, 0)), true)
+
+				-- Move enemies who aren't too close, or already moving
+				if enemy_distance > 160 and not IsUninterruptableForcedMovement(enemy) then
+					local enemy_knockback_origin = enemy_loc + (enemy_loc - caster_loc):Normalized() * 100
+					local epicenter_knockback = {
+						should_stun = 0,
+						knockback_duration = 0.03,
+						duration = 0.03,
+						knockback_distance = pull_strength,
+						knockback_height = 0,
+						center_x = enemy_knockback_origin.x,
+						center_y = enemy_knockback_origin.y,
+						center_z = enemy_knockback_origin.z
+					}
+					enemy:RemoveModifierByName("modifier_knockback")
+					enemy:AddNewModifier(caster, ability, "modifier_knockback", epicenter_knockback)
 				end
 			end
 		end

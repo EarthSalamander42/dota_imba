@@ -392,7 +392,7 @@ function GameMode:DamageFilter( keys )
 
 			-- Reduce damage
 			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.94
+				keys.damage = keys.damage * 0.92
 			end
 
 			-- Physical damage block
@@ -424,7 +424,7 @@ function GameMode:DamageFilter( keys )
 
 			-- Reduce damage
 			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.91
+				keys.damage = keys.damage * 0.88
 			end
 
 			-- Physical damage block
@@ -453,7 +453,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Reduce damage
 		if victim:GetTeam() ~= attacker:GetTeam() then
-			keys.damage = keys.damage * 0.88
+			keys.damage = keys.damage * 0.85
 		end
 
 		-- Physical damage block
@@ -530,7 +530,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
 
 			-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
 			if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then

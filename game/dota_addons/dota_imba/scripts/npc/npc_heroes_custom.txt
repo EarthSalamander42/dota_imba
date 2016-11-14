@@ -912,8 +912,6 @@
 
 		"AttributeAgilityGain"		"3.5"
 
-		"AttackRange"				"400"
-
 		//"Ability1"					"imba_luna_lucent_beam"
 		//"Ability2"					"imba_luna_moon_glaive"
 		//"Ability3"					"imba_luna_lunar_blessing"

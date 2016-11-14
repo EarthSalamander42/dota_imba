@@ -67,8 +67,8 @@
 		"item"		"item_lifesteal"
 		"item"		"item_imba_shadow_amulet"
 		"item"		"item_ghost"
-		"item"		"item_blink"	
-	}	
+		"item"		"item_imba_blink"
+	}
 	
 	// Level 1 - Green Recipes
 	"basics"
@@ -86,6 +86,7 @@
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
 		"item"		"item_imba_moon_shard"
+		"item"		"item_imba_blink_boots"
 	}
 
 	// Level 2 - Blue Recipes

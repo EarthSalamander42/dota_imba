@@ -2227,7 +2227,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"barrier_duration"			"9"
+				"barrier_duration"			"12"
 			}
 			"05"
 			{
@@ -6111,7 +6111,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"18"
+				"bonus_armor"			"20"
 			}
 			"03"
 			{
@@ -6121,7 +6121,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_as_reduction"		"30"
+				"aura_as_reduction"		"35"
 			}
 			"05"
 			{
@@ -6727,7 +6727,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"6"
+				"damage_reduction"				"8"
 			}
 		}
 
@@ -6871,7 +6871,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"9"
+				"damage_reduction"		"12"
 			}
 		}
 
@@ -7072,7 +7072,7 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"12"
+				"damage_reduction"		"15"
 			}
 		}
 
@@ -10696,7 +10696,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"min_duration"				"0.75"
+				"min_duration"				"2.0"
 			}
 			"06"
 			{
@@ -17598,7 +17598,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"phase_ms"				"35"
+				"phase_ms"				"40"
 			}		
 			"04"
 			{
@@ -17608,7 +17608,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"new_ms_limit"			"625"
+				"new_ms_limit"			"700"
 			}
 		}
 
@@ -17771,6 +17771,216 @@
 		}
 	}
 
-	//rapier freed IDs: 2151-2164, 2196
+	//=================================================================================================================
+	// Blink Dagger
+	//=================================================================================================================
+	"item_imba_blink"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2196"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"item_blink"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"7.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"blink"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2250"
+		"ItemShopTags"					"teleport"
+		"ItemQuality"					"component"
+		"ItemAliases"					"blink dagger"
+		"SideShop"						"1"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_blink_range"			"1400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blink_damage_cooldown"		"2"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_blink.lua"
+				"Function"					"blink_start"
+				
+				"Target"					"POINT"
+				
+				"blink_effect"				"particles/item/blink/blink_dagger_start_imba.vpcf"
+				"blink_effect_end"			"particles/item/blink/blink_dagger_imbaend.vpcf"
+			}
+		}
+		
+		"Modifiers"
+		{			
+			"modifier_item_imba_blink_damage"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_blink.lua"
+						"Function"			"blink_damaged"
+						
+						"Damage"			"%attack_damage"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Blink Boots
+	//=================================================================================================================
+	"item_recipe_imba_blink_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2152"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1500"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_blink_boots"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_blink;item_boots"
+		}
+	}
+	
+	//=================================================================================================================
+	// Blink Boots
+	//=================================================================================================================
+	"item_imba_blink_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2153"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityTextureName"			"item_imba_blink_boots"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"6.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"blink"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"4150"
+		"ItemShopTags"					"teleport"
+		"ItemQuality"					"common"
+		"ItemAliases"					"blink;boots"
+		"SideShop"						"0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_blink_range"			"1400"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blink_damage_cooldown"		"2"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movement_speed"		"110"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"				"items/item_blink.lua"
+				"Function"					"blink_start"
+				
+				"Target"					"POINT"
+				
+				"blink_effect"				"particles/item/blink/blink_dagger_start_imba.vpcf"
+				"blink_effect_end"			"particles/item/blink/blink_dagger_imbaend.vpcf"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_blink_boots"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				
+				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement_speed"
+				}
+			}
+			
+			"modifier_item_imba_blink_boots_damage"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"Attributes" 				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_blink.lua"
+						"Function"			"blink_damaged"
+						
+						"Damage"			"%attack_damage"
+					}
+				}
+			}
+		}
+	}
+
+	//rapier freed IDs: 2154-2164
 	//next free ID: 2204
 }

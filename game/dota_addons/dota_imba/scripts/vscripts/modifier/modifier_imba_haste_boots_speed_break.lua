@@ -19,7 +19,7 @@ function modifier_imba_haste_boots_speed_break:DeclareFunctions()
 end
 
 function modifier_imba_haste_boots_speed_break:GetModifierMoveSpeed_Max()
-	return 625
+	return 700
 end
 
 function modifier_imba_haste_boots_speed_break:IsHidden()

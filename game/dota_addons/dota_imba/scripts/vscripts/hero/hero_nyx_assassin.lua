@@ -58,6 +58,7 @@ function ImpaleDamage ( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local land_sound = keys.land_sound
+	local particle_hit = keys.particle_hit
 
 	-- Parameters
 	local damage_delay = ability:GetLevelSpecialValueFor("air_time", ability_level)
@@ -68,6 +69,11 @@ function ImpaleDamage ( keys )
 	if not target.impale_damage_taken then
 		target.impale_damage_taken = 0
 	end
+
+	-- Plays the impact particle
+	local impale_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(impale_pfx, 0, target:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(impale_pfx)
 
 	-- Wait for the target to land, in [damage_delay] time
 	Timers:CreateTimer(damage_delay, function()

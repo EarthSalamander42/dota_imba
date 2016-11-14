@@ -45,7 +45,7 @@ function ManaBreak( keys )
 	-- Calculate and deal damage based on missing mana
 	local target_current_mana = target:GetMana()
 	local missing_mana = math.max(target_max_mana - target_current_mana, 0)
-	local damage = missing_mana * damage_ratio * (1 - math.sqrt(missing_mana) * 0.01)
+	local damage = missing_mana * damage_ratio
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end
 

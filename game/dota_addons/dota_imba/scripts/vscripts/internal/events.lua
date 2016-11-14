@@ -69,3 +69,78 @@ function GameMode:_OnConnectFull(keys)
 		GameRules:SetCustomGameSetupRemainingTime(0)
 	end
 end
+
+-- This function is called once a player says something on any chat
+function GameMode:OnPlayerChat(keys)
+	local text = keys.text
+	
+	-- This Handler is only for commands, ends the function if first character is not "-"
+	if not (string.byte(text) == 45) then
+		return nil
+	end
+	
+	-- If we are here, declare variables
+	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+	local caster_heroname = PlayerResource:GetSelectedHeroName(keys.playerid)
+	local color = {}
+	
+	-- Check for Chakram-Colorcode
+	-- if caster_heroname == "npc_dota_hero_shredder" then
+	-- 	local chakram_command = false
+	-- 	for str in string.gmatch(text, "%S+") do
+	-- 		if str == "-chakram" then
+	-- 			chakram_command = true
+	-- 		elseif chakram_command == false then
+	-- 			break
+	-- 		end
+			
+	-- 		if tonumber(str) then
+	-- 			if correct_command and tonumber(str) >= 0 and tonumber(str) <=255 then
+	-- 				table.insert(color,str)
+	-- 				if #color >= 3 then
+	-- 					break
+	-- 				end
+	-- 			else
+	-- 				chakram_command = false
+	-- 			end
+	-- 		end
+			
+	-- 		if chakram_command == false then
+	-- 			break
+	-- 		end
+	-- 	end
+	-- 	if chakram_command == true then
+	-- 		caster.color = Vector ( color[1], color[2], color[3])
+	-- 		return nil
+	-- 	end
+	-- end
+	
+	-- Check for Blink-Colorcode
+	local blink_command = false
+	for str in string.gmatch(text, "%S+") do
+		if str == "-blink" then
+			blink_command = true
+		elseif blink_command == false then
+			break
+		end
+		
+		if tonumber(str) then
+			if blink_command and tonumber(str) >= 0 and tonumber(str) <=255 then
+				table.insert(color,str)
+				if #color >= 3 then
+					break
+				end
+			else
+				blink_command = false
+			end
+		end
+		
+		if blink_command == false then
+			break
+		end
+	end
+	if blink_command == true then
+		caster.blinkcolor = Vector ( color[1], color[2], color[3])
+		return nil
+	end
+end

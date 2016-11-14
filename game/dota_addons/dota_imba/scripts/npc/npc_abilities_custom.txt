@@ -5867,7 +5867,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_burn"			"0.6"
+				"damage_per_burn"			"0.3"
 			}
 			"02"
 			{
@@ -5888,6 +5888,11 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"illusion_factor_tooltip"	"50"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_tooltip"			"30"
 			}
 		}
 
@@ -16014,7 +16019,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_per_jump"			"15"
+				"agi_per_jump"			"20"
 			}
 			"06"
 			{
@@ -19617,7 +19622,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 140 160 180"
+		"AbilityManaCost"				"125 145 165 185"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19696,7 +19701,7 @@
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"toggle_mana_cost"		"20 25 30 35"
+				"toggle_mana_cost"		"25 30 35 40"
 			}
 			"16"
 			{
@@ -20931,7 +20936,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
 		
 		// Time		
@@ -20952,6 +20957,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
 			"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
+			"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale_hit.vpcf"
 		}
 		
 		// Special
@@ -20971,7 +20977,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"length"				"800"
+				"length"				"700"
 			}
 			"04"
 			{
@@ -21056,6 +21062,7 @@
 				"Function"				"ImpaleDamage"
 
 				"land_sound"			"Hero_NyxAssassin.Impale.TargetLand"
+				"particle_hit"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale_hit.vpcf"
 			}
 		}
 
@@ -22011,12 +22018,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.25"
+		"AbilityCastRange"				"575"
+		"AbilityCastPoint"				"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"9.0"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -22163,12 +22170,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"575"
+		"AbilityCastPoint"				"0.2"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14.0"
+		"AbilityCooldown"				"20 18 16 14"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -22189,7 +22196,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"6 8 10 12"
+				"duration"				"5 6 7 8"
 			}
 			"02"
 			{
@@ -28280,22 +28287,22 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_force"			"150 180 210 240"
+				"wind_force"			"45 65 85 105"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_duration"			"50"
+				"wind_force_tooltip"	"90 130 170 210"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_tick"			"0.5"
+				"var_type"				"FIELD_INTEGER"
+				"max_duration"			"50"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"movement_tick"			"0.03"
+				"damage_tick"			"0.5"
 			}
 		}
 		
@@ -28336,29 +28343,6 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"ThinkInterval"			"%movement_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_sandking.lua"
-						"Function"				"SandStormMovementTick"
-
-						"modifier_sandstorm"	"modifier_imba_sandstorm"
-					}
-				}
-			}
-
-			"modifier_imba_sandstorm"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"0.05"
-
 				"ThinkInterval"			"%damage_tick"
 
 				"OnIntervalThink"
@@ -28366,28 +28350,9 @@
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandStormDamageTick"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandStormMovementStart"
+						"Function"			"SandStormTick"
 
 						"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-						"modifier_storm"	"modifier_imba_sandstorm"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandStormMovementEnd"
 					}
 				}
 			}
@@ -28415,7 +28380,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-			"particle"						"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
+			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
 		}
 		
 		// Special
@@ -28425,37 +28390,27 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325"
+				"radius"					"400"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"14 21 28 35"
+				"damage"					"80 120 160 200"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"35 50 65 80"
+				"debuff_duration"			"6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration"			"6"
+				"ms_slow"					"-30"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_slow"					"-20"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"slow_duration"				"3"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"prevent_time"				"0.1"
 			}
 		}
 		
@@ -28468,18 +28423,15 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"OnAttackLanded"
+				"OnDealDamage"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"		"modifier_imba_caustic_finale"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
+						"ScriptFile"		"hero/hero_sandking.lua"
+						"Function"			"CausticFinale"
+
+						"modifier_debuff"	"modifier_imba_caustic_finale"
+						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
 					}
 				}
 
@@ -28504,44 +28456,21 @@
 
 				"Duration"					"%debuff_duration"
 
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Ability.SandKing_CausticFinale"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
+				"EffectName"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+				"EffectAttachType"			"follow_origin"
 				
-				"OnTakeDamage"
+				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"CausticFinale"
+						"Function"			"CausticFinaleEnd"
 
+						"modifier_debuff"	"modifier_imba_caustic_finale"
 						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
 						"modifier_slow"		"modifier_imba_caustic_finale_slow"
-						"particle_pulse"	"particles/hero/sand_king/sandking_caustic_shockwave.vpcf"
+						"particle_explode"	"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
+						"sound_explode"		"Ability.SandKing_CausticFinale"
 					}
 				}
 			}
@@ -28553,7 +28482,7 @@
 				"IsDebuff"					"1"
 				"IsPurgable"				"0"
 
-				"Duration"					"%prevent_time"
+				"Duration"					"%debuff_duration"
 			}
 
 			"modifier_imba_caustic_finale_slow"
@@ -28660,7 +28589,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"120 100 80"
-		"AbilityCastRange"				"775"
+		"AbilityCastRange"				"825"
 		"AbilityChannelTime"			"4.0"
 		"AbilityCastPoint"				"0.0"
 
@@ -28706,7 +28635,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"775"
+				"max_radius"			"825"
 			}
 			"06"
 			{
@@ -28726,7 +28655,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_pulses_scepter"	"5"
+				"damage_scepter"		"140"
 			}
 			"10"
 			{
@@ -28736,12 +28665,17 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_scepter"			"120"
+				"pull_strength"			"80"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_radius_scepter"	"1500"
+				"pull_radius"			"600"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_radius_scepter"	"1100"
 			}
 		}	
 			
@@ -29994,7 +29928,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_radius"			"1200"
+				"slow_radius"			"900"
 			}
 			"02"
 			{
@@ -30014,7 +29948,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"1200"
+				"vision_radius"			"900"
 			}
 			"06"
 			{
@@ -30034,7 +29968,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius_scepter"	"1200"
+				"aura_radius_scepter"	"900"
 			}
 			"10"
 			{
@@ -31620,19 +31554,14 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"initial_stacks"			"10 12 14 16"
+				"initial_stacks"			"4 8 12 16"
 			}
 			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"armor_per_stack"			"-0.25"
-			}
-			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"dmg_per_stack"				"1"
 			}
-			"07"
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"slow_per_stack"			"-1"
@@ -31718,7 +31647,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_per_stack"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_stack"
 				}
 			}
 		}
