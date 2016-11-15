@@ -493,6 +493,24 @@ function GameMode:DamageFilter( keys )
 		end
 	end
 
+	-- Magic shield damage prevention
+	if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") then
+
+		-- Parameters
+		local shield_stacks = victim:GetModifierStackCount("modifier_item_imba_initiate_robe_stacks", nil)
+
+		-- Ignore part of incoming damage
+		if keys.damage > shield_stacks then
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, shield_stacks, nil)
+			victim:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+			keys.damage = keys.damage - shield_stacks
+		else
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, keys.damage, nil)
+			victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
+			keys.damage = 0
+		end
+	end
+
 	-- Decrepify damage counter
 	if victim.decrepify_damage_counter then
 		if damage_type == DAMAGE_TYPE_MAGICAL then

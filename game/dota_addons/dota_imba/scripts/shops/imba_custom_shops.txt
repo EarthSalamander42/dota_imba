@@ -25,21 +25,23 @@
 		"item"		"item_slippers"
 		"item"		"item_mantle"
 		"item"		"item_circlet"
+		"item"		"item_ring_of_protection"
 		"item"		"item_belt_of_strength"
 		"item"		"item_boots_of_elves"
 		"item"		"item_robe"
 		"item"		"item_ogre_axe"
 		"item"		"item_blade_of_alacrity"
 		"item"		"item_staff_of_wizardry"
+		"item"		"item_gem"
 		"item"		"item_imba_soul_of_truth"
 	}
 
 	"weapons_armor"
 	{
-		"item"		"item_ring_of_protection"
 		"item"		"item_stout_shield"
 		"item"		"item_quelling_blade"
 		"item"		"item_infused_raindrop"
+		"item"		"item_imba_poor_mans_shield"
 		"item"		"item_imba_orb_of_venom"
 		"item"		"item_blades_of_attack"
 		"item"		"item_blight_stone"
@@ -63,11 +65,11 @@
 		"item"		"item_cloak"
 		"item"		"item_imba_ring_of_health"
 		"item"		"item_imba_void_stone"
-		"item"		"item_gem"
 		"item"		"item_lifesteal"
 		"item"		"item_imba_shadow_amulet"
 		"item"		"item_ghost"
 		"item"		"item_imba_blink"
+		"item"		"item_imba_blink_boots"
 	}
 	
 	// Level 1 - Green Recipes
@@ -76,7 +78,6 @@
 		"item"		"item_imba_magic_wand"
 		"item"		"item_imba_null_talisman"
 		"item"		"item_imba_wraith_band"
-		"item"		"item_imba_poor_mans_shield"
 		"item"		"item_imba_bracer"
 		"item"		"item_imba_soul_ring"
 		"item"		"item_phase_boots"
@@ -86,7 +87,7 @@
 		"item"		"item_imba_hand_of_midas"
 		"item"		"item_travel_boots"
 		"item"		"item_imba_moon_shard"
-		"item"		"item_imba_blink_boots"
+		"item"		"item_ultimate_scepter"
 	}
 
 	// Level 2 - Blue Recipes
@@ -110,6 +111,7 @@
 				
 	"magics"			
 	{
+		"item"		"item_imba_initiate_robe"
 		"item"		"item_imba_glimmer_cape"
 		"item"		"item_imba_force_staff"
 		"item"		"item_aether_lens"
@@ -120,7 +122,6 @@
 		"item"		"item_imba_rod_of_atos"
 		//"item"		"item_imba_lotus_orb"
 		"item"		"item_imba_orchid"
-		"item"		"item_ultimate_scepter"
 		"item"		"item_imba_ethereal_blade"
 		"item"		"item_imba_refresher"
 		"item"		"item_imba_sheepstick"
@@ -172,7 +173,7 @@
 		"item"		"item_imba_sange"
 		"item"		"item_imba_yasha"
 		"item"		"item_imba_azura"
-		"item"		"item_echo_sabre"
+		"item"		"item_imba_echo_sabre"
 		"item"		"item_imba_maelstrom"
 		"item"		"item_imba_diffusal_blade"
 		"item"		"item_imba_desolator"

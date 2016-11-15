@@ -2682,7 +2682,7 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect"
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_strength"
-				    "MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"				"%bonus_mana_regen"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"				"%bonus_mana_regen"
 				}
 			}
 
@@ -17981,6 +17981,595 @@
 		}
 	}
 
-	//rapier freed IDs: 2154-2164
+	//=================================================================================================================
+	// Recipe: Echo Sabre
+	//=================================================================================================================
+	"item_recipe_imba_echo_sabre"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2154"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_echo_sabre"
+		"ItemRequirements"
+		{
+			"01"						"item_ogre_axe;item_imba_oblivion_staff"
+		}
+	}
+	
+	//=================================================================================================================
+	// Echo Sabre
+	//=================================================================================================================
+	"item_imba_echo_sabre"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2155"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_echo_sabre"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"4.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"echo_sabre"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2650"
+		"ItemShopTags"					"int;attack_speed;damage;regen_mana;damage;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"echo sabre"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"13"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"13"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"20"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"75"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bat_reduction"			"-80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_slow"		"-100"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.7"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_hits"				"2"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ranged_cooldown"		"7.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_echo_sabre"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
+				}
+			}
+			
+			"modifier_item_imba_echo_sabre_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreStart"
+						
+						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
+						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_echo_sabre_unique"
+					}
+				}
+			}
+
+			"modifier_item_imba_echo_sabre_double_hit"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+
+				"Duration"				"2.5"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreHit"
+						
+						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
+						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreEnd"
+					}
+				}
+			}
+
+			"modifier_item_imba_echo_sabre_slow"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+				"IsDebuff"				"1"
+
+				"Duration"				"%slow_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Reverb Rapier
+	//=================================================================================================================
+	"item_recipe_imba_reverb_rapier"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2156"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_reverb_rapier"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_echo_sabre;item_imba_relic"
+		}
+	}
+	
+	//=================================================================================================================
+	// Reverb Rapier
+	//=================================================================================================================
+	"item_imba_reverb_rapier"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2157"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_reverb_rapier"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"4.0"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"echo_sabre"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6450"
+		"ItemShopTags"					"int;attack_speed;damage;regen_mana;damage;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"reverb rapier"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"120"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bat_reduction"			"-80"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movement_slow"			"-100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_slow"		"-100"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.7"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_hits"				"4"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ranged_cooldown"		"7.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_reverb_rapier"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intellect"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
+				}
+			}
+			
+			"modifier_item_imba_reverb_rapier_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"ReverbRapierStart"
+						
+						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
+						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_reverb_rapier_unique"
+					}
+				}
+			}
+
+			"modifier_item_imba_reverb_rapier_quadra_hit"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+
+				"Duration"				"2.5"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreHit"
+						
+						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
+						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreEnd"
+					}
+				}
+			}
+
+			"modifier_item_imba_reverb_rapier_slow"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsPurgable"			"1"
+				"IsDebuff"				"1"
+
+				"Duration"				"%slow_duration"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_slow" 
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Initiate's Robe
+	//=================================================================================================================
+	"item_recipe_imba_initiate_robe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2158"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"325"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_initiate_robe"
+		"ItemRequirements"
+		{
+			"01"						"item_cloak;item_infused_raindrop"
+		}
+	}
+	
+	//=================================================================================================================
+	// Initiate's Robe
+	//=================================================================================================================
+	"item_imba_initiate_robe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2159"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_initiate_robe"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		"FightRecapLevel"				"1"
+		
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0.0"
+		"AbilityManaCost"				"0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1100"
+		"ItemShopTags"					"magic_resist;regen_mana"
+		"ItemQuality"					"common"
+		"ItemAliases"					"initiate robe;robe"
+	
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen"			"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_resist"			"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_conversion_rate"	"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"250"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_item_imba_initiate_robe"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+				
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_ITEM_UNIQUE"	"%magic_resist"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"				"1.0"		// this is hardcoded due to an obscure engine bug
+				}
+			}
+			
+			"modifier_item_imba_initiate_robe_unique"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+
+				"ThinkInterval"			"0.03"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_initiate_robe.lua"
+						"Function"			"InitiateRobeThink"
+						
+						"modifier_stacks"	"modifier_item_imba_initiate_robe_stacks"
+						"particle_shield"	"particles/item/initiate_robe/initiate_robe_shield.vpcf"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"internal/util.lua"
+						"Function"			"IllusionPassiveRemover"
+
+						"modifier"			"modifier_item_imba_initiate_robe_unique"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_initiate_robe.lua"
+						"Function"			"InitiateRobeEnd"
+						
+						"modifier_stacks"	"modifier_item_imba_initiate_robe_stacks"
+					}
+				}
+			}
+
+			"modifier_item_imba_initiate_robe_stacks"
+			{
+				"Passive"				"0"
+				"IsHidden"				"0"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+			}
+		}
+	}
+
+	//rapier freed IDs: 2160-2164
 	//next free ID: 2204
 }

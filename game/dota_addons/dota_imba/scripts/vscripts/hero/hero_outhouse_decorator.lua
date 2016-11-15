@@ -68,8 +68,23 @@ function ArcaneOrbRestoreMana( keys )
 	-- Play sound
 	caster:EmitSound(sound_name)
 
-	-- Restore mana
-	caster:GiveMana(mana_restore)
+	-- Magic shield interaction
+	if caster.magic_shield_mana_count then
+
+		-- Calculate magic shield stacks to gain
+		local current_mana = caster:GetMana()
+		local stacks_to_gain = caster.magic_shield_mana_count - current_mana
+
+		-- Restore mana
+		caster:GiveMana(mana_restore)
+
+		-- Offset global variable to force stack gain
+		caster.magic_shield_mana_count = caster:GetMana() + stacks_to_gain
+
+	-- Normal interaction, just restore mana
+	else
+		caster:GiveMana(mana_restore)	
+	end
 end
 
 function IntGainCounterUp( keys )
@@ -234,8 +249,23 @@ function RestoreMana( keys )
 	local cast_ability_level = cast_ability:GetLevel() - 1
 	if cast_ability and cast_ability:GetManaCost(cast_ability_level) > 0 and StickProcCheck(cast_ability) and cast_ability:GetCooldown(cast_ability_level) > 0 then
 
-		-- Restores mana
-		target:GiveMana(mana_restore)
+		-- Magic shield interaction
+		if target.magic_shield_mana_count then
+
+			-- Calculate magic shield stacks to gain
+			local current_mana = target:GetMana()
+			local stacks_to_gain = target.magic_shield_mana_count - current_mana
+
+			-- Restore mana
+			target:GiveMana(mana_restore)
+
+			-- Offset global variable to force stack gain
+			target.magic_shield_mana_count = target:GetMana() + stacks_to_gain
+
+		-- Normal interaction, just restores mana
+		else
+			target:GiveMana(mana_restore)	
+		end
 
 		-- Plays sound and effect
 		local essence_fx = ParticleManager:CreateParticle(essence_particle, PATTACH_ABSORIGIN_FOLLOW, target)

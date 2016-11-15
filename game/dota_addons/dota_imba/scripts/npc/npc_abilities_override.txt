@@ -260,6 +260,8 @@
     "item_glimmer_cape"				"REMOVE"
     "item_recipe_bloodthorn"		"REMOVE"
     "item_bloodthorn"				"REMOVE"
+    "item_recipe_echo_sabre"		"REMOVE"
+    "item_echo_sabre"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1654,74 +1656,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_amp"				"12"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Recipe: Echo Sabre
-	//=================================================================================================================
-	"item_recipe_echo_sabre"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_ogre_axe;item_imba_oblivion_staff"
-		}
-	}
-	
-	//=================================================================================================================
-	// Echo Sabre
-	//=================================================================================================================
-	"item_echo_sabre"
-	{
-		"AbilityCooldown"				"2.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"13"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"13"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"13"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"75"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_damage"			"0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"100"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_speed_slow"		"100"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"0.6"
 			}
 		}
 	}

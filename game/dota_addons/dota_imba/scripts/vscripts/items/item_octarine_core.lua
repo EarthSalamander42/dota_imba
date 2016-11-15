@@ -35,6 +35,7 @@ function OctarineLifesteal( keys )
 	-- Play the particle
 	local lifesteal_fx = ParticleManager:CreateParticle(particle_lifesteal, PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(lifesteal_fx, 0, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(lifesteal_fx)
 
 	-- Delay the lifesteal for one game tick to prevent blademail/octarine interaction
 	Timers:CreateTimer(0.01, function()
