@@ -20343,6 +20343,948 @@
 			}
 		}
 	}
+	
+	// Rewrite of Nevermore Presence of the Dark Lord for DotA Imba
+	// Original recreated by Noya on April 5, 2015
+	// Author: Thor
+	// Date: August 28, 2016
+	"imba_nevermore_dark_lord"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             		"ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+	    "OnCastbar"                 	"0"
+	    "AbilityTextureName"            "nevermore_dark_lord"
+	    
+	    
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"              "1200"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "armor_reduction"               "-3 -4 -5 -6"
+	        }
+	        "02"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "radius"                        "1200"
+	        }
+	        "03"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "vision_reduction"              "-200"
+	        }
+	        "04"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "raze_armor_reduction"          "-1.5 -2 -2.5 -3"
+	        }
+	        "05"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "raze_vision_reduction"         "-100"
+	        }
+	        "06"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "raze_debuff_duration"          "5"
+	        }
+	        "07"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "raze_debuff_max_stacks"        "3"
+	        }
+	        "08"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "soul_tick_time"                "1"
+	        }
+	        "09"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "souls_per_tick"                "1"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_imba_dark_lord"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	    
+	            "Aura"              "modifier_imba_dark_lord_presence"
+	            "Aura_Radius"       "%radius"
+	            "Aura_Teams"        "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	            "Aura_Types"        "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC" //mechanic?
+	            "Aura_Flags"        "DOTA_UNIT_TARGET_FLAG_NONE" //immune?
+	        }
+	
+	        "modifier_imba_dark_lord_presence"
+	        {
+	            "IsHidden"          "0"
+	            "IsDebuff"          "1"
+	        
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%armor_reduction"
+	                "MODIFIER_PROPERTY_BONUS_DAY_VISION"        "%vision_reduction"
+	                "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"      "%vision_reduction"
+	            }
+	
+	            "ThinkInterval"     "%soul_tick_time"
+	
+	            "OnIntervalThink"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"                "hero/hero_nevermore.lua"
+	                    "Function"                  "DarkLordPresenceTick"
+	                    "modifier"                  "modifier_imba_necromastery_temporary_buff"
+	                    "modifier_souls_counter"    "modifier_imba_necromastery_temporary_buff_counter"
+	                }
+	            }
+	        }
+	
+	        "modifier_imba_dark_lord_raze"
+	        {
+	            "IsDebuff"          "1"
+	            "Duration"          "%raze_debuff_duration"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "%raze_armor_reduction"
+	                "MODIFIER_PROPERTY_BONUS_DAY_VISION"        "%raze_vision_reduction"
+	                "MODIFIER_PROPERTY_BONUS_NIGHT_VISION"      "%raze_vision_reduction"
+	            }
+	        }
+	    }
+	}
+	
+	// Rewrite of Nevermore Necromastery for DotA Imba
+	// Original recreated by Noya on April 5, 2015
+	// Temporary soul counter inspired by Rook's implementation of Slark Essence Shift
+	// Author: Thor
+	// Date: August 28, 2016
+	"imba_nevermore_necromastery"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             "ability_datadriven"
+	    "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "AbilityTextureName"    "nevermore_necromastery"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "damage_per_soul"               "3"
+	        }
+	        "02"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "max_souls"                     "18 24 30 36"
+	        }
+	        "03"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "max_souls_scepter"             "22 30 38 46"
+	        }
+	        "04"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "soul_release"                  "0.5"
+	        }
+	        "05"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "souls_non_hero_count"          "1"
+	        }
+	        "06"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "souls_hero_count"              "12"
+	        }       
+	        "07"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "engorge_soul_duration"         "15 20 25 30"
+	        }
+	        "08"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "engorge_damage_soul_count"     "2"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+	        "particle"  "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	    }
+	
+	    "OnOwnerDied"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"        "hero/hero_nevermore.lua"
+	            "Function"          "NecromasteryDeath"
+	            "modifier"          "modifier_imba_necromastery"
+	            "requiem_ability"   "imba_nevermore_requiem"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        "modifier_imba_soul_collector"
+	        {
+	            "Passive"           "1"
+	            "IsHidden"          "1"
+	
+	            "OnKill"
+	            {
+	
+	                "FireEffect"
+	                {
+	                    "EffectName"        "particles/units/heroes/hero_nevermore/nevermore_necro_souls.vpcf"
+	                    "EffectAttachType"  "attach_hitloc"
+	                    "Target"            "UNIT"
+	                }
+	
+	                "RunScript"
+	                {
+	                    "ScriptFile"        "hero/hero_nevermore.lua"
+	                    "Function"          "NecromasteryStack"
+	                    "modifier"          "modifier_imba_necromastery"
+	                }
+	            }
+	
+	            "OnDealDamage"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"                    "hero/hero_nevermore.lua"
+	                    "Function"                      "NecromasteryOnDamage"
+	                    "modifier"                      "modifier_imba_necromastery_temporary_buff"
+	                    "modifier_souls_counter"        "modifier_imba_necromastery_temporary_buff_counter"
+	                    "modifier_ignore_damage"        "modifier_imba_ignore_damage_necromastery"
+	                }
+	            }
+	        }
+	
+	        "modifier_imba_necromastery"
+	        {
+	            "Attributes"        "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+	
+	            "EffectName"        "particles/units/heroes/hero_nevermore/nevermore_souls.vpcf"
+	            "EffectAttachType"  "follow_origin"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"      "%damage_per_soul"
+	            }
+	        }
+	
+	        "modifier_imba_necromastery_temporary_buff_counter"
+	        {
+	            "Duration"      "%engorge_soul_duration"
+	        }
+	
+	        "modifier_imba_necromastery_temporary_buff"
+	        {
+	            "Attributes"    "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            "Duration"      "%engorge_soul_duration"
+	            "IsHidden"      "1"
+	
+	            "OnDestroy"  //Decrement the visible counter.
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"                "hero/hero_nevermore.lua"
+	                    "Function"                  "NecromasteryReduceTemporarySouls"
+	                    "modifier"                  "modifier_imba_necromastery_temporary_buff"
+	                    "modifier_souls_counter"    "modifier_imba_necromastery_temporary_buff_counter"
+	                }
+	            }
+	        }
+	    }
+	}
+	// Rewrite of Nevermore Requiem
+	// Author: Thorminator
+	// Date: August 28, 2016
+	"imba_nevermore_requiem"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+	    "AbilityType"                   "DOTA_ABILITY_TYPE_ULTIMATE"
+	    "AbilityTextureName"            "nevermore_requiem"
+	    
+	    
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"                  "1.67"
+	    "AbilityCooldown"                   "120.0 110.0 100.0"
+	    "AbilityCastAnimation"              "ACT_DOTA_CAST_ABILITY_6"
+	
+	    // Special
+	    //------------------------------------------------------------------------------------------------------------- 
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "cast_time_tooltip"             "1.67"
+	        }
+	        "02"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "radius"                        "1000"        
+	        }
+	        "03"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "reduction_ms"                  "-25"
+	        }
+	        "04"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "reduction_damage"              "-50"
+	        }
+	        "05"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "reduction_tooltip"             "-50"
+	        }
+	        "06"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "slow_duration"                 "5.0"
+	        }
+	        "07"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "reduction_radius"              "1000"
+	        }
+	        "08"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "soul_conversion"               "1" //number of souls per line
+	        }
+	        "09"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "line_width_start"              "150"
+	        }
+	        "10"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "line_width_end"                "425"
+	        }
+	        "11"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "line_speed"                    "700"
+	        }
+	        "12"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "soul_death_release"            "0.5"
+	        }
+	        "13"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "heal_pct_scepter"              "100"
+	        }
+	        "14"
+	        {
+	            "var_type"                      "FIELD_INTEGER"
+	            "line_damage"                   "65 100 135"
+	        }
+	        "15"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "raze_no_cd_duration"           "0.5"
+	        }
+	        "16"
+	        {
+	            "var_type"                      "FIELD_FLOAT"
+	            "screen_black_duration"         "4"
+	        }
+	    }
+	
+	    "precache"
+	    {
+	        "soundfile"     "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	
+	        //Particle for shadows below caster on cast. Not sure when a or b are used, CP0 and CP2 should be origin, CP1 should be number of lines
+	        "particle"      "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf"
+	        "particle"      "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_b.vpcf"
+	
+	        //Line particles, CP0 is start point, CP1 is velocity
+	        "particle"      "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf"
+	
+	        //More particles for caster origin when finished casting, CP0 is starting point and CP1 is number of lines
+	        "particle"      "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf"
+	
+	        "particle"      "particles/hero/enigma/screen_blackhole_indicator.vpcf"
+	
+	        //Dummy particle for linear projectiles
+	        "particle"      "particles/units/heroes/hero_visage/visage_soul_assumption_bolt_dummy.vpcf"
+	    }
+	
+	    "OnAbilityPhaseStart"
+	    {
+	        "FireSound"
+	        {
+	            "EffectName"    "Hero_Nevermore.RequiemOfSoulsCast"
+	            "Target"        "CASTER"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	
+	        "RunScript"
+	        {
+	            //Make sure the variables here are synced with modifier_imba_requiem_death_cast_modifier OnDeath
+	            "ScriptFile"                    "hero/hero_nevermore.lua"
+	            "Function"                      "RequiemCast"
+	            "modifier_souls_counter"        "modifier_imba_necromastery"
+	            "modifier_temp_souls"           "modifier_imba_necromastery_temporary_buff"
+	            "modifier_temp_souls_counter"   "modifier_imba_necromastery_temporary_buff_counter"
+	            "requiem_cast_sound"            "Hero_Nevermore.RequiemOfSouls"
+	            "particle_caster_souls"         "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf"
+	            "particle_caster_ground"        "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf"
+	            "particle_lines"                "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf"
+	            "particle_lines_dummy"          "particles/units/heroes/hero_visage/visage_soul_assumption_bolt_dummy.vpcf"
+	            "death_cast"                    "0"
+	            "ability_aux"                   "imba_nevermore_requiem_aux"
+	        }
+	    }
+	
+	    "OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"       "0"
+	        "RunScript"
+	        {
+	            "ScriptFile"                "hero/hero_nevermore.lua"
+	            "Function"                  "RequiemProjectileHitOutward"
+	            "modifier_enemy"            "modifier_imba_requiem_enemy_debuff"
+	            "modifier_enemy_screen"     "modifier_imba_requiem_black_screen"
+	            "modifier_ignore_damage"    "modifier_imba_ignore_damage_necromastery"
+	            "modifier_raze_no_cooldown" "modifier_imba_shadowraze_no_cooldown"
+	        }
+	    }
+	
+	    "Modifiers" 
+	    {
+	        "modifier_imba_requiem_death_cast_modifier"
+	        {
+	            "IsHidden"      "1"
+	            "Passive"       "1"
+	
+	            "OnDeath"
+	            {
+	                "RunScript"
+	                {
+	                    //Make sure the variables here are synced with OnSpellStart
+	                    "ScriptFile"                    "hero/hero_nevermore.lua"
+	                    "Function"                      "RequiemCast"
+	                    "modifier_souls_counter"        "modifier_imba_necromastery"
+	                    "modifier_temp_souls"           "modifier_imba_necromastery_temporary_buff"
+	                    "modifier_temp_souls_counter"   "modifier_imba_necromastery_temporary_buff_counter"
+	                    "requiem_cast_sound"            "Hero_Nevermore.RequiemOfSouls"
+	                    "particle_caster_souls"         "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_a.vpcf"
+	                    "particle_caster_ground"        "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls.vpcf"
+	                    "particle_lines"                "particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line.vpcf"
+	                    "particle_lines_dummy"          "particles/units/heroes/hero_visage/visage_soul_assumption_bolt_dummy.vpcf"
+	                    "death_cast"                    "1"
+	                    "ability_aux"                   "imba_nevermore_requiem_aux"
+	                }
+	            }
+	        }
+	
+	        "modifier_imba_requiem_black_screen"
+	        {
+	            "Passive"                   "0"
+	            "IsHidden"                  "1"
+	            "IsDebuff"                  "1"
+	            "IsPurgable"                "0"
+	
+	            "Duration"                  "%screen_black_duration"
+	    
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "hero/hero_nevermore.lua"
+	                    "Function"              "RequiemDebuffCreated"
+	
+	                    "particle_screen"       "particles/hero/enigma/screen_blackhole_indicator.vpcf"
+	                }
+	            }
+	
+	            "OnDestroy"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"            "hero/hero_nevermore.lua"
+	                    "Function"              "RequiemDebuffDestroyed"
+	                }
+	            }
+	        }
+	
+	        //Modifier that allows caster to cast razes without cooldown. Removed if a raze is cast without hitting a hero.
+	        //This functionality is built into raze rather than the modifier itself.
+	        "modifier_imba_shadowraze_no_cooldown"
+	        {
+	            "IsDebuff"      "0"
+	            "IsPurgable"    "0"
+	
+	            "OnCreated"
+	            {
+	                "RunScript"
+	                {
+	                    "ScriptFile"    "hero/hero_nevermore.lua"
+	                    "Function"      "ShadowrazeNoCooldownBuffCreated"
+	                    
+	                    "near_raze"     "imba_nevermore_shadowraze1"
+	                    "medium_raze"   "imba_nevermore_shadowraze2"
+	                    "far_raze"      "imba_nevermore_shadowraze3"
+	                }
+	            }
+	        }
+	
+	        "modifier_imba_requiem_enemy_debuff"
+	        {
+	            "Duration"      "%slow_duration"
+	            "IsDebuff"      "1"
+	
+	            "Properties"
+	            {
+	                "MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"      "%reduction_ms"
+	                "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"       "%reduction_damage"
+	            }
+	        }
+	
+	        //Units with this modifier are ignored by necromastery's temp soul generation
+	        "modifier_imba_ignore_damage_necromastery"
+	        {
+	            "Duration"      "0.05"
+	            "IsDebuff"      "1"
+	            "IsHidden"      "1"
+	        }
+	    }
+	}
+	// Rewrite of Nevermore Requiem (auxillary for inward waves)
+	// Author: Thorminator
+	// Date: August 28, 2016
+	"imba_nevermore_requiem_aux"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"nevermore_requiem"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+	
+		"OnProjectileHitUnit"
+	    {
+	        "DeleteOnHit"       "0"
+	        "RunScript"
+	        {
+	            "ScriptFile"                "hero/hero_nevermore.lua"
+	            "Function"                  "RequiemProjectileHitInward"
+	            "modifier_enemy"            "modifier_imba_requiem_enemy_debuff"
+	            "modifier_enemy_screen"     "modifier_imba_requiem_black_screen"
+	            "modifier_ignore_damage"    "modifier_imba_ignore_damage_necromastery"
+	            "modifier_raze_no_cooldown" "modifier_imba_shadowraze_no_cooldown"
+	            "ability_main"              "imba_nevermore_requiem"
+	        }
+	    }
+	}
+	// Rewrite of Nevermore Shadowraze for DotA Imba
+	// Original recreated by Noya on April 5, 2015
+	// Author: Thor
+	// Date: August 28, 2016
+	"imba_nevermore_shadowraze1"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             		"ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_BEHAVIOR_AOE"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+	    "FightRecapLevel"               "1"
+	    "AbilityTextureName"            "nevermore_shadowraze1"
+	    
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"              "0.67"
+	    "AbilityCastAnimation"          "ACT_DOTA_RAZE_1"
+	    "AbilityCastRange"              "450"
+	
+	    // Time     
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "10.0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "75"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "450"       
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "combo_modifier_duration"   "2"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "soul_damage_bonus"         "5"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_damage"               "100 175 250 325"
+	        }
+	        "05"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_refresh_cooldown"     "30"
+	        }
+	    }
+	
+	    // Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	    }
+	
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "hero/hero_nevermore.lua"
+	            "Function"      "ShadowrazeLeveled"
+	            "near_raze"     "imba_nevermore_shadowraze1"
+	            "medium_raze"   "imba_nevermore_shadowraze2"
+	            "far_raze"      "imba_nevermore_shadowraze3"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"                        "hero/hero_nevermore.lua"
+	            "Function"                          "Shadowraze1Cast"
+	            "modifier_combo"                    "modifier_imba_shadowraze_combo"
+	            "modifier_souls_counter"            "modifier_imba_necromastery"
+	            "modifier_temp_souls_counter"       "modifier_imba_necromastery_temporary_buff_counter"
+	            "modifier_raze_no_cooldown"         "modifier_imba_shadowraze_no_cooldown"
+	            "modifier_raze_refresh_cooldown"    "modifier_imba_shadowraze_refresh_cooldown"
+	            "particle_raze"                     "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	            "sound_raze"                        "Hero_Nevermore.Shadowraze"
+	            "near_raze"                         "imba_nevermore_shadowraze1"
+	            "medium_raze"                       "imba_nevermore_shadowraze2"
+	            "far_raze"                          "imba_nevermore_shadowraze3"
+	            "presence_of_the_dark_lord"         "imba_nevermore_dark_lord"
+	            "modifier_dark_lord_raze"            "modifier_imba_dark_lord_raze"
+	        }
+	    }
+	
+	    "Modifiers"
+	    {
+	        //Modifier applied to targets hit by shadowraze to count number of combo hits
+	        "modifier_imba_shadowraze_combo"
+	        {
+	            "IsHidden"      "1"
+	            "IsDebuff"      "1"
+	            "Attributes"    "MODIFIER_ATTRIBUTE_MULTIPLE"
+	            "Duration"      "%combo_modifier_duration"
+	        }
+	
+	        //Modifier applied to caster to stop raze from refreshing due to hitting combos
+	        "modifier_imba_shadowraze_refresh_cooldown"
+	        {   
+	            "Duration"      "%raze_refresh_cooldown"
+	        }
+	    }
+	}
+	// Rewrite of Nevermore Shadowraze for DotA Imba
+	// Original recreated by Noya on April 5, 2015
+	// Author: Thor
+	// Date: August 28, 2016
+	"imba_nevermore_shadowraze2"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"             		"ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "OnLearnbar"                    "0"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+	    "FightRecapLevel"               "1"
+	    "AbilityTextureName"            "nevermore_shadowraze2"
+	    
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"              "0.67"
+	    "AbilityCastAnimation"          "ACT_DOTA_RAZE_2"
+	
+	    // Time     
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "10.0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "75"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius"                    "250"       
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "distance"                  "450"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "combo_modifier_duration"   "2"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "soul_damage_bonus"         "5"
+	        }
+	        "05"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_damage"               "100 175 250 325"
+	        }
+	        "06"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_amount"               "4"
+	        }
+	    }
+		
+		// Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	    }
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "hero/hero_nevermore.lua"
+	            "Function"      "ShadowrazeLeveled"
+	            "near_raze"     "imba_nevermore_shadowraze1"
+	            "medium_raze"   "imba_nevermore_shadowraze2"
+	            "far_raze"      "imba_nevermore_shadowraze3"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"                        "hero/hero_nevermore.lua"
+	            "Function"                          "Shadowraze2Cast"
+	            "modifier_combo"                    "modifier_imba_shadowraze_combo"
+	            "modifier_souls_counter"            "modifier_imba_necromastery"
+	            "modifier_temp_souls_counter"       "modifier_imba_necromastery_temporary_buff_counter"
+	            "modifier_raze_no_cooldown"         "modifier_imba_shadowraze_no_cooldown"
+	            "modifier_raze_refresh_cooldown"    "modifier_imba_shadowraze_refresh_cooldown"
+	            "particle_raze"                     "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	            "sound_raze"                        "Hero_Nevermore.Shadowraze"
+	            "near_raze"                         "imba_nevermore_shadowraze1"
+	            "medium_raze"                       "imba_nevermore_shadowraze2"
+	            "far_raze"                          "imba_nevermore_shadowraze3"
+	            "presence_of_the_dark_lord"         "imba_nevermore_dark_lord"
+	            "modifier_dark_lord_raze"            "modifier_imba_dark_lord_raze"
+	        }
+	    }
+	}
+	
+	// Rewrite of Nevermore Shadowraze for DotA Imba
+	// Original recreated by Noya on April 5, 2015
+	// Author: Thor
+	// Date: August 28, 2016
+	"imba_nevermore_shadowraze3"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "BaseClass"                     "ability_datadriven"
+	    "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+	    "OnLearnbar"                    "0"
+	    "AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
+	    "AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY" 
+	    "AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+	    "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+	    "FightRecapLevel"               "1"
+	    "AbilityTextureName"            "nevermore_shadowraze2"
+	    
+	    // Casting
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastPoint"              "0.67"
+	    "AbilityCastAnimation"          "ACT_DOTA_RAZE_2"
+	
+	    // Time     
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCooldown"               "10.0"
+	
+	    // Cost
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityManaCost"               "75"
+	
+	    // Special
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilitySpecial"
+	    {
+	        "01"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "initial_radius"            "100"       
+	        }
+	        "02"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "initial_distance"           "200"
+	        }
+	        "03"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "radius_inc_per_raze"       "50"
+	        }
+	        "04"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "combo_modifier_duration"   "5"
+	        }
+	        "05"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "soul_damage_bonus"         "2"
+	        }
+	        "06"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_damage"               "100 175 250 325"
+	        }
+	        "07"
+	        {
+	            "var_type"                  "FIELD_INTEGER"
+	            "raze_amount"               "4"
+	        }
+	    }
+		
+		// Precache
+	    //-------------------------------------------------------------------------------------------------------------
+	    "precache"
+	    {
+	        "particle"  "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	        "soundfile" "soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+	    }
+	
+	    "OnUpgrade"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"    "hero/hero_nevermore.lua"
+	            "Function"      "ShadowrazeLeveled"
+	            "near_raze"     "imba_nevermore_shadowraze1"
+	            "medium_raze"   "imba_nevermore_shadowraze2"
+	            "far_raze"     "imba_nevermore_shadowraze3"
+	        }
+	    }
+	
+	    "OnSpellStart"
+	    {
+	        "RunScript"
+	        {
+	            "ScriptFile"                        "hero/hero_nevermore.lua"
+	            "Function"                          "Shadowraze3Cast"
+	            "modifier_combo"                    "modifier_imba_shadowraze_combo"
+	            "modifier_souls_counter"            "modifier_imba_necromastery"
+	            "modifier_temp_souls_counter"       "modifier_imba_necromastery_temporary_buff_counter"
+	            "modifier_raze_no_cooldown"         "modifier_imba_shadowraze_no_cooldown"
+	            "modifier_raze_refresh_cooldown"    "modifier_imba_shadowraze_refresh_cooldown"
+	            "particle_raze"                     "particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+	            "sound_raze"                        "Hero_Nevermore.Shadowraze"
+	            "near_raze"                         "imba_nevermore_shadowraze1"
+	            "medium_raze"                       "imba_nevermore_shadowraze2"
+	            "far_raze"                          "imba_nevermore_shadowraze3"
+	            "presence_of_the_dark_lord"         "imba_nevermore_dark_lord"
+	            "modifier_dark_lord_raze"            "modifier_imba_dark_lord_raze"
+	        }
+	    }
+	}
 
 	//=================================================================================================================
 	// Night Stalker's Void
