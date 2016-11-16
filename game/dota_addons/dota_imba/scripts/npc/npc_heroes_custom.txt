@@ -1093,6 +1093,32 @@
 
 		"ProjectileModel"			"particles/units/heroes/hero_necrolyte/necrolyte_base_attack.vpcf"
 	}
+	
+	//=================================================================================================================
+	// HERO: Shadow Fiend
+	//=================================================================================================================
+	"npc_imba_hero_nevermore"
+	{
+		"override_hero"				"npc_dota_hero_nevermore"
+	
+		"AttackRate"				"1.6"
+	
+		"AttackDamageMin"			"23"
+		"AttackDamageMax"			"25"
+	
+		"ArmorPhysical"				"-1"
+	
+		"Ability1"					"imba_nevermore_shadowraze1"
+		"Ability2"					"imba_nevermore_shadowraze2"
+		"Ability3"					"imba_nevermore_shadowraze3"
+		"Ability4"					"imba_nevermore_necromastery"
+		"Ability5"					"imba_nevermore_dark_lord"
+		"Ability6"					"imba_nevermore_requiem"
+		"Ability7"					"attribute_bonus_agi"
+		"Ability8"					"imba_nevermore_requiem_aux"
+	
+		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+	}
 
 	//=================================================================================================================
 	// HERO: Night Stalker
