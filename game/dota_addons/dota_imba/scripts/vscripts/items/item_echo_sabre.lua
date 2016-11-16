@@ -5,6 +5,7 @@ function EchoSabreStart( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local modifier_applier = keys.modifier_applier
 	local modifier_double = keys.modifier_double
 
 	-- If a higher-level echo sabre version is present, or the item is in cooldown, do nothing
@@ -29,14 +30,18 @@ function EchoSabreStart( keys )
 	-- Apply attacker modifier
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_double, {})
 
+	-- Apply the slow-applier modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_applier, {})
+
 	-- Reset global variable
-	caster.echo_saber_remaining_hits = max_hits
+	caster.echo_saber_remaining_hits = max_hits - 1
 end
 
 function ReverbRapierStart( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	local modifier_applier = keys.modifier_applier
 	local modifier_double = keys.modifier_double
 
 	-- If the item is in cooldown, do nothing
@@ -61,21 +66,18 @@ function ReverbRapierStart( keys )
 	-- Apply attacker modifier
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_double, {})
 
+	-- Apply the slow-applier modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_applier, {})
+
 	-- Reset global variable
-	caster.echo_saber_remaining_hits = max_hits
+	caster.echo_saber_remaining_hits = max_hits - 1
 end
 
-function EchoSabreHit( keys )
+function EchoSabreStartHit( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
+	local modifier_applier = keys.modifier_applier
 	local modifier_double = keys.modifier_double
-	local modifier_slow = keys.modifier_slow
-
-	-- If the target is not magic immune, apply the slow modifier
-	if not target:IsMagicImmune() then
-		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
-	end
 
 	-- Count down one attack from the limit
 	if caster.echo_saber_remaining_hits then
@@ -86,6 +88,25 @@ function EchoSabreHit( keys )
 	if caster.echo_saber_remaining_hits and caster.echo_saber_remaining_hits <= 0 then
 		caster:RemoveModifierByName(modifier_double)
 	end
+
+	-- Apply the slow-applier modifier
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_applier, {})
+end
+
+function EchoSabreFinishHit( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_applier = keys.modifier_applier
+	local modifier_slow = keys.modifier_slow
+
+	-- If the target is not magic immune, apply the slow modifier
+	if not target:IsMagicImmune() then
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+	end
+
+	-- Remove the slow-applier modifier
+	caster:RemoveModifierByName(modifier_applier)
 end
 
 function EchoSabreEnd( keys )

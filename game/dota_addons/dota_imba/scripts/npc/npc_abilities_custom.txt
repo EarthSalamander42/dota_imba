@@ -17550,19 +17550,6 @@
 				"stun_duration"			"%mini_stun"
 			}
 
-			//"Stun"
-			//{
-			//	"Target"
-			//	{
-			//		"Center"			"TARGET"
-			//		"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-			//		"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-			//		"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-			//	}
-			//
-			//	"Duration"				"%mini_stun"
-			//}	
-
 			"TrackingProjectile"
 			{
 				"Target"
@@ -20344,10 +20331,13 @@
 		}
 	}
 	
-	// Rewrite of Nevermore Presence of the Dark Lord for DotA Imba
+	// Rewrite of Nevermore Presence of the Dark Lord for DotA IMBA
 	// Original recreated by Noya on April 5, 2015
 	// Author: Thor
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Presence of the Dark Lord
+	//=================================================================================================================
 	"imba_nevermore_dark_lord"
 	{
 	    // General
@@ -20475,6 +20465,9 @@
 	// Temporary soul counter inspired by Rook's implementation of Slark Essence Shift
 	// Author: Thor
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Necromastery
+	//=================================================================================================================
 	"imba_nevermore_necromastery"
 	{
 	    // General
@@ -20622,9 +20615,13 @@
 	        }
 	    }
 	}
-	// Rewrite of Nevermore Requiem
+
+	// Rewrite of Nevermore Requiem for DotA IMBA
 	// Author: Thorminator
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Requiem of Souls
+	//=================================================================================================================
 	"imba_nevermore_requiem"
 	{
 	    // General
@@ -20898,6 +20895,9 @@
 	// Rewrite of Nevermore Requiem (auxillary for inward waves)
 	// Author: Thorminator
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Requiem of Souls (aux)
+	//=================================================================================================================
 	"imba_nevermore_requiem_aux"
 	{
 		// General
@@ -20941,10 +20941,14 @@
 	        }
 	    }
 	}
+
 	// Rewrite of Nevermore Shadowraze for DotA Imba
 	// Original recreated by Noya on April 5, 2015
 	// Author: Thor
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Shadowraze #1
+	//=================================================================================================================
 	"imba_nevermore_shadowraze1"
 	{
 	    // General
@@ -21063,10 +21067,14 @@
 	        }
 	    }
 	}
+
 	// Rewrite of Nevermore Shadowraze for DotA Imba
 	// Original recreated by Noya on April 5, 2015
 	// Author: Thor
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Shadowraze #2
+	//=================================================================================================================
 	"imba_nevermore_shadowraze2"
 	{
 	    // General
@@ -21176,6 +21184,9 @@
 	// Original recreated by Noya on April 5, 2015
 	// Author: Thor
 	// Date: August 28, 2016
+	//=================================================================================================================
+	// Shadow Fiend's Shadowraze #3
+	//=================================================================================================================
 	"imba_nevermore_shadowraze3"
 	{
 	    // General

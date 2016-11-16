@@ -18094,7 +18094,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ranged_cooldown"		"7.0"
+				"ranged_cooldown"		"6.0"
 			}
 		}
 		
@@ -18134,7 +18134,7 @@
 						"Function"			"EchoSabreStart"
 						
 						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
-						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
+						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
 					}
 				}
 
@@ -18159,15 +18159,15 @@
 
 				"Duration"				"2.5"
 				
-				"OnAttackLanded"
+				"OnAttackStart"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreHit"
+						"Function"			"EchoSabreStartHit"
 						
+						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
 						"modifier_double"	"modifier_item_imba_echo_sabre_double_hit"
-						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
 					}
 				}
 
@@ -18177,6 +18177,28 @@
 					{
 						"ScriptFile"		"items/item_echo_sabre.lua"
 						"Function"			"EchoSabreEnd"
+					}
+				}
+			}
+
+			"modifier_item_imba_echo_sabre_slow_applier"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+
+				"Duration"				"1.5"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreFinishHit"
+						
+						"modifier_applier"	"modifier_item_imba_echo_sabre_slow_applier"
+						"modifier_slow"		"modifier_item_imba_echo_sabre_slow"
 					}
 				}
 			}
@@ -18221,7 +18243,7 @@
 		"ItemResult"					"item_imba_reverb_rapier"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_echo_sabre;item_imba_relic"
+			"01"						"item_imba_echo_sabre;item_claymore;item_claymore"
 		}
 	}
 	
@@ -18249,7 +18271,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"6450"
+		"ItemCost"						"5450"
 		"ItemShopTags"					"int;attack_speed;damage;regen_mana;damage;hard_to_tag"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"reverb rapier"
@@ -18278,7 +18300,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"120"
+				"bonus_damage"			"90"
 			}
 			"05"
 			{
@@ -18288,7 +18310,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bat_reduction"			"-80"
+				"bat_reduction"			"-90"
 			}
 			"07"
 			{
@@ -18308,12 +18330,12 @@
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_hits"				"4"
+				"max_hits"				"3"
 			}
 			"11"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ranged_cooldown"		"7.0"
+				"ranged_cooldown"		"6.0"
 			}
 		}
 		
@@ -18353,7 +18375,7 @@
 						"Function"			"ReverbRapierStart"
 						
 						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
-						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
+						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
 					}
 				}
 
@@ -18377,16 +18399,16 @@
 				"IsBuff"				"1"
 
 				"Duration"				"2.5"
-				
-				"OnAttackLanded"
+
+				"OnAttackStart"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"items/item_echo_sabre.lua"
-						"Function"			"EchoSabreHit"
+						"Function"			"EchoSabreStartHit"
 						
 						"modifier_double"	"modifier_item_imba_reverb_rapier_quadra_hit"
-						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
+						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
 					}
 				}
 
@@ -18396,6 +18418,28 @@
 					{
 						"ScriptFile"		"items/item_echo_sabre.lua"
 						"Function"			"EchoSabreEnd"
+					}
+				}
+			}
+
+			"modifier_item_imba_reverb_rapier_slow_applier"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsPurgable"			"0"
+				"IsBuff"				"1"
+
+				"Duration"				"1.5"
+				
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_echo_sabre.lua"
+						"Function"			"EchoSabreFinishHit"
+						
+						"modifier_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
+						"modifier_slow"		"modifier_item_imba_reverb_rapier_slow"
 					}
 				}
 			}
