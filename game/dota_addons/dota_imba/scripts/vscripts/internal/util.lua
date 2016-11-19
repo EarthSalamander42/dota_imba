@@ -1712,3 +1712,38 @@ function IsStolenSpell(caster)
 
 	return false
 end
+
+-- Sets level of the ability with [ability_name] to [level] for [caster] if the caster has this ability
+function SetAbilityLevelIfPresent(caster, ability_name, level)
+	local ability = caster:FindAbilityByName(ability_name)
+	if ability then
+		ability:SetLevel(level)
+	end
+end
+
+-- Refreshes ability with [ability_name] for [caster] if the caster has this ability
+function RefreshAbilityIfPresent(caster, ability_name)
+	local ability = caster:FindAbilityByName(ability_name)
+	if ability then
+		ability:EndCooldown()
+	end
+end
+
+-- Returns true if a hero has red hair
+function IsGinger(unit)
+
+	local ginger_hero_names = {
+		"npc_dota_hero_enchantress",
+		"npc_dota_hero_lina",
+		"npc_dota_hero_windrunner"
+	}
+
+	local unit_name = unit:GetName()
+	for _,name in pairs(ginger_hero_names) do
+		if name == unit_name then
+			return true
+		end
+	end
+	
+	return false
+end

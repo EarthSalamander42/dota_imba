@@ -87,19 +87,30 @@ function Gust( keys )
 			caster.gust_enemy_hit = false
 		end)
 
-		-- Caster knockback
-		knockback_modifier = {
-			should_stun = 0,
-			knockback_duration = self_knockback_duration,
-			duration = self_knockback_duration,
-			knockback_distance = knockback_distance,
-			knockback_height = knockback_height,
-			center_x = target_loc.x,
-			center_y = target_loc.y,
-			center_z = target_loc.z
-		}
-		caster:RemoveModifierByName("modifier_knockback")
-		caster:AddNewModifier(caster, ability, "modifier_knockback", knockback_modifier )
+		-- Backflip
+		local steps = math.floor(self_knockback_duration / 0.03)
+		local max_height = 180
+		local height_step = max_height / steps * 0.5
+		local angle_step = 360 / steps
+		local length = (caster_loc - target_loc):Normalized() * knockback_distance
+		local length_step = length / steps
+		
+		local angle = 0
+		local height = max_height
+		local position = caster:GetAbsOrigin()
+		Timers:CreateTimer(0, function()
+			angle = angle + angle_step
+			position = position + length_step
+			height = height - height_step
+			caster:SetAngles(-angle, 0, 0)
+			caster:SetAbsOrigin(position + Vector(0, 0, height))
+			if angle < 360 then
+				return 0.03
+			else
+				FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+				caster:SetAngles(0, 0, 0)
+			end
+		end)
 
 	end
 

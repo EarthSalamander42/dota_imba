@@ -459,13 +459,6 @@ function NetherWardZap( keys )
 	local ward_position = ward:GetAbsOrigin()
 
 	-- Special cases
-	-- Requiem of Souls: add souls before cast
-	if cast_ability_name == "nevermore_requiem" then
-		ward:AddAbility("nevermore_necromastery")
-		local ability_souls = ward:FindAbilityByName("nevermore_necromastery")
-		ward:AddNewModifier(ward, ability_souls, "modifier_nevermore_necromastery", {})
-		ward:SetModifierStackCount("modifier_nevermore_necromastery", ward, 40)
-	end
 
 	-- Nether Strike: add greater bash
 	if cast_ability_name == "spirit_breaker_nether_strike" then
@@ -487,6 +480,11 @@ function NetherWardZap( keys )
 	-- Earth Splitter: ignore cast range
 	if cast_ability_name == "elder_titan_earth_splitter" then
 		ability_range = 25000
+	end
+
+	-- Shadowraze #2/#3: face the caster
+	if cast_ability_name == "imba_nevermore_shadowraze3" or cast_ability_name == "imba_nevermore_shadowraze2" then
+		ward:SetForwardVector((target_point - ward_position):Normalized())
 	end
 
 	-- Storm Bolt: choose another target
