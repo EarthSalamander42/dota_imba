@@ -2518,10 +2518,10 @@
 	//=================================================================================================================
 	"arc_warden_flux"
 	{
-		"AbilityCastRange"				"650 800 950 1100"
+		"AbilityCastRange"				"725 850 975 1100"
 		"AbilityCastPoint"				"0.2"
 		
-		"AbilityCooldown"				"20.0"
+		"AbilityCooldown"				"18.0 17.0 16.0 15.0"
 
 		"AbilityManaCost"				"50"
 
@@ -2540,7 +2540,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"search_radius"			"225"
+				"search_radius"			"180"
 			}
 			"04"
 			{
@@ -2555,7 +2555,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"650 800 950 1100"
+				"cast_range_tooltip"	"725 850 975 1100"
 			}
 		}
 	}
@@ -2567,7 +2567,7 @@
 	{
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityCooldown"				"50 45 40 35"
+		"AbilityCooldown"				"30 25 20 15"
 
 		"AbilityManaCost"				"110"
 		
@@ -2578,12 +2578,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"300 350 400 450"
+				"radius"					"275"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.5 4.0 4.5 5.0"
+				"duration"					"5.5 6.0 6.5 7.0"
 			}
 			"03"
 			{
@@ -2606,9 +2606,9 @@
 		"AbilityCastRange"					"2000"
 		"AbilityCastPoint"					"0.2"
 		
-		"AbilityCooldown"					"3.0"
+		"AbilityCooldown"					"2.5"
 
-		"AbilityManaCost"					"100"
+		"AbilityManaCost"					"80"
 
 		"AbilitySpecial"
 		{
@@ -2620,7 +2620,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"3.0"
+				"activation_delay"			"2.0"
 			}			
 			"03"
 			{
@@ -2652,6 +2652,11 @@
 				"var_type"					"FIELD_FLOAT"
 				"wraith_vision_duration"	"4.0"
 			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ministun_duration"			"1.0"
+			}
 		}
 	}
 
@@ -2665,17 +2670,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"20.0 25.0 30.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_cost_pct"		"30 15 0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_cost_pct"			"30 15 0"
+				"duration"				"15.0 20.0 25.0"
 			}
 		}
 	}
@@ -4013,23 +4008,23 @@
 	//=================================================================================================================
 	"dark_seer_vacuum"
 	{
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"600"
 
 		"AbilityCastPoint"				"0.3"
 
-		"AbilityCooldown"				"28 23 18 13"
+		"AbilityCooldown"				"28 25 22 19"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
+				"radius"				"525 625 725 825"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.6"
+				"duration"				"0.5"
 			}
 			"03"
 			{
@@ -4049,12 +4044,12 @@
 	//=================================================================================================================
 	"dark_seer_ion_shell"
 	{
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 		
-		"AbilityCooldown"				"7"
+		"AbilityCooldown"				"9"
 		
-		"AbilityManaCost"				"90"
+		"AbilityManaCost"				"70 80 90 100 110 120 130"
 
 		"MaxLevel"						"7"
 
@@ -4063,12 +4058,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"300 320 340 360 380 400 420"
+				"radius"				"260 270 280 290 300 310 320"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"50 75 100 125 150 175 200"
+				"damage_per_second"		"40 60 80 100 120 140 160"
 			}
 			"03"
 			{
@@ -4083,9 +4078,9 @@
 	//=================================================================================================================
 	"dark_seer_surge"
 	{
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"600"
 
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastPoint"				"0.1"
 
 		"AbilityCooldown"				"9"
 
@@ -4098,7 +4093,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0"
+				"duration"				"7.5"
 			}
 		}
 	}
@@ -4113,29 +4108,29 @@
 
 		"AbilityCooldown"					"100"
 
-		"AbilityManaCost"					"0"
+		"AbilityManaCost"					"125 250 375"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"175 225 275"
+				"damage"					"150 200 250"
 			}	
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"50.0"
+				"duration"					"45.0"
 			}			
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_damage_outgoing"	"-30 0 30"
+				"replica_damage_outgoing"	"-30 -15 0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"70 100 130"
+				"tooltip_outgoing"			"70 85 100"
 			}
 			"05"
 			{
@@ -4156,7 +4151,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"replica_scale"				"30"
+				"replica_scale"				"25"
 			}
 			"09"
 			{
@@ -4166,12 +4161,12 @@
 			"10"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"replica_damage_outgoing_scepter"	"30 90 150"
+				"replica_damage_outgoing_scepter"	"20 50 80"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing_scepter"	"130 190 250"
+				"tooltip_outgoing_scepter"	"120 150 180"
 			}
 		}
 	}

@@ -494,7 +494,7 @@ function GameMode:DamageFilter( keys )
 	end
 
 	-- Magic shield damage prevention
-	if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") then
+	if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
 
 		-- Parameters
 		local shield_stacks = victim:GetModifierStackCount("modifier_item_imba_initiate_robe_stacks", nil)

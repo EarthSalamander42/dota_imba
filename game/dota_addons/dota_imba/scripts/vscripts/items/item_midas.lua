@@ -6,7 +6,7 @@ function MidasPassiveGold( keys )
 	local ability = keys.ability
 
 	-- If this unit is not a real hero, do nothing
-	if not caster:IsRealHero() then
+	if caster:HasModifier("modifier_arc_warden_tempest_double") or not caster:IsRealHero() then
 		return nil
 	end
 

@@ -7498,11 +7498,11 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"			"items/item_rapier.lua"
-						"Function"				"RapierVision"
+						"ScriptFile"		"items/item_rapier.lua"
+						"Function"			"RapierVision"
 
-						"modifier_phys"			"modifier_item_imba_rapier_stacks_phys"
-						"modifier_magic"		"modifier_item_imba_rapier_stacks_magic"
+						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
+						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
 					}
 				}
 
@@ -18614,6 +18614,140 @@
 		}
 	}
 
-	//rapier freed IDs: 2160-2164
+	//=================================================================================================================
+	// Recipe: Aghanim's Synth
+	//=================================================================================================================
+	"item_recipe_imba_ultimate_scepter_synth"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2160"
+		"BaseClass"						"item_datadriven"
+		"Model"							"models/props_gameplay/recipe.mdl"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"12000"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_ultimate_scepter_synth"
+		"ItemRequirements"
+		{
+			"01"						"item_ultimate_scepter"
+		}
+	}
+
+	//=================================================================================================================
+	// Aghanim's Synth
+	//=================================================================================================================
+	"item_imba_ultimate_scepter_synth"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2161"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName" 			"item_imba_ultimate_scepter_synth"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"16200"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemAliases"					"aghanim; scepter; ultimate; synth; alchemist"
+		"ItemStackable"					"0"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemRequiresCharges" 			"1"
+		"SideShop"						"0"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"14"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"300"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"250"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"items/item_aghanim.lua"
+				"Function"				"AghanimsSynthCast"
+				
+				"modifier_synth"		"modifier_item_ultimate_scepter_consumed"
+				"modifier_stats"		"modifier_item_imba_ultimate_scepter_synth_stats"
+				"sound_cast"			"Hero_Alchemist.Scepter.Cast"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_ultimate_scepter_synth"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_all_stats"
+					"MODIFIER_PROPERTY_HEALTH_BONUS" 			"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS" 				"%bonus_mana"
+				}
+			}
+
+			"modifier_item_imba_ultimate_scepter_synth_stats"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsBuff"				"1"
+				"IsPurgable"			"0"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_all_stats"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%bonus_all_stats"
+					"MODIFIER_PROPERTY_HEALTH_BONUS" 			"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS" 				"%bonus_mana"
+				}
+			}
+		}
+	}
+
+	//rapier freed IDs: 2162-2164
 	//next free ID: 2204
 }

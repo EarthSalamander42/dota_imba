@@ -330,8 +330,8 @@ function ReincarnationScepterAura( keys )
 	local modifier_wraith = keys.modifier_wraith
 	local scepter = HasScepter(caster)
 
-	-- If the ability was unlearned, or the caster has no scepter, do nothing
-	if not ability or not scepter then
+	-- If the ability was unlearned, or the caster has no scepter, or the caster is dead, do nothing
+	if not ability or not scepter or not caster:IsAlive() then
 		return nil
 	end
 

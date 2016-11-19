@@ -176,21 +176,107 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arc Warden Refresher Orb interaction
+	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------
 
-	if npc:GetName() == "npc_dota_hero_arc_warden" then
+	if npc:HasModifier("modifier_arc_warden_tempest_double") then
 
-		-- Trigger Refresher Orb's cooldown on this arc warden
-		if npc ~= self.heroes[npc:GetOwnerEntity():GetPlayerID()] then
-			Timers:CreateTimer(0.01, function()
-				for i = 0, 5 do
-					local item = npc:GetItemInSlot(i)
-					if item and item:GetAbilityName() == "item_imba_refresher" then
-						item:StartCooldown(item:GetCooldown(0))
+		-- List of items the clone can't carry
+		local clone_forbidden_items = {
+			"item_imba_rapier",
+			"item_imba_rapier_magic",
+			"item_imba_rapier_dummy",
+			"item_imba_moon_shard",
+			"item_imba_soul_of_truth",
+			"item_imba_refresher"
+		}
+
+		-- Iterate through the clone's items
+		Timers:CreateTimer(0.05, function()
+			for i = 0, 5 do
+				local current_item = npc:GetItemInSlot(i)
+
+				-- Remove any existing forbidden items on the clone
+				for _, forbidden_item in pairs(clone_forbidden_items) do
+					if current_item and current_item:GetName() == forbidden_item then
+						npc:RemoveItem(current_item)
+						break
 					end
 				end
-			end)
+			end
+
+			-- Erase any leftover modifiers
+			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_phys")
+			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_magic")
+		end)
+
+		-- List of modifiers which carry over from the main hero to the clone
+		local clone_shared_buffs = {
+			"modifier_imba_unlimited_level_powerup",
+			"modifier_imba_moon_shard_stacks_dummy",
+			"modifier_imba_moon_shard_consume_1",
+			"modifier_imba_moon_shard_consume_2",
+			"modifier_imba_moon_shard_consume_3",
+			"modifier_item_imba_soul_of_truth"
+		}
+
+		-- Iterate through the main hero's potential modifiers
+		local main_hero = npc:GetOwner():GetAssignedHero()
+		for _, shared_buff in pairs(clone_shared_buffs) do
+			
+			-- If the main hero has this modifier, copy it to the clone
+			if main_hero:HasModifier(shared_buff) then
+				local shared_buff_modifier = main_hero:FindModifierByName(shared_buff)
+				local shared_buff_ability = shared_buff_modifier:GetAbility()
+
+				-- If a source ability was found, use it
+				if shared_buff_ability then
+					shared_buff_ability:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+
+				-- Else, it's a consumable item modifier. Create a dummy item to use the ability from.
+				else
+					-- Moon Shard
+					if string.find(shared_buff, "moon_shard") then
+
+						-- Create dummy item
+						local dummy_item = CreateItem("item_imba_moon_shard", npc, npc)
+						main_hero:AddItem(dummy_item)
+
+						-- Fetch dummy item's ability handle
+						for i = 0, 11 do
+							local current_item = main_hero:GetItemInSlot(i)
+							if current_item and current_item:GetName() == "item_imba_moon_shard" then
+								current_item:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+								break
+							end
+						end
+						main_hero:RemoveItem(dummy_item)
+					end
+
+					-- Soul of Truth
+					if shared_buff == "modifier_item_imba_soul_of_truth" then
+
+						-- Create dummy item
+						local dummy_item = CreateItem("item_imba_soul_of_truth", npc, npc)
+						main_hero:AddItem(dummy_item)
+
+						-- Fetch dummy item's ability handle
+						for i = 0, 11 do
+							local current_item = main_hero:GetItemInSlot(i)
+							if current_item and current_item:GetName() == "item_imba_soul_of_truth" then
+								current_item:ApplyDataDrivenModifier(main_hero, npc, shared_buff, {})
+								break
+							end
+						end
+						main_hero:RemoveItem(dummy_item)
+					end
+				end
+
+				-- Apply any stacks if relevant
+				if main_hero:GetModifierStackCount(shared_buff, nil) > 0 then
+					npc:SetModifierStackCount(shared_buff, main_hero, main_hero:GetModifierStackCount(shared_buff, nil))
+				end
+			end
 		end
 	end
 
@@ -230,24 +316,6 @@ function GameMode:OnNPCSpawned(keys)
 			else
 				npc:SetAbilityPoints( math.min(npc:GetLevel(), 25) )
 			end
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: War Veteran stack updater
-	-------------------------------------------------------------------------------------------------
-	
-	-- Attempt to find War Veteran ability 
-	local ability_powerup = npc:FindAbilityByName("imba_unlimited_level_powerup")
-	if ability_powerup then
-
-		-- Fetch hero level and current amount of stacks
-		local correct_amount = math.max( npc:GetLevel() - 25, 0)
-		local power_stacks = npc:GetModifierStackCount("modifier_imba_unlimited_level_powerup", ability_powerup)
-
-		-- If the number of stacks is not correct, fix it
-		if power_stacks < correct_amount then
-			AddStacks(ability_powerup, npc, npc, "modifier_imba_unlimited_level_powerup", ( correct_amount - power_stacks ), true)
 		end
 	end
 
@@ -611,26 +679,6 @@ function GameMode:OnPlayerLevelUp(keys)
 			if hero_level > 35 then
 				hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
 			end
-
-		-- Arc Warden is also tricky
-		--elseif hero:GetName() == "npc_dota_hero_arc_warden" then
-
-			-- If the generic powerup isn't present, apply it
-		--	local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-		--	if not ability_powerup then
-		--		hero:AddAbility("imba_unlimited_level_powerup")
-		--		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-		--		ability_powerup:SetLevel(1)
-		--	end
-
-			-- Apply the relevant amount of stacks of the high level power-up
-		--	local buff_stacks = hero_level - 25
-		--	if buff_stacks > 0 then
-		--		ability_powerup:ApplyDataDrivenModifier(hero, hero, "modifier_imba_unlimited_level_powerup", {})
-		--		hero:SetModifierStackCount("modifier_imba_unlimited_level_powerup", hero, buff_stacks)
-		--	else
-		--		hero:RemoveModifierByName("modifier_imba_unlimited_level_powerup")
-		--	end
 		else
 
 			-- Prevent the hero from gaining further ability points after level 25
@@ -643,9 +691,6 @@ function GameMode:OnPlayerLevelUp(keys)
 				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 				ability_powerup:SetLevel(1)
 			end
-
-			-- Increase the amount of stacks of the high level power-up
-			AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", 1, true)
 		end
 	end
 

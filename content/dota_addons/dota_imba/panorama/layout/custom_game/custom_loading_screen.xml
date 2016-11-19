@@ -43,8 +43,6 @@
 
 			<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
 			<Label id="community_post_description_02" class="CommunityText" html="true" text="#community_post_description_02"/>
-			<Label id="community_post_description_03" class="CommunityText" html="true" text="#community_post_description_03"/>
-			<Label id="community_post_description_04" class="CommunityText" html="true" text="#community_post_description_04"/>
 		</Panel>
 	</Panel>
 </root>

@@ -5067,17 +5067,17 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ms_bonus"								"3"
+				"ms_bonus"								"2"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"3"
+				"as_bonus"								"2"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"dmg_bonus"								"3"
+				"dmg_bonus"								"2"
 			}
 		}
 
@@ -5085,12 +5085,25 @@
 		{
 			"modifier_imba_unlimited_level_powerup"
 			{
-				"Passive"								"0"
+				"Passive"								"1"
 				"IsHidden"								"0"
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
 		
 				"Attributes"							"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"ThinkInterval"							"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"					"hero/npc_upgrades.lua"
+						"Function"						"WarVeteranUpdater"
+
+						"modifier_stacks"				"modifier_imba_unlimited_level_powerup"
+					}
+				}
 		
 				"Properties"
 				{
@@ -8445,7 +8458,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pit_dmg_reduction"		"-30 -40 -50 -60"
+				"pit_dmg_reduction"		"-20 -30 -40 -50"
 			}
 		}	
 
@@ -8773,7 +8786,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"6.0"
+				"duration_scepter"			"4.5"
 			}
 			"07"
 			{
@@ -30995,6 +31008,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"140 100 60"
+		"AbilityCastRange"				"900"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
