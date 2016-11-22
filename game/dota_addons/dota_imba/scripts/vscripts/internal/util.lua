@@ -266,6 +266,7 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_crimson_guard_active")
 	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
+	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -1128,11 +1129,17 @@ end
 -- Returns the total cooldown reduction on a given unit
 function GetCooldownReduction( unit )
 
+	local reduction = 1.0
+
+	-- Octarine Core
 	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
-		return 0.75
-	else
-		return 1
+		reduction = reduction * 0.75
 	end
+
+	-- Frantic mode
+	reduction = reduction /FRANTIC_MULTIPLIER
+
+	return reduction
 end
 
 -- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)

@@ -17588,7 +17588,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"90"
+				"bonus_movement_speed"	"100"
 			}
 			"02"
 			{
@@ -17664,7 +17664,7 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Tranquil Boots II
+	// Recipe: Ironleaf Boots
 	//=================================================================================================================
 	"item_recipe_imba_tranquil_boots_2"
 	{
@@ -17675,7 +17675,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"	
+		"ItemCost"						"900"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -17684,35 +17684,35 @@
 		"ItemResult"					"item_imba_tranquil_boots_2"
 		"ItemRequirements"
 		{
-			"01"						"item_tranquil_boots;item_platemail;item_imba_ring_of_health;item_imba_ring_of_health"
+			"01"						"item_tranquil_boots;item_platemail;item_imba_ring_of_health"
 		}
 	}
-	
+
 	//=================================================================================================================
-	// Tranquil Boots II
+	// Ironleaf Boots
 	//=================================================================================================================
 	"item_imba_tranquil_boots_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2191"
-		"BaseClass"						"item_tranquil_boots"
-		"AbilityTextureName" 			"item_imba_tranquil_boots_2"
+		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
+		"AbilityTextureName"			"item_imba_tranquil_boots_2"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.0"
-		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"1200"
+		"AbilityCooldown"				"5.0"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4025"
+		"ItemCost"						"4050"
 		"ItemShopTags"					"move_speed;regen_health;armor"
 		"ItemQuality"					"rare"
-		"ItemAliases"					"tranquil boots"
-		"ItemHideCharges"		     	"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemAliases"					"tranquils; tranquil boots; ironleaf boots"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -17721,52 +17721,187 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"110"
+				"base_move_speed"		"60"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"18"
+				"base_armor"			"18"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"36"
+				"base_health_regen"		"16"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_duration"			"16.0"
+				"var_type"				"FIELD_INTEGER"
+				"move_speed_per_sec"	"7"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"256"
+				"var_type"				"FIELD_FLOAT"
+				"health_regen_per_sec"	"2.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_interval"			"0.334"
+				"armor_per_sec"			"1.0"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_time"			"2"
+				"max_stacks"			"20"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_count"			"1"
+				"radius"				"1200"
 			}
-			"09"
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_tranquil_boots_2"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"break_threshold"		"20"
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%base_move_speed"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%base_health_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%base_armor"
+				}
 			}
-			"10"
+
+			"modifier_item_imba_tranquil_boots_unique"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"broken_movement_speed"	"80"
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+
+				"Aura"						"modifier_item_imba_tranquil_boots_aura_thinker"
+				"Aura_Radius"				"%radius"
+				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
+
+				"ThinkInterval"				"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsThink"
+
+						"modifier_move"		"modifier_item_imba_tranquil_boots_2_movement_stacks"
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsBreak"
+
+						"modifier_move"		"modifier_item_imba_tranquil_boots_2_movement_stacks"
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+
+				"OnAttacked"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsBreak"
+
+						"modifier_move"		"modifier_item_imba_tranquil_boots_2_movement_stacks"
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsBreak"
+
+						"modifier_move"		"modifier_item_imba_tranquil_boots_2_movement_stacks"
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+			}
+
+			"modifier_item_imba_tranquil_boots_aura_thinker"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+				
+				"ThinkInterval"				"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsAllyThink"
+
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_boots.lua"
+						"Function"			"TranquilsAllyEnd"
+
+						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
+					}
+				}
+			}
+
+			"modifier_item_imba_tranquil_boots_2_movement_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+
+				"EffectName"				"particles/item/boots/ironleaf_boots_tranquility.vpcf"
+				"EffectAttachType"			"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"1"
+				}
+			}
+
+			"modifier_item_imba_tranquil_boots_2_stacks"
+			{
+				"Passive"					"0"
+				"IsHidden"					"0"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen_per_sec"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_sec"
+				}
 			}
 		}
 	}
@@ -17784,7 +17919,7 @@
 		"AbilityTextureName"			"item_blink"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
-		
+
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
@@ -17792,7 +17927,7 @@
 		"AbilityCooldown"				"7.0"
 		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"blink"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"2250"
@@ -17801,7 +17936,7 @@
 		"ItemAliases"					"blink dagger"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-	
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17929,6 +18064,16 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"bonus_movement_speed"		"110"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_extra_distance"		"2800"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_extra_cooldown"		"12.0"
 			}
 		}
 		

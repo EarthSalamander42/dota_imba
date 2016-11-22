@@ -20365,7 +20365,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.67"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCastAnimation"			"ACT_DOTA_RAZE_1"
 		"AbilityCastRange"				"450"
 
@@ -20497,7 +20497,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.67"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCastAnimation"			"ACT_DOTA_RAZE_2"
 		"AbilityCastRange"				"700"
 
@@ -20549,7 +20549,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"raze_amount"				"4"
+				"raze_amount"				"5"
 			}
 		}
 
@@ -20612,7 +20612,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.67"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCastAnimation"			"ACT_DOTA_RAZE_2"
 		"AbilityCastRange"				"1500"
 
@@ -20771,7 +20771,7 @@
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"temp_soul_duration"			"15 20 25 30"
+				"temp_soul_duration"			"20 30 40 50"
 			}
 			"08"
 			{
@@ -20782,6 +20782,11 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"soul_projectile_speed"			"1500"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"harvest_levels_per_soul"		"15"
 			}
 		}
 
@@ -21183,7 +21188,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_duration"				"5"
+				"slow_duration"				"6"
 			}
 			"07"
 			{
@@ -30353,6 +30358,17 @@
 						"Function"		"BerserkersRageAttack"
 
 						"sound_bash"	"Hero_TrollWarlord.BerserkersRage.Stun"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_imba_berserkers_rage"
 					}
 				}
 			}

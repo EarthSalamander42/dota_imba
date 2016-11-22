@@ -173,12 +173,8 @@ function LightStrikeArray( keys )
 		-- Create a sound/visibility dummy
 		local sound_dummy = CreateUnitByName("npc_dummy_unit", blast_positions[blast_count], false, caster, caster, caster:GetTeamNumber())
 
-		-- Guarantee blast visibility by making the caster briefly visible
-		caster:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.3)
-		caster:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.3)
-
 		-- Play the blast particle
-		local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, caster)
+		local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(blast_pfx, 0, blast_positions[blast_count])
 		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(aoe_radius, 0, 0))
 		ParticleManager:ReleaseParticleIndex(blast_pfx)

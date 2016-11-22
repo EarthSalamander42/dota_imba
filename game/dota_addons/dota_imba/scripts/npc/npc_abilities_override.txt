@@ -958,10 +958,7 @@
 	//=================================================================================================================
 	"item_tranquil_boots"
 	{
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6.0"
-		"AbilityManaCost"				"0"
 
 		"AbilitySpecial"
 		{
@@ -1100,7 +1097,7 @@
 	//=================================================================================================================
 	"item_travel_boots"
 	{
-		"AbilityCooldown"				"40.0"
+		"AbilityCooldown"				"45.0"
 		"AbilityChannelTime"			"2.0"
 		
 		"AbilityManaCost"				"0"
@@ -1125,8 +1122,8 @@
 	//=================================================================================================================
 	"item_travel_boots_2"
 	{
-		"AbilityCooldown"				"35.0"
-		"AbilityChannelTime"			"1.5"
+		"AbilityCooldown"				"40.0"
+		"AbilityChannelTime"			"2.0"
 		
 		"AbilityManaCost"				"0"
 		"ItemCost"						"4350"
@@ -4248,7 +4245,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"formation_time"			"1.0 0.8 0.6 0.4"
+				"formation_time"			"0.0"
 			}
 			"03"
 			{
@@ -4268,7 +4265,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
+				"radius"					"750"
 			}
 			"02"
 			{
@@ -4288,12 +4285,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"9.0"
+				"duration_scepter"			"15.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pulses_scepter"			"36"
+				"pulses_scepter"			"60"
 			}
 		}
 	}
@@ -7155,23 +7152,25 @@
 		"AbilityCastRange"				"25000"
 		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"30"
+
+		"MaxLevel"						"3"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"area_of_effect"			"300 375 425 475"
+				"area_of_effect"			"375 425 475"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_treants"				"4 6 8 10"
+				"max_treants"				"6 8 10"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"90 120 150 180"
+				"duration"					"120 150 180"
 			}
 			"04"
 			{
@@ -7203,17 +7202,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"16 18 20"
+				"max_targets"			"16 18 20 22"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"150 200 250"
+				"damage"				"150 200 250 300"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_percent_add"	"8"
+				"damage_percent_add"	"7"
 			}
 			"04"
 			{
@@ -7223,12 +7222,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_targets_scepter"	"20 25 30"
+				"max_targets_scepter"	"20 25 30 35"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"190 250 310"
+				"damage_scepter"		"190 250 310 370"
 			}
 			"07"
 			{
@@ -14475,7 +14474,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"illusion_dmg_pct"		"100"
-				"CalculateSpellDamageTooltip"	"1"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 			"05"
 			{
@@ -14495,7 +14494,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"360 400 440 480"
+				"radius"				"375 425 475 525"
 			}
 		}
 	}

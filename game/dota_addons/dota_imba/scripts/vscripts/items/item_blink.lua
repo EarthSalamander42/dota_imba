@@ -31,11 +31,29 @@ function blink_start(keys)
 	
 	local origin_point = caster:GetAbsOrigin()
 	local target_point = keys.target_points[1]
-	local distance = target_point - origin_point
+	local distance = (target_point - origin_point):Length2D()
 	
 	-- Set distance if targeted destiny is beyond range
-	if distance:Length2D() > max_blink_range then 
-		target_point = origin_point + (target_point - origin_point):Normalized() * max_blink_range
+	if distance > max_blink_range then
+
+		-- Extra parameters
+		local max_extra_distance = ability:GetLevelSpecialValueFor("max_extra_distance", 0)
+		local max_extra_cooldown = ability:GetLevelSpecialValueFor("max_extra_cooldown", 0)
+
+		-- Calculate total overshoot distance
+		if distance > max_extra_distance then
+			target_point = origin_point + (target_point - origin_point):Normalized() * max_extra_distance
+			Timers:CreateTimer(0.03, function()
+				ability:StartCooldown(ability:GetCooldownTimeRemaining() + max_extra_cooldown * GetCooldownReduction(caster))
+			end)
+
+		-- Calculate cooldown increase if between the two extremes
+		else
+			local extra_fraction = (distance - max_blink_range) / (max_extra_distance - max_blink_range)
+			Timers:CreateTimer(0.03, function()
+				ability:StartCooldown(ability:GetCooldownTimeRemaining() + max_extra_cooldown * extra_fraction * GetCooldownReduction(caster))
+			end)
+		end
 	end
 	
 	-- Adding an extremely small timer for the particles, else they will only appear at the dest

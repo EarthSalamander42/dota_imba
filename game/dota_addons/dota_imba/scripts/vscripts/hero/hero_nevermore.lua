@@ -113,9 +113,11 @@ function NecromasteryAttack(keys)
 		-- Parameters
 		local soul_projectile_speed = ability:GetLevelSpecialValueFor("soul_projectile_speed", ability_level)
 		local hero_attack_souls = ability:GetLevelSpecialValueFor("hero_attack_souls", ability_level)
+		local harvest_levels_per_soul = ability:GetLevelSpecialValueFor("harvest_levels_per_soul", ability_level)
 
 		-- Add temporary souls
-		for i = 1, hero_attack_souls do
+		local total_souls = hero_attack_souls + math.floor(caster:GetLevel() / harvest_levels_per_soul)
+		for i = 1, total_souls do
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_souls_temp, {})
 		end
 
@@ -331,7 +333,9 @@ function ShadowrazeCreateRaze(keys, point, radius, particle_raze)
 			-- Gain temporary souls if Necromastery is learned
 			if ability_necromastery and necromastery_level > 0 and not IsGinger(enemy) then
 				local hero_attack_souls = ability_necromastery:GetLevelSpecialValueFor("hero_attack_souls", necromastery_level - 1 )
-				for i = 1, hero_attack_souls do
+				local harvest_levels_per_soul = ability_necromastery:GetLevelSpecialValueFor("harvest_levels_per_soul", necromastery_level - 1 )
+				local total_souls = hero_attack_souls + math.floor(caster:GetLevel() / harvest_levels_per_soul)
+				for i = 1, total_souls do
 					ability_necromastery:ApplyDataDrivenModifier(caster, caster, modifier_souls_temp, {})
 				end
 			end
@@ -466,8 +470,9 @@ function Shadowraze2Cast(keys)
 	local caster_loc = caster:GetAbsOrigin()
 	local forward_vector = caster:GetForwardVector()
 	local hero_hit = false
-	for i=0, (raze_amount - 1) do
-		raze_point = RotatePosition(caster_loc, QAngle(0, i * 360 / raze_amount, 0), caster_loc + forward_vector * distance)
+	local side_razes = (raze_amount - 1) * 0.5
+	for i = -side_razes, side_razes do
+		raze_point = RotatePosition(caster_loc, QAngle(0, i * 60, 0), caster_loc + forward_vector * distance)
 
 		-- Create raze and track if a hero has been hit
 		hero_hit = ShadowrazeCreateRaze(keys, raze_point, radius, particle_raze) or hero_hit

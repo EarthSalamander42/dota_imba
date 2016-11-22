@@ -3,9 +3,6 @@
 
 function InitiateRobeThink( keys )
 	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
-	local particle_shield = keys.particle_shield
 
 	-- If a higher-level version of the ability is present, do nothing
 	if caster:HasModifier("modifier_item_imba_arcane_nexus_unique") then
@@ -13,16 +10,33 @@ function InitiateRobeThink( keys )
 	end
 
 	-- Parameters
+	local ability = keys.ability
+	local modifier_stacks = keys.modifier_stacks
+	local particle_shield = keys.particle_shield
 	local mana_conversion_rate = ability:GetSpecialValueFor("mana_conversion_rate") * 0.01
 	local max_stacks = ability:GetSpecialValueFor("max_stacks")
 
-	-- Create the global variable, if necessary
+	-- Create the global variables, if necessary
 	if not caster.magic_shield_mana_count then
 		caster.magic_shield_mana_count = caster:GetMana()
 	end
 
-	-- Fetch current mana
+	if not caster.magic_shield_int_count then
+		caster.magic_shield_int_count = caster:GetIntellect()
+	end
+
+	-- Fetch current parameters
 	local current_mana = caster:GetMana()
+	local current_int = caster:GetIntellect()
+
+	-- Adjust mana tracking variable based on intelligence
+	if current_int < caster.magic_shield_int_count then
+		local int_loss = (caster.magic_shield_int_count - current_int)
+		caster.magic_shield_mana_count = caster.magic_shield_mana_count - 12 * int_loss
+	end
+
+	-- Update intelligence count
+	caster.magic_shield_int_count = current_int
 
 	-- If mana was spent or lost, grant magic shield stacks
 	if current_mana < caster.magic_shield_mana_count then
@@ -55,8 +69,9 @@ function InitiateRobeEnd( keys )
 	local ability = keys.ability
 	local modifier_stacks = keys.modifier_stacks
 
-	-- Clear global variable
+	-- Clear global variables
 	caster.magic_shield_mana_count = nil
+	caster.magic_shield_int_count = nil
 
 	-- Remove magic shield stacks
 	caster:RemoveModifierByName(modifier_stacks)

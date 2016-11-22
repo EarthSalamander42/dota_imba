@@ -23,4 +23,11 @@ function AghanimsSynthCast( keys )
 	-- Spend the item's only charge
 	ability:SetCurrentCharges( ability:GetCurrentCharges() - 1 )
 	caster:RemoveItem(ability)
+
+	-- Create a regular scepter for one game frame to prevent regular dota interactions from going bad
+	local dummy_scepter = CreateItem("item_ultimate_scepter", caster, caster)
+	caster:AddItem(dummy_scepter)
+	Timers:CreateTimer(0.01, function()
+		caster:RemoveItem(dummy_scepter)
+	end)
 end
