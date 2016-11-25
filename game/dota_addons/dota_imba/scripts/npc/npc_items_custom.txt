@@ -825,10 +825,10 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
 
-						"modifier"			"modifier_item_imba_hand_of_midas"
+						"modifier"		"modifier_item_imba_hand_of_midas"
 					}
 				}
 			}
@@ -2840,18 +2840,12 @@
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
 			}
-			// If changed, these keyvalues have to be manually updated in the damage filter 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"40"
+				"spell_power"				"30"
 			}
 			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_damage"				"175"
-			}
-			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"distance_taper_start"		"2500"
@@ -2892,6 +2886,24 @@
 			{
 				"Passive"						"1"
 				"IsHidden"						"1"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_orchid.lua"
+						"Function"				"OrchidSpellPowerUp"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_orchid.lua"
+						"Function"				"OrchidSpellPowerDown"
+					}
+				}
 			}
 
 			"modifier_item_imba_orchid_debuff"
@@ -3040,7 +3052,6 @@
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
 			}
-			// If changed, these keyvalues have to be manually updated in the damage filter 
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -3054,12 +3065,17 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"target_crit_multiplier"	"145"
+				"target_crit_multiplier"	"135"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"distance_taper_start"		"2500"
+			}
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"30"
 			}
 		}
 
@@ -3108,6 +3124,24 @@
 						"modifier_crit"			"modifier_imba_bloodthorn_crit"
 					}
 				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_orchid.lua"
+						"Function"				"BloodthornSpellPowerUp"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_orchid.lua"
+						"Function"				"BloodthornSpellPowerDown"
+					}
+				}
 			}
 
 			"modifier_imba_bloodthorn_crit"
@@ -3148,8 +3182,8 @@
 				{
 					"FireSound"
 					{
-						"EffectName"					"DOTA_Item.Bloodthorn.Activate"
-						"Target"						"TARGET"
+						"EffectName"			"DOTA_Item.Bloodthorn.Activate"
+						"Target"				"TARGET"
 					}
 				}
 
@@ -7460,11 +7494,6 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"322"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"stack_damage"				"322"
 			}
 		}
@@ -7586,27 +7615,6 @@
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
 					}
 				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierPreventAttackAmp"
-
-						"modifier_prevent"	"modifier_item_imba_rapier_prevent_attack_amp"
-					}
-				}
-			}
-
-			"modifier_item_imba_rapier_prevent_attack_amp"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.01"
 			}
 		}
 	}
@@ -7648,27 +7656,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"physical_amp"				"80"
+				"spell_power"				"70"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"80"
+				"stack_damage"				"322"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pure_amp"					"30"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
 				"taper_distance"			"2500"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stack_damage"				"161"
 			}
 		}
 
@@ -7790,26 +7788,14 @@
 					}
 				}
 
-				"OnAttackLanded"
+				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierPreventAttackAmp"
-
-						"modifier_prevent"	"modifier_item_imba_rapier_prevent_attack_amp"
+						"Function"			"RapierMagicSpellPowerEnd"
 					}
 				}
-			}
-
-			"modifier_item_imba_rapier_prevent_attack_amp"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.01"
 			}
 		}
 	}
@@ -8108,12 +8094,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"60"
+				"base_damage"			"70"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"extra_damage"			"4.0"
+				"extra_damage"			"3.0"
 			}
 			"05"
 			{
@@ -15617,7 +15603,7 @@
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14"
+		"AbilityCooldown"				"16"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -17858,6 +17844,7 @@
 						"ScriptFile"		"items/item_boots.lua"
 						"Function"			"TranquilsAllyThink"
 
+						"modifier_bearer"	"modifier_item_imba_tranquil_boots_unique"
 						"modifier_stacks"	"modifier_item_imba_tranquil_boots_2_stacks"
 					}
 				}
@@ -17951,6 +17938,16 @@
 				"var_type"					"FIELD_INTEGER"
 				"blink_damage_cooldown"		"2"
 			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_extra_distance"		"1400"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"max_extra_cooldown"		"0.0"
+			}
 		}
 		
 		"OnSpellStart"
@@ -18002,7 +17999,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1500"	
+		"ItemCost"						"1800"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -18039,7 +18036,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4150"
+		"ItemCost"						"4450"
 		"ItemShopTags"					"teleport"
 		"ItemQuality"					"common"
 		"ItemAliases"					"blink;boots"
@@ -18893,6 +18890,596 @@
 		}
 	}
 
-	//rapier freed IDs: 2162-2164
-	//next free ID: 2204
+	//=================================================================================================================
+	// Recipe: Aether Lens
+	//=================================================================================================================
+	"item_recipe_imba_aether_lens"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2162"
+		"BaseClass"						"item_datadriven"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"550"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_aether_lens"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_energy_booster;item_imba_ring_of_health"
+		}
+	}
+
+	//=================================================================================================================
+	// Aether Lens
+	//=================================================================================================================
+	"item_imba_aether_lens"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2163"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_aether_lens"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"2300"
+		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"aether lens"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_bonus"		"200"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_power"			"10"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_aether_lens"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+				
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				}
+			}
+
+			"modifier_item_imba_aether_lens_range"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"ThinkInterval"					"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"AetherLensRangeThink"
+						
+						"modifier_cast_range"	"modifier_item_aether_lens"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"AetherLensRangeDestroy"
+						
+						"modifier_cast_range"	"modifier_item_aether_lens"
+					}
+				}
+			}
+
+			"modifier_item_imba_aether_lens_spell_power"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"AetherLensSpellPowerCreate"						
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"AetherLensSpellPowerDestroy"						
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Nether Wand
+	//=================================================================================================================
+	"item_recipe_imba_nether_wand"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2164"
+		"BaseClass"						"item_datadriven"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"300"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_nether_wand"
+		"ItemRequirements"
+		{
+			"01"						"item_quarterstaff;item_staff_of_wizardry;item_staff_of_wizardry"
+		}
+	}
+
+	//=================================================================================================================
+	// Nether Wand
+	//=================================================================================================================
+	"item_imba_nether_wand"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2204"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_nether_wand"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3175"
+		"ItemShopTags"					"int;damage;attack_speed;attack_damage;hard_to_tag"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"wand;nether wand"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"28"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"2.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_amount"			"6"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_tick"				"0.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_power"			"10"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_nether_wand"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as" 
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+				}
+			}
+
+			"modifier_item_imba_nether_wand_unique"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWand"
+
+						"modifier_burn"			"modifier_item_imba_nether_wand_burn"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_nether_wand_unique"
+					}
+				}
+			}
+
+			"modifier_item_imba_nether_wand_burn"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"Purgable"						"1"
+
+				"Duration"						"%burn_duration"
+
+				"EffectName"					"particles/item/nether_wand/nether_burn_debuff.vpcf"
+				"EffectAttachType"				"follow_origin"	
+
+				"ThinkInterval"					"%burn_tick"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandTick"	
+
+						"modifier_unique"		"modifier_item_imba_nether_wand_unique"					
+					}
+				}
+			}
+
+			"modifier_item_imba_nether_wand_spell_power"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandSpellPowerCreate"						
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandSpellPowerDestroy"						
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Elder Staff
+	//=================================================================================================================
+	"item_recipe_imba_elder_staff"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2205"
+		"BaseClass"						"item_datadriven"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_elder_staff"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_nether_wand;item_imba_aether_lens"
+		}
+	}
+
+	//=================================================================================================================
+	// Nether Wand
+	//=================================================================================================================
+	"item_imba_elder_staff"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2206"
+		"BaseClass"						"item_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"item_imba_elder_staff"
+		"Model"							"models/props_gameplay/red_box.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5475"
+		"ItemShopTags"					"int;damage;attack_speed;attack_damage;mana;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"elder staff"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_as"				"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"300"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_bonus"		"300"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spell_power"			"25"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_duration"			"2.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_amount"			"7"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_tick"				"0.5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_item_imba_elder_staff"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"
+				"IsBuff"					"1"
+				"Purgable"					"0"
+
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as" 
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_intellect"
+					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%bonus_health_regen"
+				}
+			}
+
+			"modifier_item_imba_elder_staff_unique"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnDealDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"ElderStaff"
+
+						"modifier_burn"			"modifier_item_imba_elder_staff_burn"
+					}
+				}
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"internal/util.lua"
+						"Function"				"IllusionPassiveRemover"
+
+						"modifier"				"modifier_item_imba_elder_staff_unique"
+					}
+				}
+			}
+
+			"modifier_item_imba_elder_staff_burn"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"Purgable"						"1"
+
+				"Duration"						"%burn_duration"
+
+				"EffectName"					"particles/item/nether_wand/nether_burn_debuff.vpcf"
+				"EffectAttachType"				"follow_origin"	
+
+				"ThinkInterval"					"%burn_tick"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandTick"	
+
+						"modifier_unique"		"modifier_item_imba_elder_staff_unique"					
+					}
+				}
+			}
+
+			"modifier_item_imba_elder_staff_spell_power"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandSpellPowerCreate"						
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_nether_wand.lua"
+						"Function"				"NetherWandSpellPowerDestroy"						
+					}
+				}
+			}
+
+			"modifier_item_imba_elder_staff_range"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"Purgable"						"0"
+
+				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
+
+				"ThinkInterval"					"1.0"
+
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"ElderStaffRangeThink"
+						
+						"modifier_cast_range"	"modifier_item_aether_lens"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"items/item_aether_lens.lua"
+						"Function"				"ElderStaffRangeDestroy"
+						
+						"modifier_cast_range"	"modifier_item_aether_lens"
+					}
+				}
+			}
+		}
+	}
+
+	//next free ID: 2207
 }

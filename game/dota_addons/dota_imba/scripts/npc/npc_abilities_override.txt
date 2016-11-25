@@ -262,6 +262,8 @@
     "item_bloodthorn"				"REMOVE"
     "item_recipe_echo_sabre"		"REMOVE"
     "item_echo_sabre"				"REMOVE"
+    "item_recipe_aether_lens"		"REMOVE"
+	//"item_aether_lens"			"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1617,32 +1619,23 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Aether Lens
-	//=================================================================================================================
-	"item_recipe_aether_lens"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_imba_energy_booster;item_imba_ring_of_health"
-		}
-	}
-
-	//=================================================================================================================
 	// Aether Lens
 	//=================================================================================================================
 	"item_aether_lens"
 	{
+		"ItemPurchasable"				"0"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"300"
+				"bonus_mana"			"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"10"
+				"bonus_health_regen"	"0"
 			}
 			"03"
 			{
@@ -1652,7 +1645,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spell_amp"				"12"
+				"spell_amp"				"0"
 			}
 		}
 	}
@@ -2662,12 +2655,18 @@
 	//=================================================================================================================
 	"arc_warden_tempest_double"
 	{
+		"MaxLevel"						"4"
+
+		"RequiredLevel"					"1"
+
+		"AbilityCooldown"				"45 40 35 30"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0 20.0 25.0"
+				"duration"				"12.0 18.0 24.0 30.0"
 			}
 		}
 	}
@@ -7196,6 +7195,8 @@
 	"furion_wrath_of_nature"
 	{
 		"AbilityCastPoint"				"0.4"
+
+		"MaxLevel"						"4"
 			
 		"AbilitySpecial"
 		{
@@ -11181,7 +11182,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"int_multiplier"		"2.0"
+				"int_multiplier"		"1.8"
 				"CalculateSpellDamageTooltip"	"1"
 			}
 			"05"
@@ -15299,17 +15300,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_cost_percent"		"0.35"
+				"health_cost_percent"		"0.30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_damage"				"0.35"
+				"health_damage"				"0.30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_damage_scepter"		"0.6"
+				"health_damage_scepter"		"0.5"
 			}
 			"04"
 			{
@@ -15319,13 +15320,13 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"35"
+				"tooltip_health_damage"				"30"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"35"
-				"CalculateSpellDamageTooltip"		"1"
+				"tooltip_health_cost_percent"		"30"
+				"CalculateSpellDamageTooltip"		"0"
 			}
 			"07"
 			{
@@ -15340,7 +15341,7 @@
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage_scepter"		"60"
+				"tooltip_health_damage_scepter"		"50"
 			}
 			"10"
 			{

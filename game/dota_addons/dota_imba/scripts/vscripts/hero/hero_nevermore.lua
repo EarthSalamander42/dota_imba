@@ -102,6 +102,11 @@ function NecromasteryAttack(keys)
 	local modifier_souls_temp = keys.modifier_souls_temp
 	local particle_projectile = keys.particle_projectile
 
+	-- If the ability is disabled (by break), do nothing
+	if ability_level < 0 then
+		return nil
+	end
+
 	-- Absorb souls only from enemy heroes
 	if target:IsRealHero() and target:GetTeam() ~= caster:GetTeam() then
 
@@ -584,7 +589,6 @@ function RequiemCast(keys)
 	else
 		souls = caster:GetModifierStackCount(modifier_temp_souls_counter, caster)
 	end
-	local lines = math.floor(souls * soul_conversion)
 
 	-- Remove all temporary souls. They are consumed regardless of death
 	local real_souls = caster:GetModifierStackCount(modifier_souls_counter, caster)
@@ -594,6 +598,12 @@ function RequiemCast(keys)
 			caster:RemoveModifierByName(modifier_temp_souls)
 		end
 	end
+
+	-- If this was a death cast, use only real souls
+	if death_cast == 1 then
+		souls = real_souls
+	end
+	local lines = math.floor(souls * soul_conversion)
 
 	-- Sound and particle effects
 	caster:EmitSound(keys.requiem_cast_sound)

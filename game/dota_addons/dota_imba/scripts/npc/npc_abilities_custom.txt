@@ -7586,7 +7586,7 @@
 				"IsPurgable"			"0"
 
 				"EffectName"			"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
-				"EffectAttachType"		"attach_origin"	
+				"EffectAttachType"		"attach_origin"
 
 				"OverrideAnimation" 	"ACT_DOTA_FLAIL"	
 
@@ -13466,7 +13466,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_tick"			"3.0 3.75 4.5 5.25"
+				"damage_per_tick"			"3.0 3.5 4.0 4.5"
 			}
 			"04"
 			{
@@ -29389,7 +29389,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 60 90 120"
+				"damage"				"25 50 75 100"
 			}
 			"04"
 			{
@@ -29502,7 +29502,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"80 120 160 200"
+				"damage"					"80 110 140 170"
 			}
 			"03"
 			{

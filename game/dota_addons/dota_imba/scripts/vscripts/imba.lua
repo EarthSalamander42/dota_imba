@@ -275,62 +275,25 @@ function GameMode:DamageFilter( keys )
 		return false
 	end
 
-	-- Orchid spell crit
-	if attacker:HasModifier("modifier_item_imba_orchid_unique") then
+	-- Spell power handling
+	if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and attacker:IsRealHero() then
 
-		-- If damage is physical, or owner has a Bloodthorn, do nothing
-		if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and not attacker:HasModifier("modifier_item_imba_bloodthorn_unique") then
+		-- Compensate for in-built spell power mechanics
+		local base_damage_amp = attacker:GetIntellect() * 0.000625
+		keys.damage = keys.damage / (1 + base_damage_amp)
+
+		-- Fetch player's current spell power
+		local spell_power = GetSpellPower(attacker) * 0.01
+
+		-- If the target is too far away, do nothing
+		local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
+		if distance <= 2500 then
 			
-			-- Parameters
-			local crit_chance = 40
-			local crit_damage = 175
-			local distance_taper_start = 2500
-
-			-- Check for a valid target
-			if not (victim:IsBuilding() or victim:IsTower() or victim:GetTeam() == attacker:GetTeam()) then
-
-				-- Ignore crit beyond the effect threshold
-				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-				local target_too_far = false
-				if distance > distance_taper_start then
-					target_too_far = true
-				end
-
-				-- Roll for crit chance
-				if RandomInt(1, 100) <= crit_chance and not target_too_far then
-					keys.damage = keys.damage * crit_damage / 100
-					display_red_crit_number = true
-				end
-			end
-		end
-	end
-
-	-- Bloodthorn spell crit
-	if attacker:HasModifier("modifier_item_imba_bloodthorn_unique") then
-
-		-- If damage is physical, do nothing
-		if damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE then
-			
-			-- Parameters
-			local crit_chance = 40
-			local crit_damage = 175
-			local distance_taper_start = 2500
-
-			-- Check for a valid target
-			if not (victim:IsBuilding() or victim:IsTower() or victim:GetTeam() == attacker:GetTeam()) then
-
-				-- Ignore crit beyond the effect threshold
-				local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-				local target_too_far = false
-				if distance > distance_taper_start then
-					target_too_far = true
-				end
-
-				-- Roll for crit chance
-				if RandomInt(1, 100) <= crit_chance and not target_too_far then
-					keys.damage = keys.damage * crit_damage / 100
-					display_red_crit_number = true
-				end
+			-- Adjust damage depending on its type
+			if damage_type == DAMAGE_TYPE_MAGICAL then
+				keys.damage = keys.damage * (1 + spell_power)
+			elseif damage_type == DAMAGE_TYPE_PURE then
+				keys.damage = keys.damage * (1 + spell_power * 0.3)
 			end
 		end
 	end
@@ -339,39 +302,9 @@ function GameMode:DamageFilter( keys )
 	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
 
 		-- Multiply damage and flag for a crit
-		local target_crit_multiplier = 145
-		keys.damage = keys.damage * target_crit_multiplier / 100
+		local target_crit_multiplier = 135
+		keys.damage = keys.damage * target_crit_multiplier * 0.01
 		display_red_crit_number = true
-	end
-
-	-- Rapier damage amplification
-	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") then
-
-		-- If the target is Roshan, a building, or an ally, or this was an autoattack, do nothing
-		if not ( victim:IsBuilding() or IsRoshan(victim) or victim:GetTeam() == attacker:GetTeam() or attacker:IsInvulnerable() or attacker:IsOutOfGame() or victim:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") ) then
-			
-			-- Calculate damage amplification
-			local damage_amp = 0
-			local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
-
-			-- Fetch appropriate stacks
-			if damage_type == DAMAGE_TYPE_PHYSICAL then
-				damage_amp = 40 + 40 * amp_stacks
-			elseif damage_type == DAMAGE_TYPE_MAGICAL then
-				damage_amp = 40 + 40 * amp_stacks
-			elseif damage_type == DAMAGE_TYPE_PURE then
-				damage_amp = 15 + 15 * amp_stacks
-			end
-
-			-- Reduce damage amplification if the target is too far away
-			local distance = ( victim:GetAbsOrigin() - attacker:GetAbsOrigin() ):Length2D()
-			if distance > 2500 then
-				damage_amp = 0
-			end
-
-			-- Amplify damage
-			keys.damage = keys.damage * (100 + damage_amp) / 100
-		end
 	end
 
 	-- Spiked Carapace damage prevention

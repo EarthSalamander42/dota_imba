@@ -78,12 +78,32 @@ function TranquilsAllyThink( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
+	local modifier_bearer = keys.modifier_bearer
 	local modifier_stacks = keys.modifier_stacks
 
-	-- If the aura bearer has stacks, copy them
-	if caster:HasModifier(modifier_stacks) then
+	-- If this unit is a tranquils bearer, do nothing
+	if target:HasModifier(modifier_bearer) then
+		return nil
+	end
+
+	-- Parameters
+	local radius = ability:GetSpecialValueFor("radius")
+	local highest_stacks = 0
+
+	-- Search for the aura bearer with the highest amount of stacks nearby
+	local nearby_allies = FindUnitsInRadius(target:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	for _,ally in pairs(nearby_allies) do
+		
+		-- If this ally is an aura bearer, fetch its stacks
+		if ally:HasModifier(modifier_bearer) and ally:HasModifier(modifier_stacks) then
+			highest_stacks = math.max(highest_stacks, ally:GetModifierStackCount(modifier_stacks, nil))
+		end
+	end
+
+	-- If there are more than zero stacks, apply and update them
+	if highest_stacks > 0 then
 		ability:ApplyDataDrivenModifier(caster, target, modifier_stacks, {})
-		target:SetModifierStackCount(modifier_stacks, caster, caster:GetModifierStackCount(modifier_stacks, caster))
+		target:SetModifierStackCount(modifier_stacks, caster, highest_stacks)
 
 	-- Else, remove them
 	else

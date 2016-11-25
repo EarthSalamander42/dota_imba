@@ -1280,8 +1280,10 @@ end
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
 	
-	if unit:HasModifier("modifier_item_aether_lens") then
+	if unit:HasModifier("modifier_item_imba_elder_staff_range") then
 		cast_range_increase = cast_range_increase + 300
+	elseif unit:HasModifier("modifier_item_imba_aether_lens_range") then
+		cast_range_increase = cast_range_increase + 200
 	end
 
 	return cast_range_increase
@@ -1753,4 +1755,35 @@ function IsGinger(unit)
 	end
 	
 	return false
+end
+
+-- Changes a hero's current spell power
+function ChangeSpellPower(unit, amount)
+
+	if not unit.spell_power then
+		unit.spell_power = 0
+	end
+
+	unit.spell_power = unit.spell_power + amount
+end
+
+-- Fetches a hero's current spell power
+function GetSpellPower(unit)
+
+	-- If this is not a hero, do nothing
+	if not unit:IsHero() then
+		return 0
+	end
+
+	-- Adjust base spell power based on current intelligence
+	local unit_intelligence = unit:GetIntellect()
+	local spell_power = unit_intelligence * 0.14
+
+	-- Fetch current bonus spell power from other sources, if existing
+	if unit.spell_power then
+		spell_power = spell_power + unit.spell_power
+	end
+
+	-- Return current spell power
+	return spell_power
 end

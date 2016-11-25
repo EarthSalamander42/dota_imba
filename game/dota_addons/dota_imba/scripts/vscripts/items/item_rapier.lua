@@ -44,14 +44,22 @@ function RapierToggle( keys )
 	AddStacks(next_ability, caster, caster, next_stacks, current_stacks, true)
 end
 
-function RapierPreventAttackAmp( keys )
+function RapierMagicSpellPowerEnd( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
-	local modifier_prevent = keys.modifier_prevent
 
-	-- Apply modifier to prevent autoattack damage amplification
-	ability:ApplyDataDrivenModifier(caster, target, modifier_prevent, {})
+	-- If this is an illusion, do nothing
+	if caster:IsIllusion() then
+		return nil
+	end
+
+	-- Remove all bonus spell power
+	local spell_power = ability:GetSpecialValueFor("spell_power")
+	if not caster.magic_rapier_level_tracker then
+		caster.magic_rapier_level_tracker = 0
+	end
+	ChangeSpellPower(caster, (-1) * spell_power * caster.magic_rapier_level_tracker)
+	caster.magic_rapier_level_tracker = nil
 end
 
 function RapierParticleMagic( keys )
@@ -67,6 +75,16 @@ function RapierParticleMagic( keys )
 
 	-- Fetch current rapier level
 	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
+
+	-- Update granted spell power if necessary
+	local spell_power = ability:GetSpecialValueFor("spell_power")
+	if not caster.magic_rapier_level_tracker then
+		caster.magic_rapier_level_tracker = 0
+	end
+	if caster.magic_rapier_level_tracker ~= rapier_level then
+		ChangeSpellPower(caster, spell_power * (rapier_level - caster.magic_rapier_level_tracker))
+		caster.magic_rapier_level_tracker = rapier_level
+	end
 	
 	-- If rapier level is enough, grant vision of the caster to all teams
 	if rapier_level >= 3 then
@@ -74,6 +92,7 @@ function RapierParticleMagic( keys )
 		-- Destroy physical rapier particle
 		if caster.rapier_phys_particle then
 			ParticleManager:DestroyParticle(caster.rapier_phys_particle, true)
+			ParticleManager:ReleaseParticleIndex(caster.rapier_phys_particle)
 			caster.rapier_phys_particle = nil
 		end
 
@@ -109,6 +128,7 @@ function RapierParticlePhys( keys )
 		-- Destroy physical rapier particle
 		if caster.rapier_magic_particle then
 			ParticleManager:DestroyParticle(caster.rapier_magic_particle, true)
+			ParticleManager:ReleaseParticleIndex(caster.rapier_magic_particle)
 			caster.rapier_magic_particle = nil
 		end
 
