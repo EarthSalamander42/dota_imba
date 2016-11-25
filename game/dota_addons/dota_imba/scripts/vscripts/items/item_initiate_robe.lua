@@ -16,25 +16,6 @@ function InitiateRobeThink( keys )
 	local mana_conversion_rate = ability:GetSpecialValueFor("mana_conversion_rate") * 0.01
 	local max_stacks = ability:GetSpecialValueFor("max_stacks")
 
-	-- hmm
-	if not caster:HasModifier("modifier_item_aether_lens") then
-
-		local lens = CreateItem("item_aether_lens", caster, caster)
-		for i = 0, 11 do
-			local current_item = caster:GetItemInSlot(i)
-			if not current_item then
-				caster:AddItem(CreateItem("item_imba_dummy", caster, caster))
-			end
-		end
-		caster:AddItem(lens)
-		for i = 0, 11 do
-			local current_item = caster:GetItemInSlot(i)
-			if current_item and current_item:GetName() == "item_imba_dummy" then
-				caster:RemoveItem(current_item)
-			end
-		end
-	end
-
 	-- Create the global variables, if necessary
 	if not caster.magic_shield_mana_count then
 		caster.magic_shield_mana_count = caster:GetMana()

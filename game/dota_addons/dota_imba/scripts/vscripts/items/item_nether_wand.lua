@@ -45,7 +45,13 @@ function NetherWandTick( keys )
 
 	-- Calculate damage
 	local burn_damage = burn_amount * burn_tick / burn_duration
-	local damage = target:GetMaxHealth() * burn_damage * 0.01
+	local damage = target:GetHealth() * burn_damage * 0.01
+
+	-- Caustic finale interaction part 1
+	local caustic_ability = caster:FindAbilityByName("imba_sandking_caustic_finale")
+	if caustic_ability and caustic_ability:GetLevel() > 0 then
+		caustic_ability:ApplyDataDrivenModifier(caster, target, "modifier_imba_caustic_finale_prevent", {})
+	end
 
 	-- Deal damage
 	if caster:HasModifier(modifier_unique) then
@@ -53,6 +59,9 @@ function NetherWandTick( keys )
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_unique, {})
 	end
+
+	-- Caustic finale interaction part 2
+	target:RemoveModifierByNameAndCaster("modifier_imba_caustic_finale_prevent", caster)
 end
 
 function NetherWandSpellPowerCreate( keys )

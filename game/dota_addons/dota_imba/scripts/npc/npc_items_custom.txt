@@ -19115,7 +19115,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"6"
+				"burn_amount"			"7"
 			}
 			"06"
 			{
@@ -19329,7 +19329,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"7"
+				"burn_amount"			"8"
 			}
 			"10"
 			{

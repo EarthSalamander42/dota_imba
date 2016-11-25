@@ -179,7 +179,7 @@ function GameMode:OnNPCSpawned(keys)
 	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------
 
-	if npc:FindAbilityByName("arc_warden_tempest_double") and not npc.first_tempest_double_cast then
+	if npc:FindAbilityByName("arc_warden_tempest_double") and not npc.first_tempest_double_cast and npc:IsRealHero() then
 		npc.first_tempest_double_cast = true
 		local tempest_double_ability = npc:FindAbilityByName("arc_warden_tempest_double")
 		tempest_double_ability:SetLevel(4)
