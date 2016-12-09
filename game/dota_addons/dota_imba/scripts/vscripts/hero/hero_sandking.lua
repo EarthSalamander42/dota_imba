@@ -217,6 +217,11 @@ function CausticFinale( keys )
 		return nil
 	end
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Else, apply it
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 end

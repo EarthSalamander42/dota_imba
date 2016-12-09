@@ -330,6 +330,7 @@ function Gravity( keys )
 	local stun_increase = ability:GetLevelSpecialValueFor("stun_increase", ability_level) / 100
 	local think_interval = ability:GetLevelSpecialValueFor("think_interval", ability_level)
 
+	
 	-- Calculate adjusted stun increase
 	local corrected_increase = 1 - ( 1 / (1 + stun_increase) )
 
@@ -339,6 +340,23 @@ function Gravity( keys )
 		modifier_stun:SetDuration(modifier_stun:GetRemainingTime() + think_interval * corrected_increase, false)
 	end
 end
+
+function GravityApply ( keys )
+	local caster = keys.caster
+	local ability = keys.ability	
+	local ability_level = ability:GetLevel()-1
+	local modifier_aura = keys.modifier_aura
+	
+	-- If passives are disabled by break, remove aura, else bring it back
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_aura)
+	else
+		if not caster:HasModifier(modifier_aura) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
+		end		
+	end	
+end
+
 
 function BlackHole( keys )
 	local caster = keys.caster

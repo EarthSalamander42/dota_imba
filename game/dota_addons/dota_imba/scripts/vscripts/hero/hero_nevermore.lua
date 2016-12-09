@@ -55,6 +55,12 @@ function NecromasteryKill(keys)
 	if scepter then
 		max_souls = ability:GetLevelSpecialValueFor("max_souls_scepter", ability_level)
 	end
+	
+	-- If the caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 
 	-- Fire visual soul projectile
 	local soul_projectile = {
@@ -102,8 +108,8 @@ function NecromasteryAttack(keys)
 	local modifier_souls_temp = keys.modifier_souls_temp
 	local particle_projectile = keys.particle_projectile
 
-	-- If the ability is disabled (by break), do nothing
-	if ability_level < 0 then
+	-- If the ability is disabled by break, do nothing
+	if caster:PassivesDisabled() then
 		return nil
 	end
 
@@ -207,6 +213,11 @@ function DarkLordPresence(keys)
 	local particle_projectile = keys.particle_projectile
 	local ability_necromastery = caster:FindAbilityByName(keys.ability_necromastery)
 
+	-- If ability is disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- If this is not a real hero, GTFO 
 	if not target:IsRealHero() then
 		return nil
@@ -251,6 +262,26 @@ function DarkLordPresence(keys)
 		ability_necromastery:ApplyDataDrivenModifier(caster, caster, modifier_souls_temp, {})
 	end
 end
+
+
+function DarkLordPresenceCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1	
+	local modifier_aura = keys.modifier_aura
+	
+	-- If caster's passive are disabled, stop the aura, otherwise replace it
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_aura)
+	else
+		if not caster:HasModifier(modifier_aura) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
+		end
+	end
+	
+	
+end
+
 
 -- Toggles visibility of the Presence of the Dark Lord debuff on/off
 function DarkLordDummyStart(keys)

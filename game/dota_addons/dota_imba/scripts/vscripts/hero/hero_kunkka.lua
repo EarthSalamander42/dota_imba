@@ -229,6 +229,11 @@ function Tidebringer( keys )
 		return nil
 	end
 
+	-- If the caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local sound_attack = keys.sound_attack
 	local sound_hit = keys.sound_hit

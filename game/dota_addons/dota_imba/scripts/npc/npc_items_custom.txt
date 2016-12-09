@@ -10186,20 +10186,16 @@
 				"Duration"							"%break_duration"
 
 				"EffectName"						"particles/item/silver_edge/silver_edge_break.vpcf"
-				"EffectAttachType"					"follow_overhead"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_silver_edge.lua"
-						"Function"					"SilverEdgeBreak"		
-					}
-				}
+				"EffectAttachType"					"follow_overhead"			
 
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%break_damage_reduction"
+				}				
+				
+				"States"
+				{
+					"MODIFIER_STATE_PASSIVES_DISABLED"					"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 

@@ -312,6 +312,10 @@ function FrostMourne( keys )
 	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
 	local modifier_buff = "modifier_imba_frostmourne_buff"
 
+	-- If ability was disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end	
 
 	if caster:HasModifier(modifier_buff_base) then
 		local stack_count = caster:GetModifierStackCount(modifier_buff, ability)

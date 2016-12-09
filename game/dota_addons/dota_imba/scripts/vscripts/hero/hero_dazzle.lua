@@ -82,6 +82,12 @@ function ShallowGravePassive( keys )
 			return nil
 		end
 	end
+	
+	-- If ability is disabled by break, remove buffs
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_passive)
+		return nil
+	end	
 
 	if not caster:HasModifier(modifier_cooldown) then
 		ability:ApplyDataDrivenModifier(caster, caster, modifier_passive, {})
@@ -98,7 +104,7 @@ function ShallowGraveDamageCheck( keys )
 	-- If the ability was unlearned, or it's not time to trigger shallow grave, do nothing
 	if not ability or caster:GetHealth() > 1 or caster:HasModifier(modifier_grave) then
 		return nil
-	end
+	end	
 
 	-- Parameters
 	local ability_level = ability:GetLevel() - 1

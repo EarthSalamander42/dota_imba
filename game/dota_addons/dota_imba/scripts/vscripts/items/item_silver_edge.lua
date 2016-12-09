@@ -125,18 +125,6 @@ function SilverEdgePhaseCooldownEnd( keys )
 	end
 end
 
-function SilverEdgeBreak( keys )
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
-	-- Parameters
-	local break_duration = ability:GetLevelSpecialValueFor("break_duration", ability_level)
-
-	-- Apply Break
-	PassiveBreak(target, break_duration)
-end
-
 function SilverEdgeBreakParticleEnd( keys )
 	local target = keys.target
 

@@ -146,8 +146,9 @@ function Trueshot( keys )
 		end
 	end
 
+	
 	-- If the caster is afflicted by Break, remove all stacks
-	if caster.break_duration_left then
+	if caster:PassivesDisabled() then
 		target:RemoveModifierByName(modifier_stack)
 		return nil
 	end
@@ -183,7 +184,7 @@ function Marksmanship( keys )
 	end
 
 	-- If the caster is afflicted by Break, remove the buff
-	if caster.break_duration_left then
+	if caster:PassivesDisabled() then
 		caster:RemoveModifierByName(modifier_effect)
 		return nil
 	end

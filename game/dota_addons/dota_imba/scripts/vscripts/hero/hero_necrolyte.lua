@@ -233,6 +233,11 @@ function HeartstopperEnemy( keys )
 	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level) * 0.01
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Adds a stack of the debuff
 	local debuff_stacks = target:GetModifierStackCount(modifier_debuff, nil)
 	if debuff_stacks < max_stacks then
@@ -262,6 +267,11 @@ function HeartstopperAlly( keys )
 	-- Ability parameters
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Adds a stack of the buff
 	local buff_stacks = target:GetModifierStackCount(modifier_buff, nil)
 	if buff_stacks < max_stacks then
@@ -283,8 +293,8 @@ function SadistKill( keys )
 	local ability_level = ability:GetLevel() - 1
 	local regen_modifier = keys.regen_modifier
 
-	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
 		return nil
 	end
 
@@ -307,8 +317,8 @@ function SadistHit( keys )
 	local ability = keys.ability
 	local regen_modifier = keys.regen_modifier
 
-	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
 		return nil
 	end
 

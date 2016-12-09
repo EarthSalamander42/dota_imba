@@ -290,11 +290,14 @@ function BladedanceHit( keys )
 	local target = keys.target
 
 
-	
-
 	-- Parameters
 	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
 
+	-- If caster's passives are disabled by break, do nothing	
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Roll for a crit
 	if RandomInt(1, 100) <= crit_chance then
 

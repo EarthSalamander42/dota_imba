@@ -249,6 +249,11 @@ function VengeanceAuraUpdate( keys )
 	local modifier_stack = keys.modifier_stack
 	local modifier_rancor = keys.modifier_rancor
 	
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 
@@ -267,6 +272,26 @@ function VengeanceAuraUpdate( keys )
 	target:RemoveModifierByName(modifier_stack)
 	AddStacks(ability, caster, target, modifier_stack, rancor_stacks, true)
 end
+
+function VengeanceAuraSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_aura_ally = keys.modifier_aura_ally
+	
+	-- If caster's passives are disabled by break, remove aura
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_aura_ally)		
+	else
+		if not caster:HasModifier(modifier_aura_ally) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura_ally, {})			
+		end
+	
+	end
+	
+end
+
+
 
 function UpgradeSwapback( keys )
 	local caster = keys.caster

@@ -57,6 +57,11 @@ function FrostNova( keys )
 	if not ability then
 		return nil
 	end
+	
+	-- If the caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
 		
 	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)

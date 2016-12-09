@@ -54,6 +54,11 @@ function ArcaneOrbRestoreMana( keys )
 	if not ability or ability:GetLevel() == 0 then
 		return nil
 	end
+	
+	-- If caster's passives are disabled, give no mana (essence aura is removed)
+	if caster:PassivesDisabled() then
+		return nil
+	end
 
 	-- Parameters
 	local particle_name = keys.particle_name
@@ -245,6 +250,8 @@ function RestoreMana( keys )
 	local mana_restore = target:GetMaxMana() * restore_amount / 100
 	local max_stacks = math.floor( caster:GetBaseIntellect() * max_int_pct / 100 )
 
+	
+	
 	-- If the ability just cast uses mana, restore mana accordingly
 	local cast_ability_level = cast_ability:GetLevel() - 1
 	if cast_ability and cast_ability:GetManaCost(cast_ability_level) > 0 and StickProcCheck(cast_ability) and cast_ability:GetCooldown(cast_ability_level) > 0 then
@@ -301,6 +308,24 @@ function RestoreMana( keys )
 			caster:CalculateStatBonus()
 		end
 	end
+end
+
+function EssenceAuraSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_aura = keys.modifier_aura	
+	
+	-- If caster's passives are disabled by break, remove the aura, otherwise place it
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_aura)
+	else
+		if not caster:HasModifier(modifier_aura) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
+		end
+	end
+	
+
 end
 
 function EssenceAuraEnd( keys )

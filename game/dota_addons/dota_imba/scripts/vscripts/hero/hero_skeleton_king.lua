@@ -152,8 +152,8 @@ end
 function VampiricAuraOn( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local modifier_aura = keys.modifier_aura
-
+	local modifier_aura = keys.modifier_aura	
+	
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_aura, {})
 end
 
@@ -164,6 +164,31 @@ function VampiricAuraOff( keys )
 	caster:RemoveModifierByName(modifier_aura)
 end
 
+function VampiricAuraSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_aura_hero = keys.modifier_aura_hero
+	local modifier_aura_creep = keys.modifier_aura_creep
+	
+	-- If caster's passives are disabled, remove aura, otherwise place it back
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_aura_hero)
+		caster:RemoveModifierByName(modifier_aura_creep)
+	else
+		if not caster:HasModifier(modifier_aura_hero) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura_hero, {})
+		end
+		
+		-- If ability is toggled on, give creep aura back
+		if not caster:HasModifier(modifier_aura_creep) and ability:GetToggleState() then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_aura_creep, {})
+		end
+	end
+	
+end
+
+
 function VampiricAuraHit( keys )
 	local caster = keys.caster
 	local attacker = keys.attacker
@@ -173,7 +198,7 @@ function VampiricAuraHit( keys )
 	local particle_heal = keys.particle_heal
 
 	-- If the ability was unlearned, or disabled by break, do nothing
-	if not ability or caster.break_duration_left then
+	if not ability or caster:PassivesDisabled() then
 		return nil
 	end
 
@@ -216,7 +241,7 @@ function VampiricAuraCreepHit( keys )
 	local particle_heal = keys.particle_heal
 
 	-- If the ability was unlearned, or disabled by break, do nothing
-	if not ability or caster.break_duration_left then
+	if not ability or caster:PassivesDisabled() then
 		return nil
 	end
 
@@ -251,7 +276,7 @@ function MortalStrikeCrit( keys )
 	caster:RemoveModifierByName(modifier_crit)
 
 	-- If the ability was unlearned, or disabled by break, do nothing
-	if not ability or caster.break_duration_left then
+	if not ability or caster:PassivesDisabled() then
 		return nil
 	end
 

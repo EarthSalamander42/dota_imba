@@ -13570,6 +13570,25 @@
 					}
 				}
 			}
+			
+			"modifier_imba_enigma_gravity_aura_check"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"				
+				"IsPurgable"				"0"
+				
+				"ThinkInterval"				"%think_interval"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_enigma.lua"
+						"Function"			"GravityApply"
+						
+						"modifier_aura"		"modifier_imba_enigma_gravity_aura"
+					}
+				}
+			}
 		}
 	}
 
@@ -18845,7 +18864,7 @@
 
 			"modifier_imba_empower"
 			{
-				"Passive"						"1"
+				"Passive"						"0"
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
 				"IsHidden"						"0"
@@ -18870,6 +18889,25 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_pct"
+				}
+			}
+			
+			"modifier_imba_empower_self_check"
+			{
+				"Passive"						"1"				
+				"IsPurgable"					"0"
+				"IsHidden"						"1"
+				
+				"ThinkInterval"				"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_magnus.lua"
+						"Function"				"EmpowerSelfCheck"
+						
+						"modifier_empower"		"modifier_imba_empower"
+					}
 				}
 			}
 
@@ -21106,6 +21144,25 @@
 					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%raze_vision_reduction"
 				}
 			}
+			
+			"modifier_presence_aura_check"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"				
+				
+				"ThinkInterval"		"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_nevermore.lua"
+						"Function"		"DarkLordPresenceCheck"
+						
+						"modifier_aura" "modifier_imba_dark_lord"
+					}
+				}
+			}
 		}
 	}
 
@@ -22987,6 +23044,25 @@
 					"MODIFIER_PROPERTY_MANA_BONUS"	"%bonus_mana"
 				}
 			}
+			
+			"modifier_imba_essence_aura_self_check"
+			{
+				"Passive"			"1"
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+			
+				"ThinkInterval"		"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"hero/hero_outhouse_decorator.lua"
+						"Function"		"EssenceAuraSelfCheck"
+						
+						"modifier_aura"	"modifier_imba_essence_aura"
+					}
+				}
+			}
 		}
 	}
 
@@ -23973,7 +24049,8 @@
 						"ScriptFile"		"hero/hero_phantom_assassin.lua"
 						"Function"			"Blur"
 
-						"modifier_blur"		"modifier_imba_blur_blur"
+						"modifier_blur"		"modifier_imba_blur_blur"						
+						"main_modifier"		"modifier_imba_blur"
 					}
 				}
 
@@ -23981,7 +24058,27 @@
 				{
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion"
 				}
-			}
+			}	
+
+			"modifier_imba_blur_check"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"				
+				"IsPurgable"				"0"
+				
+				"ThinkInterval"				"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_phantom_assassin.lua"
+						"Function"			"BlurSelfCheck"
+						
+						"modifier_blur"		"modifier_imba_blur_blur"						
+						"main_modifier"		"modifier_imba_blur"
+					}
+				}
+			}			
 
 			"modifier_imba_blur_blur"
 			{
@@ -24830,6 +24927,26 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stack_str"
+				}
+			}
+			
+			"modifier_imba_flesh_heap_self_check"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"				
+				"IsPurgable"			"0"
+				
+				"ThinkInterval"			"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_pudge.lua"	
+						"Function"			"FleshHeapSelfCheck"
+						
+						"modifier_str"		"modifier_imba_flesh_heap_stacks"
+						"modifier_res"		"modifier_imba_flesh_heap_resist"
+					}
 				}
 			}
 
@@ -27881,6 +27998,26 @@
 					}
 				}
 			}
+			
+			"modifier_imba_great_cleave_self_check"
+			{
+				"Passive"					"1"				
+				"IsPurgable"				"0"
+				"IsHidden"					"1"
+				
+				"ThinkInterval"				"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_sven.lua"
+						"Function"			"GreatCleaveSelfCheck"
+						
+						"modifier_cleave"	"modifier_imba_great_cleave_passive"
+						"modifier_overkill"	"modifier_imba_great_cleave_active"
+					}
+				}
+			}
 
 			"modifier_imba_great_cleave_active"
 			{
@@ -30852,6 +30989,26 @@
 					}
 				}
 			}
+			
+			"modifier_imba_vampiric_aura_self_check"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"				
+				"IsPurgable"				"0"
+				
+				"ThinkInterval"				"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_skeleton_king.lua"
+						"Function"				"VampiricAuraSelfCheck"
+						
+						"modifier_aura_hero"	"modifier_imba_vampiric_aura_hero"
+						"modifier_aura_creep"	"modifier_imba_vampiric_aura_creep"
+					}
+				}
+			}
 		}
 	}
 
@@ -32200,6 +32357,25 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%rancor_damage_bonus"
+				}
+			}
+			
+			"modifier_imba_command_aura_self_check"
+			{
+				"Passive"					"1"
+				"IsHidden"					"1"				
+				"IsPurgable"				"0"
+				
+				"ThinkInterval"				"0.2"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/hero_vengeful.lua"
+						"Function"				"VengeanceAuraSelfCheck"
+						
+						"modifier_aura_ally"	"modifier_imba_command_aura_positive_aura"						
+					}
 				}
 			}
 		}
@@ -34040,4 +34216,21 @@
 			}
 		}
 	}
+	
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

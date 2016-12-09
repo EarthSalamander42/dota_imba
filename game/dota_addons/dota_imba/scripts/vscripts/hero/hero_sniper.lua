@@ -9,7 +9,7 @@ function Headshot( keys )
 	local modifier_near = keys.modifier_near
 	local modifier_far = keys.modifier_far
 	local modifier_normal_debuff = keys.modifier_normal_debuff
-
+	
 	-- Parameters
 	local near_duration = ability:GetLevelSpecialValueFor("near_duration", ability_level)
 	local normal_damage = ability:GetLevelSpecialValueFor("normal_damage", ability_level)
@@ -18,6 +18,11 @@ function Headshot( keys )
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local far_proc_chance = ability:GetLevelSpecialValueFor("far_proc_chance", ability_level)
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end	
+	
 	-- Near mode headshot, stuns the target if it is not a building
 	if caster:HasModifier(modifier_near) then
 		if not target:IsBuilding() then
@@ -79,6 +84,11 @@ function HeadshotKnockback( keys )
 	local speed = ability:GetLevelSpecialValueFor("knockback_speed", ability_level)
 	local caster_pos = caster:GetAbsOrigin()
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end	
+	
 	-- Play sound
 	target:EmitSound("Imba.SniperLongRangeHeadshot0"..RandomInt(1, 2))
 
