@@ -1529,12 +1529,14 @@
 	{
 		"override_hero"				"npc_dota_hero_silencer"
 
+		"AttackRate"				"1.5"
+
 		"AttributeIntelligenceGain"	"3.0"
 
-		//"Ability1"					"imba_silencer_curse_of_the_silent"
-		//"Ability2"					"imba_silencer_glaives_of_wisdom"
-		//"Ability3"					"imba_silencer_last_word"
-		//"Ability4"					"imba_silencer_global_silence"
+		"Ability1"					"imba_silencer_arcane_curse"
+		"Ability2"					"imba_silencer_glaives_of_wisdom"
+		"Ability3"					"imba_silencer_last_word"
+		"Ability4"					"imba_silencer_global_silence"
 		"Ability5"					"attribute_bonus_int"
 
 		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
@@ -1608,26 +1610,6 @@
 		"Ability5"					"attribute_bonus_agi"
 
 		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Silencer
-	//=================================================================================================================
-	"npc_imba_hero_silencer"
-	{
-		"override_hero"				"npc_dota_hero_silencer"
-
-		"AttackRate"				"1.5"
-
-		"AttributeIntelligenceGain"		"3.0"
-
-		//"Ability1"					"imba_silencer_curse_of_the_silent"
-		//"Ability2"					"imba_silencer_glaives_of_wisdom"
-		//"Ability3"					"imba_silencer_last_word"
-		//"Ability4"					"imba_silencer_global_silence"
-		"Ability5"					"attribute_bonus_int"
-
-		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
