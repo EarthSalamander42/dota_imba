@@ -585,8 +585,8 @@ function FleshHeap( keys )
 	-- If this isnt a real hero, do nothing.
 	if not target:IsRealHero() then
 		return nil
-	end
-
+	end	
+	
 	-- Parameters
 	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
 
@@ -609,12 +609,16 @@ function HeapUpdater( keys )
 	local ability_level = ability:GetLevel() - 1
 	local modifier_resist = keys.modifier_resist
 	local modifier_stacks = keys.modifier_stacks
-
+	
 	-- Parameters
 	local stack_scale_up = ability:GetLevelSpecialValueFor("stack_scale_up", ability_level)
 	local stack_amount = caster:GetModifierStackCount(modifier_stacks, caster)
 	local resist_amount = caster:FindAllModifiersByName(modifier_resist)
 
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- If the amount of strength stacks has increased, update it
 	if caster.heap_stacks > stack_amount and caster:IsAlive() then
 		local stacks_missing = caster.heap_stacks - stack_amount
@@ -639,6 +643,30 @@ function HeapUpdater( keys )
 		end
 	end
 end
+
+
+function FleshHeapSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_str = keys.modifier_str
+	local modifier_res = keys.modifier_res	
+	
+	
+	-- If caster's passive are disabled by break, remove modifiers, else place them back
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_str)
+		caster:RemoveModifierByName(modifier_res)		
+	else
+		if ability_level > 0 and not caster:HasModifier(modifier_str) and not caster:HasModifier(modifier_res) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_str, {})
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_res, {})				
+		end
+	end
+	
+
+end
+
 
 function Dismember( keys )
 	local caster = keys.caster

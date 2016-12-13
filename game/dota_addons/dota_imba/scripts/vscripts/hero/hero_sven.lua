@@ -147,7 +147,7 @@ function GreatCleave( keys )
 	local sound_cast = keys.sound_cast
 	local modifier_active = keys.modifier_active
 	local modifier_passive = keys.modifier_passive
-
+	
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
@@ -161,6 +161,26 @@ function GreatCleave( keys )
 	-- Apply the active modifier
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_active, {})
 end
+
+function GreatCleaveSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_cleave = keys.modifier_cleave
+	local modifier_overkill = keys.modifier_overkill
+		
+	-- If caster's passives are disabled by break, remove cleave
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_cleave)
+	else
+		if not caster:HasModifier(modifier_cleave) and not caster:HasModifier(modifier_overkill) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_cleave, {})
+		end
+	end
+	
+	
+end
+
 
 function GreatCleaveLevelUp( keys )
 	local caster = keys.caster
@@ -194,6 +214,8 @@ function GreatCleaveHit( keys )
 		return nil
 	end
 
+	
+	
 	-- Play alternate attack sound
 	target:EmitSound(sound_attack)
 

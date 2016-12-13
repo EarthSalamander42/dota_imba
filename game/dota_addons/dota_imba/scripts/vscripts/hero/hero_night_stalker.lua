@@ -53,7 +53,14 @@ function HunterInTheNight( keys )
 	local ability = keys.ability
 	local modifier = keys.modifier
 	local modifier_stack = keys.modifier_stack
-
+		
+	-- If caster's passive are disabled by break, remove buff
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier)
+		return nil
+	end
+	
+		
 	if not GameRules:IsDaytime() then
 		if caster.hunter_in_the_night_stacks then
 			ability:ApplyDataDrivenModifier(caster, caster, modifier_stack, {})

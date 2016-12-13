@@ -223,10 +223,18 @@ function Blur( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local modifier_blur = keys.modifier_blur
-
+	local main_modifier = keys.main_modifier
+	
+	-- If caster's passives are disabled, remove buffs and stop
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_blur)		
+		caster:RemoveModifierByName(main_modifier)			
+		return nil
+	end
+	
 	-- Parameters
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-
+	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)	
+	
 	-- Detect nearby enemies
 	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
@@ -238,6 +246,22 @@ function Blur( keys )
 	elseif #nearby_enemies == 0 and caster:HasModifier(modifier_blur) then
 		caster:RemoveModifierByName(modifier_blur)
 	end
+end
+
+function BlurSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel() - 1
+	local modifier_blur = keys.modifier_blur
+	local main_modifier = keys.main_modifier
+	
+	-- If caster's passives are not disabled and it doesn't have them, apply buffs
+	if not caster:PassivesDisabled() and not caster:HasModifier(main_modifier) then
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_blur, {})
+		ability:ApplyDataDrivenModifier(caster, caster, main_modifier, {})
+	end
+	
+	
 end
 
 function BlurStart( keys )
@@ -260,6 +284,11 @@ function CoupDeGrace( keys )
 		return nil
 	end
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
 	local kill_chance = ability:GetLevelSpecialValueFor("crit_chance_scepter", ability_level)

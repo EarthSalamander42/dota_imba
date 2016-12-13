@@ -8,9 +8,9 @@ function ManaBreak( keys )
 	local target = keys.target
 
 	-- If the ability is disabled by Break, do nothing
-	if ability_level < 0 then
+	if caster:PassivesDisabled() then
 		return nil
-	end
+	end	
 
 	-- If there isn't a valid target, do nothing
 	if not ( target:IsHero() or target:IsCreep() or target:IsAncient() ) or target:GetMaxMana() == 0 or target:IsMagicImmune() then
@@ -57,9 +57,9 @@ function Magehunter( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- If the ability is disabled by Break, do nothing
-	if ability_level < 0 then
+	if caster:PassivesDisabled() then
 		return nil
-	end
+	end	
 
 	-- If there isn't a casted ability, do nothing
 	if not cast_ability then

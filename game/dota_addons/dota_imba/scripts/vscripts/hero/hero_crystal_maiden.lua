@@ -97,6 +97,11 @@ function Frostbite( keys )
 	local creep_chance = ability:GetLevelSpecialValueFor("creep_chance", ability_level)
 	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
 	
+	-- If passive is disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end		
+	
 	-- Applies root and damage to attacking unit according to its type, then triggers the cooldown accordingly
 	if attacker:GetTeam() ~= caster:GetTeam() and not attacker:IsMagicImmune() then
 		if attacker:IsHero() or IsRoshan(attacker) then

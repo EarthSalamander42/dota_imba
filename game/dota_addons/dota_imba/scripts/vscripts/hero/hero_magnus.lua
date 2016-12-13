@@ -334,14 +334,33 @@ function EmpowerHit( keys )
 	end
 end
 
+function EmpowerSelfCheck ( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local ability_level = ability:GetLevel()-1
+	local modifier_empower = keys.modifier_empower
+	
+	-- If caster's passives are disabled, remove the empower debuff, otherwise renew it
+	if caster:PassivesDisabled() then
+		caster:RemoveModifierByName(modifier_empower)
+	else
+		if not caster:HasModifier(modifier_empower) then
+			ability:ApplyDataDrivenModifier(caster, caster, modifier_empower, {})
+		end
+	end
+end
+
+
+
+
 function Magnetize( keys )
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
-	local modifier_debuff = keys.modifier_debuff
-
+	local modifier_debuff = keys.modifier_debuff	
+	
 	-- If the ability was unlearned or broken, do nothing
-	if ability:GetLevel() == 0 or caster.break_duration_left then
+	if ability:GetLevel() == 0 or caster:PassivesDisabled() then
 		return nil
 	end
 	

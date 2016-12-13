@@ -214,6 +214,11 @@ function BerserkersRageAttack( keys )
 	local ability_level = ability:GetLevel() - 1
 	local sound_bash = keys.sound_bash
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
 	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
@@ -264,6 +269,11 @@ function FervorAttack( keys )
 	local ability = keys.ability
 	local modifier_stacks = keys.modifier_stacks
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Apply a stack of Fervor
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_stacks, {})
 end

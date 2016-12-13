@@ -75,6 +75,11 @@ function PurificationDeath( keys )
 		return nil
 	end
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Effects
 	local cast_sound = keys.cast_sound
 	local aoe_particle = keys.aoe_particle
@@ -144,7 +149,7 @@ function DegenAura( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
+	if caster:PassivesDisabled() then
 		return nil
 	end
 	

@@ -78,6 +78,11 @@ function LandMineThrow( keys )
 	local player_id = caster:GetPlayerID()
 	local step_duration = 0.03
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- If this target is invalid, do nothing
 	if not target:IsAlive() or target:IsBuilding() or target:GetTeam() == caster:GetTeam() then
 		return nil

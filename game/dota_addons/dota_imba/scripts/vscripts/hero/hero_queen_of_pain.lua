@@ -53,6 +53,11 @@ function ShadowStrikeAttack( keys )
 	if target:IsMagicImmune() or target:IsBuilding() or IsRoshan(target) or (caster:GetTeam() == target:GetTeam()) or target:HasModifier(modifier_debuff) then
 		return nil
 	end
+	
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
 
 	-- Parameters
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level) * 2
@@ -275,11 +280,16 @@ function Torment( keys )
 	local caster = keys.caster
 	local target = keys.unit
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-
+	local ability_level = ability:GetLevel() - 1	
+	
 	-- Parameters
 	local cooldown_reduction = ability:GetLevelSpecialValueFor("cooldown_reduction", ability_level)
 
+	-- If caster's passives are disabled, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- If a hero was damaged, reduce all ability cooldowns
 	if target:IsRealHero() then
 		for i = 0, 15 do

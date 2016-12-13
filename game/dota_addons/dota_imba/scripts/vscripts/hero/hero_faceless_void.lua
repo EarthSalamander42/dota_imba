@@ -277,6 +277,11 @@ function TimeLock( keys )
 		return nil
 	end
 	
+	-- If the caster's passives is disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
 	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
@@ -328,6 +333,7 @@ function Timelord( keys )
 end
 
 function TimelordStrike( keys )
+	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
@@ -335,6 +341,11 @@ function TimelordStrike( keys )
 	-- Parameters
 	local cooldown_increase = ability:GetLevelSpecialValueFor("cooldown_increase", ability_level)
 
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- If a hero was damaged, increase all its ability cooldowns
 	if target:IsRealHero() then
 		for i = 0, 15 do

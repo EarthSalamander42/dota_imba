@@ -114,9 +114,12 @@ function CounterHelix( keys )
 	local sound_spin = keys.sound_spin
 
 	-- If the ability is disabled by Break, do nothing
-	if ability_level < 0 then
+	if caster:PassivesDisabled() then
 		return nil
 	end
+	-- if ability_level < 0 then
+		-- return nil
+	-- end
 
 	-- Parameters
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)

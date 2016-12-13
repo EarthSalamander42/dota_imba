@@ -128,9 +128,9 @@ function Return( keys )
 	local particle_return = keys.particle_return
 
 	-- If the ability is disabled by Break, do nothing
-	if ability_level < 0 then
+	if caster:PassivesDisabled() then
 		return nil
-	end
+	end	
 
 	-- Parameters
 	local str_percentage = ability:GetLevelSpecialValueFor("strength_pct", ability_level)

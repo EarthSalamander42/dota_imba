@@ -218,8 +218,9 @@ function FierySoul( keys )
 		end
 	end
 
+	
 	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
+	if caster:PassivesDisabled() then
 		return nil
 	end
 

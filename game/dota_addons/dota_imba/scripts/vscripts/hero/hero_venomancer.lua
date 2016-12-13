@@ -184,6 +184,11 @@ function PoisonSting( keys )
 		return nil
 	end
 	
+	-- If caster's passives are disabled by break, do nothing
+	if caster:PassivesDisabled() then
+		return nil
+	end
+	
 	-- Parameters
 	local caster_stacks = ability:GetLevelSpecialValueFor("caster_stacks", ability_level)
 	local initial_stacks = ability:GetLevelSpecialValueFor("initial_stacks", ability_level)
