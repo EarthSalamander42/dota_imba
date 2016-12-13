@@ -30937,6 +30937,735 @@
 	}
 
 	//=================================================================================================================
+	// Skywrath's Arcane Bolt
+	//=================================================================================================================
+	"imba_skywrath_mage_arcane_bolt"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"skywrath_mage_arcane_bolt"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf" 
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"			"900"
+		"AbilityCastPoint"			"0.1"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"			"5.0 4.0 3.0 2.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"			"70"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"325"
+			}
+			"03"
+			{
+				"var_type" 				"FIELD_FLOAT"
+				"vision_duration"		"3.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"60 80 100 120"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_multiplier"		"1.8"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"10.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_int_bonus"		"3 4 5 6"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_int_multi_bonus"	"0.2"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"ArcaneBoltCast"
+
+				"sound_cast"			"Hero_SkywrathMage.ArcaneBolt.Cast"
+				"particle_projectile"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt.vpcf"
+				"modifier_stacks"		"modifier_imba_arcane_int_stack"
+				"stack_duration"		"%stack_duration"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"				"1"
+
+			"RunScript"
+			{
+				"ScriptFile"			"hero/hero_skywrath_mage.lua"
+				"Function"				"ArcaneBoltHit"
+				
+				"sound_impact"			"Hero_SkywrathMage.ArcaneBolt.Impact"
+				"modifier_stacks" 		"modifier_imba_arcane_int_stack"
+				"seal_modifier"			"modifier_imba_ancient_seal_silence"
+				"seal_ability"			"imba_skywrath_mage_ancient_seal"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_arcane_int_stack"
+			{
+				"Passive"    "0"
+				"IsBuff"     "1"
+				"IsPurgable" "0"
+				"IsHidden"   "0"
+
+				"Duration"				"%stack_duration"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stack_int_bonus"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Skywrath's Concussive Shot
+	//=================================================================================================================
+	"imba_skywrath_mage_concussive_shot"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO"		
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_MAGICAL"		
+		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"skywrath_mage_concussive_shot"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf" 				
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"particle"			"particles/hero/skywrath_mage/skywrath_mage_ghastly_eerie.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint" 		 "0"
+		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"95"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 				"FIELD_INTEGER"
+				"damage"				"60 120 180 240"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_range"			"1600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"800"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"				
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_amount"			"-25 -30 -35 -40"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.34"
+			}		
+			"09"			
+			{
+				"var_type"				  "FIELD_FLOAT"
+				"ghastly_pulse_intervals" "1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_force_spend"		"25 50 75 100"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"ConcussiveShotCast"
+				
+				"sound_cast"			"Hero_SkywrathMage.ConcussiveShot.Cast"
+				"particle_projectile"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" 				"1"
+
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"ConcussiveShotImpact"
+
+				"sound_impact"			"Hero_SkywrathMage.ConcussiveShot.Target"				
+				"modifier_slow"			"modifier_imba_concussive_shot_slow"
+				"aoe_particle"			"particles/hero/skywrath_mage/skywrath_mage_ghastly_eerie.vpcf"
+				"modifier_ghast_pulse"	"modifier_imba_ghastly_pulse"
+				"sound_cast"			"Hero_SkywrathMage.ConcussiveShot.Cast"
+				"particle_projectile"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"				
+				"ghastly_ability_name"	"imba_skywrath_mage_concussive_shot_ghastly"
+				"seal_modifier"			"modifier_imba_ancient_seal_silence"
+				"seal_ability"			"imba_skywrath_mage_ancient_seal"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_concussive_shot_slow"
+			{
+				"Passive"    "0"
+				"IsDebuff"   "1"
+				"IsPurgable" "1"
+				"IsHidden"   "0"
+				
+				"Duration"				"%slow_duration"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+				}
+			}
+
+			"modifier_imba_ghastly_pulse"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+				
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"ThinkInterval"			"%ghastly_pulse_intervals"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+						"Function"				"ConcussiveShotGhastlyPulseInterval"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Skywrath's Ghastly Pulse Concussive Shots
+	//=================================================================================================================
+	"imba_skywrath_mage_concussive_shot_ghastly"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO"		
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_MAGICAL"		
+		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"skywrath_mage_concussive_shot"	
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf" 				
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+			"particle"			"particles/hero/skywrath_mage/skywrath_mage_ghastly_eerie.vpcf"						
+		}	
+	
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint" 		 "0"
+		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_2"
+	
+	
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+	
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 				"FIELD_INTEGER"
+				"damage"				"30 60 90 120"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_range"			"1600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"800"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"				
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_amount"			"-25 -30 -35 -40"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"4"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_radius"			"400"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.34"
+			}
+		}
+
+		"OnSpellStart" 
+		{
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"ConcussiveShotGhastlyPulseCast"
+				
+				"sound_cast"			"Hero_SkywrathMage.ConcussiveShot.Cast"
+				"particle_projectile"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit" 				"1"
+
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"ConcussiveShotGhastlyPulseImpact"
+
+				"sound_impact"			"Hero_SkywrathMage.ConcussiveShot.Target"
+				"modifier_slow"			"modifier_imba_concussive_shot_slow"
+				"aoe_particle"			"particles/hero/skywrath_mage/skywrath_mage_ghastly_eerie.vpcf"
+				"modifier_ghast_pulse"	"modifier_imba_ghastly_pulse"
+				"seal_modifier"			"modifier_imba_ancient_seal_silence"
+				"seal_ability"			"imba_skywrath_mage_ancient_seal"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_concussive_shot_slow"
+			{
+				"Passive"    "0"
+				"IsDebuff"   "1"
+				"IsPurgable" "1"
+				"IsHidden"   "0"
+
+				"Duration"				"%slow_duration"
+
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"EffectName"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_slow_debuff.vpcf"
+				"EffectAttachType"		"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+				}	
+			}
+		}
+	}	
+
+	//=================================================================================================================
+	// Skywrath's Ancient Seal
+	//=================================================================================================================
+	"imba_skywrath_mage_ancient_seal"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"			"1"
+		"AbilityTextureName"     	"skywrath_mage_ancient_seal"
+			
+			
+			
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf" 				
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
+		}	
+		
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"		 "700"
+		"AbilityCastPoint" 		 "0.1"
+		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_3"
+		
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14"
+		
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 90 100 110"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{	
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"magic_reduction"	"-30 -35 -40 -45"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"3 4 5 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_to_duration"	"0.0001 0.00015 0.0002 0.00025"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_explosion_damage"	"100 150 200"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_explosion_radius"	"180"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_threshold"	"600 550 500"
+			}		
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_explosion_delay"	"0.5"
+			}			
+		}		
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"AncientSeal"
+				
+				"sound_cast"			"Hero_SkywrathMage.AncientSeal.Target"												
+				"seal_particle"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
+				"seal_modifier"			"modifier_imba_ancient_seal_silence"			
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_ancient_seal_silence"
+			{
+				"Passive"    "0"
+				"IsDebuff"   "1"
+				"IsPurgable" "1"
+				"IsHidden"   "0"
+
+				"Duration"				"%duration"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+						"Function"				"AncientSealRemoveDebuff"
+
+						"modifier"				"modifier_imba_ancient_seal_silence"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+						"Function"				"AncientSealExplosion"
+
+						"explosion_particle"	"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf"
+						"damageTaken"			"%attack_damage"	
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_reduction"
+				}
+
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Skywrath's Mystic Flare
+	//=================================================================================================================
+	"imba_skywrath_mage_mystic_flare"
+	{
+		//General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"              	"ability_datadriven"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO"		
+		"AbilityUnitTargetFlags"	"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"  	"DAMAGE_TYPE_MAGICAL"		
+		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"			"2"
+		"AbilityTextureName"     	"skywrath_mage_mystic_flare"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"			
+			"particle"          "particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_c.vpcf"       // Attach for core
+			"particle"          "particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_f.vpcf"       // Attach for core
+			"particle"          "particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient_j.vpcf"       // Attach for core
+			"particle"          "particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"         // Main particle
+			"particle"			"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf"
+			"particle"			"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion_shockwave.vpcf"
+		}	
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint" 		 "0.1"
+		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastRange"		 "900"	
+		"AOERadius" 			 "170"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"60 40 20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"350 575 800"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{	
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"duration"		"2.4"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage"		"600 1000 1400"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"interval"		"0.1"
+			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"170"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_delay"	"1"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_damage"	"150 350 500"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_radius"	"350"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explosion_radius_increase"	"5 10 15"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"explosion_damage_increase"	"10 15 20"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile" 			"hero/hero_skywrath_mage.lua"
+				"Function"				"MysticFlare"
+
+				"sound_cast"					"Hero_SkywrathMage.MysticFlare.Cast"
+				"sound_target"			"Hero_SkywrathMage.MysticFlare.Target"
+				"core_particle"					"particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf"
+				"modifier_mystic_flare"			"modifier_imba_mystic_flare"
+				"explosion_particle"			"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf"
+				"explosion_shockwave_particle"	"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion_shockwave.vpcf"
+				"target"						"POINT"
+				"seal_modifier"			"modifier_imba_ancient_seal_silence"
+				"seal_ability"			"imba_skywrath_mage_ancient_seal"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_mystic_flare"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING"						"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Troll Warlord's Whirling Axes (melee)
 	//=================================================================================================================
 	"imba_troll_warlord_whirling_axes_melee"
