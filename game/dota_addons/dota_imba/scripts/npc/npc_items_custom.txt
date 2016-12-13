@@ -18242,10 +18242,13 @@
 
 		"OnUnequip"
 		{
-			"RemoveModifier"
+			"RunScript"
 			{
-				"ModifierName"	"modifier_item_imba_echo_sabre_double_hit"
-				"Target" 		"CASTER"
+				"ScriptFile"			"items/item_echo_sabre.lua"
+				"Function"				"EchoSabreUnequip"
+
+				"modifier_multihit"		"modifier_item_imba_echo_sabre_double_hit"
+				"modifier_slow_applier"	"modifier_item_imba_echo_sabre_slow_applier"
 			}
 		}
 		
@@ -18492,10 +18495,13 @@
 
 		"OnUnequip"
 		{
-			"RemoveModifier"
+			"RunScript"
 			{
-				"ModifierName"	"modifier_item_imba_reverb_rapier_quadra_hit"
-				"Target" 		"CASTER"
+				"ScriptFile"			"items/item_echo_sabre.lua"
+				"Function"				"EchoSabreUnequip"
+
+				"modifier_multihit"		"modifier_item_imba_reverb_rapier_quadra_hit"
+				"modifier_slow_applier"	"modifier_item_imba_reverb_rapier_slow_applier"
 			}
 		}
 		
