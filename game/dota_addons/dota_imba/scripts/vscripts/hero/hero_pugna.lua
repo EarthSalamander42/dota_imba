@@ -731,7 +731,7 @@ function LifeDrainTickEnemy( keys )
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = health_drain * tick_rate, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Calculate amount of healing done
-	local caster_healing = health_drain * tick_rate * (1 - target:GetMagicalArmorValue())
+	local caster_healing = health_drain * tick_rate * (1 + GetSpellPower(caster) * 0.01) * (1 - target:GetMagicalArmorValue())
 
 	-- If the caster would be overhealed, restore mana
 	local health_missing = caster:GetMaxHealth() - caster:GetHealth()
@@ -810,7 +810,7 @@ function LifeDrainTickAlly( keys )
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = health_drain * tick_rate / 2, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Calculate amount of healing done
-	local target_healing = health_drain * tick_rate * ( 1 - caster:GetMagicalArmorValue() )
+	local target_healing = health_drain * tick_rate * (1 + GetSpellPower(caster) * 0.01) * ( 1 - caster:GetMagicalArmorValue() )
 
 	-- If the target would be overhealed, restore its mana
 	local health_missing = target:GetMaxHealth() - target:GetHealth()

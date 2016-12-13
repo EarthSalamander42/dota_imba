@@ -5079,6 +5079,11 @@
 				"var_type"								"FIELD_INTEGER"
 				"dmg_bonus"								"2"
 			}
+			"05"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"spell_power"							"2"
+			}
 		}
 
 		"Modifiers"

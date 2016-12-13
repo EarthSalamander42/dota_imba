@@ -1779,6 +1779,11 @@ function GetSpellPower(unit)
 	local unit_intelligence = unit:GetIntellect()
 	local spell_power = unit_intelligence * 0.14
 
+	-- Adjust spell power based on War Veteran stacks
+	if unit:HasModifier("modifier_imba_unlimited_level_powerup") then
+		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
+	end
+
 	-- Fetch current bonus spell power from other sources, if existing
 	if unit.spell_power then
 		spell_power = spell_power + unit.spell_power
