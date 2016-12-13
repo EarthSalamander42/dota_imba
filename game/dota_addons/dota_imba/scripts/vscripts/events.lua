@@ -176,6 +176,25 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Replace Silencer Int Steal with IMBA version
+	--
+	-- Unfortunately, needs to be done every time Silencer spawns as his modifier is permanently
+	-- embedded into his character and he'll gain it every time he spawns
+	-------------------------------------------------------------------------------------------------
+	if npc:IsRealHero() then
+		Timers:CreateTimer(1, function()
+			if npc:HasModifier("modifier_silencer_int_steal") then
+				npc:RemoveModifierByName("modifier_silencer_int_steal")
+				
+				-- Only add the modifier once, since it persists through death and whatnot
+				if not npc:HasModifier("modifier_imba_silencer_int_steal") then
+					npc:AddNewModifier(npc, nil, "modifier_imba_silencer_int_steal", {steal_range = 925, steal_amount = 2})
+				end
+			end
+		end)
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arc Warden clone handling
 	-------------------------------------------------------------------------------------------------
 
