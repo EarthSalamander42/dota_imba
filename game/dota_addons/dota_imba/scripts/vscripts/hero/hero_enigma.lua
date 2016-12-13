@@ -464,18 +464,22 @@ function BlackHoleEnd( keys )
 	local caster = keys.caster
 	local sound_stop = keys.sound_stop
 
-	-- Stop all sounds from playing
-	caster.black_hole_dummy:StopSound("Hero_Enigma.Black_Hole")
-	caster.black_hole_dummy:StopSound("Imba.EnigmaBlackHoleTi5")
+	if not caster:IsNull() then
+		-- Play the end sound
+		caster:EmitSound(sound_stop)
+		
+		if caster.black_hole_dummy ~= nil then
+			-- Stop all sounds from playing
+			caster.black_hole_dummy:StopSound("Hero_Enigma.Black_Hole")
+			caster.black_hole_dummy:StopSound("Imba.EnigmaBlackHoleTi5")
 
-	-- Play the end sound
-	caster:EmitSound(sound_stop)
+			-- Destroy the dummy
+			caster.black_hole_dummy:Destroy()
 
-	-- Destroy the dummy
-	caster.black_hole_dummy:Destroy()
-
-	-- Clear global variable
-	caster.black_hole_center = nil
+			-- Clear global variable
+			caster.black_hole_center = nil
+		end
+	end
 end
 
 function BlackHoleDebuffStart( keys )
