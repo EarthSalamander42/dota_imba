@@ -18239,6 +18239,15 @@
 				"ranged_cooldown"		"6.0"
 			}
 		}
+
+		"OnUnequip"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_item_imba_echo_sabre_double_hit"
+				"Target" 		"CASTER"
+			}
+		}
 		
 		"Modifiers"
 		{
@@ -18478,6 +18487,15 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"ranged_cooldown"		"6.0"
+			}
+		}
+
+		"OnUnequip"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_item_imba_reverb_rapier_quadra_hit"
+				"Target" 		"CASTER"
 			}
 		}
 		
