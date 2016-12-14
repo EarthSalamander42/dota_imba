@@ -2840,6 +2840,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
 			}
+			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -2879,30 +2880,6 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
 					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_orchid_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidSpellPowerUp"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidSpellPowerDown"
-					}
 				}
 			}
 
@@ -3072,6 +3049,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"distance_taper_start"		"2500"
 			}
+			// hardcoded to GetSpellPower() on util.lua
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -3122,24 +3100,6 @@
 						"Function"				"BloodthornCritRoll"
 
 						"modifier_crit"			"modifier_imba_bloodthorn_crit"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornSpellPowerUp"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornSpellPowerDown"
 					}
 				}
 			}
@@ -7653,6 +7613,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
+			// hardcoded to GetSpellPower() on util.lua
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -7785,15 +7746,6 @@
 
 						"modifier_phys"		"modifier_item_imba_rapier_stacks_phys"
 						"modifier_magic"	"modifier_item_imba_rapier_stacks_magic"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_rapier.lua"
-						"Function"			"RapierMagicSpellPowerEnd"
 					}
 				}
 			}
@@ -17999,7 +17951,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1800"	
+		"ItemCost"						"1500"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -18036,7 +17988,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4450"
+		"ItemCost"						"4150"
 		"ItemShopTags"					"teleport"
 		"ItemQuality"					"common"
 		"ItemAliases"					"blink;boots"
@@ -18065,12 +18017,17 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_extra_distance"		"2800"
+				"max_extra_distance"		"2000"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"max_extra_cooldown"		"12.0"
+				"max_extra_cooldown"		"6.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_extra_tooltip"			"600"
 			}
 		}
 		
@@ -18793,7 +18750,7 @@
 	
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"12000"	
+		"ItemCost"						"8000"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -18828,7 +18785,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"16200"
+		"ItemCost"						"12200"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemAliases"					"aghanim; scepter; ultimate; synth; alchemist"
@@ -18978,6 +18935,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_bonus"		"200"
 			}
+			// hardcoded to GetSpellPower() on util.lua
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -19033,34 +18991,6 @@
 						"Function"				"AetherLensRangeDestroy"
 						
 						"modifier_cast_range"	"modifier_item_aether_lens"
-					}
-				}
-			}
-
-			"modifier_item_imba_aether_lens_spell_power"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"AetherLensSpellPowerCreate"						
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_aether_lens.lua"
-						"Function"				"AetherLensSpellPowerDestroy"						
 					}
 				}
 			}
@@ -19134,7 +19064,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"2.0"
+				"burn_duration"			"2.5"
 			}
 			"05"
 			{
@@ -19146,6 +19076,7 @@
 				"var_type"				"FIELD_FLOAT"
 				"burn_tick"				"0.5"
 			}
+			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -19226,34 +19157,6 @@
 						"Function"				"NetherWandTick"	
 
 						"modifier_unique"		"modifier_item_imba_nether_wand_unique"					
-					}
-				}
-			}
-
-			"modifier_item_imba_nether_wand_spell_power"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandSpellPowerCreate"						
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandSpellPowerDestroy"						
 					}
 				}
 			}
@@ -19340,6 +19243,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"cast_range_bonus"		"300"
 			}
+			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -19348,7 +19252,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_duration"			"2.0"
+				"burn_duration"			"2.5"
 			}
 			"09"
 			{
@@ -19437,34 +19341,6 @@
 						"Function"				"NetherWandTick"	
 
 						"modifier_unique"		"modifier_item_imba_elder_staff_unique"					
-					}
-				}
-			}
-
-			"modifier_item_imba_elder_staff_spell_power"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"Purgable"						"0"
-
-				"Attributes"					"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandSpellPowerCreate"						
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_nether_wand.lua"
-						"Function"				"NetherWandSpellPowerDestroy"						
 					}
 				}
 			}

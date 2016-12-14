@@ -209,7 +209,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Set game end on kills
 	if tonumber(mode_info.number_of_kills) > 0 then
 		END_GAME_ON_KILLS = true
-		KILLS_TO_END_GAME_FOR_TEAM = tonumber(mode_info.number_of_kills)
+		KILLS_TO_END_GAME_FOR_TEAM = math.min(tonumber(mode_info.number_of_kills), 250)
 		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
 	end
 
@@ -263,13 +263,17 @@ function OnSetGameMode( eventSourceIndex, args )
 	print("hero starting gold: "..HERO_INITIAL_GOLD)
 
 	-- Gold bounties information
-	CREEP_GOLD_BONUS = tonumber(mode_info.gold_bounty)
-	HERO_GOLD_BONUS = tonumber(mode_info.gold_bounty)
+	if tonumber(mode_info.gold_bounty) > 0 then
+		CREEP_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
+		HERO_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
+	end
 	print("gold bounty increased by: "..HERO_GOLD_BONUS)
 
 	-- XP bounties information
-	CREEP_XP_BONUS = tonumber(mode_info.xp_bounty)
-	HERO_XP_BONUS = tonumber(mode_info.xp_bounty)
+	if tonumber(mode_info.xp_bounty) > 0 then
+		CREEP_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
+		HERO_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
+	end
 	print("xp bounty increased by: "..HERO_XP_BONUS)
 
 	-- Passive gold adjustment
@@ -314,13 +318,13 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Enable higher starting level
 	if tonumber(mode_info.xp_start) then
-		HERO_STARTING_LEVEL = tonumber(mode_info.xp_start)
+		HERO_STARTING_LEVEL = math.min(math.max(tonumber(mode_info.xp_start), 1), 25)
 		print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
 	end
 
 	-- Set up level cap
 	if mode_info.level_cap then
-		MAX_LEVEL = tonumber(mode_info.level_cap)
+		MAX_LEVEL = math.min(math.max(tonumber(mode_info.level_cap), 25), 100)
 	end
 	print("Heroes can level up to level "..MAX_LEVEL)
 
@@ -341,7 +345,7 @@ function OnSetGameMode( eventSourceIndex, args )
 	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
 
 	-- Buyback cooldown information
-	HERO_BUYBACK_COOLDOWN = tonumber(mode_info.buyback)
+	HERO_BUYBACK_COOLDOWN = math.min(math.max(tonumber(mode_info.buyback), 0), 180)
 	print("buyback cooldown: "..HERO_BUYBACK_COOLDOWN.." seconds")
 	
 	-- Set the game options as being chosen

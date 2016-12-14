@@ -535,50 +535,6 @@ function ApplyAllRandomOmgAbilities( hero )
 		end
 	end
 
-	-- Figure out which attribute bonus to add
-	local ability_start_string = ""
-	local ability_end_string = ""
-
-	-- Choose number of abilities
-	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 3 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
-		ability_end_string = "_random_omg_3a2u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
-		ability_end_string = "_random_omg_4a1u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 5 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
-		ability_end_string = "_random_omg_5a1u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
-		ability_end_string = "_random_omg_4a2u"
-	end
-
-	-- Choose attribute
-	if hero:GetPrimaryAttribute() == 0 then
-		ability_start_string = "attribute_bonus_str"
-	elseif hero:GetPrimaryAttribute() == 1 then
-		ability_start_string = "attribute_bonus_agi"
-	elseif hero:GetPrimaryAttribute() == 2 then
-		ability_start_string = "attribute_bonus_int"
-	end
-
-	-- Re-add attribute bonus and store it for reference
-	hero:AddAbility(ability_start_string..ability_end_string)
-	hero.random_omg_abilities[i] = ability_start_string..ability_end_string
-	i = i + 1
-
-	-- Apply ability layout modifier
-	local layout_ability_name
-	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 4 then
-		layout_ability_name = "random_omg_ability_layout_changer_4"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 5 then
-		layout_ability_name = "random_omg_ability_layout_changer_5"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 6 then
-		layout_ability_name = "random_omg_ability_layout_changer_6"
-	end
-
-	hero:AddAbility(layout_ability_name)
-	local layout_ability = hero:FindAbilityByName(layout_ability_name)
-	layout_ability:SetLevel(1)
-	hero.random_omg_abilities[i] = layout_ability_name
-
 	-- Apply high level powerup ability, if previously existing
 	if ability_powerup then
 		hero:AddAbility("imba_unlimited_level_powerup")
@@ -1757,21 +1713,11 @@ function IsGinger(unit)
 	return false
 end
 
--- Changes a hero's current spell power
-function ChangeSpellPower(unit, amount)
-
-	if not unit.spell_power then
-		unit.spell_power = 0
-	end
-
-	unit.spell_power = unit.spell_power + amount
-end
-
 -- Fetches a hero's current spell power
 function GetSpellPower(unit)
 
-	-- If this is not a hero, do nothing
-	if not unit:IsHero() then
+	-- If this is not a hero, or the unit is invulnerable, do nothing
+	if not unit:IsHero() or unit:IsInvulnerable() then
 		return 0
 	end
 
@@ -1784,9 +1730,28 @@ function GetSpellPower(unit)
 		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
 	end
 
-	-- Fetch current bonus spell power from other sources, if existing
-	if unit.spell_power then
-		spell_power = spell_power + unit.spell_power
+	-- Define item-based item power values
+	local item_spell_power = {}
+	item_spell_power["item_imba_aether_lens"] = 10
+	item_spell_power["item_imba_nether_wand"] = 10
+	item_spell_power["item_imba_elder_staff"] = 25
+	item_spell_power["item_imba_orchid"] = 30
+	item_spell_power["item_imba_bloodthorn"] = 30
+
+	-- Fetch current bonus spell power from items, if existing
+	for i = 0, 5 do
+		local current_item = unit:GetItemInSlot(i)
+		if current_item then
+			local current_item_name = current_item:GetName()
+			if item_spell_power[current_item_name] then
+				spell_power = spell_power + item_spell_power[current_item_name]
+			end
+		end
+	end
+
+	-- Fetch current bonus spell power from rapiras, if existing
+	if unit:HasModifier("modifier_item_imba_rapier_stacks_magic") then
+		spell_power = spell_power + unit:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", nil) * 70
 	end
 
 	-- Return current spell power

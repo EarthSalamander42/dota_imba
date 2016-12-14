@@ -146,6 +146,8 @@ DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Diretide Kings' bounty multipli
 DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn time
 DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
 
+IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
+
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings
 -------------------------------------------------------------------------------------------------
@@ -320,15 +322,26 @@ for i = 2, 5 do
 end
 
 XP_PER_LEVEL_TABLE[6] = 2000
-XP_PER_LEVEL_TABLE[7] = 2600
-XP_PER_LEVEL_TABLE[8] = 3400
-XP_PER_LEVEL_TABLE[9] = 4400
-XP_PER_LEVEL_TABLE[10] = 5400
-XP_PER_LEVEL_TABLE[11] = 6000
-XP_PER_LEVEL_TABLE[12] = 8200
-XP_PER_LEVEL_TABLE[13] = 9000
+XP_PER_LEVEL_TABLE[7] = 2615
+XP_PER_LEVEL_TABLE[8] = 3245
+XP_PER_LEVEL_TABLE[9] = 3890
+XP_PER_LEVEL_TABLE[10] = 4550
+XP_PER_LEVEL_TABLE[11] = 5225
+XP_PER_LEVEL_TABLE[12] = 6000
+XP_PER_LEVEL_TABLE[13] = 7175
+XP_PER_LEVEL_TABLE[14] = 8375
+XP_PER_LEVEL_TABLE[15] = 9600
+XP_PER_LEVEL_TABLE[16] = 10850
+XP_PER_LEVEL_TABLE[17] = 12125
+XP_PER_LEVEL_TABLE[18] = 13500
+XP_PER_LEVEL_TABLE[19] = 14900
+XP_PER_LEVEL_TABLE[20] = 16325
+XP_PER_LEVEL_TABLE[21] = 17925
+XP_PER_LEVEL_TABLE[22] = 19825
+XP_PER_LEVEL_TABLE[23] = 22000
+XP_PER_LEVEL_TABLE[24] = 24500
 
-for i = 14, MAX_LEVEL do
+for i = 25, MAX_LEVEL do
 	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
 end
 

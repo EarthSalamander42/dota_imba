@@ -9,6 +9,12 @@ function NetherWand( keys )
 		return nil
 	end
 
+	-- If the target is over 2500 distance away, do nothing
+	local target = keys.unit
+	if (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+		return nil
+	end
+
 	-- Parameters
 	local ability = keys.ability
 	local target = keys.unit
@@ -25,6 +31,11 @@ function ElderStaff( keys )
 	local ability = keys.ability
 	local target = keys.unit
 	local modifier_burn = keys.modifier_burn
+
+	-- If the target is over 2500 distance away, do nothing
+	if (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() > IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+		return nil
+	end
 
 	-- Apply the burn modifier
 	if target:GetTeam() ~= caster:GetTeam() and not target:IsBuilding() then
@@ -62,32 +73,4 @@ function NetherWandTick( keys )
 
 	-- Caustic finale interaction part 2
 	target:RemoveModifierByNameAndCaster("modifier_imba_caustic_finale_prevent", caster)
-end
-
-function NetherWandSpellPowerCreate( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If this is an illusion, do nothing
-	if caster:IsIllusion() then
-		return nil
-	end
-
-	-- Increase spell power
-	local spell_power = ability:GetSpecialValueFor("spell_power")
-	ChangeSpellPower(caster, spell_power)
-end
-
-function NetherWandSpellPowerDestroy( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If this is an illusion, do nothing
-	if caster:IsIllusion() then
-		return nil
-	end
-
-	-- Decrease spell power
-	local spell_power = ability:GetSpecialValueFor("spell_power")
-	ChangeSpellPower(caster, -spell_power)
 end

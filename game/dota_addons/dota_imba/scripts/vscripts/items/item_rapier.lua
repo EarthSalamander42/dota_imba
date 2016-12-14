@@ -44,24 +44,6 @@ function RapierToggle( keys )
 	AddStacks(next_ability, caster, caster, next_stacks, current_stacks, true)
 end
 
-function RapierMagicSpellPowerEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If this is an illusion, do nothing
-	if caster:IsIllusion() then
-		return nil
-	end
-
-	-- Remove all bonus spell power
-	local spell_power = ability:GetSpecialValueFor("spell_power")
-	if not caster.magic_rapier_level_tracker then
-		caster.magic_rapier_level_tracker = 0
-	end
-	ChangeSpellPower(caster, (-1) * spell_power * caster.magic_rapier_level_tracker)
-	caster.magic_rapier_level_tracker = nil
-end
-
 function RapierParticleMagic( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -75,16 +57,6 @@ function RapierParticleMagic( keys )
 
 	-- Fetch current rapier level
 	local rapier_level = caster:GetModifierStackCount(modifier_phys, caster) + caster:GetModifierStackCount(modifier_magic, caster)
-
-	-- Update granted spell power if necessary
-	local spell_power = ability:GetSpecialValueFor("spell_power")
-	if not caster.magic_rapier_level_tracker then
-		caster.magic_rapier_level_tracker = 0
-	end
-	if caster.magic_rapier_level_tracker ~= rapier_level then
-		ChangeSpellPower(caster, spell_power * (rapier_level - caster.magic_rapier_level_tracker))
-		caster.magic_rapier_level_tracker = rapier_level
-	end
 	
 	-- If rapier level is enough, grant vision of the caster to all teams
 	if rapier_level >= 3 then

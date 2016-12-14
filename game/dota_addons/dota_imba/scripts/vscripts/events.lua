@@ -633,7 +633,7 @@ function GameMode:OnNonPlayerUsedAbility(keys)
 	DebugPrint('[BAREBONES] OnNonPlayerUsedAbility')
 	DebugPrintTable(keys)
 
-	local abilityname=  keys.abilityname
+	local abilityname = keys.abilityname
 end
 
 -- A player changed their name
@@ -706,14 +706,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	if hero_level > 25 then
 
 		-- Invoker is a special case
-		if hero:GetName() == "npc_dota_hero_invoker" then
-			if hero_level > 35 then
-				hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
-			end
-		else
-
-			-- Prevent the hero from gaining further ability points after level 25
-			hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
+		if not hero:GetName() == "npc_dota_hero_invoker" then
 
 			-- If the generic powerup isn't present, apply it
 			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
@@ -721,6 +714,12 @@ function GameMode:OnPlayerLevelUp(keys)
 				hero:AddAbility("imba_unlimited_level_powerup")
 				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 				ability_powerup:SetLevel(1)
+
+				for i = 0, 99 do
+					if hero:GetAbilityByIndex(i) then
+						print(hero:GetAbilityByIndex(i):GetName())
+					end
+				end
 			end
 		end
 	end
@@ -796,9 +795,9 @@ function GameMode:OnPlayerPickHero(keys)
 	if IMBA_PICK_MODE_ALL_PICK then
 
 		-- Fetch player's team and chosen hero
-		local team = PlayerResource:GetTeam(player:GetPlayerID())
-		local hero = player:GetAssignedHero()
-		local hero_name = hero:GetName()
+		--local team = PlayerResource:GetTeam(player:GetPlayerID())
+		--local hero = player:GetAssignedHero()
+		--local hero_name = hero:GetName()
 
 		-- Check if the hero was already picked in the same team
 		--if PlayerResource:IsHeroSelected(hero_name) then
@@ -868,98 +867,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Suicide Squad, Attack! Mines
-	-------------------------------------------------------------------------------------------------
-
-	-- Check if suicide is leveled
-	local ability_suicide = killed_unit:FindAbilityByName("techies_suicide")
-	if ability_suicide and ability_suicide:GetLevel() > 0 then
-
-		-- Check for scepter
-		local scepter = HasScepter(killed_unit)
-			
-		-- Land Mines
-		local ability_land_mine = killed_unit:FindAbilityByName("imba_techies_land_mines")
-		if ability_land_mine and ability_land_mine:GetLevel() > 0 then
-			local caster = killed_unit				
-			local ability_level = ability_land_mine:GetLevel() - 1
-			local modifier_state = "modifier_imba_land_mines_state"
-			
-			-- Parameters
-			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
-			local levels_per_mine = ability_land_mine:GetLevelSpecialValueFor("levels_per_mine", ability_level)
-			local duration = ability_land_mine:GetLevelSpecialValueFor("duration", ability_level)
-			local player_id = caster:GetPlayerID()
-
-			-- Calculate amount of mines to drop
-			local mine_amount = 1 + math.floor( caster:GetLevel() / levels_per_mine )
-
-			-- Drop the mines
-			for i = 1, mine_amount do
-				local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-				land_mine:SetControllableByPlayer(player_id, true)
-				land_mine:AddNewModifier(caster, ability_land_mine, "modifier_kill", {duration = duration})
-
-				-- Root the mine in place
-				land_mine:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
-
-				-- Make the mine have no unit collision or health bar
-				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
-
-				-- Wait for the activation delay
-				Timers:CreateTimer(activation_time, function()
-					
-					-- Grant the mine the appropriately leveled abilities
-					local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_passive:SetLevel(ability_level + 1)
-					if scepter then
-						local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
-						mine_teleport:SetLevel(1)
-					end
-				end)
-			end
-		end
-
-		-- Stasis Trap
-		local ability_stasis_trap = killed_unit:FindAbilityByName("imba_techies_stasis_trap")
-		if ability_stasis_trap and ability_stasis_trap:GetLevel() > 0 then
-
-			local caster = killed_unit
-			local ability_level = ability_stasis_trap:GetLevel() - 1
-			
-			-- Parameters
-			local activation_delay = ability_stasis_trap:GetLevelSpecialValueFor("activation_delay", ability_level)
-			local player_id = caster:GetPlayerID()
-			local trap_loc_1 = caster:GetAbsOrigin() + RandomVector(100)
-			local trap_loc_2 = caster:GetAbsOrigin() + RandomVector(100)
-
-			-- Play the spawn animation
-			local trap_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(trap_pfx, 0, trap_loc_1)
-			ParticleManager:SetParticleControl(trap_pfx, 1, trap_loc_1)
-
-			-- Wait for the activation delay
-			Timers:CreateTimer(activation_delay, function()
-
-				-- Create the mine at the specified place
-				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_1, false, caster, caster, caster:GetTeam())
-				stasis_trap:SetControllableByPlayer(player_id, true)
-				stasis_trap:AddNewModifier(caster, ability_stasis_trap, "modifier_kill", {duration = 600})
-
-				-- Root the mine in place
-				stasis_trap:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
-
-				-- Make the mine have no unit collision or health bar
-				ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap, "modifier_imba_stasis_trap_state", {})
-					
-				-- Grant the mine the appropriately leveled abilities
-				local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
-				trap_passive:SetLevel(ability_level + 1)
-			end)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Meepo redirect to Meepo Prime
 	-------------------------------------------------------------------------------------------------
 	if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
@@ -979,12 +886,6 @@ function GameMode:OnEntityKilled( keys )
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
-		end
-
-		-- Decrease respawn timer due to Techies' Suicide Squad, Attack!
-		if killed_unit:HasModifier("modifier_techies_suicide_respawn_time") then
-			killed_unit:RemoveModifierByName("modifier_techies_suicide_respawn_time")
-			respawn_time = math.max( respawn_time * 0.5)
 		end
 
 		-- Multiply respawn timer by the lobby options

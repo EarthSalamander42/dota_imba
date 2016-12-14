@@ -287,7 +287,7 @@ function GameMode:DamageFilter( keys )
 
 		-- If the target is too far away, do nothing
 		local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
-		if distance <= 2500 then
+		if distance <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
 			
 			-- Adjust damage depending on its type
 			if damage_type == DAMAGE_TYPE_MAGICAL then
@@ -832,9 +832,9 @@ function GameMode:OnHeroInGame(hero)
 
 	-- Set up initial gold
 	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
-	local has_repicked = PlayerResource:HasRepicked(hero:GetPlayerID())
+	local has_not_repicked = PlayerResource:CanRepick(hero:GetPlayerID())
 
-	if has_repicked then
+	if not has_not_repicked then
 		hero:SetGold(HERO_INITIAL_REPICK_GOLD, false)
 	elseif has_randomed then
 		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
