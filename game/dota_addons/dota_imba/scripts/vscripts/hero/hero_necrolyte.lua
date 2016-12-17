@@ -368,11 +368,6 @@ function ReapersScythe( keys )
 	
 	-- Apply the Reaper's Scythe debuff
 	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-	
-	-- Initializes the respawn time variable if necessary
-	if not target.scythe_added_respawn then
-		target.scythe_added_respawn = 0
-	end
 
 	-- Scythe model particle
 	local caster_loc = caster:GetAbsOrigin()
@@ -414,22 +409,11 @@ function ReapersScytheKill( keys )
 	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
 	local scepter = HasScepter(caster)
 
-	-- Initialize or increase scythe respawn timer stacking penalty
-	if target.scythe_stacking_respawn_timer then
-		target.scythe_stacking_respawn_timer = target.scythe_stacking_respawn_timer + respawn_stack
-	else
-		target.scythe_stacking_respawn_timer = respawn_stack
-	end
-
 	-- Flag this as a scythe death, increasing respawn timer by respawn_base
-	target.scythe_added_respawn = respawn_base
 	target:RemoveModifierByName("modifier_imba_reapers_scythe")
 
 	-- Scepter on-kill effects
 	if scepter then
-
-		-- Prevent buyback
-		target:SetBuyBackDisabledByReapersScythe(true)
 
 		-- Apply sadist stacks to nearby allies, if appropriate
 		local ability_sadist = caster:FindAbilityByName("imba_necrolyte_sadist")

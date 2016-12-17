@@ -2,6 +2,7 @@
 
 require('statcollection/init')
 require('internal/util')
+require('player_resource')
 require('imba')
 
 function Precache( context )

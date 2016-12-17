@@ -351,14 +351,6 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Reaper's Scythe buyback prevention clean-up
-	-------------------------------------------------------------------------------------------------
-
-	if npc:IsRealHero() then
-		npc:SetBuyBackDisabledByReapersScythe(false)
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Buyback setup (part 2)
 	-------------------------------------------------------------------------------------------------
 
@@ -402,26 +394,10 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Creep bounty/stats adjustment
+	-- IMBA: Creep stats adjustment
 	-------------------------------------------------------------------------------------------------
 
 	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
-
-		-- Fetch base bounties
-		local max_bounty = npc:GetMaximumGoldBounty()
-		local min_bounty = npc:GetMinimumGoldBounty()
-		local xp_bounty = npc:GetDeathXP()
-
-		-- Adjust bounties based on game time
-		local game_time = GAME_TIME_ELAPSED / 60
-		max_bounty = max_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-		min_bounty = min_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-		xp_bounty = xp_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-
-		-- Adjust bounties according to game options
-		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
-		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
-		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
@@ -690,10 +666,6 @@ function GameMode:OnPlayerLevelUp(keys)
 		xp_bounty = ( hero_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
 	end
 
-	-- Adjust bounties with the game options multiplier
-	gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
-	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-
 	-- Set up bounties
 	hero:SetDeathXP(xp_bounty)
 	hero:SetMaximumGoldBounty(gold_bounty)
@@ -784,9 +756,15 @@ function GameMode:OnPlayerPickHero(keys)
 	DebugPrint('[BAREBONES] OnPlayerPickHero')
 	DebugPrintTable(keys)
 
-	local heroClass = keys.hero
-	local heroEntity = EntIndexToHScript(keys.heroindex)
+	local hero_class = keys.hero
+	local hero_entity = EntIndexToHScript(keys.heroindex)
 	local player = EntIndexToHScript(keys.player)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Assign hero to player
+	-------------------------------------------------------------------------------------------------
+
+	PlayerResource:SetPickedHero(player:GetPlayerID(), hero_entity)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: All Pick hero pick logic
@@ -882,6 +860,23 @@ function GameMode:OnEntityKilled( keys )
 		-- Calculate base respawn timer, capped at 60 seconds
 		local hero_level = killed_unit:GetLevel()
 		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
+
+		-- Calculate respawn timer reduction due to talents
+		local respawn_reduction_talents = {}
+		respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 10
+		respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 15
+		respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 20
+		respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 25
+		respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 30
+		respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 35
+		respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 40
+		respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 50
+
+		for talent_name,respawn_reduction_bonus in pairs(respawn_reduction_talents) do
+			if killed_unit:FindAbilityByName(talent_name) and killed_unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+				respawn_time = respawn_time - respawn_reduction_bonus
+			end
+		end
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction then
@@ -1198,11 +1193,19 @@ function GameMode:OnConnectFull(keys)
 	GameMode:_OnConnectFull(keys)
 	
 	local entIndex = keys.index+1
+
 	-- The Player entity of the joining user
 	local ply = EntIndexToHScript(entIndex)
 	
 	-- The Player ID of the joining player
-	local playerID = ply:GetPlayerID()
+	local player_id = ply:GetPlayerID()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player data initialization
+	-------------------------------------------------------------------------------------------------
+
+	PlayerResource:InitPlayerData(player_id)
+
 end
 
 -- This function is called whenever illusions are created and tells you which was/is the original entity

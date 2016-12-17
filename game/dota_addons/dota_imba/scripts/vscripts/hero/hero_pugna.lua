@@ -420,7 +420,12 @@ function NetherWardZap( keys )
 		"visage_soul_assumption",
 		"visage_summon_familiars",
 		"earth_spirit_geomagnetic_grip",
-		"keeper_of_the_light_recall"
+		"keeper_of_the_light_recall",
+		"monkey_king_boundless_strike",
+		"monkey_king_mischief",
+		"monkey_king_tree_dance",
+		"monkey_king_primal_spring",
+		"monkey_king_wukongs_command"
 	}
 
 	-- Ignore items

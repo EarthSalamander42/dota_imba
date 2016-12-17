@@ -242,9 +242,9 @@ HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in 
 CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
 HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
 
+BOUNTY_RAMP_PER_MINUTE = 5													-- Bounty increase (in %) based on game time
 CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
-CREEP_BOUNTY_RAMP_UP_PER_MINUTE = 5											-- Creep bounty increase (in %) based on game time
 
 ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
 SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?

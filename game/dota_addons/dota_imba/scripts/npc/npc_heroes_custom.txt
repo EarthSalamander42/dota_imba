@@ -12,6 +12,15 @@
 		"Ability3"					"imba_abaddon_frostmourne"
 		"Ability4"					"imba_abaddon_borrowed_time"
 
+		"Ability10"					"special_bonus_hp_regen_6"
+		"Ability11"					"special_bonus_mp_regen_3"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_cast_range_100"
+		"Ability14"					"special_bonus_attack_damage_75"
+		"Ability15"					"special_bonus_respawn_reduction_30"
+		"Ability16"					"special_bonus_strength_12"
+		"Ability17"					"special_bonus_all_stats_10"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -61,7 +70,16 @@
 		"Ability4"					"imba_antimage_magehunter"
 		"Ability5"					"imba_antimage_mana_void"
 
-		"AttackRate"				"1.35"
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_attack_speed_20"
+		"Ability12"					"special_bonus_armor_5"
+		"Ability13"					"special_bonus_attack_damage_40"
+		"Ability14"					"special_bonus_all_stats_7"
+		"Ability15"					"special_bonus_agility_15"
+		"Ability16"					"special_bonus_evasion_20"
+		"Ability17"					"special_bonus_movement_speed_45"
+
+		"AttackRate"				"1.45"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -95,6 +113,15 @@
 		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 
+		"Ability10"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_attack_damage_50"
+		"Ability13"					"special_bonus_hp_200"
+		"Ability14"					"special_bonus_cooldown_reduction_12"
+		"Ability15"					"special_bonus_hp_regen_14"
+		"Ability16"					"special_bonus_spell_lifesteal_20"
+		"Ability17"					"special_bonus_armor_9"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -123,6 +150,15 @@
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"imba_bane_fiends_grip"
+
+		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability11"					"special_bonus_gold_income_15"
+		"Ability12"					"special_bonus_cooldown_reduction_12"
+		"Ability13"					"special_bonus_respawn_reduction_25"
+		"Ability14"					"special_bonus_cast_range_100"
+		"Ability15"					"special_bonus_movement_speed_30"
+		"Ability16"					"special_bonus_intelligence_20"
+		"Ability17"					"special_bonus_all_stats_10"
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
@@ -192,6 +228,7 @@
 		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
+		//"Ability2"					"bounty_hunter_jinada"
 		"Ability3"					"imba_bounty_hunter_wind_walk"
 		"Ability4"					"imba_bounty_hunter_shadow_jaunt"
 		"Ability5"					"imba_bounty_hunter_track"
@@ -262,10 +299,12 @@
 	{
 		"override_hero"				"npc_dota_hero_chaos_knight"
 
-		"AttackDamageMin"			"1"
-		"AttackDamageMax"			"99"
+		"AttackDamageMin"			"29"
+		"AttackDamageMax"			"89"
 
 		"AttributeStrengthGain"		"3.0"
+
+		"AttackRange"				"200"
 
 		//"Ability1"					"imba_chaos_knight_chaos_bolt"
 		//"Ability2"					"imba_chaos_knight_reality_rift"
@@ -424,7 +463,7 @@
 
 		"ModelScale" 				"1.05"
 
-		"AttackRange"				"166"
+		"AttackRange"				"266"
 
 		//"Ability1"					"imba_doom_bringer_devour"
 		//"Ability2"					"imba_doom_bringer_scorched_earth"
@@ -503,6 +542,8 @@
 	{
 		"override_hero"				"npc_dota_hero_earth_spirit"
 
+		"AttackRange"				"225"
+
 		//"Ability1"					"imba_earth_spirit_boulder_smash"
 		//"Ability2"					"imba_earth_spirit_rolling_boulder"
 		//"Ability3"					"imba_earth_spirit_geomagnetic_grip"
@@ -519,6 +560,8 @@
 	"npc_imba_hero_elder_titan"
 	{
 		"override_hero"				"npc_dota_hero_elder_titan"
+
+		"AttackRange"				"200"
 
 		//"Ability1"					"imba_elder_titan_echo_stomp"
 		//"Ability2"					"imba_elder_titan_ancestral_spirit"
@@ -682,9 +725,10 @@
 	{
 		"override_hero"				"npc_dota_hero_jakiro"
 
-		"Ability1"					"imba_jakiro_fire_breath"								
+		"Ability1"					"imba_jakiro_fire_breath"
+		//"Ability2"					"jakiro_ice_path"
 		"Ability3"					"imba_jakiro_liquid_fire"
-		"Ability4"					"imba_jakiro_macropyre"				
+		"Ability4"					"imba_jakiro_macropyre"
 		"Ability5"					"imba_jakiro_ice_breath"
 
 		"AttackRange"				"500"
@@ -744,7 +788,8 @@
 		"Ability2"					"imba_kunkka_tidebringer"	
 		"Ability3"					"imba_kunkka_x_marks_the_spot"
 		"Ability4"					"imba_kunkka_return"
-		"Ability5"					"imba_kunkka_ghostship"		
+		"Ability5"					"imba_kunkka_ghostship"
+		"Ability6"					""
 		
 		"MovementTurnRate"			"5.0"
 
@@ -759,6 +804,8 @@
 		"override_hero"				"npc_dota_hero_legion_commander"
 
 		"AttackRate"				"1.6"
+
+		"AttackRange"				"225"
 		
 		//"Ability1"				"imba_legion_commander_overwhelming_odds"
 		//"Ability2"				"imba_legion_commander_press_the_attack"
@@ -833,12 +880,19 @@
 		"Ability2"					"imba_lina_light_strike_array"
 		"Ability3"					"imba_lina_fiery_soul"
 		"Ability4"					"imba_lina_laguna_blade"
-		"Ability6"					"imba_lina_dragon_slave_aux"
-		"Ability7"					"imba_lina_dragon_slave_fiery"
-		"Ability8"					"imba_lina_dragon_slave_aux_fiery"
-		"Ability9"					"imba_lina_light_strike_array_fiery"
-		"Ability10"					"imba_lina_blazing_soul"
-		"Ability11"					"imba_lina_laguna_blade_fiery"
+		"Ability5"					"imba_lina_dragon_slave_aux"
+		"Ability6"					"imba_lina_dragon_slave_fiery"
+		"Ability7"					"imba_lina_dragon_slave_aux_fiery"
+		"Ability8"					"imba_lina_light_strike_array_fiery"
+		"Ability9"					"imba_lina_blazing_soul"
+		"Ability10"					"imba_lina_laguna_blade_fiery"
+		"Ability11"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_gold_income_15"
+		"Ability13"					"special_bonus_spell_lifesteal_20"
+		"Ability14"					"special_bonus_cast_range_60"
+		"Ability15"					"special_bonus_spell_amplify_12"
+		"Ability16"					"special_bonus_cast_range_60"
+		"Ability17"					"special_bonus_cast_range_75"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}
@@ -886,8 +940,11 @@
 		
 		"AbilityLayout"				"5"
 
+		"AttackRange"				"200"
+
 		"Ability1"					"imba_magnus_shockwave"
 		"Ability2"					"imba_magnus_empower"
+		//"Ability3"					"magnataur_skewer"
 		"Ability4"					"imba_magnus_magnetize"
 		"Ability5"					"imba_magnus_reverse_polarity"
 
@@ -1056,7 +1113,7 @@
 		"Ability2"					"imba_necrolyte_heartstopper_aura"
 		"Ability3"					"imba_necrolyte_sadist"
 		"Ability4"					"imba_necrolyte_reapers_scythe"
-		"Ability6"					"imba_necrolyte_death_pulse_aux"
+		"Ability5"					"imba_necrolyte_death_pulse_aux"
 
 		"ProjectileModel"			"particles/units/heroes/hero_necrolyte/necrolyte_base_attack.vpcf"
 	}
@@ -1074,7 +1131,7 @@
 		"Ability4"					"imba_nevermore_necromastery"
 		"Ability5"					"imba_nevermore_dark_lord"
 		"Ability6"					"imba_nevermore_requiem"
-		"Ability8"					"imba_nevermore_requiem_aux"
+		"Ability7"					"imba_nevermore_requiem_aux"
 	
 		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 	}
@@ -1114,7 +1171,10 @@
 		"AttributeIntelligenceGain"	"2.25"
 
 		"Ability1"					"imba_nyx_assassin_impale"
+		//"Ability2"					"nyx_assassin_mana_burn"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
+		//"Ability4"					"nyx_assassin_burrow"
+		//"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 
 		"ProjectileSpeed"			"900"
@@ -1219,6 +1279,8 @@
 
 		"AttributeAgilityGain"		"3.5"
 
+		"AttackRange"				"225"
+
 		//"Ability1"					"imba_phantom_lancer_spirit_lance"
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
@@ -1279,6 +1341,8 @@
 		"MovementTurnRate"			"1.0"
 
 		"AbilityLayout"				"6"
+
+		"AttackRange"				"200"
 
 		"Ability1"					"imba_pudge_meat_hook"
 		"Ability2"					"imba_pudge_rot"
@@ -1385,9 +1449,9 @@
 		//"Ability5"		"imba_rubick_empty1"
 		//"Ability6"		"imba_rubick_empty2"
 		//"Ability7"		"imba_rubick_spell_steal"
-		//"Ability9"		"imba_rubick_hidden1"
-		//"Ability10"		"imba_rubick_hidden2"
-		//"Ability11"		"imba_rubick_hidden3"
+		//"Ability8"		"imba_rubick_hidden1"
+		//"Ability9"		"imba_rubick_hidden2"
+		//"Ability10"		"imba_rubick_hidden3"
 
 		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
@@ -1587,7 +1651,7 @@
 		"Ability3"					"imba_sniper_take_aim_far"
 		"Ability4"					"imba_sniper_headshot"
 		"Ability5"					"imba_sniper_assassinate"
-		"Ability7"					"imba_sniper_take_aim_normal"
+		"Ability6"					"imba_sniper_take_aim_normal"
 
 		"AttributeAgilityGain"		"2.5"
 
@@ -1653,6 +1717,8 @@
 
 		"ArmorPhysical"				"3"
 
+		"AttackRange"				"200"
+
 		"Ability1"					"imba_sven_storm_bolt"
 		"Ability2"					"imba_sven_great_cleave"
 		"Ability3"					"imba_sven_warcry"
@@ -1698,7 +1764,7 @@
 
 		"AttackRate"			"1.6"
 
-		"AttackRange"			"150"
+		"AttackRange"			"200"
 
 		//"Ability1"				"imba_templar_assassin_refraction"
 		//"Ability2"				"imba_templar_assassin_meld"
@@ -1736,6 +1802,8 @@
 		"ModelScale"				"0.96"
 
 		"AttributeBaseStrength"		"28"
+
+		"AttackRange"				"200"
 
 		//"Ability1"					"imba_tidehunter_gush"
 		//"Ability2"					"imba_tidehunter_kraken_shell"
@@ -1795,6 +1863,8 @@
 		"RingRadius"				"130"
 		"HealthBarOffset"			"350"
 
+		"AttackRange"				"250"
+
 		//"Ability1"				"imba_tiny_avalanche"
 		//"Ability2"				"imba_tiny_toss"
 		//"Ability3"				"imba_tiny_craggy_exterior"
@@ -1817,6 +1887,8 @@
 
 		"AttributeBaseStrength"		"29"
 		"AttributeStrengthGain"		"4.0"
+
+		"AttackRange"				"200"
 
 		//"Ability1"					"imba_treant_natures_guise"
 		//"Ability2"					"imba_treant_leech_seed"
@@ -1880,6 +1952,8 @@
 		"override_hero"				"npc_dota_hero_abyssal_underlord"
 
 		"AttributeIntelligenceGain"	"3.0"
+
+		"AttackRange"				"225"
 
 		//"Ability1"					"imba_abyssal_underlord_firestorm"
 		//"Ability2"					"imba_abyssal_underlord_pit_of_malice"
@@ -1967,7 +2041,7 @@
 		"Ability4"					"imba_vengeful_rancor"
 		"Ability5"					"imba_vengeful_swap_back"
 		"Ability6"					"imba_vengeful_nether_swap"
-		"Ability8"					"vengefulspirit_nether_swap"
+		"Ability7"					"vengefulspirit_nether_swap"
 
 		"ProjectileModel"			"particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
 	}
@@ -2016,7 +2090,7 @@
 	{
 		"override_hero"				"npc_dota_hero_warlock"
 
-		"Ability1"					"warlock_fatal_bonds"
+		//"Ability1"					"warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
 		"Ability3"					"imba_warlock_upheaval"
 		"Ability4"					"imba_warlock_rain_of_chaos"

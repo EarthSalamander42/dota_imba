@@ -2326,8 +2326,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"60"
-		"AttackDamageMax"			"60"
+		"AttackDamageMin"			"100"
+		"AttackDamageMax"			"100"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
@@ -2377,8 +2377,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2398,7 +2398,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.75"
+		"ModelScale"				"0.67"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -2417,8 +2417,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"80"
-		"AttackDamageMax"			"80"
+		"AttackDamageMin"			"135"
+		"AttackDamageMax"			"135"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
@@ -2468,8 +2468,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2489,7 +2489,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.9"
+		"ModelScale"				"0.75"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -2499,6 +2499,7 @@
 		"Ability1"					"necronomicon_warrior_mana_burn"
 		"Ability2"					"necronomicon_warrior_last_will"
 		"Ability3"					"necronomicon_warrior_sight"
+		"Ability4"					"black_dragon_dragonhide_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2508,8 +2509,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"100"
-		"AttackDamageMax"			"100"
+		"AttackDamageMin"			"170"
+		"AttackDamageMax"			"170"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
@@ -2559,8 +2560,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2577,10 +2578,10 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/neutral_creeps/n_creep_thunder_lizard/n_creep_thunder_lizard_big.vmdl"
-		"SoundSet"					"n_creep_Ranged"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"SoundSet"					"n_creep_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.8"
+		"ModelScale"				"0.82"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -2588,10 +2589,12 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_necronomicon_warrior_trample"
-		"Ability2"					"necronomicon_warrior_mana_burn"
-		"Ability3"					"necronomicon_warrior_last_will"
-		"Ability4"					"necronomicon_warrior_sight"
+		"AbilityLayout"				"5"
+		"Ability1"					"necronomicon_warrior_mana_burn"
+		"Ability2"					"necronomicon_warrior_last_will"
+		"Ability3"					"necronomicon_warrior_sight"
+		"Ability4"					"black_dragon_dragonhide_aura"
+		"Ability5"					"granite_golem_hp_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2601,8 +2604,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"120"
-		"AttackDamageMax"			"120"
+		"AttackDamageMin"			"205"
+		"AttackDamageMax"			"205"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
@@ -2652,8 +2655,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2670,10 +2673,10 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/items/warlock/golem/hellsworn_golem/hellsworn_golem.vmdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"n_creep_Melee"
 		"Level"						"5"
-		"ModelScale"				"1.1"
+		"ModelScale"				"0.9"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -2681,13 +2684,13 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"5"
-
-		"Ability1"					"imba_necronomicon_warrior_trample"
-		"Ability2"					"necronomicon_warrior_mana_burn"
-		"Ability3"					"necronomicon_warrior_last_will"
-		"Ability4"					"necronomicon_warrior_sight"
-		"Ability5"					"imba_necronomicon_warrior_blaze_spikes"
+		"AbilityLayout"				"6"
+		"Ability1"					"necronomicon_warrior_mana_burn"
+		"Ability2"					"necronomicon_warrior_last_will"
+		"Ability3"					"necronomicon_warrior_sight"
+		"Ability4"					"black_dragon_dragonhide_aura"
+		"Ability5"					"granite_golem_hp_aura"
+		"Ability6"					"spawnlord_aura"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -2697,11 +2700,11 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"280"
-		"AttackDamageMax"			"280"
+		"AttackDamageMin"			"240"
+		"AttackDamageMax"			"240"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"1.5"
-		"AttackAnimationPoint"		"0.24"
+		"AttackRate"				"0.75"
+		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"800"
 		"AttackRange"				"150"
 		"ProjectileModel"			""
@@ -2748,8 +2751,8 @@
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2839,7 +2842,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2859,7 +2862,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.75"
+		"ModelScale"				"0.67"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -2871,8 +2874,8 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"25"
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"20"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -2920,7 +2923,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"700"
+		"StatusHealth"				"800"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -2929,7 +2932,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -2949,7 +2952,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.9"
+		"ModelScale"				"0.75"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -2958,11 +2961,12 @@
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_mana_burn"
 		"Ability2"					"necronomicon_archer_aoe"
+		"Ability3"					"forest_troll_high_priest_mana_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"30"
+		"ArmorPhysical"				"6"
+		"MagicalResistance"			"20"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3010,7 +3014,7 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"800"
+		"StatusHealth"				"1000"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3019,7 +3023,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -3036,10 +3040,10 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.82"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3048,13 +3052,14 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_mana_burn"
-		"Ability2"					"black_dragon_fireball"
-		"Ability3"					"necronomicon_archer_aoe"
+		"Ability2"					"necronomicon_archer_aoe"
+		"Ability3"					"forest_troll_high_priest_mana_aura"
+		"Ability4"					"big_thunder_lizard_wardrums_aura"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"35"
+		"ArmorPhysical"				"7"
+		"MagicalResistance"			"20"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3063,11 +3068,11 @@
 		"AttackDamageMax"			"225"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
-		"AttackAnimationPoint"		"0.94"
+		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"1050"
 		"AttackRange"				"750"
-		"ProjectileModel"			"particles/neutral_fx/black_dragon_attack.vpcf"
-		"ProjectileSpeed"			"1500"
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
+		"ProjectileSpeed"			"1000"
 
 		// Attributes
 		//----------------------------------------------------------------
@@ -3096,13 +3101,13 @@
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"390"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
+		"StatusHealth"				"1200"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3111,7 +3116,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision
@@ -3128,10 +3133,10 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/neutral_creeps/n_creep_gargoyle/n_creep_gargoyle.vmdl"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.9"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3140,14 +3145,15 @@
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"necronomicon_archer_mana_burn"
-		"Ability2"					"black_dragon_fireball"
-		"Ability3"					"necronomicon_archer_aoe"
-		"Ability4"					"imba_necronomicon_archer_multishot"
+		"Ability2"					"necronomicon_archer_aoe"
+		"Ability3"					"forest_troll_high_priest_mana_aura"
+		"Ability4"					"big_thunder_lizard_wardrums_aura"
+		"Ability5"					"imba_necronomicon_archer_multishot"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"40"
+		"ArmorPhysical"				"8"
+		"MagicalResistance"			"20"
 
 		// Attack
 		//----------------------------------------------------------------
@@ -3156,11 +3162,11 @@
 		"AttackDamageMax"			"225"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
-		"AttackAnimationPoint"		"0.4"
+		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"1100"
 		"AttackRange"				"800"
-		"ProjectileModel"			"particles/base_attacks/ranged_tower_bad.vpcf"
-		"ProjectileSpeed"			"1500"
+		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
+		"ProjectileSpeed"			"1000"
 
 		// Attributes
 		//----------------------------------------------------------------
@@ -3189,13 +3195,13 @@
 
 		// Movement
 		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"400"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1000"
+		"StatusHealth"				"1400"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3204,7 +3210,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Vision

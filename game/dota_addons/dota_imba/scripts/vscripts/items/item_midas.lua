@@ -1,39 +1,6 @@
 --[[	Author: d2imba
 		Date:	24.03.2015	]]
 
-function MidasPassiveGold( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If this unit is not a real hero, do nothing
-	if caster:HasModifier("modifier_arc_warden_tempest_double") or not caster:IsRealHero() then
-		return nil
-	end
-
-	-- Creates leftover gold global variable if it does not exist yet
-	if not caster.midas_passive_gold then
-		caster.midas_passive_gold = 0
-	end
-
-	-- Parameters
-	local passive_gold = ability:GetLevelSpecialValueFor("passive_gold", ability:GetLevel() - 1)
-
-	-- Multiply passive gold by the lobby's gold multiplier
-	passive_gold = passive_gold * ( 100 + CREEP_GOLD_BONUS ) / 100
-
-	-- Store leftover gold for later
-	caster.midas_passive_gold = caster.midas_passive_gold + ( passive_gold - math.floor(passive_gold) )
-
-	-- If passive gold is above 1, add part of it to the passive gold
-	if caster.midas_passive_gold >= 1 then
-		passive_gold = passive_gold + math.floor(caster.midas_passive_gold)
-		caster.midas_passive_gold = caster.midas_passive_gold - math.floor(caster.midas_passive_gold)
-	end
-
-	-- Grant gold
-	caster:ModifyGold(math.floor(passive_gold), true, 0)
-end
-
 function Midas( keys )
 	local caster = keys.caster
 	local target = keys.target

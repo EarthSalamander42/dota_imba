@@ -1236,10 +1236,30 @@ end
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
 	
+	-- From items
 	if unit:HasModifier("modifier_item_imba_elder_staff_range") then
 		cast_range_increase = cast_range_increase + 300
 	elseif unit:HasModifier("modifier_item_imba_aether_lens_range") then
-		cast_range_increase = cast_range_increase + 200
+		cast_range_increase = cast_range_increase + 225
+	end
+
+	-- From talents
+	local cast_range_talents = {}
+	cast_range_talents["special_bonus_cast_range_50"] = 100
+	cast_range_talents["special_bonus_cast_range_60"] = 125
+	cast_range_talents["special_bonus_cast_range_75"] = 150
+	cast_range_talents["special_bonus_cast_range_100"] = 200
+	cast_range_talents["special_bonus_cast_range_125"] = 250
+	cast_range_talents["special_bonus_cast_range_150"] = 300
+	cast_range_talents["special_bonus_cast_range_175"] = 350
+	cast_range_talents["special_bonus_cast_range_200"] = 400
+	cast_range_talents["special_bonus_cast_range_250"] = 450
+	cast_range_talents["special_bonus_cast_range_300"] = 500
+
+	for talent_name,cast_range_bonus in pairs(cast_range_talents) do
+		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+			cast_range_increase = cast_range_increase + cast_range_bonus
+		end
 	end
 
 	return cast_range_increase
@@ -1752,6 +1772,25 @@ function GetSpellPower(unit)
 	-- Fetch current bonus spell power from rapiras, if existing
 	if unit:HasModifier("modifier_item_imba_rapier_stacks_magic") then
 		spell_power = spell_power + unit:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", nil) * 70
+	end
+
+	-- Fetch bonus spell power from talents
+	local spell_power_talents = {}
+	spell_power_talents["special_bonus_spell_amplify_3"] = 10
+	spell_power_talents["special_bonus_spell_amplify_4"] = 15
+	spell_power_talents["special_bonus_spell_amplify_5"] = 20
+	spell_power_talents["special_bonus_spell_amplify_6"] = 25
+	spell_power_talents["special_bonus_spell_amplify_8"] = 30
+	spell_power_talents["special_bonus_spell_amplify_10"] = 35
+	spell_power_talents["special_bonus_spell_amplify_12"] = 40
+	spell_power_talents["special_bonus_spell_amplify_15"] = 50
+	spell_power_talents["special_bonus_spell_amplify_20"] = 60
+	spell_power_talents["special_bonus_spell_amplify_25"] = 70
+
+	for talent_name,spell_power_bonus in pairs(spell_power_talents) do
+		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+			spell_power = spell_power + spell_power_bonus
+		end
 	end
 
 	-- Return current spell power

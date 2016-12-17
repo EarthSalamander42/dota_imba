@@ -11,6 +11,11 @@ function Radiance( keys )
 	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
 	local extra_damage = ability:GetLevelSpecialValueFor("extra_damage", ability_level)
 
+	-- Illusions don't deal extra damage
+	if not caster:IsRealHero() then
+		extra_damage = 0
+	end
+
 	-- Calculate and deal damage
 	local damage = base_damage + extra_damage * target:GetHealth() / 100
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})

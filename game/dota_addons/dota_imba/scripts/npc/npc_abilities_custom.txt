@@ -11,7 +11,7 @@
   
 	"dummy_unit_state"
 	{
-		"AbilityBehavior" 				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"			"rubick_empty1"
 		"MaxLevel"						"1"
@@ -553,135 +553,6 @@
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%base_damage_per_tier"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%base_armor_per_tier"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%base_as_per_tier"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Warrior: Trample
-	//=================================================================================================================
-	"imba_necronomicon_warrior_trample"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"					"imba_necronomicon_warrior_trample"
-		"MaxLevel"								"2"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"1000"
-		"AbilityCastPoint"						"0.1"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"9"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"150 250"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"300"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_range"					"1000"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"speed"							"1500"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/npc_upgrades.lua"
-				"Function"						"NecrowarriorTrample"
-				"Target"						"POINT"
-
-				"sound_cast"					"n_creep_Thunderlizard_Big.Roar"
-				"sound_hit"						"Hero_EmberSpirit.Attack.Rip"
-				"particle_hit"					"particles/item/necronomicon/necronomicon_slash.vpcf"
-				"modifier_dummy"				"modifier_imba_trample_hit_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_trample_hit_dummy"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
-		
-				"Duration"			"0.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Warrior: Blaze Spikes
-	//=================================================================================================================
-	"imba_necronomicon_warrior_blaze_spikes"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"					"DAMAGE_TYPE_PHYSICAL"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"					"imba_necronomicon_warrior_blaze_spikes"
-		"MaxLevel"								"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage"						"100"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_necronomicon_warrior_blaze_spikes"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/npc_upgrades.lua"
-						"Function"				"NecrowarriorBlazeSpikes"
-
-						"particle_hit"			"particles/item/necronomicon/necronomicon_slash.vpcf"
-						"sound_hit"				"Hero_EmberSpirit.SleightOfFist.Damage"
-					}
 				}
 			}
 		}
@@ -4494,7 +4365,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"800"
-		"AbilityCastPoint"								"0.35"
+		"AbilityCastPoint"								"0.25"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -4557,6 +4428,11 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"attack_speed"							"20"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"projectile_speed"						"2000"
 			}
 		}
 
@@ -4670,7 +4546,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"500"
-		"AbilityCastPoint"								"0.35"
+		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------

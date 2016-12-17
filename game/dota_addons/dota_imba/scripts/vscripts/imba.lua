@@ -157,8 +157,60 @@ function GameMode:BountyRuneFilter( keys )
 	--xp_bounty	 ==> 	136.5
 	--gold_bounty	 ==> 	132.6
 
-	keys["gold_bounty"] = ( 100 + CREEP_GOLD_BONUS ) / 100 * keys["gold_bounty"]
-	keys["xp_bounty"] = ( 100 + CREEP_XP_BONUS ) / 100 * keys["xp_bounty"]
+	keys["gold_bounty"] = ( 1 + CREEP_GOLD_BONUS * 0.01 ) * keys["gold_bounty"]
+	keys["xp_bounty"] = ( 1 + CREEP_XP_BONUS * 0.01 ) * keys["xp_bounty"]
+
+	return true
+end
+
+-- Gold gain filter function
+function GameMode:GoldFilter( keys )
+	-- reason_const		12
+	-- reliable			1
+	-- player_id_const	0
+	-- gold				141
+
+	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
+
+	-- Hand of Midas gold bonus
+	if hero and hero:HasModifier("modifier_item_imba_hand_of_midas") and keys.gold > 0 then
+		keys.gold = keys.gold * 1.1
+	end
+
+	-- Lobby options adjustment
+	if keys.gold > 0 then
+		local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
+		keys.gold = keys.gold * (1 + CREEP_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+	end
+
+	-- Show gold earned message
+	if hero then
+	--	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
+	end
+
+	return true
+end
+
+-- Experience gain filter function
+function GameMode:ExperienceFilter( keys )
+	-- reason_const		1
+	-- experience		130
+	-- player_id_const	0
+
+	-- Lobby options adjustment
+	local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
+	keys.experience = keys.experience * (1 + CREEP_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+
+	return true
+end
+
+-- Modifier gained filter function
+function GameMode:ModifierFilter( keys )
+	-- entindex_parent_const	215
+	-- entindex_ability_const	610
+	-- duration					-1
+	-- entindex_caster_const	215
+	-- name_const				modifier_imba_roshan_rage_stack
 
 	return true
 end
@@ -364,7 +416,12 @@ function GameMode:DamageFilter( keys )
 			if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
 
 				-- Calculate damage block
-				local damage_block = 5 + victim:GetLevel()
+				local damage_block
+				if victim:GetLevel() then
+					damage_block = 5 + victim:GetLevel()
+				else
+					damage_block = 20
+				end
 
 				-- Calculate actual damage
 				local actual_damage = math.max(keys.damage - damage_block, 0)
@@ -393,7 +450,12 @@ function GameMode:DamageFilter( keys )
 		if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
 
 			-- Calculate damage block
-			local damage_block = 10 + victim:GetLevel()
+			local damage_block
+			if victim:GetLevel() then
+				damage_block = 10 + victim:GetLevel()
+			else
+				damage_block = 25
+			end
 
 			-- Calculate actual damage
 			local actual_damage = math.max(keys.damage - damage_block, 0)
@@ -612,6 +674,9 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "BountyRuneFilter"), self )
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap(GameMode, "OrderFilter"), self )
 	GameRules:GetGameModeEntity():SetDamageFilter( Dynamic_Wrap(GameMode, "DamageFilter"), self )
+	GameRules:GetGameModeEntity():SetModifyGoldFilter( Dynamic_Wrap(GameMode, "GoldFilter"), self )
+	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
+	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup

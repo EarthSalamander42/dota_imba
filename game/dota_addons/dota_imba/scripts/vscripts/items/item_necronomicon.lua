@@ -45,33 +45,41 @@ function Necronomicon( keys )
 	ability:ApplyDataDrivenModifier(caster, ranged_summon, "modifier_item_imba_necronomicon_summon", {})
 	
 	-- Find summon abilities
-	local melee_ability_1 = melee_summon:FindAbilityByName("necronomicon_warrior_mana_burn")
-	local melee_ability_2 = melee_summon:FindAbilityByName("necronomicon_warrior_last_will")
-	local melee_ability_3 = melee_summon:FindAbilityByName("necronomicon_warrior_sight")
-	local melee_ability_4 = melee_summon:FindAbilityByName("imba_necronomicon_warrior_trample")
-	local melee_ability_5 = melee_summon:FindAbilityByName("imba_necronomicon_warrior_blaze_spikes")
+	local melee_abilities = {
+		"necronomicon_warrior_mana_burn",
+		"necronomicon_warrior_last_will",
+		"necronomicon_warrior_sight",
+		"black_dragon_dragonhide_aura",
+		"granite_golem_hp_aura",
+		"spawnlord_aura"
+	}
+	local ranged_abilities = {
+		"necronomicon_archer_mana_burn",
+		"necronomicon_archer_aoe",
+		"forest_troll_high_priest_mana_aura",
+		"big_thunder_lizard_wardrums_aura",
+		"imba_necronomicon_archer_multishot"
+	}
 
-	local ranged_ability_1 = ranged_summon:FindAbilityByName("necronomicon_archer_mana_burn")
-	local ranged_ability_2 = ranged_summon:FindAbilityByName("necronomicon_archer_aoe")
-	local ranged_ability_3 = ranged_summon:FindAbilityByName("black_dragon_fireball")
-	local ranged_ability_4 = ranged_summon:FindAbilityByName("imba_necronomicon_archer_multishot")
-
-	-- Upgrade abilities according to the Necronomicon level
-	melee_ability_1:SetLevel(necro_level)
-	melee_ability_2:SetLevel(necro_level)
-	melee_ability_3:SetLevel(1)
-	ranged_ability_1:SetLevel(necro_level)
-	ranged_ability_2:SetLevel(necro_level)
-
-	-- Bonus level 4 abilities
-	if necro_level >= 4 then
-		melee_ability_4:SetLevel(necro_level - 3)
-		ranged_ability_3:SetLevel(1)
+	-- Upgrade melee minion abilities
+	for _, melee_ability in pairs(melee_abilities) do
+		if melee_summon:FindAbilityByName(melee_ability) then
+			if melee_summon:FindAbilityByName(melee_ability):GetMaxLevel() > 1 then
+				melee_summon:FindAbilityByName(melee_ability):SetLevel(necro_level)
+			else
+				melee_summon:FindAbilityByName(melee_ability):SetLevel(1)
+			end
+		end
 	end
 
-	-- Bonus level 5 abilities
-	if necro_level >= 5 then
-		melee_ability_5:SetLevel(1)
-		ranged_ability_4:SetLevel(1)
+	-- Upgrade ranged minion abilities
+	for _, ranged_ability in pairs(ranged_abilities) do
+		if ranged_summon:FindAbilityByName(ranged_ability) then
+			if ranged_summon:FindAbilityByName(ranged_ability):GetMaxLevel() > 1 then
+				ranged_summon:FindAbilityByName(ranged_ability):SetLevel(necro_level)
+			else
+				ranged_summon:FindAbilityByName(ranged_ability):SetLevel(1)
+			end
+		end
 	end
 end
