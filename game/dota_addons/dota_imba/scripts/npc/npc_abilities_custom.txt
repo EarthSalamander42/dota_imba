@@ -9644,7 +9644,7 @@
 			"modifier_imba_freezing_field_northwest"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -9662,7 +9662,7 @@
 			"modifier_imba_freezing_field_northeast"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -9680,7 +9680,7 @@
 			"modifier_imba_freezing_field_southeast"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -9698,7 +9698,7 @@
 			"modifier_imba_freezing_field_southwest"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -10016,7 +10016,7 @@
 			"modifier_imba_freezing_field_northwest"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -10034,7 +10034,7 @@
 			"modifier_imba_freezing_field_northeast"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -10052,7 +10052,7 @@
 			"modifier_imba_freezing_field_southeast"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				
@@ -10070,7 +10070,7 @@
 			"modifier_imba_freezing_field_southwest"
 			{
 				"IsHidden"								"1"
-				"ThinkInterval"							"%explosion_interval * 4"
+				"ThinkInterval"							"0.4"
 				
 				"Duration"								"%AbilityDuration"
 				

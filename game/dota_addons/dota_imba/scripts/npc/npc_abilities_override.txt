@@ -140,6 +140,7 @@
 	"item_bloodstone"				"REMOVE"
 	"item_recipe_sphere"			"REMOVE"
 	"item_sphere"					"REMOVE"
+	"item_recipe_vanguard"			"REMOVE"
 	"item_vanguard"					"REMOVE"
 	"item_recipe_blade_mail"		"REMOVE"
 	"item_blade_mail"				"REMOVE"
@@ -167,7 +168,7 @@
 	"item_lesser_crit"				"REMOVE"
 	"item_recipe_armlet"			"REMOVE"
 	"item_armlet"					"REMOVE"
-	//"item_recipe_invis_sword"		"REMOVE"
+	"item_recipe_invis_sword"		"REMOVE"
 	"item_invis_sword"				"REMOVE"
 	"item_recipe_sange_and_yasha"	"REMOVE"
 	"item_sange_and_yasha"			"REMOVE"
@@ -2502,7 +2503,7 @@
 	//=================================================================================================================
 	// Ring of Health
 	//=================================================================================================================
-	"item_imba_ring_of_health"
+	"item_ring_of_health"
 	{
 		"AbilitySpecial"
 		{
@@ -7184,6 +7185,21 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	//	Leshrac: bonus Diabolic Edict explosions
+	//=================================================================================================================
+	"special_bonus_unique_leshrac_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"50"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Leshrac: Lightning Storm
@@ -7229,6 +7245,21 @@
 			}			
 		}
 	}
+
+	//=================================================================================================================
+	// Ability:	Lightning Storm slow duration increase
+	//=================================================================================================================
+	"special_bonus_unique_leshrac_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"2"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Leshrac: Pulse Nova
@@ -7263,31 +7294,21 @@
 	}
 
 	//=================================================================================================================
-	//	Leshrac: bonus Diabolic Edict explosions
+	//	Lich: talent attack/move slow
 	//=================================================================================================================
-	"special_bonus_unique_leshrac_1"
+	"special_bonus_unique_lich_2"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"50"
 			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability:	Lightning Storm slow duration increase
-	//=================================================================================================================
-	"special_bonus_unique_leshrac_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
+			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"2"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3"
 			}
 		}
 	}
@@ -7692,7 +7713,7 @@
 	}
 
 	//=================================================================================================================
-	// Ability: Special Bonus
+	//	Luna: Lucent Beam cooldown reduction
 	//=================================================================================================================
 	"special_bonus_unique_luna_2"
 	{
@@ -11928,7 +11949,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"450"
+				"value"				"500"
 			}
 		}
 	}
@@ -13605,12 +13626,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"pit_interval"				"2.4 2.1 1.8 1.5"
+				"pit_interval"				"2.2 2.0 1.8 1.6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pit_damage"				"40 60 80 100"
+				"pit_damage"				"0"
 			}
 			"05"
 			{
@@ -16010,7 +16031,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
+				"value"				"15"
 			}
 		}
 	}
@@ -16022,7 +16043,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
+				"value"				"20"
 			}
 		}
 	}
@@ -16034,7 +16055,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
+				"value"				"30"
 			}
 		}
 	}
@@ -16046,7 +16067,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
+				"value"				"40"
 			}
 		}
 	}
@@ -16058,7 +16079,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
+				"value"				"50"
 			}
 		}
 	}
@@ -17417,7 +17438,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
+				"value"				"45"
 			}
 		}
 	}
@@ -17429,7 +17450,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
+				"value"				"50"
 			}
 		}
 	}
@@ -17441,7 +17462,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
+				"value"				"60"
 			}
 		}
 	}
@@ -17531,7 +17552,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
+				"value"				"9"
 			}
 		}
 	}
@@ -17543,7 +17564,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
+				"value"				"12"
 			}
 		}
 	}
@@ -17555,7 +17576,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
+				"value"				"15"
 			}
 		}
 	}
@@ -17567,7 +17588,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
+				"value"				"18"
 			}
 		}
 	}
@@ -17579,7 +17600,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
+				"value"				"20"
 			}
 		}
 	}
@@ -17591,7 +17612,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
+				"value"				"25"
 			}
 		}
 	}
@@ -17603,7 +17624,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
+				"value"				"30"
 			}
 		}
 	}
@@ -17615,7 +17636,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
+				"value"				"40"
 			}
 		}
 	}
@@ -20003,7 +20024,7 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
-		"AbilityCooldown"					"4"
+		"AbilityCooldown"					"3"
 		"AbilityManaCost"					"0"
 		
 		"AbilitySpecial"

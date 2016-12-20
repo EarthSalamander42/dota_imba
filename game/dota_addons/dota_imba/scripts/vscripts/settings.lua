@@ -116,9 +116,6 @@ HERO_BUYBACK_COOLDOWN = 30													-- Base buyback cooldown
 HERO_BUYBACK_COOLDOWN_START_POINT = 15										-- Game time (in minutes) after which buyback cooldown is activated
 HERO_BUYBACK_COOLDOWN_GROW_FACTOR = 2										-- Buyback cooldown increase per minute
 
-HERO_RESPAWN_TIME_BASE = 3.75												-- Base hero respawn time
-HERO_RESPAWN_TIME_PER_LEVEL = 2.25											-- Hero respawn time per level
-
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 TOWER_MINIMUM_GOLD = 180													-- Tower minimum gold bounty
@@ -147,6 +144,57 @@ DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn 
 DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
+
+HERO_RESPAWN_TIME_PER_LEVEL = {}											-- Hero respawn time per level
+HERO_RESPAWN_TIME_PER_LEVEL[1] = 6
+HERO_RESPAWN_TIME_PER_LEVEL[2] = 8
+HERO_RESPAWN_TIME_PER_LEVEL[3] = 10
+HERO_RESPAWN_TIME_PER_LEVEL[4] = 12
+HERO_RESPAWN_TIME_PER_LEVEL[5] = 14
+HERO_RESPAWN_TIME_PER_LEVEL[6] = 18
+HERO_RESPAWN_TIME_PER_LEVEL[7] = 20
+HERO_RESPAWN_TIME_PER_LEVEL[8] = 22
+HERO_RESPAWN_TIME_PER_LEVEL[9] = 24
+HERO_RESPAWN_TIME_PER_LEVEL[10] = 26
+HERO_RESPAWN_TIME_PER_LEVEL[11] = 28
+HERO_RESPAWN_TIME_PER_LEVEL[12] = 32
+HERO_RESPAWN_TIME_PER_LEVEL[13] = 34
+HERO_RESPAWN_TIME_PER_LEVEL[14] = 36
+HERO_RESPAWN_TIME_PER_LEVEL[15] = 38
+HERO_RESPAWN_TIME_PER_LEVEL[16] = 40
+HERO_RESPAWN_TIME_PER_LEVEL[17] = 42
+HERO_RESPAWN_TIME_PER_LEVEL[18] = 46
+HERO_RESPAWN_TIME_PER_LEVEL[19] = 48
+HERO_RESPAWN_TIME_PER_LEVEL[20] = 50
+HERO_RESPAWN_TIME_PER_LEVEL[21] = 52
+HERO_RESPAWN_TIME_PER_LEVEL[22] = 54
+HERO_RESPAWN_TIME_PER_LEVEL[23] = 56
+HERO_RESPAWN_TIME_PER_LEVEL[24] = 58
+HERO_RESPAWN_TIME_PER_LEVEL[25] = 60
+
+SPELL_POWER_TALENTS = {}													-- Spell power talent values
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_3"] = 10
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_4"] = 15
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_5"] = 20
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_6"] = 25
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_8"] = 30
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_10"] = 35
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_12"] = 40
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_15"] = 45
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_20"] = 50
+SPELL_POWER_TALENTS["special_bonus_spell_amplify_25"] = 60
+
+CAST_RANGE_TALENTS = {}														-- Cast range talent values
+CAST_RANGE_TALENTS["special_bonus_cast_range_50"] = 100
+CAST_RANGE_TALENTS["special_bonus_cast_range_60"] = 125
+CAST_RANGE_TALENTS["special_bonus_cast_range_75"] = 150
+CAST_RANGE_TALENTS["special_bonus_cast_range_100"] = 200
+CAST_RANGE_TALENTS["special_bonus_cast_range_125"] = 250
+CAST_RANGE_TALENTS["special_bonus_cast_range_150"] = 300
+CAST_RANGE_TALENTS["special_bonus_cast_range_175"] = 350
+CAST_RANGE_TALENTS["special_bonus_cast_range_200"] = 400
+CAST_RANGE_TALENTS["special_bonus_cast_range_250"] = 450
+CAST_RANGE_TALENTS["special_bonus_cast_range_300"] = 500
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: map-based settings

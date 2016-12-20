@@ -1233,6 +1233,7 @@ function IsUninterruptableForcedMovement( unit )
 	return false
 end
 
+-- Returns an unit's existing increased cast range modifiers
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
 	
@@ -1244,19 +1245,7 @@ function GetCastRangeIncrease( unit )
 	end
 
 	-- From talents
-	local cast_range_talents = {}
-	cast_range_talents["special_bonus_cast_range_50"] = 100
-	cast_range_talents["special_bonus_cast_range_60"] = 125
-	cast_range_talents["special_bonus_cast_range_75"] = 150
-	cast_range_talents["special_bonus_cast_range_100"] = 200
-	cast_range_talents["special_bonus_cast_range_125"] = 250
-	cast_range_talents["special_bonus_cast_range_150"] = 300
-	cast_range_talents["special_bonus_cast_range_175"] = 350
-	cast_range_talents["special_bonus_cast_range_200"] = 400
-	cast_range_talents["special_bonus_cast_range_250"] = 450
-	cast_range_talents["special_bonus_cast_range_300"] = 500
-
-	for talent_name,cast_range_bonus in pairs(cast_range_talents) do
+	for talent_name,cast_range_bonus in pairs(CAST_RANGE_TALENTS) do
 		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
 			cast_range_increase = cast_range_increase + cast_range_bonus
 		end
@@ -1743,7 +1732,7 @@ function GetSpellPower(unit)
 
 	-- Adjust base spell power based on current intelligence
 	local unit_intelligence = unit:GetIntellect()
-	local spell_power = unit_intelligence * 0.14
+	local spell_power = unit_intelligence * 0.125
 
 	-- Adjust spell power based on War Veteran stacks
 	if unit:HasModifier("modifier_imba_unlimited_level_powerup") then
@@ -1755,7 +1744,7 @@ function GetSpellPower(unit)
 	item_spell_power["item_imba_aether_lens"] = 10
 	item_spell_power["item_imba_nether_wand"] = 10
 	item_spell_power["item_imba_elder_staff"] = 25
-	item_spell_power["item_imba_orchid"] = 30
+	item_spell_power["item_imba_orchid"] = 25
 	item_spell_power["item_imba_bloodthorn"] = 30
 
 	-- Fetch current bonus spell power from items, if existing
@@ -1775,24 +1764,22 @@ function GetSpellPower(unit)
 	end
 
 	-- Fetch bonus spell power from talents
-	local spell_power_talents = {}
-	spell_power_talents["special_bonus_spell_amplify_3"] = 10
-	spell_power_talents["special_bonus_spell_amplify_4"] = 15
-	spell_power_talents["special_bonus_spell_amplify_5"] = 20
-	spell_power_talents["special_bonus_spell_amplify_6"] = 25
-	spell_power_talents["special_bonus_spell_amplify_8"] = 30
-	spell_power_talents["special_bonus_spell_amplify_10"] = 35
-	spell_power_talents["special_bonus_spell_amplify_12"] = 40
-	spell_power_talents["special_bonus_spell_amplify_15"] = 50
-	spell_power_talents["special_bonus_spell_amplify_20"] = 60
-	spell_power_talents["special_bonus_spell_amplify_25"] = 70
+	spell_power = spell_power + GetSpellPowerFromTalents(unit)
 
-	for talent_name,spell_power_bonus in pairs(spell_power_talents) do
+	-- Return current spell power
+	return spell_power
+end
+
+-- Fetches a hero's current spell power from talents
+function GetSpellPowerFromTalents(unit)
+	local spell_power = 0
+
+	-- Iterate through all spell power talents
+	for talent_name,spell_power_bonus in pairs(SPELL_POWER_TALENTS) do
 		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
 			spell_power = spell_power + spell_power_bonus
 		end
 	end
 
-	-- Return current spell power
 	return spell_power
 end

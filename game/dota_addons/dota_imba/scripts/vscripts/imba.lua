@@ -331,7 +331,7 @@ function GameMode:DamageFilter( keys )
 	if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and attacker:IsRealHero() then
 
 		-- Compensate for in-built spell power mechanics
-		local base_damage_amp = attacker:GetIntellect() * 0.000625
+		local base_damage_amp = attacker:GetIntellect() * 0.000625 + GetSpellPowerFromTalents(attacker) * 0.01
 		keys.damage = keys.damage / (1 + base_damage_amp)
 
 		-- Fetch player's current spell power

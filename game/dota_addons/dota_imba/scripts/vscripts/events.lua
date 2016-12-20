@@ -181,6 +181,7 @@ function GameMode:OnNPCSpawned(keys)
 	-- Unfortunately, needs to be done every time Silencer spawns as his modifier is permanently
 	-- embedded into his character and he'll gain it every time he spawns
 	-------------------------------------------------------------------------------------------------
+
 	if npc:IsRealHero() then
 		Timers:CreateTimer(1, function()
 			if npc:HasModifier("modifier_silencer_int_steal") then
@@ -415,11 +416,11 @@ function GameMode:OnEntityHurt(keys)
 	--DebugPrint("[BAREBONES] Entity Hurt")
 	--DebugPrintTable(keys)
 
-	local damagebits = keys.damagebits -- This might always be 0 and therefore useless
-	if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
-	local entCause = EntIndexToHScript(keys.entindex_attacker)
-	local entVictim = EntIndexToHScript(keys.entindex_killed)
-	end
+	--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
+	--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
+	--local entCause = EntIndexToHScript(keys.entindex_attacker)
+	--local entVictim = EntIndexToHScript(keys.entindex_killed)
+	--end
 end
 
 -- An item was picked up off the ground
@@ -562,45 +563,45 @@ function GameMode:OnAbilityUsed(keys)
 	-- IMBA: Remote Mines adjustment
 	-------------------------------------------------------------------------------------------------
 
-	if abilityname == "techies_remote_mines" then
+	-- if abilityname == "techies_remote_mines" then
 
-		local mine_caster = player:GetAssignedHero()
-		Timers:CreateTimer(0.01, function()
-			local nearby_units = FindUnitsInRadius(mine_caster:GetTeamNumber(), mine_caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,unit in pairs(nearby_units) do
+	-- 	local mine_caster = player:GetAssignedHero()
+	-- 	Timers:CreateTimer(0.01, function()
+	-- 		local nearby_units = FindUnitsInRadius(mine_caster:GetTeamNumber(), mine_caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- 		for _,unit in pairs(nearby_units) do
 
-				-- Only operate on remotes which need setup
-				if unit.needs_remote_mine_setup then
+	-- 			-- Only operate on remotes which need setup
+	-- 			if unit.needs_remote_mine_setup then
 					
-					-- Add extra abilities
-					unit:AddAbility("imba_techies_minefield_teleport")
-					unit:AddAbility("imba_techies_remote_auto_creep")
-					unit:AddAbility("imba_techies_remote_auto_hero")
-					local minefield_teleport = unit:FindAbilityByName("imba_techies_minefield_teleport")
-					local auto_creep = unit:FindAbilityByName("imba_techies_remote_auto_creep")
-					local auto_hero = unit:FindAbilityByName("imba_techies_remote_auto_hero")
-					auto_creep:SetLevel(1)
-					auto_hero:SetLevel(1)
+	-- 				-- Add extra abilities
+	-- 				unit:AddAbility("imba_techies_minefield_teleport")
+	-- 				unit:AddAbility("imba_techies_remote_auto_creep")
+	-- 				unit:AddAbility("imba_techies_remote_auto_hero")
+	-- 				local minefield_teleport = unit:FindAbilityByName("imba_techies_minefield_teleport")
+	-- 				local auto_creep = unit:FindAbilityByName("imba_techies_remote_auto_creep")
+	-- 				local auto_hero = unit:FindAbilityByName("imba_techies_remote_auto_hero")
+	-- 				auto_creep:SetLevel(1)
+	-- 				auto_hero:SetLevel(1)
 
-					-- Enable minefield teleport if the caster has a scepter
-					local scepter = HasScepter(mine_caster)
-					if scepter then
-						minefield_teleport:SetLevel(1)
-					end
+	-- 				-- Enable minefield teleport if the caster has a scepter
+	-- 				local scepter = HasScepter(mine_caster)
+	-- 				if scepter then
+	-- 					minefield_teleport:SetLevel(1)
+	-- 				end
 
-					-- Toggle abilities on according to the current caster setting
-					if mine_caster.auto_hero_exploding then
-						auto_hero:ToggleAbility()
-					elseif mine_caster.auto_creep_exploding then
-						auto_creep:ToggleAbility()
-					end
+	-- 				-- Toggle abilities on according to the current caster setting
+	-- 				if mine_caster.auto_hero_exploding then
+	-- 					auto_hero:ToggleAbility()
+	-- 				elseif mine_caster.auto_creep_exploding then
+	-- 					auto_creep:ToggleAbility()
+	-- 				end
 
-					-- Set this mine's setup as done
-					unit.needs_remote_mine_setup = nil
-				end
-			end
-		end)
-	end
+	-- 				-- Set this mine's setup as done
+	-- 				unit.needs_remote_mine_setup = nil
+	-- 			end
+	-- 		end
+	-- 	end)
+	-- end
 
 end
 
@@ -813,7 +814,7 @@ function GameMode:OnEntityKilled( keys )
 	-- The Killing entity
 	local killer = nil
 
-	if keys.entindex_attacker ~= nil then
+	if keys.entindex_attacker then
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
@@ -855,22 +856,22 @@ function GameMode:OnEntityKilled( keys )
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
 	
-	if killed_unit:IsRealHero() and PlayerResource:GetPlayer(killed_unit:GetPlayerID()) then
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
 		
 		-- Calculate base respawn timer, capped at 60 seconds
-		local hero_level = killed_unit:GetLevel()
-		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
+		local hero_level = math.min(killed_unit:GetLevel(), 25)
+		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
 
 		-- Calculate respawn timer reduction due to talents
 		local respawn_reduction_talents = {}
-		respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 10
-		respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 15
-		respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 20
-		respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 25
-		respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 30
-		respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 35
-		respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 40
-		respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 50
+		respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 9
+		respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 12
+		respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 15
+		respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 18
+		respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 20
+		respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 25
+		respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 30
+		respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 40
 
 		for talent_name,respawn_reduction_bonus in pairs(respawn_reduction_talents) do
 			if killed_unit:FindAbilityByName(talent_name) and killed_unit:FindAbilityByName(talent_name):GetLevel() > 0 then
@@ -884,18 +885,7 @@ function GameMode:OnEntityKilled( keys )
 		end
 
 		-- Multiply respawn timer by the lobby options
-		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
-
-		-- Fetch increased respawn timer due to Reaper's Scythe on this death
-		if killed_unit.scythe_added_respawn then
-			respawn_time = respawn_time + killed_unit.scythe_added_respawn
-			killed_unit.scythe_added_respawn = 0
-		end
-
-		-- Fetch stacking increased respawn timer due to Reaper's Scythe
-		if killed_unit.scythe_stacking_respawn_timer then
-			respawn_time = respawn_time + killed_unit.scythe_stacking_respawn_timer
-		end
+		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
@@ -965,7 +955,7 @@ function GameMode:OnEntityKilled( keys )
 		-- Killed hero gold loss
 		local killed_level = killed_unit:GetLevel()
 		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
-		killed_gold_loss = -1 * killed_gold_loss * ( 100 + HERO_GOLD_BONUS ) / 100
+		killed_gold_loss = -1 * killed_gold_loss
 		killed_unit:ModifyGold(killed_gold_loss, false, DOTA_ModifyGold_Death)
 
 		-- Nearby allied heroes gold gain
@@ -1043,7 +1033,7 @@ function GameMode:OnEntityKilled( keys )
 
 		-- Update killed hero's bounty
 		local killed_bounty = HERO_KILL_GOLD_BASE + killed_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killed_unit)
-		killed_bounty = math.max( killed_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
+		killed_bounty = math.max( killed_bounty, 0)
 		killed_unit:SetMaximumGoldBounty(killed_bounty)
 		killed_unit:SetMinimumGoldBounty(killed_bounty)
 
@@ -1089,7 +1079,7 @@ function GameMode:OnEntityKilled( keys )
 			-- Update killer's bounty
 			local killer_level = killer_hero:GetLevel()
 			local killer_bounty = HERO_KILL_GOLD_BASE + killer_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killer_hero)
-			killer_bounty = math.max( killer_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
+			killer_bounty = math.max(killer_bounty, 0)
 			killer_hero:SetMaximumGoldBounty(killer_bounty)
 			killer_hero:SetMinimumGoldBounty(killer_bounty)
 

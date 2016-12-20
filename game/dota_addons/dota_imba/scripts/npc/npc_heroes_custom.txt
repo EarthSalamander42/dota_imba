@@ -12,14 +12,14 @@
 		"Ability3"					"imba_abaddon_frostmourne"
 		"Ability4"					"imba_abaddon_borrowed_time"
 
-		"Ability10"					"special_bonus_hp_regen_6"
-		"Ability11"					"special_bonus_mp_regen_3"
-		"Ability12"					"special_bonus_movement_speed_20"
-		"Ability13"					"special_bonus_cast_range_100"
-		"Ability14"					"special_bonus_attack_damage_75"
-		"Ability15"					"special_bonus_respawn_reduction_30"
+		"Ability10"					"special_bonus_attack_damage_25"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_mp_150"
+		"Ability13"					"special_bonus_armor_5"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_respawn_reduction_35"
 		"Ability16"					"special_bonus_strength_12"
-		"Ability17"					"special_bonus_all_stats_10"
+		"Ability17"					"special_bonus_respawn_reduction_60"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -37,6 +37,15 @@
 		//"Ability4"					"imba_alchemist_chemical_rage"
 		//"Ability6"					"imba_alchemist_unstable_concoction_throw"
 
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_armor_4"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_all_stats_6"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_hp_275"
+		"Ability16"					"special_bonus_lifesteal_20"
+		"Ability17"					"special_bonus_unique_alchemist"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -52,6 +61,15 @@
 		//"Ability3"					"ancient_apparition_chilling_touch"	
 		//"Ability4"					"ancient_apparition_ice_blast"		
 		//"Ability5"					"ancient_apparition_ice_blast_release"
+
+		"Ability10"					"special_bonus_gold_income_15"
+		"Ability11"					"special_bonus_spell_amplify_8"
+		"Ability12"					"special_bonus_intelligence_13"
+		"Ability13"					"special_bonus_hp_regen_14"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_respawn_reduction_50"
+		"Ability16"					"special_bonus_unique_ancient_apparition_1"
+		"Ability17"					"special_bonus_unique_ancient_apparition_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_ancient_apparition/ancient_apparition_base_attack.vpcf"
 	}
@@ -70,16 +88,14 @@
 		"Ability4"					"imba_antimage_magehunter"
 		"Ability5"					"imba_antimage_mana_void"
 
-		"Ability10"					"special_bonus_hp_150"
-		"Ability11"					"special_bonus_attack_speed_20"
-		"Ability12"					"special_bonus_armor_5"
-		"Ability13"					"special_bonus_attack_damage_40"
-		"Ability14"					"special_bonus_all_stats_7"
-		"Ability15"					"special_bonus_agility_15"
-		"Ability16"					"special_bonus_evasion_20"
-		"Ability17"					"special_bonus_movement_speed_45"
-
-		"AttackRate"				"1.45"
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_evasion_15"
+		"Ability15"					"special_bonus_all_stats_8"
+		"Ability16"					"special_bonus_agility_16"
+		"Ability17"					"special_bonus_unique_antimage"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -95,6 +111,15 @@
 		//"Ability2"					"imba_arc_warden_magnetic_field"
 		//"Ability3"					"imba_arc_warden_spark_wraith"
 		//"Ability4"					"imba_arc_warden_tempest_double"
+
+		"Ability10"					"special_bonus_hp_125"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_attack_damage_25"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_cooldown_reduction_10"
+		"Ability15"					"special_bonus_attack_range_100"
+		"Ability16"					"special_bonus_lifesteal_15"
+		"Ability17"					"special_bonus_unique_arc_warden"
 
 		"ProjectileModel"			"particles/units/heroes/hero_arc_warden/arc_warden_base_attack.vpcf"
 	}
@@ -113,14 +138,14 @@
 		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 
-		"Ability10"					"special_bonus_attack_speed_20"
-		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_mp_regen_3"
 		"Ability12"					"special_bonus_attack_damage_50"
-		"Ability13"					"special_bonus_hp_200"
-		"Ability14"					"special_bonus_cooldown_reduction_12"
-		"Ability15"					"special_bonus_hp_regen_14"
-		"Ability16"					"special_bonus_spell_lifesteal_20"
-		"Ability17"					"special_bonus_armor_9"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_hp_regen_14"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_armor_7"
+		"Ability17"					"special_bonus_magic_resistance_25"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -151,14 +176,14 @@
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"imba_bane_fiends_grip"
 
-		"Ability10"					"special_bonus_exp_boost_15"
-		"Ability11"					"special_bonus_gold_income_15"
-		"Ability12"					"special_bonus_cooldown_reduction_12"
-		"Ability13"					"special_bonus_respawn_reduction_25"
-		"Ability14"					"special_bonus_cast_range_100"
-		"Ability15"					"special_bonus_movement_speed_30"
-		"Ability16"					"special_bonus_intelligence_20"
-		"Ability17"					"special_bonus_all_stats_10"
+		"Ability10"					"special_bonus_armor_4"
+		"Ability11"					"special_bonus_mp_175"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_exp_boost_20"
+		"Ability14"					"special_bonus_movement_speed_30"
+		"Ability15"					"special_bonus_cast_range_100"
+		"Ability16"					"special_bonus_cooldown_reduction_12"
+		"Ability17"					"special_bonus_spell_amplify_12"
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
@@ -180,6 +205,15 @@
 		//"Ability3"					"imba_batrider_firefly"
 		//"Ability4"					"imba_batrider_flaming_lasso"
 
+		"Ability10"					"special_bonus_intelligence_10"
+		"Ability11"					"special_bonus_armor_4"
+		"Ability12"					"special_bonus_spell_amplify_6"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_cooldown_reduction_12"
+		"Ability15"					"special_bonus_movement_speed_30"
+		"Ability16"					"special_bonus_unique_batrider_1"
+		"Ability17"					"special_bonus_unique_batrider_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_batrider/batrider_base_attack.vpcf"
 	}
 
@@ -198,6 +232,15 @@
 		//"Ability4"					"imba_beastmaster_inner_beast"
 		//"Ability5"					"imba_beastmaster_primal_roar"
 
+		"Ability10"						"special_bonus_exp_boost_15"
+		"Ability11"						"special_bonus_movement_speed_25"
+		"Ability12"						"special_bonus_strength_8"
+		"Ability13"						"special_bonus_respawn_reduction_35"
+		"Ability14"						"special_bonus_cooldown_reduction_15"
+		"Ability15"						"special_bonus_hp_250"
+		"Ability16"						"special_bonus_attack_damage_75"
+		"Ability17"						"special_bonus_unique_beastmaster"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -215,6 +258,15 @@
 		//"Ability3"					"bloodseeker_thirst"
 		//"Ability4"					"bloodseeker_rupture"
 
+		"Ability10"					"special_bonus_armor_4"
+		"Ability11"					"special_bonus_attack_damage_35"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_respawn_reduction_35"
+		"Ability15"					"special_bonus_all_stats_12"
+		"Ability16"					"special_bonus_lifesteal_30"
+		"Ability17"					"special_bonus_unique_bloodseeker"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -224,7 +276,12 @@
 	"npc_imba_hero_bounty_hunter"
 	{
 		"override_hero"				"npc_dota_hero_bounty_hunter"
-		
+
+		"AttackDamageMin"			"31"
+		"AttackDamageMax"			"35"
+
+		"AttributeBaseAgility"		"27"
+
 		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_bounty_hunter_shuriken_toss"
@@ -233,10 +290,14 @@
 		"Ability4"					"imba_bounty_hunter_shadow_jaunt"
 		"Ability5"					"imba_bounty_hunter_track"
 
-		"AttackDamageMin"			"31"
-		"AttackDamageMax"			"35"
-
-		"AttributeBaseAgility"		"27"
+		"Ability10"					"special_bonus_hp_125"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_movement_speed_25"
+		"Ability14"					"special_bonus_spell_amplify_8"
+		"Ability15"					"special_bonus_attack_damage_65"
+		"Ability16"					"special_bonus_evasion_20"
+		"Ability17"					"special_bonus_unique_bounty_hunter"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -255,6 +316,15 @@
 		//"Ability3"					"imba_bristleback_bristleback"
 		//"Ability4"					"imba_bristleback_warpath"
 
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_attack_speed_25"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_hp_regen_20"
+		"Ability17"					"special_bonus_unique_bristleback"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -272,6 +342,15 @@
 		//"Ability3"					"imba_broodmother_incapacitating_bite"
 		//"Ability4"					"imba_broodmother_insatiable_hunger"
 
+		"Ability10"					"special_bonus_agility_13"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_cooldown_reduction_15"
+		"Ability13"					"special_bonus_armor_5"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_attack_speed_30"
+		"Ability16"					"special_bonus_unique_broodmother_1"
+		"Ability17"					"special_bonus_unique_broodmother_2"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -288,6 +367,15 @@
 		"Ability2"					"imba_centaur_double_edge"
 		"Ability3"					"imba_centaur_return"
 		"Ability4"					"imba_centaur_stampede"
+
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_strength_6"
+		"Ability13"					"special_bonus_evasion_15"
+		"Ability14"					"special_bonus_strength_8"
+		"Ability15"					"special_bonus_magic_resistance_12"
+		"Ability16"					"special_bonus_strength_9"
+		"Ability17"					"special_bonus_spell_amplify_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -311,6 +399,15 @@
 		//"Ability3"					"imba_chaos_knight_chaos_strike"
 		//"Ability4"					"imba_chaos_knight_phantasm"
 
+		"Ability10"					"special_bonus_attack_speed_15"
+		"Ability11"					"special_bonus_intelligence_8"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_gold_income_40"
+		"Ability15"					"special_bonus_all_stats_8"
+		"Ability16"					"special_bonus_cooldown_reduction_20"
+		"Ability17"					"special_bonus_unique_chaos_knight"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -332,6 +429,15 @@
 		//"Ability4"					"imba_chen_holy_persuasion"
 		//"Ability5"					"imba_chen_hand_of_god"
 
+		"Ability10"					"special_bonus_gold_income_25"
+		"Ability11"					"special_bonus_respawn_reduction_50"
+		"Ability12"					"special_bonus_movement_speed_30"
+		"Ability13"					"special_bonus_attack_range_125"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_cast_range_125"
+		"Ability16"					"special_bonus_spell_amplify_20"
+		"Ability17"					"special_bonus_unique_chen_1"
+
 		"ProjectileModel"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
 	}
 
@@ -348,6 +454,15 @@
 		"Ability2"					"imba_clinkz_searing_arrows"
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
+
+		"Ability10"					"special_bonus_intelligence_8"
+		"Ability11"					"special_bonus_magic_resistance_8"
+		"Ability12"					"special_bonus_strength_5"
+		"Ability13"					"special_bonus_attack_damage_30"
+		"Ability14"					"special_bonus_evasion_20"
+		"Ability15"					"special_bonus_all_stats_7"
+		"Ability16"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_attack_speed_30"
 
 		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	}
@@ -368,6 +483,15 @@
 		//"Ability3"					"imba_rattletrap_rocket_flare"
 		//"Ability4"					"imba_rattletrap_hookshot"
 
+		"Ability10"					"special_bonus_armor_4"
+		"Ability11"					"special_bonus_mp_175"
+		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_respawn_reduction_35"
+		"Ability15"					"special_bonus_magic_resistance_12"
+		"Ability16"					"special_bonus_hp_275"
+		"Ability17"					"special_bonus_unique_clockwerk"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -384,6 +508,15 @@
 		"Ability2"					"imba_crystal_maiden_frostbite"
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
 		"Ability4"					"imba_crystal_maiden_freezing_field"
+
+		"Ability10"					"special_bonus_gold_income_20"
+		"Ability11"					"special_bonus_attack_damage_40"
+		"Ability12"					"special_bonus_cast_range_100"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_spell_amplify_12"
+		"Ability17"					"special_bonus_all_stats_14"
 
 		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
 	}
@@ -404,6 +537,15 @@
 		//"Ability3"					"imba_dark_seer_surge"
 		//"Ability4"					"imba_dark_seer_wall_of_replica"
 
+		"Ability10"					"special_bonus_evasion_12"
+		"Ability11"					"special_bonus_cast_range_75"
+		"Ability12"					"special_bonus_attack_damage_65"
+		"Ability13"					"special_bonus_hp_regen_8"
+		"Ability14"					"special_bonus_strength_7"
+		"Ability15"					"special_bonus_intelligence_15"
+		"Ability16"					"special_bonus_cooldown_reduction_12"
+		"Ability17"					"special_bonus_unique_dark_seer"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -419,6 +561,15 @@
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"					"imba_dazzle_weave"
 
+		"Ability10"					"special_bonus_gold_income_20"
+		"Ability11"					"special_bonus_exp_boost_20"
+		"Ability12"					"special_bonus_intelligence_12"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_cast_range_100"
+		"Ability15"					"special_bonus_attack_damage_40"
+		"Ability16"					"special_bonus_movement_speed_30"
+		"Ability17"					"special_bonus_respawn_reduction_35"
+
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
 
@@ -428,13 +579,22 @@
     "npc_imba_hero_death_prophet"
 	{
 		"override_hero"				"npc_dota_hero_death_prophet"
+
+		"ArmorPhysical"				"2"
 		
 		//"Ability1"					"imba_death_prophet_carrion_swarm"
 		//"Ability2"					"imba_death_prophet_silence"
 		//"Ability3"					"imba_death_prophet_spirit_siphon"
 		//"Ability4"					"imba_death_prophet_exorcism"
 
-		"ArmorPhysical"				"2"
+		"Ability10"					"special_bonus_spell_amplify_4"
+		"Ability11"					"special_bonus_strength_4"
+		"Ability12"					"special_bonus_magic_resistance_10"
+		"Ability13"					"special_bonus_cast_range_75"
+		"Ability14"					"special_bonus_cooldown_reduction_12"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_hp_275"
+		"Ability17"					"special_bonus_unique_death_prophet"
 
 		"ProjectileModel"			"particles/units/heroes/hero_death_prophet/death_prophet_base_attack.vpcf"
 	}
@@ -450,6 +610,15 @@
 		//"Ability2"					"imba_disruptor_glimpse"
 		//"Ability3"					"imba_disruptor_kinetic_field"
 		//"Ability4"					"imba_disruptor_static_storm"
+
+		"Ability10"					"special_bonus_cast_range_100"
+		"Ability11"					"special_bonus_gold_income_20"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_respawn_reduction_35"
+		"Ability14"					"special_bonus_cooldown_reduction_15"
+		"Ability15"					"special_bonus_spell_amplify_8"
+		"Ability16"					"special_bonus_magic_resistance_25"
+		"Ability17"					"special_bonus_unique_disruptor"
 
 		"ProjectileModel"			"particles/units/heroes/hero_disruptor/disruptor_base_attack.vpcf"
 	}
@@ -472,6 +641,15 @@
 		//"Ability5"					"imba_doom_bringer_empty2"
 		//"Ability6"					"imba_doom_bringer_doom"
 
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_intelligence_8"
+		"Ability12"					"special_bonus_movement_speed_25"
+		"Ability13"					"special_bonus_armor_6"
+		"Ability14"					"special_bonus_attack_damage_50"
+		"Ability15"					"special_bonus_hp_regen_14"
+		"Ability16"					"special_bonus_unique_doom_1"
+		"Ability17"					"special_bonus_unique_doom_2"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -493,6 +671,15 @@
 		//"Ability3"				"imba_dragon_knight_dragon_blood"
 		//"Ability4"				"imba_dragon_knight_elder_dragon_form"
 
+		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability11"					"special_bonus_gold_income_20"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_attack_damage_40"
+		"Ability15"					"special_bonus_hp_250"
+		"Ability16"					"special_bonus_movement_speed_35"
+		"Ability17"					"special_bonus_unique_dragon_knight"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -502,13 +689,22 @@
     "npc_imba_hero_drow_ranger"
 	{
 		"override_hero"				"npc_dota_hero_drow_ranger"
+
+		"AttackAcquisitionRange"	"900"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows"
 		"Ability2"					"imba_drow_ranger_gust"
 		"Ability3"					"imba_drow_ranger_trueshot"
 		"Ability4"					"imba_drow_ranger_marksmanship"
 
-		"AttackAcquisitionRange"	"900"
+		"Ability10"					"special_bonus_movement_speed_15"
+		"Ability11"					"special_bonus_agility_8"
+		"Ability12"					"special_bonus_all_stats_4"
+		"Ability13"					"special_bonus_agility_13"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_agility_14"
+		"Ability16"					"special_bonus_strength_9"
+		"Ability17"					"special_bonus_agility_15"
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}
@@ -532,6 +728,15 @@
 		//"Ability3"				"imba_earthshaker_aftershock"
 		//"Ability4"				"imba_earthshaker_echo_slam"
 
+		"Ability10"					"special_bonus_movement_speed_15"
+		"Ability11"					"special_bonus_mp_150"
+		"Ability12"					"special_bonus_strength_6"
+		"Ability13"					"special_bonus_attack_damage_40"
+		"Ability14"					"special_bonus_spell_amplify_6"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_hp_350"
+		"Ability17"					"special_bonus_unique_earthshaker"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -551,6 +756,15 @@
 		//"Ability5"					"imba_earth_spirit_petrify"
 		//"Ability6"					"imba_earth_spirit_magnetize"
 
+		"Ability10"					"special_bonus_intelligence_10"
+		"Ability11"					"special_bonus_armor_4"
+		"Ability12"					"special_bonus_magic_resistance_12"
+		"Ability13"					"special_bonus_gold_income_25"
+		"Ability14"					"special_bonus_spell_amplify_6"
+		"Ability15"					"special_bonus_hp_200"
+		"Ability16"					"special_bonus_respawn_reduction_35"
+		"Ability17"					"special_bonus_unique_earth_spirit"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -569,6 +783,15 @@
 		//"Ability4"					"imba_elder_titan_return_spirit"
 		//"Ability5"					"imba_elder_titan_earth_splitter"
 
+		"Ability10"					"special_bonus_respawn_reduction_25"
+		"Ability11"					"special_bonus_strength_5"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_exp_boost_20"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_attack_speed_30"
+		"Ability16"					"special_bonus_armor_8"
+		"Ability17"					"special_bonus_unique_elder_titan"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -586,6 +809,15 @@
 		//"Ability3"					"imba_ember_spirit_flame_guard"
 		//"Ability4"					"imba_ember_spirit_activate_fire_remnant"
 		//"Ability5"					"imba_ember_spirit_fire_remnant"
+
+		"Ability10"					"special_bonus_spell_amplify_5"
+		"Ability11"					"special_bonus_attack_damage_25"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_all_stats_7"
+		"Ability14"					"special_bonus_cooldown_reduction_12"
+		"Ability15"					"special_bonus_armor_6"
+		"Ability16"					"special_bonus_unique_ember_spirit_1"
+		"Ability17"					"special_bonus_unique_ember_spirit_2"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -608,6 +840,15 @@
 		//"Ability3"					"imba_enchantress_natures_attendants"
 		//"Ability4"					"imba_enchantress_impetus"
 
+		"Ability10"					"special_bonus_all_stats_5"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_unique_enchantress_1"
+		"Ability13"					"special_bonus_attack_damage_35"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_respawn_reduction_25"
+		"Ability16"					"special_bonus_intelligence_25"
+		"Ability17"					"special_bonus_unique_enchantress_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_enchantress/enchantress_base_attack.vpcf"
 	}
 
@@ -628,6 +869,15 @@
 		"Ability4"					"imba_enigma_gravity"
 		"Ability5"					"imba_enigma_black_hole"
 
+		"Ability10"					"special_bonus_movement_speed_20"
+		"Ability11"					"special_bonus_magic_resistance_10"
+		"Ability12"					"special_bonus_cooldown_reduction_12"
+		"Ability13"					"special_bonus_gold_income_40"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_armor_7"
+		"Ability17"					"special_bonus_cast_range_200"
+
 		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack.vpcf"					
 	}
 
@@ -645,6 +895,15 @@
 		"Ability3"					"imba_faceless_void_time_lock"
 		"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"imba_faceless_void_chronosphere"
+
+		"Ability10"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_strength_5"
+		"Ability12"					"special_bonus_armor_4"
+		"Ability13"					"special_bonus_attack_damage_30"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_mp_350"
+		"Ability16"					"special_bonus_evasion_25"
+		"Ability17"					"special_bonus_magic_resistance_30"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -664,6 +923,15 @@
 		"Ability4"					"gyrocopter_call_down"
 		"Ability6"					""
 
+		"Ability10"					"special_bonus_spell_amplify_5"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_magic_resistance_12"
+		"Ability13"					"special_bonus_attack_damage_35"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_cooldown_reduction_15"
+		"Ability16"					"special_bonus_unique_gyrocopter_1"
+		"Ability17"					"special_bonus_unique_gyrocopter_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_gyrocopter/gyro_base_attack.vpcf"
 	}
 
@@ -682,6 +950,15 @@
 		//"Ability2"					"imba_huskar_burning_spear"
 		//"Ability3"					"imba_huskar_berserkers_blood"
 		//"Ability4"					"imba_huskar_life_break"
+
+		"Ability10"					"special_bonus_lifesteal_10"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_attack_damage_35"
+		"Ability14"					"special_bonus_lifesteal_20"
+		"Ability15"					"special_bonus_attack_speed_30"
+		"Ability16"					"special_bonus_lifesteal_25"
+		"Ability17"					"special_bonus_attack_range_100"
 
 		"ProjectileModel"			"particles/units/heroes/hero_huskar/huskar_base_attack.vpcf"					
 	}
@@ -715,6 +992,15 @@
 		//"Ability15"				"imba_invoker_ice_wall"
 		//"Ability16"				"imba_invoker_deafening_blast"
 
+		"Ability17"					"special_bonus_unique_invoker_1"
+		"Ability18"					"special_bonus_exp_boost_20"
+		"Ability19"					"special_bonus_attack_damage_30"
+		"Ability20"					"special_bonus_hp_175"
+		"Ability21"					"special_bonus_unique_invoker_2"
+		"Ability22"					"special_bonus_attack_speed_30"
+		"Ability23"					"special_bonus_unique_invoker_3"
+		"Ability24"					"special_bonus_all_stats_12"
+
 		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 	}
 
@@ -725,13 +1011,22 @@
 	{
 		"override_hero"				"npc_dota_hero_jakiro"
 
+		"AttackRange"				"500"
+
 		"Ability1"					"imba_jakiro_fire_breath"
 		//"Ability2"					"jakiro_ice_path"
 		"Ability3"					"imba_jakiro_liquid_fire"
 		"Ability4"					"imba_jakiro_macropyre"
 		"Ability5"					"imba_jakiro_ice_breath"
 
-		"AttackRange"				"500"
+		"Ability10"					"special_bonus_exp_boost_20"
+		"Ability11"					"special_bonus_spell_amplify_5"
+		"Ability12"					"special_bonus_gold_income_30"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_cast_range_200"
+		"Ability15"					"special_bonus_armor_7"
+		"Ability16"					"special_bonus_respawn_reduction_50"
+		"Ability17"					"special_bonus_unique_jakiro"
 
 		"ProjectileModel"			"particles/units/heroes/hero_jakiro/jakiro_base_attack.vpcf"
 	}
@@ -747,6 +1042,15 @@
 		"Ability2"					"imba_juggernaut_healing_ward"
 		"Ability3"					"imba_juggernaut_blade_dance"
 		"Ability4"					"imba_juggernaut_omni_slash"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_armor_4"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_movement_speed_20"
+		"Ability15"					"special_bonus_all_stats_7"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_agility_16"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -772,6 +1076,15 @@
 		//"Ability8"					"imba_keeper_of_the_light_spirit_form_illuminate"
 		//"Ability9"					"imba_keeper_of_the_light_spirit_form_illuminate_end"
 
+		"Ability10"					"special_bonus_exp_boost_20"
+		"Ability11"					"special_bonus_movement_speed_25"
+		"Ability12"					"special_bonus_strength_6"
+		"Ability13"					"special_bonus_respawn_reduction_35"
+		"Ability14"					"special_bonus_magic_resistance_6"
+		"Ability15"					"special_bonus_armor_12"
+		"Ability16"					"special_bonus_cast_range_150"
+		"Ability17"					"special_bonus_unique_keeper_of_the_light"
+
 		"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
 	}
 
@@ -782,6 +1095,8 @@
 	{
 		"override_hero"				"npc_dota_hero_kunkka"
 
+		"MovementTurnRate"			"5.0"
+
 		"AbilityLayout"				"5"
 		
 		"Ability1"					"imba_kunkka_torrent"		
@@ -790,8 +1105,15 @@
 		"Ability4"					"imba_kunkka_return"
 		"Ability5"					"imba_kunkka_ghostship"
 		"Ability6"					""
-		
-		"MovementTurnRate"			"5.0"
+
+		"Ability10"					"special_bonus_attack_damage_25"
+		"Ability11"					"special_bonus_mp_150"
+		"Ability12"					"special_bonus_hp_regen_8"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_magic_resistance_20"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_attack_damage_75"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -811,6 +1133,17 @@
 		//"Ability2"				"imba_legion_commander_press_the_attack"
 		//"Ability3"				"imba_legion_commander_moment_of_courage"
 		//"Ability4"				"imba_legion_commander_duel"
+
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_armor_5"
+		"Ability15"					"special_bonus_respawn_reduction_25"
+		"Ability16"					"special_bonus_unique_legion_commander"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
+
+		"ProjectileSpeed"			"900"
 	}
 
 	//=================================================================================================================
@@ -828,6 +1161,15 @@
 		//"Ability3"					"imba_leshrac_lightning_storm"
 		//"Ability4"					"imba_leshrac_pulse_nova"
 
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_mp_300"
+		"Ability13"					"special_bonus_magic_resistance_12"
+		"Ability14"					"special_bonus_spell_amplify_6"
+		"Ability15"					"special_bonus_strength_7"
+		"Ability16"					"special_bonus_unique_leshrac_1"
+		"Ability17"					"special_bonus_unique_leshrac_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_leshrac/leshrac_base_attack.vpcf"
 	}
 
@@ -837,13 +1179,22 @@
 	"npc_imba_hero_lich"
 	{
 		"override_hero"				"npc_dota_hero_lich"
+
+		"AttributeBaseIntelligence"	"22"
 		
 		"Ability1"					"imba_lich_frost_nova"
 		"Ability2"					"imba_lich_frost_armor"
 		"Ability3"					"imba_lich_dark_ritual"
 		"Ability4"					"imba_lich_chain_frost"
 
-		"AttributeBaseIntelligence"	"22"
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_cast_range_100"
+		"Ability13"					"special_bonus_all_stats_6"
+		"Ability14"					"special_bonus_attack_damage_100"
+		"Ability15"					"special_bonus_spell_amplify_8"
+		"Ability16"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_unique_lich_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lich/lich_base_attack.vpcf"
 	}
@@ -865,6 +1216,15 @@
 		//"Ability6"				"imba_life_stealer_infest"
 		//"Ability7"				"imba_life_stealer_control"
 		//"Ability8"				"imba_life_stealer_consume"
+
+		"Ability10"					"special_bonus_all_stats_5"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_attack_damage_30"
+		"Ability14"					"special_bonus_evasion_15"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_armor_7"
+		"Ability17"					"special_bonus_unique_lifestealer"
 	}
 
 	//=================================================================================================================
@@ -907,7 +1267,16 @@
 		//"Ability1"				"lion_impale"				
 		//"Ability2"				"lion_voodoo"				
 		//"Ability3"				"lion_mana_drain"			
-		//"Ability4"				"lion_finger_of_death"		
+		//"Ability4"				"lion_finger_of_death"
+
+		"Ability10"					"special_bonus_respawn_reduction_25"
+		"Ability11"					"special_bonus_gold_income_20"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_attack_damage_40"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_spell_amplify_8"
+		"Ability16"					"special_bonus_all_stats_12"
+		"Ability17"					"special_bonus_unique_lion"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
@@ -926,6 +1295,15 @@
 		//"Ability3"					"imba_luna_lunar_blessing"
 		//"Ability4"					"imba_luna_eclipse"
 
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_unique_luna_1"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_armor_4"
+		"Ability14"					"special_bonus_attack_speed_25"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_all_stats_10"
+		"Ability17"					"special_bonus_unique_luna_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
 	}
 
@@ -942,13 +1320,22 @@
 
 		"AttackRange"				"200"
 
+		"MovementTurnRate"			"1.0"
+
 		"Ability1"					"imba_magnus_shockwave"
 		"Ability2"					"imba_magnus_empower"
 		//"Ability3"					"magnataur_skewer"
 		"Ability4"					"imba_magnus_magnetize"
 		"Ability5"					"imba_magnus_reverse_polarity"
 
-		"MovementTurnRate"			"1.0"
+		"Ability10"					"special_bonus_attack_speed_15"
+		"Ability11"					"special_bonus_spell_amplify_6"
+		"Ability12"					"special_bonus_gold_income_25"
+		"Ability13"					"special_bonus_attack_damage_30"
+		"Ability14"					"special_bonus_strength_8"
+		"Ability15"					"special_bonus_movement_speed_30"
+		"Ability16"					"special_bonus_respawn_reduction_35"
+		"Ability17"					"special_bonus_cooldown_reduction_12"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -967,6 +1354,15 @@
 		//"Ability3"					"medusa_mana_shield"
 		//"Ability4"					"medusa_stone_gaze"
 
+		"Ability10"					"special_bonus_intelligence_8"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_evasion_15"
+		"Ability14"					"special_bonus_agility_14"
+		"Ability15"					"special_bonus_mp_400"
+		"Ability16"					"special_bonus_lifesteal_20"
+		"Ability17"					"special_bonus_unique_medusa"
+
 		"ProjectileModel"			"particles/units/heroes/hero_medusa/medusa_base_attack.vpcf"
 	}
 
@@ -982,6 +1378,15 @@
 		//"Ability3"					"imba_meepo_geostrike"
 		//"Ability4"					"imba_meepo_divided_we_stand"
 
+		"Ability10"					"special_bonus_armor_4"
+		"Ability11"					"special_bonus_attack_damage_15"
+		"Ability12"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_evasion_15"
+		"Ability15"					"special_bonus_attack_speed_25"
+		"Ability16"					"special_bonus_hp_350"
+		"Ability17"					"special_bonus_unique_meepo"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -994,12 +1399,6 @@
 
 		"AbilityLayout"				"5"
 
-		"Ability1"					"imba_mirana_starfall"
-		"Ability2"					"imba_mirana_arrow"
-		"Ability3"					"imba_mirana_leap"
-		"Ability4"					"imba_mirana_cosmic_dust"
-		"Ability5"					"mirana_invis"
-
 		"AttackDamageMin"			"26"
 		"AttackDamageMax"			"30"
 		"AttackRate"				"1.6"
@@ -1009,6 +1408,21 @@
 		"MovementTurnRate"			"0.8"	
 
 		"VisionNighttimeRange"		"1800"
+
+		"Ability1"					"imba_mirana_starfall"
+		"Ability2"					"imba_mirana_arrow"
+		"Ability3"					"imba_mirana_leap"
+		"Ability4"					"imba_mirana_cosmic_dust"
+		"Ability5"					"mirana_invis"
+
+		"Ability10"					"special_bonus_agility_13"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_spell_amplify_6"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_attack_damage_40"
+		"Ability15"					"special_bonus_armor_5"
+		"Ability16"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_cooldown_reduction_15"
 
 		"ProjectileModel"			"particles/units/heroes/hero_mirana/mirana_base_attack.vpcf"
 	}
@@ -1033,6 +1447,15 @@
 		//"Ability7"					"imba_morphling_morph"
 		//"Ability8"					"imba_morphling_morph_replicate"
 
+		"Ability10"					"special_bonus_agility_13"
+		"Ability11"					"special_bonus_mp_150"
+		"Ability12"					"special_bonus_attack_speed_20"
+		"Ability13"					"special_bonus_cooldown_reduction_12"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_attack_damage_40"
+		"Ability16"					"special_bonus_unique_morphling_1"
+		"Ability17"					"special_bonus_unique_morphling_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_morphling/morphling_base_attack.vpcf"
 	}
 
@@ -1052,6 +1475,15 @@
 		//"Ability7"					"imba_monkey_king_untransform"
 		//"Ability8"					"imba_monkey_king_wukongs_command"
 
+		"Ability10"					"special_bonus_attack_speed_20"
+		"Ability11"					"special_bonus_armor_4"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_attack_damage_40"
+		"Ability15"					"special_bonus_strength_8"
+		"Ability16"					"special_bonus_magic_resistance_25"
+		"Ability17"					"special_bonus_unique_monkey_king"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1070,6 +1502,15 @@
 		//"Ability3"				"imba_naga_siren_rip_tide"
 		//"Ability4"				"imba_naga_siren_song_of_the_siren"
 		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
+
+		"Ability10"					"special_bonus_mp_150"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_agility_14"
+		"Ability14"					"special_bonus_evasion_20"
+		"Ability15"					"special_bonus_strength_8"
+		"Ability16"					"special_bonus_movement_speed_30"
+		"Ability17"					"special_bonus_unique_naga_siren"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1095,6 +1536,15 @@
 		//"Ability3"				"imba_furion_force_of_nature"
 		//"Ability4"				"imba_furion_wrath_of_nature"
 
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_intelligence_12"
+		"Ability13"					"special_bonus_movement_speed_25"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_armor_5"
+		"Ability16"					"special_bonus_respawn_reduction_35"
+		"Ability17"					"special_bonus_unique_furion"
+
 		"ProjectileModel"			"particles/units/heroes/hero_furion/furion_base_attack.vpcf"
 	}
 
@@ -1115,25 +1565,16 @@
 		"Ability4"					"imba_necrolyte_reapers_scythe"
 		"Ability5"					"imba_necrolyte_death_pulse_aux"
 
+		"Ability10"					"special_bonus_attack_damage_25"
+		"Ability11"					"special_bonus_strength_4"
+		"Ability12"					"special_bonus_all_stats_6"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_spell_amplify_6"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_hp_250"
+		"Ability17"					"special_bonus_spell_lifesteal_20"
+
 		"ProjectileModel"			"particles/units/heroes/hero_necrolyte/necrolyte_base_attack.vpcf"
-	}
-	
-	//=================================================================================================================
-	// HERO: Shadow Fiend
-	//=================================================================================================================
-	"npc_imba_hero_nevermore"
-	{
-		"override_hero"				"npc_dota_hero_nevermore"
-	
-		"Ability1"					"imba_nevermore_shadowraze1"
-		"Ability2"					"imba_nevermore_shadowraze2"
-		"Ability3"					"imba_nevermore_shadowraze3"
-		"Ability4"					"imba_nevermore_necromastery"
-		"Ability5"					"imba_nevermore_dark_lord"
-		"Ability6"					"imba_nevermore_requiem"
-		"Ability7"					"imba_nevermore_requiem_aux"
-	
-		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1154,6 +1595,15 @@
 		"Ability2"					"imba_night_stalker_crippling_fear"
 		"Ability3"					"imba_night_stalker_hunter_in_the_night"
 		"Ability4"					"imba_night_stalker_darkness"
+
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_mp_175"
+		"Ability12"					"special_bonus_cast_range_100"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_attack_damage_40"
+		"Ability16"					"special_bonus_armor_6"
+		"Ability17"					"special_bonus_cooldown_reduction_15"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1177,6 +1627,15 @@
 		//"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 
+		"Ability10"					"special_bonus_spell_amplify_4"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_gold_income_25"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_intelligence_15"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_movement_speed_30"
+		"Ability17"					"special_bonus_armor_7"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1197,6 +1656,15 @@
 		//"Ability4"					"imba_ogre_magi_unrefined_fireblast"
 		//"Ability5"					"imba_ogre_magi_multicast"
 
+		"Ability10"					"special_bonus_gold_income_20"
+		"Ability11"					"special_bonus_cast_range_100"
+		"Ability12"					"special_bonus_attack_damage_35"
+		"Ability13"					"special_bonus_magic_resistance_10"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_spell_amplify_10"
+		"Ability17"					"special_bonus_unique_ogre_magi"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1214,6 +1682,15 @@
 		//"Ability2"					"imba_oracle_fates_edict"
 		//"Ability3"					"imba_oracle_purifying_flames"
 		//"Ability4"					"imba_oracle_false_promise"
+
+		"Ability10"					"special_bonus_respawn_reduction_25"
+		"Ability11"					"special_bonus_exp_boost_20"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_gold_income_25"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_intelligence_15"
+		"Ability16"					"special_bonus_cast_range_150"
+		"Ability17"					"special_bonus_unique_oracle"
 
 		"ProjectileModel"			"particles/units/heroes/hero_oracle/oracle_base_attack.vpcf"
 	}
@@ -1235,6 +1712,15 @@
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
 		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 
+		"Ability10"					"special_bonus_mp_175"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_armor_5"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_intelligence_15"
+		"Ability15"					"special_bonus_hp_200"
+		"Ability16"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_spell_amplify_10"
+
 		"ProjectileModel"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_base_attack.vpcf"
 	}
 
@@ -1249,6 +1735,15 @@
 		"Ability2"					"imba_omniknight_repel"
 		"Ability3"					"imba_omniknight_degen_aura"
 		"Ability4"					"imba_omniknight_guardian_angel"
+
+		"Ability10"					"special_bonus_gold_income_10"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_cast_range_75"
+		"Ability13"					"special_bonus_strength_8"
+		"Ability14"					"special_bonus_attack_damage_100"
+		"Ability15"					"special_bonus_mp_regen_6"
+		"Ability16"					"special_bonus_unique_omniknight_1"
+		"Ability17"					"special_bonus_unique_omniknight_2"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1266,6 +1761,15 @@
 		"Ability2"					"imba_phantom_assassin_phantom_strike"
 		"Ability3"					"imba_phantom_assassin_blur"
 		"Ability4"					"imba_phantom_assassin_coup_de_grace"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_attack_damage_20"
+		"Ability12"					"special_bonus_lifesteal_15"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_attack_speed_25"
+		"Ability15"					"special_bonus_evasion_25"
+		"Ability16"					"special_bonus_agility_16"
+		"Ability17"					"special_bonus_all_stats_10"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1285,6 +1789,15 @@
 		//"Ability2"					"imba_phantom_lancer_doppelwalk"
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_cooldown_reduction_10"
+		"Ability12"					"special_bonus_all_stats_6"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_evasion_20"
+		"Ability16"					"special_bonus_strength_9"
+		"Ability17"					"special_bonus_unique_phantom_lancer"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1306,6 +1819,15 @@
 		//"Ability8"					"imba_phoenix_sun_ray_stop"
 		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
 
+		"Ability10"					"special_bonus_respawn_reduction_25"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_strength_5"
+		"Ability13"					"special_bonus_gold_income_25"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_spell_amplify_8"
+		"Ability16"					"special_bonus_unique_phoenix_1"
+		"Ability17"					"special_bonus_unique_phoenix_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_phoenix/phoenix_base_attack.vpcf"
 	}
 
@@ -1325,6 +1847,15 @@
 		//"Ability3"				"imba_puck_phase_shift"
 		//"Ability4"				"imba_puck_ethereal_jaunt"
 		//"Ability5"				"imba_puck_dream_coil"
+
+		"Ability10"					"special_bonus_intelligence_7"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_spell_amplify_6"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_gold_income_50"
+		"Ability17"					"special_bonus_unique_puck"
 
 		"ProjectileModel"			"particles/units/heroes/hero_puck/puck_base_attack.vpcf"
 	}
@@ -1351,6 +1882,15 @@
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
 
+		"Ability10"					"special_bonus_strength_6"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_gold_income_25"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_attack_speed_35"
+		"Ability17"					"special_bonus_strength_12"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1372,6 +1912,15 @@
 		"Ability3"					"imba_pugna_nether_ward"
 		"Ability4"					"imba_pugna_life_drain_end"
 		"Ability5"					"imba_pugna_life_drain"
+
+		"Ability10"					"special_bonus_mp_regen_3"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_respawn_reduction_25"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_all_stats_7"
+		"Ability15"					"special_bonus_cast_range_100"
+		"Ability16"					"special_bonus_spell_lifesteal_20"
+		"Ability17"					"special_bonus_cooldown_reduction_15"
 
 		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
@@ -1397,6 +1946,15 @@
 		"Ability4"					"imba_queenofpain_delightful_torment"
 		"Ability5"					"imba_queenofpain_sonic_wave"
 
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_strength_5"
+		"Ability12"					"special_bonus_cooldown_reduction_10"
+		"Ability13"					"special_bonus_spell_amplify_6"
+		"Ability14"					"special_bonus_attack_range_75"
+		"Ability15"					"special_bonus_hp_200"
+		"Ability16"					"special_bonus_intelligence_30"
+		"Ability17"					"special_bonus_spell_lifesteal_70"
+
 		"ProjectileModel"			"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
 	}
 
@@ -1413,6 +1971,15 @@
 		//"Ability2"					"imba_razor_static_link"
 		//"Ability3"					"imba_razor_unstable_current"
 		//"Ability4"					"imba_razor_eye_of_the_storm"
+
+		"Ability10"					"special_bonus_movement_speed_15"
+		"Ability11"					"special_bonus_agility_13"
+		"Ability12"					"special_bonus_armor_5"
+		"Ability13"					"special_bonus_cast_range_100"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_attack_speed_30"
+		"Ability16"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_unique_razor"
 
 		"ProjectileModel"			"particles/units/heroes/hero_razor/razor_base_attack.vpcf"
 	}
@@ -1432,6 +1999,15 @@
 		//"Ability3"					"imba_riki_permanent_invisibility"
 		//"Ability4"					"imba_riki_tricks_of_the_trade"
 
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_agility_14"
+		"Ability13"					"special_bonus_exp_boost_20"
+		"Ability14"					"special_bonus_cast_range_150"
+		"Ability15"					"special_bonus_all_stats_8"
+		"Ability16"					"special_bonus_unique_riki_1"
+		"Ability17"					"special_bonus_unique_riki_2"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1442,8 +2018,8 @@
 	{
 		"override_hero"				"npc_dota_hero_rubick"
 
-		"Ability1"		"imba_rubick_telekinesis"
-		"Ability2"		"imba_rubick_telekinesis_land"
+		"Ability1"					"imba_rubick_telekinesis"
+		"Ability2"					"imba_rubick_telekinesis_land"
 		//"Ability3"		"imba_rubick_fade_bolt"
 		//"Ability4"		"imba_rubick_null_field"
 		//"Ability5"		"imba_rubick_empty1"
@@ -1452,6 +2028,15 @@
 		//"Ability8"		"imba_rubick_hidden1"
 		//"Ability9"		"imba_rubick_hidden2"
 		//"Ability10"		"imba_rubick_hidden3"
+
+		"Ability11"					"special_bonus_gold_income_20"
+		"Ability12"					"special_bonus_attack_damage_35"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_intelligence_12"
+		"Ability15"					"special_bonus_cast_range_100"
+		"Ability16"					"special_bonus_spell_amplify_8"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
+		"Ability18"					"special_bonus_spell_lifesteal_20"
 
 		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
@@ -1471,6 +2056,15 @@
 		"Ability4"					"imba_sandking_treacherous_sands"
 		"Ability5"					"imba_sandking_epicenter"
 
+		"Ability10"					"special_bonus_mp_150"
+		"Ability11"					"special_bonus_gold_income_15"
+		"Ability12"					"special_bonus_magic_resistance_10"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_armor_6"
+		"Ability16"					"special_bonus_hp_regen_20"
+		"Ability17"					"special_bonus_spell_lifesteal_20"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1487,6 +2081,15 @@
 		//"Ability4"					"imba_shadow_demon_shadow_poison_release"
 		//"Ability5"					"imba_shadow_demon_demonic_purge"
 
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_cast_range_75"
+		"Ability13"					"special_bonus_spell_amplify_6"
+		"Ability14"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_unique_shadow_demon_1"
+		"Ability17"					"special_bonus_unique_shadow_demon_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_shadow_demon/shadow_demon_base_attack.vpcf"
 	}
 
@@ -1496,21 +2099,24 @@
 	"npc_imba_hero_nevermore"
 	{
 		"override_hero"				"npc_dota_hero_nevermore"
+	
+		"Ability1"					"imba_nevermore_shadowraze1"
+		"Ability2"					"imba_nevermore_shadowraze2"
+		"Ability3"					"imba_nevermore_shadowraze3"
+		"Ability4"					"imba_nevermore_necromastery"
+		"Ability5"					"imba_nevermore_dark_lord"
+		"Ability6"					"imba_nevermore_requiem"
+		"Ability7"					"imba_nevermore_requiem_aux"
 
-		"AttackRate"				"1.6"
-
-		"AttackDamageMin"			"23"
-		"AttackDamageMax"			"25"
-
-		"ArmorPhysical"				"-1"
-
-		//"Ability1"					"imba_nevermore_shadowraze1"
-		//"Ability2"					"imba_nevermore_shadowraze2"
-		//"Ability3"					"imba_nevermore_shadowraze3"
-		//"Ability4"					"imba_nevermore_necromastery"
-		//"Ability5"					"imba_nevermore_dark_lord"
-		//"Ability6"					"imba_nevermore_requiem"
-
+		"Ability10"					"special_bonus_movement_speed_15"
+		"Ability11"					"special_bonus_attack_speed_10"
+		"Ability12"					"special_bonus_spell_amplify_5"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_attack_range_75"
+		"Ability15"					"special_bonus_evasion_20"
+		"Ability16"					"special_bonus_lifesteal_15"
+		"Ability17"					"special_bonus_spell_lifesteal_20"
+	
 		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 	}
 
@@ -1561,6 +2167,15 @@
 		"Ability2"					"imba_wraith_king_vampiric_aura"
 		"Ability3"					"imba_wraith_king_mortal_strike"
 		"Ability4"					"imba_wraith_king_reincarnation"
+
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_intelligence_7"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_strength_8"
+		"Ability16"					"special_bonus_lifesteal_20"
+		"Ability17"					"special_bonus_armor_7"
 		
 		"ProjectileSpeed"			"900"
 	}
@@ -1576,6 +2191,15 @@
 		//"Ability2"					"imba_skywrath_mage_concussive_shot"
 		//"Ability3"					"imba_skywrath_mage_ancient_seal"
 		//"Ability4"					"imba_skywrath_mage_mystic_flare"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_intelligence_8"
+		"Ability12"					"special_bonus_attack_damage_35"
+		"Ability13"					"special_bonus_gold_income_25"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_mp_regen_14"
+		"Ability17"					"special_bonus_unique_skywrath"
 
 		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 	}
@@ -1594,6 +2218,15 @@
 		//"Ability3"					"imba_slardar_bash"
 		//"Ability4"					"imba_slardar_amplify_damage"
 
+		"Ability10"					"special_bonus_hp_regen_5"
+		"Ability11"					"special_bonus_mp_150"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_attack_damage_35"
+		"Ability15"					"special_bonus_armor_6"
+		"Ability16"					"special_bonus_strength_9"
+		"Ability17"					"special_bonus_unique_slardar"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1611,26 +2244,16 @@
 		//"Ability3"					"imba_slark_essence_shift"
 		//"Ability4"					"imba_slark_shadow_dance"
 
+		"Ability10"					"special_bonus_lifesteal_10"
+		"Ability11"					"special_bonus_attack_damage_15"
+		"Ability12"					"special_bonus_agility_14"
+		"Ability13"					"special_bonus_strength_6"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_attack_speed_30"
+		"Ability16"					"special_bonus_all_stats_12"
+		"Ability17"					"special_bonus_unique_slark"
+
 		"ProjectileSpeed"			"900"
-	}
-
-	//=================================================================================================================
-	// HERO: Silencer
-	//=================================================================================================================
-	"npc_imba_hero_silencer"
-	{
-		"override_hero"				"npc_dota_hero_silencer"
-
-		"AttackRate"				"1.5"
-
-		"AttributeIntelligenceGain"		"3.0"
-
-		//"Ability1"					"imba_silencer_curse_of_the_silent"
-		//"Ability2"					"imba_silencer_glaives_of_wisdom"
-		//"Ability3"					"imba_silencer_last_word"
-		//"Ability4"					"imba_silencer_global_silence"
-
-		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 	}
 
 	//=================================================================================================================
@@ -1653,7 +2276,14 @@
 		"Ability5"					"imba_sniper_assassinate"
 		"Ability6"					"imba_sniper_take_aim_normal"
 
-		"AttributeAgilityGain"		"2.5"
+		"Ability10"					"special_bonus_unique_sniper_1"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_unique_sniper_2"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_mp_regen_6"
+		"Ability16"					"special_bonus_attack_range_75"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
 
 		"ProjectileModel"			"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
 	}
@@ -1688,6 +2318,15 @@
 		//"Ability3"					"imba_spirit_breaker_greater_bash"
 		//"Ability4"					"imba_spirit_breaker_nether_strike"
 
+		"Ability10"					"special_bonus_all_stats_5"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_armor_5"
+		"Ability14"					"special_bonus_gold_income_30"
+		"Ability15"					"special_bonus_respawn_reduction_40"
+		"Ability16"					"special_bonus_unique_spirit_breaker_1"
+		"Ability17"					"special_bonus_unique_spirit_breaker_2"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1702,6 +2341,15 @@
 		//"Ability2"					"imba_storm_spirit_electric_vortex"
 		//"Ability3"					"imba_storm_spirit_overload"
 		//"Ability4"					"imba_storm_spirit_ball_lightning"
+
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_mp_regen_4"
+		"Ability14"					"special_bonus_attack_speed_25"
+		"Ability15"					"special_bonus_mp_regen_6"
+		"Ability16"					"special_bonus_unique_storm_spirit"
+		"Ability17"					"special_bonus_mp_regen_6"
 
 		"ProjectileModel"			"particles/units/heroes/hero_stormspirit/stormspirit_base_attack.vpcf"
 	}
@@ -1723,6 +2371,15 @@
 		"Ability2"					"imba_sven_great_cleave"
 		"Ability3"					"imba_sven_warcry"
 		"Ability4"					"imba_sven_gods_strength"
+
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_mp_150"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_all_stats_7"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_evasion_20"
+		"Ability16"					"special_bonus_attack_damage_50"
+		"Ability17"					"special_bonus_strength_10"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1752,6 +2409,15 @@
 		//"Ability5"					"imba_techies_minefield_sign"
 		//"Ability6"					"imba_techies_remote_mines"
 
+		"Ability10"					"special_bonus_movement_speed_20"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_exp_boost_25"
+		"Ability13"					"special_bonus_cast_range_200"
+		"Ability14"					"special_bonus_gold_income_40"
+		"Ability15"					"special_bonus_respawn_reduction_60"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_unique_techies"
+
 		"ProjectileModel"			"particles/units/heroes/hero_techies/techies_base_attack.vpcf"
 	}
 
@@ -1772,6 +2438,15 @@
 		//"Ability4"				"imba_templar_assassin_trap"
 		//"Ability5"				"imba_templar_assassin_psionic_trap"
 
+		"Ability10"				"special_bonus_attack_speed_15"
+		"Ability11"				"special_bonus_movement_speed_15"
+		"Ability12"				"special_bonus_all_stats_6"
+		"Ability13"				"special_bonus_evasion_15"
+		"Ability14"				"special_bonus_hp_200"
+		"Ability15"				"special_bonus_attack_damage_40"
+		"Ability16"				"special_bonus_respawn_reduction_35"
+		"Ability17"				"special_bonus_unique_templar_assassin"
+
 		"ProjectileModel"		"particles/units/heroes/hero_templar_assassin/templar_assassin_base_attack.vpcf"
 	}
 
@@ -1790,6 +2465,15 @@
 		//"Ability2"					"imba_terrorblade_conjure_image"
 		//"Ability3"					"imba_terrorblade_metamorphosis"
 		//"Ability4"					"imba_terrorblade_sunder"
+
+		"Ability10"					"special_bonus_hp_regen_5"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_agility_15"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_all_stats_12"
+		"Ability17"					"special_bonus_unique_terrorblade"
 	}
 
 	//=================================================================================================================
@@ -1810,6 +2494,15 @@
 		//"Ability3"					"imba_tidehunter_anchor_smash"
 		//"Ability4"					"imba_tidehunter_ravage"
 
+		"Ability10"					"special_bonus_attack_damage_30"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_armor_5"
+		"Ability13"					"special_bonus_exp_boost_25"
+		"Ability14"					"special_bonus_mp_regen_4"
+		"Ability15"					"special_bonus_strength_7"
+		"Ability16"					"special_bonus_cooldown_reduction_20"
+		"Ability17"					"special_bonus_unique_tidehunter"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1824,6 +2517,15 @@
 		"Ability2"					"imba_tinker_heat_seeking_missile"
 		"Ability3"					"imba_tinker_march_of_the_machines"
 		"Ability4"					"imba_tinker_rearm"
+
+		"Ability10"					"special_bonus_intelligence_8"
+		"Ability11"					"special_bonus_armor_4"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_spell_amplify_6"
+		"Ability14"					"special_bonus_cast_range_100"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_spell_lifesteal_20"
+		"Ability17"					"special_bonus_mp_regen_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
 	}
@@ -1842,6 +2544,15 @@
 		//"Ability5"					"imba_shredder_return_chakram_2"
 		//"Ability6"					"imba_shredder_chakram"
 		//"Ability7"					"imba_shredder_return_chakram"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_hp_regen_6"
+		"Ability13"					"special_bonus_intelligence_10"
+		"Ability14"					"special_bonus_spell_amplify_8"
+		"Ability15"					"special_bonus_cast_range_125"
+		"Ability16"					"special_bonus_strength_9"
+		"Ability17"					"special_bonus_unique_timbersaw"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1870,6 +2581,15 @@
 		//"Ability3"				"imba_tiny_craggy_exterior"
 		//"Ability4"				"imba_tiny_grow"
 
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_intelligence_8"
+		"Ability12"					"special_bonus_attack_damage_50"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_mp_regen_6"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_unique_tiny"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1895,6 +2615,15 @@
 		//"Ability3"					"imba_treant_living_armor"
 		//"Ability4"					"imba_treant_eyes_in_the_forest"
 		//"Ability5"					"imba_treant_overgrowth"
+
+		"Ability10"					"special_bonus_attack_speed_15"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_gold_income_25"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_unique_treant"
+		"Ability15"					"special_bonus_attack_damage_50"
+		"Ability16"					"special_bonus_20_bash_2"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1922,6 +2651,15 @@
 		"Ability4"					"imba_troll_warlord_berserkers_rage"
 		"Ability5"					"imba_troll_warlord_battle_trance"
 
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_agility_13"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_armor_5"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_attack_damage_40"
+		"Ability16"					"special_bonus_magic_resistance_25"
+		"Ability17"					"special_bonus_attack_range_75"
+
 		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
 	}
 
@@ -1940,6 +2678,15 @@
 		//"Ability4"					"imba_tusk_launch_snowball"
 		//"Ability5"					"imba_tusk_walrus_kick"
 		//"Ability6"					"imba_tusk_walrus_punch"
+
+		"Ability10"					"special_bonus_exp_boost_20"
+		"Ability11"					"special_bonus_attack_damage_35"
+		"Ability12"					"special_bonus_strength_6"
+		"Ability13"					"special_bonus_gold_income_20"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_hp_275"
+		"Ability17"					"special_bonus_unique_tusk"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1961,6 +2708,15 @@
 		//"Ability4"					"imba_abyssal_underlord_dark_rift"
 		//"Ability5"					"imba_abyssal_underlord_cancel_dark_rift"
 
+		"Ability10"					"special_bonus_armor_4"
+		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_spell_amplify_6"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_cast_range_100"
+		"Ability16"					"special_bonus_hp_regen_25"
+		"Ability17"					"special_bonus_unique_underlord"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -1979,6 +2735,15 @@
 		//"Ability2"					"imba_undying_soul_rip"
 		//"Ability3"					"imba_undying_tombstone"
 		//"Ability4"					"imba_undying_flesh_golem"
+
+		"Ability10"					"special_bonus_respawn_reduction_35"
+		"Ability11"					"special_bonus_gold_income_20"
+		"Ability12"					"special_bonus_exp_boost_25"
+		"Ability13"					"special_bonus_hp_175"
+		"Ability14"					"special_bonus_all_stats_7"
+		"Ability15"					"special_bonus_movement_speed_25"
+		"Ability16"					"special_bonus_armor_7"
+		"Ability17"					"special_bonus_unique_undying"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2003,6 +2768,15 @@
 		//"Ability3"					"imba_ursa_fury_swipes"
 		//"Ability4"					"ursa_enrage"
 
+		"Ability10"					"special_bonus_attack_damage_20"
+		"Ability11"					"special_bonus_magic_resistance_10"
+		"Ability12"					"special_bonus_armor_5"
+		"Ability13"					"special_bonus_attack_speed_20"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_hp_200"
+		"Ability16"					"special_bonus_all_stats_10"
+		"Ability17"					"special_bonus_unique_ursa"
+
 		"ProjectileSpeed"			"900"
 	}
 
@@ -2017,6 +2791,15 @@
 		//"Ability2"				"imba_viper_nethertoxin"
 		//"Ability3"				"imba_viper_corrosive_skin"
 		//"Ability4"				"imba_viper_viper_strike"
+
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_strength_6"
+		"Ability13"					"special_bonus_agility_14"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_attack_range_75"
+		"Ability16"					"special_bonus_unique_viper_1"
+		"Ability17"					"special_bonus_unique_viper_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_viper/viper_base_attack.vpcf"
 	}
@@ -2043,6 +2826,15 @@
 		"Ability6"					"imba_vengeful_nether_swap"
 		"Ability7"					"vengefulspirit_nether_swap"
 
+		"Ability10"					"special_bonus_magic_resistance_8"
+		"Ability11"					"special_bonus_attack_speed_15"
+		"Ability12"					"special_bonus_all_stats_6"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_attack_damage_40"
+		"Ability15"					"special_bonus_attack_range_75"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_lifesteal_20"
+
 		"ProjectileModel"			"particles/units/heroes/hero_vengeful/vengeful_base_attack.vpcf"
 	}
 
@@ -2063,6 +2855,15 @@
 		"Ability4"					"imba_venomancer_toxicity"
 		"Ability5"					"imba_venomancer_poison_nova"
 
+		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_cast_range_100"
+		"Ability14"					"special_bonus_attack_damage_50"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_respawn_reduction_60"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
+
 		"ProjectileModel"			"particles/units/heroes/hero_venomancer/venomancer_base_attack.vpcf"
 	}
 
@@ -2080,6 +2881,15 @@
 		//"Ability3"					"imba_visage_gravekeepers_cloak"
 		//"Ability4"					"imba_visage_summon_familiars"
 
+		"Ability10"					"special_bonus_gold_income_20"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_attack_damage_35"
+		"Ability13"					"special_bonus_cast_range_100"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_spell_amplify_10"
+		"Ability17"					"special_bonus_unique_visage_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_visage/visage_base_attack.vpcf"
 	}
 
@@ -2094,6 +2904,15 @@
 		"Ability2"					"imba_warlock_shadow_word"
 		"Ability3"					"imba_warlock_upheaval"
 		"Ability4"					"imba_warlock_rain_of_chaos"
+
+		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability11"					"special_bonus_all_stats_6"
+		"Ability12"					"special_bonus_cast_range_100"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_20_bash_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_warlock/warlock_base_attack.vpcf"
 	}
@@ -2114,6 +2933,15 @@
 		//"Ability3"					"imba_weaver_geminate_attack"
 		//"Ability4"					"imba_weaver_time_lapse"
 
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_unique_weaver_1"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_all_stats_6"
+		"Ability14"					"special_bonus_hp_200"
+		"Ability15"					"special_bonus_agility_14"
+		"Ability16"					"special_bonus_magic_resistance_20"
+		"Ability17"					"special_bonus_unique_weaver_2"
+
 		"ProjectileModel"			"particles/units/heroes/hero_weaver/weaver_base_attack.vpcf"
 	}
 
@@ -2132,6 +2960,15 @@
 		//"Ability3"				"imba_windrunner_windrun"
 		//"Ability4"				"imba_windrunner_focusfire"
 
+		"Ability10"					"special_bonus_attack_damage_15"
+		"Ability11"					"special_bonus_mp_regen_3"
+		"Ability12"					"special_bonus_hp_175"
+		"Ability13"					"special_bonus_intelligence_13"
+		"Ability14"					"special_bonus_spell_amplify_8"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_unique_windranger"
+
 		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
 	}
 
@@ -2146,6 +2983,15 @@
 		//"Ability2"				"imba_winter_wyvern_splinter_blast"
 		//"Ability3"				"imba_winter_wyvern_cold_embrace"
 		//"Ability4"				"imba_winter_wyvern_winters_curse"
+
+		"Ability10"					"special_bonus_intelligence_10"
+		"Ability11"					"special_bonus_strength_5"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_attack_damage_30"
+		"Ability14"					"special_bonus_gold_income_30"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_unique_winter_wyvern_1"
+		"Ability17"					"special_bonus_unique_winter_wyvern_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_winter_wyvern/winter_wyvern_base_attack.vpcf"
 	}
@@ -2168,6 +3014,15 @@
 	//	"Ability9"					"imba_wisp_spirits_in"
 	//	"Ability10"					"imba_wisp_spirits_out"
 
+		"Ability11"					"special_bonus_magic_resistance_8"
+		"Ability12"					"special_bonus_armor_4"
+		"Ability13"					"special_bonus_mp_regen_4"
+		"Ability14"					"special_bonus_strength_6"
+		"Ability15"					"special_bonus_hp_regen_10"
+		"Ability16"					"special_bonus_gold_income_30"
+		"Ability17"					"special_bonus_respawn_reduction_40"
+		"Ability18"					"special_bonus_unique_wisp"
+
 		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
 	}
 
@@ -2182,6 +3037,15 @@
 		//"Ability2"					"imba_witch_doctor_voodoo_restoration"
 		//"Ability3"					"imba_witch_doctor_maledict"
 		//"Ability4"					"imba_witch_doctor_death_ward"
+
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_exp_boost_15"
+		"Ability12"					"special_bonus_attack_damage_50"
+		"Ability13"					"special_bonus_respawn_reduction_35"
+		"Ability14"					"special_bonus_armor_6"
+		"Ability15"					"special_bonus_magic_resistance_20"
+		"Ability16"					"special_bonus_unique_witch_doctor_1"
+		"Ability17"					"special_bonus_unique_witch_doctor_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_witchdoctor/witchdoctor_base_attack.vpcf"
 	}
@@ -2203,6 +3067,15 @@
 		//"Ability2"					"imba_zuus_lightning_bolt"
 		//"Ability3"					"imba_zuus_static_field"
 		//"Ability4"					"imba_zuus_thundergods_wrath"
+
+		"Ability10"					"special_bonus_mp_regen_2"
+		"Ability11"					"special_bonus_hp_150"
+		"Ability12"					"special_bonus_armor_4"
+		"Ability13"					"special_bonus_magic_resistance_12"
+		"Ability14"					"special_bonus_movement_speed_25"
+		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability16"					"special_bonus_cast_range_100"
+		"Ability17"					"special_bonus_unique_zeus"
 
 		"ProjectileModel"			"particles/units/heroes/hero_zuus/zuus_base_attack.vpcf"
 	}

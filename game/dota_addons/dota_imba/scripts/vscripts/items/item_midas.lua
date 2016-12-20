@@ -20,9 +20,6 @@ function Midas( keys )
 	local xp_multiplier = ability:GetLevelSpecialValueFor("xp_multiplier", ability:GetLevel() - 1)
 	local bonus_xp = creep_XP * xp_multiplier
 
-	-- Multiply gold by the lobby's parameters
-	bonus_gold = bonus_gold * ( 100 + CREEP_GOLD_BONUS ) / 100
-
 	-- Play sound and show gold gain message to the owner
 	target:EmitSound(sound_cast)
 	SendOverheadEventMessage(PlayerResource:GetPlayer(caster:GetPlayerID()), OVERHEAD_ALERT_GOLD, target, bonus_gold, nil)
