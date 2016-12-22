@@ -213,7 +213,7 @@ function CausticFinale( keys )
 	local modifier_prevent = keys.modifier_prevent
 
 	-- If the target is an ally, or already has the debuff, or has the prevention debuff, do nothing
-	if target:GetTeam() == caster:GetTeam() or target:HasModifier(modifier_debuff) or target:HasModifier(modifier_prevent) then
+	if target:GetTeam() == caster:GetTeam() or target:HasModifier(modifier_debuff) or target:HasModifier(modifier_prevent) or target:IsIllusion() then
 		return nil
 	end
 

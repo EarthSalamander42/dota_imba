@@ -445,9 +445,6 @@ function ApplyAllRandomOmgAbilities( hero )
 		ability_powerup = true
 	end
 
-	-- Check if the frantic mode ability is present
-	local ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
-
 	-- Remove default abilities
 	for i = 0, 15 do
 		local old_ability = hero:GetAbilityByIndex(i)
@@ -541,13 +538,6 @@ function ApplyAllRandomOmgAbilities( hero )
 		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		ability_powerup:SetLevel(1)
 		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", powerup_stacks, true)
-	end
-
-	-- Apply frantic mode ability, if previously existing
-	if ability_frantic then
-		hero:AddAbility("imba_frantic_buff")
-		ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
-		ability_frantic:SetLevel(1)
 	end
 
 end
@@ -1091,9 +1081,6 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
-
-	-- Frantic mode
-	reduction = reduction /FRANTIC_MULTIPLIER
 
 	return reduction
 end

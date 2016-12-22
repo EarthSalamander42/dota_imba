@@ -157,8 +157,9 @@ function GameMode:BountyRuneFilter( keys )
 	--xp_bounty	 ==> 	136.5
 	--gold_bounty	 ==> 	132.6
 
-	keys["gold_bounty"] = ( 1 + CREEP_GOLD_BONUS * 0.01 ) * keys["gold_bounty"]
-	keys["xp_bounty"] = ( 1 + CREEP_XP_BONUS * 0.01 ) * keys["xp_bounty"]
+	local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
+	keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
+	keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
 
 	return true
 end
@@ -180,7 +181,7 @@ function GameMode:GoldFilter( keys )
 	-- Lobby options adjustment
 	if keys.gold > 0 then
 		local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-		keys.gold = keys.gold * (1 + CREEP_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
 	end
 
 	-- Show gold earned message
@@ -199,7 +200,7 @@ function GameMode:ExperienceFilter( keys )
 
 	-- Lobby options adjustment
 	local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-	keys.experience = keys.experience * (1 + CREEP_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
 
 	return true
 end
@@ -212,6 +213,11 @@ function GameMode:ModifierFilter( keys )
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
 
+	return true
+end
+
+-- Item added to inventory filter
+function GameMode:ItemAddedFilter( keys )
 	return true
 end
 
@@ -600,75 +606,7 @@ function GameMode:OnAllPlayersLoaded()
 	DebugPrint("[IMBA] All Players have loaded into the game")
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player globals initialization
-	-------------------------------------------------------------------------------------------------
-
-	self.players = {}
-	self.heroes = {}
-
-	IMBA_STARTED_TRACKING_CONNECTIONS = true
-
-	GOODGUYS_CONNECTED_PLAYERS = 0
-	BADGUYS_CONNECTED_PLAYERS = 0
-
-	-- Assign players to the table
-	for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-		self.players[id] = PlayerResource:GetPlayer(id)
-		
-		if self.players[id] then
-
-			-- Initialize connection state
-			self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-			print("initialized connection for player "..id..": "..self.players[id].connection_state)
-
-			-- Assign appropriate player color
-			if IMBA_PLAYERS_ON_GAME == 10 and id > 4 then
-				PlayerResource:SetCustomPlayerColor(id+5, PLAYER_COLORS[id+5][1], PLAYER_COLORS[id+5][2], PLAYER_COLORS[id+5][3])
-			else
-				PlayerResource:SetCustomPlayerColor(id, PLAYER_COLORS[id][1], PLAYER_COLORS[id][2], PLAYER_COLORS[id][3])
-			end
-
-			-- Increment amount of players on this team by one
-			if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-				GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-				print("goodguys team now has "..GOODGUYS_CONNECTED_PLAYERS.." players")
-			elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
-				BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-				print("badguys team now has "..BADGUYS_CONNECTED_PLAYERS.." players")
-			end
-		else
-
-			-- If the player never connected, assign it a special string
-			if PlayerResource:GetConnectionState(id) == 1 then
-				self.players[id] = "empty_player_slot"
-				print("player "..id.." never connected")
-			end
-
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: All Random setup
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_PICK_MODE_ALL_RANDOM then
-
-		-- Pick setup
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			Timers:CreateTimer(0, function()
-				if self.players[id] and self.players[id] ~= "empty_player_slot" then
-					PlayerResource:GetPlayer(id):MakeRandomHeroSelection()
-					PlayerResource:SetHasRepicked(id)
-					PlayerResource:SetHasRandomed(id)
-				elseif not self.players[id] then
-					return 0.5
-				end
-			end)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Filter setup
+	-- IMBA: Game filters setup
 	-------------------------------------------------------------------------------------------------
 
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap(GameMode, "BountyRuneFilter"), self )
@@ -677,6 +615,33 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetModifyGoldFilter( Dynamic_Wrap(GameMode, "GoldFilter"), self )
 	GameRules:GetGameModeEntity():SetModifyExperienceFilter( Dynamic_Wrap(GameMode, "ExperienceFilter"), self )
 	GameRules:GetGameModeEntity():SetModifierGainedFilter( Dynamic_Wrap(GameMode, "ModifierFilter"), self )
+	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: All Random setup
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_PICK_MODE_ALL_RANDOM then
+
+		-- Pick setup
+		for player_id = 0, 19 do
+			Timers:CreateTimer(0, function()
+				if PlayerResource:IsImbaPlayer(player_id) then
+					
+					-- If this player is connected to the game, random a hero for it
+					if PlayerResource:GetConnectionState(player_id) == 1 or PlayerResource:GetConnectionState(player_id) == 2 then
+						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
+						PlayerResource:SetCanRepick(player_id, false)
+						PlayerResource:SetHasRandomed(player_id)
+
+					-- Else, keep trying
+					else
+						return 0.5
+					end
+				end
+			end)
+		end
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
@@ -730,11 +695,11 @@ function GameMode:OnAllPlayersLoaded()
 		end
 
 		-- Game mode
-		local game_mode = "<font color='#FF7800'>ALL PICK</font>"
+		local game_mode = "ALL PICK"
 		if IMBA_PICK_MODE_ALL_RANDOM then
-			game_mode = "<font color='#FF7800'>ALL RANDOM</font>"
+			game_mode = "ALL RANDOM"
 		elseif IMBA_ABILITY_MODE_RANDOM_OMG then
-			game_mode = "<font color='#FF7800'>RANDOM OMG</font>, <font color='#FF7800'>"..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.."</font> abilities, <font color='#FF7800'>"..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.."</font> ultimates, skills are randomed on every respawn"
+			game_mode = "RANDOM OMG, "..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.." abilities, "..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.." ultimates, skills are randomed on every respawn"
 		end
 
 		-- Same hero
@@ -744,80 +709,74 @@ function GameMode:OnAllPlayersLoaded()
 		end
 
 		-- Bounties
-		local gold_bounty = 100 + CREEP_GOLD_BONUS
-		gold_bounty = "<font color='#FF7800'>"..gold_bounty.."%</font>"
-		local XP_bounty = 100 + CREEP_XP_BONUS
-		XP_bounty = "<font color='#FF7800'>"..XP_bounty.."%</font>"
+		local gold_bounty = 100 + CUSTOM_GOLD_BONUS
+		gold_bounty = gold_bounty.."%"
+		local XP_bounty = 100 + CUSTOM_XP_BONUS
+		XP_bounty = XP_bounty.."%"
 
 		-- Respawn
 		local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
 		if respawn_time == 100 then
-			respawn_time = "<font color='#FF7800'>normal</font> respawn time, "
+			respawn_time = "normal respawn time, "
 		elseif respawn_time == 50 then
-			respawn_time = "<font color='#FF7800'>half</font> respawn time, "
+			respawn_time = "half respawn time, "
 		elseif respawn_time == 0 then
-			respawn_time = "<font color='#FF7800'>zero</font> respawn time, "
+			respawn_time = "instant respawn time, "
 		end
 
 		-- Buyback
 		local buyback_cooldown = HERO_BUYBACK_COOLDOWN
 		if buyback_cooldown == 0 then
-			buyback_cooldown = "<font color='#FF7800'>no</font> buyback cooldown."
+			buyback_cooldown = "no buyback cooldown."
 		else
-			buyback_cooldown = "<font color='#FF7800'>"..buyback_cooldown.." seconds</font> buyback cooldown."
+			buyback_cooldown = buyback_cooldown.." seconds buyback cooldown."
 		end
 
 		-- Starting gold & level
-		local start_status = "Heroes will start with <font color='#FF7800'>"..HERO_INITIAL_GOLD.."</font> gold, at level <font color='#FF7800'>"..HERO_STARTING_LEVEL.."</font>, and can progress up to level <font color='#FF7800'>"..MAX_LEVEL.."</font>."
+		local start_status = "Heroes will start with "..HERO_INITIAL_GOLD.." gold, at level "..HERO_STARTING_LEVEL..", and can progress up to level "..MAX_LEVEL.."."
 
 		-- Creep power setting
 		local creep_power = "Lane creeps' power is set to "
 		if CREEP_POWER_FACTOR == 1 then
-			creep_power = creep_power.."<font color='#FF7800'>normal</font>,"
+			creep_power = creep_power.."normal,"
 		elseif CREEP_POWER_FACTOR == 2 then
-			creep_power = creep_power.."<font color='#FF7800'>high</font>,"
+			creep_power = creep_power.."high,"
 		elseif CREEP_POWER_FACTOR == 4 then
-			creep_power = creep_power.."<font color='#FF7800'>extreme</font>,"
+			creep_power = creep_power.."extreme,"
 		end
 
 		-- Tower power setting
 		local tower_power = " and tower power is set to "
 		if TOWER_POWER_FACTOR == 0 then
-			tower_power = tower_power.."<font color='#FF7800'>normal</font>."
+			tower_power = tower_power.."normal."
 		elseif TOWER_POWER_FACTOR == 1 then
-			tower_power = tower_power.."<font color='#FF7800'>high</font>."
+			tower_power = tower_power.."high."
 		elseif TOWER_POWER_FACTOR == 2 then
-			tower_power = tower_power.."<font color='#FF7800'>extreme</font>."
+			tower_power = tower_power.."extreme."
 		end
 
 		-- Tower abilities
 		local tower_abilities = ""
 		if TOWER_ABILITY_MODE then
 			if TOWER_UPGRADE_MODE then
-				tower_abilities = "Towers will gain <font color='#FF7800'>upgradable random abilities</font>."
+				tower_abilities = "Towers will gain upgradable random abilities."
 			else
-				tower_abilities = "Towers will gain <font color='#FF7800'>random abilities</font>."
+				tower_abilities = "Towers will gain random abilities."
 			end
 		end
 
 		-- Comeback gold
 		local comeback_gold = ""
 		if HERO_GLOBAL_BOUNTY_FACTOR > 0 then
-			comeback_gold = " Global comeback gold is <font color='#FF7800'>enabled</font>."
+			comeback_gold = " Global comeback gold is enabled."
 		else
-			comeback_gold = " Global comeback gold is <font color='#FF7800'>disabled</font>."
+			comeback_gold = " Global comeback gold is disabled."
 		end
 
 		-- Kills to end the game
 		local kills_to_end = ""
 		if END_GAME_ON_KILLS then
-			kills_to_end = "<font color='#FF7800'>ARENA MODE:</font> the game will only end when one team reaches <font color='#FF7800'>"..KILLS_TO_END_GAME_FOR_TEAM.."</font> kills."
-		end
-
-		-- Frantic mode
-		local frantic_mode = ""
-		if FRANTIC_MULTIPLIER > 1 then
-			frantic_mode = " <font color='#FF7800'>FRANTIC MODE:</font> cooldowns and mana costs decreased by <font color='#FF7800'>"..FRANTIC_MULTIPLIER.."x</font>."
+			kills_to_end = "ARENA MODE: the game will only end when one team reaches "..KILLS_TO_END_GAME_FOR_TEAM.." kills."
 		end
 		
 		Say(nil, game_mode..same_hero, false)
@@ -826,9 +785,6 @@ function GameMode:OnAllPlayersLoaded()
 		Say(nil, creep_power..tower_power, false)
 		Say(nil, tower_abilities..comeback_gold, false)
 		Say(nil, kills_to_end, false)
-		if frantic_mode ~= "" then
-			Say(nil, frantic_mode, false)
-		end
 	end)
 end
 
@@ -840,39 +796,17 @@ end
 	The hero parameter is the hero entity that just spawned in
 ]]
 function GameMode:OnHeroInGame(hero)
-	DebugPrint("[IMBA] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: First hero spawn initialization
 	-------------------------------------------------------------------------------------------------
 
-	-- Update the player's hero if it was picked or changed
-	local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+	-- Fetch this hero's associated player ID
+	local player_id = hero:GetPlayerID()
 
-	if player and self.players[player:GetPlayerID()] and self.players[player:GetPlayerID()] ~= "empty_player_slot" and not self.heroes[player:GetPlayerID()] then
-		self.heroes[player:GetPlayerID()] = hero
-	elseif player and self.players[player:GetPlayerID()] and self.players[player:GetPlayerID()] ~= "empty_player_slot" and self.heroes[player:GetPlayerID()] and ( self.heroes[player:GetPlayerID()]:GetName() ~= hero:GetName() ) then
-		self.heroes[player:GetPlayerID()] = hero
-	end
-
-	-- Check if this function was already performed
-	if not player then
+	-- Check if initial setup was already performed
+	if PlayerResource:IsPlayerSpawnSetupDone(player_id) then
 		return nil
-	elseif player.already_spawned then
-		return nil
-	end
-
-	--If not, flag it as being done
-	player.already_spawned = true
-
-	-- Create kill and death streak and buyback globals
-	hero.kill_streak_count = 0
-	hero.death_streak_count = 0
-	hero.buyback_count = 0
-
-	-- Give Invoker an extra ability point at level 1
-	if hero:GetName() == "npc_dota_hero_invoker" then
-		hero:SetAbilityPoints( hero:GetAbilityPoints() + 1 )
 	end
 
 	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
@@ -880,13 +814,6 @@ function GameMode:OnHeroInGame(hero)
 		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
 		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
 	end)
-
-	-- Add frantic mode passive buff
-	if FRANTIC_MULTIPLIER > 1 then
-		hero:AddAbility("imba_frantic_buff")
-		ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
-		ability_frantic:SetLevel(1)
-	end
 
 	-- Set up initial level
 	if HERO_STARTING_LEVEL > 1 then
@@ -900,17 +827,15 @@ function GameMode:OnHeroInGame(hero)
 	local has_not_repicked = PlayerResource:CanRepick(hero:GetPlayerID())
 
 	if not has_not_repicked then
-		hero:SetGold(HERO_INITIAL_REPICK_GOLD, false)
+		hero:ModifyGold(HERO_REPICK_GOLD_LOSS, true, DOTA_ModifyGold_SelectionPenalty)
 	elseif has_randomed then
-		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
-	else
-		hero:SetGold(HERO_INITIAL_GOLD, false)
+		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
 	end
 
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
 
 		-- Set initial gold for the mode 
-		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
+		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
 
 		-- Randomize abilities
 		ApplyAllRandomOmgAbilities(hero)
@@ -919,31 +844,14 @@ function GameMode:OnHeroInGame(hero)
 	if IMBA_PICK_MODE_ALL_RANDOM then
 
 		-- Set initial gold for the mode 
-		hero:SetGold(HERO_INITIAL_RANDOM_GOLD, false)
+		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
 	end
 
-	-- Set up initial hero kill gold bounty
-	local gold_bounty = HERO_KILL_GOLD_BASE + HERO_KILL_GOLD_PER_LEVEL
-
-	-- Multiply bounty by the lobby options
-	gold_bounty = gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100
-
-	-- Update the hero's bounty
-	hero:SetMinimumGoldBounty(gold_bounty)
-	hero:SetMaximumGoldBounty(gold_bounty)
-
-	-- Set up initial hero kill XP bounty
-	local xp_bounty = HERO_KILL_XP_CONSTANT_1
-
-	-- Multiply bounty by the lobby options
-	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-	hero:SetDeathXP(xp_bounty)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Initialize innate hero abilities
-	-------------------------------------------------------------------------------------------------
-
+	-- Initialize innate hero abilities
 	InitializeInnateAbilities(hero)
+
+	-- Set initial spawn setup as having been done
+	PlayerResource:SetPlayerSpawnSetupDone(player_id)
 
 end
 
@@ -956,16 +864,7 @@ function GameMode:OnGameInProgress()
 	DebugPrint("[IMBA] The game has officially begun")
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Game time tracker
-	-------------------------------------------------------------------------------------------------
-	
-	Timers:CreateTimer(5, function()
-		GAME_TIME_ELAPSED = GAME_TIME_ELAPSED + 5
-		return 5
-	end)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Structure bounty/stats setup
+	-- IMBA: Structure stats setup
 	-------------------------------------------------------------------------------------------------
 
 	-- Roll the random ancient abilities for this game
@@ -980,37 +879,15 @@ function GameMode:OnGameInProgress()
 	-- Iterate through each one
 	for _, building in pairs(buildings) do
 		
-		-- Parameters
+		-- Fetch building name
 		local building_name = building:GetName()
-		local special_building = true
-		local max_bounty = building:GetMaximumGoldBounty()
-		local min_bounty = building:GetMinimumGoldBounty()
-		local xp_bounty = building:GetDeathXP()
 
 		-- Identify the building type
 		if string.find(building_name, "tower") then
 
-			-- Set up base bounties
-			min_bounty = TOWER_MINIMUM_GOLD
-			max_bounty = TOWER_MAXIMUM_GOLD
-			xp_bounty = TOWER_EXPERIENCE
 			building:AddAbility("imba_tower_buffs")
 			local tower_ability = building:FindAbilityByName("imba_tower_buffs")
 			tower_ability:SetLevel(1)
-
-		elseif string.find(building_name, "rax_melee") then
-
-			-- Set up base bounties
-			min_bounty = MELEE_RAX_MINIMUM_GOLD
-			max_bounty = MELEE_RAX_MAXIMUM_GOLD
-			xp_bounty = MELEE_RAX_EXPERIENCE
-
-		elseif string.find(building_name, "rax_range") then
-
-			-- Set up base bounties
-			min_bounty = RANGED_RAX_MINIMUM_GOLD
-			max_bounty = RANGED_RAX_MAXIMUM_GOLD
-			xp_bounty = RANGED_RAX_EXPERIENCE
 
 		elseif string.find(building_name, "fort") then
 
@@ -1058,25 +935,6 @@ function GameMode:OnGameInProgress()
 				end
 				
 			end
-
-		elseif string.find(building_name, "fountain") then
-			-- Do nothing (fountain was already modified previously)
-		else
-
-			-- Flag this building as non-tower, non-rax
-			special_building = false
-		end
-		
-		-- Update XP bounties
-		building:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
-
-		-- Update gold bounties
-		if special_building then
-			building:SetMaximumGoldBounty( math.floor( max_bounty * CREEP_GOLD_BONUS / 100 ) )
-			building:SetMinimumGoldBounty( math.floor( min_bounty * CREEP_GOLD_BONUS / 100 ) )
-		else
-			building:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
-			building:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 		end
 	end
 

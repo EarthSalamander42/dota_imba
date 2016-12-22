@@ -16,13 +16,14 @@ UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop item
 HERO_SELECTION_TIME = 50.0					-- How long should we let people select their hero?
 PRE_GAME_TIME = 90.0						-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
+AUTO_LAUNCH_DELAY = 20.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
 
-GOLD_PER_TICK = 5							-- How much gold should players get per tick?
-GOLD_TICK_TIME = 3.0						-- How long should we wait in seconds between gold ticks?
+GOLD_PER_TICK = 1							-- How much gold should players get per tick?
+GOLD_TICK_TIME = 0.6						-- How long should we wait in seconds between gold ticks?
 
 RECOMMENDED_BUILDS_DISABLED = true			-- Should we disable the recommened builds for heroes
-CAMERA_DISTANCE_OVERRIDE = 1134.0			-- How far out should we allow the camera to go?  1134 is the default in Dota
+CAMERA_DISTANCE_OVERRIDE = -1				-- How far out should we allow the camera to go?  1134 is the default in Dota
 
 MINIMAP_ICON_SIZE = 1						-- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1					-- What icon size should we use for creeps?
@@ -37,21 +38,21 @@ DISABLE_FOG_OF_WAR_ENTIRELY = false			-- Should we disable fog of war entirely f
 USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of the map completely black until uncovered by each team? 
 											-- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
-USE_STANDARD_HERO_GOLD_BOUNTY = true		-- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
+USE_STANDARD_HERO_GOLD_BOUNTY = false		-- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
 
 USE_CUSTOM_TOP_BAR_VALUES = false			-- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true						-- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true					-- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals)  Requires USE_CUSTOM_TOP_BAR_VALUES
 
 ENABLE_TOWER_BACKDOOR_PROTECTION = true		-- Should we enable backdoor protection for our towers?
-REMOVE_ILLUSIONS_ON_DEATH = false			-- Should we remove all illusions if the main hero dies?
+REMOVE_ILLUSIONS_ON_DEATH = true			-- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players get gold?
 
 USE_CUSTOM_XP_VALUES = true					-- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
-LOSE_GOLD_ON_DEATH = false					-- Should we have players lose the normal amount of dota gold on death?
+LOSE_GOLD_ON_DEATH = true					-- Should we have players lose the normal amount of dota gold on death?
 SHOW_ONLY_PLAYER_INVENTORY = false			-- Should we only allow players to see their own inventory even when selecting other units?
 DISABLE_STASH_PURCHASING = false			-- Should we prevent players from being able to buy items into their stash when not at a shop?
 DISABLE_ANNOUNCER = false					-- Should we disable the announcer from working in the game?
@@ -63,15 +64,6 @@ FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fo
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
 MAXIMUM_ATTACK_SPEED = 600					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed?
-
-											-- NOTE: You always need at least 2 non-bounty (non-regen while broken) type runes to be able to spawn or your game will crash!
-ENABLED_RUNES = {}							-- Which runes should be enabled to spawn in our game mode?
-ENABLED_RUNES[DOTA_RUNE_DOUBLEDAMAGE] = true
-ENABLED_RUNES[DOTA_RUNE_HASTE] = true
-ENABLED_RUNES[DOTA_RUNE_ILLUSION] = true
-ENABLED_RUNES[DOTA_RUNE_INVISIBILITY] = true
-ENABLED_RUNES[DOTA_RUNE_REGENERATION] = true
-ENABLED_RUNES[DOTA_RUNE_BOUNTY] = true
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
@@ -116,24 +108,11 @@ HERO_BUYBACK_COOLDOWN = 30													-- Base buyback cooldown
 HERO_BUYBACK_COOLDOWN_START_POINT = 15										-- Game time (in minutes) after which buyback cooldown is activated
 HERO_BUYBACK_COOLDOWN_GROW_FACTOR = 2										-- Buyback cooldown increase per minute
 
+ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
-
-TOWER_MINIMUM_GOLD = 180													-- Tower minimum gold bounty
-TOWER_MAXIMUM_GOLD = 220													-- Tower maximum gold bounty
-TOWER_EXPERIENCE = 400														-- Tower experience bounty
-
-MELEE_RAX_MINIMUM_GOLD = 180												-- Melee barracks minimum gold bounty
-MELEE_RAX_MAXIMUM_GOLD = 200												-- Melee barracks maximum gold bounty
-MELEE_RAX_EXPERIENCE = 400													-- Melee barracks experience bounty
-
-RANGED_RAX_MINIMUM_GOLD = 100												-- Ranged barracks minimum gold bounty
-RANGED_RAX_MAXIMUM_GOLD = 120												-- Ranged barracks maximum gold bounty
-RANGED_RAX_EXPERIENCE = 200													-- Ranged barracks experience bounty
 
 ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
-
-GAME_TIME_ELAPSED = 0														-- Initializes game time tracker
 
 VENGEFUL_RANCOR = false														-- Tracks if Vengeful Spirit's "Rancor" ability is in the game
 
@@ -284,13 +263,10 @@ IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait befor
 IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
 
-CREEP_GOLD_BONUS = 30														-- Amount of bonus gold granted by creeps and passive gold (in %)
-HERO_GOLD_BONUS = 30														-- Amount of bonus gold granted by heroes (in %)
+CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
+CUSTOM_XP_BONUS = 30														-- Amount of bonus XP gained (in %)
 
-CREEP_XP_BONUS = 30															-- Amount of bonus XP granted by creeps (in %)
-HERO_XP_BONUS = 30															-- Amount of bonus XP granted by heroes (in %)
-
-BOUNTY_RAMP_PER_MINUTE = 5													-- Bounty increase (in %) based on game time
+BOUNTY_RAMP_PER_MINUTE = 3													-- Bounty increase (in %) based on game time
 CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
@@ -315,15 +291,13 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
-FRANTIC_MULTIPLIER = 1														-- Mana cost/cooldown decrease multiplier
-
 HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
 HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
-HERO_INITIAL_REPICK_GOLD = 525												-- Gold granted to players at the start of the game on repicking their hero
-HERO_INITIAL_RANDOM_GOLD = 825												-- Gold granted to players at the start of the game on randoming their hero
+HERO_REPICK_GOLD_LOSS = 0												-- Gold lost by players who repick their hero
+HERO_RANDOM_GOLD_BONUS = 0												-- Gold granted to players who random their hero
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -332,14 +306,12 @@ MAX_LEVEL = 35																-- What level should we let heroes get to?
 
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	HERO_INITIAL_GOLD = 2000
-	HERO_INITIAL_REPICK_GOLD = 1500
-	HERO_INITIAL_RANDOM_GOLD = 2500
+	HERO_REPICK_GOLD_LOSS = -400
+	HERO_RANDOM_GOLD_BONUS = 300
 	HERO_STARTING_LEVEL = 5
 	HERO_RESPAWN_TIME_MULTIPLIER = 50
-	CREEP_GOLD_BONUS = 60
-	HERO_GOLD_BONUS = 60
-	HERO_XP_BONUS = 100
-	CREEP_XP_BONUS = 100
+	CUSTOM_GOLD_BONUS = 60
+	CUSTOM_XP_BONUS = 100
 	TOWER_UPGRADE_MODE = true
 	CREEP_POWER_FACTOR = 2
 	TOWER_POWER_FACTOR = 1
@@ -347,14 +319,12 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	MAX_LEVEL = 50
 	HERO_INITIAL_GOLD = 2000
-	HERO_INITIAL_REPICK_GOLD = 1500
-	HERO_INITIAL_RANDOM_GOLD = 2500
+	HERO_REPICK_GOLD_LOSS = -400
+	HERO_RANDOM_GOLD_BONUS = 300
 	HERO_STARTING_LEVEL = 5
 	HERO_RESPAWN_TIME_MULTIPLIER = 50
-	CREEP_GOLD_BONUS = 200
-	HERO_GOLD_BONUS = 200
-	HERO_XP_BONUS = 200
-	CREEP_XP_BONUS = 200
+	CUSTOM_GOLD_BONUS = 200
+	CUSTOM_XP_BONUS = 200
 	CREEP_POWER_FACTOR = 2
 	TOWER_POWER_FACTOR = 1
 	HERO_BUYBACK_COOLDOWN = 60
@@ -370,23 +340,23 @@ for i = 2, 5 do
 end
 
 XP_PER_LEVEL_TABLE[6] = 2000
-XP_PER_LEVEL_TABLE[7] = 2615
-XP_PER_LEVEL_TABLE[8] = 3245
-XP_PER_LEVEL_TABLE[9] = 3890
-XP_PER_LEVEL_TABLE[10] = 4550
-XP_PER_LEVEL_TABLE[11] = 5225
-XP_PER_LEVEL_TABLE[12] = 6000
-XP_PER_LEVEL_TABLE[13] = 7175
-XP_PER_LEVEL_TABLE[14] = 8375
-XP_PER_LEVEL_TABLE[15] = 9600
-XP_PER_LEVEL_TABLE[16] = 10850
-XP_PER_LEVEL_TABLE[17] = 12125
-XP_PER_LEVEL_TABLE[18] = 13500
-XP_PER_LEVEL_TABLE[19] = 14900
-XP_PER_LEVEL_TABLE[20] = 16325
-XP_PER_LEVEL_TABLE[21] = 17925
-XP_PER_LEVEL_TABLE[22] = 19825
-XP_PER_LEVEL_TABLE[23] = 22000
+XP_PER_LEVEL_TABLE[7] = 2640
+XP_PER_LEVEL_TABLE[8] = 3300
+XP_PER_LEVEL_TABLE[9] = 3980
+XP_PER_LEVEL_TABLE[10] = 4680
+XP_PER_LEVEL_TABLE[11] = 5400
+XP_PER_LEVEL_TABLE[12] = 6140
+XP_PER_LEVEL_TABLE[13] = 7340
+XP_PER_LEVEL_TABLE[14] = 8565
+XP_PER_LEVEL_TABLE[15] = 9815
+XP_PER_LEVEL_TABLE[16] = 11090
+XP_PER_LEVEL_TABLE[17] = 12390
+XP_PER_LEVEL_TABLE[18] = 13715
+XP_PER_LEVEL_TABLE[19] = 15115
+XP_PER_LEVEL_TABLE[20] = 16605
+XP_PER_LEVEL_TABLE[21] = 18180
+XP_PER_LEVEL_TABLE[22] = 20080
+XP_PER_LEVEL_TABLE[23] = 22280
 XP_PER_LEVEL_TABLE[24] = 24500
 
 for i = 25, MAX_LEVEL do

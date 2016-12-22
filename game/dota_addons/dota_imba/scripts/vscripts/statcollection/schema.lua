@@ -43,7 +43,7 @@ function BuildGameArray()
 	local game = {}
 
 	-- Add game values here as game.someValue = GetSomeGameValue()
-	game.gl = GAME_TIME_ELAPSED -- Tracks total game length, from the horn sound, in seconds
+	game.gl = GameRules:GetDOTATime(false, false) -- Tracks total game length, from the horn sound, in seconds
 	game.wt = GAME_WINNER_TEAM -- Tracks which team won the game
 
 	return game

@@ -20,9 +20,10 @@ function GameMode:_InitGameMode()
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
 	GameRules:EnableCustomGameSetupAutoLaunch( START_GAME_AUTOMATICALLY )
-
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
+	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
+	GameRules:SetStartingGold( HERO_INITIAL_GOLD )
 
 	-- Register a listener for the game mode configuration
 	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
@@ -43,7 +44,6 @@ function GameMode:_InitGameMode()
 			SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
 		end
 	end
-	DebugPrint('[IMBA] GameRules set')
 
 	--InitLogFile( "log/barebones.txt","")
 
@@ -151,10 +151,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
 
-		for rune, spawn in pairs(ENABLED_RUNES) do
-			mode:SetRuneEnabled(rune, spawn)
-		end
-
 		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
 		self:OnFirstPlayerLoaded()
@@ -213,12 +209,6 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
 	end
 
-	-- Set frantic mode multiplier
-	if tonumber(mode_info.frantic_mode) == 1 then
-		FRANTIC_MULTIPLIER = 3
-		print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
-	end
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Additional Random OMG setup
 	-------------------------------------------------------------------------------------------------
@@ -249,35 +239,33 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Starting gold information
 	if mode_info.gold_start == "2000" then
 		HERO_INITIAL_GOLD = 2000
-		HERO_INITIAL_REPICK_GOLD = 1500
-		HERO_INITIAL_RANDOM_GOLD = 2500
+		HERO_REPICK_GOLD_LOSS = -400
+		HERO_RANDOM_GOLD_BONUS = 300
 	elseif mode_info.gold_start == "6000" then
 		HERO_INITIAL_GOLD = 6000
-		HERO_INITIAL_REPICK_GOLD = 5000
-		HERO_INITIAL_RANDOM_GOLD = 7000
+		HERO_REPICK_GOLD_LOSS = -900
+		HERO_RANDOM_GOLD_BONUS = 800
 	elseif mode_info.gold_start == "15000" then
 		HERO_INITIAL_GOLD = 15000
-		HERO_INITIAL_REPICK_GOLD = 12500
-		HERO_INITIAL_RANDOM_GOLD = 17500
+		HERO_REPICK_GOLD_LOSS = -2400
+		HERO_RANDOM_GOLD_BONUS = 2300
 	end
 	print("hero starting gold: "..HERO_INITIAL_GOLD)
 
 	-- Gold bounties information
 	if tonumber(mode_info.gold_bounty) > 0 then
-		CREEP_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
-		HERO_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
+		CUSTOM_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
 	end
-	print("gold bounty increased by: "..HERO_GOLD_BONUS)
+	print("gold bounty increased by: "..CUSTOM_GOLD_BONUS)
 
 	-- XP bounties information
 	if tonumber(mode_info.xp_bounty) > 0 then
-		CREEP_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
-		HERO_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
+		CUSTOM_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
 	end
-	print("xp bounty increased by: "..HERO_XP_BONUS)
+	print("xp bounty increased by: "..CUSTOM_XP_BONUS)
 
 	-- Passive gold adjustment
-	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
+	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
 	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
 
 	-- Comeback gold adjustment
@@ -386,8 +374,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Tracks gold/experience options
-	statCollection:setFlags({gold_bonus = CREEP_GOLD_BONUS})
-	statCollection:setFlags({exp_bonus = CREEP_XP_BONUS})
+	statCollection:setFlags({gold_bonus = CUSTOM_GOLD_BONUS})
+	statCollection:setFlags({exp_bonus = CUSTOM_XP_BONUS})
 
 	-- Tracks respawn and buyback
 	statCollection:setFlags({respawn_mult = HERO_RESPAWN_TIME_MULTIPLIER})
@@ -400,9 +388,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Tracks creep and tower power settings
 	statCollection:setFlags({creep_power = CREEP_POWER_FACTOR})
 	statCollection:setFlags({tower_power = TOWER_POWER_FACTOR})
-
-	-- Tracks Frantic Mode multiplier
-	statCollection:setFlags({frantic_mult = FRANTIC_MULTIPLIER})
 
 	-- Tracks structure abilities and upgrades
 	statCollection:setFlags({tower_abilities = TOWER_ABILITY_MODE and 1 or 0})

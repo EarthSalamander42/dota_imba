@@ -97,7 +97,7 @@ function DeathPulseThink( keys )
 	local base_heal_pct = ability:GetLevelSpecialValueFor("toggle_heal_pct", ability_level) * 0.01
 	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level) * 0.01
 	local toggle_mana_cost = ability:GetLevelSpecialValueFor("toggle_mana_cost", ability_level)
-	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level) / FRANTIC_MULTIPLIER
+	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
 
 	-- If the caster is out of mana, toggle the ability off
 	if caster:GetMana() < toggle_mana_cost then
@@ -170,7 +170,7 @@ function DeathPulseEnd( keys )
 	local modifier_caster = keys.modifier_caster
 
 	-- Parameters
-	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level) / FRANTIC_MULTIPLIER
+	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
 
 	-- Remove caster modifier
 	caster:RemoveModifierByName(modifier_caster)

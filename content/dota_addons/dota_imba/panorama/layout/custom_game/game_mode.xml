@@ -206,7 +206,6 @@
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_pick_option_allow_same_hero" id="allow_same_hero_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_custom"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_options_frantic" id="frantic_mode_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_custom"/>
 

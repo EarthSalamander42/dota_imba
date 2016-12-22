@@ -3195,8 +3195,7 @@
 	{
 		"AbilityCastRange"				"1000"
 
-		"AbilityCooldown"				"13.0 11.0 9.0 7.0"
-		"AbilityDuration"				"4.0"
+		"AbilityCooldown"				"13 11 9 7"
 
 		"AbilityManaCost"				"120"
 
@@ -3226,6 +3225,21 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_restore_time"	"13 11 9 7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Apparition: bonus Cold Feet charges
+	//=================================================================================================================
+	"special_bonus_unique_ancient_apparition_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"3"
 			}
 		}
 	}
@@ -3306,6 +3320,21 @@
 	}
 
 	//=================================================================================================================
+	// Ancient Apparition: bonus Chilling Touch damage
+	//=================================================================================================================
+	"special_bonus_unique_ancient_apparition_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Ancient Apparition: Ice Blast
 	//=================================================================================================================
 	"ancient_apparition_ice_blast"
@@ -3368,36 +3397,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	// Ancient Apparition: bonus Cold Feet charges
-	//=================================================================================================================
-	"special_bonus_unique_ancient_apparition_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"3"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Apparition: bonus Chilling Touch damage
-	//=================================================================================================================
-	"special_bonus_unique_ancient_apparition_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"value"					"100"
-			}
-		}
-	}
 	
 	//=================================================================================================================
 	// Antimage: Blink
@@ -3446,10 +3445,11 @@
 	//=================================================================================================================
 	"arc_warden_flux"
 	{
-		"AbilityCastRange"				"725 850 975 1100"
+		"AbilityCastRange"				"700 800 900 1000"
+
 		"AbilityCastPoint"				"0.2"
 		
-		"AbilityCooldown"				"18.0 17.0 16.0 15.0"
+		"AbilityCooldown"				"18 17 16 15"
 
 		"AbilityManaCost"				"50"
 
@@ -3483,7 +3483,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"725 850 975 1100"
+				"cast_range_tooltip"	"700 800 900 1000"
 			}
 		}
 	}
@@ -3553,7 +3553,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"90.0"
+				"duration"					"90"
 			}
 			"04"
 			{
@@ -3598,14 +3598,16 @@
 
 		"RequiredLevel"					"1"
 
-		"AbilityCooldown"				"45 40 35 30"
+		"AbilityCooldown"				"60 50 40 30"
+
+		"DisplayAdditionalHeroes"		"1"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"12.0 18.0 24.0 30.0"
+				"duration"				"24.0"
 			}
 		}
 	}
@@ -4662,7 +4664,7 @@
 	//=================================================================================================================
 	"chaos_knight_phantasm"
 	{
-		"AbilityCooldown"								"130 110 90"
+		"AbilityCooldown"								"100"
 
 		"AbilityManaCost"								"120 150 180"
 
@@ -4716,7 +4718,7 @@
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cooldown_scepter"						"110 90 70"
+				"cooldown_scepter"						"80"
 			}
 		}
 	}
@@ -4729,6 +4731,7 @@
 		"AbilityCastPoint"				"0.2"
 
 		"AbilityCastRange"				"1000"
+
 		"AbilityCooldown"				"10 9 8 7"
 
 		"AbilityManaCost"				"50"
@@ -4748,7 +4751,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"-30"
+				"bonus_movement_speed"	"-40"
 			}
 			"04"
 			{
@@ -4822,13 +4825,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_units"				"3 5 7 9"
+				"max_units"				"2 3 4 5"
 				"LinkedSpecialBonus"	"special_bonus_unique_chen_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_min"			"900 1200 1500 1800"
+				"health_min"			"2500"
 			}
 		}
 	}
@@ -4843,7 +4846,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"9"
+				"value"				"10"
 			}
 		}
 	}
@@ -5465,6 +5468,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"dragon_cast_range"		"500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"2000"
 			}
 		}
 	}
@@ -6248,7 +6256,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"15 25 35 45"
+				"magic_resistance_pct"		"50 75 100 125"
 			}
 		}
 	}
@@ -6394,31 +6402,33 @@
 	//=================================================================================================================
 	"ember_spirit_sleight_of_fist"
 	{
-		"AbilityCooldown"					"10 7.5 5 2.5"
+		"AbilityCooldown"						"10 7.5 5 2.5"
 
-		"AbilityCastRange"					"825"
+		"AbilityCastRange"						"825"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"450 500 550 600"
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"450 500 550 600"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_hero_damage"			"60 80 100 120"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_hero_damage"				"60 80 100 120"
+				"CalculateSpellDamageTooltip"	"0"
 			}		
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"attack_interval"			"0.2"
+				"var_type"						"FIELD_FLOAT"
+				"attack_interval"				"0.2"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"creep_damage_penalty"		"0"
+				"var_type"						"FIELD_INTEGER"
+				"creep_damage_penalty"			"0"
+				"CalculateSpellDamageTooltip"	"0"
 			}
 		}
 	}
@@ -6474,8 +6484,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1400"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1400"
 			}
 		}
 	}
@@ -6507,7 +6517,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250"
+				"damage"				"125 225 325"
 			}
 			"05"
 			{
@@ -6549,7 +6559,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250"
+				"damage"				"125 225 325"
 			}
 			"05"
 			{
@@ -7207,7 +7217,7 @@
 	"leshrac_lightning_storm"
 	{
 		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.35"
+		"AbilityCastPoint"				"0.3"
 		
 		"AbilityCooldown"				"2.5"
 
@@ -8079,7 +8089,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strike_crit_mult"			"200 220 240 260"
+				"strike_crit_mult"			"225"
 			}
 			"03"
 			{
@@ -8890,6 +8900,21 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	//	Nature's Prophet: treant damage/HP multiplier
+	//=================================================================================================================
+	"special_bonus_unique_furion"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"0"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Nature's Prophet: Wrath of Nature
@@ -8936,19 +8961,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"buffer_tooltip_scepter"	"10"
-			}
-		}
-	}
-
-
-	"special_bonus_unique_furion"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"12"
 			}
 		}
 	}
@@ -10481,6 +10493,8 @@
 
 		"AbilityCooldown"				"30"
 
+		"AbilityChannelTime"			"3 4 5"
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -10517,7 +10531,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"100 175 250 325"
+				"damage"						"110 180 250 320"
 			}
 			"02"
 			{
@@ -14968,7 +14982,7 @@
 
 		"AbilityCastPoint"				"0.3"
 
-		"AbilityDamage"					"8 12 16 20"
+		"AbilityDamage"					"15 20 25 30"
 
 		"AbilitySpecial"
 		{
@@ -15044,7 +15058,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
+				"value"				"225"
 			}
 		}
 	}
@@ -16317,6 +16331,18 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"50"
+			}
+		}
+	}
+
+	"special_bonus_intelligence_16"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"55"
 			}
 		}
 	}
@@ -19473,19 +19499,19 @@
 
 		"AbilityCooldown"				"7.0"
 
-		"AbilityDamage"					"160 240 320 400"
+		"AbilityDamage"					"180 270 360 450"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.0"
+				"damage_reduction"		"0.1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"125 140 155 170"
+				"arrow_width"			"125 130 135 140"
 			}
 			"03"
 			{
@@ -19537,7 +19563,8 @@
 	{
 		"AbilityCastPoint"				"0.0"
 
-		"AbilityCooldown"				"12"
+		"AbilityCooldown"				"11"
+
 		"AbilityDuration"				"4 5 6 7"
 	
 		"AbilitySpecial"
@@ -19816,7 +19843,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 80 120 160"
+				"damage"				"30 60 90 120"
 			}
 			"02"
 			{
@@ -19826,7 +19853,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_hero"		"20 40 60 80"
+				"damage_per_hero"		"30 60 90 120"
 			}
 			"04"
 			{
@@ -19975,7 +20002,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_regen_per_instance"	"2.0 4.0 6.0 8.0 10.0 12.5 15.0 20.0 25.0 35.0"
+				"health_regen_per_instance"	"2.5 5.0 7.5 10.0 13.0 16.0 20.0 25.0 30.0 40.0"
 			}
 		}
 	}
@@ -21323,7 +21350,7 @@
 	{
 		"AbilityCastPoint"				"0.2"
 
-		"AbilityCooldown"				"24.0 20.0 16.0 12.0"
+		"AbilityCooldown"				"24 20 16 12"
 
 		"AbilityManaCost"				"50"
 
@@ -21794,7 +21821,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-25 -30 -35 -40"
+				"bonus_movespeed"		"-30 -35 -40 -45"
 			}
 			"03"
 			{

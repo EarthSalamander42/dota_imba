@@ -12,99 +12,58 @@ function GameMode:OnDisconnect(keys)
 	-- IMBA: Player disconnect/abandon logic
 	-------------------------------------------------------------------------------------------------
 
-	-- If players haven't finished picking yet, do nothing
-	if not IMBA_STARTED_TRACKING_CONNECTIONS then
+	-- GetConnectionState values:
+	-- 0 - no connection
+	-- 1 - bot connected
+	-- 2 - player connected
+	-- 3 - bot/player disconnected.
+
+	PrintTable(keys)
+
+	-- Fetch player's player ID and hero
+	local player_id = keys.userid
+	local hero = PlayerResource:GetPickedHero(player_id)
+
+	-- If the game has already ended, do nothing
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
 		return nil
+
+	-- Else, start tracking player's reconnect/abandon state
+	else
+		print("started keeping track of player "..player_id.."'s connection state")
+		local disconnect_time = 0
+		Timers:CreateTimer(1, function()
+			
+			-- Keep track of time disconnected
+			disconnect_time = disconnect_time + 1
+
+			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
+			if hero:HasOwnerAbandoned() or disconnect_time >= ABANDON_TIME then
+				print("player "..player_id.." has abandoned the game.")
+
+				-- Abandon message
+				--Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+				-- If this was the last player to abandon on his team, end the game
+				--Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+				--Timers:CreateTimer(FULL_ABANDON_TIME, function()
+				--	if GOODGUYS_CONNECTED_PLAYERS == 0 then
+				--		GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+				--		GAME_WINNER_TEAM = "Dire"
+				--	end
+				--end)
+				
+			-- If the player has reconnected, stop tracking connection state every second
+			elseif PlayerResource:GetConnectionState(player_id) == 2 then
+				--Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+			-- Else, keep tracking connection state
+			else
+				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+				return 1
+			end
+		end)
 	end
-
-	-- If the game has already been won, do nothing
-	--if ??? then
-	--	return nil
-	--end
-
-	-- Connection status detection delay
-	Timers:CreateTimer(1, function()
-
-		local disconnected_this_time = {}
-	
-		-- Update players' connection status
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				print("player "..id.."has just disconnected, with connection state "..self.players[id].connection_state)
-				if self.players[id].connection_state == 3 then
-					self.players[id].is_disconnected = true
-					print("set up player "..id.." as disconnected")
-					disconnected_this_time[id] = true
-				end
-			end
-		end
-
-		-- Iterate through each recently disconnected player
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].is_disconnected and disconnected_this_time[id] then
-
-				-- Parameters
-				local team = PlayerResource:GetTeam(id)
-				local hero = self.heroes[id]
-				local hero_name = hero:GetName()
-				local player_name = PlayerResource:GetPlayerName(id)
-				local full_abandon = false
-				local line_duration = 7
-				local remaining_connected_players
-
-				-- Show disconnect message
-				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-				-- Radiant abandon logic
-				if team == DOTA_TEAM_GOODGUYS then
-					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS - 1
-					remaining_connected_players = GOODGUYS_CONNECTED_PLAYERS
-					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Radiant")
-
-				-- Dire abandon logic
-				elseif team == DOTA_TEAM_BADGUYS then
-					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS - 1
-					remaining_connected_players = BADGUYS_CONNECTED_PLAYERS
-					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Dire")
-				end
-			end
-		end
-
-		-- Full radiant team has abandoned
-		if GOODGUYS_CONNECTED_PLAYERS == 0 then
-			full_abandon = true
-
-			-- Display message to the other team
-			Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-			-- End the game in 15 seconds if no one reconnects
-			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
-				if GOODGUYS_CONNECTED_PLAYERS == 0 then
-					GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-					GAME_WINNER_TEAM = "Dire"
-				end
-			--end)
-		end
-
-		-- Full dire team has abandoned
-		if BADGUYS_CONNECTED_PLAYERS == 0 then
-			full_abandon = true
-
-			-- Display message to the other team
-			Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-			-- End the game in 15 seconds if no one reconnects
-			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
-				if BADGUYS_CONNECTED_PLAYERS == 0 then
-					GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-					GAME_WINNER_TEAM = "Radiant"
-				end
-			--end)
-		end
-	end)
 end
 
 -- The overall game state has changed
@@ -157,6 +116,34 @@ function GameMode:OnGameRulesStateChange(keys)
 	--		print("loading...")
 	--		PrecacheUnitByNameAsync("npc_dota_hero_brewmaster", function(...) end)
 	--	end)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Force-random picks after the pick time has elapsed 
+	-------------------------------------------------------------------------------------------------
+
+	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		Timers:CreateTimer(HERO_SELECTION_TIME - 10.1, function()
+			for player_id = 0, 19 do
+				if PlayerResource:IsImbaPlayer(player_id) then
+
+					-- If this player still hasn't picked a hero, random one
+					if not PlayerResource:GetPickedHero(player_id) then
+						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
+						PlayerResource:SetCanRepick(player_id, false)
+						PlayerResource:SetHasRandomed(player_id)
+						print("tried to random a hero for "..player_id)
+					end
+				end
+			end
+		end)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Skip strategy time
+	-------------------------------------------------------------------------------------------------
+
+	if new_state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -220,7 +207,8 @@ function GameMode:OnNPCSpawned(keys)
 			"item_imba_rapier_dummy",
 			"item_imba_moon_shard",
 			"item_imba_soul_of_truth",
-			"item_imba_refresher"
+			"item_imba_refresher",
+			"item_imba_ultimate_scepter_synth"
 		}
 
 		-- Iterate through the clone's items
@@ -444,94 +432,6 @@ function GameMode:OnPlayerReconnect(keys)
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
 
-	-- If players haven't finished picking yet, do nothing
-	if not IMBA_STARTED_TRACKING_CONNECTIONS then
-		return nil
-	end
-
-	-- If the game has already been won, do nothing
-	--if ??? then
-	--	return nil
-	--end
-
-	-- Connection status detection delay
-	Timers:CreateTimer(1, function()
-
-		-- Attempt to detect players who were ignored on the initial load
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if not self.players[id] then
-				print("attempting to fetch connection status for player"..id)
-				self.players[id] = PlayerResource:GetPlayer(id)
-				
-				if self.players[id] then
-
-					-- Initialize connection state
-					self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-					print("initialized connection for player "..id..": "..self.players[id].connection_state)
-
-					-- Assign appropriate player color
-					if IMBA_PLAYERS_ON_GAME == 10 and id > 4 then
-						PlayerResource:SetCustomPlayerColor(id+5, PLAYER_COLORS[id+5][1], PLAYER_COLORS[id+5][2], PLAYER_COLORS[id+5][3])
-					else
-						PlayerResource:SetCustomPlayerColor(id, PLAYER_COLORS[id][1], PLAYER_COLORS[id][2], PLAYER_COLORS[id][3])
-					end
-
-					-- Increment amount of players on this team by one
-					if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-						GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-						print("goodguys team now has "..GOODGUYS_CONNECTED_PLAYERS.." players")
-					elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
-						BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-						print("badguys team now has "..BADGUYS_CONNECTED_PLAYERS.." players")
-					end
-				end
-			end
-		end
-
-		local reconnected_this_time = {}
-
-		-- Update players' connection status
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				print("player "..id.."has just reconnected, with connection state "..self.players[id].connection_state)
-				if self.players[id].connection_state == 2 then
-					self.players[id].is_disconnected = nil
-					print("set up player "..id.." as reconnected")
-					reconnected_this_time[id] = true
-				end
-			end
-		end
-
-		-- Iterate through each recently reconnected player
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and not self.players[id].is_disconnected and reconnected_this_time[id] then
-
-				-- Parameters
-				local player = PlayerResource:GetPlayer(id)
-				local player_name = PlayerResource:GetPlayerName(id)
-				local team = PlayerResource:GetTeam(id)
-				local hero = player:GetAssignedHero()
-				local hero_name = hero:GetName()
-
-				-- Show reconnection message to remaining players
-				local line_duration = 5
-				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-				-- Update team connection status
-				if team == DOTA_TEAM_GOODGUYS then
-					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-					print(hero_name.." has reconnected, "..GOODGUYS_CONNECTED_PLAYERS.." players remaining on Radiant")
-				elseif team == DOTA_TEAM_BADGUYS then
-					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-					print(hero_name.." has reconnected, "..BADGUYS_CONNECTED_PLAYERS.." players remaining on Dire")
-				end
-			end
-		end
-	end)
-
 end
 
 -- An item was purchased by a player
@@ -649,32 +549,11 @@ function GameMode:OnPlayerLevelUp(keys)
 	local level = keys.level
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Update hero bounty on level up
-	-------------------------------------------------------------------------------------------------
-
-	-- Calculate new base bounties
-	local hero = player:GetAssignedHero()
-	local hero_level = hero:GetLevel()
-
-	-- Gold bounty
-	local gold_bounty = HERO_KILL_GOLD_BASE + hero_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(hero)
-
-	-- XP bounty
-	local xp_bounty
-	if hero_level <= 5 then
-		xp_bounty = HERO_KILL_XP_CONSTANT_1 + ( hero_level - 1 ) * HERO_KILL_XP_CONSTANT_2
-	else
-		xp_bounty = ( hero_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
-	end
-
-	-- Set up bounties
-	hero:SetDeathXP(xp_bounty)
-	hero:SetMaximumGoldBounty(gold_bounty)
-	hero:SetMinimumGoldBounty(gold_bounty)
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Unlimited level logic
 	-------------------------------------------------------------------------------------------------
+
+	local hero = player:GetAssignedHero()
+	local hero_level = hero:GetLevel()
 
 	if hero_level > 25 then
 
@@ -952,91 +831,6 @@ function GameMode:OnEntityKilled( keys )
 			end
 		end
 
-		-- Killed hero gold loss
-		local killed_level = killed_unit:GetLevel()
-		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
-		killed_gold_loss = -1 * killed_gold_loss
-		killed_unit:ModifyGold(killed_gold_loss, false, DOTA_ModifyGold_Death)
-
-		-- Nearby allied heroes gold gain
-		local allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		local assist_gold = killed_unit:GetGoldBounty()
-
-		-- If no allied hero was near the kill, distribute gold evenly to all of the team's heroes
-		if #allied_heroes == 0 then
-			assist_gold = assist_gold * 0.2
-			allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_UNITS_EVERYWHERE, false)
-			for _,ally in pairs(allied_heroes) do
-				EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-				SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-				ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-			end
-		else
-			local is_killer_present = false
-			local nearby_allies = #allied_heroes
-
-			-- Check if the killer was near the kill
-			for _,ally in pairs(allied_heroes) do
-				if ally == killer then
-					is_killer_present = true
-				end
-			end
-			
-			-- If yes, reduce the count of nearby allies by one
-			if is_killer_present then
-				nearby_allies = nearby_allies - 1
-			end
-
-			-- Distribute assist gold accordingly
-			if nearby_allies == 1 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_2
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies == 2 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies == 3 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies >= 4 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			end
-		end
-
-		-- Reset killed hero's killstreak and update its deathstreak
-		killed_unit.kill_streak_count = 0
-		killed_unit.death_streak_count = killed_unit.death_streak_count + 1
-
-		-- Update killed hero's bounty
-		local killed_bounty = HERO_KILL_GOLD_BASE + killed_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killed_unit)
-		killed_bounty = math.max( killed_bounty, 0)
-		killed_unit:SetMaximumGoldBounty(killed_bounty)
-		killed_unit:SetMinimumGoldBounty(killed_bounty)
-
 		-- Check if the killer was a non-hero entity (to avoid GetPlayerID crashes)
 		local nonhero_killer = false
 		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
@@ -1071,17 +865,6 @@ function GameMode:OnEntityKilled( keys )
 		if not nonhero_killer and killer:GetPlayerID() then
 			local killer_player = PlayerResource:GetPlayer(killer:GetPlayerID())
 			local killer_hero = killer_player:GetAssignedHero()
-			
-			-- Reset killer hero's deathstreak and update its killstreak
-			killer_hero.death_streak_count = 0
-			killer_hero.kill_streak_count = killer_hero.kill_streak_count + 1
-
-			-- Update killer's bounty
-			local killer_level = killer_hero:GetLevel()
-			local killer_bounty = HERO_KILL_GOLD_BASE + killer_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killer_hero)
-			killer_bounty = math.max(killer_bounty, 0)
-			killer_hero:SetMaximumGoldBounty(killer_bounty)
-			killer_hero:SetMinimumGoldBounty(killer_bounty)
 
 			-- Killer Rancor logic
 			if VENGEFUL_RANCOR and killer_hero:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
@@ -1106,67 +889,7 @@ function GameMode:OnEntityKilled( keys )
 				killed_unit.vengeance_aura_target = killer_hero
 			end
 		end
-
-		-- Killed hero deathstreak messages
-		local killed_hero_name = killed_unit:GetName()
-		local killed_player_name = PlayerResource:GetPlayerName(killed_unit:GetPlayerID())
-		local line_duration = 7
-
-		if killed_unit.death_streak_count >= 3 then
-			Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, continue = true})
-		end
-
-		if killed_unit.death_streak_count == 3 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 4 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 5 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 6 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 7 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 8 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 9 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count >= 10 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
-		end
-
-		-- Global comeback gold calculation
-		local all_heroes = HeroList:GetAllHeroes()
-		local killer_team_networth = 0
-		local killed_team_networth = 0
-
-		for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and not self.players[id].is_disconnected then
-				local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
-				local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
-				if hero:GetTeam() == killer:GetTeam() then
-					killer_team_networth = killer_team_networth + hero_networth
-				else
-					killed_team_networth = killed_team_networth + hero_networth
-				end
-			end
-		end
-
-		if killer_team_networth < killed_team_networth and HERO_GLOBAL_BOUNTY_FACTOR > 0 then
-			local networth_difference = math.max( killed_team_networth - killer_team_networth, 0)
-			local welfare_gold = networth_difference * ( HERO_GLOBAL_BOUNTY_FACTOR / 100 ) / PlayerResource:GetPlayerCountForTeam(killer:GetTeam())
-			for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
-				if self.players[id] and not self.players[id].is_disconnected then
-					local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
-					if hero:GetTeam() == killer:GetTeam() then
-						hero:ModifyGold(welfare_gold, true, DOTA_ModifyGold_HeroKill)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, hero, welfare_gold, nil)
-					end
-				end
-			end
-		end
 	end
-
 end
 
 -- This function is called 1 to 2 times as the player connects initially but before they have completely connected

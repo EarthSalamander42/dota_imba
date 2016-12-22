@@ -128,43 +128,6 @@ function FountainBash( keys )
 	end
 end
 
-function Frantic( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_cd = keys.modifier_cd
-	local modifier_mana = keys.modifier_mana
-
-	-- Remove any pre-existing frantic modifiers
-	caster:RemoveModifierByName(modifier_cd)
-	caster:RemoveModifierByName(modifier_mana)
-
-	-- Calculate amount of stacks to add
-	local cd_stacks = 100 - math.floor( 100 / FRANTIC_MULTIPLIER )
-	local mana_stacks = caster:GetMaxMana() * ( FRANTIC_MULTIPLIER - 1 )
-
-	-- Apply stacks
-	AddStacks(ability, caster, caster, modifier_cd, cd_stacks, true)
-	AddStacks(ability, caster, caster, modifier_mana, mana_stacks, true)
-end
-
-function FranticUpdate( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_mana = keys.modifier_mana
-	local modifier_dummy = keys.modifier_dummy
-
-	-- Remove any pre-existing frantic modifiers
-	caster:RemoveModifierByName(modifier_dummy)
-	caster:RemoveModifierByName(modifier_mana)
-
-	-- Calculate amount of stacks to add
-	local mana_stacks = caster:GetMaxMana() * ( FRANTIC_MULTIPLIER - 1 )
-
-	-- Apply stacks
-	AddStacks(ability, caster, caster, modifier_mana, mana_stacks, true)
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
-end
-
 function NecrowarriorTrample( keys )
 	local caster = keys.caster
 	local target = keys.target_points[1]

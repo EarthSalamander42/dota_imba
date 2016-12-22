@@ -14545,34 +14545,29 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"75"
+				"bonus_cooldown"		"25"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cooldown"		"25"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"hero_lifesteal"		"30"
 			}			
-			"07"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"creep_lifesteal"		"10"
 			}	
-			"08"
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_radius"			"900"
 			}
-			"09"
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"minimum_mana"			"140"
 			}
-			"10"
+			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_dmg"				"100"
@@ -14605,7 +14600,6 @@
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_intelligence"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%bonus_health"
 					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%bonus_mana_regen"
 				}
 			}
 

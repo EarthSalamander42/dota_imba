@@ -38,7 +38,7 @@ function GainChargesOnKill( keys )
 	-- Parameters
 	local current_charges = item:GetCurrentCharges()
 
-	if target:GetTeam() ~= caster:GetTeam() and not target:HasModifier(assist_modifier) and not target:IsIllusion() then
+	if target:GetTeam() ~= caster:GetTeam() and not target:HasModifier(assist_modifier) and not target:IsIllusion() and not target:HasModifier("modifier_arc_warden_tempest_double") then
 		item:SetCurrentCharges( current_charges + 1 )
 	end
 end
@@ -51,7 +51,7 @@ function GainChargesOnAssist( keys )
 	-- Parameters
 	local current_charges = item:GetCurrentCharges()
 
-	if not target:IsIllusion() then
+	if ( not target:IsIllusion() ) and not target:HasModifier("modifier_arc_warden_tempest_double") then
 		item:SetCurrentCharges( current_charges + 1 )
 	end
 end
@@ -60,6 +60,11 @@ function LoseCharges( keys )
 	local caster = keys.caster
 	local item = keys.ability
 	local item_level = item:GetLevel() - 1
+
+	-- If this is not a real hero, do nothing
+	if caster:HasModifier("modifier_arc_warden_tempest_double") then
+		return nil
+	end
 
 	-- Parameters
 	local on_death_charge_loss = item:GetLevelSpecialValueFor("on_death_loss", item_level)
