@@ -264,10 +264,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 	print("xp bounty increased by: "..CUSTOM_XP_BONUS)
 
-	-- Passive gold adjustment
-	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
-	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
-
 	-- Comeback gold adjustment
 	if tonumber(mode_info.comeback_gold) == 0 then
 		HERO_GLOBAL_BOUNTY_FACTOR = 0
@@ -381,7 +377,7 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Tracks respawn and buyback
 	statCollection:setFlags({respawn_mult = HERO_RESPAWN_TIME_MULTIPLIER})
-	statCollection:setFlags({buyback_mult = HERO_BUYBACK_COST_MULTIPLIER})
+	statCollection:setFlags({buyback_mult = 100})
 
 	-- Track starting gold and levels
 	statCollection:setFlags({starting_gold = HERO_INITIAL_GOLD})

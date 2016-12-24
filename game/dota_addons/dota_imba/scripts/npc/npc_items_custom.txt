@@ -26,7 +26,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2171"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_magic_stick"
+		"AbilityTextureName" 			"custom/item_imba_magic_stick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/magic_wand.mdl"
 		
@@ -153,7 +153,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2172"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_magic_wand"
+		"AbilityTextureName" 			"custom/item_imba_magic_wand"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/magic_wand.mdl"
 		
@@ -278,7 +278,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"item_imba_mango"
+		"AbilityTextureName" 			"custom/item_imba_mango"
 		"Model"							"models/props_gameplay/mango.mdl"
 
 		// Stats
@@ -389,7 +389,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityTextureName" 			"item_imba_hand_of_midas"
+		"AbilityTextureName" 			"custom/item_imba_hand_of_midas"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -883,7 +883,7 @@
 		"FightRecapLevel"				"2"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_mekansm"
+		"AbilityTextureName"			"custom/item_imba_mekansm"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -1057,7 +1057,7 @@
 		"FightRecapLevel"				"2"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_mekansm_2"
+		"AbilityTextureName"			"custom/item_imba_mekansm_2"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -1278,7 +1278,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_vladmir"
+		"AbilityTextureName"			"custom/item_imba_vladmir"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1401,7 +1401,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_vladmir_2"
+		"AbilityTextureName"			"custom/item_imba_vladmir_2"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1645,7 +1645,7 @@
 		"FightRecapLevel"				"2"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_pipe"
+		"AbilityTextureName"			"custom/item_imba_pipe"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -1854,7 +1854,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2028"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_sheepstick"
+		"AbilityTextureName" 			"custom/item_imba_sheepstick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -2008,7 +2008,7 @@
 				"IsPurgable"							"0"
 				"IsHidden"								"0"
 
-				"TextureName"		"imba_sheepstick_recast"
+				"TextureName"		"custom/imba_sheepstick_recast"
 			}
 		}
 	}
@@ -2048,7 +2048,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2170"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_orchid"
+		"AbilityTextureName" 			"custom/item_imba_orchid"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -2237,7 +2237,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2140"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_bloodthorn"
+		"AbilityTextureName" 			"custom/item_imba_bloodthorn"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3178,7 +3178,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1222"	
 		"BaseClass"						"item_datadriven"	
-		"AbilityTextureName" 			"item_imba_dagon_6"												
+		"AbilityTextureName" 			"custom/item_imba_dagon_6"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3295,7 +3295,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1223"	
 		"BaseClass"						"item_datadriven"	
-		"AbilityTextureName" 			"item_imba_dagon_7"												
+		"AbilityTextureName" 			"custom/item_imba_dagon_7"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3412,7 +3412,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1224"	
 		"BaseClass"						"item_datadriven"	
-		"AbilityTextureName" 			"item_imba_dagon_8"												
+		"AbilityTextureName" 			"custom/item_imba_dagon_8"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3529,7 +3529,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2042"	
 		"BaseClass"						"item_datadriven"	
-		"AbilityTextureName" 			"item_imba_dagon_9"												
+		"AbilityTextureName" 			"custom/item_imba_dagon_9"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3646,7 +3646,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2043"	
 		"BaseClass"						"item_datadriven"	
-		"AbilityTextureName" 			"item_imba_dagon_10"												
+		"AbilityTextureName" 			"custom/item_imba_dagon_10"												
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -3881,7 +3881,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2047"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_necronomicon"
+		"AbilityTextureName" 			"custom/item_imba_necronomicon"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -3988,7 +3988,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2048"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_necronomicon_2"
+		"AbilityTextureName" 			"custom/item_imba_necronomicon_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -4095,7 +4095,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2049"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_necronomicon_3"
+		"AbilityTextureName" 			"custom/item_imba_necronomicon_3"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -4202,7 +4202,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2194"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_necronomicon_4"
+		"AbilityTextureName" 			"custom/item_imba_necronomicon_4"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -4309,7 +4309,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2195"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_necronomicon_5"
+		"AbilityTextureName" 			"custom/item_imba_necronomicon_5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Stats
@@ -4526,7 +4526,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2151"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_assault"
+		"AbilityTextureName" 			"custom/item_imba_assault"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -4749,7 +4749,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2150"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_siege_cuirass"
+		"AbilityTextureName" 			"custom/item_imba_siege_cuirass"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 		
@@ -5066,7 +5066,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2185"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_heart"
+		"AbilityTextureName" 			"custom/item_imba_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
@@ -5343,7 +5343,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2146"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_shivas_guard"
+		"AbilityTextureName" 			"custom/item_imba_shivas_guard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"FightRecapLevel"				"1"
 		
@@ -5588,7 +5588,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2126"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_bloodstone"
+		"AbilityTextureName" 			"custom/item_imba_bloodstone"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"FightRecapLevel"				"2"
 		
@@ -5954,7 +5954,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2181"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_vanguard"
+		"AbilityTextureName" 			"custom/item_imba_vanguard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
@@ -6067,7 +6067,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2182"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_crimson_guard"
+		"AbilityTextureName" 			"custom/item_imba_crimson_guard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -6263,7 +6263,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2184"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"imba_greatwyrm_plate"
+		"AbilityTextureName" 			"custom/item_imba_greatwyrm_plate"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -6624,7 +6624,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2065"
 		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"item_imba_rapier"
+		"AbilityTextureName" 					"custom/item_imba_rapier"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
 
@@ -6727,7 +6727,7 @@
 
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"TextureName"				"item_imba_rapier"
+				"TextureName"				"custom/item_imba_rapier"
 
 				"ThinkInterval"				"0.03"
 
@@ -6758,7 +6758,7 @@
 
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"TextureName"				"item_imba_rapier_magic"
+				"TextureName"				"custom/item_imba_rapier_magic"
 
 				"ThinkInterval"				"0.03"
 
@@ -6786,7 +6786,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"									"2137"
 		"BaseClass"								"item_datadriven"
-		"AbilityTextureName" 					"item_imba_rapier_magic"
+		"AbilityTextureName" 					"custom/item_imba_rapier_magic"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"									"models/props_gameplay/divine_rapier.mdl"
 
@@ -6900,7 +6900,7 @@
 
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"TextureName"				"item_imba_rapier"
+				"TextureName"				"custom/item_imba_rapier"
 
 				"ThinkInterval"				"0.03"
 
@@ -6931,7 +6931,7 @@
 
 				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
-				"TextureName"				"item_imba_rapier_magic"
+				"TextureName"				"custom/item_imba_rapier_magic"
 
 				"ThinkInterval"				"0.03"
 
@@ -6959,7 +6959,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2138"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_rapier"
+		"AbilityTextureName" 			"custom/item_imba_rapier"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"Model"							"models/props_gameplay/divine_rapier.mdl"
 
@@ -7017,7 +7017,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1135"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_monkey_king_bar"
+		"AbilityTextureName" 			"custom/item_imba_monkey_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 
@@ -7179,7 +7179,7 @@
 		"ID"							"2068"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
-		"AbilityTextureName"			"item_imba_radiance"
+		"AbilityTextureName"			"custom/item_imba_radiance"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 
@@ -7340,7 +7340,7 @@
 		"ID"							"2070"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName" 			"item_imba_butterfly"
+		"AbilityTextureName" 			"custom/item_imba_butterfly"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -7543,7 +7543,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2147"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_greater_crit"
+		"AbilityTextureName" 			"custom/item_imba_greater_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -7809,7 +7809,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2141"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_bfury"
+		"AbilityTextureName" 			"custom/item_imba_bfury"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
 		"AbilityCastRange"				"450"
@@ -8213,7 +8213,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_armlet"
+		"AbilityTextureName"			"custom/item_imba_armlet"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8343,7 +8343,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_armlet_active"
+		"AbilityTextureName"			"custom/item_imba_armlet_active"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -8552,7 +8552,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2168"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_invis_sword"
+		"AbilityTextureName"			"custom/item_imba_invis_sword"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
@@ -8893,7 +8893,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"								"2169"
 		"BaseClass"							"item_datadriven"
-		"AbilityTextureName"				"item_silver_edge"
+		"AbilityTextureName"				"custom/item_imba_silver_edge"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"Model"								"models/props_gameplay/red_box.vmdl"
@@ -9389,7 +9389,7 @@
 		"ID"							"2134"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_sange_and_yasha"
+		"AbilityTextureName" 			"custom/item_imba_sange_and_yasha"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -9666,7 +9666,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"								"1160"
 		"BaseClass"							"item_datadriven"
-		"AbilityTextureName" 				"item_imba_skadi"
+		"AbilityTextureName" 				"custom/item_imba_skadi"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"								"models/props_gameplay/red_box.vmdl" 
 		"Effect"							"particles/generic_gameplay/dropped_item.vpcf"
@@ -9898,7 +9898,7 @@
 		"ID"							"2127"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_sange"
+		"AbilityTextureName" 			"custom/item_imba_sange"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -10094,7 +10094,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2143"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_maelstrom"
+		"AbilityTextureName" 			"custom/item_imba_maelstrom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -10230,7 +10230,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2145"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_mjollnir"
+		"AbilityTextureName" 			"custom/item_imba_mjollnir"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -10490,7 +10490,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2197"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_desolator"
+		"AbilityTextureName" 			"custom/item_imba_desolator"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -10749,7 +10749,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2199"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_desolator_2"
+		"AbilityTextureName" 			"custom/item_imba_desolator_2"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11008,7 +11008,7 @@
 		"ID"							"2131"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_yasha"
+		"AbilityTextureName" 			"custom/item_imba_yasha"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -11181,6 +11181,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2090"
 		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/item_imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
 		
 		// Item Info
@@ -11252,7 +11253,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2201"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_diffusal_blade"
+		"AbilityTextureName" 			"custom/item_imba_diffusal_blade"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11429,7 +11430,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2202"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_diffusal_blade_2"
+		"AbilityTextureName" 			"custom/item_imba_diffusal_blade_2"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11611,7 +11612,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2203"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_diffusal_blade_3"
+		"AbilityTextureName" 			"custom/item_imba_diffusal_blade_3"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11930,7 +11931,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"item_imba_arcane_boots"
+		"AbilityTextureName"			"custom/item_imba_arcane_boots"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12121,7 +12122,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2148"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_ancient_janggo"
+		"AbilityTextureName" 			"custom/item_imba_ancient_janggo"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"FightRecapLevel"				"1"
 		
@@ -12407,7 +12408,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2101"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_veil_of_discord"
+		"AbilityTextureName" 			"custom/item_imba_veil_of_discord"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -12594,7 +12595,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName" 			"item_imba_heavens_halberd"
+		"AbilityTextureName" 			"custom/item_imba_heavens_halberd"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12939,7 +12940,7 @@
 		"ID"							"2108"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_azura"
+		"AbilityTextureName" 			"custom/item_imba_azura"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -13133,7 +13134,7 @@
 		"ID"							"2130"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_sange_and_azura"
+		"AbilityTextureName" 			"custom/item_imba_sange_and_azura"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -13368,7 +13369,7 @@
 		"ID"							"2133"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_azura_and_yasha"
+		"AbilityTextureName" 			"custom/item_imba_azura_and_yasha"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -13646,7 +13647,7 @@
 		"ID"							"2136"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName" 			"item_imba_sange_and_azura_and_yasha"
+		"AbilityTextureName" 			"custom/item_imba_sange_and_azura_and_yasha"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -13972,7 +13973,7 @@
 		"ID"							"1243"
 		"BaseClass"						"item_black_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"item_imba_white_queen_cape"
+		"AbilityTextureName"			"custom/item_imba_white_queen_cape"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
@@ -14056,7 +14057,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2113"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_moon_shard"
+		"AbilityTextureName" 			"custom/item_imba_moon_shard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -14149,7 +14150,7 @@
 
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
 
-				"TextureName"		"item_imba_moon_shard"
+				"TextureName"		"custom/item_imba_moon_shard"
 			}
 
 			"modifier_imba_moon_shard_consume_1"
@@ -14328,7 +14329,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2121"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_octarine_core"
+		"AbilityTextureName" 			"custom/item_imba_octarine_core"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -14505,7 +14506,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2173"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_octarine_core_off"
+		"AbilityTextureName" 			"custom/item_imba_octarine_core_off"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -14698,7 +14699,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2123"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_guardian_greaves"
+		"AbilityTextureName" 			"custom/item_imba_guardian_greaves"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -14966,7 +14967,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"								"2165"
 		"BaseClass"							"item_datadriven"
-		"AbilityTextureName" 				"item_aegis"
+		"AbilityTextureName" 				"custom/item_imba_aegis"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"Model"								"models/props_gameplay/aegis.mdl"
 
@@ -15074,7 +15075,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2166"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_cheese"
+		"AbilityTextureName" 			"custom/item_imba_cheese"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
@@ -15150,7 +15151,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2177"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_shotgun"
+		"AbilityTextureName" 			"custom/item_imba_shotgun"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		
@@ -15295,7 +15296,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2179"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_starfury"
+		"AbilityTextureName" 			"custom/item_imba_starfury"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		
@@ -15488,7 +15489,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"item_imba_soul_of_truth"
+		"AbilityTextureName" 			"custom/item_imba_soul_of_truth"
 		"Model"							"models/props_gameplay/gem01.vmdl"
 
 		// Stats
@@ -15569,7 +15570,7 @@
 
 				"Duration"				"%duration"
 
-				"TextureName"			"item_imba_soul_of_truth"
+				"TextureName"			"custom/item_imba_soul_of_truth"
 
 				"OnCreated"
 				{
@@ -15643,7 +15644,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2187"
 		"BaseClass"						"item_power_treads"
-		"AbilityTextureName" 			"item_power_treads"
+		"AbilityTextureName" 			"item_imba_power_treads"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 
 		// Item Info
@@ -15711,7 +15712,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2189"
 		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"item_imba_phase_boots_2"
+		"AbilityTextureName" 			"custom/item_imba_phase_boots_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
@@ -15846,7 +15847,7 @@
 		"ID"							"2191"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_tranquil_boots_2"
+		"AbilityTextureName"			"custom/item_imba_tranquil_boots_2"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		
 		// Stats		
@@ -16065,7 +16066,7 @@
 		"ID"							"2196"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityTextureName"			"item_blink"
+		"AbilityTextureName"			"custom/item_imba_blink"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 
@@ -16184,7 +16185,7 @@
 		"ID"							"2153"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityTextureName"			"item_imba_blink_boots"
+		"AbilityTextureName"			"custom/item_imba_blink_boots"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
@@ -16326,7 +16327,7 @@
 		"ID"							"2155"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_echo_sabre"
+		"AbilityTextureName"			"custom/item_imba_echo_sabre"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
@@ -16578,7 +16579,7 @@
 		"ID"							"2157"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_reverb_rapier"
+		"AbilityTextureName"			"custom/item_imba_reverb_rapier"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
@@ -16830,7 +16831,7 @@
 		"ID"							"2159"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_initiate_robe"
+		"AbilityTextureName"			"custom/item_imba_initiate_robe"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
@@ -16984,7 +16985,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName" 			"item_imba_ultimate_scepter_synth"
+		"AbilityTextureName" 			"custom/item_imba_ultimate_scepter_synth"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Stats
@@ -17115,7 +17116,7 @@
 		"ID"							"2163"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_aether_lens"
+		"AbilityTextureName"			"custom/item_imba_aether_lens"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
@@ -17241,7 +17242,7 @@
 		"ID"							"2204"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_nether_wand"
+		"AbilityTextureName"			"custom/item_imba_nether_wand"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
@@ -17398,7 +17399,7 @@
 	}
 
 	//=================================================================================================================
-	// Nether Wand
+	// Elder Staff
 	//=================================================================================================================
 	"item_imba_elder_staff"
 	{
@@ -17407,7 +17408,7 @@
 		"ID"							"2206"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"item_imba_elder_staff"
+		"AbilityTextureName"			"custom/item_imba_elder_staff"
 		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info

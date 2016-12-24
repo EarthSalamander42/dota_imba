@@ -149,9 +149,36 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 	local current_gold = self:GetGold(player_id)
 	local current_allies = {}
 	local ally_amount = 0
+	local gold_per_interval = 3 * ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) / GOLD_TICK_TIME
 
-	-- Start gold redistribution loop
-	Timers:CreateTimer(0, function()
+	-- Distribute initial gold
+	for id = 0, 19 do
+		if self:IsImbaPlayer(id) and (not self.PlayerData[id]["distribute_gold_to_allies"]) and self:GetTeam(id) == player_team then
+			current_allies[#current_allies + 1] = id
+		end
+	end
+
+	-- If there is at least one ally to redirect gold to, do it
+	ally_amount = #current_allies
+	if ally_amount >= 1 and current_gold >= ally_amount then
+		local gold_to_share = current_gold - (current_gold % ally_amount)
+		local gold_per_ally = gold_to_share / ally_amount
+		for _,ally_id in pairs(current_allies) do
+			self:ModifyGold(ally_id, gold_per_ally, false, DOTA_ModifyGold_AbandonedRedistribute)
+		end
+		print("distributed "..gold_to_share.." gold initially ("..gold_per_ally.." per ally)")
+	end
+
+	-- Update the variables to start the cycle
+	current_gold = current_gold % ally_amount
+	ally_amount = 0
+	current_allies = {}
+
+	-- Start the redistribution cycle
+	Timers:CreateTimer(3, function()
+
+		-- Update gold according to passive gold gain
+		current_gold = current_gold + gold_per_interval
 
 		-- Update active ally amount
 		for id = 0, 19 do
@@ -165,14 +192,14 @@ function PlayerResource:StartAbandonGoldRedistribution(player_id)
 		if ally_amount >= 1 and current_gold >= ally_amount then
 			local gold_to_share = current_gold - (current_gold % ally_amount)
 			local gold_per_ally = gold_to_share / ally_amount
-			self:ModifyGold(player_id, -gold_to_share, false, DOTA_ModifyGold_AbandonedRedistribute)
 			for _,ally_id in pairs(current_allies) do
 				self:ModifyGold(ally_id, gold_per_ally, false, DOTA_ModifyGold_AbandonedRedistribute)
 			end
+			print("distributed "..gold_to_share.." gold ("..gold_per_ally.." per ally)")
 		end
 
 		-- Update variables
-		current_gold = self:GetGold(player_id)
+		current_gold = current_gold % ally_amount
 		current_allies = {}
 		ally_amount = 0
 
@@ -186,5 +213,6 @@ end
 -- Stops a specific player from redistributing their gold to its allies
 function PlayerResource:StopAbandonGoldRedistribution(player_id)
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
+	self:ModifyGold(player_id, -self:GetGold(player_id), false, DOTA_ModifyGold_AbandonedRedistribute)
 	print("player "..player_id.." is no longer redistributing gold to its allies.")
 end

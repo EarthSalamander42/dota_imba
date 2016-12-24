@@ -807,6 +807,11 @@ function GameMode:OnHeroInGame(hero)
 	-- Fetch this hero's associated player ID
 	local player_id = hero:GetPlayerID()
 
+	-- Initializes player data if this is a bot
+	if PlayerResource:GetConnectionState(player_id) == 1 then
+		PlayerResource:InitPlayerData(player_id)
+	end
+
 	-- Check if initial setup was already performed
 	if PlayerResource:IsPlayerSpawnSetupDone(player_id) then
 		return nil
@@ -855,7 +860,13 @@ end
 	is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function GameMode:OnGameInProgress()
-	DebugPrint("[IMBA] The game has officially begun")
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Passive gold adjustment
+	-------------------------------------------------------------------------------------------------
+	
+	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
+	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup

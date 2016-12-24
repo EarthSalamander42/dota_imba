@@ -384,7 +384,7 @@ function GameMode:OnNPCSpawned(keys)
 	-------------------------------------------------------------------------------------------------
 
 	Timers:CreateTimer(0.1, function()
-		if npc and npc:HasModifier("modifier_buyback_gold_penalty") then
+		if (not npc:IsNull()) and npc:HasModifier("modifier_buyback_gold_penalty") then
 			npc:RemoveModifierByName("modifier_buyback_gold_penalty")
 		end
 	end)
@@ -743,34 +743,34 @@ function GameMode:OnTeamKillCredit(keys)
 	-- IMBA: Global comeback gold logic
 	-------------------------------------------------------------------------------------------------
 
-	if GLOBAL_BOUNTY_FACTOR > 0 and PlayerResource:GetPlayerCountForTeam(killer_team) > 0 then
+	-- if GLOBAL_BOUNTY_FACTOR > 0 and PlayerResource:GetPlayerCountForTeam(killer_team) > 0 then
 
-		-- Calculate both teams' current net worth
-		local killer_team_networth = 0
-		local victim_team_networth = 0
-		for id = 0, 19 do
-			if PlayerResource:IsImbaPlayer(id) then
-				local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
-				if PlayerResource:GetTeam(id) == killer_team then
-					killer_team_networth = killer_team_networth + hero_networth
-				else
-					victim_team_networth = victim_team_networth + hero_networth
-				end
-			end
-		end
+	-- 	-- Calculate both teams' current net worth
+	-- 	local killer_team_networth = 0
+	-- 	local victim_team_networth = 0
+	-- 	for id = 0, 19 do
+	-- 		if PlayerResource:IsImbaPlayer(id) then
+	-- 			local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
+	-- 			if PlayerResource:GetTeam(id) == killer_team then
+	-- 				killer_team_networth = killer_team_networth + hero_networth
+	-- 			else
+	-- 				victim_team_networth = victim_team_networth + hero_networth
+	-- 			end
+	-- 		end
+	-- 	end
 
-		-- Distribute the comeback gold
-		if killer_team_networth < victim_team_networth then
-			local networth_difference = math.max( victim_team_networth - killer_team_networth, 0)
-			local welfare_gold = networth_difference / PlayerResource:GetPlayerCountForTeam(killer_team) * GLOBAL_BOUNTY_FACTOR * 0.01 / (1 + CUSTOM_GOLD_BONUS * 0.01)
-			for id = 0, 19 do
-				if PlayerResource:IsImbaPlayer(id) and PlayerResource:GetTeam(id) == killer_team then
-					PlayerResource:ModifyGold(id, welfare_gold, false, DOTA_ModifyGold_HeroKill)
-					SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, PlayerResource:GetPickedHero(id), welfare_gold, nil)
-				end
-			end
-		end
-	end
+	-- 	-- Distribute the comeback gold
+	-- 	if killer_team_networth < victim_team_networth then
+	-- 		local networth_difference = math.max( victim_team_networth - killer_team_networth, 0)
+	-- 		local welfare_gold = networth_difference / PlayerResource:GetPlayerCountForTeam(killer_team) * GLOBAL_BOUNTY_FACTOR * 0.01 / (1 + CUSTOM_GOLD_BONUS * 0.01)
+	-- 		for id = 0, 19 do
+	-- 			if PlayerResource:IsImbaPlayer(id) and PlayerResource:GetTeam(id) == killer_team then
+	-- 				PlayerResource:ModifyGold(id, welfare_gold, false, DOTA_ModifyGold_HeroKill)
+	-- 				SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, PlayerResource:GetPickedHero(id), welfare_gold, nil)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Rancor logic
