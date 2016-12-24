@@ -38,17 +38,16 @@ DISABLE_FOG_OF_WAR_ENTIRELY = false			-- Should we disable fog of war entirely f
 USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of the map completely black until uncovered by each team? 
 											-- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
-USE_STANDARD_HERO_GOLD_BOUNTY = false		-- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
+USE_NONSTANDARD_HERO_GOLD_BOUNTY = false	-- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
+USE_NONSTANDARD_HERO_XP_BOUNTY = false		-- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
 
 USE_CUSTOM_TOP_BAR_VALUES = false			-- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true						-- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true					-- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals)  Requires USE_CUSTOM_TOP_BAR_VALUES
 
 ENABLE_TOWER_BACKDOOR_PROTECTION = true		-- Should we enable backdoor protection for our towers?
-REMOVE_ILLUSIONS_ON_DEATH = true			-- Should we remove all illusions if the main hero dies?
+REMOVE_ILLUSIONS_ON_DEATH = false			-- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false					-- Should we disable the gold sound when players get gold?
-
-USE_CUSTOM_XP_VALUES = true					-- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
 ENABLE_FIRST_BLOOD = true					-- Should we enable first blood for the first kill in this game?
 HIDE_KILL_BANNERS = false					-- Should we hide the kill banners that show when a player is killed?
@@ -69,58 +68,23 @@ MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
 
-HERO_KILL_GOLD_BASE = 100													-- Hero gold bounty base value
-HERO_KILL_GOLD_PER_LEVEL = 9												-- Hero gold bounty increase per level
+GLOBAL_BOUNTY_FACTOR = 15													-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
 
-HERO_KILL_GOLD_PER_KILLSTREAK = 60											-- Amount of gold awarded per killstreak
-HERO_KILL_GOLD_PER_DEATHSTREAK = 50											-- Amount of gold reduced from the hero's bounty on a deathstreak
+BUYBACK_COOLDOWN_ENABLED = true												-- Is the buyback cooldown enabled?
 
-HERO_KILL_GOLD_KILLSTREAK_CAP = 1500										-- Maximum percentage of its bounty a hero can grant
-HERO_KILL_GOLD_DEATHSTREAK_CAP = 50											-- Minimum percentage of its bounty a hero can grant
+BUYBACK_BASE_COST = 100														-- Base cost to buyback
+BUYBACK_COST_PER_LEVEL = 1.5												-- Level-based buyback cost
+BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
-HERO_DEATH_GOLD_LOSS_PER_LEVEL = 30											-- Amount of gold lost on death per level
-
-HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK = 10									-- Amount of gold prevented from being lost on death per deathstreak (in %)
-
-KILLSTREAK_EXP_FACTOR = 1.2													-- Killstreak gold formula exponent
-
-HERO_ASSIST_RADIUS = 1300													-- Radius around the killed hero where allies will gain assist gold and experience
-
-HERO_ASSIST_BOUNTY_FACTOR_2 = 0.60											-- Factor to multiply the assist bounty by when 2 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_3 = 0.40											-- Factor to multiply the assist bounty by when 3 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_4 = 0.30											-- Factor to multiply the assist bounty by when 4 heroes are involved
-HERO_ASSIST_BOUNTY_FACTOR_5 = 0.25											-- Factor to multiply the assist bounty by when 5 heroes are involved
-
-HERO_GLOBAL_BOUNTY_FACTOR = 18												-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
-
-HERO_KILL_XP_CONSTANT_1 = 100												-- XP formula up to level 5 is constant I + (level - 1) * constant II
-HERO_KILL_XP_CONSTANT_2 = 20												-- XP formula from level 6 and beyond is the level 5 value + (level - 5) * constant II
-
-HERO_BUYBACK_BASE_COST = 100												-- Base cost to buyback
-HERO_BUYBACK_COST_PER_LEVEL = 25											-- Level-based buyback cost
-HERO_BUYBACK_COST_PER_MINUTE = 20											-- Time-based buyback cost
-
-HERO_BUYBACK_RESET_TIME_PER_LEVEL = 4										-- Time needed for the buyback price to reset, per hero level
-HERO_BUYBACK_RESET_TIME_PER_MINUTE = 2										-- Time needed for the buyback price to reset, per minute of game time (in seconds)
-
-HERO_BUYBACK_COST_SCALING = 100												-- Cost multiplier when buybacking in quick sucession (in %)
-HERO_BUYBACK_COOLDOWN = 30													-- Base buyback cooldown
-HERO_BUYBACK_COOLDOWN_START_POINT = 15										-- Game time (in minutes) after which buyback cooldown is activated
-HERO_BUYBACK_COOLDOWN_GROW_FACTOR = 2										-- Buyback cooldown increase per minute
+BUYBACK_COOLDOWN_START_POINT = 600											-- Game time (in seconds) after which buyback cooldown is activated
+BUYBACK_COOLDOWN_GROW_FACTOR = 0.167										-- Buyback cooldown increase per second
+BUYBACK_COOLDOWN_MAXIMUM = 300												-- Maximum buyback cooldown
 
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
 ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
 AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
-
-VENGEFUL_RANCOR = false														-- Tracks if Vengeful Spirit's "Rancor" ability is in the game
-
-IMBA_GAME_MODE_DIRETIDE_2015 = false										-- Is this game special event-enabled?
-
-DIRETIDE_KING_BOUNTY_MULTIPLIER = 3											-- Diretide Kings' bounty multiplier
-DIRETIDE_KING_EXTRA_RESPAWN_TIME = 20										-- Diretide Kings' extra respawn time
-DIRETIDE_KING_BUYBACK_COST_MULTIPLIER = 2									-- Diretide Kings' buyback cost multiplier
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
@@ -270,6 +234,9 @@ BOUNTY_RAMP_PER_MINUTE = 3													-- Bounty increase (in %) based on game t
 CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
+REMAINING_GOODGUYS = 0														-- Remaining players on Radiant
+REMAINING_BADGUYS = 0														-- Remaining players on Dire
+
 ANCIENT_ABILITIES_LIST = {}													-- Initializes the ancients' abilities list
 SPAWN_ANCIENT_BEHEMOTHS = true												-- Should the ancients spawn behemoths?
 TOWER_ABILITY_MODE = true													-- Should towers gain random unique abilities?
@@ -291,13 +258,12 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_1"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_2"] = {}
 TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}																		
 
-HERO_BUYBACK_COST_MULTIPLIER = 100											-- User-defined buyback cost multiplier
-
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
-HERO_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
-HERO_REPICK_GOLD_LOSS = 0												-- Gold lost by players who repick their hero
-HERO_RANDOM_GOLD_BONUS = 0												-- Gold granted to players who random their hero
+MAP_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
+HERO_INITIAL_GOLD = 0														-- Gold to add to players as soon as they spawn into the game
+HERO_REPICK_GOLD_LOSS = 0													-- Gold lost by players who repick their hero
+HERO_RANDOM_GOLD_BONUS = 0													-- Gold granted to players who random their hero
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -305,7 +271,7 @@ USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custo
 MAX_LEVEL = 35																-- What level should we let heroes get to?
 
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
-	HERO_INITIAL_GOLD = 2000
+	MAP_INITIAL_GOLD = 2000
 	HERO_REPICK_GOLD_LOSS = -400
 	HERO_RANDOM_GOLD_BONUS = 300
 	HERO_STARTING_LEVEL = 5
@@ -315,10 +281,9 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	TOWER_UPGRADE_MODE = true
 	CREEP_POWER_FACTOR = 2
 	TOWER_POWER_FACTOR = 1
-	HERO_BUYBACK_COOLDOWN = 60
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	MAX_LEVEL = 50
-	HERO_INITIAL_GOLD = 2000
+	MAP_INITIAL_GOLD = 2000
 	HERO_REPICK_GOLD_LOSS = -400
 	HERO_RANDOM_GOLD_BONUS = 300
 	HERO_STARTING_LEVEL = 5
@@ -327,7 +292,6 @@ elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	CUSTOM_XP_BONUS = 200
 	CREEP_POWER_FACTOR = 2
 	TOWER_POWER_FACTOR = 1
-	HERO_BUYBACK_COOLDOWN = 60
 end
 
 -- XP per level table (only active if custom hero levels are enabled) 

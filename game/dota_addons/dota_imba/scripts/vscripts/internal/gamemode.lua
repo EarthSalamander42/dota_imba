@@ -11,11 +11,11 @@ function GameMode:_InitGameMode()
 	GameRules:SetPreGameTime( PRE_GAME_TIME)
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetTreeRegrowTime( TREE_REGROW_TIME )
-	GameRules:SetUseCustomHeroXPValues ( USE_CUSTOM_XP_VALUES )
+	GameRules:SetUseCustomHeroXPValues ( USE_NONSTANDARD_HERO_XP_BOUNTY )
 	GameRules:SetGoldPerTick( GOLD_PER_TICK )
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME )
 	GameRules:SetRuneSpawnTime( RUNE_SPAWN_TIME )
-	GameRules:SetUseBaseGoldBountyOnHeroes( USE_STANDARD_HERO_GOLD_BOUNTY )
+	GameRules:SetUseBaseGoldBountyOnHeroes( USE_NONSTANDARD_HERO_GOLD_BOUNTY )
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
@@ -23,7 +23,7 @@ function GameMode:_InitGameMode()
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
 	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
-	GameRules:SetStartingGold( HERO_INITIAL_GOLD )
+	GameRules:SetStartingGold( MAP_INITIAL_GOLD )
 
 	-- Register a listener for the game mode configuration
 	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
@@ -133,7 +133,7 @@ function GameMode:_CaptureGameMode()
 		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
 		mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
 
-		mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
+		mode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
@@ -238,15 +238,15 @@ function OnSetGameMode( eventSourceIndex, args )
 	
 	-- Starting gold information
 	if mode_info.gold_start == "2000" then
-		HERO_INITIAL_GOLD = 2000
+		HERO_INITIAL_GOLD = 2000 - MAP_INITIAL_GOLD
 		HERO_REPICK_GOLD_LOSS = -400
 		HERO_RANDOM_GOLD_BONUS = 300
 	elseif mode_info.gold_start == "6000" then
-		HERO_INITIAL_GOLD = 6000
+		HERO_INITIAL_GOLD = 6000 - MAP_INITIAL_GOLD
 		HERO_REPICK_GOLD_LOSS = -900
 		HERO_RANDOM_GOLD_BONUS = 800
 	elseif mode_info.gold_start == "15000" then
-		HERO_INITIAL_GOLD = 15000
+		HERO_INITIAL_GOLD = 15000 - MAP_INITIAL_GOLD
 		HERO_REPICK_GOLD_LOSS = -2400
 		HERO_RANDOM_GOLD_BONUS = 2300
 	end
@@ -333,8 +333,10 @@ function OnSetGameMode( eventSourceIndex, args )
 	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
 
 	-- Buyback cooldown information
-	HERO_BUYBACK_COOLDOWN = math.min(math.max(tonumber(mode_info.buyback), 0), 180)
-	print("buyback cooldown: "..HERO_BUYBACK_COOLDOWN.." seconds")
+	if tonumber(mode_info.disable_buyback_cooldown) == 1 then
+		BUYBACK_COOLDOWN_ENABLED = false
+		print("buyback cooldown disabled")
+	end
 	
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true

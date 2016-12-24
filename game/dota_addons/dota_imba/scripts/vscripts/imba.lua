@@ -171,6 +171,11 @@ function GameMode:GoldFilter( keys )
 	-- player_id_const	0
 	-- gold				141
 
+	-- Gold from abandoning players does not get multiplied
+	if keys.reason_const == DOTA_ModifyGold_AbandonedRedistribute then
+		return true
+	end
+
 	local hero = PlayerResource:GetPickedHero(keys.player_id_const)
 
 	-- Hand of Midas gold bonus
@@ -184,10 +189,10 @@ function GameMode:GoldFilter( keys )
 		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
 	end
 
-	-- Show gold earned message
-	if hero then
+	-- Show gold earned message??
+	--if hero then
 	--	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, hero, keys.gold, nil)
-	end
+	--end
 
 	return true
 end
@@ -714,22 +719,20 @@ function GameMode:OnAllPlayersLoaded()
 		local XP_bounty = 100 + CUSTOM_XP_BONUS
 		XP_bounty = XP_bounty.."%"
 
+		-- Buyback
+		local buyback_cooldown = ""
+		if not BUYBACK_COOLDOWN_ENABLED then
+			buyback_cooldown = "no buyback cooldown, "
+		end
+
 		-- Respawn
 		local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
 		if respawn_time == 100 then
-			respawn_time = "normal respawn time, "
+			respawn_time = "normal respawn time."
 		elseif respawn_time == 50 then
-			respawn_time = "half respawn time, "
+			respawn_time = "half respawn time."
 		elseif respawn_time == 0 then
-			respawn_time = "instant respawn time, "
-		end
-
-		-- Buyback
-		local buyback_cooldown = HERO_BUYBACK_COOLDOWN
-		if buyback_cooldown == 0 then
-			buyback_cooldown = "no buyback cooldown."
-		else
-			buyback_cooldown = buyback_cooldown.." seconds buyback cooldown."
+			respawn_time = "instant respawn time."
 		end
 
 		-- Starting gold & level
@@ -767,7 +770,7 @@ function GameMode:OnAllPlayersLoaded()
 
 		-- Comeback gold
 		local comeback_gold = ""
-		if HERO_GLOBAL_BOUNTY_FACTOR > 0 then
+		if GLOBAL_BOUNTY_FACTOR > 0 then
 			comeback_gold = " Global comeback gold is enabled."
 		else
 			comeback_gold = " Global comeback gold is disabled."
@@ -780,7 +783,7 @@ function GameMode:OnAllPlayersLoaded()
 		end
 		
 		Say(nil, game_mode..same_hero, false)
-		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..respawn_time..buyback_cooldown, false)
+		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..buyback_cooldown..respawn_time, false)
 		Say(nil, start_status, false)
 		Say(nil, creep_power..tower_power, false)
 		Say(nil, tower_abilities..comeback_gold, false)
@@ -823,28 +826,19 @@ function GameMode:OnHeroInGame(hero)
 	end
 
 	-- Set up initial gold
+	hero:ModifyGold(HERO_INITIAL_GOLD, false, DOTA_ModifyGold_SelectionPenalty)
 	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
 	local has_not_repicked = PlayerResource:CanRepick(hero:GetPlayerID())
 
 	if not has_not_repicked then
-		hero:ModifyGold(HERO_REPICK_GOLD_LOSS, true, DOTA_ModifyGold_SelectionPenalty)
-	elseif has_randomed then
-		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
+		hero:ModifyGold(HERO_REPICK_GOLD_LOSS, false, DOTA_ModifyGold_SelectionPenalty)
+	elseif has_randomed or IMBA_ABILITY_MODE_RANDOM_OMG or IMBA_PICK_MODE_ALL_RANDOM then
+		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, false, DOTA_ModifyGold_SelectionPenalty)
 	end
 
+	-- Randomize abilities
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
-
-		-- Set initial gold for the mode 
-		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
-
-		-- Randomize abilities
 		ApplyAllRandomOmgAbilities(hero)
-	end
-
-	if IMBA_PICK_MODE_ALL_RANDOM then
-
-		-- Set initial gold for the mode 
-		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, true, DOTA_ModifyGold_SelectionPenalty)
 	end
 
 	-- Initialize innate hero abilities

@@ -18,18 +18,29 @@ function GameMode:OnDisconnect(keys)
 	-- 2 - player connected
 	-- 3 - bot/player disconnected.
 
-	PrintTable(keys)
+	-- Typical keys:
+	-- PlayerID: 2
+	-- name: Zimberzimber
+	-- networkid: [U:1:95496383]
+	-- reason: 2
+	-- splitscreenplayer: -1
+	-- userid: 7
+	-- xuid: 76561198055762111
 
-	-- Fetch player's player ID and hero
-	local player_id = keys.userid
-	local hero = PlayerResource:GetPickedHero(player_id)
-
-	-- If the game has already ended, do nothing
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then
+	-- If the game hasn't started, or has already ended, do nothing
+	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
 
 	-- Else, start tracking player's reconnect/abandon state
 	else
+
+		-- Fetch player's player and hero information
+		local player_id = keys.PlayerID
+		local player_name = keys.name
+		local hero = PlayerResource:GetPickedHero(player_id)
+		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+
+		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
 		local disconnect_time = 0
 		Timers:CreateTimer(1, function()
@@ -39,23 +50,52 @@ function GameMode:OnDisconnect(keys)
 
 			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
 			if hero:HasOwnerAbandoned() or disconnect_time >= ABANDON_TIME then
-				print("player "..player_id.." has abandoned the game.")
 
 				-- Abandon message
-				--Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
+				print("player "..player_id.." has abandoned the game.")
 
-				-- If this was the last player to abandon on his team, end the game
-				--Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-				--Timers:CreateTimer(FULL_ABANDON_TIME, function()
-				--	if GOODGUYS_CONNECTED_PLAYERS == 0 then
-				--		GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-				--		GAME_WINNER_TEAM = "Dire"
-				--	end
-				--end)
+				-- Decrease the player's team's player count
+				PlayerResource:DecrementTeamPlayerCount(player_id)
+
+				-- Start redistributing this player's gold to its allies
+				PlayerResource:StartAbandonGoldRedistribution(player_id)
+
+				-- If this was the last player to abandon on his team, wait 15 seconds and end the game if no one came back.
+				if REMAINING_GOODGUYS <= 0 then
+					Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+					Timers:CreateTimer(FULL_ABANDON_TIME, function()
+						if REMAINING_GOODGUYS <= 0 then
+							GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+							GAME_WINNER_TEAM = "Dire"
+						end
+					end)
+				elseif REMAINING_BADGUYS <= 0 then
+					Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+					Timers:CreateTimer(FULL_ABANDON_TIME, function()
+						if REMAINING_BADGUYS <= 0 then
+							GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+							GAME_WINNER_TEAM = "Radiant"
+						end
+					end)
+				end
 				
 			-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
-				--Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+				-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+				if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+					Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+					Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+					Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+					PlayerResource:IncrementTeamPlayerCount(player_id)
+				end
+
+				-- Stop redistributing gold to allies, if applicable
+				PlayerResource:StopAbandonGoldRedistribution(player_id)
 
 			-- Else, keep tracking connection state
 			else
@@ -128,7 +168,7 @@ function GameMode:OnGameRulesStateChange(keys)
 				if PlayerResource:IsImbaPlayer(player_id) then
 
 					-- If this player still hasn't picked a hero, random one
-					if not PlayerResource:GetPickedHero(player_id) then
+					if not PlayerResource:HasSelectedHero(player_id) then
 						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
 						PlayerResource:SetCanRepick(player_id, false)
 						PlayerResource:SetHasRandomed(player_id)
@@ -340,36 +380,12 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Buyback setup (part 2)
+	-- IMBA: Buyback penalty removal
 	-------------------------------------------------------------------------------------------------
 
-	-- Check if the spawned unit has the buyback penalty modifier
 	Timers:CreateTimer(0.1, function()
-		if not npc:IsNull() and npc:HasModifier("modifier_buyback_gold_penalty") then
-
-			-- Add one to this player's buyback count
-			npc.buyback_count = npc.buyback_count + 1
-
-			-- Update the quick sucession buyback cost increase variable
-			if npc.quick_sucession_buybacks then
-				npc.quick_sucession_buybacks = npc.quick_sucession_buybacks + 1
-			else
-				npc.quick_sucession_buybacks = 1
-			end
-
-			-- Store this buyback's variable amount for later reference
-			local this_buyback_number = npc.quick_sucession_buybacks
-
-			-- Reset buyback cost after the penalty time ends
-			Timers:CreateTimer(0.5, function()
-				if npc:HasModifier("modifier_buyback_gold_penalty") or not npc:IsAlive() then
-					return 0.5
-				else
-					if this_buyback_number == npc.quick_sucession_buybacks then
-						npc.quick_sucession_buybacks = 0
-					end
-				end
-			end)
+		if npc and npc:HasModifier("modifier_buyback_gold_penalty") then
+			npc:RemoveModifierByName("modifier_buyback_gold_penalty")
 		end
 	end)
 
@@ -633,18 +649,15 @@ end
 
 -- A player picked a hero
 function GameMode:OnPlayerPickHero(keys)
-	DebugPrint('[BAREBONES] OnPlayerPickHero')
-	DebugPrintTable(keys)
 
-	local hero_class = keys.hero
 	local hero_entity = EntIndexToHScript(keys.heroindex)
-	local player = EntIndexToHScript(keys.player)
+	local player_id = hero_entity:GetPlayerID()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Assign hero to player
 	-------------------------------------------------------------------------------------------------
 
-	PlayerResource:SetPickedHero(player:GetPlayerID(), hero_entity)
+	PlayerResource:SetPickedHero(player_id, hero_entity)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: All Pick hero pick logic
@@ -671,13 +684,141 @@ end
 
 -- A player killed another player in a multi-team context
 function GameMode:OnTeamKillCredit(keys)
-	DebugPrint('[BAREBONES] OnTeamKillCredit')
-	DebugPrintTable(keys)
 
-	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-	local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
-	local numKills = keys.herokills
-	local killerTeamNumber = keys.teamnumber
+	-- Typical keys:
+	-- herokills: 6
+	-- killer_userid: 0
+	-- splitscreenplayer: -1
+	-- teamnumber: 2
+	-- victim_userid: 7
+	-- killer id will be -1 in case of a non-player owned killer (e.g. neutrals, towers, etc.)
+
+	local killer_id = keys.killer_userid
+	local victim_id = keys.victim_userid
+	local killer_team = keys.teamnumber
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Deathstreak logic
+	-------------------------------------------------------------------------------------------------
+
+	if PlayerResource:IsImbaPlayer(killer_id) and PlayerResource:IsImbaPlayer(victim_id) then
+		
+		-- Reset the killer's deathstreak
+		PlayerResource:ResetDeathstreak(killer_id)
+
+		-- Increment the victim's deathstreak
+		PlayerResource:IncrementDeathstreak(victim_id)
+
+		-- Show Deathstreak message
+		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
+		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
+		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
+		local line_duration = 7
+
+		if victim_death_streak >= 3 then
+			Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+		end
+
+		if victim_death_streak == 3 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+		elseif victim_death_streak == 4 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+		elseif victim_death_streak == 5 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+		elseif victim_death_streak == 6 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+		elseif victim_death_streak == 7 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+		elseif victim_death_streak == 8 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+		elseif victim_death_streak == 9 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+		elseif victim_death_streak >= 10 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Global comeback gold logic
+	-------------------------------------------------------------------------------------------------
+
+	if GLOBAL_BOUNTY_FACTOR > 0 and PlayerResource:GetPlayerCountForTeam(killer_team) > 0 then
+
+		-- Calculate both teams' current net worth
+		local killer_team_networth = 0
+		local victim_team_networth = 0
+		for id = 0, 19 do
+			if PlayerResource:IsImbaPlayer(id) then
+				local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
+				if PlayerResource:GetTeam(id) == killer_team then
+					killer_team_networth = killer_team_networth + hero_networth
+				else
+					victim_team_networth = victim_team_networth + hero_networth
+				end
+			end
+		end
+
+		-- Distribute the comeback gold
+		if killer_team_networth < victim_team_networth then
+			local networth_difference = math.max( victim_team_networth - killer_team_networth, 0)
+			local welfare_gold = networth_difference / PlayerResource:GetPlayerCountForTeam(killer_team) * GLOBAL_BOUNTY_FACTOR * 0.01 / (1 + CUSTOM_GOLD_BONUS * 0.01)
+			for id = 0, 19 do
+				if PlayerResource:IsImbaPlayer(id) and PlayerResource:GetTeam(id) == killer_team then
+					PlayerResource:ModifyGold(id, welfare_gold, false, DOTA_ModifyGold_HeroKill)
+					SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, PlayerResource:GetPickedHero(id), welfare_gold, nil)
+				end
+			end
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Rancor logic
+	-------------------------------------------------------------------------------------------------
+
+	-- Victim stack loss
+	local victim_hero = PlayerResource:GetPickedHero(victim_id)
+	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
+		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
+		if current_stacks <= 2 then
+			victim_hero:RemoveModifierByName("modifier_imba_rancor")
+		else
+			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
+		end
+	end
+	
+	-- Killer stack gain
+	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
+		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		if eligible_rancor_targets[1] then
+			local rancor_stacks = 1
+
+			-- Double stacks if the killed unit was Venge
+			if victim_hero == VENGEFUL_RANCOR_CASTER then
+				rancor_stacks = rancor_stacks * 2
+			end
+
+			-- Add stacks and play particle effect
+			AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
+			local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
+			ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
+			ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Vengeance Aura logic
+	-------------------------------------------------------------------------------------------------
+
+	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
+		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
+		local killer_hero = PlayerResource:GetPickedHero(killer_id)
+		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
+			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
+			victim_hero.vengeance_aura_target = killer_hero
+		end
+	end
+
 end
 
 -- An entity died
@@ -772,123 +913,30 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Buyback setup (part 1)
+	-- IMBA: Buyback setup
 	-------------------------------------------------------------------------------------------------
 
 	-- Check if the dying unit was a player-controlled hero
-	if killed_unit:IsRealHero() and PlayerResource:GetPlayer(killed_unit:GetPlayerID()) then
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
 
-		-- Check if buyback cost is currently affected by the quick-buyback cost penalty
-		local buyback_cost_multiplier = 1
-		if killed_unit.quick_sucession_buybacks and killed_unit.quick_sucession_buybacks > 0 then
-			buyback_cost_multiplier = ( ( 100 + HERO_BUYBACK_COST_SCALING ) / 100 ) ^ killed_unit.quick_sucession_buybacks
-		end
-
-		-- Apply lobby options to buyback cost
-		buyback_cost_multiplier = buyback_cost_multiplier * HERO_BUYBACK_COST_MULTIPLIER / 100
-
-		-- Calculate regular buyback cost and 
+		-- Buyback parameters
+		local player_id = killed_unit:GetPlayerID()
 		local hero_level = killed_unit:GetLevel()
-		local game_time = GameRules:GetDOTATime(false, false) / 60
+		local game_time = GameRules:GetDOTATime(false, false)
 
-		local buyback_cost = ( HERO_BUYBACK_BASE_COST + hero_level * HERO_BUYBACK_COST_PER_LEVEL + game_time * HERO_BUYBACK_COST_PER_MINUTE ) * buyback_cost_multiplier
-		local buyback_penalty_duration = HERO_BUYBACK_RESET_TIME_PER_LEVEL * hero_level + HERO_BUYBACK_RESET_TIME_PER_MINUTE * game_time
+		-- Calculate buyback cost
+		local buyback_cost = BUYBACK_BASE_COST + hero_level * hero_level * BUYBACK_COST_PER_LEVEL + game_time * BUYBACK_COST_PER_SECOND
+		buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
-		-- Update buyback cost and penalty duration 
-		PlayerResource:SetCustomBuybackCost(killed_unit:GetPlayerID(), buyback_cost)
-		PlayerResource:SetBuybackGoldLimitTime(killed_unit:GetPlayerID(), buyback_penalty_duration)
+		-- Update buyback cost
+		PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 
 		-- Setup buyback cooldown
 		local buyback_cooldown = 0
-		if game_time > HERO_BUYBACK_COOLDOWN_START_POINT and HERO_BUYBACK_COOLDOWN > 0 then
-			buyback_cooldown = HERO_BUYBACK_COOLDOWN + (game_time - HERO_BUYBACK_COOLDOWN_START_POINT) * HERO_BUYBACK_COOLDOWN_GROW_FACTOR
+		if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then
+			buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
 		end
-		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), buyback_cooldown)
-		
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Hero kill bounty calculation
-	-------------------------------------------------------------------------------------------------
-
-	-- Check if the killer is not a neutral unit
-	local non_neutral_killer = false
-
-	if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
-		non_neutral_killer = true
-	end
-	
-	-- Check if killed unit is a hero, and killer/killed belong to different teams
-	if killed_unit:IsRealHero() and killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
-
-		-- Killed hero Rancor clean-up
-		if killed_unit:HasModifier("modifier_imba_rancor") then
-			local current_stacks = killed_unit:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
-			if current_stacks <= 2 then
-				killed_unit:RemoveModifierByName("modifier_imba_rancor")
-			else
-				killed_unit:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
-			end
-		end
-
-		-- Check if the killer was a non-hero entity (to avoid GetPlayerID crashes)
-		local nonhero_killer = false
-		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
-			nonhero_killer = true
-
-			-- Vengeful Spirit Rancor logic
-			if VENGEFUL_RANCOR and killer:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
-				local eligible_rancor_targets = FindUnitsInRadius(killed_unit:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-				if eligible_rancor_targets[1] then
-					local rancor_stacks = 1
-
-					-- Double stacks if the killed unit was Venge
-					if killed_unit == VENGEFUL_RANCOR_CASTER then
-						rancor_stacks = rancor_stacks * 2
-					end
-
-					-- Add stacks and play particle effect
-					AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
-					local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
-					ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
-					ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-				end
-			end
-		end
-
-		-- If the killer was a player-owned summon, make its owner the killer
-		if IsPlayerOwnedSummon(killer) then
-			killer = killer:GetOwnerEntity()
-		end
-
-		-- If the killer is player-owned, remove its deathstreak and start its killstreak
-		if not nonhero_killer and killer:GetPlayerID() then
-			local killer_player = PlayerResource:GetPlayer(killer:GetPlayerID())
-			local killer_hero = killer_player:GetAssignedHero()
-
-			-- Killer Rancor logic
-			if VENGEFUL_RANCOR and killer_hero:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
-				local rancor_stacks = 1
-
-				-- Double stacks if the killed unit was Venge
-				if killed_unit == VENGEFUL_RANCOR_CASTER then
-					rancor_stacks = rancor_stacks * 2
-				end
-
-				-- Add stacks and play particle effect
-				AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, killer_hero, "modifier_imba_rancor", rancor_stacks, true)
-				local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, killer_hero)
-				ParticleManager:SetParticleControl(rancor_pfx, 0, killer_hero:GetAbsOrigin())
-				ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-			end
-
-			-- Vengeance Aura logic
-			local vengeance_aura_ability = killed_unit:FindAbilityByName("imba_vengeful_command_aura")
-			if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
-				vengeance_aura_ability:ApplyDataDrivenModifier(killed_unit, killer_hero, "modifier_imba_command_aura_negative_aura", {})
-				killed_unit.vengeance_aura_target = killer_hero
-			end
-		end
+		PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 	end
 end
 

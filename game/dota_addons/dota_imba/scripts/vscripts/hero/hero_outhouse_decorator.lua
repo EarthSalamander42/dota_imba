@@ -374,7 +374,7 @@ function SanityEclipse( keys )
 
 				-- If Arcane Orb is learned, steal intelligence from the targets
 				if ability_arcane_orb and ability_arcane_orb:GetLevel() > 0 then
-					print("derp2")
+
 					-- Arcane Orb Parameters
 					local int_steal = ability_arcane_orb:GetLevelSpecialValueFor("int_gain", ability_arcane_orb:GetLevel() - 1)
 					int_steal = int_steal * orb_stacks
