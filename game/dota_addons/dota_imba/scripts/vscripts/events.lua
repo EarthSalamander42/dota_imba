@@ -3,14 +3,6 @@
 
 -- Cleanup a player when they leave
 function GameMode:OnDisconnect(keys)
-	DebugPrint('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
-	DebugPrintTable(keys)
-
-	local player_name = keys.name
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player disconnect/abandon logic
-	-------------------------------------------------------------------------------------------------
 
 	-- GetConnectionState values:
 	-- 0 - no connection
@@ -27,6 +19,10 @@ function GameMode:OnDisconnect(keys)
 	-- userid: 7
 	-- xuid: 76561198055762111
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player disconnect/abandon logic
+	-------------------------------------------------------------------------------------------------
+
 	-- If the game hasn't started, or has already ended, do nothing
 	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
@@ -39,6 +35,7 @@ function GameMode:OnDisconnect(keys)
 		local player_name = keys.name
 		local hero = PlayerResource:GetPickedHero(player_id)
 		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local line_duration = 7
 
 		-- Start tracking
 		print("started keeping track of player "..player_id.."'s connection state")
@@ -85,17 +82,6 @@ function GameMode:OnDisconnect(keys)
 				
 			-- If the player has reconnected, stop tracking connection state every second
 			elseif PlayerResource:GetConnectionState(player_id) == 2 then
-
-				-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
-				if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
-					Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-					Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-					Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-					PlayerResource:IncrementTeamPlayerCount(player_id)
-				end
-
-				-- Stop redistributing gold to allies, if applicable
-				PlayerResource:StopAbandonGoldRedistribution(player_id)
 
 			-- Else, keep tracking connection state
 			else
@@ -441,12 +427,28 @@ end
 -- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
-	DebugPrint( '[BAREBONES] OnPlayerReconnect' )
-	DebugPrintTable(keys) 
+	PrintTable(keys)
+
+	local player_id = keys.PlayerID
+	local player_name = keys.name
+	local hero = PlayerResource:GetPickedHero(player_id)
+	local hero_name = PlayerResource:GetPickedHeroName(player_id)
+	local line_duration = 7
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
+
+	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+		PlayerResource:IncrementTeamPlayerCount(player_id)
+
+		-- Stop redistributing gold to allies, if applicable
+		PlayerResource:StopAbandonGoldRedistribution(player_id)
+	end
 
 end
 
