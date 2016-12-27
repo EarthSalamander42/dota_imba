@@ -319,27 +319,6 @@ function MidnightPulse( keys )
 	end)
 end
 
-function Gravity( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Parameters
-	local stun_increase = ability:GetLevelSpecialValueFor("stun_increase", ability_level) / 100
-	local think_interval = ability:GetLevelSpecialValueFor("think_interval", ability_level)
-
-	-- Calculate adjusted stun increase
-	local corrected_increase = 1 - ( 1 / (1 + stun_increase) )
-
-	-- Increase existing stuns' duration
-	if target:HasModifier("modifier_stunned") then
-		local modifier_stun = target:FindModifierByName("modifier_stunned")
-		modifier_stun:SetDuration(modifier_stun:GetRemainingTime() + think_interval * corrected_increase, false)
-	end
-end
-
 function BlackHole( keys )
 	local caster = keys.caster
 	local target = keys.target_points[1]
@@ -505,7 +484,9 @@ function BlackHoleDebuffStart( keys )
 	end
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+	if not IsRoshan(target) then
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
+	end
 
 	-- Deal max health-based damage if the caster has a scepter
 	if scepter then

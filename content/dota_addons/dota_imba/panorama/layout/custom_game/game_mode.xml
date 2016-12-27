@@ -30,7 +30,6 @@
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_pick_option_allow_same_hero" id="allow_same_hero_standard" />
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_standard"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_standard"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_standard"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_standard"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>
@@ -96,7 +95,6 @@
 
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_random_omg"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_random_omg"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_random_omg"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_random_omg"/>
 
 				<DropDown id="number_of_abilities_random_omg">
@@ -191,7 +189,6 @@
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_disable_buyback_cooldown" id="buyback_cooldown_custom"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_custom"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>
@@ -315,7 +312,6 @@
 
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_10v10"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_10v10"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_10v10"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_10v10"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>

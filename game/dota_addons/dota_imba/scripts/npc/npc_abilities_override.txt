@@ -1745,12 +1745,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_bonus"				"500"
+				"xp_bonus"				"600"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"xp_per_use"			"500"
+				"xp_per_use"			"200"
 			}
 			"03"
 			{
@@ -2171,7 +2171,7 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"berserk_bonus_attack_speed"	"175"
+				"berserk_bonus_attack_speed"	"200"
 			}
 			"04"
 			{
@@ -3599,8 +3599,6 @@
 		"RequiredLevel"					"1"
 
 		"AbilityCooldown"				"60 50 40 30"
-
-		"DisplayAdditionalHeroes"		"1"
 
 		"AbilitySpecial"
 		{

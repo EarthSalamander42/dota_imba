@@ -68,12 +68,11 @@ MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed
 -- IMBA: gameplay globals
 -------------------------------------------------------------------------------------------------
 
-GLOBAL_BOUNTY_FACTOR = 15													-- Global comeback gold awarded as a fraction of the difference between team networths (in %)
-
 BUYBACK_COOLDOWN_ENABLED = true												-- Is the buyback cooldown enabled?
 
 BUYBACK_BASE_COST = 100														-- Base cost to buyback
 BUYBACK_COST_PER_LEVEL = 1.5												-- Level-based buyback cost
+BUYBACK_COST_PER_LEVEL_AFTER_25 = 35										-- Level-based buyback cost growth after level 25
 BUYBACK_COST_PER_SECOND = 0.25												-- Time-based buyback cost
 
 BUYBACK_COOLDOWN_START_POINT = 600											-- Game time (in seconds) after which buyback cooldown is activated
@@ -83,8 +82,8 @@ BUYBACK_COOLDOWN_MAXIMUM = 300												-- Maximum buyback cooldown
 ABANDON_TIME = 180															-- Time for a player to be considered as having abandoned the game (in seconds)
 FULL_ABANDON_TIME = 15														-- Time for a team to be considered as having abandoned the game (in seconds)
 
-ROSHAN_RESPAWN_TIME = 480													-- Roshan respawn timer (in seconds)
-AEGIS_DURATION = 420														-- Aegis expiration timer (in seconds)
+ROSHAN_RESPAWN_TIME = 30													-- Roshan respawn timer (in seconds)
+AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 

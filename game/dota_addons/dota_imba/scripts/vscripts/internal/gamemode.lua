@@ -264,12 +264,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 	print("xp bounty increased by: "..CUSTOM_XP_BONUS)
 
-	-- Comeback gold adjustment
-	if tonumber(mode_info.comeback_gold) == 0 then
-		HERO_GLOBAL_BOUNTY_FACTOR = 0
-		print("Global comeback gold deactivated!")
-	end
-
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creeps and buildings setup
 	-------------------------------------------------------------------------------------------------

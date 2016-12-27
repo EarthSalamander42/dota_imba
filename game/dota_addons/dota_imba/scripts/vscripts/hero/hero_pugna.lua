@@ -289,7 +289,7 @@ function NetherWardZap( keys )
 	local spell_damage = ability_zap:GetLevelSpecialValueFor("spell_damage", ability_zap_level)
 
 	-- Fetch cast ability's mana cost
-	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
+	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
 
 	-- Deal damage
 	ApplyDamage({attacker = ward, victim = target, ability = ability_zap, damage = mana_spent * mana_multiplier, damage_type = DAMAGE_TYPE_MAGICAL})

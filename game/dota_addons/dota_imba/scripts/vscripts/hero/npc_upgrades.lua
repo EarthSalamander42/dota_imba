@@ -53,7 +53,7 @@ function TowerUpgrade( keys )
 	elseif string.find(caster:GetUnitName(), "tower3") then
 		tower_tier_multiplier = 2
 	elseif string.find(caster:GetUnitName(), "tower4") then
-		tower_tier_multiplier = 2
+		tower_tier_multiplier = 3
 	end
 
 	-- Adjust health

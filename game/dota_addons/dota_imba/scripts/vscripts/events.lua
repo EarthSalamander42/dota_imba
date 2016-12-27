@@ -226,36 +226,6 @@ function GameMode:OnNPCSpawned(keys)
 
 	if npc:HasModifier("modifier_arc_warden_tempest_double") then
 
-		-- List of items the clone can't carry
-		local clone_forbidden_items = {
-			"item_imba_rapier",
-			"item_imba_rapier_magic",
-			"item_imba_rapier_dummy",
-			"item_imba_moon_shard",
-			"item_imba_soul_of_truth",
-			"item_imba_refresher",
-			"item_imba_ultimate_scepter_synth"
-		}
-
-		-- Iterate through the clone's items
-		Timers:CreateTimer(0.05, function()
-			for i = 0, 5 do
-				local current_item = npc:GetItemInSlot(i)
-
-				-- Remove any existing forbidden items on the clone
-				for _, forbidden_item in pairs(clone_forbidden_items) do
-					if current_item and current_item:GetName() == forbidden_item then
-						npc:RemoveItem(current_item)
-						break
-					end
-				end
-			end
-
-			-- Erase any leftover modifiers
-			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_phys")
-			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_magic")
-		end)
-
 		-- List of modifiers which carry over from the main hero to the clone
 		local clone_shared_buffs = {
 			"modifier_imba_unlimited_level_powerup",
@@ -560,38 +530,23 @@ end
 
 -- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
-	DebugPrint('[BAREBONES] OnPlayerLevelUp')
-	DebugPrintTable(keys)
 
 	local player = EntIndexToHScript(keys.player)
-	local level = keys.level
+	local hero = player:GetAssignedHero()
+	local hero_level = hero:GetLevel()
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Unlimited level logic
 	-------------------------------------------------------------------------------------------------
 
-	local hero = player:GetAssignedHero()
-	local hero_level = hero:GetLevel()
-
+	-- If the generic powerup isn't present, apply it
 	if hero_level > 25 then
-
-		-- Invoker is a special case
-		if not hero:GetName() == "npc_dota_hero_invoker" then
-
-			-- If the generic powerup isn't present, apply it
-			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-			if not ability_powerup then
-				hero:AddAbility("imba_unlimited_level_powerup")
-				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-				ability_powerup:SetLevel(1)
-
-				for i = 0, 99 do
-					if hero:GetAbilityByIndex(i) then
-						print(hero:GetAbilityByIndex(i):GetName())
-					end
-				end
-			end
+		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		if not ability_powerup then
+			hero:AddAbility("imba_unlimited_level_powerup")
+			ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		end
+		ability_powerup:SetLevel(1)
 	end
 
 end
@@ -740,39 +695,6 @@ function GameMode:OnTeamKillCredit(keys)
 			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
 		end
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Global comeback gold logic
-	-------------------------------------------------------------------------------------------------
-
-	-- if GLOBAL_BOUNTY_FACTOR > 0 and PlayerResource:GetPlayerCountForTeam(killer_team) > 0 then
-
-	-- 	-- Calculate both teams' current net worth
-	-- 	local killer_team_networth = 0
-	-- 	local victim_team_networth = 0
-	-- 	for id = 0, 19 do
-	-- 		if PlayerResource:IsImbaPlayer(id) then
-	-- 			local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
-	-- 			if PlayerResource:GetTeam(id) == killer_team then
-	-- 				killer_team_networth = killer_team_networth + hero_networth
-	-- 			else
-	-- 				victim_team_networth = victim_team_networth + hero_networth
-	-- 			end
-	-- 		end
-	-- 	end
-
-	-- 	-- Distribute the comeback gold
-	-- 	if killer_team_networth < victim_team_networth then
-	-- 		local networth_difference = math.max( victim_team_networth - killer_team_networth, 0)
-	-- 		local welfare_gold = networth_difference / PlayerResource:GetPlayerCountForTeam(killer_team) * GLOBAL_BOUNTY_FACTOR * 0.01 / (1 + CUSTOM_GOLD_BONUS * 0.01)
-	-- 		for id = 0, 19 do
-	-- 			if PlayerResource:IsImbaPlayer(id) and PlayerResource:GetTeam(id) == killer_team then
-	-- 				PlayerResource:ModifyGold(id, welfare_gold, false, DOTA_ModifyGold_HeroKill)
-	-- 				SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, PlayerResource:GetPickedHero(id), welfare_gold, nil)
-	-- 			end
-	-- 		end
-	-- 	end
-	-- end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Rancor logic
@@ -927,7 +849,11 @@ function GameMode:OnEntityKilled( keys )
 		local game_time = GameRules:GetDOTATime(false, false)
 
 		-- Calculate buyback cost
-		local buyback_cost = BUYBACK_BASE_COST + hero_level * hero_level * BUYBACK_COST_PER_LEVEL + game_time * BUYBACK_COST_PER_SECOND
+		local level_based_cost = math.min(hero_level * hero_level, 625) * BUYBACK_COST_PER_LEVEL
+		if hero_level > 25 then
+			level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
+		end
+		local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND
 		buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
 		-- Update buyback cost

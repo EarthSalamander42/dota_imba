@@ -267,6 +267,8 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
+	target:RemoveModifierByName("modifier_item_imba_rapier_cursed_unique")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -947,6 +949,7 @@ function UpgradeTower( tower )
 
 		-- If this ability is not maxed, try to upgrade it
 		if abilities[i] and abilities[i]:GetLevel() < 3 then
+
 			-- Upgrade ability
 			abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
 
@@ -987,9 +990,9 @@ function UpgradeTower( tower )
 					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][i+1]
 				end
 			elseif tower.tower_tier == 41 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i+1]
 			elseif tower.tower_tier == 42 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i+1]
 			end
 
 			-- Add the new ability
@@ -1516,7 +1519,7 @@ function TriggerWraithKingReincarnation(caster, ability)
 	Timers:CreateTimer(reincarnate_delay, function()
 
 		-- Purge most debuffs
-		caster:Purge(false, true, false, true, false)
+		caster:Purge(false, true, false, true, true)
 
 		-- Heal, even through healing prevention debuffs
 		caster:SetHealth(caster:GetMaxHealth())
@@ -1647,7 +1650,7 @@ function TriggerAegisReincarnation(caster)
 		caster:SetMana(caster:GetMaxMana())
 
 		-- Purge all debuffs
-		caster:Purge(false, true, false, true, false)
+		caster:Purge(false, true, false, true, true)
 
 		-- Remove Aegis modifier
 		caster:RemoveModifierByName(modifier_aegis)
@@ -1730,9 +1733,12 @@ function GetSpellPower(unit)
 	local item_spell_power = {}
 	item_spell_power["item_imba_aether_lens"] = 10
 	item_spell_power["item_imba_nether_wand"] = 10
-	item_spell_power["item_imba_elder_staff"] = 25
+	item_spell_power["item_imba_elder_staff"] = 20
 	item_spell_power["item_imba_orchid"] = 25
 	item_spell_power["item_imba_bloodthorn"] = 30
+	item_spell_power["item_imba_rapier_magic"] = 70
+	item_spell_power["item_imba_rapier_magic_2"] = 200
+	item_spell_power["item_imba_rapier_cursed"] = 200
 
 	-- Fetch current bonus spell power from items, if existing
 	for i = 0, 5 do
@@ -1743,11 +1749,6 @@ function GetSpellPower(unit)
 				spell_power = spell_power + item_spell_power[current_item_name]
 			end
 		end
-	end
-
-	-- Fetch current bonus spell power from rapiras, if existing
-	if unit:HasModifier("modifier_item_imba_rapier_stacks_magic") then
-		spell_power = spell_power + unit:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", nil) * 70
 	end
 
 	-- Fetch bonus spell power from talents

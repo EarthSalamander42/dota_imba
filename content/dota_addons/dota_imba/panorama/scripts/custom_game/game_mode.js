@@ -30,7 +30,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 
 		panel.FindChildTraverse('tower_abilities_standard').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_standard').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_standard').SetSelected(true);
 	} else if (mapInfo.map_display_name == "imba_random_omg") {
 		mode_standard.ToggleClass("invisible");
@@ -38,7 +37,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 		
 		panel.FindChildTraverse('tower_abilities_random_omg').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_random_omg').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_random_omg').SetSelected(true);
 	} else if (mapInfo.map_display_name == "imba_custom") {
 		mode_standard.ToggleClass("invisible");
@@ -46,7 +44,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 		
 		panel.FindChildTraverse('tower_abilities_custom').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_custom').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_custom').SetSelected(true);
 		panel.FindChildTraverse("max_level_dropdown_custom").SetSelected('50')
 		panel.FindChildTraverse("gold_gain_dropdown_custom").SetSelected('200');
@@ -63,7 +60,6 @@ function SelectDefaultGameMode(panel) {
 		
 		panel.FindChildTraverse('tower_abilities_10v10').SetSelected(true);
 		panel.FindChildTraverse("tower_upgrades_10v10").SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_10v10').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_10v10').SetSelected(true);
 		panel.FindChildTraverse("gold_gain_dropdown_10v10").SetSelected('60');
 		panel.FindChildTraverse("xp_gain_dropdown_10v10").SetSelected('100');
@@ -167,7 +163,6 @@ function SetGameMode()
 				"allow_same_hero": $.GetContextPanel().FindChildTraverse("allow_same_hero_standard").checked,
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_standard").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_standard").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_standard").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_standard").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_standard").GetSelected().id,
 				"gold_bounty": $.GetContextPanel().FindChildTraverse("gold_gain_dropdown_standard").GetSelected().id,
@@ -183,7 +178,6 @@ function SetGameMode()
 			"modes": {
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_random_omg").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_random_omg").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_random_omg").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_random_omg").checked,
 				"number_of_abilities": $.GetContextPanel().FindChildTraverse("number_of_abilities_random_omg").GetSelected().id,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_random_omg").GetSelected().id,
@@ -205,7 +199,6 @@ function SetGameMode()
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_custom").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_custom").checked,
 				"disable_buyback_cooldown": $.GetContextPanel().FindChildTraverse("buyback_cooldown_custom").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_custom").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_custom").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_custom").GetSelected().id,
 				"level_cap": $.GetContextPanel().FindChildTraverse("max_level_dropdown_custom").GetSelected().id,
@@ -224,7 +217,6 @@ function SetGameMode()
 			"modes": {
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_10v10").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_10v10").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_10v10").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_10v10").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_10v10").GetSelected().id,
 				"level_cap": $.GetContextPanel().FindChildTraverse("max_level_dropdown_10v10").GetSelected().id,

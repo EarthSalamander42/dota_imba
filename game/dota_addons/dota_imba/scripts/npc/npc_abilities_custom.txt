@@ -471,7 +471,7 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Roshan: Bash (normal)
+	// Roshan: Bash
 	//=================================================================================================================
 	"imba_roshan_bash"
 	{
@@ -494,8 +494,8 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"debuff_duration"						"4"
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"6.0"
 			}
 			"02"
 			{
@@ -505,17 +505,22 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"8"
+				"stacking_damage"						"30"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"armor_reduction"						"-4"
+				"base_armor"							"8"
 			}
 			"05"
 			{
+				"var_type"								"FIELD_INTEGER"
+				"stacking_armor"						"4"
+			}
+			"06"
+			{
 				"var_type"								"FIELD_FLOAT"
-				"bash_duration"							"1.5"
+				"bash_duration"							"1.35"
 			}
 		}
 
@@ -554,14 +559,14 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
 				}
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Roshan: Slam (normal)
+	// Roshan: Slam
 	//=================================================================================================================
 	"imba_roshan_slam"
 	{
@@ -593,32 +598,37 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slam_radius"							"375"
+				"slam_radius"							"500"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"90"
+				"base_damage"							"100"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"dmg_per_minute"						"15"
+				"stacking_damage"						"50"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"armor_reduction"						"-6"
+				"base_armor"							"4"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slow"									"-50"
+				"stacking_armor"						"2"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"debuff_duration"						"4"
+				"slow"									"-70"
+			}
+			"07"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"debuff_duration"						"5.5"
 			}
 		}
 
@@ -629,7 +639,8 @@
 				"ScriptFile"							"hero/neutral_roshan.lua"
 				"Function"								"RoshanSlam"
 
-				"modifier_debuff"						"modifier_imba_roshan_slam"
+				"modifier_slow"							"modifier_imba_roshan_slam"
+				"modifier_armor"						"modifier_imba_roshan_slam_armor"
 				"sound_cast"							"Roshan.Slam"
 				"particle_slam"							"particles/neutral_fx/roshan_slam.vpcf"
 			}
@@ -650,32 +661,46 @@
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow"
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_reduction" 
+				}
+			}
+
+			"modifier_imba_roshan_slam_armor"
+			{
+				"Passive"								"0"
+				"IsHidden"								"1"
+				"IsDebuff"								"1"
+				"IsPurgable"							"1"
+
+				"Duration"								"%debuff_duration"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"-1" 
 				}
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Roshan: Summon Roshlings (normal)
+	// Roshan: Summon Roshlings
 	//=================================================================================================================
 	"imba_roshan_summon"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"							"roshan_spell_block"
-		"MaxLevel"										"1"
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"					"roshan_spell_block"
+		"MaxLevel"								"1"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"0"
+		"AbilityManaCost"						"0"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"90.0"
-		"AbilityCastPoint"								"0.0"
+		"AbilityCooldown"						"90.0"
+		"AbilityCastPoint"						"0.0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -683,45 +708,44 @@
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"summon_duration"						"60"
+				"var_type"						"FIELD_INTEGER"
+				"summon_duration"				"60"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"summon_amount"							"2"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"10"
 			}
 		}
 
 		"OnSpellStart"
 		{
-			"SpawnUnit"
+			"RunScript"
 			{
-				"UnitName"								"npc_imba_roshling"
-				"Target" 								"CASTER"
-				"Duration"								"%summon_duration"
-				"UnitCount"								"%summon_amount"
-				"UnitLimit"								"4"
-				"SpawnRadius"							"250"
-				
-				"OnSpawn"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"					"modifier_kill"
-						"Target"						"TARGET"
-						"Duration"						"%summon_duration"
-					}
+				"ScriptFile"					"hero/neutral_roshan.lua"
+				"Function"						"RoshanSummon"
 
+				"sound_summon"					"DOTA_Item.Necronomicon.Activate"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_roshan_summon_passive"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"OnAttackLanded"
+				{
 					"RunScript"
 					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanSummon"
+						"ScriptFile"			"hero/neutral_roshan.lua"
+						"Function"				"RoshanSummonAttack"
 
-						"sound_summon"					"DOTA_Item.Necronomicon.Activate"
-						"ability_bash"					"imba_roshling_bash"
-						"ability_aura"					"imba_roshling_aura"
-						"ability_passives"				"imba_roshling_immortal_strength"
+						"modifier_bonus"		"modifier_imba_roshling_bash_debuff"
 					}
 				}
 			}
@@ -742,10 +766,6 @@
 		"AbilityTextureName"							"roshan_bash"
 		"MaxLevel"										"1"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"8.0"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -758,22 +778,7 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"20"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"stacking_damage"						"2"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"armor_reduction"						"-4"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"bash_duration"							"1.0"
+				"damage_bonus"							"10"
 			}
 		}
 
@@ -793,10 +798,9 @@
 					"RunScript"
 					{
 						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanBash"
+						"Function"						"RoshlingBash"
 
 						"modifier_debuff"				"modifier_imba_roshling_bash_debuff"
-						"sound_bash"					"RoshanDT.Bash"
 					}
 				}
 			}
@@ -809,11 +813,6 @@
 				"IsPurgable"							"0"
 
 				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_reduction"
-				}
 			}
 		}
 	}
@@ -847,7 +846,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"regen_bonus"							"30"
+				"regen_bonus"							"25"
 			}
 			"04"
 			{
@@ -892,101 +891,7 @@
 	}
 
 	//=================================================================================================================
-	// Roshling passive buffs
-	//=================================================================================================================
-	"imba_roshling_immortal_strength"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"							"rubick_empty1"
-		"MaxLevel"										"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"regen_per_minute"						"2"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_per_minute"						"2"
-			}
-			"03"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.25"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"20"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_roshling_immortal_strength"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"							"60.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanUpgrade"
-
-						"modifier_stack"				"modifier_imba_roshling_immortal_strength_stack"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanUpgrade"
-
-						"modifier_stack"				"modifier_imba_roshling_immortal_strength_stack"
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus" 
-				}
-			}
-
-			"modifier_imba_roshling_immortal_strength_stack"
-			{
-				"Passive"								"0"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute" 
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Roshan: Rage of the Immortal (normal)
+	// Roshan: Rage of the Immortal
 	//=================================================================================================================
 	"imba_roshan_rage"
 	{
@@ -1004,16 +909,21 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"hp_threshold"							"10"
+				"base_hp_threshold"						"1000"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"15"
+				"var_type"								"FIELD_FLOAT"
+				"stacking_hp_threshold_perc"			"0.9"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
+				"as_bonus"								"10"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
 				"armor_bonus"							"1"
 			}
 		}
@@ -1027,7 +937,7 @@
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
 
-				"ThinkInterval"							"0.5"
+				"ThinkInterval"							"0.1"
 
 				"OnIntervalThink"
 				{
@@ -1107,12 +1017,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"300"
+				"base_damage"							"500"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"dmg_per_minute"						"30"
+				"stacking_damage"						"250"
 			}
 			"06"
 			{
@@ -1145,6 +1055,7 @@
 		"OnProjectileHitUnit"
 		{
 			"DeleteOnHit"								"0"
+
 			"RunScript"
 			{
 				"ScriptFile"							"hero/neutral_roshan.lua"
@@ -1154,7 +1065,7 @@
 	}
 
 	//=================================================================================================================
-	// Roshan: Strength of the Immortal (normal passive buffs)
+	// Roshan: Strength of the Immortal (passive buffs)
 	//=================================================================================================================
 	"imba_roshan_immortal_strength"
 	{
@@ -1172,32 +1083,32 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_hp_regen"							"20"
+				"bonus_damage"							"50"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"regen_per_minute"						"3"
+				"bonus_armor"							"5"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_per_minute"						"2"
+				"bonus_as"								"40"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"armor_per_minute"						"0.25"
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health"							"1000"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"as_bonus"								"130"
+				"bonus_ms"								"10"
 			}
 			"06"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"purge_interval"						"1.0"
+				"var_type"								"FIELD_INTEGER"
+				"base_as"								"100"
 			}
 		}
 
@@ -1209,19 +1120,6 @@
 				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
-
-				"ThinkInterval"							"60.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanUpgrade"
-
-						"modifier_stack"				"modifier_imba_roshan_immortal_strength_stack"
-					}
-				}
 
 				"OnCreated"
 				{
@@ -1245,8 +1143,7 @@
 		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%base_hp_regen"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_bonus" 
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%base_as" 
 				}
 
 				"States"
@@ -1261,12 +1158,13 @@
 				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
-		
+
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%regen_per_minute"
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%damage_per_minute"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%armor_per_minute" 
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"			"%bonus_damage"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%bonus_armor"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_ms"
 				}
 			}
 
@@ -1276,17 +1174,6 @@
 				"IsHidden"								"1"
 				"IsBuff"								"1"
 				"IsPurgable"							"0"
-		
-				"ThinkInterval"							"%purge_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanPurge"
-					}
-				}
 
 				"OnAttacked"
 				{
@@ -1301,7 +1188,7 @@
 	}
 
 	//=================================================================================================================
-	// Roshan: AI controller (normal)
+	// Roshan: AI controller
 	//=================================================================================================================
 	"imba_roshan_ai"
 	{
@@ -1319,42 +1206,37 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slam_radius"							"350"
+				"slam_radius"							"500"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"slam_targets"							"3"
+				"var_type"								"FIELD_FLOAT"
+				"roshling_pct"							"0.7"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"roshling_pct"							"0.6"
+				"fury_pct"								"0.35"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"fury_pct"								"0.3"
+				"var_type"								"FIELD_INTEGER"
+				"leash_radius"							"500"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"leash_radius"							"900"
+				"leash_time"							"3"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"leash_margin"							"50"
+				"super_leash_time"						"6"
 			}
 			"07"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"leash_time"							"6"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"think_interval"						"0.5"
+				"var_type"								"FIELD_INTEGER"
+				"leash_margin"							"50"
 			}
 		}
 
@@ -1368,12 +1250,13 @@
 				"IsPurgable"							"0"
 
 				"ThinkInterval"							"0.1"
+
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"EvadeCourier"
+						"Function"						"RoshanAIthink"
 					}
 				}
 
@@ -1382,25 +1265,9 @@
 					"RunScript"
 					{
 						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanAI"
+						"Function"						"RoshanAIstart"
 
-						"ability_slam"					"imba_roshan_slam"
-						"ability_roshling"				"imba_roshan_summon"
-						"ability_fury"					"imba_roshan_fury"
 						"damage_taken"					"%attack_damage"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/neutral_roshan.lua"
-						"Function"						"RoshanAI"
-
-						"ability_slam"					"imba_roshan_slam"
-						"ability_roshling"				"imba_roshan_summon"
-						"ability_fury"					"imba_roshan_fury"
 					}
 				}
 			}
@@ -12516,6 +12383,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"1200"
 			}
+			// Stun duration increase hardcoded in the modifier filter
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -12551,17 +12419,6 @@
 				"IsHidden"					"0"
 				"IsDebuff"					"1"
 				"IsPurgable"				"0"
-
-				"ThinkInterval"				"%think_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"Gravity"
-					}
-				}
 			}
 		}
 	}

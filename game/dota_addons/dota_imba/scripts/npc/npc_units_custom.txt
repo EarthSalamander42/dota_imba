@@ -2135,7 +2135,7 @@
 	}
 
 	//=================================================================================
-	// Roshan (normal)
+	// Roshan
 	//=================================================================================
 	"npc_imba_roshan"
 	{
@@ -2150,7 +2150,6 @@
 				
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"5"
 		"Ability1"					"imba_roshan_bash"
 		"Ability2"					"imba_roshan_slam"
 		"Ability3"					"imba_roshan_summon"
@@ -2161,27 +2160,27 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"50"
+		"ArmorPhysical"				"14"
+		"MagicalResistance"			"60"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"90"
-		"AttackDamageMax"			"90"
+		"AttackDamageMin"			"100"
+		"AttackDamageMax"			"100"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"2.0"
 		"AttackAnimationPoint"		"0.3"
-		"AttackAcquisitionRange"	"150"
-		"AttackRange"				"128"
+		"AttackAcquisitionRange"	"200"
+		"AttackRange"				"200"
 		"ProjectileModel"			"ranged_goodguy"
 		"ProjectileSpeed"			"1000"
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"2000"
-		"BountyGoldMin"				"350"
-		"BountyGoldMax"				"400"
+		"BountyXP"					"1500"
+		"BountyGoldMin"				"300"
+		"BountyGoldMax"				"300"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -2197,15 +2196,15 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"9000"
-		"StatusHealthRegen"			"20"
+		"StatusHealth"				"7000"
+		"StatusHealthRegen"			"50"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
@@ -2239,23 +2238,21 @@
 		//----------------------------------------------------------------
 		"Ability1"					"imba_roshling_bash"
 		"Ability2"					"imba_roshling_aura"
-		"Ability3"					""
-		"Ability4"					"imba_roshling_immortal_strength"
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"4"
-		"MagicalResistance"			"0"
+		"ArmorPhysical"				"10"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30"
-		"AttackDamageMax"			"30"
+		"AttackDamageMin"			"50"
+		"AttackDamageMax"			"50"
 		"AttackRate"				"1.0"
 		"AttackAnimationPoint"		"0.26"
 		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"128"
+		"AttackRange"				"150"
 		"ProjectileModel"			"ranged_goodguy"
 		"ProjectileSpeed"			"1000"   
 
@@ -2274,19 +2271,19 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"400"
+		"MovementSpeed"				"550"
 		"MovementTurnRate"			"0.5"
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"1000"
-		"StatusHealthRegen"			"10"
+		"StatusHealthRegen"			"25"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
 		// Team
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_LIGHT"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		

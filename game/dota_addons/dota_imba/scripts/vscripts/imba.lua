@@ -218,11 +218,205 @@ function GameMode:ModifierFilter( keys )
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
 
+	local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
+	local modifier_name = keys.name_const
+	local modifier_caster
+	if keys.entindex_caster_const then
+		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+	else
+		return true
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Roshan special modifier rules
+	-------------------------------------------------------------------------------------------------
+
+	if IsRoshan(modifier_owner) then
+		
+		-- Ignore stuns
+		if modifier_name == "modifier_stunned" then
+			return false
+		end
+
+		-- Halve the duration of everything else
+		if modifier_caster ~= modifier_owner and keys.duration > 0 then
+			keys.duration = keys.duration * 0.5
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Enigma's gravity stun duration increase
+	-------------------------------------------------------------------------------------------------
+
+	if modifier_owner:HasModifier("modifier_imba_enigma_gravity") then
+		if modifier_name == "modifier_stunned" and keys.duration > 0 then
+			keys.duration = keys.duration * 1.2
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Greatwyrm Plate debuff duration reduction
+	-------------------------------------------------------------------------------------------------
+
+	if modifier_owner:HasModifier("modifier_item_greatwyrm_plate_unique") or modifier_owner:HasModifier("modifier_item_greatwyrm_plate_active") then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			keys.duration = keys.duration * 0.85
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Cursed Rapier debuff duration reduction
+	-------------------------------------------------------------------------------------------------
+
+	if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			keys.duration = keys.duration * 0.5
+		end
+	end
+
 	return true
 end
 
 -- Item added to inventory filter
 function GameMode:ItemAddedFilter( keys )
+
+	-- Typical keys:
+	-- inventory_parent_entindex_const: 852
+	-- item_entindex_const: 1519
+	-- item_parent_entindex_const: -1
+	-- suggested_slot: -1
+
+	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
+	local item = EntIndexToHScript(keys.item_entindex_const)
+
+	-------------------------------------------------------------------------------------------------
+	-- Aegis of the Immortal pickup logic
+	-------------------------------------------------------------------------------------------------
+
+	if item:GetName() == "item_imba_aegis" then
+		
+		-- If this is a player, do Aegis stuff
+		if unit:GetPlayerOwnerID() and PlayerResource:IsImbaPlayer(unit:GetPlayerOwnerID()) then
+			
+			-- Apply.refresh the Aegis reincarnation modifier
+			item:ApplyDataDrivenModifier(unit, unit, "modifier_item_imba_aegis", {})
+
+			-- Flag unit as an aegis holder
+			unit.has_aegis = true
+
+			-- Display aegis pickup message for all players
+			local line_duration = 7
+			Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
+			Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, continue = true})
+			Notifications:BottomToAll({text = "#imba_player_aegis_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+
+			-- Destroy the item
+			return false
+
+		-- If this is not a player, do nothing and drop another Aegis
+		else
+			local drop = CreateItem("item_imba_aegis", nil, nil)
+			CreateItemOnPositionSync(unit:GetAbsOrigin(), drop)
+			drop:LaunchLoot(false, 250, 0.5, unit:GetAbsOrigin() + RandomVector(100))
+
+			-- Destroy the item
+			return false
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Rapier pickup logic
+	-------------------------------------------------------------------------------------------------
+
+	if item:GetName() == "item_imba_rapier_dummy" or item:GetName() == "item_imba_rapier_2_dummy" or item:GetName() == "item_imba_rapier_magic_dummy" or item:GetName() == "item_imba_rapier_magic_2_dummy" then
+		
+		-- Only real heroes can pick up rapiers
+		local item_name = item:GetName()
+		if unit:IsRealHero() then
+			if item_name == "item_imba_rapier_dummy" then
+				unit:AddItem(CreateItem("item_imba_rapier", unit, unit))
+			elseif item_name == "item_imba_rapier_2_dummy" then
+				unit:AddItem(CreateItem("item_imba_rapier_2", unit, unit))
+			elseif item_name == "item_imba_rapier_magic_dummy" then
+				unit:AddItem(CreateItem("item_imba_rapier_magic", unit, unit))
+			elseif item_name == "item_imba_rapier_magic_2_dummy" then
+				unit:AddItem(CreateItem("item_imba_rapier_magic_2", unit, unit))
+			end
+
+		-- If this is a non-hero, launch another dummy
+		else
+			local unit_pos = unit:GetAbsOrigin()
+			local drop = CreateItem(item_name, nil, nil)
+			CreateItemOnPositionSync(unit_pos, drop)
+			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
+		end
+		
+		return false		
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Courier Rapier prohibition
+	-------------------------------------------------------------------------------------------------
+
+	if item:GetName() == "item_imba_rapier" or item:GetName() == "item_imba_rapier_2" or item:GetName() == "item_imba_rapier_magic" or item:GetName() == "item_imba_rapier_magic_2" or item:GetName() == "item_imba_rapier_cursed"then
+		
+		-- Launch a dummy rapier if this is not a real hero
+		if not unit:IsRealHero() then
+
+			-- Fetch appropriate dummy name
+			local item_name = item:GetName()
+			if item_name == "item_imba_rapier" then
+				item_name = "item_imba_rapier_dummy"
+			elseif item_name == "item_imba_rapier_2" then
+				item_name = "item_imba_rapier_2_dummy"
+			elseif item_name == "item_imba_rapier_magic" then
+				item_name = "item_imba_rapier_magic_dummy"
+			elseif item_name == "item_imba_rapier_magic_2" then
+				item_name = "item_imba_rapier_magic_2_dummy"
+			end
+
+			-- Launch dummy
+			local unit_pos = unit:GetAbsOrigin()
+			local drop = CreateItem(item_name, nil, nil)
+			CreateItemOnPositionSync(unit_pos, drop)
+			drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
+			return false
+		end	
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Tempest Double forbidden items
+	-------------------------------------------------------------------------------------------------
+	
+	if unit:HasModifier("modifier_arc_warden_tempest_double") then
+
+		-- List of items the clone can't carry
+		local clone_forbidden_items = {
+			"item_imba_rapier",
+			"item_imba_rapier_2",
+			"item_imba_rapier_magic",
+			"item_imba_rapier_magic_2",
+			"item_imba_rapier_dummy",
+			"item_imba_rapier_2_dummy",
+			"item_imba_rapier_magic_dummy",
+			"item_imba_rapier_magic_2_dummy",
+			"item_imba_rapier_cursed",
+			"item_imba_moon_shard",
+			"item_imba_soul_of_truth",
+			"item_imba_mango",
+			"item_imba_refresher",
+			"item_imba_ultimate_scepter_synth"
+		}
+
+		-- If this item is forbidden, delete it
+		local item_name = item:GetName()
+		for _, forbidden_item in pairs(clone_forbidden_items) do
+			if item_name == forbidden_item then
+				return false
+			end
+		end
+	end
+
 	return true
 end
 
@@ -243,7 +437,10 @@ function GameMode:OrderFilter( keys )
 	local units = keys["units"]
 	local unit = EntIndexToHScript(units["0"])
 
+	------------------------------------------------------------------------------------
 	-- Queen of Pain's Sonic Wave confusion
+	------------------------------------------------------------------------------------
+
 	if unit:HasModifier("modifier_imba_sonic_wave_daze") then
 
 		-- Determine order type
@@ -341,22 +538,26 @@ function GameMode:DamageFilter( keys )
 	-- Spell power handling
 	if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and attacker:IsRealHero() then
 
-		-- Compensate for in-built spell power mechanics
-		local base_damage_amp = attacker:GetIntellect() * 0.000625 + GetSpellPowerFromTalents(attacker) * 0.01
-		keys.damage = keys.damage / (1 + base_damage_amp)
+		-- If the attacker and victim are on the same team, do nothing
+		if victim:GetTeam() ~= attacker:GetTeam() then
 
-		-- Fetch player's current spell power
-		local spell_power = GetSpellPower(attacker) * 0.01
+			-- Compensate for in-built spell power mechanics
+			local base_damage_amp = attacker:GetIntellect() * 0.000625 + GetSpellPowerFromTalents(attacker) * 0.01
+			keys.damage = keys.damage / (1 + base_damage_amp)
 
-		-- If the target is too far away, do nothing
-		local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
-		if distance <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-			
-			-- Adjust damage depending on its type
-			if damage_type == DAMAGE_TYPE_MAGICAL then
-				keys.damage = keys.damage * (1 + spell_power)
-			elseif damage_type == DAMAGE_TYPE_PURE then
-				keys.damage = keys.damage * (1 + spell_power * 0.3)
+			-- Fetch player's current spell power
+			local spell_power = GetSpellPower(attacker) * 0.01
+
+			-- If the target is too far away, do nothing
+			local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
+			if distance <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
+				
+				-- Adjust damage depending on its type
+				if damage_type == DAMAGE_TYPE_MAGICAL then
+					keys.damage = keys.damage * (1 + spell_power)
+				elseif damage_type == DAMAGE_TYPE_PURE then
+					keys.damage = keys.damage * (1 + spell_power * 0.3)
+				end
 			end
 		end
 	end
@@ -368,6 +569,11 @@ function GameMode:DamageFilter( keys )
 		local target_crit_multiplier = 135
 		keys.damage = keys.damage * target_crit_multiplier * 0.01
 		display_red_crit_number = true
+	end
+
+	-- Cursed Rapier damage reduction
+	if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
+		keys.damage = keys.damage * 0.25
 	end
 
 	-- Spiked Carapace damage prevention
@@ -388,7 +594,7 @@ function GameMode:DamageFilter( keys )
 
 			-- Reduce damage
 			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.92
+				keys.damage = keys.damage * 0.90
 			end
 
 			-- Physical damage block
@@ -420,7 +626,7 @@ function GameMode:DamageFilter( keys )
 
 			-- Reduce damage
 			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.88
+				keys.damage = keys.damage * 0.85
 			end
 
 			-- Physical damage block
@@ -545,6 +751,44 @@ function GameMode:DamageFilter( keys )
 			if scythe_caster and attacker ~= scythe_caster then
 				keys.damage = 0
 				TriggerNecrolyteReaperScytheDeath(victim, scythe_caster)
+			end
+		end
+	end
+
+	-- Cheese auto-healing
+	if victim:HasModifier("modifier_imba_cheese_death_prevention") then
+		
+		-- Check if death is imminent
+		local victim_health = victim:GetHealth()
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
+
+			-- Find the cheese item handle
+			local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
+			local item = cheese_modifier:GetAbility()
+
+			-- Spend a charge of Cheese if the cooldown is ready
+			if item:IsCooldownReady() then
+				
+				-- Reduce damage by your remaining amount of health
+				keys.damage = keys.damage - victim_health
+
+				-- Play sound
+				victim:EmitSound("DOTA_Item.Cheese.Activate")
+
+				-- Fully heal yourself
+				victim:Heal(victim:GetMaxHealth(), victim)
+				victim:GiveMana(victim:GetMaxMana())
+
+				-- Spend a charge
+				item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
+
+				-- Trigger cooldown
+				item:StartCooldown( item:GetCooldown(1) * GetCooldownReduction(victim) )
+
+				-- If this was the last charge, remove the item
+				if item:GetCurrentCharges() == 0 then
+					victim:RemoveItem(item)
+				end
 			end
 		end
 	end
@@ -1003,7 +1247,6 @@ function GameMode:OnGameInProgress()
 		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] do
 			TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
 		end
-
 		
 		-- Safelane towers
 		for i = 1, 3 do
@@ -1138,19 +1381,20 @@ function GameMode:OnGameInProgress()
 		dire_right_t4.tower_lane = "midlane"
 
 		-- Add and level up the multishot ability
-		local multishot_ability = "imba_tower_multishot"
-		radiant_left_t4:AddAbility(multishot_ability)
-		dire_left_t4:AddAbility(multishot_ability)
-		radiant_right_t4:AddAbility(multishot_ability)
-		dire_right_t4:AddAbility(multishot_ability)
-		local radiant_left_ability = radiant_left_t4:FindAbilityByName(multishot_ability)
-		local dire_left_ability = dire_left_t4:FindAbilityByName(multishot_ability)
-		local radiant_right_ability = radiant_right_t4:FindAbilityByName(multishot_ability)
-		local dire_right_ability = dire_right_t4:FindAbilityByName(multishot_ability)
-		radiant_left_ability:SetLevel(3)
-		dire_left_ability:SetLevel(3)
-		radiant_right_ability:SetLevel(3)
-		dire_right_ability:SetLevel(3)
+		local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][1]
+		local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][1]
+		radiant_left_t4:AddAbility(ability_name_1)
+		dire_left_t4:AddAbility(ability_name_1)
+		radiant_right_t4:AddAbility(ability_name_2)
+		dire_right_t4:AddAbility(ability_name_2)
+		local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
+		local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
+		local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
+		local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
+		radiant_left_ability:SetLevel(1)
+		dire_left_ability:SetLevel(1)
+		radiant_right_ability:SetLevel(1)
+		dire_right_ability:SetLevel(1)
 	end
 
 end
