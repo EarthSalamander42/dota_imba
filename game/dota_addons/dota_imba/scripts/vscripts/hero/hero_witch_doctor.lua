@@ -304,7 +304,15 @@ function witch_doctor_death_ward_imba:OnSpellStart()
 		self.death_ward:SetBaseAttackTime( self:GetSpecialValueFor("base_attack_time") )
 		self.death_ward:AddNewModifier(caster, self, "modifier_death_ward_handling", {duration = self:GetChannelTime()})
 		EmitSoundOn("Hero_WitchDoctor.Death_WardBuild", self.death_ward)
-		local exceptionList = {["item_starfury"] = true,}
+		local exceptionList = {
+			["item_imba_azura"] = true,
+			["item_imba_bfury"] = true,
+			["item_imba_butterfly"] = true,
+			["item_imba_echo_sabre"] = true,
+			["item_imba_reverb_rapier"] = true,
+			["item_imba_starfury"] = true,
+			["item_imba_shotgun"] = true,
+		}
 		for i = 0, 5 do
 			local item = caster:GetItemInSlot(i)
 			if item and not exceptionList[item:GetName()] then
