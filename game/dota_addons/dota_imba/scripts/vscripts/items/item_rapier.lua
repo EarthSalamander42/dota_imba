@@ -103,15 +103,19 @@ function RapierDrop( keys )
 		caster.rapier_cursed_pfx = nil
 	end
 
-	-- Reset cursed rapier corruption count
-	caster.corruption_total_time = nil
+	-- Illusions stop here
+	if caster:IsRealHero() then
 
-	-- Remove the rapiers from the player's inventory
-	caster:RemoveItem(item)
+		-- Reset cursed rapier corruption count
+		caster.corruption_total_time = nil
 
-	-- Drop this rapier
-	local caster_pos = caster:GetAbsOrigin()
-	local drop = CreateItem(rapier_type, nil, nil)
-	CreateItemOnPositionSync(caster_pos, drop)
-	drop:LaunchLoot(false, 250, 0.5, caster_pos + RandomVector(100))
+		-- Remove the rapiers from the player's inventory
+		caster:RemoveItem(item)
+
+		-- Drop this rapier
+		local caster_pos = caster:GetAbsOrigin()
+		local drop = CreateItem(rapier_type, nil, nil)
+		CreateItemOnPositionSync(caster_pos, drop)
+		drop:LaunchLoot(false, 250, 0.5, caster_pos + RandomVector(100))
+	end
 end

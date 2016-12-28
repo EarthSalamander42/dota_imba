@@ -361,7 +361,7 @@ function GameMode:ItemAddedFilter( keys )
 	if item:GetName() == "item_imba_rapier" or item:GetName() == "item_imba_rapier_2" or item:GetName() == "item_imba_rapier_magic" or item:GetName() == "item_imba_rapier_magic_2" or item:GetName() == "item_imba_rapier_cursed"then
 		
 		-- Launch a dummy rapier if this is not a real hero
-		if not unit:IsRealHero() then
+		if not unit:IsHero() then
 
 			-- Fetch appropriate dummy name
 			local item_name = item:GetName()
