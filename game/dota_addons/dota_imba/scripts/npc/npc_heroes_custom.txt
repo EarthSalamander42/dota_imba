@@ -3131,10 +3131,10 @@
 	{
 		"override_hero"				"npc_dota_hero_witch_doctor"
 
-		//"Ability1"					"imba_witch_doctor_paralyzing_cask"
-		//"Ability2"					"imba_witch_doctor_voodoo_restoration"
-		//"Ability3"					"imba_witch_doctor_maledict"
-		//"Ability4"					"imba_witch_doctor_death_ward"
+		"Ability1"					"witch_doctor_paralyzing_cask_imba"
+		"Ability2"					"witch_doctor_voodoo_restoration_imba"
+		"Ability3"					"witch_doctor_maledict_imba"
+		"Ability4"					"witch_doctor_death_ward_imba"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
