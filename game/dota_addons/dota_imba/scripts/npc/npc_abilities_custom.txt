@@ -34695,4 +34695,331 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Witch Doctor: Paralyzing Cask
+	//=================================================================================================================
+	"imba_witch_doctor_paralyzing_cask"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_witch_doctor"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
+		"AbilityTextureName"			"witch_doctor_paralyzing_cask"
+		"CastFilterRejectCaster" 		"1"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_cast.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce01.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/cask_bounce02.vsnd"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityModifierSupportValue"	"0.5"	// Can have multiple bounces
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_duration"			"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_duration"		"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_damage"			"50"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage"			"75 100 125 150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_range"			"750"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounces"				"6 10 14 18"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_delay"			"0.15"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_split"			"1"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_split"			"2"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Witch Doctor: Voodoo Restoration
+	//=================================================================================================================
+	"imba_witch_doctor_voodoo_restoration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"witch_doctor_voodoo_restoration"
+		"ScriptFile"					"hero/hero_witch_doctor"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack_explosion.vpcf"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_loop.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_off.vsnd"
+		}
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"8 10 12 14"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second"			"8 10 12 14"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"525 550 575 600"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal"						"16 24 32 40"
+				"LinkedSpecialBonus"		"special_bonus_unique_witch_doctor_2"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_to_heal"				"25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cleanse_interval"			"6 5 4 3"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"heal_interval"				"0.2"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Witch Doctor: Maledict
+	//=================================================================================================================
+	"imba_witch_doctor_maledict"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"AbilityTextureName"			"witch_doctor_maledict"
+		"ScriptFile"					"hero/hero_witch_doctor"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_cast.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_fail.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_loop.vsnd"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/maledict_tick.vsnd"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+		"AbilityDuration"				"12.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"15 20 25 30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"105 110 115 120"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"225 250 275 300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration_tooltip"			"12"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"20 30 40 50"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_threshold"	"100"
+			}			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ticks"						"4"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_time"					"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Witch Doctor: Death Ward
+	//=================================================================================================================
+	"imba_witch_doctor_death_ward"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"					"ability_lua"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"witch_doctor_death_ward"
+		"ScriptFile"					"hero/hero_witch_doctor"
+		"FightRecapLevel"				"2"
+
+		"HasScepterUpgrade"			"1"
+		
+		"precache"
+		{
+			"particle" 		"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_deathward_glow_c.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_skull.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_cast_staff_fire.vpcf"
+			"soundfile"		"sounds/weapons/hero/witch_doctor/deathward_build.vsnd"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80.0"
+		"AbilityChannelTime"			"8.0 8.0 8.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200 200 200"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90 180 270"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"0.22 0.2 0.18"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounces_scepter"		"9"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"650 725 800"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"int_to_damage"			"100"
+			}
+		}
+	}
 }
