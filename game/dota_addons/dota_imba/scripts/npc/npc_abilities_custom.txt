@@ -83,12 +83,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"total_armor"							"5"
+				"bonus_armor"							"5"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"ancient_health"						"10000"
+				"ancient_health"						"15000"
 			}
 		}
 
@@ -135,7 +135,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ABILITY_LAYOUT"			"6"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%total_armor"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
 				}
 			}
 		}
@@ -164,13 +164,18 @@
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"mega_armor_per_minute"					"0.7"
+				"var_type"								"FIELD_INTEGER"
+				"bonus_health_per_minute"				"5"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"mega_magic_armor_per_minute"			"2"
+				"mega_armor"							"15"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"mega_magic_armor"						"35"
 			}
 		}
 
@@ -221,7 +226,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%mega_armor_per_minute"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%mega_armor"
 				}
 			}
 
@@ -234,7 +239,7 @@
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"1"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%mega_magic_armor"
 				}
 			}
 		}

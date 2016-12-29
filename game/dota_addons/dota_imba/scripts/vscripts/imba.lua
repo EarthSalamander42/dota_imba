@@ -157,9 +157,9 @@ function GameMode:BountyRuneFilter( keys )
 	--xp_bounty	 ==> 	136.5
 	--gold_bounty	 ==> 	132.6
 
-	local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-	keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
-	keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
+	-- local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
+	-- keys["gold_bounty"] = ( 1 + CUSTOM_GOLD_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["gold_bounty"]
+	-- keys["xp_bounty"] = ( 1 + CUSTOM_XP_BONUS * 0.01 ) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01) * keys["xp_bounty"]
 
 	return true
 end
@@ -288,12 +288,40 @@ function GameMode:ItemAddedFilter( keys )
 
 	local unit = EntIndexToHScript(keys.inventory_parent_entindex_const)
 	local item = EntIndexToHScript(keys.item_entindex_const)
+	local item_name = 0
+	if item:GetName() then
+		item_name = item:GetName()
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Rune pickup logic
+	-------------------------------------------------------------------------------------------------
+
+	if item_name == "item_imba_rune_bounty" then
+		PickupBountyRune(item, unit)
+		return false
+	end
+
+	if item_name == "item_imba_rune_double_damage" then
+		PickupDoubleDamageRune(item, unit)
+		return false
+	end
+
+	if item_name == "item_imba_rune_haste" then
+		PickupHasteRune(item, unit)
+		return false
+	end
+
+	if item_name == "item_imba_rune_regeneration" then
+		PickupRegenerationRune(item, unit)
+		return false
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Aegis of the Immortal pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item:GetName() == "item_imba_aegis" then
+	if item_name == "item_imba_aegis" then
 		
 		-- If this is a player, do Aegis stuff
 		if unit:GetPlayerOwnerID() and PlayerResource:IsImbaPlayer(unit:GetPlayerOwnerID()) then
@@ -328,19 +356,48 @@ function GameMode:ItemAddedFilter( keys )
 	-- Rapier pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item:GetName() == "item_imba_rapier_dummy" or item:GetName() == "item_imba_rapier_2_dummy" or item:GetName() == "item_imba_rapier_magic_dummy" or item:GetName() == "item_imba_rapier_magic_2_dummy" then
+	if item_name == "item_imba_rapier_dummy" or item_name == "item_imba_rapier_2_dummy" or item_name == "item_imba_rapier_magic_dummy" or item_name == "item_imba_rapier_magic_2_dummy" then
 		
 		-- Only real heroes can pick up rapiers
-		local item_name = item:GetName()
 		if unit:IsRealHero() then
-			if item_name == "item_imba_rapier_dummy" then
+
+			-- Check current main inventory status
+			local free_slot = false
+			local rapier_amount = 0
+			local rapier_2_amount = 0
+			local rapier_magic_amount = 0
+			local rapier_magic_2_amount = 0
+			for i = 0, 8 do
+				local current_item = unit:GetItemInSlot(i)
+				if not current_item then
+					free_slot = true
+				elseif current_item and current_item:GetName() == "item_imba_rapier" then
+					rapier_amount = rapier_amount + 1
+				elseif current_item and current_item:GetName() == "item_imba_rapier_2" then
+					rapier_2_amount = rapier_2_amount + 1
+				elseif current_item and current_item:GetName() == "item_imba_rapier_magic" then
+					rapier_magic_amount = rapier_magic_amount + 1
+				elseif current_item and current_item:GetName() == "item_imba_rapier_magic_2" then
+					rapier_magic_2_amount = rapier_magic_2_amount + 1
+				end
+			end
+
+			-- If the conditions are just right, add a rapier
+			if item_name == "item_imba_rapier_dummy" and (free_slot or rapier_amount >= 2) then
 				unit:AddItem(CreateItem("item_imba_rapier", unit, unit))
-			elseif item_name == "item_imba_rapier_2_dummy" then
+			elseif item_name == "item_imba_rapier_2_dummy" and (free_slot or rapier_magic_2_amount >= 1) then
 				unit:AddItem(CreateItem("item_imba_rapier_2", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_dummy" then
+			elseif item_name == "item_imba_rapier_magic_dummy" and (free_slot or rapier_magic_amount >= 2) then
 				unit:AddItem(CreateItem("item_imba_rapier_magic", unit, unit))
-			elseif item_name == "item_imba_rapier_magic_2_dummy" then
+			elseif item_name == "item_imba_rapier_magic_2_dummy" and (free_slot or rapier_2_amount >= 1) then
 				unit:AddItem(CreateItem("item_imba_rapier_magic_2", unit, unit))
+
+			-- Else, launch another dummy
+			else
+				local unit_pos = unit:GetAbsOrigin()
+				local drop = CreateItem(item_name, nil, nil)
+				CreateItemOnPositionSync(unit_pos, drop)
+				drop:LaunchLoot(false, 250, 0.5, unit_pos + RandomVector(100))
 			end
 
 		-- If this is a non-hero, launch another dummy
@@ -358,13 +415,13 @@ function GameMode:ItemAddedFilter( keys )
 	-- Courier Rapier prohibition
 	-------------------------------------------------------------------------------------------------
 
-	if item:GetName() == "item_imba_rapier" or item:GetName() == "item_imba_rapier_2" or item:GetName() == "item_imba_rapier_magic" or item:GetName() == "item_imba_rapier_magic_2" or item:GetName() == "item_imba_rapier_cursed"then
+	if item_name == "item_imba_rapier" or item_name == "item_imba_rapier_2" or item_name == "item_imba_rapier_magic" or item_name == "item_imba_rapier_magic_2" or item_name == "item_imba_rapier_cursed" then
 		
 		-- Launch a dummy rapier if this is not a real hero
 		if not unit:IsHero() then
 
 			-- Fetch appropriate dummy name
-			local item_name = item:GetName()
+
 			if item_name == "item_imba_rapier" then
 				item_name = "item_imba_rapier_dummy"
 			elseif item_name == "item_imba_rapier_2" then
@@ -409,7 +466,6 @@ function GameMode:ItemAddedFilter( keys )
 		}
 
 		-- If this item is forbidden, delete it
-		local item_name = item:GetName()
 		for _, forbidden_item in pairs(clone_forbidden_items) do
 			if item_name == forbidden_item then
 				return false
@@ -927,7 +983,7 @@ function GameMode:OnAllPlayersLoaded()
 
 	if IS_BANNED_PLAYER then
 		Timers:CreateTimer(1, function()
-			Say(nil, "<font color='#FF0000'>Baumi</font> detected, game will not start. Please disconnect.", false)
+			Say(nil, "You are banned from playing IMBA. Game will not start.", false)
 		end)
 	end
 
@@ -1098,11 +1154,9 @@ function GameMode:OnHeroInGame(hero)
 
 end
 
---[[
-	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
+--[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
 	gold will begin to go up in ticks if configured, creeps will spawn, towers will become damageable etc.  This function
-	is useful for starting any game logic timers/thinkers, beginning the first round, etc.
-]]
+	is useful for starting any game logic timers/thinkers, beginning the first round, etc.									]]
 function GameMode:OnGameInProgress()
 
 	-------------------------------------------------------------------------------------------------
@@ -1111,6 +1165,15 @@ function GameMode:OnGameInProgress()
 	
 	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
 	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Rune timers setup
+	-------------------------------------------------------------------------------------------------
+
+	Timers:CreateTimer(0, function()
+		SpawnImbaRunes()
+		return RUNE_SPAWN_TIME
+	end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Structure stats setup

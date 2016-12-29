@@ -18100,5 +18100,124 @@
 		"ItemDisassembleRule"					"DOTA_ITEM_DISASSEMBLE_NEVER"
 	}
 
-	//next free ID: 2218
+	//=================================================================================================================
+	// Bounty Rune
+	//=================================================================================================================
+	"item_imba_rune_bounty"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2218"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_goldxp.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+	}
+
+	//=================================================================================================================
+	// Nightmare Shadow (haste rune)
+	//=================================================================================================================
+	"item_imba_rune_haste"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2219"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_haste01.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_ms_owner"				"100"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_as_owner"				"100"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_ms_aura"					"20"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_as_aura"					"50"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"22"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_rune_haste_owner"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"1"
+
+				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Duration"						"%duration"
+
+				"Aura"							"modifier_imba_rune_haste_aura"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NONE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms_owner"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as_owner"
+				}
+			}
+
+			"modifier_imba_rune_haste_aura"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms_aura"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as_aura"
+				}
+			}
+		}
+	}
+
+	//next free ID: 2222
 }

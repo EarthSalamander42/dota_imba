@@ -23,15 +23,23 @@ function CreepUpgrade( keys )
 
 	-- Parameters
 	local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
-	local magic_armor_per_minute = ability:GetLevelSpecialValueFor("mega_magic_armor_per_minute", ability_level)
+	local magic_armor_per_minute = ability:GetSpecialValueFor("mega_magic_armor_per_minute")
+	local bonus_health_per_minute = ability:GetSpecialValueFor("bonus_health_per_minute")
 
 	-- Adjust creep damage
 	AddStacks(ability, caster, caster, modifier_damage, game_time, true)
 
+	-- Adjust creep health
+	local base_health = caster:GetMaxHealth()
+	local bonus_health = base_health * bonus_health_per_minute * game_time * 0.01
+	Timers:CreateTimer(0.5, function()
+		SetCreatureHealth(caster, base_health + bonus_health, true)
+	end)
+
 	-- Adjust mega creep armor
 	if string.find(caster:GetUnitName(), "mega") then
-		AddStacks(ability, caster, caster, modifier_armor, math.max(game_time - 12, 0), true)
-		AddStacks(ability, caster, caster, modifier_magic_resist, math.floor(100 - 100 * (1 - magic_armor_per_minute / 100) ^ math.max(game_time - 12, 0)), true)
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_armor, {})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_magic_resist, {})
 	end
 end
 

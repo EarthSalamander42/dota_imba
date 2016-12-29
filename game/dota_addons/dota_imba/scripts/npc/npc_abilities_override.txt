@@ -3133,6 +3133,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_gold_cap"		"28 40 52 64"
 			}
+			// hardcoded into the bounty rune pick up function
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
@@ -17810,7 +17811,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
+				"value"				"35"
 			}
 		}
 	}
