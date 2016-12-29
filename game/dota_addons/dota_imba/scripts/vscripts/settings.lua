@@ -126,6 +126,20 @@ SPELL_POWER_TALENTS["special_bonus_spell_amplify_15"] = 45
 SPELL_POWER_TALENTS["special_bonus_spell_amplify_20"] = 50
 SPELL_POWER_TALENTS["special_bonus_spell_amplify_25"] = 60
 
+ITEM_SPELL_POWER = {}														-- Spell power item values
+ITEM_SPELL_POWER["item_imba_aether_lens"] = 10
+ITEM_SPELL_POWER["item_imba_nether_wand"] = 10
+ITEM_SPELL_POWER["item_imba_elder_staff"] = 20
+ITEM_SPELL_POWER["item_imba_orchid"] = 25
+ITEM_SPELL_POWER["item_imba_bloodthorn"] = 30
+ITEM_SPELL_POWER["item_imba_rapier_magic"] = 70
+ITEM_SPELL_POWER["item_imba_rapier_magic_2"] = 200
+ITEM_SPELL_POWER["item_imba_rapier_cursed"] = 200
+
+MODIFIER_SPELL_POWER = {}													-- Spell power modifier values
+MODIFIER_SPELL_POWER["modifier_imba_rune_double_damage_owner"] = 50
+MODIFIER_SPELL_POWER["modifier_imba_rune_double_damage_aura"] = 20
+
 CAST_RANGE_TALENTS = {}														-- Cast range talent values
 CAST_RANGE_TALENTS["special_bonus_cast_range_50"] = 100
 CAST_RANGE_TALENTS["special_bonus_cast_range_60"] = 125

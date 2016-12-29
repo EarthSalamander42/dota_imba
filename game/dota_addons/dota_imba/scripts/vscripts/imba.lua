@@ -297,24 +297,36 @@ function GameMode:ItemAddedFilter( keys )
 	-- Rune pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_imba_rune_bounty" then
-		PickupBountyRune(item, unit)
-		return false
-	end
+	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
 
-	if item_name == "item_imba_rune_double_damage" then
-		PickupDoubleDamageRune(item, unit)
-		return false
-	end
+		-- Only real heroes can pick up runes
+		--if unit:IsRealHero() then
+			if item_name == "item_imba_rune_bounty" then
+				PickupBountyRune(item, unit)
+				return false
+			end
 
-	if item_name == "item_imba_rune_haste" then
-		PickupHasteRune(item, unit)
-		return false
-	end
+			if item_name == "item_imba_rune_double_damage" then
+				PickupDoubleDamageRune(item, unit)
+				return false
+			end
 
-	if item_name == "item_imba_rune_regeneration" then
-		PickupRegenerationRune(item, unit)
-		return false
+			if item_name == "item_imba_rune_haste" then
+				PickupHasteRune(item, unit)
+				return false
+			end
+
+			if item_name == "item_imba_rune_regeneration" then
+				PickupRegenerationRune(item, unit)
+				return false
+			end
+
+		-- If this is not a real hero, drop another rune in place of the picked up one
+		-- else
+		-- 	local new_rune = CreateItem(item_name, nil, nil)
+		-- 	CreateItemOnPositionForLaunch(item:GetAbsOrigin(), new_rune)
+		-- 	return false
+		-- end
 	end
 
 	-------------------------------------------------------------------------------------------------

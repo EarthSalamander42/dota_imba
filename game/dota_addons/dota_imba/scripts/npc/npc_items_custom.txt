@@ -18219,5 +18219,229 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Power Surge (double damage rune)
+	//=================================================================================================================
+	"item_imba_rune_double_damage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2220"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_doubledamage01.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_owner"			"100"
+			}
+			// hardcoded in settings.lua
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_spell_power_owner"		"50"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_aura"				"30"
+			}
+			// hardcoded in settings.lua
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_spell_power_aura"		"20"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"25"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_rune_double_damage_owner"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"1"
+
+				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Duration"						"%duration"
+
+				"Aura"							"modifier_imba_rune_double_damage_aura"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NONE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_owner"
+				}
+			}
+
+			"modifier_imba_rune_double_damage_aura"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_aura"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Boundless Energy (regeneration rune)
+	//=================================================================================================================
+	"item_imba_rune_regeneration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2221"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/rune_regeneration01.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_regen_base_owner"			"50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_regen_perc_owner"			"5"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mp_regen_base_owner"			"35"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"mp_regen_perc_owner"			"3.5"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_regen_base_owner"			"20"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hp_regen_perc_owner"			"2"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mp_regen_base_owner"			"15"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"mp_regen_perc_owner"			"1.5"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"25"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_rune_regeneration_owner"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsBuff"						"1"
+				"IsPurgable"					"1"
+
+				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Duration"						"%duration"
+
+				"Aura"							"modifier_imba_rune_regeneration_aura"
+				"Aura_Radius"					"%aura_radius"
+				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_NONE"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen_base_owner"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"			"%hp_regen_perc_owner"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"				"35"  //This is hardcoded due to an obscure engine bug.
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mp_regen_perc_owner"
+				}
+			}
+
+			"modifier_imba_rune_regeneration_aura"
+			{
+				"Passive"						"0"
+				"IsHidden"						"1"
+				"IsBuff"						"1"
+				"IsPurgable"					"0"
+
+				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
+				"EffectAttachType"				"follow_origin"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%hp_regen_base_owner"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"			"%hp_regen_perc_owner"
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"				"15"  //This is hardcoded due to an obscure engine bug.
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mp_regen_perc_owner"
+				}
+			}
+		}
+	}
+
 	//next free ID: 2222
 }

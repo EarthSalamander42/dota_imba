@@ -1729,24 +1729,20 @@ function GetSpellPower(unit)
 		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
 	end
 
-	-- Define item-based item power values
-	local item_spell_power = {}
-	item_spell_power["item_imba_aether_lens"] = 10
-	item_spell_power["item_imba_nether_wand"] = 10
-	item_spell_power["item_imba_elder_staff"] = 20
-	item_spell_power["item_imba_orchid"] = 25
-	item_spell_power["item_imba_bloodthorn"] = 30
-	item_spell_power["item_imba_rapier_magic"] = 70
-	item_spell_power["item_imba_rapier_magic_2"] = 200
-	item_spell_power["item_imba_rapier_cursed"] = 200
+	-- Fetch current bonus spell power from modifiers, if existing
+	for current_modifier, modifier_spell_power in pairs(MODIFIER_SPELL_POWER) do
+		if unit:HasModifier(current_modifier) then
+			spell_power = spell_power + modifier_spell_power
+		end
+	end
 
 	-- Fetch current bonus spell power from items, if existing
 	for i = 0, 5 do
 		local current_item = unit:GetItemInSlot(i)
 		if current_item then
 			local current_item_name = current_item:GetName()
-			if item_spell_power[current_item_name] then
-				spell_power = spell_power + item_spell_power[current_item_name]
+			if ITEM_SPELL_POWER[current_item_name] then
+				spell_power = spell_power + ITEM_SPELL_POWER[current_item_name]
 			end
 		end
 	end
@@ -1793,9 +1789,9 @@ function SpawnImbaRunes()
 
 	-- List of powerup rune types
 	local powerup_rune_types = {
-		--"item_imba_rune_double_damage",
-		"item_imba_rune_haste"
-		--"item_imba_rune_regeneration"
+		"item_imba_rune_double_damage",
+		"item_imba_rune_haste",
+		"item_imba_rune_regeneration"
 	}
 
 	-- Spawn a random powerup rune in a random powerup location
@@ -1850,8 +1846,28 @@ function PickupHasteRune(item, unit)
 
 	-- Apply the movement speed increase modifier to the owner
 	local duration = item:GetSpecialValueFor("duration")
-	unit:AddNewModifier(unit, item, "modifier_imba_haste_boots_speed_break", {duration = duration})
+	unit:AddNewModifier(unit, item, "modifier_imba_haste_rune_speed_limit_break", {duration = duration})
 
 	-- Play the haste rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
+end
+
+-- Picks up a double damage rune
+function PickupDoubleDamageRune(item, unit)
+
+	-- Apply the aura modifier to the owner
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {})
+
+	-- Play the double damage rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+end
+
+-- Picks up a regeneration rune
+function PickupRegenerationRune(item, unit)
+
+	-- Apply the aura modifier to the owner
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {})
+
+	-- Play the double damage rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 end
