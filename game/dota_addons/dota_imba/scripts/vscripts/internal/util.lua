@@ -1768,6 +1768,11 @@ function GetSpellPowerFromTalents(unit)
 	return spell_power
 end
 
+-- Directly reduces a hero's HP without killing it
+function ApplyHealthReductionDamage(unit, damage)
+	unit:SetHealth(math.max(unit:GetHealth() - damage, 2))
+end
+
 -- Spawns runes on the map
 function SpawnImbaRunes()
 

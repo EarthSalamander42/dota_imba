@@ -306,14 +306,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 	print("Heroes can level up to level "..MAX_LEVEL)
 
-	-- Max level experience table set-up
-	if MAX_LEVEL > 35 then
-		for i = 36, MAX_LEVEL do
-			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
-			mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-		end
-	end
-
 	-- Respawn time information
 	if mode_info.respawn == "respawn_half" then
 		HERO_RESPAWN_TIME_MULTIPLIER = 50

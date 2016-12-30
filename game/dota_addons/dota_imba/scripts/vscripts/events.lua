@@ -549,6 +549,11 @@ function GameMode:OnPlayerLevelUp(keys)
 		ability_powerup:SetLevel(1)
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Hero experience bounty adjustment
+	-------------------------------------------------------------------------------------------------
+
+	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
 end
 
 -- A player last hit a creep, a tower, or a hero

@@ -55,7 +55,6 @@ require('events')
 	This function should generally only be used if the Precache() function in addon_game_mode.lua is not working.
 ]]
 function GameMode:PostLoadPrecache()
-	DebugPrint("[IMBA] Performing Post-Load precache")    
 
 end
 
@@ -64,7 +63,6 @@ end
 	It can be used to initialize state that isn't initializeable in InitGameMode() but needs to be done before everyone loads in.
 ]]
 function GameMode:OnFirstPlayerLoaded()
-	DebugPrint("[IMBA] First Player has loaded")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Roshan initialization
@@ -185,8 +183,8 @@ function GameMode:GoldFilter( keys )
 
 	-- Lobby options adjustment
 	if keys.gold > 0 then
-		local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+		local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
+		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 	end
 
 	-- Show gold earned message??
@@ -203,9 +201,14 @@ function GameMode:ExperienceFilter( keys )
 	-- experience		130
 	-- player_id_const	0
 
+	-- Ignore negative experience values
+	if keys.experience < 0 then
+		return false
+	end
+
 	-- Lobby options adjustment
-	local game_time = math.max(GameRules:GetDOTATime(false, false) / 60, 0)
-	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_MINUTE * 0.01)
+	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
+	keys.experience = keys.experience * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
 
 	return true
 end
@@ -241,6 +244,11 @@ function GameMode:ModifierFilter( keys )
 		-- Halve the duration of everything else
 		if modifier_caster ~= modifier_owner and keys.duration > 0 then
 			keys.duration = keys.duration * 0.5
+		end
+
+		-- Fury swipes capping
+		if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+			modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
 		end
 	end
 
@@ -1080,14 +1088,6 @@ function GameMode:OnAllPlayersLoaded()
 			end
 		end
 
-		-- Comeback gold
-		local comeback_gold = ""
-		if GLOBAL_BOUNTY_FACTOR > 0 then
-			comeback_gold = " Global comeback gold is enabled."
-		else
-			comeback_gold = " Global comeback gold is disabled."
-		end
-
 		-- Kills to end the game
 		local kills_to_end = ""
 		if END_GAME_ON_KILLS then
@@ -1098,7 +1098,7 @@ function GameMode:OnAllPlayersLoaded()
 		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..buyback_cooldown..respawn_time, false)
 		Say(nil, start_status, false)
 		Say(nil, creep_power..tower_power, false)
-		Say(nil, tower_abilities..comeback_gold, false)
+		Say(nil, tower_abilities, false)
 		Say(nil, kills_to_end, false)
 	end)
 end
@@ -1134,6 +1134,9 @@ function GameMode:OnHeroInGame(hero)
 		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
 		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
 	end)
+
+	-- Set up initial level 1 experience bounty
+	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
 
 	-- Set up initial level
 	if HERO_STARTING_LEVEL > 1 then
@@ -1177,6 +1180,17 @@ function GameMode:OnGameInProgress()
 	
 	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
 	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Custom maximum level EXP tables adjustment
+	-------------------------------------------------------------------------------------------------
+	
+	if MAX_LEVEL > 35 then
+		for i = 36, MAX_LEVEL do
+			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+			GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+		end
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Rune timers setup

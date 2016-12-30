@@ -77,8 +77,8 @@ function RapierThinkCursed( keys )
 		caster.corruption_total_time = 0
 	end
 	caster.corruption_total_time = caster.corruption_total_time + 0.03
-	local total_corruption = base_corruption * (1 + caster.corruption_total_time / time_to_double) * 0.01 * 0.03 * caster:GetMaxHealth()
-	ApplyDamage({attacker = caster, victim = caster, ability = item, damage = total_corruption, damage_type = DAMAGE_TYPE_PURE})
+	local total_corruption = base_corruption * caster:GetMaxHealth() * (caster.corruption_total_time / time_to_double) * 0.01 * 0.03
+	ApplyHealthReductionDamage(caster, total_corruption)
 end
 
 function RapierDrop( keys )

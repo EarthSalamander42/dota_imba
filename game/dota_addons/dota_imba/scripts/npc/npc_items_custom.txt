@@ -397,7 +397,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"80.0"
+		"AbilityCooldown"				"100.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -14913,6 +14913,17 @@
 				"IsHidden"				"1"
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"internal/util.lua"
+						"Function"		"IllusionPassiveRemover"
+
+						"modifier"		"modifier_imba_cheese_death_prevention"
+					}
+				}
 			}
 		}
 	}
@@ -17926,12 +17937,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"base_corruption"			"1.0"
+				"base_corruption"			"0.4"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"time_to_double"			"10"
+				"time_to_double"			"5"
 			}
 		}
 
@@ -18115,6 +18126,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"								"0"
 		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 	}
@@ -18134,6 +18146,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"								"0"
 		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 
@@ -18181,6 +18194,8 @@
 				"IsHidden"						"0"
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
+
+				"AbilityTextureName"			"custom/imba_rune_haste"
 
 				"EffectName"					"particles/generic_gameplay/rune_haste_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -18234,6 +18249,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"								"0"
 		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 
@@ -18283,6 +18299,8 @@
 				"IsHidden"						"0"
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
+
+				"AbilityTextureName"			"custom/imba_rune_double_damage"
 
 				"EffectName"					"particles/generic_gameplay/rune_doubledamage_owner.vpcf"
 				"EffectAttachType"				"follow_origin"
@@ -18334,6 +18352,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"								"0"
 		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
 		"ItemSellable"							"0"
 		"ItemKillable"							"1"
 
@@ -18401,6 +18420,8 @@
 				"IsHidden"						"0"
 				"IsBuff"						"1"
 				"IsPurgable"					"1"
+
+				"AbilityTextureName"			"custom/imba_rune_regeneration"
 
 				"EffectName"					"particles/generic_gameplay/rune_regen_owner.vpcf"
 				"EffectAttachType"				"follow_origin"

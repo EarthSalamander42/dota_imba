@@ -39,7 +39,7 @@ USE_UNSEEN_FOG_OF_WAR = false				-- Should we make unseen and fogged areas of th
 											-- Note: DISABLE_FOG_OF_WAR_ENTIRELY must be false for USE_UNSEEN_FOG_OF_WAR to work
 USE_STANDARD_DOTA_BOT_THINKING = false		-- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_NONSTANDARD_HERO_GOLD_BOUNTY = false	-- Should heroes follow their own gold bounty rules instead of the default DOTA ones?
-USE_NONSTANDARD_HERO_XP_BOUNTY = false		-- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
+USE_NONSTANDARD_HERO_XP_BOUNTY = true		-- Should heroes follow their own XP bounty rules instead of the default DOTA ones?
 
 USE_CUSTOM_TOP_BAR_VALUES = false			-- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true						-- Should we display the top bar score/count at all?
@@ -243,7 +243,7 @@ IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abiliti
 CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
 CUSTOM_XP_BONUS = 30														-- Amount of bonus XP gained (in %)
 
-BOUNTY_RAMP_PER_MINUTE = 3													-- Bounty increase (in %) based on game time
+BOUNTY_RAMP_PER_SECOND = 0.05												-- Bounty increase (in %) based on game time
 CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
@@ -338,6 +338,24 @@ XP_PER_LEVEL_TABLE[24] = 24500
 
 for i = 25, MAX_LEVEL do
 	XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
+end
+
+-- XP AWARDED per level table (how much bounty heroes are worth beyond level 25)
+HERO_XP_BOUNTY_PER_LEVEL = {}
+HERO_XP_BOUNTY_PER_LEVEL[1] = 125
+HERO_XP_BOUNTY_PER_LEVEL[2] = 170
+HERO_XP_BOUNTY_PER_LEVEL[3] = 215
+HERO_XP_BOUNTY_PER_LEVEL[4] = 260
+HERO_XP_BOUNTY_PER_LEVEL[5] = 305
+HERO_XP_BOUNTY_PER_LEVEL[6] = 350
+HERO_XP_BOUNTY_PER_LEVEL[7] = 395
+
+for i = 8, 20 do
+	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135
+end
+
+for i = 21, 100 do
+	HERO_XP_BOUNTY_PER_LEVEL[i] = HERO_XP_BOUNTY_PER_LEVEL[i-1] + 135 + i * 3
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?

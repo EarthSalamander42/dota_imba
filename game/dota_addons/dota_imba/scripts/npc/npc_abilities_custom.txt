@@ -160,12 +160,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"5"
+				"bonus_damage_per_minute"				"4"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"5"
+				"bonus_health_per_minute"				"4"
 			}
 			"03"
 			{
@@ -30682,7 +30682,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"18 14 16 12"
+		"AbilityCooldown"					"18 16 14 12"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------

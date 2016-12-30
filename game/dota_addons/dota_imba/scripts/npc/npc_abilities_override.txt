@@ -1481,12 +1481,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"40"
+				"damage_bonus"				"20"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus_ranged"		"20"
+				"damage_bonus_ranged"		"10"
 			}
 			"03"
 			{

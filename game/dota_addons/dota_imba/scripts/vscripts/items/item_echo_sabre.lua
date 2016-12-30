@@ -44,8 +44,8 @@ function ReverbRapierStart( keys )
 	local modifier_applier = keys.modifier_applier
 	local modifier_double = keys.modifier_double
 
-	-- If the item is in cooldown, do nothing
-	if not ability:IsCooldownReady() then
+	-- If the item is in cooldown, or the attacker is already benefitting from increased attack speed, do nothing
+	if not ability:IsCooldownReady() or caster:HasModifier(modifier_double) then
 		return nil
 	end
 
