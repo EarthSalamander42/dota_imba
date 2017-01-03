@@ -3,16 +3,15 @@
 
 function Cheese( keys )
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	local sound_cast = keys.sound_cast
 
 	-- Play sound
-	target:EmitSound(sound_cast)
+	caster:EmitSound(sound_cast)
 
-	-- Fully heal the target
-	target:Heal(target:GetMaxHealth(), caster)
-	target:GiveMana(target:GetMaxMana())
+	-- Fully heal the caster
+	caster:Heal(caster:GetMaxHealth(), caster)
+	caster:GiveMana(caster:GetMaxMana())
 
 	-- Spend a charge
 	ability:SetCurrentCharges( ability:GetCurrentCharges() - 1 )

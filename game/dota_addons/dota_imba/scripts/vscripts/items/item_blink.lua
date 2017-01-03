@@ -74,7 +74,7 @@ function blink_damaged(keys)
 	local attacker_name = keys.attacker:GetName()
 	local blink_damage_cooldown = ability:GetLevelSpecialValueFor("blink_damage_cooldown", 0)
 
-	if keys.Damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer()) then
+	if keys.Damage > 0 and (attacker_name == "npc_dota_roshan" or keys.attacker:IsControllableByAnyPlayer()) and ( keys.attacker:GetTeam() ~= caster:GetTeam() ) then
 		if ability:GetCooldownTimeRemaining() < blink_damage_cooldown then
 			ability:StartCooldown(blink_damage_cooldown)
 		end

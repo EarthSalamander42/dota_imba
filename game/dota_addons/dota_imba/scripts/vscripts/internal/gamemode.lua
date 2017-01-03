@@ -11,18 +11,19 @@ function GameMode:_InitGameMode()
 	GameRules:SetPreGameTime( PRE_GAME_TIME)
 	GameRules:SetPostGameTime( POST_GAME_TIME )
 	GameRules:SetTreeRegrowTime( TREE_REGROW_TIME )
-	GameRules:SetUseCustomHeroXPValues ( USE_CUSTOM_XP_VALUES )
+	GameRules:SetUseCustomHeroXPValues ( USE_NONSTANDARD_HERO_XP_BOUNTY )
 	GameRules:SetGoldPerTick( GOLD_PER_TICK )
 	GameRules:SetGoldTickTime( GOLD_TICK_TIME )
 	GameRules:SetRuneSpawnTime( RUNE_SPAWN_TIME )
-	GameRules:SetUseBaseGoldBountyOnHeroes( USE_STANDARD_HERO_GOLD_BOUNTY )
+	GameRules:SetUseBaseGoldBountyOnHeroes( USE_NONSTANDARD_HERO_GOLD_BOUNTY )
 	GameRules:SetHeroMinimapIconScale( MINIMAP_ICON_SIZE )
 	GameRules:SetCreepMinimapIconScale( MINIMAP_CREEP_ICON_SIZE )
 	GameRules:SetRuneMinimapIconScale( MINIMAP_RUNE_ICON_SIZE )
 	GameRules:EnableCustomGameSetupAutoLaunch( START_GAME_AUTOMATICALLY )
-
 	GameRules:SetFirstBloodActive( ENABLE_FIRST_BLOOD )
 	GameRules:SetHideKillMessageHeaders( HIDE_KILL_BANNERS )
+	GameRules:SetCustomGameSetupAutoLaunchDelay( AUTO_LAUNCH_DELAY )
+	GameRules:SetStartingGold( MAP_INITIAL_GOLD )
 
 	-- Register a listener for the game mode configuration
 	CustomGameEventManager:RegisterListener("set_game_mode", OnSetGameMode)
@@ -43,7 +44,6 @@ function GameMode:_InitGameMode()
 			SetTeamCustomHealthbarColor(team, color[1], color[2], color[3])
 		end
 	end
-	DebugPrint('[IMBA] GameRules set')
 
 	--InitLogFile( "log/barebones.txt","")
 
@@ -133,7 +133,7 @@ function GameMode:_CaptureGameMode()
 		mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
 		mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
 
-		mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
+		mode:SetFogOfWarDisabled( DISABLE_FOG_OF_WAR_ENTIRELY )
 		mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
 		mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
 
@@ -150,10 +150,6 @@ function GameMode:_CaptureGameMode()
 		mode:SetMaximumAttackSpeed( MAXIMUM_ATTACK_SPEED )
 		mode:SetMinimumAttackSpeed( MINIMUM_ATTACK_SPEED )
 		mode:SetStashPurchasingDisabled ( DISABLE_STASH_PURCHASING )
-
-		for rune, spawn in pairs(ENABLED_RUNES) do
-			mode:SetRuneEnabled(rune, spawn)
-		end
 
 		mode:SetUnseenFogOfWarEnabled(USE_UNSEEN_FOG_OF_WAR)
 
@@ -209,14 +205,8 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Set game end on kills
 	if tonumber(mode_info.number_of_kills) > 0 then
 		END_GAME_ON_KILLS = true
-		KILLS_TO_END_GAME_FOR_TEAM = tonumber(mode_info.number_of_kills)
+		KILLS_TO_END_GAME_FOR_TEAM = math.min(tonumber(mode_info.number_of_kills), 250)
 		print("Game will end on "..KILLS_TO_END_GAME_FOR_TEAM.." kills!")
-	end
-
-	-- Set frantic mode multiplier
-	if tonumber(mode_info.frantic_mode) == 1 then
-		FRANTIC_MULTIPLIER = 3
-		print("Frantic mode activated! Multiplier:"..FRANTIC_MULTIPLIER)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -248,39 +238,31 @@ function OnSetGameMode( eventSourceIndex, args )
 	
 	-- Starting gold information
 	if mode_info.gold_start == "2000" then
-		HERO_INITIAL_GOLD = 2000
-		HERO_INITIAL_REPICK_GOLD = 1500
-		HERO_INITIAL_RANDOM_GOLD = 2500
+		HERO_INITIAL_GOLD = 2000 - MAP_INITIAL_GOLD
+		HERO_REPICK_GOLD_LOSS = -400
+		HERO_RANDOM_GOLD_BONUS = 300
 	elseif mode_info.gold_start == "6000" then
-		HERO_INITIAL_GOLD = 6000
-		HERO_INITIAL_REPICK_GOLD = 5000
-		HERO_INITIAL_RANDOM_GOLD = 7000
+		HERO_INITIAL_GOLD = 6000 - MAP_INITIAL_GOLD
+		HERO_REPICK_GOLD_LOSS = -900
+		HERO_RANDOM_GOLD_BONUS = 800
 	elseif mode_info.gold_start == "15000" then
-		HERO_INITIAL_GOLD = 15000
-		HERO_INITIAL_REPICK_GOLD = 12500
-		HERO_INITIAL_RANDOM_GOLD = 17500
+		HERO_INITIAL_GOLD = 15000 - MAP_INITIAL_GOLD
+		HERO_REPICK_GOLD_LOSS = -2400
+		HERO_RANDOM_GOLD_BONUS = 2300
 	end
 	print("hero starting gold: "..HERO_INITIAL_GOLD)
 
 	-- Gold bounties information
-	CREEP_GOLD_BONUS = tonumber(mode_info.gold_bounty)
-	HERO_GOLD_BONUS = tonumber(mode_info.gold_bounty)
-	print("gold bounty increased by: "..HERO_GOLD_BONUS)
+	if tonumber(mode_info.gold_bounty) > 0 then
+		CUSTOM_GOLD_BONUS = math.min(tonumber(mode_info.gold_bounty), 300)
+	end
+	print("gold bounty increased by: "..CUSTOM_GOLD_BONUS)
 
 	-- XP bounties information
-	CREEP_XP_BONUS = tonumber(mode_info.xp_bounty)
-	HERO_XP_BONUS = tonumber(mode_info.xp_bounty)
-	print("xp bounty increased by: "..HERO_XP_BONUS)
-
-	-- Passive gold adjustment
-	local adjusted_gold_per_tick = GOLD_TICK_TIME / ( 1 + CREEP_GOLD_BONUS / 100 )
-	GameRules:SetGoldTickTime( adjusted_gold_per_tick )
-
-	-- Comeback gold adjustment
-	if tonumber(mode_info.comeback_gold) == 0 then
-		HERO_GLOBAL_BOUNTY_FACTOR = 0
-		print("Global comeback gold deactivated!")
+	if tonumber(mode_info.xp_bounty) > 0 then
+		CUSTOM_XP_BONUS = math.min(tonumber(mode_info.xp_bounty), 300)
 	end
+	print("xp bounty increased by: "..CUSTOM_XP_BONUS)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Creeps and buildings setup
@@ -314,23 +296,15 @@ function OnSetGameMode( eventSourceIndex, args )
 
 	-- Enable higher starting level
 	if tonumber(mode_info.xp_start) then
-		HERO_STARTING_LEVEL = tonumber(mode_info.xp_start)
+		HERO_STARTING_LEVEL = math.min(math.max(tonumber(mode_info.xp_start), 1), 25)
 		print("Heroes will start the game on level "..HERO_STARTING_LEVEL)
 	end
 
 	-- Set up level cap
 	if mode_info.level_cap then
-		MAX_LEVEL = tonumber(mode_info.level_cap)
+		MAX_LEVEL = math.min(math.max(tonumber(mode_info.level_cap), 25), 100)
 	end
 	print("Heroes can level up to level "..MAX_LEVEL)
-
-	-- Max level experience table set-up
-	if MAX_LEVEL > 35 then
-		for i = 36, MAX_LEVEL do
-			XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100
-			mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
-		end
-	end
 
 	-- Respawn time information
 	if mode_info.respawn == "respawn_half" then
@@ -341,8 +315,10 @@ function OnSetGameMode( eventSourceIndex, args )
 	print("respawn time multiplier: "..HERO_RESPAWN_TIME_MULTIPLIER)
 
 	-- Buyback cooldown information
-	HERO_BUYBACK_COOLDOWN = tonumber(mode_info.buyback)
-	print("buyback cooldown: "..HERO_BUYBACK_COOLDOWN.." seconds")
+	if tonumber(mode_info.disable_buyback_cooldown) == 1 then
+		BUYBACK_COOLDOWN_ENABLED = false
+		print("buyback cooldown disabled")
+	end
 	
 	-- Set the game options as being chosen
 	GAME_OPTIONS_SET = true
@@ -382,12 +358,12 @@ function OnSetGameMode( eventSourceIndex, args )
 	end
 
 	-- Tracks gold/experience options
-	statCollection:setFlags({gold_bonus = CREEP_GOLD_BONUS})
-	statCollection:setFlags({exp_bonus = CREEP_XP_BONUS})
+	statCollection:setFlags({gold_bonus = CUSTOM_GOLD_BONUS})
+	statCollection:setFlags({exp_bonus = CUSTOM_XP_BONUS})
 
 	-- Tracks respawn and buyback
 	statCollection:setFlags({respawn_mult = HERO_RESPAWN_TIME_MULTIPLIER})
-	statCollection:setFlags({buyback_mult = HERO_BUYBACK_COST_MULTIPLIER})
+	statCollection:setFlags({buyback_mult = 100})
 
 	-- Track starting gold and levels
 	statCollection:setFlags({starting_gold = HERO_INITIAL_GOLD})
@@ -396,9 +372,6 @@ function OnSetGameMode( eventSourceIndex, args )
 	-- Tracks creep and tower power settings
 	statCollection:setFlags({creep_power = CREEP_POWER_FACTOR})
 	statCollection:setFlags({tower_power = TOWER_POWER_FACTOR})
-
-	-- Tracks Frantic Mode multiplier
-	statCollection:setFlags({frantic_mult = FRANTIC_MULTIPLIER})
 
 	-- Tracks structure abilities and upgrades
 	statCollection:setFlags({tower_abilities = TOWER_ABILITY_MODE and 1 or 0})

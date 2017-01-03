@@ -30,7 +30,6 @@
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_pick_option_allow_same_hero" id="allow_same_hero_standard" />
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_standard"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_standard"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_standard"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_standard"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>
@@ -86,14 +85,6 @@
 							<Label text="#imba_gamemode_hero_options_respawn_half" id="respawn_half"/>
 						</DropDown>
 					</Panel>
-
-					<Panel class="DualColumnRight" id="buyback_box">
-						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
-						<DropDown id="buyback_dropdown_standard">
-							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
-							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
-						</DropDown>
-					</Panel>
 				</Panel>
 
 			</Panel>
@@ -104,7 +95,6 @@
 
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_random_omg"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_random_omg"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_random_omg"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_random_omg"/>
 
 				<DropDown id="number_of_abilities_random_omg">
@@ -186,14 +176,6 @@
 							<Label text="#imba_gamemode_hero_options_respawn_half" id="respawn_half"/>
 						</DropDown>
 					</Panel>
-
-					<Panel class="DualColumnRight" id="buyback_box">
-						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
-						<DropDown id="buyback_dropdown_random_omg">
-							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
-							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
-						</DropDown>
-					</Panel>
 				</Panel>
 
 			</Panel>
@@ -206,8 +188,7 @@
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_pick_option_allow_same_hero" id="allow_same_hero_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_custom"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_options_frantic" id="frantic_mode_custom"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_custom"/>
+				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_disable_buyback_cooldown" id="buyback_cooldown_custom"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_custom"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>
@@ -301,16 +282,6 @@
 							<Label text="#imba_gamemode_hero_options_respawn_zero" id="respawn_zero"/>
 						</DropDown>
 					</Panel>
-
-					<Panel class="DualColumnRight" id="buyback_box">
-						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
-						<DropDown id="buyback_dropdown_custom">
-							<Label text="#imba_gamemode_hero_options_buyback_none" id="0"/>
-							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
-							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
-							<Label text="#imba_gamemode_hero_options_buyback_180" id="180"/>
-						</DropDown>
-					</Panel>
 				</Panel>
 
 			</Panel>
@@ -341,7 +312,6 @@
 
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_abilities" id="tower_abilities_10v10"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_tower_upgrades" id="tower_upgrades_10v10"/>
-				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_comeback_gold" id="comeback_gold_10v10"/>
 				<ToggleButton class="ToggleButton" text="#imba_gamemode_game_option_spawn_behemoths" id="spawn_behemoths_10v10"/>
 
 				<Label class="GameOptionLabel" text="#imba_gamemode_game_objective_title" id="game_objective_label"/>
@@ -425,15 +395,6 @@
 						<DropDown id="respawn_dropdown_10v10">
 							<Label text="#imba_gamemode_hero_options_respawn_normal" id="respawn_normal"/>
 							<Label text="#imba_gamemode_hero_options_respawn_half" id="respawn_half"/>
-						</DropDown>
-					</Panel>
-
-					<Panel class="DualColumnRight" id="buyback_box">
-						<Label class="GameOptionLabel" text="#imba_gamemode_hero_options_buyback_title" id="buyback_title"/>
-						<DropDown id="buyback_dropdown_10v10">
-							<Label text="#imba_gamemode_hero_options_buyback_60" id="60"/>
-							<Label text="#imba_gamemode_hero_options_buyback_120" id="120"/>
-							<Label text="#imba_gamemode_hero_options_buyback_180" id="180"/>
 						</DropDown>
 					</Panel>
 				</Panel>

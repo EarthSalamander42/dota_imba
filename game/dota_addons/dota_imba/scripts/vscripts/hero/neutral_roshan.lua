@@ -5,7 +5,6 @@ function RoshanBash( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local modifier_debuff = keys.modifier_debuff
 	local sound_bash = keys.sound_bash
 
@@ -15,16 +14,18 @@ function RoshanBash( keys )
 	end
 
 	-- Parameters
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local stacking_damage = ability:GetLevelSpecialValueFor("stacking_damage", ability_level)
-	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
+	local base_damage = ability:GetSpecialValueFor("base_damage")
+	local stacking_damage = ability:GetSpecialValueFor("stacking_damage")
+	local base_armor = ability:GetSpecialValueFor("base_armor")
+	local stacking_armor = ability:GetSpecialValueFor("stacking_armor")
+	local bash_duration = ability:GetSpecialValueFor("bash_duration")
 
-	-- Calculate total damage
-	local game_time = GameRules:GetDOTATime(false, false) / 60
-	local total_damage = base_damage + stacking_damage * game_time
+	-- Calculate updated parameters
+	local total_damage = base_damage + stacking_damage * GAME_ROSHAN_KILLS
+	local total_armor = base_armor + stacking_armor * GAME_ROSHAN_KILLS
 
 	-- Start ability cooldown
-	ability:StartCooldown(ability:GetCooldown(ability_level))
+	ability:StartCooldown(ability:GetCooldown(1))
 
 	-- Play sound
 	target:EmitSound(sound_bash)
@@ -33,80 +34,162 @@ function RoshanBash( keys )
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = bash_duration})
 
 	-- Apply debuff modifier
-	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+	AddStacks(ability, caster, target, modifier_debuff, total_armor, true)
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 end
 
 function RoshanSlam( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_debuff = keys.modifier_debuff
+	local modifier_slow = keys.modifier_slow
+	local modifier_armor = keys.modifier_armor
 	local sound_cast = keys.sound_cast
 	local particle_slam = keys.particle_slam
 
 	-- Parameters
-	local slam_radius = ability:GetLevelSpecialValueFor("slam_radius", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local dmg_per_minute = ability:GetLevelSpecialValueFor("dmg_per_minute", ability_level)
-	local caster_pos = caster:GetAbsOrigin()
+	local slam_radius = ability:GetSpecialValueFor("slam_radius")
+	local base_damage = ability:GetSpecialValueFor("base_damage")
+	local stacking_damage = ability:GetSpecialValueFor("stacking_damage")
+	local base_armor = ability:GetSpecialValueFor("base_armor")
+	local stacking_armor = ability:GetSpecialValueFor("stacking_armor")
+	local caster_loc = caster:GetAbsOrigin()
 
-	-- Calculate total damage
-	local game_time = GameRules:GetDOTATime(false, false) / 60
-	local total_damage = base_damage + dmg_per_minute * game_time
+	-- Calculate updated parameters
+	local total_damage = base_damage + stacking_damage * GAME_ROSHAN_KILLS
+	local total_armor = base_armor + stacking_armor * GAME_ROSHAN_KILLS
 
 	-- Play sound
 	caster:EmitSound(sound_cast)
 
 	-- Play particle
 	local slam_pfx = ParticleManager:CreateParticle(particle_slam, PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(slam_pfx, 0, caster_pos)
+	ParticleManager:SetParticleControl(slam_pfx, 0, caster_loc)
 	ParticleManager:SetParticleControl(slam_pfx, 1, Vector(slam_radius, 0, 0))
+	ParticleManager:ReleaseParticleIndex(slam_pfx)
 
-	-- Find targets
-	local slam_targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, slam_radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
-
+	-- Iterate through targets
+	local slam_targets = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, slam_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,target in pairs(slam_targets) do
 		
-		-- Apply debuff modifier
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+		-- Apply slow and armor debuffs
+		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+		AddStacks(ability, caster, target, modifier_armor, total_armor, true)
 
 		-- Deal damage
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = ability:GetAbilityDamageType()})
+		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_PHYSICAL})
 	end
+
+	-- Trigger reduced cooldown
+	Timers:CreateTimer(0.1, function()
+		ability:EndCooldown()
+		ability:StartCooldown(math.max(ability:GetCooldown(1) - #slam_targets, 1))
+	end)
 end
 
 function RoshanSummon( keys )
-	local target = keys.target
-	local ability_bash = target:FindAbilityByName(keys.ability_bash)
-	local ability_aura = target:FindAbilityByName(keys.ability_aura)
-	local ability_passives = target:FindAbilityByName(keys.ability_passives)
+	local caster = keys.caster
+	local ability = keys.ability
 	local sound_summon = keys.sound_summon
 
-	-- Play sound
-	target:EmitSound(sound_summon)
+	-- Parameters
+	local summon_duration = ability:GetSpecialValueFor("summon_duration")
+	local caster_loc = caster:GetAbsOrigin()
+	local caster_direction = caster:GetForwardVector()
+	local summon_name = "npc_imba_roshling"
+	local summon_amount = 1 + GAME_ROSHAN_KILLS
+	local summon_abilities = {
+		"imba_roshling_bash",
+		"imba_roshling_aura"
+	}
 
-	-- Setup roshling abilities
-	ability_bash:SetLevel(1)
-	ability_aura:SetLevel(1)
-	ability_passives:SetLevel(1)
-	FindClearSpaceForUnit(target, target:GetAbsOrigin(), true)
+	-- Play cast sound
+	caster:EmitSound(sound_summon)
+
+	-- Calculate summon positions
+	local summon_positions = {}
+	for i = 1, summon_amount do
+		summon_positions[i] = RotatePosition(caster_loc, QAngle(0, (i - 1) * 360 / summon_amount, 0), caster_loc + caster_direction * 150)
+	end
+
+	-- Destroy trees
+	GridNav:DestroyTreesAroundPoint(caster_loc, 250, false)
+
+	-- Spawn the summons
+	for i = 1, summon_amount do
+		local roshling_summon = CreateUnitByName(summon_name, summon_positions[i], true, caster, caster, caster:GetTeam())
+
+		-- Make the summons limited duration
+		roshling_summon:AddNewModifier(caster, ability, "modifier_kill", {duration = summon_duration})
+
+		-- Level up the summon's abilities
+		for _, summon_ability in pairs(summon_abilities) do
+			if roshling_summon:FindAbilityByName(summon_ability) then
+				roshling_summon:FindAbilityByName(summon_ability):SetLevel(1)
+			end
+		end
+	end
+end
+
+function RoshanSummonAttack( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_bonus = keys.modifier_bonus
+
+	-- Parameters
+	local bonus_damage = ability:GetSpecialValueFor("bonus_damage")
+
+	-- Fetch the amount of stacks on the target
+	local total_bonus = target:GetModifierStackCount(modifier_bonus, nil)
+
+	-- Calculate damage
+	local damage = caster:GetAttackDamage() * bonus_damage * total_bonus * 0.01
+
+	-- Deal damage
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PHYSICAL})
+end
+
+function RoshlingBash( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_debuff = keys.modifier_debuff
+
+	-- Add a stack of Fury Smash
+	AddStacks(ability, caster, target, modifier_debuff, 1, true)
+end
+
+function RoshanRage( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+	local modifier_stack = keys.modifier_stack
+
+	-- Parameters
+	local base_hp_threshold = ability:GetSpecialValueFor("base_hp_threshold")
+	local stacking_hp_threshold_perc = ability:GetSpecialValueFor("stacking_hp_threshold_perc")
+
+	-- Calculate total buff stacks
+	local hp_per_stack = base_hp_threshold * (stacking_hp_threshold_perc ^ GAME_ROSHAN_KILLS)
+	local total_stacks = math.floor( (caster:GetMaxHealth() - caster:GetHealth()) / hp_per_stack )
+
+	-- Update the stacks buff
+	caster:RemoveModifierByName(modifier_stack)
+	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
 end
 
 function RoshanFury( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
 	local particle_fury = keys.particle_fury
 
 	-- Parameters
-	local width = ability:GetLevelSpecialValueFor("width", ability_level)
-	local length = ability:GetLevelSpecialValueFor("length", ability_level)
-	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
+	local width = ability:GetSpecialValueFor("width")
+	local length = ability:GetSpecialValueFor("length")
+	local speed = ability:GetSpecialValueFor("speed")
 
 	-- Projectile geometry
 	local caster_pos = caster:GetAbsOrigin()
@@ -139,29 +222,24 @@ function RoshanFury( keys )
 	}
 
 	ProjectileManager:CreateLinearProjectile(projectile_fury)
-
-	-- Flag spell as having finished cast (for the AI controller)
-	caster.ai_is_casting = nil
 end
 
 function RoshanFuryHit( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 
 	-- Parameters
-	local length = ability:GetLevelSpecialValueFor("length", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local dmg_per_minute = ability:GetLevelSpecialValueFor("dmg_per_minute", ability_level)
-	local debuff_duration = ability:GetLevelSpecialValueFor("debuff_duration", ability_level)
+	local length = ability:GetSpecialValueFor("length")
+	local base_damage = ability:GetSpecialValueFor("base_damage")
+	local stacking_damage = ability:GetSpecialValueFor("stacking_damage")
+	local debuff_duration = ability:GetSpecialValueFor("debuff_duration")
 
 	-- Calculate total damage
-	local game_time = GameRules:GetDOTATime(false, false) / 60
-	local total_damage = base_damage + dmg_per_minute * game_time
+	local total_damage = base_damage + stacking_damage * GAME_ROSHAN_KILLS
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = ability:GetAbilityDamageType()})
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Knockback calculations
 	local caster_pos = caster:GetAbsOrigin()
@@ -188,41 +266,24 @@ function RoshanFuryHit( keys )
 	target:AddNewModifier(caster, ability, "modifier_knockback", fury_knockback)
 end
 
-function RoshanRage( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_stack = keys.modifier_stack
-
-	-- Parameters
-	local hp_threshold = ability:GetLevelSpecialValueFor("hp_threshold", ability_level)
-
-	-- Calculate total buff stacks
-	local total_stacks = math.floor( ( 1 - caster:GetHealth() / caster:GetMaxHealth() ) * 100 / hp_threshold )
-
-	-- Update the stacks buff
-	caster:RemoveModifierByName(modifier_stack)
-	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
-end
-
 function RoshanUpgrade( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local modifier_stack = keys.modifier_stack
 
 	-- Calculate total buff stacks
-	local total_stacks = GameRules:GetDOTATime(false, false) / 60
+	local total_stacks = GAME_ROSHAN_KILLS
+
+	-- Update health
+	local bonus_health = ability:GetSpecialValueFor("bonus_health")
+	Timers:CreateTimer(0.5, function()
+		SetCreatureHealth(caster, 7000 + bonus_health * total_stacks, true)
+	end)
 
 	-- Update the stacks buff
-	caster:RemoveModifierByName(modifier_stack)
-	AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
-end
-
-function RoshanPurge( keys )
-	local caster = keys.caster
-
-	-- Purge all debuffs
-	caster:Purge(false, true, false, true, false)
+	if total_stacks > 0 then
+		AddStacks(ability, caster, caster, modifier_stack, total_stacks, true)
+	end
 end
 
 function RoshanIllusionPurge( keys )
@@ -264,8 +325,29 @@ function RoshanDeath( keys )
 	end)
 end
 
-function EvadeCourier( keys )
+function RoshanAIstart( keys )
 	local caster = keys.caster
+
+	-- If the AI is not active, kickstart it
+	if not caster.ai_is_active then
+		caster.ai_is_active = true
+	end
+end
+
+function RoshanAIthink( keys )
+	local caster = keys.caster
+	local ability = keys.ability
+
+	-- Search for enemies in the attack search radius
+	local attack_search_range_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
+	if #attack_search_range_enemies > 0 then
+		caster.ai_is_active = true
+		caster.closest_attack_target = attack_search_range_enemies[1]
+	else
+		caster.closest_attack_target = nil
+	end
+
+	-- Make couriers dodge Roshan
 	local roshan_loc = caster:GetAbsOrigin()
 	local nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, 600, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _,potential_courier in pairs(nearby_targets) do
@@ -274,129 +356,104 @@ function EvadeCourier( keys )
 			FindClearSpaceForUnit(potential_courier, courier_loc + (courier_loc - roshan_loc):Normalized() * 300, true)
 		end
 	end
-end
-
-function RoshanAI( keys )
-	local caster = keys.caster
-	local attacker = keys.attacker
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local damage_taken = keys.damage_taken
-	local ability_slam = caster:FindAbilityByName(keys.ability_slam)
-	local ability_roshling = caster:FindAbilityByName(keys.ability_roshling)
-	local ability_fury = caster:FindAbilityByName(keys.ability_fury)
-
-	-- If the damage source's height is different from Roshan's (cliff attacks), prevent damage and do nothing
-	if (attacker:GetAbsOrigin().z - caster:GetAbsOrigin().z) > 25 then
-		caster:Heal(damage_taken, caster)
-		return nil
-	end
-
-	-- If already acting, do nothing
-	if caster.ai_is_active then
-		return nil
-	end
 
 	-- Parameters
-	local leash_radius = ability:GetLevelSpecialValueFor("leash_radius", ability_level)
-	local leash_margin = ability:GetLevelSpecialValueFor("leash_margin", ability_level)
-	local leash_time = ability:GetLevelSpecialValueFor("leash_time", ability_level)
-	local slam_radius = ability:GetLevelSpecialValueFor("slam_radius", ability_level)
-	local slam_targets = ability:GetLevelSpecialValueFor("slam_targets", ability_level)
-	local roshling_pct = ability:GetLevelSpecialValueFor("roshling_pct", ability_level)
-	local fury_pct = ability:GetLevelSpecialValueFor("fury_pct", ability_level)
-	local think_interval = ability:GetLevelSpecialValueFor("think_interval", ability_level)
-	local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+	local slam_radius = ability:GetSpecialValueFor("slam_radius")
+	local roshling_pct = ability:GetSpecialValueFor("roshling_pct")
+	local fury_pct = ability:GetSpecialValueFor("fury_pct")
+	local leash_radius = ability:GetSpecialValueFor("leash_radius")
+	local leash_time = ability:GetSpecialValueFor("leash_time")
+	local super_leash_time = ability:GetSpecialValueFor("super_leash_time")
+	local leash_margin = ability:GetSpecialValueFor("leash_margin")
+	local spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+	local ability_slam = caster:FindAbilityByName("imba_roshan_slam")
+	local ability_roshling = caster:FindAbilityByName("imba_roshan_summon")
+	local ability_fury = caster:FindAbilityByName("imba_roshan_fury")
 
 	-- Condition variables
-	local roshan_loc
-	local roshan_hp
-	local nearby_targets
+	local roshan_hp = caster:GetHealth() / caster:GetMaxHealth()
 
-	-- Initialize logical parameters
-	caster.ai_is_active = true
+	-- Check if currently leashing back to the spawn position
+	if caster.ai_is_leashing_back then
 
-	Timers:CreateTimer(0, function()
+		-- Check if leashing back was successful
+		if (roshan_loc - spawn_loc):Length2D() < leash_margin then
+			caster.ai_is_leashing_back = nil
+			caster.ai_leashing_delay = nil
+			caster.ai_is_active = nil
+			caster.closest_attack_target = nil
+			caster.last_attacker = nil
+			return nil
+		else
 
-		-- Update caster status
-		roshan_loc = caster:GetAbsOrigin()
-		roshan_hp = caster:GetHealth() / caster:GetMaxHealth()
-
-		-- Check if currently leashing back to the spawn position
-		if caster.ai_is_leashing_back then
-
-			-- Check if leashing back was successful
-			if (roshan_loc - roshan_spawn_loc):Length2D() < leash_margin then
+			-- Teleport if leashing back for too long
+			caster.ai_leashing_delay = caster.ai_leashing_delay + 0.1
+			if caster.ai_leashing_delay > super_leash_time then
+				FindClearSpaceForUnit(caster, spawn_loc, true)
 				caster.ai_is_leashing_back = nil
 				caster.ai_leashing_delay = nil
-				return think_interval
+				caster.ai_is_active = nil
+				caster.closest_attack_target = nil
+				caster.last_attacker = nil
+				return nil
 			else
-
-				-- Teleport if leashing back for too long
-				caster.ai_leashing_delay = caster.ai_leashing_delay + think_interval
-				if caster.ai_leashing_delay > leash_time then
-					FindClearSpaceForUnit(caster, roshan_spawn_loc, true)
-					caster.ai_is_leashing_back = nil
-					caster.ai_leashing_delay = nil
-					return think_interval
-				else
-					caster:MoveToPosition(roshan_spawn_loc)
-					return think_interval
-				end
+				caster:MoveToPosition(spawn_loc)
+				return nil
 			end
 		end
+	end
 
-		-- Check if an ability cast is underway
-		if caster.ai_is_casting then
-			return think_interval
-		end
+	-- Check if an ability cast is underway
+	if ability_slam:IsInAbilityPhase() or ability_roshling:IsInAbilityPhase() or ability_fury:IsInAbilityPhase() then
+		return nil
+	end
 		
-		-- Check for leash range
-		if (roshan_loc - roshan_spawn_loc):Length2D() > leash_radius then
-			caster.ai_is_leashing_back = true
-			caster.ai_leashing_delay = 0
-			caster.ai_current_target = nil
-			caster:MoveToPosition(roshan_spawn_loc)
-			return think_interval
-		end
+	-- Check for leash range
+	if (roshan_loc - spawn_loc):Length2D() > leash_radius then
 
-		-- Update current target
-		nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, leash_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
-		if nearby_targets[1] then
-			caster.ai_current_target = nearby_targets[1]
-		end
-
-		-- Check for cast conditions
-		nearby_targets = FindUnitsInRadius(caster:GetTeamNumber(), roshan_loc, nil, slam_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
-		if roshan_hp <= fury_pct and ability_fury and ability_fury:IsCooldownReady() then
-			
-			-- Cast Fury of the Immortal on the current target
-			caster:CastAbilityOnTarget(caster.ai_current_target, ability_fury, 0)
-			caster.ai_is_casting = true
-			Timers:CreateTimer(2.0, function()
-				caster.ai_is_casting = nil
-			end)
-			return think_interval
-		elseif roshan_hp <= roshling_pct and ability_roshling and ability_roshling:IsCooldownReady() then
-			
-			-- Summon Roshlings
-			caster:CastAbilityNoTarget(ability_roshling, 0)
-			return think_interval
-		elseif #nearby_targets >= slam_targets and ability_slam and ability_slam:IsCooldownReady() then
-			
-			-- Perform Slam
-			caster:CastAbilityNoTarget(ability_slam, 0)
-			return think_interval
-		end
-
-		-- If there is a target, attack it
-		if caster.ai_current_target and caster.ai_current_target:IsAlive() then
-			caster:SetAttacking(caster.ai_current_target)
-			return think_interval
+		-- Count to [leash_time] if already out of the leash radius
+		if caster.ai_leashing_delay then
+			caster.ai_leashing_delay = caster.ai_leashing_delay + 0.1
 		else
-			caster:MoveToPosition(roshan_spawn_loc)
-			caster.ai_current_target = nil
-			caster.ai_is_active = nil
+			caster.ai_leashing_delay = 0
 		end
-	end)
+
+		-- If at or above [leash_time], start leashing back
+		if caster.ai_leashing_delay >= leash_time then
+			caster.ai_is_leashing_back = true
+			caster:MoveToPosition(spawn_loc)
+			return nil
+		end
+
+	-- If inside leash range, stop counting
+	else
+		caster.ai_leashing_delay = nil
+	end
+
+	-- If the AI is not active, do not launch skills (use basic AI functionality)
+	if not caster.ai_is_active then
+		return nil
+	end
+
+	-- Check for Fury of the Immortal cast conditions
+	if roshan_hp <= fury_pct and ability_fury and ability_fury:IsCooldownReady() and caster.closest_attack_target then
+		
+		-- Cast Fury of the Immortal on the current target
+		caster:CastAbilityOnTarget(caster.closest_attack_target, ability_fury, 0)
+		return nil
+
+	-- Check for Summon Roshlings cast conditions
+	elseif roshan_hp <= roshling_pct and ability_roshling and ability_roshling:IsCooldownReady() then
+		
+		-- Summon Roshlings
+		caster:CastAbilityNoTarget(ability_roshling, 0)
+		return nil
+
+	-- Check for Slam cast conditions
+	elseif ability_slam and ability_slam:IsCooldownReady() then
+		
+		-- Perform Slam
+		caster:CastAbilityNoTarget(ability_slam, 0)
+		return nil
+	end
 end

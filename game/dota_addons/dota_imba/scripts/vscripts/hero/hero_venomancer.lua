@@ -363,7 +363,7 @@ function WardSting( keys )
 	local modifier_sting = keys.modifier_sting
 
 	-- If the target is a building, or the ability was unlearned, do nothing
-	if target:IsBuilding() or not ability then
+	if target:IsBuilding() or IsRoshan(target) or not ability then
 		return nil
 	end
 

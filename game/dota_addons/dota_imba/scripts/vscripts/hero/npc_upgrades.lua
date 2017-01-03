@@ -23,15 +23,23 @@ function CreepUpgrade( keys )
 
 	-- Parameters
 	local game_time = GameRules:GetDOTATime(false, false) * CREEP_POWER_FACTOR / 60
-	local magic_armor_per_minute = ability:GetLevelSpecialValueFor("mega_magic_armor_per_minute", ability_level)
+	local magic_armor_per_minute = ability:GetSpecialValueFor("mega_magic_armor_per_minute")
+	local bonus_health_per_minute = ability:GetSpecialValueFor("bonus_health_per_minute")
 
 	-- Adjust creep damage
 	AddStacks(ability, caster, caster, modifier_damage, game_time, true)
 
+	-- Adjust creep health
+	local base_health = caster:GetMaxHealth()
+	local bonus_health = base_health * bonus_health_per_minute * game_time * 0.01
+	Timers:CreateTimer(0.5, function()
+		SetCreatureHealth(caster, base_health + bonus_health, true)
+	end)
+
 	-- Adjust mega creep armor
 	if string.find(caster:GetUnitName(), "mega") then
-		AddStacks(ability, caster, caster, modifier_armor, math.max(game_time - 12, 0), true)
-		AddStacks(ability, caster, caster, modifier_magic_resist, math.floor(100 - 100 * (1 - magic_armor_per_minute / 100) ^ math.max(game_time - 12, 0)), true)
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_armor, {})
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_magic_resist, {})
 	end
 end
 
@@ -53,7 +61,7 @@ function TowerUpgrade( keys )
 	elseif string.find(caster:GetUnitName(), "tower3") then
 		tower_tier_multiplier = 2
 	elseif string.find(caster:GetUnitName(), "tower4") then
-		tower_tier_multiplier = 2
+		tower_tier_multiplier = 3
 	end
 
 	-- Adjust health
@@ -126,43 +134,6 @@ function FountainBash( keys )
 		-- Play sound
 		enemy:EmitSound(sound_bash)
 	end
-end
-
-function Frantic( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_cd = keys.modifier_cd
-	local modifier_mana = keys.modifier_mana
-
-	-- Remove any pre-existing frantic modifiers
-	caster:RemoveModifierByName(modifier_cd)
-	caster:RemoveModifierByName(modifier_mana)
-
-	-- Calculate amount of stacks to add
-	local cd_stacks = 100 - math.floor( 100 / FRANTIC_MULTIPLIER )
-	local mana_stacks = caster:GetMaxMana() * ( FRANTIC_MULTIPLIER - 1 )
-
-	-- Apply stacks
-	AddStacks(ability, caster, caster, modifier_cd, cd_stacks, true)
-	AddStacks(ability, caster, caster, modifier_mana, mana_stacks, true)
-end
-
-function FranticUpdate( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_mana = keys.modifier_mana
-	local modifier_dummy = keys.modifier_dummy
-
-	-- Remove any pre-existing frantic modifiers
-	caster:RemoveModifierByName(modifier_dummy)
-	caster:RemoveModifierByName(modifier_mana)
-
-	-- Calculate amount of stacks to add
-	local mana_stacks = caster:GetMaxMana() * ( FRANTIC_MULTIPLIER - 1 )
-
-	-- Apply stacks
-	AddStacks(ability, caster, caster, modifier_mana, mana_stacks, true)
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_dummy, {})
 end
 
 function NecrowarriorTrample( keys )

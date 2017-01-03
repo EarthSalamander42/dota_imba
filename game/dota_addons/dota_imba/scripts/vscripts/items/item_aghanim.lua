@@ -9,7 +9,7 @@ function AghanimsSynthCast( keys )
 	local sound_cast = keys.sound_cast
 
 	-- If the caster already has the synth buff, do nothing
-	if caster:HasModifier(modifier_synth) then
+	if caster:HasModifier(modifier_synth) or caster:HasModifier("modifier_arc_warden_tempest_double") then
 		return nil
 	end
 

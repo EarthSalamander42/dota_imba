@@ -388,7 +388,7 @@ function Chronosphere( keys )
 	local caster_mana = caster:GetMana()
 
 	-- Calculate final chronosphere parameters
-	local total_radius = base_radius + extra_radius * caster_mana / mana_cost / FRANTIC_MULTIPLIER
+	local total_radius = base_radius + extra_radius * caster_mana / mana_cost
 
 	-- Spend mana
 	caster:SpendMana(caster:GetMana(), ability)

@@ -49,8 +49,8 @@ function AncientThink( keys )
 	local tier_2_ability = caster:GetAbilityByIndex(5 + behemoth_adjustment)
 	local tier_3_ability = caster:GetAbilityByIndex(6 + behemoth_adjustment)
 
-	-- If health < 20%, refresh abilities once
-	if (( ancient_health < 0.20 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
+	-- If health < 40%, refresh abilities once
+	if (( ancient_health < 0.40 and IMBA_PLAYERS_ON_GAME == 20 ) and not caster.abilities_refreshed ) then
 		caster.tier_1_cast = false
 		caster.tier_3_cast = false
 		tier_1_ability:SetActivated(true)
@@ -64,16 +64,16 @@ function AncientThink( keys )
 		end)
 	end
 
-	-- If health < 30%, use the tier 3 ability
-	if ancient_health < 0.3 and tier_3_ability and not caster.tier_3_cast then
+	-- If health < 50%, use the tier 3 ability
+	if ancient_health < 0.5 and tier_3_ability and not caster.tier_3_cast then
 		tier_3_ability:OnSpellStart()
 		tier_3_ability:SetActivated(false)
 		caster.tier_3_cast = true
 		return nil
 	end
 
-	-- If health < 60%, use the tier 2 ability
-	if ancient_health < 0.6 and tier_2_ability and not caster.tier_2_cast then
+	-- If health < 70%, use the tier 2 ability
+	if ancient_health < 0.7 and tier_2_ability and not caster.tier_2_cast then
 		tier_2_ability:OnSpellStart()
 		tier_2_ability:SetActivated(false)
 		caster.tier_2_cast = true

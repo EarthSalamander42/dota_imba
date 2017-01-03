@@ -12,7 +12,7 @@ function MoonShardActive( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- If this unit is not a real hero, do nothing
-	if not target:IsRealHero() then
+	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
 		return nil
 	end
 

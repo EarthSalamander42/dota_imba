@@ -267,6 +267,8 @@ function TrueKill(caster, target, ability)
 	target:RemoveModifierByName("modifier_item_greatwyrm_plate_unique")
 	target:RemoveModifierByName("modifier_item_vanguard_unique")
 	target:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+	target:RemoveModifierByName("modifier_imba_cheese_death_prevention")
+	target:RemoveModifierByName("modifier_item_imba_rapier_cursed_unique")
 
 	-- Kills the target
 	target:Kill(ability, caster)
@@ -445,9 +447,6 @@ function ApplyAllRandomOmgAbilities( hero )
 		ability_powerup = true
 	end
 
-	-- Check if the frantic mode ability is present
-	local ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
-
 	-- Remove default abilities
 	for i = 0, 15 do
 		local old_ability = hero:GetAbilityByIndex(i)
@@ -535,63 +534,12 @@ function ApplyAllRandomOmgAbilities( hero )
 		end
 	end
 
-	-- Figure out which attribute bonus to add
-	local ability_start_string = ""
-	local ability_end_string = ""
-
-	-- Choose number of abilities
-	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 3 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
-		ability_end_string = "_random_omg_3a2u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
-		ability_end_string = "_random_omg_4a1u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 5 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 1 then
-		ability_end_string = "_random_omg_5a1u"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT == 4 and IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 2 then
-		ability_end_string = "_random_omg_4a2u"
-	end
-
-	-- Choose attribute
-	if hero:GetPrimaryAttribute() == 0 then
-		ability_start_string = "attribute_bonus_str"
-	elseif hero:GetPrimaryAttribute() == 1 then
-		ability_start_string = "attribute_bonus_agi"
-	elseif hero:GetPrimaryAttribute() == 2 then
-		ability_start_string = "attribute_bonus_int"
-	end
-
-	-- Re-add attribute bonus and store it for reference
-	hero:AddAbility(ability_start_string..ability_end_string)
-	hero.random_omg_abilities[i] = ability_start_string..ability_end_string
-	i = i + 1
-
-	-- Apply ability layout modifier
-	local layout_ability_name
-	if IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 4 then
-		layout_ability_name = "random_omg_ability_layout_changer_4"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 5 then
-		layout_ability_name = "random_omg_ability_layout_changer_5"
-	elseif IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT + IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT == 6 then
-		layout_ability_name = "random_omg_ability_layout_changer_6"
-	end
-
-	hero:AddAbility(layout_ability_name)
-	local layout_ability = hero:FindAbilityByName(layout_ability_name)
-	layout_ability:SetLevel(1)
-	hero.random_omg_abilities[i] = layout_ability_name
-
 	-- Apply high level powerup ability, if previously existing
 	if ability_powerup then
 		hero:AddAbility("imba_unlimited_level_powerup")
 		ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		ability_powerup:SetLevel(1)
 		AddStacks(ability_powerup, hero, hero, "modifier_imba_unlimited_level_powerup", powerup_stacks, true)
-	end
-
-	-- Apply frantic mode ability, if previously existing
-	if ability_frantic then
-		hero:AddAbility("imba_frantic_buff")
-		ability_frantic = hero:FindAbilityByName("imba_frantic_buff")
-		ability_frantic:SetLevel(1)
 	end
 
 end
@@ -1001,6 +949,7 @@ function UpgradeTower( tower )
 
 		-- If this ability is not maxed, try to upgrade it
 		if abilities[i] and abilities[i]:GetLevel() < 3 then
+
 			-- Upgrade ability
 			abilities[i]:SetLevel( abilities[i]:GetLevel() + 1 )
 
@@ -1041,9 +990,9 @@ function UpgradeTower( tower )
 					new_ability = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][i+1]
 				end
 			elseif tower.tower_tier == 41 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i+1]
 			elseif tower.tower_tier == 42 then
-				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
+				new_ability = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i+1]
 			end
 
 			-- Add the new ability
@@ -1135,9 +1084,6 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
-
-	-- Frantic mode
-	reduction = reduction /FRANTIC_MULTIPLIER
 
 	return reduction
 end
@@ -1277,13 +1223,22 @@ function IsUninterruptableForcedMovement( unit )
 	return false
 end
 
+-- Returns an unit's existing increased cast range modifiers
 function GetCastRangeIncrease( unit )
 	local cast_range_increase = 0
 	
+	-- From items
 	if unit:HasModifier("modifier_item_imba_elder_staff_range") then
 		cast_range_increase = cast_range_increase + 300
 	elseif unit:HasModifier("modifier_item_imba_aether_lens_range") then
-		cast_range_increase = cast_range_increase + 200
+		cast_range_increase = cast_range_increase + 225
+	end
+
+	-- From talents
+	for talent_name,cast_range_bonus in pairs(CAST_RANGE_TALENTS) do
+		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+			cast_range_increase = cast_range_increase + cast_range_bonus
+		end
 	end
 
 	return cast_range_increase
@@ -1564,7 +1519,7 @@ function TriggerWraithKingReincarnation(caster, ability)
 	Timers:CreateTimer(reincarnate_delay, function()
 
 		-- Purge most debuffs
-		caster:Purge(false, true, false, true, false)
+		caster:Purge(false, true, false, true, true)
 
 		-- Heal, even through healing prevention debuffs
 		caster:SetHealth(caster:GetMaxHealth())
@@ -1695,7 +1650,7 @@ function TriggerAegisReincarnation(caster)
 		caster:SetMana(caster:GetMaxMana())
 
 		-- Purge all debuffs
-		caster:Purge(false, true, false, true, false)
+		caster:Purge(false, true, false, true, true)
 
 		-- Remove Aegis modifier
 		caster:RemoveModifierByName(modifier_aegis)
@@ -1757,33 +1712,167 @@ function IsGinger(unit)
 	return false
 end
 
--- Changes a hero's current spell power
-function ChangeSpellPower(unit, amount)
-
-	if not unit.spell_power then
-		unit.spell_power = 0
-	end
-
-	unit.spell_power = unit.spell_power + amount
-end
-
 -- Fetches a hero's current spell power
 function GetSpellPower(unit)
 
-	-- If this is not a hero, do nothing
-	if not unit:IsHero() then
+	-- If this is not a hero, or the unit is invulnerable, do nothing
+	if not unit:IsHero() or unit:IsInvulnerable() then
 		return 0
 	end
 
 	-- Adjust base spell power based on current intelligence
 	local unit_intelligence = unit:GetIntellect()
-	local spell_power = unit_intelligence * 0.14
+	local spell_power = unit_intelligence * 0.125
 
-	-- Fetch current bonus spell power from other sources, if existing
-	if unit.spell_power then
-		spell_power = spell_power + unit.spell_power
+	-- Adjust spell power based on War Veteran stacks
+	if unit:HasModifier("modifier_imba_unlimited_level_powerup") then
+		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
 	end
+
+	-- Fetch current bonus spell power from modifiers, if existing
+	for current_modifier, modifier_spell_power in pairs(MODIFIER_SPELL_POWER) do
+		if unit:HasModifier(current_modifier) then
+			spell_power = spell_power + modifier_spell_power
+		end
+	end
+
+	-- Fetch current bonus spell power from items, if existing
+	for i = 0, 5 do
+		local current_item = unit:GetItemInSlot(i)
+		if current_item then
+			local current_item_name = current_item:GetName()
+			if ITEM_SPELL_POWER[current_item_name] then
+				spell_power = spell_power + ITEM_SPELL_POWER[current_item_name]
+			end
+		end
+	end
+
+	-- Fetch bonus spell power from talents
+	spell_power = spell_power + GetSpellPowerFromTalents(unit)
 
 	-- Return current spell power
 	return spell_power
+end
+
+-- Fetches a hero's current spell power from talents
+function GetSpellPowerFromTalents(unit)
+	local spell_power = 0
+
+	-- Iterate through all spell power talents
+	for talent_name,spell_power_bonus in pairs(SPELL_POWER_TALENTS) do
+		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+			spell_power = spell_power + spell_power_bonus
+		end
+	end
+
+	return spell_power
+end
+
+-- Directly reduces a hero's HP without killing it
+function ApplyHealthReductionDamage(unit, damage)
+	unit:SetHealth(math.max(unit:GetHealth() - damage, 2))
+end
+
+-- Spawns runes on the map
+function SpawnImbaRunes()
+
+	-- Locate the rune spots on the map
+	local bounty_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_bounty")
+	local powerup_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_powerup")
+
+	-- Spawn bounty runes
+	local game_time = GameRules:GetDOTATime(false, false)
+	for _, bounty_loc in pairs(bounty_rune_locations) do
+		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+		 CreateItemOnPositionForLaunch(bounty_loc:GetAbsOrigin(), bounty_rune)
+
+		-- If these are the 00:00 runes, double their worth
+		if game_time < 1 then
+			bounty_rune.is_initial_bounty_rune = true
+		end
+	end
+
+	-- List of powerup rune types
+	local powerup_rune_types = {
+		"item_imba_rune_double_damage",
+		"item_imba_rune_haste",
+		"item_imba_rune_regeneration"
+	}
+
+	-- Spawn a random powerup rune in a random powerup location
+	if game_time > 1 then
+		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)]:GetAbsOrigin(), CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+	end
+end
+
+-- Picks up a bounty rune
+function PickupBountyRune(item, unit)
+
+	-- Bounty rune parameters
+	local base_bounty = 50
+	local bounty_per_minute = 5
+	local game_time = GameRules:GetDOTATime(false, false)
+	local current_bounty = base_bounty + bounty_per_minute * game_time / 60
+
+	-- If this is the first bounty rune spawn, double the base bounty
+	if item.is_initial_bounty_rune then
+		current_bounty = base_bounty * 2
+	end
+
+	-- Adjust value for lobby options
+	current_bounty = current_bounty * (1 + CUSTOM_GOLD_BONUS * 0.01)
+
+	-- Grant the unit experience
+	unit:AddExperience(current_bounty, DOTA_ModifyXP_CreepKill, false, true)
+
+	-- If this is alchemist, increase the gold amount
+	if unit:FindAbilityByName("alchemist_goblins_greed") and unit:FindAbilityByName("alchemist_goblins_greed"):GetLevel() > 0 then
+		current_bounty = current_bounty * 4
+	end
+
+	-- Grant the unit gold
+	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_CreepKill)
+
+	-- Show the gold gained message to everyone
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+
+	-- Play the gold gained sound
+	unit:EmitSound("General.Coins")
+
+	-- Play the bounty rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
+end
+
+-- Picks up a haste rune
+function PickupHasteRune(item, unit)
+
+	-- Apply the aura modifier to the owner
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_haste_owner", {})
+
+	-- Apply the movement speed increase modifier to the owner
+	local duration = item:GetSpecialValueFor("duration")
+	unit:AddNewModifier(unit, item, "modifier_imba_haste_rune_speed_limit_break", {duration = duration})
+
+	-- Play the haste rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Haste", unit)
+end
+
+-- Picks up a double damage rune
+function PickupDoubleDamageRune(item, unit)
+
+	-- Apply the aura modifier to the owner
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_double_damage_owner", {})
+
+	-- Play the double damage rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.DD", unit)
+end
+
+-- Picks up a regeneration rune
+function PickupRegenerationRune(item, unit)
+
+	-- Apply the aura modifier to the owner
+	item:ApplyDataDrivenModifier(unit, unit, "modifier_imba_rune_regeneration_owner", {})
+
+	-- Play the double damage rune activation sound to the unit's team
+	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 end

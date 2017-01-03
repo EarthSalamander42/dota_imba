@@ -3,108 +3,93 @@
 
 -- Cleanup a player when they leave
 function GameMode:OnDisconnect(keys)
-	DebugPrint('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
-	DebugPrintTable(keys)
 
-	local player_name = keys.name
+	-- GetConnectionState values:
+	-- 0 - no connection
+	-- 1 - bot connected
+	-- 2 - player connected
+	-- 3 - bot/player disconnected.
+
+	-- Typical keys:
+	-- PlayerID: 2
+	-- name: Zimberzimber
+	-- networkid: [U:1:95496383]
+	-- reason: 2
+	-- splitscreenplayer: -1
+	-- userid: 7
+	-- xuid: 76561198055762111
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player disconnect/abandon logic
 	-------------------------------------------------------------------------------------------------
 
-	-- If players haven't finished picking yet, do nothing
-	if not IMBA_STARTED_TRACKING_CONNECTIONS then
+	-- If the game hasn't started, or has already ended, do nothing
+	if (GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME) or (GameRules:State_Get() < DOTA_GAMERULES_STATE_PRE_GAME) then
 		return nil
-	end
 
-	-- If the game has already been won, do nothing
-	--if ??? then
-	--	return nil
-	--end
+	-- Else, start tracking player's reconnect/abandon state
+	else
 
-	-- Connection status detection delay
-	Timers:CreateTimer(1, function()
+		-- Fetch player's player and hero information
+		local player_id = keys.PlayerID
+		local player_name = keys.name
+		local hero = PlayerResource:GetPickedHero(player_id)
+		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local line_duration = 7
 
-		local disconnected_this_time = {}
-	
-		-- Update players' connection status
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				print("player "..id.."has just disconnected, with connection state "..self.players[id].connection_state)
-				if self.players[id].connection_state == 3 then
-					self.players[id].is_disconnected = true
-					print("set up player "..id.." as disconnected")
-					disconnected_this_time[id] = true
-				end
-			end
-		end
+		-- Start tracking
+		print("started keeping track of player "..player_id.."'s connection state")
+		local disconnect_time = 0
+		Timers:CreateTimer(1, function()
+			
+			-- Keep track of time disconnected
+			disconnect_time = disconnect_time + 1
 
-		-- Iterate through each recently disconnected player
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].is_disconnected and disconnected_this_time[id] then
+			-- If the player has abandoned the game, set his gold to zero and distribute passive gold towards its allies
+			if hero:HasOwnerAbandoned() or disconnect_time >= ABANDON_TIME then
 
-				-- Parameters
-				local team = PlayerResource:GetTeam(id)
-				local hero = self.heroes[id]
-				local hero_name = hero:GetName()
-				local player_name = PlayerResource:GetPlayerName(id)
-				local full_abandon = false
-				local line_duration = 7
-				local remaining_connected_players
-
-				-- Show disconnect message
+				-- Abandon message
 				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 				Notifications:BottomToAll({text = "#imba_player_abandon_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+				PlayerResource:SetHasAbandonedDueToLongDisconnect(player_id, true)
+				print("player "..player_id.." has abandoned the game.")
 
-				-- Radiant abandon logic
-				if team == DOTA_TEAM_GOODGUYS then
-					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS - 1
-					remaining_connected_players = GOODGUYS_CONNECTED_PLAYERS
-					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Radiant")
+				-- Decrease the player's team's player count
+				PlayerResource:DecrementTeamPlayerCount(player_id)
 
-				-- Dire abandon logic
-				elseif team == DOTA_TEAM_BADGUYS then
-					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS - 1
-					remaining_connected_players = BADGUYS_CONNECTED_PLAYERS
-					print(hero_name.." has disconnected, only "..remaining_connected_players.." players remaining on Dire")
+				-- Start redistributing this player's gold to its allies
+				PlayerResource:StartAbandonGoldRedistribution(player_id)
+
+				-- If this was the last player to abandon on his team, wait 15 seconds and end the game if no one came back.
+				if REMAINING_GOODGUYS <= 0 then
+					Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+					Timers:CreateTimer(FULL_ABANDON_TIME, function()
+						if REMAINING_GOODGUYS <= 0 then
+							GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+							GAME_WINNER_TEAM = "Dire"
+						end
+					end)
+				elseif REMAINING_BADGUYS <= 0 then
+					Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
+					Timers:CreateTimer(FULL_ABANDON_TIME, function()
+						if REMAINING_BADGUYS <= 0 then
+							GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+							GAME_WINNER_TEAM = "Radiant"
+						end
+					end)
 				end
+				
+			-- If the player has reconnected, stop tracking connection state every second
+			elseif PlayerResource:GetConnectionState(player_id) == 2 then
+
+			-- Else, keep tracking connection state
+			else
+				print("tracking player "..player_id.."'s connection state, disconnected for "..disconnect_time.." seconds.")
+				return 1
 			end
-		end
-
-		-- Full radiant team has abandoned
-		if GOODGUYS_CONNECTED_PLAYERS == 0 then
-			full_abandon = true
-
-			-- Display message to the other team
-			Notifications:BottomToAll({text = "#imba_team_good_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-			-- End the game in 15 seconds if no one reconnects
-			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
-				if GOODGUYS_CONNECTED_PLAYERS == 0 then
-					GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-					GAME_WINNER_TEAM = "Dire"
-				end
-			--end)
-		end
-
-		-- Full dire team has abandoned
-		if BADGUYS_CONNECTED_PLAYERS == 0 then
-			full_abandon = true
-
-			-- Display message to the other team
-			Notifications:BottomToAll({text = "#imba_team_bad_abandon_message", duration = line_duration, style = {color = "DodgerBlue"} })
-
-			-- End the game in 15 seconds if no one reconnects
-			--Timers:CreateTimer(FULL_ABANDON_TIME, function()
-				if BADGUYS_CONNECTED_PLAYERS == 0 then
-					GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-					GAME_WINNER_TEAM = "Radiant"
-				end
-			--end)
-		end
-	end)
+		end)
+	end
 end
 
 -- The overall game state has changed
@@ -160,6 +145,34 @@ function GameMode:OnGameRulesStateChange(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Force-random picks after the pick time has elapsed 
+	-------------------------------------------------------------------------------------------------
+
+	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		Timers:CreateTimer(HERO_SELECTION_TIME - 10.1, function()
+			for player_id = 0, 19 do
+				if PlayerResource:IsImbaPlayer(player_id) then
+
+					-- If this player still hasn't picked a hero, random one
+					if not PlayerResource:HasSelectedHero(player_id) then
+						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
+						PlayerResource:SetCanRepick(player_id, false)
+						PlayerResource:SetHasRandomed(player_id)
+						print("tried to random a hero for "..player_id)
+					end
+				end
+			end
+		end)
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Skip strategy time
+	-------------------------------------------------------------------------------------------------
+
+	if new_state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Stat collection stuff
 	-------------------------------------------------------------------------------------------------
 
@@ -174,6 +187,26 @@ function GameMode:OnNPCSpawned(keys)
 	GameMode:_OnNPCSpawned(keys)
 
 	local npc = EntIndexToHScript(keys.entindex)
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Replace Silencer Int Steal with IMBA version
+	--
+	-- Unfortunately, needs to be done every time Silencer spawns as his modifier is permanently
+	-- embedded into his character and he'll gain it every time he spawns
+	-------------------------------------------------------------------------------------------------
+
+	if npc:IsRealHero() then
+		Timers:CreateTimer(1, function()
+			if npc:HasModifier("modifier_silencer_int_steal") then
+				npc:RemoveModifierByName("modifier_silencer_int_steal")
+				
+				-- Only add the modifier once, since it persists through death and whatnot
+				if not npc:HasModifier("modifier_imba_silencer_int_steal") then
+					npc:AddNewModifier(npc, nil, "modifier_imba_silencer_int_steal", {steal_range = 925, steal_amount = 2})
+				end
+			end
+		end)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arc Warden clone handling
@@ -192,35 +225,6 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	if npc:HasModifier("modifier_arc_warden_tempest_double") then
-
-		-- List of items the clone can't carry
-		local clone_forbidden_items = {
-			"item_imba_rapier",
-			"item_imba_rapier_magic",
-			"item_imba_rapier_dummy",
-			"item_imba_moon_shard",
-			"item_imba_soul_of_truth",
-			"item_imba_refresher"
-		}
-
-		-- Iterate through the clone's items
-		Timers:CreateTimer(0.05, function()
-			for i = 0, 5 do
-				local current_item = npc:GetItemInSlot(i)
-
-				-- Remove any existing forbidden items on the clone
-				for _, forbidden_item in pairs(clone_forbidden_items) do
-					if current_item and current_item:GetName() == forbidden_item then
-						npc:RemoveItem(current_item)
-						break
-					end
-				end
-			end
-
-			-- Erase any leftover modifiers
-			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_phys")
-			npc:RemoveModifierByName("modifier_item_imba_rapier_stacks_magic")
-		end)
 
 		-- List of modifiers which carry over from the main hero to the clone
 		local clone_shared_buffs = {
@@ -332,44 +336,12 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Reaper's Scythe buyback prevention clean-up
+	-- IMBA: Buyback penalty removal
 	-------------------------------------------------------------------------------------------------
 
-	if npc:IsRealHero() then
-		npc:SetBuyBackDisabledByReapersScythe(false)
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Buyback setup (part 2)
-	-------------------------------------------------------------------------------------------------
-
-	-- Check if the spawned unit has the buyback penalty modifier
 	Timers:CreateTimer(0.1, function()
-		if not npc:IsNull() and npc:HasModifier("modifier_buyback_gold_penalty") then
-
-			-- Add one to this player's buyback count
-			npc.buyback_count = npc.buyback_count + 1
-
-			-- Update the quick sucession buyback cost increase variable
-			if npc.quick_sucession_buybacks then
-				npc.quick_sucession_buybacks = npc.quick_sucession_buybacks + 1
-			else
-				npc.quick_sucession_buybacks = 1
-			end
-
-			-- Store this buyback's variable amount for later reference
-			local this_buyback_number = npc.quick_sucession_buybacks
-
-			-- Reset buyback cost after the penalty time ends
-			Timers:CreateTimer(0.5, function()
-				if npc:HasModifier("modifier_buyback_gold_penalty") or not npc:IsAlive() then
-					return 0.5
-				else
-					if this_buyback_number == npc.quick_sucession_buybacks then
-						npc.quick_sucession_buybacks = 0
-					end
-				end
-			end)
+		if (not npc:IsNull()) and npc:HasModifier("modifier_buyback_gold_penalty") then
+			npc:RemoveModifierByName("modifier_buyback_gold_penalty")
 		end
 	end)
 
@@ -383,26 +355,10 @@ function GameMode:OnNPCSpawned(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Creep bounty/stats adjustment
+	-- IMBA: Creep stats adjustment
 	-------------------------------------------------------------------------------------------------
 
 	if not npc:IsHero() and not npc:IsOwnedByAnyPlayer() then
-
-		-- Fetch base bounties
-		local max_bounty = npc:GetMaximumGoldBounty()
-		local min_bounty = npc:GetMinimumGoldBounty()
-		local xp_bounty = npc:GetDeathXP()
-
-		-- Adjust bounties based on game time
-		local game_time = GAME_TIME_ELAPSED / 60
-		max_bounty = max_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-		min_bounty = min_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-		xp_bounty = xp_bounty * ( 100 + CREEP_BOUNTY_RAMP_UP_PER_MINUTE * game_time ) / 100
-
-		-- Adjust bounties according to game options
-		npc:SetDeathXP( math.floor( xp_bounty * ( 1 + CREEP_XP_BONUS / 100 ) ) )
-		npc:SetMaximumGoldBounty( math.floor( max_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
-		npc:SetMinimumGoldBounty( math.floor( min_bounty * ( 1 + CREEP_GOLD_BONUS / 100 ) ) )
 
 		-- Add passive buff to lane creeps
 		if string.find(npc:GetUnitName(), "dota_creep") then
@@ -420,11 +376,11 @@ function GameMode:OnEntityHurt(keys)
 	--DebugPrint("[BAREBONES] Entity Hurt")
 	--DebugPrintTable(keys)
 
-	local damagebits = keys.damagebits -- This might always be 0 and therefore useless
-	if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
-	local entCause = EntIndexToHScript(keys.entindex_attacker)
-	local entVictim = EntIndexToHScript(keys.entindex_killed)
-	end
+	--local damagebits = keys.damagebits -- This might always be 0 and therefore useless
+	--if keys.entindex_attacker ~= nil and keys.entindex_killed ~= nil then
+	--local entCause = EntIndexToHScript(keys.entindex_attacker)
+	--local entVictim = EntIndexToHScript(keys.entindex_killed)
+	--end
 end
 
 -- An item was picked up off the ground
@@ -441,100 +397,28 @@ end
 -- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
-	DebugPrint( '[BAREBONES] OnPlayerReconnect' )
-	DebugPrintTable(keys) 
+	PrintTable(keys)
+
+	local player_id = keys.PlayerID
+	local player_name = keys.name
+	local hero = PlayerResource:GetPickedHero(player_id)
+	local hero_name = PlayerResource:GetPickedHeroName(player_id)
+	local line_duration = 7
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
 
-	-- If players haven't finished picking yet, do nothing
-	if not IMBA_STARTED_TRACKING_CONNECTIONS then
-		return nil
+	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
+	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
+		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
+		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
+		PlayerResource:IncrementTeamPlayerCount(player_id)
+
+		-- Stop redistributing gold to allies, if applicable
+		PlayerResource:StopAbandonGoldRedistribution(player_id)
 	end
-
-	-- If the game has already been won, do nothing
-	--if ??? then
-	--	return nil
-	--end
-
-	-- Connection status detection delay
-	Timers:CreateTimer(1, function()
-
-		-- Attempt to detect players who were ignored on the initial load
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if not self.players[id] then
-				print("attempting to fetch connection status for player"..id)
-				self.players[id] = PlayerResource:GetPlayer(id)
-				
-				if self.players[id] then
-
-					-- Initialize connection state
-					self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-					print("initialized connection for player "..id..": "..self.players[id].connection_state)
-
-					-- Assign appropriate player color
-					if IMBA_PLAYERS_ON_GAME == 10 and id > 4 then
-						PlayerResource:SetCustomPlayerColor(id+5, PLAYER_COLORS[id+5][1], PLAYER_COLORS[id+5][2], PLAYER_COLORS[id+5][3])
-					else
-						PlayerResource:SetCustomPlayerColor(id, PLAYER_COLORS[id][1], PLAYER_COLORS[id][2], PLAYER_COLORS[id][3])
-					end
-
-					-- Increment amount of players on this team by one
-					if PlayerResource:GetTeam(id) == DOTA_TEAM_GOODGUYS then
-						GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-						print("goodguys team now has "..GOODGUYS_CONNECTED_PLAYERS.." players")
-					elseif PlayerResource:GetTeam(id) == DOTA_TEAM_BADGUYS then
-						BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-						print("badguys team now has "..BADGUYS_CONNECTED_PLAYERS.." players")
-					end
-				end
-			end
-		end
-
-		local reconnected_this_time = {}
-
-		-- Update players' connection status
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and self.players[id].connection_state ~= PlayerResource:GetConnectionState(id) then
-				self.players[id].connection_state = PlayerResource:GetConnectionState(id)
-				print("player "..id.."has just reconnected, with connection state "..self.players[id].connection_state)
-				if self.players[id].connection_state == 2 then
-					self.players[id].is_disconnected = nil
-					print("set up player "..id.." as reconnected")
-					reconnected_this_time[id] = true
-				end
-			end
-		end
-
-		-- Iterate through each recently reconnected player
-		for id = 0, ( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and not self.players[id].is_disconnected and reconnected_this_time[id] then
-
-				-- Parameters
-				local player = PlayerResource:GetPlayer(id)
-				local player_name = PlayerResource:GetPlayerName(id)
-				local team = PlayerResource:GetTeam(id)
-				local hero = player:GetAssignedHero()
-				local hero_name = hero:GetName()
-
-				-- Show reconnection message to remaining players
-				local line_duration = 5
-				Notifications:BottomToAll({hero = hero_name, duration = line_duration})
-				Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
-				Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})
-
-				-- Update team connection status
-				if team == DOTA_TEAM_GOODGUYS then
-					GOODGUYS_CONNECTED_PLAYERS = GOODGUYS_CONNECTED_PLAYERS + 1
-					print(hero_name.." has reconnected, "..GOODGUYS_CONNECTED_PLAYERS.." players remaining on Radiant")
-				elseif team == DOTA_TEAM_BADGUYS then
-					BADGUYS_CONNECTED_PLAYERS = BADGUYS_CONNECTED_PLAYERS + 1
-					print(hero_name.." has reconnected, "..BADGUYS_CONNECTED_PLAYERS.." players remaining on Dire")
-				end
-			end
-		end
-	end)
 
 end
 
@@ -567,45 +451,45 @@ function GameMode:OnAbilityUsed(keys)
 	-- IMBA: Remote Mines adjustment
 	-------------------------------------------------------------------------------------------------
 
-	if abilityname == "techies_remote_mines" then
+	-- if abilityname == "techies_remote_mines" then
 
-		local mine_caster = player:GetAssignedHero()
-		Timers:CreateTimer(0.01, function()
-			local nearby_units = FindUnitsInRadius(mine_caster:GetTeamNumber(), mine_caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,unit in pairs(nearby_units) do
+	-- 	local mine_caster = player:GetAssignedHero()
+	-- 	Timers:CreateTimer(0.01, function()
+	-- 		local nearby_units = FindUnitsInRadius(mine_caster:GetTeamNumber(), mine_caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+	-- 		for _,unit in pairs(nearby_units) do
 
-				-- Only operate on remotes which need setup
-				if unit.needs_remote_mine_setup then
+	-- 			-- Only operate on remotes which need setup
+	-- 			if unit.needs_remote_mine_setup then
 					
-					-- Add extra abilities
-					unit:AddAbility("imba_techies_minefield_teleport")
-					unit:AddAbility("imba_techies_remote_auto_creep")
-					unit:AddAbility("imba_techies_remote_auto_hero")
-					local minefield_teleport = unit:FindAbilityByName("imba_techies_minefield_teleport")
-					local auto_creep = unit:FindAbilityByName("imba_techies_remote_auto_creep")
-					local auto_hero = unit:FindAbilityByName("imba_techies_remote_auto_hero")
-					auto_creep:SetLevel(1)
-					auto_hero:SetLevel(1)
+	-- 				-- Add extra abilities
+	-- 				unit:AddAbility("imba_techies_minefield_teleport")
+	-- 				unit:AddAbility("imba_techies_remote_auto_creep")
+	-- 				unit:AddAbility("imba_techies_remote_auto_hero")
+	-- 				local minefield_teleport = unit:FindAbilityByName("imba_techies_minefield_teleport")
+	-- 				local auto_creep = unit:FindAbilityByName("imba_techies_remote_auto_creep")
+	-- 				local auto_hero = unit:FindAbilityByName("imba_techies_remote_auto_hero")
+	-- 				auto_creep:SetLevel(1)
+	-- 				auto_hero:SetLevel(1)
 
-					-- Enable minefield teleport if the caster has a scepter
-					local scepter = HasScepter(mine_caster)
-					if scepter then
-						minefield_teleport:SetLevel(1)
-					end
+	-- 				-- Enable minefield teleport if the caster has a scepter
+	-- 				local scepter = HasScepter(mine_caster)
+	-- 				if scepter then
+	-- 					minefield_teleport:SetLevel(1)
+	-- 				end
 
-					-- Toggle abilities on according to the current caster setting
-					if mine_caster.auto_hero_exploding then
-						auto_hero:ToggleAbility()
-					elseif mine_caster.auto_creep_exploding then
-						auto_creep:ToggleAbility()
-					end
+	-- 				-- Toggle abilities on according to the current caster setting
+	-- 				if mine_caster.auto_hero_exploding then
+	-- 					auto_hero:ToggleAbility()
+	-- 				elseif mine_caster.auto_creep_exploding then
+	-- 					auto_creep:ToggleAbility()
+	-- 				end
 
-					-- Set this mine's setup as done
-					unit.needs_remote_mine_setup = nil
-				end
-			end
-		end)
-	end
+	-- 				-- Set this mine's setup as done
+	-- 				unit.needs_remote_mine_setup = nil
+	-- 			end
+	-- 		end
+	-- 	end)
+	-- end
 
 end
 
@@ -614,7 +498,7 @@ function GameMode:OnNonPlayerUsedAbility(keys)
 	DebugPrint('[BAREBONES] OnNonPlayerUsedAbility')
 	DebugPrintTable(keys)
 
-	local abilityname=  keys.abilityname
+	local abilityname = keys.abilityname
 end
 
 -- A player changed their name
@@ -646,66 +530,30 @@ end
 
 -- A player leveled up
 function GameMode:OnPlayerLevelUp(keys)
-	DebugPrint('[BAREBONES] OnPlayerLevelUp')
-	DebugPrintTable(keys)
 
 	local player = EntIndexToHScript(keys.player)
-	local level = keys.level
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Update hero bounty on level up
-	-------------------------------------------------------------------------------------------------
-
-	-- Calculate new base bounties
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
-
-	-- Gold bounty
-	local gold_bounty = HERO_KILL_GOLD_BASE + hero_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(hero)
-
-	-- XP bounty
-	local xp_bounty
-	if hero_level <= 5 then
-		xp_bounty = HERO_KILL_XP_CONSTANT_1 + ( hero_level - 1 ) * HERO_KILL_XP_CONSTANT_2
-	else
-		xp_bounty = ( hero_level - 4 ) * HERO_KILL_XP_CONSTANT_1 + 4 * HERO_KILL_XP_CONSTANT_2
-	end
-
-	-- Adjust bounties with the game options multiplier
-	gold_bounty = math.max( gold_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
-	xp_bounty = xp_bounty * ( 100 + HERO_XP_BONUS ) / 100
-
-	-- Set up bounties
-	hero:SetDeathXP(xp_bounty)
-	hero:SetMaximumGoldBounty(gold_bounty)
-	hero:SetMinimumGoldBounty(gold_bounty)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Unlimited level logic
 	-------------------------------------------------------------------------------------------------
 
+	-- If the generic powerup isn't present, apply it
 	if hero_level > 25 then
-
-		-- Invoker is a special case
-		if hero:GetName() == "npc_dota_hero_invoker" then
-			if hero_level > 35 then
-				hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
-			end
-		else
-
-			-- Prevent the hero from gaining further ability points after level 25
-			hero:SetAbilityPoints( hero:GetAbilityPoints() - 1 )
-
-			-- If the generic powerup isn't present, apply it
-			local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-			if not ability_powerup then
-				hero:AddAbility("imba_unlimited_level_powerup")
-				ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-				ability_powerup:SetLevel(1)
-			end
+		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+		if not ability_powerup then
+			hero:AddAbility("imba_unlimited_level_powerup")
+			ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		end
+		ability_powerup:SetLevel(1)
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Hero experience bounty adjustment
+	-------------------------------------------------------------------------------------------------
+
+	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[hero_level])
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -763,12 +611,15 @@ end
 
 -- A player picked a hero
 function GameMode:OnPlayerPickHero(keys)
-	DebugPrint('[BAREBONES] OnPlayerPickHero')
-	DebugPrintTable(keys)
 
-	local heroClass = keys.hero
-	local heroEntity = EntIndexToHScript(keys.heroindex)
-	local player = EntIndexToHScript(keys.player)
+	local hero_entity = EntIndexToHScript(keys.heroindex)
+	local player_id = hero_entity:GetPlayerID()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Assign hero to player
+	-------------------------------------------------------------------------------------------------
+
+	PlayerResource:SetPickedHero(player_id, hero_entity)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: All Pick hero pick logic
@@ -777,9 +628,9 @@ function GameMode:OnPlayerPickHero(keys)
 	if IMBA_PICK_MODE_ALL_PICK then
 
 		-- Fetch player's team and chosen hero
-		local team = PlayerResource:GetTeam(player:GetPlayerID())
-		local hero = player:GetAssignedHero()
-		local hero_name = hero:GetName()
+		--local team = PlayerResource:GetTeam(player:GetPlayerID())
+		--local hero = player:GetAssignedHero()
+		--local hero_name = hero:GetName()
 
 		-- Check if the hero was already picked in the same team
 		--if PlayerResource:IsHeroSelected(hero_name) then
@@ -795,13 +646,108 @@ end
 
 -- A player killed another player in a multi-team context
 function GameMode:OnTeamKillCredit(keys)
-	DebugPrint('[BAREBONES] OnTeamKillCredit')
-	DebugPrintTable(keys)
 
-	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
-	local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
-	local numKills = keys.herokills
-	local killerTeamNumber = keys.teamnumber
+	-- Typical keys:
+	-- herokills: 6
+	-- killer_userid: 0
+	-- splitscreenplayer: -1
+	-- teamnumber: 2
+	-- victim_userid: 7
+	-- killer id will be -1 in case of a non-player owned killer (e.g. neutrals, towers, etc.)
+
+	local killer_id = keys.killer_userid
+	local victim_id = keys.victim_userid
+	local killer_team = keys.teamnumber
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Deathstreak logic
+	-------------------------------------------------------------------------------------------------
+
+	if PlayerResource:IsImbaPlayer(killer_id) and PlayerResource:IsImbaPlayer(victim_id) then
+		
+		-- Reset the killer's deathstreak
+		PlayerResource:ResetDeathstreak(killer_id)
+
+		-- Increment the victim's deathstreak
+		PlayerResource:IncrementDeathstreak(victim_id)
+
+		-- Show Deathstreak message
+		local victim_hero_name = PlayerResource:GetPickedHeroName(victim_id)
+		local victim_player_name = PlayerResource:GetPlayerName(victim_id)
+		local victim_death_streak = PlayerResource:GetDeathstreak(victim_id)
+		local line_duration = 7
+
+		if victim_death_streak >= 3 then
+			Notifications:BottomToAll({hero = victim_hero_name, duration = line_duration})
+			Notifications:BottomToAll({text = victim_player_name.." ", duration = line_duration, continue = true})
+		end
+
+		if victim_death_streak == 3 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
+		elseif victim_death_streak == 4 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
+		elseif victim_death_streak == 5 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
+		elseif victim_death_streak == 6 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
+		elseif victim_death_streak == 7 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
+		elseif victim_death_streak == 8 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
+		elseif victim_death_streak == 9 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
+		elseif victim_death_streak >= 10 then
+			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Rancor logic
+	-------------------------------------------------------------------------------------------------
+
+	-- Victim stack loss
+	local victim_hero = PlayerResource:GetPickedHero(victim_id)
+	if victim_hero and victim_hero:HasModifier("modifier_imba_rancor") then
+		local current_stacks = victim_hero:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
+		if current_stacks <= 2 then
+			victim_hero:RemoveModifierByName("modifier_imba_rancor")
+		else
+			victim_hero:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
+		end
+	end
+	
+	-- Killer stack gain
+	if victim_hero and VENGEFUL_RANCOR and PlayerResource:IsImbaPlayer(killer_id) and killer_team ~= VENGEFUL_RANCOR_TEAM then
+		local eligible_rancor_targets = FindUnitsInRadius(victim_hero:GetTeamNumber(), victim_hero:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
+		if eligible_rancor_targets[1] then
+			local rancor_stacks = 1
+
+			-- Double stacks if the killed unit was Venge
+			if victim_hero == VENGEFUL_RANCOR_CASTER then
+				rancor_stacks = rancor_stacks * 2
+			end
+
+			-- Add stacks and play particle effect
+			AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
+			local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
+			ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
+			ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Vengeance Aura logic
+	-------------------------------------------------------------------------------------------------
+
+	if victim_hero and PlayerResource:IsImbaPlayer(killer_id) then
+		local vengeance_aura_ability = victim_hero:FindAbilityByName("imba_vengeful_command_aura")
+		local killer_hero = PlayerResource:GetPickedHero(killer_id)
+		if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
+			vengeance_aura_ability:ApplyDataDrivenModifier(victim_hero, killer_hero, "modifier_imba_command_aura_negative_aura", {})
+			victim_hero.vengeance_aura_target = killer_hero
+		end
+	end
+
 end
 
 -- An entity died
@@ -817,7 +763,7 @@ function GameMode:OnEntityKilled( keys )
 	-- The Killing entity
 	local killer = nil
 
-	if keys.entindex_attacker ~= nil then
+	if keys.entindex_attacker then
 		killer = EntIndexToHScript( keys.entindex_attacker )
 	end
 
@@ -849,98 +795,6 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Suicide Squad, Attack! Mines
-	-------------------------------------------------------------------------------------------------
-
-	-- Check if suicide is leveled
-	local ability_suicide = killed_unit:FindAbilityByName("techies_suicide")
-	if ability_suicide and ability_suicide:GetLevel() > 0 then
-
-		-- Check for scepter
-		local scepter = HasScepter(killed_unit)
-			
-		-- Land Mines
-		local ability_land_mine = killed_unit:FindAbilityByName("imba_techies_land_mines")
-		if ability_land_mine and ability_land_mine:GetLevel() > 0 then
-			local caster = killed_unit				
-			local ability_level = ability_land_mine:GetLevel() - 1
-			local modifier_state = "modifier_imba_land_mines_state"
-			
-			-- Parameters
-			local activation_time = ability_land_mine:GetLevelSpecialValueFor("activation_time", ability_level)
-			local levels_per_mine = ability_land_mine:GetLevelSpecialValueFor("levels_per_mine", ability_level)
-			local duration = ability_land_mine:GetLevelSpecialValueFor("duration", ability_level)
-			local player_id = caster:GetPlayerID()
-
-			-- Calculate amount of mines to drop
-			local mine_amount = 1 + math.floor( caster:GetLevel() / levels_per_mine )
-
-			-- Drop the mines
-			for i = 1, mine_amount do
-				local land_mine = CreateUnitByName("npc_imba_techies_land_mine", caster:GetAbsOrigin() + RandomVector(100), false, caster, caster, caster:GetTeam())
-				land_mine:SetControllableByPlayer(player_id, true)
-				land_mine:AddNewModifier(caster, ability_land_mine, "modifier_kill", {duration = duration})
-
-				-- Root the mine in place
-				land_mine:AddNewModifier(land_mine, ability_land_mine, "modifier_rooted", {})
-
-				-- Make the mine have no unit collision or health bar
-				ability_land_mine:ApplyDataDrivenModifier(caster, land_mine, modifier_state, {})
-
-				-- Wait for the activation delay
-				Timers:CreateTimer(activation_time, function()
-					
-					-- Grant the mine the appropriately leveled abilities
-					local mine_passive = land_mine:FindAbilityByName("imba_techies_land_mine_passive")
-					mine_passive:SetLevel(ability_level + 1)
-					if scepter then
-						local mine_teleport = land_mine:FindAbilityByName("imba_techies_minefield_teleport")
-						mine_teleport:SetLevel(1)
-					end
-				end)
-			end
-		end
-
-		-- Stasis Trap
-		local ability_stasis_trap = killed_unit:FindAbilityByName("imba_techies_stasis_trap")
-		if ability_stasis_trap and ability_stasis_trap:GetLevel() > 0 then
-
-			local caster = killed_unit
-			local ability_level = ability_stasis_trap:GetLevel() - 1
-			
-			-- Parameters
-			local activation_delay = ability_stasis_trap:GetLevelSpecialValueFor("activation_delay", ability_level)
-			local player_id = caster:GetPlayerID()
-			local trap_loc_1 = caster:GetAbsOrigin() + RandomVector(100)
-			local trap_loc_2 = caster:GetAbsOrigin() + RandomVector(100)
-
-			-- Play the spawn animation
-			local trap_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_techies/techies_stasis_trap_plant.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControl(trap_pfx, 0, trap_loc_1)
-			ParticleManager:SetParticleControl(trap_pfx, 1, trap_loc_1)
-
-			-- Wait for the activation delay
-			Timers:CreateTimer(activation_delay, function()
-
-				-- Create the mine at the specified place
-				local stasis_trap = CreateUnitByName("npc_imba_techies_stasis_trap", trap_loc_1, false, caster, caster, caster:GetTeam())
-				stasis_trap:SetControllableByPlayer(player_id, true)
-				stasis_trap:AddNewModifier(caster, ability_stasis_trap, "modifier_kill", {duration = 600})
-
-				-- Root the mine in place
-				stasis_trap:AddNewModifier(stasis_trap, ability_stasis_trap, "modifier_rooted", {})
-
-				-- Make the mine have no unit collision or health bar
-				ability_stasis_trap:ApplyDataDrivenModifier(caster, stasis_trap, "modifier_imba_stasis_trap_state", {})
-					
-				-- Grant the mine the appropriately leveled abilities
-				local trap_passive = stasis_trap:FindAbilityByName("imba_techies_stasis_trap_passive")
-				trap_passive:SetLevel(ability_level + 1)
-			end)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Meepo redirect to Meepo Prime
 	-------------------------------------------------------------------------------------------------
 	if killed_unit:GetUnitName() == "npc_dota_hero_meepo" then
@@ -951,36 +805,36 @@ function GameMode:OnEntityKilled( keys )
 	-- IMBA: Respawn timer setup
 	-------------------------------------------------------------------------------------------------
 	
-	if killed_unit:IsRealHero() and PlayerResource:GetPlayer(killed_unit:GetPlayerID()) then
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
 		
 		-- Calculate base respawn timer, capped at 60 seconds
-		local hero_level = killed_unit:GetLevel()
-		local respawn_time = HERO_RESPAWN_TIME_BASE + math.min(hero_level, 25) * HERO_RESPAWN_TIME_PER_LEVEL
+		local hero_level = math.min(killed_unit:GetLevel(), 25)
+		local respawn_time = HERO_RESPAWN_TIME_PER_LEVEL[hero_level]
+
+		-- Calculate respawn timer reduction due to talents
+		local respawn_reduction_talents = {}
+		respawn_reduction_talents["special_bonus_respawn_reduction_15"] = 9
+		respawn_reduction_talents["special_bonus_respawn_reduction_20"] = 12
+		respawn_reduction_talents["special_bonus_respawn_reduction_25"] = 15
+		respawn_reduction_talents["special_bonus_respawn_reduction_30"] = 18
+		respawn_reduction_talents["special_bonus_respawn_reduction_35"] = 20
+		respawn_reduction_talents["special_bonus_respawn_reduction_40"] = 25
+		respawn_reduction_talents["special_bonus_respawn_reduction_50"] = 30
+		respawn_reduction_talents["special_bonus_respawn_reduction_60"] = 40
+
+		for talent_name,respawn_reduction_bonus in pairs(respawn_reduction_talents) do
+			if killed_unit:FindAbilityByName(talent_name) and killed_unit:FindAbilityByName(talent_name):GetLevel() > 0 then
+				respawn_time = respawn_time - respawn_reduction_bonus
+			end
+		end
 
 		-- Fetch decreased respawn timer due to Bloodstone charges
 		if killed_unit.bloodstone_respawn_reduction then
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 
-		-- Decrease respawn timer due to Techies' Suicide Squad, Attack!
-		if killed_unit:HasModifier("modifier_techies_suicide_respawn_time") then
-			killed_unit:RemoveModifierByName("modifier_techies_suicide_respawn_time")
-			respawn_time = math.max( respawn_time * 0.5)
-		end
-
 		-- Multiply respawn timer by the lobby options
-		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER / 100, 3)
-
-		-- Fetch increased respawn timer due to Reaper's Scythe on this death
-		if killed_unit.scythe_added_respawn then
-			respawn_time = respawn_time + killed_unit.scythe_added_respawn
-			killed_unit.scythe_added_respawn = 0
-		end
-
-		-- Fetch stacking increased respawn timer due to Reaper's Scythe
-		if killed_unit.scythe_stacking_respawn_timer then
-			respawn_time = respawn_time + killed_unit.scythe_stacking_respawn_timer
-		end
+		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 
 		-- Set up the respawn timer
 		killed_unit:SetTimeUntilRespawn(respawn_time)
@@ -988,280 +842,35 @@ function GameMode:OnEntityKilled( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Buyback setup (part 1)
+	-- IMBA: Buyback setup
 	-------------------------------------------------------------------------------------------------
 
 	-- Check if the dying unit was a player-controlled hero
-	if killed_unit:IsRealHero() and PlayerResource:GetPlayer(killed_unit:GetPlayerID()) then
+	if killed_unit:IsRealHero() and killed_unit:GetPlayerID() and PlayerResource:IsImbaPlayer(killed_unit:GetPlayerID()) then
 
-		-- Check if buyback cost is currently affected by the quick-buyback cost penalty
-		local buyback_cost_multiplier = 1
-		if killed_unit.quick_sucession_buybacks and killed_unit.quick_sucession_buybacks > 0 then
-			buyback_cost_multiplier = ( ( 100 + HERO_BUYBACK_COST_SCALING ) / 100 ) ^ killed_unit.quick_sucession_buybacks
-		end
-
-		-- Apply lobby options to buyback cost
-		buyback_cost_multiplier = buyback_cost_multiplier * HERO_BUYBACK_COST_MULTIPLIER / 100
-
-		-- Calculate regular buyback cost and 
+		-- Buyback parameters
+		local player_id = killed_unit:GetPlayerID()
 		local hero_level = killed_unit:GetLevel()
-		local game_time = GameRules:GetDOTATime(false, false) / 60
+		local game_time = GameRules:GetDOTATime(false, false)
 
-		local buyback_cost = ( HERO_BUYBACK_BASE_COST + hero_level * HERO_BUYBACK_COST_PER_LEVEL + game_time * HERO_BUYBACK_COST_PER_MINUTE ) * buyback_cost_multiplier
-		local buyback_penalty_duration = HERO_BUYBACK_RESET_TIME_PER_LEVEL * hero_level + HERO_BUYBACK_RESET_TIME_PER_MINUTE * game_time
+		-- Calculate buyback cost
+		local level_based_cost = math.min(hero_level * hero_level, 625) * BUYBACK_COST_PER_LEVEL
+		if hero_level > 25 then
+			level_based_cost = level_based_cost + BUYBACK_COST_PER_LEVEL_AFTER_25 * (hero_level - 25)
+		end
+		local buyback_cost = BUYBACK_BASE_COST + level_based_cost + game_time * BUYBACK_COST_PER_SECOND
+		buyback_cost = buyback_cost * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
-		-- Update buyback cost and penalty duration 
-		PlayerResource:SetCustomBuybackCost(killed_unit:GetPlayerID(), buyback_cost)
-		PlayerResource:SetBuybackGoldLimitTime(killed_unit:GetPlayerID(), buyback_penalty_duration)
+		-- Update buyback cost
+		PlayerResource:SetCustomBuybackCost(player_id, buyback_cost)
 
 		-- Setup buyback cooldown
 		local buyback_cooldown = 0
-		if game_time > HERO_BUYBACK_COOLDOWN_START_POINT and HERO_BUYBACK_COOLDOWN > 0 then
-			buyback_cooldown = HERO_BUYBACK_COOLDOWN + (game_time - HERO_BUYBACK_COOLDOWN_START_POINT) * HERO_BUYBACK_COOLDOWN_GROW_FACTOR
+		if BUYBACK_COOLDOWN_ENABLED and game_time > BUYBACK_COOLDOWN_START_POINT then
+			buyback_cooldown = math.min(BUYBACK_COOLDOWN_GROW_FACTOR * (game_time - BUYBACK_COOLDOWN_START_POINT), BUYBACK_COOLDOWN_MAXIMUM)
 		end
-		PlayerResource:SetCustomBuybackCooldown(killed_unit:GetPlayerID(), buyback_cooldown)
-		
+		PlayerResource:SetCustomBuybackCooldown(player_id, buyback_cooldown)
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Hero kill bounty calculation
-	-------------------------------------------------------------------------------------------------
-
-	-- Check if the killer is not a neutral unit
-	local non_neutral_killer = false
-
-	if killer:GetTeam() == DOTA_TEAM_GOODGUYS or killer:GetTeam() == DOTA_TEAM_BADGUYS then
-		non_neutral_killer = true
-	end
-	
-	-- Check if killed unit is a hero, and killer/killed belong to different teams
-	if killed_unit:IsRealHero() and killed_unit:GetTeam() ~= killer:GetTeam() and non_neutral_killer then
-
-		-- Killed hero Rancor clean-up
-		if killed_unit:HasModifier("modifier_imba_rancor") then
-			local current_stacks = killed_unit:GetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER)
-			if current_stacks <= 2 then
-				killed_unit:RemoveModifierByName("modifier_imba_rancor")
-			else
-				killed_unit:SetModifierStackCount("modifier_imba_rancor", VENGEFUL_RANCOR_CASTER, current_stacks - math.floor(current_stacks / 2) - 1)
-			end
-		end
-
-		-- Killed hero gold loss
-		local killed_level = killed_unit:GetLevel()
-		local killed_gold_loss = math.max( ( killed_level * HERO_DEATH_GOLD_LOSS_PER_LEVEL ) * ( 100 - HERO_DEATH_GOLD_LOSS_PER_DEATHSTREAK * killed_unit.death_streak_count) / 100, 0)
-		killed_gold_loss = -1 * killed_gold_loss * ( 100 + HERO_GOLD_BONUS ) / 100
-		killed_unit:ModifyGold(killed_gold_loss, false, DOTA_ModifyGold_Death)
-
-		-- Nearby allied heroes gold gain
-		local allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
-		local assist_gold = killed_unit:GetGoldBounty()
-
-		-- If no allied hero was near the kill, distribute gold evenly to all of the team's heroes
-		if #allied_heroes == 0 then
-			assist_gold = assist_gold * 0.2
-			allied_heroes = FindUnitsInRadius(killer:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, HERO_ASSIST_RADIUS, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_UNITS_EVERYWHERE, false)
-			for _,ally in pairs(allied_heroes) do
-				EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-				SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-				ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-			end
-		else
-			local is_killer_present = false
-			local nearby_allies = #allied_heroes
-
-			-- Check if the killer was near the kill
-			for _,ally in pairs(allied_heroes) do
-				if ally == killer then
-					is_killer_present = true
-				end
-			end
-			
-			-- If yes, reduce the count of nearby allies by one
-			if is_killer_present then
-				nearby_allies = nearby_allies - 1
-			end
-
-			-- Distribute assist gold accordingly
-			if nearby_allies == 1 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_2
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies == 2 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_3
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies == 3 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_4
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			elseif nearby_allies >= 4 then
-				assist_gold = assist_gold * HERO_ASSIST_BOUNTY_FACTOR_5
-				for _,ally in pairs(allied_heroes) do
-					if ally ~= killer and not IsHeroCreep(ally) then
-						EmitSoundOnClient("General.Coins", PlayerResource:GetPlayer(ally:GetPlayerID()))
-						SendOverheadEventMessage(PlayerResource:GetPlayer(ally:GetPlayerID()), OVERHEAD_ALERT_GOLD, ally, assist_gold, nil)
-						ally:ModifyGold(assist_gold, true, DOTA_ModifyGold_HeroKill)
-					end
-				end
-			end
-		end
-
-		-- Reset killed hero's killstreak and update its deathstreak
-		killed_unit.kill_streak_count = 0
-		killed_unit.death_streak_count = killed_unit.death_streak_count + 1
-
-		-- Update killed hero's bounty
-		local killed_bounty = HERO_KILL_GOLD_BASE + killed_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killed_unit)
-		killed_bounty = math.max( killed_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
-		killed_unit:SetMaximumGoldBounty(killed_bounty)
-		killed_unit:SetMinimumGoldBounty(killed_bounty)
-
-		-- Check if the killer was a non-hero entity (to avoid GetPlayerID crashes)
-		local nonhero_killer = false
-		if killer:IsTower() or killer:IsCreep() or IsFountain(killer) then
-			nonhero_killer = true
-
-			-- Vengeful Spirit Rancor logic
-			if VENGEFUL_RANCOR and killer:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
-				local eligible_rancor_targets = FindUnitsInRadius(killed_unit:GetTeamNumber(), killed_unit:GetAbsOrigin(), nil, 1500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-				if eligible_rancor_targets[1] then
-					local rancor_stacks = 1
-
-					-- Double stacks if the killed unit was Venge
-					if killed_unit == VENGEFUL_RANCOR_CASTER then
-						rancor_stacks = rancor_stacks * 2
-					end
-
-					-- Add stacks and play particle effect
-					AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, eligible_rancor_targets[1], "modifier_imba_rancor", rancor_stacks, true)
-					local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, eligible_rancor_targets[1])
-					ParticleManager:SetParticleControl(rancor_pfx, 0, eligible_rancor_targets[1]:GetAbsOrigin())
-					ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-				end
-			end
-		end
-
-		-- If the killer was a player-owned summon, make its owner the killer
-		if IsPlayerOwnedSummon(killer) then
-			killer = killer:GetOwnerEntity()
-		end
-
-		-- If the killer is player-owned, remove its deathstreak and start its killstreak
-		if not nonhero_killer and killer:GetPlayerID() then
-			local killer_player = PlayerResource:GetPlayer(killer:GetPlayerID())
-			local killer_hero = killer_player:GetAssignedHero()
-			
-			-- Reset killer hero's deathstreak and update its killstreak
-			killer_hero.death_streak_count = 0
-			killer_hero.kill_streak_count = killer_hero.kill_streak_count + 1
-
-			-- Update killer's bounty
-			local killer_level = killer_hero:GetLevel()
-			local killer_bounty = HERO_KILL_GOLD_BASE + killer_level * HERO_KILL_GOLD_PER_LEVEL + GetKillstreakGold(killer_hero)
-			killer_bounty = math.max( killer_bounty * ( 100 + HERO_GOLD_BONUS ) / 100, 0)
-			killer_hero:SetMaximumGoldBounty(killer_bounty)
-			killer_hero:SetMinimumGoldBounty(killer_bounty)
-
-			-- Killer Rancor logic
-			if VENGEFUL_RANCOR and killer_hero:GetTeam() ~= VENGEFUL_RANCOR_TEAM then
-				local rancor_stacks = 1
-
-				-- Double stacks if the killed unit was Venge
-				if killed_unit == VENGEFUL_RANCOR_CASTER then
-					rancor_stacks = rancor_stacks * 2
-				end
-
-				-- Add stacks and play particle effect
-				AddStacks(VENGEFUL_RANCOR_ABILITY, VENGEFUL_RANCOR_CASTER, killer_hero, "modifier_imba_rancor", rancor_stacks, true)
-				local rancor_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf", PATTACH_ABSORIGIN, killer_hero)
-				ParticleManager:SetParticleControl(rancor_pfx, 0, killer_hero:GetAbsOrigin())
-				ParticleManager:SetParticleControl(rancor_pfx, 1, VENGEFUL_RANCOR_CASTER:GetAbsOrigin())
-			end
-
-			-- Vengeance Aura logic
-			local vengeance_aura_ability = killed_unit:FindAbilityByName("imba_vengeful_command_aura")
-			if vengeance_aura_ability and vengeance_aura_ability:GetLevel() > 0 then
-				vengeance_aura_ability:ApplyDataDrivenModifier(killed_unit, killer_hero, "modifier_imba_command_aura_negative_aura", {})
-				killed_unit.vengeance_aura_target = killer_hero
-			end
-		end
-
-		-- Killed hero deathstreak messages
-		local killed_hero_name = killed_unit:GetName()
-		local killed_player_name = PlayerResource:GetPlayerName(killed_unit:GetPlayerID())
-		local line_duration = 7
-
-		if killed_unit.death_streak_count >= 3 then
-			Notifications:BottomToAll({hero = killed_hero_name, duration = line_duration})
-			Notifications:BottomToAll({text = killed_player_name.." ", duration = line_duration, continue = true})
-		end
-
-		if killed_unit.death_streak_count == 3 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_3", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 4 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_4", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 5 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_5", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 6 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_6", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 7 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_7", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 8 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_8", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count == 9 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_9", duration = line_duration, continue = true})
-		elseif killed_unit.death_streak_count >= 10 then
-			Notifications:BottomToAll({text = "#imba_deathstreak_10", duration = line_duration, continue = true})
-		end
-
-		-- Global comeback gold calculation
-		local all_heroes = HeroList:GetAllHeroes()
-		local killer_team_networth = 0
-		local killed_team_networth = 0
-
-		for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
-			if self.players[id] and not self.players[id].is_disconnected then
-				local hero_networth = PlayerResource:GetGold(id) + PlayerResource:GetGoldSpentOnItems(id)
-				local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
-				if hero:GetTeam() == killer:GetTeam() then
-					killer_team_networth = killer_team_networth + hero_networth
-				else
-					killed_team_networth = killed_team_networth + hero_networth
-				end
-			end
-		end
-
-		if killer_team_networth < killed_team_networth and HERO_GLOBAL_BOUNTY_FACTOR > 0 then
-			local networth_difference = math.max( killed_team_networth - killer_team_networth, 0)
-			local welfare_gold = networth_difference * ( HERO_GLOBAL_BOUNTY_FACTOR / 100 ) / PlayerResource:GetPlayerCountForTeam(killer:GetTeam())
-			for id = 0,( IMBA_PLAYERS_ON_GAME - 1 ) do
-				if self.players[id] and not self.players[id].is_disconnected then
-					local hero = PlayerResource:GetPlayer(id):GetAssignedHero()
-					if hero:GetTeam() == killer:GetTeam() then
-						hero:ModifyGold(welfare_gold, true, DOTA_ModifyGold_HeroKill)
-						SendOverheadEventMessage(PlayerResource:GetPlayer(id), OVERHEAD_ALERT_GOLD, hero, welfare_gold, nil)
-					end
-				end
-			end
-		end
-	end
-
 end
 
 -- This function is called 1 to 2 times as the player connects initially but before they have completely connected
@@ -1278,11 +887,19 @@ function GameMode:OnConnectFull(keys)
 	GameMode:_OnConnectFull(keys)
 	
 	local entIndex = keys.index+1
+
 	-- The Player entity of the joining user
 	local ply = EntIndexToHScript(entIndex)
 	
 	-- The Player ID of the joining player
-	local playerID = ply:GetPlayerID()
+	local player_id = ply:GetPlayerID()
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Player data initialization
+	-------------------------------------------------------------------------------------------------
+
+	PlayerResource:InitPlayerData(player_id)
+
 end
 
 -- This function is called whenever illusions are created and tells you which was/is the original entity

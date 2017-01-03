@@ -31,27 +31,21 @@ function DiffusalCast( keys )
 	local diffusal_pfx = ParticleManager:CreateParticle(particle_target, PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(diffusal_pfx, 0, target:GetAbsOrigin())
 
-	-- Allied purge, removes negative buffs
-	if caster:GetTeam() == target:GetTeam() then
-		target:Purge(false, true, false, false, false)
+	-- Purge, removes positive buffs and slows
+	target:Purge(true, false, false, false, false)
 
-	-- Enemy purge, removes positive buffs and slows
-	else
-		target:Purge(true, false, false, false, false)
+	-- Instantly kill illusions and summoned units
+	if target:IsIllusion() or target:IsSummoned() then
+		target:Kill(ability, caster)
+	end
 
-		-- Instantly kill illusions and summoned units
-		if target:IsIllusion() or target:IsSummoned() then
-			target:Kill(ability, caster)
-		end
-
-		-- Slow only if the target is not magic immune
-		if not target:IsMagicImmune() then
-			if target:HasModifier(modifier_slow) then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
-				target:SetModifierStackCount(modifier_slow, caster, max_stacks)
-			else
-				AddStacks(ability, caster, target, modifier_slow, max_stacks, true)			
-			end
+	-- Slow only if the target is not magic immune
+	if not target:IsMagicImmune() then
+		if target:HasModifier(modifier_slow) then
+			ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
+			target:SetModifierStackCount(modifier_slow, caster, max_stacks)
+		else
+			AddStacks(ability, caster, target, modifier_slow, max_stacks, true)			
 		end
 	end
 

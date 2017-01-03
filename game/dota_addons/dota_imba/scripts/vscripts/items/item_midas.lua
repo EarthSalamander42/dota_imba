@@ -1,39 +1,6 @@
 --[[	Author: d2imba
 		Date:	24.03.2015	]]
 
-function MidasPassiveGold( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-
-	-- If this unit is not a real hero, do nothing
-	if caster:HasModifier("modifier_arc_warden_tempest_double") or not caster:IsRealHero() then
-		return nil
-	end
-
-	-- Creates leftover gold global variable if it does not exist yet
-	if not caster.midas_passive_gold then
-		caster.midas_passive_gold = 0
-	end
-
-	-- Parameters
-	local passive_gold = ability:GetLevelSpecialValueFor("passive_gold", ability:GetLevel() - 1)
-
-	-- Multiply passive gold by the lobby's gold multiplier
-	passive_gold = passive_gold * ( 100 + CREEP_GOLD_BONUS ) / 100
-
-	-- Store leftover gold for later
-	caster.midas_passive_gold = caster.midas_passive_gold + ( passive_gold - math.floor(passive_gold) )
-
-	-- If passive gold is above 1, add part of it to the passive gold
-	if caster.midas_passive_gold >= 1 then
-		passive_gold = passive_gold + math.floor(caster.midas_passive_gold)
-		caster.midas_passive_gold = caster.midas_passive_gold - math.floor(caster.midas_passive_gold)
-	end
-
-	-- Grant gold
-	caster:ModifyGold(math.floor(passive_gold), true, 0)
-end
-
 function Midas( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -48,13 +15,15 @@ function Midas( keys )
 	end
 
 	-- Parameters and calculations
-	local creep_XP = target:GetDeathXP()
-	local bonus_gold = ability:GetLevelSpecialValueFor("bonus_gold", ability:GetLevel() - 1)
-	local xp_multiplier = ability:GetLevelSpecialValueFor("xp_multiplier", ability:GetLevel() - 1)
-	local bonus_xp = creep_XP * xp_multiplier
+	local bonus_gold = ability:GetSpecialValueFor("bonus_gold")
+	local xp_multiplier = ability:GetSpecialValueFor("xp_multiplier")
+	local passive_gold_bonus = ability:GetSpecialValueFor("passive_gold_bonus")
+	local bonus_xp = target:GetDeathXP()
+	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 
-	-- Multiply gold by the lobby's parameters
-	bonus_gold = bonus_gold * ( 100 + CREEP_GOLD_BONUS ) / 100
+	-- Adjust for the lobby settings and for midas' own bonuses
+	bonus_xp = bonus_xp * xp_multiplier * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	bonus_gold = bonus_gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01) * (1 + passive_gold_bonus * 0.01)
 
 	-- Play sound and show gold gain message to the owner
 	target:EmitSound(sound_cast)

@@ -74,7 +74,7 @@ function OctarineBlast( keys )
 	local blast_radius = ability:GetLevelSpecialValueFor("blast_radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("blast_dmg", ability_level)
 	local minimum_mana = ability:GetLevelSpecialValueFor("minimum_mana", ability_level)
-	local cast_ability_mana_cost = cast_ability:GetManaCost(cast_ability:GetLevel() - 1) / FRANTIC_MULTIPLIER
+	local cast_ability_mana_cost = cast_ability:GetManaCost(cast_ability:GetLevel() - 1)
 
 	-- Blast geometry
 	local blast_duration = 0.75 * 0.75

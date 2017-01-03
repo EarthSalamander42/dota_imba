@@ -44,8 +44,8 @@ function ReverbRapierStart( keys )
 	local modifier_applier = keys.modifier_applier
 	local modifier_double = keys.modifier_double
 
-	-- If the item is in cooldown, do nothing
-	if not ability:IsCooldownReady() then
+	-- If the item is in cooldown, or the attacker is already benefitting from increased attack speed, do nothing
+	if not ability:IsCooldownReady() or caster:HasModifier(modifier_double) then
 		return nil
 	end
 
@@ -120,4 +120,14 @@ function EchoSabreEnd( keys )
 	
 	-- Restore attacker's BAT
 	ModifyBAT(caster, bat_increase, 0)
+end
+
+function EchoSabreUnequip( keys )
+	local caster = keys.caster
+	local modifier_multihit = keys.modifier_multihit
+	local modifier_slow_applier = keys.modifier_slow_applier
+
+	-- Remove all relevant modifiers
+	caster:RemoveModifierByName(modifier_multihit)
+	caster:RemoveModifierByName(modifier_slow_applier)
 end

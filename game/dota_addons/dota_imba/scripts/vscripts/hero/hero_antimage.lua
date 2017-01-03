@@ -24,9 +24,9 @@ function ManaBreak( keys )
 	end
 
 	-- Parameters
-	local base_mana_burn = ability:GetLevelSpecialValueFor("base_mana_burn", ability_level) * illusion_factor * FRANTIC_MULTIPLIER
+	local base_mana_burn = ability:GetLevelSpecialValueFor("base_mana_burn", ability_level) * illusion_factor
 	local bonus_mana_burn = ability:GetLevelSpecialValueFor('bonus_mana_burn', ability_level) * illusion_factor * 0.01
-	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level) / FRANTIC_MULTIPLIER
+	local damage_ratio = ability:GetLevelSpecialValueFor('damage_per_burn', ability_level)
 
 	-- Play sound
 	caster:EmitSound("Hero_Antimage.ManaBreak")
@@ -73,7 +73,7 @@ function Magehunter( keys )
 
 	-- Parameters
 	local mana_per_stack = ability:GetLevelSpecialValueFor("mana_per_stack", ability_level)
-	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
+	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
 
 	-- Add damage stacks
 	local stacks_to_add = math.floor( mana_spent / mana_per_stack )
@@ -122,7 +122,7 @@ function ManaVoid( keys )
 	local scepter = HasScepter(caster)
 
 	-- Parameters
-	local damage_per_mana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability_level) / FRANTIC_MULTIPLIER
+	local damage_per_mana = ability:GetLevelSpecialValueFor('mana_void_damage_per_mana', ability_level)
 	local radius = ability:GetLevelSpecialValueFor('mana_void_aoe_radius', ability_level)
 	local mana_burn_pct = ability:GetLevelSpecialValueFor('mana_void_mana_burn_pct', ability_level)
 	local secondary_mana_pct = 0

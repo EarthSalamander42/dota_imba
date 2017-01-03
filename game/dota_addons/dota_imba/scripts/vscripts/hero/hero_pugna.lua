@@ -289,7 +289,7 @@ function NetherWardZap( keys )
 	local spell_damage = ability_zap:GetLevelSpecialValueFor("spell_damage", ability_zap_level)
 
 	-- Fetch cast ability's mana cost
-	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
+	local mana_spent = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
 
 	-- Deal damage
 	ApplyDamage({attacker = ward, victim = target, ability = ability_zap, damage = mana_spent * mana_multiplier, damage_type = DAMAGE_TYPE_MAGICAL})
@@ -420,7 +420,12 @@ function NetherWardZap( keys )
 		"visage_soul_assumption",
 		"visage_summon_familiars",
 		"earth_spirit_geomagnetic_grip",
-		"keeper_of_the_light_recall"
+		"keeper_of_the_light_recall",
+		"monkey_king_boundless_strike",
+		"monkey_king_mischief",
+		"monkey_king_tree_dance",
+		"monkey_king_primal_spring",
+		"monkey_king_wukongs_command"
 	}
 
 	-- Ignore items
@@ -731,7 +736,7 @@ function LifeDrainTickEnemy( keys )
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = health_drain * tick_rate, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Calculate amount of healing done
-	local caster_healing = health_drain * tick_rate * (1 - target:GetMagicalArmorValue())
+	local caster_healing = health_drain * tick_rate * (1 + GetSpellPower(caster) * 0.01) * (1 - target:GetMagicalArmorValue())
 
 	-- If the caster would be overhealed, restore mana
 	local health_missing = caster:GetMaxHealth() - caster:GetHealth()
@@ -810,7 +815,7 @@ function LifeDrainTickAlly( keys )
 	ApplyDamage({attacker = caster, victim = caster, ability = ability, damage = health_drain * tick_rate / 2, damage_type = DAMAGE_TYPE_MAGICAL})
 
 	-- Calculate amount of healing done
-	local target_healing = health_drain * tick_rate * ( 1 - caster:GetMagicalArmorValue() )
+	local target_healing = health_drain * tick_rate * (1 + GetSpellPower(caster) * 0.01) * ( 1 - caster:GetMagicalArmorValue() )
 
 	-- If the target would be overhealed, restore its mana
 	local health_missing = target:GetMaxHealth() - target:GetHealth()

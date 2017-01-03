@@ -14,7 +14,7 @@ function GuardianGreaves( keys )
 
 	-- Parameters
 	local hp_heal = ability:GetLevelSpecialValueFor("replenish_health", ability_level)
-	local mana_heal = ability:GetLevelSpecialValueFor("replenish_mana", ability_level) * FRANTIC_MULTIPLIER
+	local mana_heal = ability:GetLevelSpecialValueFor("replenish_mana", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("replenish_radius", ability_level)
 	local caster_pos = caster:GetAbsOrigin()
 

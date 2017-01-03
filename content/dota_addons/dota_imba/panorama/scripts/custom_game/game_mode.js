@@ -30,7 +30,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 
 		panel.FindChildTraverse('tower_abilities_standard').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_standard').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_standard').SetSelected(true);
 	} else if (mapInfo.map_display_name == "imba_random_omg") {
 		mode_standard.ToggleClass("invisible");
@@ -38,7 +37,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 		
 		panel.FindChildTraverse('tower_abilities_random_omg').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_random_omg').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_random_omg').SetSelected(true);
 	} else if (mapInfo.map_display_name == "imba_custom") {
 		mode_standard.ToggleClass("invisible");
@@ -46,7 +44,6 @@ function SelectDefaultGameMode(panel) {
 		mode_10v10.ToggleClass("invisible");
 		
 		panel.FindChildTraverse('tower_abilities_custom').SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_custom').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_custom').SetSelected(true);
 		panel.FindChildTraverse("max_level_dropdown_custom").SetSelected('50')
 		panel.FindChildTraverse("gold_gain_dropdown_custom").SetSelected('200');
@@ -54,7 +51,6 @@ function SelectDefaultGameMode(panel) {
 		panel.FindChildTraverse("creep_power_dropdown_custom").SetSelected('2');
 		panel.FindChildTraverse("tower_power_dropdown_custom").SetSelected('1');
 		panel.FindChildTraverse("respawn_dropdown_custom").SetSelected('respawn_half');
-		panel.FindChildTraverse("buyback_dropdown_custom").SetSelected('60');
 		panel.FindChildTraverse("gold_start_dropdown_custom").SetSelected('2000');
 		panel.FindChildTraverse("xp_start_dropdown_custom").SetSelected('5');
 	} else if (mapInfo.map_display_name == "imba_10v10") {
@@ -64,14 +60,12 @@ function SelectDefaultGameMode(panel) {
 		
 		panel.FindChildTraverse('tower_abilities_10v10').SetSelected(true);
 		panel.FindChildTraverse("tower_upgrades_10v10").SetSelected(true);
-		panel.FindChildTraverse('comeback_gold_10v10').SetSelected(true);
 		panel.FindChildTraverse('spawn_behemoths_10v10').SetSelected(true);
 		panel.FindChildTraverse("gold_gain_dropdown_10v10").SetSelected('60');
 		panel.FindChildTraverse("xp_gain_dropdown_10v10").SetSelected('100');
 		panel.FindChildTraverse("creep_power_dropdown_10v10").SetSelected('2');
 		panel.FindChildTraverse("tower_power_dropdown_10v10").SetSelected('1');
 		panel.FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-		panel.FindChildTraverse("buyback_dropdown_10v10").SetSelected('120');
 		panel.FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 		panel.FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 	}
@@ -169,7 +163,6 @@ function SetGameMode()
 				"allow_same_hero": $.GetContextPanel().FindChildTraverse("allow_same_hero_standard").checked,
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_standard").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_standard").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_standard").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_standard").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_standard").GetSelected().id,
 				"gold_bounty": $.GetContextPanel().FindChildTraverse("gold_gain_dropdown_standard").GetSelected().id,
@@ -177,7 +170,6 @@ function SetGameMode()
 				"creep_power": $.GetContextPanel().FindChildTraverse("creep_power_dropdown_standard").GetSelected().id,
 				"tower_power": $.GetContextPanel().FindChildTraverse("tower_power_dropdown_standard").GetSelected().id,
 				"respawn": $.GetContextPanel().FindChildTraverse("respawn_dropdown_standard").GetSelected().id,
-				"buyback": $.GetContextPanel().FindChildTraverse("buyback_dropdown_standard").GetSelected().id,
 			}
 		}	);
 	} else if (mapInfo.map_display_name == "imba_random_omg") {
@@ -186,7 +178,6 @@ function SetGameMode()
 			"modes": {
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_random_omg").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_random_omg").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_random_omg").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_random_omg").checked,
 				"number_of_abilities": $.GetContextPanel().FindChildTraverse("number_of_abilities_random_omg").GetSelected().id,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_random_omg").GetSelected().id,
@@ -197,7 +188,6 @@ function SetGameMode()
 				"creep_power": $.GetContextPanel().FindChildTraverse("creep_power_dropdown_random_omg").GetSelected().id,
 				"tower_power": $.GetContextPanel().FindChildTraverse("tower_power_dropdown_random_omg").GetSelected().id,
 				"respawn": $.GetContextPanel().FindChildTraverse("respawn_dropdown_random_omg").GetSelected().id,
-				"buyback": $.GetContextPanel().FindChildTraverse("buyback_dropdown_random_omg").GetSelected().id,
 			}
 		}	);
 	} else if (mapInfo.map_display_name == "imba_custom") {
@@ -208,8 +198,7 @@ function SetGameMode()
 				"allow_same_hero": $.GetContextPanel().FindChildTraverse("allow_same_hero_custom").checked,
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_custom").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_custom").checked,
-				"frantic_mode": $.GetContextPanel().FindChildTraverse("frantic_mode_custom").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_custom").checked,
+				"disable_buyback_cooldown": $.GetContextPanel().FindChildTraverse("buyback_cooldown_custom").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_custom").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_custom").GetSelected().id,
 				"level_cap": $.GetContextPanel().FindChildTraverse("max_level_dropdown_custom").GetSelected().id,
@@ -220,7 +209,6 @@ function SetGameMode()
 				"creep_power": $.GetContextPanel().FindChildTraverse("creep_power_dropdown_custom").GetSelected().id,
 				"tower_power": $.GetContextPanel().FindChildTraverse("tower_power_dropdown_custom").GetSelected().id,
 				"respawn": $.GetContextPanel().FindChildTraverse("respawn_dropdown_custom").GetSelected().id,
-				"buyback": $.GetContextPanel().FindChildTraverse("buyback_dropdown_custom").GetSelected().id,
 			}
 		}	);
 	} else if (mapInfo.map_display_name == "imba_10v10") {
@@ -229,7 +217,6 @@ function SetGameMode()
 			"modes": {
 				"tower_abilities": $.GetContextPanel().FindChildTraverse("tower_abilities_10v10").checked,
 				"tower_upgrades": $.GetContextPanel().FindChildTraverse("tower_upgrades_10v10").checked,
-				"comeback_gold": $.GetContextPanel().FindChildTraverse("comeback_gold_10v10").checked,
 				"spawn_behemoths": $.GetContextPanel().FindChildTraverse("spawn_behemoths_10v10").checked,
 				"number_of_kills": $.GetContextPanel().FindChildTraverse("game_objective_dropdown_10v10").GetSelected().id,
 				"level_cap": $.GetContextPanel().FindChildTraverse("max_level_dropdown_10v10").GetSelected().id,
@@ -240,7 +227,6 @@ function SetGameMode()
 				"creep_power": $.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").GetSelected().id,
 				"tower_power": $.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").GetSelected().id,
 				"respawn": $.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").GetSelected().id,
-				"buyback": $.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").GetSelected().id,
 			}
 		}	);
 	}
@@ -260,7 +246,6 @@ function Set10v10ModeA()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('1');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('0');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_normal');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('180');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('625');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('1');
 }
@@ -275,7 +260,6 @@ function Set10v10ModeB()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('2');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('1');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('120');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 }
@@ -290,7 +274,6 @@ function Set10v10ModeC()
 	$.GetContextPanel().FindChildTraverse("creep_power_dropdown_10v10").SetSelected('3');
 	$.GetContextPanel().FindChildTraverse("tower_power_dropdown_10v10").SetSelected('2');
 	$.GetContextPanel().FindChildTraverse("respawn_dropdown_10v10").SetSelected('respawn_half');
-	$.GetContextPanel().FindChildTraverse("buyback_dropdown_10v10").SetSelected('60');
 	$.GetContextPanel().FindChildTraverse("gold_start_dropdown_10v10").SetSelected('2000');
 	$.GetContextPanel().FindChildTraverse("xp_start_dropdown_10v10").SetSelected('5');
 }

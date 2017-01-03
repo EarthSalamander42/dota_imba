@@ -583,7 +583,7 @@ function FleshHeap( keys )
 	local ability_level = ability:GetLevel() - 1
 
 	-- If this isnt a real hero, do nothing.
-	if not target:IsRealHero() then
+	if ( not target:IsRealHero() ) or target:HasModifier("modifier_arc_warden_tempest_double") then
 		return nil
 	end
 

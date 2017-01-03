@@ -36,7 +36,7 @@ function ArcaneOrb( keys )
 	end
 
 	-- Calculate and deal damage
-	local bonus_damage = caster:GetMaxMana() * mana_damage_pct / FRANTIC_MULTIPLIER
+	local bonus_damage = caster:GetMaxMana() * mana_damage_pct
 
 	if target:IsIllusion() or target:IsSummoned() then
 		bonus_damage = bonus_damage + target:GetMaxHealth()
@@ -273,7 +273,7 @@ function RestoreMana( keys )
 
 		-- Buff the caster if the spell was cast by an ally
 		if target ~= caster then
-			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 ) / FRANTIC_MULTIPLIER
+			local mana_cost = cast_ability:GetManaCost( cast_ability:GetLevel() - 1 )
 			local stack_amount = math.floor( mana_cost * mana_absorb / 100 )
 
 			-- Initialize stack amount global if necessary
@@ -374,7 +374,7 @@ function SanityEclipse( keys )
 
 				-- If Arcane Orb is learned, steal intelligence from the targets
 				if ability_arcane_orb and ability_arcane_orb:GetLevel() > 0 then
-					print("derp2")
+
 					-- Arcane Orb Parameters
 					local int_steal = ability_arcane_orb:GetLevelSpecialValueFor("int_gain", ability_arcane_orb:GetLevel() - 1)
 					int_steal = int_steal * orb_stacks
