@@ -628,10 +628,10 @@
 	{
 		"override_hero"				"npc_dota_hero_disruptor"
 
-		//"Ability1"					"imba_disruptor_thunder_strike"
-		//"Ability2"					"imba_disruptor_glimpse"
-		//"Ability3"					"imba_disruptor_kinetic_field"
-		//"Ability4"					"imba_disruptor_static_storm"
+		"Ability1"					"imba_disruptor_thunder_strike"
+		"Ability2"					"imba_disruptor_glimpse"
+		"Ability3"					"imba_disruptor_kinetic_field"
+		"Ability4"					"imba_disruptor_static_storm"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_cast_range_100"
