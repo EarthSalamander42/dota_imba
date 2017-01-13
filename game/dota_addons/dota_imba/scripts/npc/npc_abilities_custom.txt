@@ -35441,6 +35441,439 @@
 	
 	
 	
+	//=================================================================================================================
+	// Ursa's Earthshock
+	//=================================================================================================================
+	"imba_ursa_earthshock"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																				
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"		
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
+		
+		"AbilityTextureName"			"ursa_earthshock"		
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		"ScriptFile"					"hero/hero_ursa"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ursa/ursa_earthshock.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_earthshock_modifier.vpcf"			
+			"particle"		"particles/hero/ursa/ursa_trembling_steps_elixir.vpcf"
+			"particle"		"particles/hero/ursa/enrage_ursa_earthshock.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"						
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.3"		
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastRange"				"385"		
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"				
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"75"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"385 385 385 385 410 435 460"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_damage"			"90 140 190 240 270 300 330"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_pct"				"-25 -35 -45 -55 -55 -55 -55"
+			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"values_increase_distance"	"25"
+			}
+			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"values_increase_pct"		"0.05"
+			}
+			
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trembling_steps_duration"	"4"
+			}
+			
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trembling_steps_slow_pct"	"-10"
+			}
+			
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"trembling_steps_radius_pct"	"0.5"
+			}
+			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"trembling_steps_damage"	"20"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"trembling_steps_cooldown"	"0.5 0.45 0.4 0.36 0.32 0.28 0.25"
+			}
+
+			"12"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_effects_radius"		"190"
+			}
+			
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_damage_pct"			"0.5"
+			}
+			
+			"14"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bonus_slow_pct"			"-15"
+			}
+			
+			"15"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"enrage_bonus_dmg_pct"		"1"
+			}
+		}
+	}
+	
+	
+	
+	//=================================================================================================================
+	// Ursa's Overpower
+	//=================================================================================================================
+	"imba_ursa_overpower"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																								
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"		
+		"AbilityTextureName"			"ursa_overpower"		
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		"ScriptFile"					"hero/hero_ursa"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ursa/ursa_overpower_buff.vpcf"
+			"particle"		"particles/status_fx/status_effect_overpower.vpcf"
+			"particle"		"particles/hero/ursa/enrage_overpower.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"				
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.3"				
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"				
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"45 55 65 75 80 85 90"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_speed_bonus"	"5000"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attacks_num"			"3 4 5 6 7 8 9"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aspd_duration"			"15"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"disarm_radius"			"325"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	//=================================================================================================================
+	// Ursa's Fury Swipes
+	//=================================================================================================================
+	"imba_ursa_fury_swipes"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																				
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"		
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
+		"AbilityTextureName"			"ursa_fury_swipes"		
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		"ScriptFile"					"hero/hero_ursa"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"						
+			"particle"		"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_impact.vpcf"
+			"soundfile"		"sounds/weapons/hero/razor/razor_attack_crit_02.vsnd"
+		}
+						
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_stack"		"15 20 25 30 33 36 40"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"20"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"roshan_stack_duration"	"12"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"deep_stack_multiplier"	"1.5"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deep_stack_attacks"	"3"
+			}
+		}
+	}
+	
+	
+	
+	
+	//=================================================================================================================
+	// Ursa's Enrage
+	//=================================================================================================================
+	"imba_ursa_enrage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"		
+		"AbilityTextureName"			"ursa_enrage"				
+		"ScriptFile"					"hero/hero_ursa"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"		
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"			
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"						
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0"						
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50 40 30 30 30 30"						
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"4"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_cooldown"			"50 40 30 30 30 30"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cooldown"		"30 24 18 18 18 18"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_reduction"		"-80"
+			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fury_swipes_multiplier"	"1.5 1.75 2.0 2.25 2.5 2.75"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_radius_skills"	"100 120 140 160 180 200"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reduce_cd_interval"	"0.5"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reduce_cd_amount"		"0.25"
+			}
+			
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_damage_threshold"	"1000"
+			}
+			
+			"10"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_damage_reset"		"3"
+			}
+			
+			"11"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_enrage_cooldown"	"20"
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	//=================================================================================================================
+	// Ursa's Territorial Hunter
+	//=================================================================================================================
+	"imba_ursa_territorial_hunter"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"				
+		"AbilityTextureName"			"custom/territorial_hunter"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
+		"ScriptFile"					"hero/hero_ursa"		
+		"MaxLevel"						"1"		
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"						
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"						
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.3"						
+		"AbilityCastAnimation"			"ACT_DOTA_ATTACK"
+		"AbilityCastRange"				"300"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180"						
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_range"			"1800"
+			}
+		}
+	}
 	
 	
 	
