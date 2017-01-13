@@ -17454,40 +17454,39 @@
 	{
 		//General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
-		"AbilityUnitDamageType"  	"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"			"1"
-		"AbilityTextureName"     	"lion_impale"
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"lion_impale"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_impale.vpcf" 				
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_impale_hit_spikes.vpcf"
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"					"particles/units/heroes/hero_lion/lion_spell_impale.vpcf" 				
+			"particle"					"particles/units/heroes/hero_lion/lion_spell_impale_hit_spikes.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}	
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"		 "500"
-		"AbilityCastPoint" 		 "0.3"
-		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_1"
-	
+		"AbilityCastRange"				"825"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"12.0"
-	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100 120 140 160"
-	
-	
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17575,7 +17574,6 @@
 	//=================================================================================================================
 	"imba_lion_hex"
 	{
-	
 		//General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_datadriven"
@@ -17586,89 +17584,85 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lion_voodoo"
-	
-		
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{			
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-			"model"				"models/props_gameplay/frog.vmdl"
+			"particle"				"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"model"					"models/props_gameplay/frog.vmdl"
 		}	
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"		 "500"
-		"AbilityCastPoint" 		 "0"
-		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_2"
-	
+		"AbilityCastRange"			"500"
+		"AbilityCastPoint"			"0"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 24 18 12"
-	
+		"AbilityCooldown"			"30 24 18 12"
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 150 175 200"
-	
+		"AbilityManaCost"			"125 150 175 200"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"duration"		"2.5 3 3.5 4"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5 3 3.5 4"
 			}
 			"02"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"move_speed"	"140"
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"140"
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"hex_bounce_radius"	"300"
+				"var_type"				"FIELD_INTEGER"
+				"hex_bounce_radius"		"500"
 			}
-			
 		}
-		
+
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile" 			"hero/hero_lion.lua"
 				"Function"				"Hex"
-				
+
 				"sound_cast"			"Hero_Lion.Voodoo"		
 				"modifier_hex"			"modifier_imba_lion_hex"
 				"hex_particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
 			}
-			
 		}
 		
 		"Modifiers"
 		{
 			"modifier_imba_lion_hex"
 			{	
-				"ModelName" 					"models/props_gameplay/frog.vmdl"
-			
+				"ModelName" 				"models/props_gameplay/frog.vmdl"
+
 				"OnDestroy"
 				{
 					"RunScript"
 					{
-						"ScriptFile" 			"hero/hero_lion.lua"
-						"Function"				"HexBounce"
+						"ScriptFile" 		"hero/hero_lion.lua"
+						"Function"			"HexBounce"
 					
-						"sound_cast"			"Hero_Lion.Voodoo"		
-						"modifier_hex"			"modifier_imba_lion_hex"
-						"hex_particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+						"sound_cast"		"Hero_Lion.Voodoo"		
+						"modifier_hex"		"modifier_imba_lion_hex"
+						"hex_particle"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
 					}
-					
 				}
-				
-				"Duration"			"%duration"
-				
+
+				"Duration"					"%duration"
+
 				"States"
 				{
 					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
@@ -17679,7 +17673,7 @@
 					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_PASSIVES_DISABLED" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}				
-				
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"	"%move_speed"
@@ -17687,7 +17681,7 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
 	// Lion's Mana Drain
 	//=================================================================================================================
@@ -17703,31 +17697,30 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lion_mana_drain"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
-			"particle"					"particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"				"particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
 		}		
-			
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"		"850"
-		"AbilityCastPoint" 		"0.3"
-		"AbilityCastAnimation"	"ACT_DOTA_CAST_ABILITY_3"
-		
-		
+		"AbilityCastRange"			"850"
+		"AbilityCastPoint" 			"0.3"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 12 8 4"
-		"AbilityChannelTime" 			"5"
-	
+		"AbilityCooldown"			"16 12 8 4"
+		"AbilityChannelTime" 		"5"
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"10"
-	
+		"AbilityManaCost"			"10"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17744,13 +17737,13 @@
 			}
 			"03"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"interval"		"0.1"
+				"var_type"			"FIELD_FLOAT"
+				"interval"			"0.1"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_drain_sec" 	"20 40 60 120"
+				"mana_drain_sec" 	"50 100 150 200"
 			}	
 			"05"
 			{
@@ -17760,12 +17753,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"aura_max_mana_drain"	"0.005 0.01 0.015 0.02"
+				"aura_max_mana_drain"	"0.5 1.0 1.5 2.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"	
-				"mana_pct_as_damage"	"0.5 0.6 0.7 0.8"
+				"var_type"				"FIELD_INTEGER"	
+				"mana_pct_as_damage"	"80"
 			}
 		}
 		
@@ -17775,7 +17768,7 @@
 			{
 				"ScriptFile"		"hero/hero_lion.lua"
 				"Function"			"ManaDrain"
-				
+
 				"sound_cast"		"Hero_Lion.ManaDrain"
 				"particle_drain"	"particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
 				"modifier_drain"	"modifier_imba_mana_drain_debuff"
@@ -17788,22 +17781,22 @@
 			{
 				"ScriptFile"		"hero/hero_lion.lua"
 				"Function"			"ManaDrainRemoveDebuff"
-				
+
 				"modifier_drain"	"modifier_imba_mana_drain_debuff"
 			}
 		}
-		
+
 		"OnChannelFinish"
 		{
 			"RunScript"
 			{
 				"ScriptFile"		"hero/hero_lion.lua"
 				"Function"			"ManaDrainRemoveDebuff"
-				
+
 				"modifier_drain"	"modifier_imba_mana_drain_debuff"
 			}
 		}
-		
+
 		"Modifiers"
 		{
 			"modifier_imba_mana_drain_debuff"
@@ -17813,7 +17806,7 @@
 				"IsDebuff"			"1"
 				"IsPurgable"		"1"
 			}
-			
+
 			"modifier_imba_mana_drain_aura"
 			{
 				"Passive"								"1"
@@ -17837,14 +17830,14 @@
 					}
 				}
 			}
-			
+
 			"modifier_imba_mana_drain_aura_effect"
 			{
 				"Passive"								"0"
 				"IsHidden"								"0"				
 				"IsDebuff"								"1"				
 			}
-			
+
 			"modifier_imba_mana_drain_hero_effect"
 			{
 				"Passive"								"1"
@@ -17862,7 +17855,6 @@
 		//General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"              	"ability_datadriven"
-		"ScriptFile"				"hero/hero_lion.lua"
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -17872,48 +17864,47 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"lion_finger_of_death"
-	
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
-		{			 				
-			"particle"			"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
-			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		{
+			"particle"				"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}	
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"		 "900"
-		"AbilityCastPoint" 		 "0.3"
-		"AbilityCastAnimation"	 "ACT_DOTA_CAST_ABILITY_4"
-		
+		"AbilityCastRange"			"900"
+		"AbilityCastPoint"			"0.3"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"160 100 40"
-		
+		"AbilityCooldown"			"40"
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 420 650"
-	
-	
+		"AbilityManaCost"			"200 400 600"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{	
 			"01"
 			{
-				"var_type"		"FIELD_INTEGER"
-				"damage"		"600 725 850"
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"450 650 850"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"scepter_damage"	"725 875 1025"
+				"scepter_damage"	"575 800 1025"
 			}			
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"scepter_radius"	"300"	
+				"scepter_radius"	"325"	
 			}
 			"04"
 			{
@@ -17922,18 +17913,18 @@
 			}
 			"05"
 			{
-				"var_type"		"FIELD_FLOAT"
-				"damage_delay"	"0.25"
+				"var_type"			"FIELD_FLOAT"
+				"damage_delay"		"0.1"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"scepter_cooldown"	"100 60 20"
+				"scepter_cooldown"	"20"
 			}
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_add_duration"	"10"
+				"mana_add_duration"	"7"
 			}
 			"08"
 			{
@@ -34726,19 +34717,15 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.35 0.35 0.35 0.35"
+		"AbilityCastPoint"				"0.35"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
+		"AbilityCooldown"				"20 18 16 14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"110 120 130 140"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"	"0.5"	// Can have multiple bounces
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34767,32 +34754,22 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"750"
+				"bounce_range"			"575"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounces"				"6 10 14 18"
+				"bounces"				"4 8 12 16"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
+				"speed"					"1000"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.15"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"creep_split"			"1"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_split"			"2"
+				"bounce_delay"			"0.3"
 			}
 		}
 	}
@@ -34821,11 +34798,11 @@
 		}
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0 0.0 0.0 0.0"
+		"AbilityCooldown"				"0.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"8 10 12 14"		
+		"AbilityManaCost"				"20 30 40 50"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34834,23 +34811,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"8 10 12 14"
+				"mana_per_second"			"20 30 40 50"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"525 550 575 600"
+				"radius"					"500"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"heal"						"16 24 32 40"
-				"LinkedSpecialBonus"		"special_bonus_unique_witch_doctor_2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_to_heal"				"25"
+				"int_to_heal"				"20 30 40 50"
 			}
 			"05"
 			{
@@ -34895,7 +34871,7 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"575"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -34905,7 +34881,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"15 20 25 30"
+		"AbilityDamage"					"7 14 21 28"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -34918,7 +34894,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"225 250 275 300"
+				"radius"					"180 210 240 270"
 			}
 			"02"
 			{
@@ -34928,7 +34904,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"20 30 40 50"
+				"bonus_damage"				"16 24 32 40"
 			}
 			"04"
 			{
@@ -34938,9 +34914,9 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ticks"						"4"
+				"ticks"						"3"
 			}
-			"05"
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_time"					"1"
@@ -34979,13 +34955,13 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"80.0"
-		"AbilityChannelTime"			"8.0 8.0 8.0"
+		"AbilityChannelTime"			"8.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -34998,12 +34974,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 180 270"
+				"damage"				"60 105 150"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"0.22 0.2 0.18"
+				"base_attack_time"		"0.22"
 			}
 			"03"
 			{
@@ -35013,12 +34989,17 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"650 725 800"
+				"bounce_radius"			"650"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"int_to_damage"			"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_range"			"700"
 			}
 		}
 	}

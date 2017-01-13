@@ -16,6 +16,7 @@ function imba_witch_doctor_paralyzing_cask:OnSpellStart()
 			iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
 		}
 	local bounces = self:GetSpecialValueFor("bounces") + 1
+	if not self.bounce_amount then self.bounce_amount = 2 end
 	if not self.remainingBounces then self.remainingBounces = bounces
 	else self.remainingBounces = self.remainingBounces + bounces end -- Adds bounces on refresh; can be commented out
 	EmitSoundOn("Hero_WitchDoctor.Paralyzing_Cask_Cast", self:GetCaster())
@@ -24,13 +25,11 @@ end
 
 function imba_witch_doctor_paralyzing_cask:OnProjectileHit(target, vLocation)
 	EmitSoundOn("Hero_WitchDoctor.Paralyzing_Cask_Bounce", target)
-	local bounce_amount = self:GetSpecialValueFor("creep_split")
 	local bounce_delay  = self:GetSpecialValueFor("bounce_delay")
 	local bounce_range = self:GetSpecialValueFor("bounce_range")
 	local caster = self:GetCaster()
 	if not target then return end
 	if target:IsRealHero() then
-		bounce_amount = self:GetSpecialValueFor("hero_split")
 		if self.remainingBounces then self.remainingBounces = self.remainingBounces - 1 end
 		local healdmg = self:GetSpecialValueFor("hero_damage")
 		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
@@ -41,6 +40,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit(target, vLocation)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, healdmg, nil)
 		end
 	else
+		if self.remainingBounces then self.remainingBounces = self.remainingBounces - 0.5 end
 		local healdmg_creep = self:GetSpecialValueFor("creep_damage")
 		if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 			target:AddNewModifier(target, self, "modifier_stunned", {Duration = self:GetSpecialValueFor("creep_duration")})
@@ -55,20 +55,23 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit(target, vLocation)
 		Timers:CreateTimer(bounce_delay,
 		function()
 			-- Finds all units in the area
-			local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), 0, 0, false)
+			local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
 			-- Go through the target_enties table, checking for the first one that isn't the same as the target
 			local target_to_jump = {}
 			for _,unit in pairs(units) do
-				if unit ~= target and #target_to_jump < bounce_amount then
+				if unit ~= target and self.bounce_amount and #target_to_jump < self.bounce_amount then
 					table.insert(target_to_jump, unit)
-					if #target_to_jump >= bounce_amount or #units < 3 then
+					if #target_to_jump >= self.bounce_amount or #units < 3 then
 						break
 					end
 				end
 			end
 			if #target_to_jump == 0 then 
 				self.remainingBounces = nil
+				self.bounce_amount = nil
 				return
+			elseif #target_to_jump >= 2 then
+				self.bounce_amount = 1
 			end
 			for _, jumpTarget in pairs(target_to_jump) do
 				local projectile = {
@@ -86,6 +89,7 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit(target, vLocation)
 		end)
 	else
 		self.remainingBounces = nil
+		self.bounce_amount = nil
 	end
 end
 
@@ -284,6 +288,10 @@ function modifier_maledict_imba_thinker:GetDisableHealing()
 	return 1
 end
 
+function modifier_maledict_imba_thinker:IsPurgable()
+	return false
+end
+
 function modifier_maledict_imba_thinker:DealHPBurstDamage(target)
 	local oldHP = self.healthComparator
 	local newHP = target:GetHealth()
@@ -348,9 +356,9 @@ end
 
 function imba_witch_doctor_death_ward:CreateBounceAttack(originalTarget, extraData)
     local caster = self:GetCaster()
-    local enemies = FindUnitsInRadius(caster:GetTeamNumber(), originalTarget:GetAbsOrigin(), nil, 900,
+    local enemies = FindUnitsInRadius(caster:GetTeamNumber(), originalTarget:GetAbsOrigin(), nil, self:GetSpecialValueFor("bounce_radius"),
                     self:GetAbilityTargetTeam(), self:GetAbilityTargetType(),
-                    0, FIND_CLOSEST, false)
+                    DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, FIND_CLOSEST, false)
     local target = originalTarget
     for _,enemy in pairs(enemies) do
         if extraData[tostring(enemy:GetEntityIndex())] ~= 1 and not enemy:IsAttackImmune() and extraData.bounces_left > 0 then
@@ -367,7 +375,7 @@ function imba_witch_doctor_death_ward:CreateBounceAttack(originalTarget, extraDa
 				ExtraData = extraData
 			}
 			ProjectileManager:CreateTrackingProjectile(projectile)
-            extraData.bounces_left = extraData.bounces_left - 1
+			break
         end
     end
 	EmitSoundOn("Hero_Jakiro.Attack" ,originalTarget)
@@ -387,10 +395,9 @@ end
 
 function modifier_death_ward_handling:OnIntervalThink()
 	if IsServer() then
-		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, 700, self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES+DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE, 1, false)
+		local units = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("attack_range"), self:GetAbility():GetAbilityTargetTeam(), self:GetAbility():GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_NOT_ATTACK_IMMUNE + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_NO_INVIS, 1, false)
 		local bounces = 0
 		if self:GetCaster():HasScepter() then bounces = self:GetAbility():GetSpecialValueFor("bounces_scepter") end
-		print(bounces, self:GetAbility():GetSpecialValueFor("bounces_scepter"), self:GetCaster():HasScepter())
 		for _, unit in pairs(units) do
 			local projectile = {
 				Target = unit,
@@ -417,6 +424,7 @@ function modifier_death_ward_handling:CheckState()
 		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
 		[MODIFIER_STATE_NO_HEALTH_BAR] = true,
 		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_INVULNERABLE] = true,
 	}
 	return state
 end

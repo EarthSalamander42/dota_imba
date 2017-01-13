@@ -161,8 +161,6 @@ function EarthSpikesHit ( keys )
 		end			
 	end)
 	
-	
-	
 	-- If target has Linken's Sphere off cooldown, do nothing else
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
@@ -174,7 +172,6 @@ function EarthSpikesHit ( keys )
 	if target:IsMagicImmune() then
 		return nil
 	end
-	
 	
 	-- Immediately apply stun
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
@@ -209,15 +206,7 @@ function EarthSpikesHit ( keys )
 	
 	-- Adjust length if caster has cast increase
 	travel_distance = travel_distance + GetCastRangeIncrease(caster)
-	
-	
-	
-	 
-	
 end
-
-
-
 
 function Hex ( keys )
 	-- Ability properties
@@ -229,7 +218,6 @@ function Hex ( keys )
 	local modifier_hex = keys.modifier_hex
 	local hex_particle = keys.hex_particle
 	
-	
 	-- Ability specials
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	
@@ -238,21 +226,20 @@ function Hex ( keys )
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
-	end	
-	
+	end
 	
 	-- Play sound
 	caster:EmitSound(sound_cast)
 
-		-- Add particles
-		local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, target)		
-		ParticleManager:SetParticleControl(hex_particle, 0, target:GetAbsOrigin())		
-		ability:ApplyDataDrivenModifier(caster, target, modifier_hex, {})								
-	
+	-- Add particles
+	local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, target)		
+	ParticleManager:SetParticleControl(hex_particle, 0, target:GetAbsOrigin())		
+	ability:ApplyDataDrivenModifier(caster, target, modifier_hex, {})								
 end
 
 
 function HexBounce ( keys )
+
 	-- Ability properties
 	local caster = keys.caster
 	local target = keys.target	
@@ -266,40 +253,48 @@ function HexBounce ( keys )
 	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local hex_bounce_radius = ability:GetLevelSpecialValueFor("hex_bounce_radius", ability_level)
 	
-	
 	-- If the target was an is illusion, kill it
 	if target:IsIllusion() then
 		target:ForceKill(false)
 	end
 	
 	-- Find enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-									target:GetAbsOrigin(),
-									nil,
-									hex_bounce_radius,
-									DOTA_UNIT_TARGET_TEAM_ENEMY,
-									DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-									DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
-									FIND_ANY_ORDER,
-									false)
-									
-	-- Pick enemy which is not the one the modifier was just destroyed on	
-	for _,enemy in pairs(enemies) do
-	
-		if target ~= enemy then		
-			-- Play sound
-			caster:EmitSound(sound_cast)					
-				-- Add particles
-				local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, enemy)		
-				ParticleManager:SetParticleControl(hex_particle, 0, enemy:GetAbsOrigin())				
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_hex, {})												
-			break -- stop at the first valid target
-		end	
+	Timers:CreateTimer(0.03, function()
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+										target:GetAbsOrigin(),
+										nil,
+										hex_bounce_radius,
+										DOTA_UNIT_TARGET_TEAM_ENEMY,
+										DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+										DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+										FIND_ANY_ORDER,
+										false)
+										
+		-- Pick enemy which is not the one the modifier was just destroyed on	
+		for _,enemy in pairs(enemies) do
 		
-	end
-end	
-	
+			if target ~= enemy then
 
+				-- If target has Linken's Sphere off cooldown, do nothing else
+				if enemy:GetTeam() ~= caster:GetTeam() and enemy:TriggerSpellAbsorb(ability) then
+					return nil
+				else
+
+					-- Play sound
+					enemy:EmitSound(sound_cast)	
+
+					-- Add particles
+					local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, enemy)		
+					ParticleManager:SetParticleControl(hex_particle, 0, enemy:GetAbsOrigin())				
+					ability:ApplyDataDrivenModifier(caster, enemy, modifier_hex, {})
+				end
+
+				-- Stop at the first valid target
+				break
+			end
+		end
+	end)
+end
 
 function ManaDrain ( keys )
 	-- Ability properties
@@ -316,7 +311,7 @@ function ManaDrain ( keys )
 	local break_distance = ability:GetLevelSpecialValueFor("break_distance", ability_level)
 	local interval = ability:GetLevelSpecialValueFor("interval", ability_level)
 	local mana_drain_sec = ability:GetLevelSpecialValueFor("mana_drain_sec", ability_level)
-	local mana_pct_as_damage = ability:GetLevelSpecialValueFor("mana_pct_as_damage", ability_level)
+	local mana_pct_as_damage = ability:GetLevelSpecialValueFor("mana_pct_as_damage", ability_level) * 0.01
 	
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
@@ -369,15 +364,16 @@ function ManaDrain ( keys )
 		caster:SetForwardVector(direction)	
 	
 		-- Check for states that break the drain, remove particle if so
-		if distance > break_distance or target:IsMagicImmune() or target:IsInvulnerable() or target:GetMana() == 0 then		
+		if distance > break_distance or target:IsMagicImmune() or target:IsInvulnerable() then		
 			caster:InterruptChannel()
+			caster:StopSound(sound_cast)
 			ParticleManager:DestroyParticle(particle_drain, false)
 			return nil
 		end
 		
 		-- Calculate mana needed for caster to have full mana, set variable to store drained mana
-			local caster_mana_needed = caster:GetMaxMana()-caster:GetMana()			
-			local mana_drained = nil
+		local caster_mana_needed = caster:GetMaxMana()-caster:GetMana()			
+		local mana_drained = nil
 		
 		-- Check if target has more mana than max possible to drain, else drain what target has		
 		if target:GetMana() > mana_drain_per_interval then
@@ -414,13 +410,11 @@ function ManaDrainRemoveDebuff ( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local modifier_drain = keys.modifier_drain
-	
+
 	if target:HasModifier(modifier_drain) then
 		target:RemoveModifierByName(modifier_drain)
 	end
-
 end
-
 
 function ManaDrainAura ( keys )
 	-- Ability properties
@@ -430,7 +424,7 @@ function ManaDrainAura ( keys )
 	local modifier_drain_aura = keys.modifier_drain_aura
 	
 	-- Ability specials
-	local aura_max_mana_drain = ability:GetLevelSpecialValueFor("aura_max_mana_drain", ability_level)
+	local aura_max_mana_drain = ability:GetLevelSpecialValueFor("aura_max_mana_drain", ability_level) * 0.01
 	local aura_radius = ability:GetLevelSpecialValueFor("aura_radius", ability_level)
 
 	-- Find enemies in radius that has the aura modifier
@@ -451,7 +445,7 @@ function ManaDrainAura ( keys )
 			local mana_to_drain = enemy:GetMaxMana() * aura_max_mana_drain
 			
 			-- Set steal amount divided by 10 (10 intervals per sec)
-			local mana_drain_per_interval = mana_to_drain / 10
+			local mana_drain_per_interval = mana_to_drain * 0.1
 			
 			-- Calculate mana needed for caster to have full mana, set variable to store drained mana
 			local caster_mana_needed = caster:GetMaxMana()-caster:GetMana()			
@@ -478,7 +472,6 @@ function ManaDrainAura ( keys )
 	end
 end
 
-
 function FingerOfDeath ( keys )
 	-- Ability properties
 	local caster = keys.caster
@@ -503,8 +496,6 @@ function FingerOfDeath ( keys )
 		
 		caster:SpendMana(additional_mana, ability)		
 	end
-	
-	
 	
 	-- Change cooldown if caster has scepter
 	if scepter then
@@ -535,7 +526,7 @@ function FingerOfDeath ( keys )
 											  nil,
 											  scepter_radius,
 											  DOTA_UNIT_TARGET_TEAM_ENEMY,
-											  DOTA_UNIT_TARGET_HERO,
+											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 											  DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
 											  FIND_ANY_ORDER,
 											  false)
@@ -616,8 +607,6 @@ function FingerOfDeathImpact ( keys )
 	
 end
 
-
-
 function FingerOfDeathCheckKill ( keys )
 	local caster = keys.caster
 	local target = keys.target
@@ -625,15 +614,12 @@ function FingerOfDeathCheckKill ( keys )
 	local ability_level = ability:GetLevel()-1
 	local modifier_kill = keys.modifier_kill
 	
-	print("check kill")	
-	
 	-- Reset cooldown when target hero has died from Finger. Give a stack of modifier that increases mana cost by 50% per stack.	
 	if caster.newCast then
-	print("we're into check kill!")
-			ability:EndCooldown()	
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_kill, {})
-	
-			-- Prevent multiple triggers in one cast
-			caster.newCast = false			
+		ability:EndCooldown()
+		ability:ApplyDataDrivenModifier(caster, caster, modifier_kill, {})
+
+		-- Prevent multiple triggers in one cast
+		caster.newCast = false
 	end
 end

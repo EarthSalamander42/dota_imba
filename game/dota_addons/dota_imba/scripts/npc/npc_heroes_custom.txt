@@ -1306,10 +1306,10 @@
 	{
 		"override_hero"				"npc_dota_hero_lion"
 
-		//"Ability1"				"lion_impale"				
-		//"Ability2"				"lion_voodoo"				
-		//"Ability3"				"lion_mana_drain"			
-		//"Ability4"				"lion_finger_of_death"
+		"Ability1"					"imba_lion_earth_spike"				
+		"Ability2"					"imba_lion_hex"				
+		"Ability3"					"imba_lion_mana_drain"			
+		"Ability4"					"imba_lion_finger_of_death"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_25"
@@ -1319,7 +1319,7 @@
 		"Ability14"					"special_bonus_magic_resistance_15"
 		"Ability15"					"special_bonus_spell_amplify_8"
 		"Ability16"					"special_bonus_all_stats_12"
-		"Ability17"					"special_bonus_unique_lion"
+		"Ability17"					"special_bonus_spell_amplify_6"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
@@ -2420,13 +2420,13 @@
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_mp_regen_2"
+		"Ability11"					"special_bonus_mp_regen_1"
 		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_mp_regen_3"
+		"Ability13"					"special_bonus_mp_regen_2"
 		"Ability14"					"special_bonus_attack_speed_25"
 		"Ability15"					"special_bonus_mp_regen_3"
 		"Ability16"					"special_bonus_unique_storm_spirit"
-		"Ability17"					"special_bonus_mp_regen_3"
+		"Ability17"					"special_bonus_mp_regen_4"
 
 		"ProjectileModel"			"particles/units/heroes/hero_stormspirit/stormspirit_base_attack.vpcf"
 	}
@@ -3130,10 +3130,10 @@
 	{
 		"override_hero"				"npc_dota_hero_witch_doctor"
 
-		//"Ability1"					"imba_witch_doctor_paralyzing_cask"
-		//"Ability2"					"imba_witch_doctor_voodoo_restoration"
-		//"Ability3"					"imba_witch_doctor_maledict"
-		//"Ability4"					"imba_witch_doctor_death_ward"
+		"Ability1"					"imba_witch_doctor_paralyzing_cask"
+		"Ability2"					"imba_witch_doctor_voodoo_restoration"
+		"Ability3"					"imba_witch_doctor_maledict"
+		"Ability4"					"imba_witch_doctor_death_ward"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
@@ -3142,8 +3142,8 @@
 		"Ability13"					"special_bonus_respawn_reduction_35"
 		"Ability14"					"special_bonus_armor_6"
 		"Ability15"					"special_bonus_magic_resistance_20"
-		"Ability16"					"special_bonus_unique_witch_doctor_1"
-		"Ability17"					"special_bonus_unique_witch_doctor_2"
+		"Ability16"					"special_bonus_cooldown_reduction_20"
+		"Ability17"					"special_bonus_intelligence_25"
 
 		"ProjectileModel"			"particles/units/heroes/hero_witchdoctor/witchdoctor_base_attack.vpcf"
 	}

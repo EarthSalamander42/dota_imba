@@ -49,6 +49,11 @@ function NetherWandTick( keys )
 	local target = keys.target
 	local modifier_unique = keys.modifier_unique
 
+	-- If the ability was lost, do nothing
+	if not ability then
+		return nil
+	end
+
 	-- Parameters
 	local burn_duration = ability:GetSpecialValueFor("burn_duration")
 	local burn_amount = ability:GetSpecialValueFor("burn_amount")

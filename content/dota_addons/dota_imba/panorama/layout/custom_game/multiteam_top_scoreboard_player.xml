@@ -7,15 +7,13 @@
 	<script>
 	function PortraitClicked()
 	{
-		Players.PlayerPortraitClicked( $.GetContextPanel().GetAttributeInt( "player_id", -1 ), GameUI.IsControlDown(), GameUI.IsAltDown() );
+		// TODO: ctrl and alt click support
+		Players.PlayerPortraitClicked( $.GetContextPanel().GetAttributeInt( "player_id", -1 ), false, false );
 	}
 	</script>
 	<Panel hittest="false" class="ScoreboardPlayerWrapper">
 		<Panel hittest="false" id="RespawnIndicator">
 			<Label hittest="false" id="RespawnTimer" />
-		</Panel>
-		<Panel hittest="false" id="HealthIndicatorContainer">
-			<Panel hittest="false" id="HealthIndicatorHealth"/>
 		</Panel>
 		<Panel hittest="false" class="ScoreboardPlayer">
 			<Button class="PlayerPortraitWrapper" onmouseactivate="PortraitClicked();">

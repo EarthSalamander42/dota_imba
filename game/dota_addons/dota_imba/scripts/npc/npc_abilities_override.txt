@@ -8089,6 +8089,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"strike_crit_mult"			"225"
+				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king"
 			}
 			"03"
 			{
