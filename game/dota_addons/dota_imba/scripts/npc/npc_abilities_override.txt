@@ -5485,15 +5485,17 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_health_regen"		"6 12 18 24"
-				"LinkedSpecialBonus"		"special_bonus_unique_dragon_knight"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"6 12 18 24"
+				"LinkedSpecialBonus"			"special_bonus_unique_dragon_knight"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"8 12 16 20"
-				"LinkedSpecialBonus"		"special_bonus_unique_dragon_knight"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"8 12 16 20"
+				"LinkedSpecialBonus"			"special_bonus_unique_dragon_knight"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 		}
 	}

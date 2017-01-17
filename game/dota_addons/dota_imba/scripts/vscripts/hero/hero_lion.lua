@@ -216,10 +216,16 @@ function Hex ( keys )
 	local ability_level = ability:GetLevel()-1
 	local sound_cast = keys.sound_cast	
 	local modifier_hex = keys.modifier_hex
+	local modifier_bounce = keys.modifier_bounce
 	local hex_particle = keys.hex_particle
+	local scepter = HasScepter(caster)
 	
 	-- Ability specials
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+	local bounce_delay = ability:GetLevelSpecialValueFor("bounce_duration", ability_level)
+
+	if scepter then
+		bounce_delay = ability:GetLevelSpecialValueFor("b_duration_scepter", ability_level)
+	end
 	
 	-- If target has Linken's Sphere off cooldown, do nothing else
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -234,9 +240,34 @@ function Hex ( keys )
 	-- Add particles
 	local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, target)		
 	ParticleManager:SetParticleControl(hex_particle, 0, target:GetAbsOrigin())		
-	ability:ApplyDataDrivenModifier(caster, target, modifier_hex, {})								
+	ability:ApplyDataDrivenModifier(caster, target, modifier_hex, {})
+	ability:ApplyDataDrivenModifier(caster, target, modifier_bounce, {duration = bounce_delay})
 end
 
+function HexModelChange( keys )
+	local target = keys.target
+	local model_frog = keys.model_frog
+
+	-- Stores the day model to revert to it later
+	if not target.hex_original_model then
+		target.hex_original_model = target:GetModelName()
+	end
+
+	-- Changes the target's model to its night mode
+	target:SetOriginalModel(model_frog)
+	target:SetModel(model_frog)
+end
+
+function HexModelRevert( keys )
+	local target = keys.target
+
+	-- Checking for errors
+	if target.hex_original_model then
+		target:SetModel(target.hex_original_model)
+		target:SetOriginalModel(target.hex_original_model)
+		target.hex_original_model = nil
+	end
+end
 
 function HexBounce ( keys )
 
@@ -247,11 +278,17 @@ function HexBounce ( keys )
 	local ability_level = ability:GetLevel()-1
 	local sound_cast = keys.sound_cast
 	local modifier_hex = keys.modifier_hex
+	local modifier_bounce = keys.modifier_bounce
 	local hex_particle = keys.hex_particle
+	local scepter = HasScepter(caster)
 	
 	-- Ability specials
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
 	local hex_bounce_radius = ability:GetLevelSpecialValueFor("hex_bounce_radius", ability_level)
+	local bounce_delay = ability:GetLevelSpecialValueFor("bounce_duration", ability_level)
+
+	if scepter then
+		bounce_delay = ability:GetLevelSpecialValueFor("b_duration_scepter", ability_level)
+	end
 	
 	-- If the target was an is illusion, kill it
 	if target:IsIllusion() then
@@ -273,7 +310,7 @@ function HexBounce ( keys )
 		-- Pick enemy which is not the one the modifier was just destroyed on	
 		for _,enemy in pairs(enemies) do
 		
-			if target ~= enemy then
+			if target ~= enemy and not enemy:HasModifier(modifier_hex) then
 
 				-- If target has Linken's Sphere off cooldown, do nothing else
 				if enemy:GetTeam() ~= caster:GetTeam() and enemy:TriggerSpellAbsorb(ability) then
@@ -287,6 +324,7 @@ function HexBounce ( keys )
 					local hex_particle = ParticleManager:CreateParticle(hex_particle, PATTACH_CUSTOMORIGIN, enemy)		
 					ParticleManager:SetParticleControl(hex_particle, 0, enemy:GetAbsOrigin())				
 					ability:ApplyDataDrivenModifier(caster, enemy, modifier_hex, {})
+					ability:ApplyDataDrivenModifier(caster, enemy, modifier_bounce, {duration = bounce_delay})
 				end
 
 				-- Stop at the first valid target
@@ -480,12 +518,13 @@ function FingerOfDeath ( keys )
 	local ability_level = ability:GetLevel()-1
 	local sound_cast = keys.sound_cast
 	local particle_finger = keys.particle_finger
-	local scepter = caster:HasScepter()	
 	local modifier_kill = keys.modifier_kill
+	local modifier_delay = keys.modifier_delay
+	local scepter = caster:HasScepter()	
 	
 	-- Ability specials
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)	
-	local scepter_cooldown = ability:GetLevelSpecialValueFor("scepter_cooldown", ability_level)
+	local cooldown_scepter = ability:GetLevelSpecialValueFor("cooldown_scepter", ability_level)
 	local mana_price_increase = ability:GetLevelSpecialValueFor("mana_price_increase", ability_level)
 	local scepter_radius = ability:GetLevelSpecialValueFor("scepter_radius", ability_level)	
 	
@@ -500,52 +539,26 @@ function FingerOfDeath ( keys )
 	-- Change cooldown if caster has scepter
 	if scepter then
 		ability:EndCooldown()
-		ability:StartCooldown(scepter_cooldown * GetCooldownReduction(caster))
+		ability:StartCooldown(cooldown_scepter * GetCooldownReduction(caster))
 	end
 	
 	-- Play the cast sound
 	caster:EmitSound(sound_cast)
 
-	-- Launch the projectile(s)
-	if not scepter then -- single target
-		local finger_projectile =	{Target = target,
-									Source = caster,
-									Ability = ability,
-									EffectName = particle_finger,		
-									iMoveSpeed = projectile_speed,
-									bDodgeable = false, 
-									bVisibleToEnemies = true,
-									bReplaceExisting = false,        									
-									}
-									
-		ProjectileManager:CreateTrackingProjectile(finger_projectile)	
-	else
-		-- Find enemies in the AoE area
-		local enemies = FindUnitsInRadius(	caster:GetTeamNumber(),
-											  target:GetAbsOrigin(),
-											  nil,
-											  scepter_radius,
-											  DOTA_UNIT_TARGET_TEAM_ENEMY,
-											  DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-											  DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS,
-											  FIND_ANY_ORDER,
-											  false)
-											  
-		for _,enemy in pairs(enemies) do			
-			local finger_projectile =	{Target = enemy,
-										Source = caster,
-										Ability = ability,
-										EffectName = particle_finger,		
-										iMoveSpeed = projectile_speed,
-										bDodgeable = false, 
-										bVisibleToEnemies = true,
-										bReplaceExisting = false,        									
-										}										
-										
-			ProjectileManager:CreateTrackingProjectile(finger_projectile)
-			
-		end
-	end									  
+	-- Launch the projectile
+	local finger_projectile =	{Target = target,
+								Source = caster,
+								Ability = ability,
+								EffectName = particle_finger,		
+								iMoveSpeed = 4000,
+								bDodgeable = false, 
+								bVisibleToEnemies = true,
+								bReplaceExisting = false,        									
+	}						
+	ProjectileManager:CreateTrackingProjectile(finger_projectile)
+
+	-- Apply the actual damage delay modifier
+	ability:ApplyDataDrivenModifier(caster, target, modifier_delay, {})
 end
 
 function FingerOfDeathImpact ( keys )
@@ -555,56 +568,57 @@ function FingerOfDeathImpact ( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel()-1
 	local sound_impact = keys.sound_impact
-	local particle_impact = keys.particle_impact
-	local scepter = caster:HasScepter()
+	local particle_finger = keys.particle_finger
 	local modifier_kill = keys.modifier_kill
-	local modifier_check = keys.modifier_check
-	
+	local modifier_hex = keys.modifier_hex
+	local scepter = caster:HasScepter()
+
 	-- Ability specials
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local damage_delay = ability:GetLevelSpecialValueFor("damage_delay", ability_level)	
-	local scepter_damage = ability:GetLevelSpecialValueFor("scepter_damage", ability_level)
+	local radius_scepter = ability:GetLevelSpecialValueFor("radius_scepter", ability_level)	
 		
 	-- Declare caster kill state
 	if not caster.newCast then
 		caster.newCast = true
+		Timers:CreateTimer(0.1, function()
+			caster.newCast = nil
+		end)
 	end
-		
-	-- Check for scepter, assign damage
+
+	-- Search for valid nearby targets
+	local targets = {}
+	targets[1] = target
 	if scepter then
-		damage = scepter_damage		
-	end	
-	
-	-- Play hit sound
-	caster:EmitSound(sound_impact)
-	
-	--Add particles
-	local particle_impact = ParticleManager:CreateParticle(particle_impact, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle_impact, 0, caster:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_impact, 1, target:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_impact, 2, target:GetAbsOrigin())
-	ParticleManager:SetParticleControl(particle_impact, 3, Vector(100, 0, 0))
-	
-	-- Check for Linken's Sphere on primary target	
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
+		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius_scepter, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemies) do
+			if enemy ~= target and (enemy:HasModifier("modifier_stunned") or enemy:HasModifier(modifier_hex)) then
+				targets[#targets + 1] = enemy
+			end
 		end
-	end	 	
-	
-	-- Wait for 0.25 seconds, then deal damage
-	Timers:CreateTimer(damage_delay, function()		
-		if not target:IsMagicImmune() then
-			local damageTable = {victim = target,
-							 attacker = caster,	
-							 damage = damage,
-							 damage_type = DAMAGE_TYPE_MAGICAL
-							}	
-			ApplyDamage(damageTable)					
-			
-		end						
-	end)	
-	
+	end
+
+	-- Projectile
+	local finger_projectile =	{	Target = target,
+									Source = target,
+									Ability = ability,
+									EffectName = particle_finger,		
+									iMoveSpeed = 4000,
+									bDodgeable = false, 
+									bVisibleToEnemies = true,
+									bReplaceExisting = false	}						
+
+	-- Iterate through targets
+	for _,hit_target in pairs(targets) do
+		if not target:TriggerSpellAbsorb(ability) then
+			if hit_target == target or hit_target:IsRealHero() then
+				hit_target:EmitSound(sound_impact)
+			end
+			finger_projectile.Target = hit_target
+			ProjectileManager:CreateTrackingProjectile(finger_projectile)
+			ApplyDamage({victim = hit_target, attacker = caster, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		end
+	end
 end
 
 function FingerOfDeathCheckKill ( keys )

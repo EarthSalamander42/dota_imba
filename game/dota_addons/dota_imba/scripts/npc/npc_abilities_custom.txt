@@ -17615,14 +17615,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5 3 3.5 4"
+				"duration"				"2.5 3.0 3.5 4.0"
 			}
 			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bounce_duration"		"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"b_duration_scepter"	"1.25"
+			}
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"move_speed"			"140"
 			}
-			"03"
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hex_bounce_radius"		"500"
@@ -17638,6 +17648,7 @@
 
 				"sound_cast"			"Hero_Lion.Voodoo"		
 				"modifier_hex"			"modifier_imba_lion_hex"
+				"modifier_bounce"		"modifier_imba_lion_hex_bounce"
 				"hex_particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
 			}
 		}
@@ -17645,23 +17656,28 @@
 		"Modifiers"
 		{
 			"modifier_imba_lion_hex"
-			{	
-				"ModelName" 				"models/props_gameplay/frog.vmdl"
+			{
+				"Duration"					"%duration"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 		"hero/hero_lion.lua"
+						"Function"			"HexModelChange"
+
+						"model_frog"		"models/props_gameplay/frog.vmdl"
+					}
+				}
 
 				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile" 		"hero/hero_lion.lua"
-						"Function"			"HexBounce"
-					
-						"sound_cast"		"Hero_Lion.Voodoo"		
-						"modifier_hex"		"modifier_imba_lion_hex"
-						"hex_particle"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+						"Function"			"HexModelRevert"
 					}
 				}
-
-				"Duration"					"%duration"
 
 				"States"
 				{
@@ -17677,6 +17693,25 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"	"%move_speed"
+				}
+			}
+
+			"modifier_imba_lion_hex_bounce"
+			{
+				"IsHidden"					"1"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile" 		"hero/hero_lion.lua"
+						"Function"			"HexBounce"
+					
+						"sound_cast"		"Hero_Lion.Voodoo"		
+						"modifier_hex"		"modifier_imba_lion_hex"
+						"modifier_bounce"	"modifier_imba_lion_hex_bounce"
+						"hex_particle"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
+					}
 				}
 			}
 		}
@@ -17881,7 +17916,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"40"
+		"AbilityCooldown"			"120 80 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17893,43 +17928,38 @@
 		{	
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"450 650 850"
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"600 725 850"
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"scepter_damage"	"575 800 1025"
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"725 875 1025"
 			}			
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"scepter_radius"	"325"	
+				"var_type"					"FIELD_INTEGER"
+				"radius_scepter"			"1200"	
 			}
 			"04"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"projectile_speed" 	"4000"
+				"var_type"					"FIELD_FLOAT"
+				"damage_delay"				"0.1"
 			}
 			"05"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"damage_delay"		"0.1"
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_scepter"			"60 40 20"
 			}
 			"06"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"scepter_cooldown"	"20"
+				"var_type"					"FIELD_INTEGER"
+				"mana_add_duration"			"7"
 			}
 			"07"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"mana_add_duration"	"7"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_price_increase"	"0.5"
+				"var_type"					"FIELD_FLOAT"
+				"mana_price_increase"		"0.5"
 			}
 		}
 		
@@ -17943,23 +17973,10 @@
 				"sound_cast"			"Hero_Lion.FingerOfDeath"
 				"particle_finger"		"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
 				"modifier_kill"			"modifier_imba_finger_of_death_kill"
+				"modifier_delay"		"modifier_imba_finger_of_death_delay"
 			}			
 		}
-		
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lion.lua"
-				"Function"				"FingerOfDeathImpact"
-				
-				"sound_impact"			"Hero_Lion.FingerOfDeathImpact"
-				"particle_impact"		"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
-				"modifier_kill"			"modifier_imba_finger_of_death_kill"
-				"modifier_check"		"modifier_imba_finger_of_death_mark"
-			}
-		}
-		
+
 		"Modifiers"
 		{
 			"modifier_imba_finger_of_death_kill"
@@ -17969,17 +17986,41 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 				
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
 				
-				"Duration"			"%mana_add_duration"
+				"Duration"				"%mana_add_duration"
 			}
-			
+
+			"modifier_imba_finger_of_death_delay"
+			{
+				"Passive"				"0"
+				"IsHidden"				"1"
+				"IsDebuff"				"1"
+				"IsPurgable"			"0"
+
+				"Duration"				"%damage_delay"
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"hero/hero_lion.lua"
+						"Function"			"FingerOfDeathImpact"
+						
+						"sound_impact"		"Hero_Lion.FingerOfDeathImpact"
+						"particle_finger"	"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
+						"modifier_kill"		"modifier_imba_finger_of_death_kill"
+						"modifier_hex"		"modifier_imba_lion_hex"
+					}
+				}
+			}
+
 			"modifier_imba_finger_of_death_mark"
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"IsPurgable"			"0"
-				
+
 				"OnHeroKilled"
 				{
 					"RunScript"
@@ -34789,12 +34830,12 @@
 		
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
-			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack_explosion.vpcf"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_loop.vsnd"
-			"soundfile"		"sounds/weapons/hero/witch_doctor/voodoo_restoration_off.vsnd"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration.vpcf"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_voodoo_restoration_flame.vpcf"
+			"particle"					"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack_explosion.vpcf"
+			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration.vsnd"
+			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration_loop.vsnd"
+			"soundfile"					"sounds/weapons/hero/witch_doctor/voodoo_restoration_off.vsnd"
 		}
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------

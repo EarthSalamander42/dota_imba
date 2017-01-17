@@ -52,16 +52,26 @@ function imba_witch_doctor_paralyzing_cask:OnProjectileHit(target, vLocation)
 	end
 	if self.remainingBounces and self.remainingBounces > 0 then
 		-- We wait on the delay
-		Timers:CreateTimer(bounce_delay,
-		function()
-			-- Finds all units in the area
-			local units = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
-			-- Go through the target_enties table, checking for the first one that isn't the same as the target
+		Timers:CreateTimer(bounce_delay, function()
+
+			-- Finds all units in the area, prioritizing enemies
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
+			local allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, self:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NO_INVIS, 0, false)
+			
+			-- Go through the target tables, checking for the first one that isn't the same as the target
 			local target_to_jump = {}
-			for _,unit in pairs(units) do
+			for _,unit in pairs(enemies) do
 				if unit ~= target and self.bounce_amount and #target_to_jump < self.bounce_amount then
 					table.insert(target_to_jump, unit)
-					if #target_to_jump >= self.bounce_amount or #units < 3 then
+					if #target_to_jump >= self.bounce_amount then
+						break
+					end
+				end
+			end
+			if #target_to_jump == 0 then 
+				for _,unit in pairs(allies) do
+					if unit ~= target then
+						table.insert(target_to_jump, unit)
 						break
 					end
 				end

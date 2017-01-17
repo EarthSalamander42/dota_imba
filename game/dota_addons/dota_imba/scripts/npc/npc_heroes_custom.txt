@@ -1319,7 +1319,7 @@
 		"Ability14"					"special_bonus_magic_resistance_15"
 		"Ability15"					"special_bonus_spell_amplify_8"
 		"Ability16"					"special_bonus_all_stats_12"
-		"Ability17"					"special_bonus_spell_amplify_6"
+		"Ability17"					"special_bonus_cast_range_125"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
