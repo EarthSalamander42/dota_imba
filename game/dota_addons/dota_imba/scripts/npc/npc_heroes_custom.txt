@@ -2256,10 +2256,11 @@
 	{
 		"override_hero"				"npc_dota_hero_skywrath_mage"
 
-		//"Ability1"					"imba_skywrath_mage_arcane_bolt"
-		//"Ability2"					"imba_skywrath_mage_concussive_shot"
-		//"Ability3"					"imba_skywrath_mage_ancient_seal"
-		//"Ability4"					"imba_skywrath_mage_mystic_flare"
+		"Ability1"					"imba_skywrath_mage_arcane_bolt"
+		"Ability2"					"imba_skywrath_mage_concussive_shot"
+		"Ability3"					"imba_skywrath_mage_ancient_seal"
+		"Ability4"					"imba_skywrath_mage_mystic_flare"
+		"Ability5"					"imba_skywrath_mage_concussive_shot_ghastly"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
@@ -2269,7 +2270,7 @@
 		"Ability14"					"special_bonus_movement_speed_25"
 		"Ability15"					"special_bonus_magic_resistance_15"
 		"Ability16"					"special_bonus_mp_regen_14"
-		"Ability17"					"special_bonus_unique_skywrath"
+		"Ability17"					"special_bonus_spell_lifesteal_20"
 
 		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 	}

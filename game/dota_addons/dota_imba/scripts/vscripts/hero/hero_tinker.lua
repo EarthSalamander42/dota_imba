@@ -408,7 +408,8 @@ function Rearm( keys )
 		"furion_force_of_nature",
 		"imba_nyx_assassin_spiked_carapace",
 		"elder_titan_earth_splitter",
-		"imba_centaur_stampede"
+		"imba_centaur_stampede",
+		"silencer_global_silence"
 	}
 
 	-- List of unrefreshable items

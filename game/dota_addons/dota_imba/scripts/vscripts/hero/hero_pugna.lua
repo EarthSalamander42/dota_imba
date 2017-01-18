@@ -428,7 +428,8 @@ function NetherWardZap( keys )
 		"monkey_king_mischief",
 		"monkey_king_tree_dance",
 		"monkey_king_primal_spring",
-		"monkey_king_wukongs_command"
+		"monkey_king_wukongs_command",
+		"imba_skywrath_mage_concussive_shot"
 	}
 
 	-- Ignore items
