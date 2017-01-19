@@ -29,6 +29,27 @@ function IntToDamage( keys )
 	ApplyDamage( damage_table )
 end
 
+function LastWordCast( keys )
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local modifier_debuff = keys.modifier_debuff
+	local sound_cast = keys.sound_cast
+
+	-- If target has Linken's Sphere off cooldown, do nothing else
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(ability) then
+			return nil
+		end
+	end
+
+	-- Play cast sound
+	caster:EmitSound(sound_cast)
+
+	-- Apply the debuff
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+end
+
 function LastWordDamage( keys )
 	local caster = keys.caster
 	local target = keys.unit
@@ -128,14 +149,6 @@ function LastWordDebuff( keys )
 			return nil
 		end
 
-		-- We'll handle channeling at the end of it, so extend it indefinitely (unless last word was applied during channeling - this is consistent with vanilla Dota 2)
-		if event_ability:GetChannelTime() > 0 and target_modifier.channeling_handled == nil then
-			target_modifier:SetDuration( -1 , true )
-			target_modifier:StartIntervalThink( -1 )
-			target_modifier.channeling_handled = true
-			return nil
-		end
-
 		local sound = keys.sound
 		local damage_sound = keys.damage_sound
 
@@ -155,7 +168,7 @@ function GlobalSilenceCast( keys )
 	local curse_modifier = keys.curse_modifier
 	local silence_modifier = keys.silence_modifier
 
-	-- Needs to be applied via LUA because if modifier IsPurgable in data-driven definition,
+	-- Needs to be applied via lua because if modifier IsPurgable in data-driven definition,
 	-- it won't be applied through "ApplyModifier"
 	ability:ApplyDataDrivenModifier(caster, target, silence_modifier, nil)
 

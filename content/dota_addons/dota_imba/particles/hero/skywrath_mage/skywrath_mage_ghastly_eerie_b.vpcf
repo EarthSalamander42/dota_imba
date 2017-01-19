@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_nMaxParticles = 128
-	m_flConstantRadius = 350.0
+	m_flConstantRadius = 200.0
 	m_ConstantColor = [ 189, 183, 107, 255 ]
 	m_Renderers = 
 	[
@@ -48,7 +48,7 @@
 	[
 		{
 			_class = "C_INIT_RingWave"
-			m_flInitialRadius = 500.0
+			m_flInitialRadius = 350.0
 			m_bEvenDistribution = true
 			m_flParticlesPerOrbit = 46.0
 		},

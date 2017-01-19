@@ -12,6 +12,7 @@
 			m_nVertCropField = 18
 			m_flLengthFadeInTime = 3.0
 			m_bIgnoreDT = true
+			m_flMaxLength = 900.0
 		},
 	]
 	m_Operators = 
@@ -48,8 +49,8 @@
 	[
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 800.0
-			m_flRadiusMin = 20.0
+			m_flRadiusMax = 80.0
+			m_flRadiusMin = 60.0
 		},
 		{
 			_class = "C_INIT_RandomTrailLength"
@@ -82,7 +83,7 @@
 		},
 		{
 			_class = "C_INIT_RingWave"
-			m_flInitialRadius = 500.0
+			m_flInitialRadius = 350.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"

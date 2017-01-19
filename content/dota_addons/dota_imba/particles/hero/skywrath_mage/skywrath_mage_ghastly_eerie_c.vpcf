@@ -2,7 +2,7 @@
 {
 	_class = "CParticleSystemDefinition"
 	m_nMaxParticles = 128
-	m_flConstantRadius = 260.0
+	m_flConstantRadius = 125.0
 	m_ConstantColor = [ 68, 59, 49, 255 ]
 	m_Renderers = 
 	[
@@ -47,16 +47,14 @@
 			_class = "C_INIT_RingWave"
 			m_flParticlesPerOrbit = 32.0
 			m_bEvenDistribution = true
-			m_flInitialRadius = 500.0
+			m_flInitialRadius = 350.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMax = [ 0.0, 0.0, 512.0 ]
-			m_OffsetMin = [ 0.0, 0.0, 512.0 ]
 		},
 		{
 			_class = "C_INIT_PositionPlaceOnGround"
-			m_flOffset = 128.0
+			m_flOffset = 32.0
 			m_CollisionGroupName = "DEBRIS"
 			m_flMaxTraceLength = 2048.0
 		},

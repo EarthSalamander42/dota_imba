@@ -132,6 +132,19 @@ function AddStacks(ability, caster, unit, modifier, stack_amount, refresh)
 	end
 end
 
+-- Adds [stack_amount] stacks to a lua-based modifier
+function AddStacksLua(ability, caster, unit, modifier, stack_amount, refresh)
+	if unit:HasModifier(modifier) then
+		if refresh then
+			unit:AddNewModifier(caster, ability, modifier, {})
+		end
+		unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, nil) + stack_amount)
+	else
+		unit:AddNewModifier(caster, ability, modifier, {})
+		unit:SetModifierStackCount(modifier, ability, stack_amount)
+	end
+end
+
 -- Removes [stack_amount] stacks from a modifier
 function RemoveStacks(ability, unit, modifier, stack_amount)
 	if unit:HasModifier(modifier) then

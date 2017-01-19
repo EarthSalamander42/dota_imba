@@ -9,7 +9,6 @@ function ArcaneBoltCast ( keys )
 	local ability_level = ability:GetLevel() -1
 	local sound_cast = keys.sound_cast
 	local particle_projectile = keys.particle_projectile	
-	local modifier_stacks = keys.modifier_stacks
 	local scepter = caster:HasScepter()
 
 	-- Parameters
@@ -34,10 +33,7 @@ function ArcaneBoltCast ( keys )
 		iVisionRadius = vision_radius,
 		iVisionTeamNumber = caster:GetTeamNumber()
 	}
-	ProjectileManager:CreateTrackingProjectile(arcane_bolt_projectile)
-
-	-- Add Arcane Wrath stack
-	AddStacks(ability, caster, caster, modifier_stacks, 1, true)	
+	ProjectileManager:CreateTrackingProjectile(arcane_bolt_projectile)	
 
 	-- Secondary cast with scepter
 	if scepter then
@@ -61,9 +57,6 @@ function ArcaneBoltCast ( keys )
 					iVisionTeamNumber = caster:GetTeamNumber()
 				}
 				ProjectileManager:CreateTrackingProjectile(arcane_bolt_projectile)
-
-				-- Add Arcane Wrath stack
-				AddStacks(ability, caster, caster, modifier_stacks, 1, true)
 			end)
 		end
 	end
@@ -108,10 +101,15 @@ function ArcaneBoltHit ( keys )
 	
 	-- Calculate damage 		
 	local int_multiplier = int_multiplier + (stack_count * stack_int_multi_bonus)
-	local final_damage = base_damage + (int_multiplier * caster_int)			
+	local final_damage = base_damage + (int_multiplier * caster_int)
 	
 	-- Deal damage to target if it's not magic immune
-	ApplyDamage({victim = target, attacker = caster, damage = final_damage, damage_type = DAMAGE_TYPE_MAGICAL})	
+	ApplyDamage({victim = target, attacker = caster, damage = final_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+	-- Add a stack of Arcane Wrath if the target is a hero
+	if target:IsHero() then
+		AddStacks(ability, caster, caster, modifier_stacks, 1, true)
+	end
 	
 	-- Calculate and increase duration of Ancient Seal, if present
 	if target:HasModifier(seal_modifier) and caster:FindAbilityByName(keys.seal_ability) then
@@ -119,12 +117,6 @@ function ArcaneBoltHit ( keys )
 		local seal_duration_increase = seal_ability:GetLevelSpecialValueFor("bolt_duration", seal_ability:GetLevel() - 1)
 		local modifier = target:FindModifierByName(seal_modifier)
 		modifier:SetDuration(modifier:GetRemainingTime() + seal_duration_increase, true)
-		local seal_increase_pfx = ParticleManager:CreateParticle("particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf", PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(seal_increase_pfx, 1, Vector(180, 0, 0))
-		Timers:CreateTimer(0.5, function()
-			ParticleManager:DestroyParticle(seal_increase_pfx, false)
-			ParticleManager:ReleaseParticleIndex(seal_increase_pfx)
-		end)
 	end
 end
 
@@ -254,12 +246,6 @@ function ConcussiveShotImpact ( keys )
 		local seal_duration_increase = seal_ability:GetLevelSpecialValueFor("concussive_duration", seal_ability:GetLevel() - 1)
 		local modifier = target:FindModifierByName(seal_modifier)
 		modifier:SetDuration(modifier:GetRemainingTime() + seal_duration_increase, true)
-		local seal_increase_pfx = ParticleManager:CreateParticle("particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf", PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(seal_increase_pfx, 1, Vector(180, 0, 0))
-		Timers:CreateTimer(0.5, function()
-			ParticleManager:DestroyParticle(seal_increase_pfx, false)
-			ParticleManager:ReleaseParticleIndex(seal_increase_pfx)
-		end)
 	end
 
 	-- Apply vision on impact for the duration
@@ -391,12 +377,6 @@ function ConcussiveShotGhastlyPulseImpact ( keys )
 		local seal_duration_increase = seal_ability:GetLevelSpecialValueFor("concussive_duration", seal_ability:GetLevel() - 1)
 		local modifier = target:FindModifierByName(seal_modifier)
 		modifier:SetDuration(modifier:GetRemainingTime() + seal_duration_increase, true)
-		local seal_increase_pfx = ParticleManager:CreateParticle("particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion.vpcf", PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControl(seal_increase_pfx, 1, Vector(180, 0, 0))
-		Timers:CreateTimer(0.5, function()
-			ParticleManager:DestroyParticle(seal_increase_pfx, false)
-			ParticleManager:ReleaseParticleIndex(seal_increase_pfx)
-		end)
 	end
 		
 	-- Find all units in AoE range

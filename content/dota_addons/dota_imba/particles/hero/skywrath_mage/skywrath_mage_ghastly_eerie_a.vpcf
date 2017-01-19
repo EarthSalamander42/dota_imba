@@ -40,14 +40,14 @@
 	[
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 120.0
-			m_flRadiusMax = 128.0
+			m_flRadiusMin = 40.0
+			m_flRadiusMax = 60.0
 		},
 		{
 			_class = "C_INIT_RingWave"
 			m_flParticlesPerOrbit = 46.0
 			m_bEvenDistribution = true
-			m_flInitialRadius = 500.0
+			m_flInitialRadius = 350.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"
