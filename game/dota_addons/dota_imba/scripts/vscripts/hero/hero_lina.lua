@@ -6,13 +6,11 @@ function DragonSlaveLevel( keys )
 	local ability = keys.ability
 	local ability_aux = caster:FindAbilityByName(keys.ability_aux)
 	local ability_fiery = caster:FindAbilityByName(keys.ability_fiery)
-	local ability_fiery_aux = caster:FindAbilityByName(keys.ability_fiery_aux)
 
 	-- Upgrades all auxiliary abilities to the proper level
 	local ability_level = ability:GetLevel()
 	ability_aux:SetLevel(ability_level)
 	ability_fiery:SetLevel(ability_level)
-	ability_fiery_aux:SetLevel(ability_level)
 end
 
 function BlazingAbilityLevel( keys )

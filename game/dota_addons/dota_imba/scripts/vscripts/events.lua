@@ -542,11 +542,26 @@ function GameMode:OnPlayerLevelUp(keys)
 	-- If the generic powerup isn't present, apply it
 	if hero_level > 25 then
 		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
-		if not ability_powerup then
+		local is_this_hero_fucked_by_valve = false
+		local heroes_fucked_by_valve = {
+			"npc_dota_hero_rubick",
+			"npc_dota_hero_wisp",
+			"npc_dota_hero_invoker",
+			"npc_dota_hero_lina",
+			"npc_dota_hero_phoenix",
+			"npc_dota_hero_keeper_of_the_light"
+		}
+		for _, fucked_hero in pairs(heroes_fucked_by_valve) do
+			if fucked_hero == hero:GetUnitName() then
+				is_this_hero_fucked_by_valve = true
+				break
+			end
+		end
+		if (not ability_powerup) and (not is_this_hero_fucked_by_valve) then
 			hero:AddAbility("imba_unlimited_level_powerup")
 			ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
+			ability_powerup:SetLevel(1)
 		end
-		ability_powerup:SetLevel(1)
 	end
 
 	-------------------------------------------------------------------------------------------------

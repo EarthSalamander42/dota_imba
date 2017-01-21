@@ -1034,7 +1034,7 @@
 		"Ability21"					"special_bonus_unique_invoker_2"
 		"Ability22"					"special_bonus_attack_speed_30"
 		"Ability23"					"special_bonus_unique_invoker_3"
-		"Ability24"					"imba_unlimited_level_powerup"
+		"Ability24"					"special_bonus_cooldown_reduction_12"
 
 		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 	}
@@ -1117,9 +1117,9 @@
 		"Ability11"					"special_bonus_movement_speed_25"
 		"Ability12"					"special_bonus_strength_6"
 		"Ability13"					"special_bonus_respawn_reduction_35"
-		"Ability14"					"special_bonus_magic_resistance_6"
-		"Ability15"					"special_bonus_armor_12"
-		"Ability16"					"imba_unlimited_level_powerup"
+		"Ability14"					"special_bonus_magic_resistance_10"
+		"Ability15"					"special_bonus_armor_9"
+		"Ability16"					"special_bonus_cast_range_150"
 		"Ability17"					"special_bonus_unique_keeper_of_the_light"
 
 		"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
@@ -1284,17 +1284,17 @@
 		"Ability4"					"imba_lina_laguna_blade"
 		"Ability5"					"imba_lina_dragon_slave_aux"
 		"Ability6"					"imba_lina_dragon_slave_fiery"
-		"Ability7"					"imba_lina_dragon_slave_aux_fiery"
-		"Ability8"					"imba_lina_light_strike_array_fiery"
-		"Ability9"					"imba_lina_blazing_soul"
-		"Ability10"					"imba_lina_laguna_blade_fiery"
-		"Ability11"					"special_bonus_gold_income_15"
-		"Ability12"					"special_bonus_movement_speed_20"
-		"Ability13"					"special_bonus_spell_lifesteal_20"
-		"Ability14"					"special_bonus_cast_range_60"
-		"Ability15"					"special_bonus_spell_amplify_12"
-		"Ability16"					"special_bonus_cast_range_60"
-		"Ability17"					"imba_unlimited_level_powerup"
+		"Ability7"					"imba_lina_light_strike_array_fiery"
+		"Ability8"					"imba_lina_blazing_soul"
+		"Ability9"					"imba_lina_laguna_blade_fiery"
+		"Ability10"					"special_bonus_gold_income_15"
+		"Ability11"					"special_bonus_cast_range_50"
+		"Ability12"					"special_bonus_intelligence_8"
+		"Ability13"					"special_bonus_cast_range_60"
+		"Ability14"					"special_bonus_cooldown_reduction_12"
+		"Ability15"					"special_bonus_cast_range_75"
+		"Ability16"					"special_bonus_spell_lifesteal_20"
+		"Ability17"					"special_bonus_cast_range_100"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}
@@ -1880,7 +1880,7 @@
 		//"Ability8"					"imba_phoenix_sun_ray_stop"
 		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
 
-		"Ability10"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_exp_boost_15"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_strength_5"
 		"Ability13"					"special_bonus_gold_income_25"
@@ -2097,7 +2097,7 @@
 		"Ability15"					"special_bonus_cast_range_100"
 		"Ability16"					"special_bonus_spell_amplify_8"
 		"Ability17"					"special_bonus_cooldown_reduction_20"
-		"Ability18"					"imba_unlimited_level_powerup"
+		"Ability18"					"special_bonus_spell_lifesteal_20"
 
 		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
@@ -3127,7 +3127,7 @@
 		"Ability15"					"special_bonus_hp_regen_10"
 		"Ability16"					"special_bonus_respawn_reduction_40"
 		"Ability17"					"special_bonus_unique_wisp"
-		"Ability18"					"imba_unlimited_level_powerup"
+		"Ability18"					"special_bonus_attack_range_125"
 
 		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
 	}

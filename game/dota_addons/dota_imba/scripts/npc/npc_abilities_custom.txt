@@ -16691,7 +16691,7 @@
 				"Function"					"DragonSlave"
 				"Target"					"POINT"
 
-				"ability_aux"				"imba_lina_dragon_slave_aux_fiery"
+				"ability_aux"				"imba_lina_dragon_slave_aux"
 				"particle_projectile"		"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
 				"sound_cast"				"Hero_Lina.DragonSlave"
 			}
@@ -16755,73 +16755,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"secondary_distance"	"700"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_damage"		"60 90 120 150"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%secondary_damage"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lina's Dragon Slave secondary projectiles (Blazing Soul mode)
-	//=================================================================================================================
-	"imba_lina_dragon_slave_aux_fiery"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"			"lina_dragon_slave"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_speed"		"1800"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_start_width"	"150"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_end_width"	"275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_distance"	"1100"
 			}
 			"05"
 			{
