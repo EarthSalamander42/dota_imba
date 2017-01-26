@@ -6361,6 +6361,7 @@
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemAliases"					"calaminhs tutella plate;calaminh;tutella;turtle plate;nutella plate"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
