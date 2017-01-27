@@ -333,6 +333,11 @@ function imba_witch_doctor_death_ward:OnSpellStart()
 			["item_imba_reverb_rapier"] = true,
 			["item_imba_starfury"] = true,
 			["item_imba_shotgun"] = true,
+			["item_imba_rapier"] = true,
+			["item_imba_rapier_2"] = true,
+			["item_imba_rapier_magic"] = true,
+			["item_imba_rapier_magic_2"] = true,
+			["item_imba_rapier_cursed"] = true,
 		}
 		for i = 0, 5 do
 			local item = caster:GetItemInSlot(i)
@@ -355,7 +360,7 @@ end
 
 function imba_witch_doctor_death_ward:OnProjectileHit_ExtraData(target, vLocation, extraData)
 	if not self.death_ward:IsNull() then
-		self.death_ward:PerformAttack(target, false, true, true, true, false)
+		self.death_ward:PerformAttack(target, false, true, true, true, false, false, false)
 		if extraData.bounces_left > 0 and self:GetCaster():HasScepter() then
 			extraData.bounces_left = extraData.bounces_left - 1
 			extraData[tostring(target:GetEntityIndex())] = 1

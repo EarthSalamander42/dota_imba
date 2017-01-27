@@ -50,16 +50,42 @@
 	GameUI.CustomUIConfig().player_colors[18] = "#E0B818;";
 	GameUI.CustomUIConfig().player_colors[19] = "#A0FF60;";
 
+	// Find root panel of the HUD:
+	//var hudRoot;
+	//var panel;
+	//for ( panel = $.GetContextPanel(); panel != null; panel = panel.GetParent() )
+	//{
+	//	hudRoot = panel;
+	//}
+
+	//if ( hudRoot != null )
+	//{
+	//	var pregameHud = hudRoot.FindChildTraverse( "PreGame" );
+	//	if ( pregameHud != null )
+	//	{
+	//		pregameHud.style.visibility = "collapse";
+	//	}
+	//}
+						
+	//Use this line if you want to keep 4 ability minimum size, and only use 160 if you want ~2 ability min size
+	//newUI.FindChildTraverse("AbilitiesAndStatBranch").style.minWidth = "284px";
+	//newUI.FindChildTraverse("StatBranch").FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
+
+	//you are not spawning the talent UI, fuck off (Disabling mouseover and onactivate)
+	//We also don't want to crash, valve plz
+	//newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
+	//newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
+
+	//Fuck that levelup button
+	//newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
+
 	</script>
 
 	<Panel>
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_hud_base.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/game_mode.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
-		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
-		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/hud/dota_hud_scoreboard.xml" />
-		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
 	</Panel>

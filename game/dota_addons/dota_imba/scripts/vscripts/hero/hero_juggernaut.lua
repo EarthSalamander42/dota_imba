@@ -433,7 +433,7 @@ function Omnislash( keys )
 			ability:CreateVisibilityNode(current_position, 300, 1.0)
 
 			-- Perform the slash
-			caster:PerformAttack(current_target, true, true, true, true, true)
+			caster:PerformAttack(current_target, true, true, true, true, true, false, false)
 
 			-- If the target is not Roshan or a hero, instantly kill it
 			if not ( current_target:IsHero() or IsRoshan(current_target) ) then

@@ -465,7 +465,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- Tempest Double forbidden items
 	-------------------------------------------------------------------------------------------------
 	
-	if unit:HasModifier("modifier_arc_warden_tempest_double") then
+	if unit:IsTempestDouble() then
 
 		-- List of items the clone can't carry
 		local clone_forbidden_items = {

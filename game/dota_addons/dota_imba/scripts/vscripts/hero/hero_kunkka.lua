@@ -323,7 +323,7 @@ function Tidebringer( keys )
 			-- Perform an attack
 			local enemy_loc = enemy:GetAbsOrigin()
 			caster:SetAbsOrigin(enemy_loc)
-			caster:PerformAttack(enemy, true, true, true, true, true)
+			caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 			caster:SetAbsOrigin(caster_loc)
 
 			-- Sound and particle

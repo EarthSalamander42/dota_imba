@@ -63,6 +63,7 @@
 	margin-bottom: 0px;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.01, #202327 ), color-stop( 0.2, #141619ff ), to( #000000dd ) );
 	box-shadow: black -4px -4px 8px 8px;
+	visibility: collapse;
 }
 
 .BoundingBox

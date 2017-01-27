@@ -92,7 +92,7 @@ function Multishot( keys )
 	-- Attack each nearby enemy once
 	for _,enemy in pairs(enemies) do
 		if enemy ~= target then
-			caster:PerformAttack(enemy, true, true, true, true, true)
+			caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 		end
 	end
 end
@@ -446,7 +446,7 @@ function Multihit( keys )
 	-- Perform bonus attacks
 	for i = 1, bonus_attacks do
 		Timers:CreateTimer(delay * i, function()
-			caster:PerformAttack(target, true, true, true, true, true)
+			caster:PerformAttack(target, true, true, true, true, true, false, false)
 		end)
 	end
 end
@@ -877,7 +877,7 @@ function SplitHit( keys )
 	local caster = keys.caster
 	local target = keys.target
 
-	caster:PerformAttack(target, true, true, true, true, false)
+	caster:PerformAttack(target, true, true, true, true, false, false, false)
 end
 
 function Cannon( keys )

@@ -27,12 +27,12 @@ function ButterflyEffect( keys )
 
 	-- Perform an attack on the singled out enemy
 	if caster:IsRangedAttacker() then
-		caster:PerformAttack(enemy, true, true, true, true, true)
+		caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 
 	-- Troll Warlord graphical adjustment
 	elseif caster:HasModifier("modifier_imba_berserkers_rage") then
 		caster:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
-		caster:PerformAttack(enemy, true, true, true, true, true)
+		caster:PerformAttack(enemy, true, true, true, true, true, false, false)
 		caster:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
 
 	-- Melee attack
@@ -60,6 +60,6 @@ function ButterflyProjectileHit( keys )
 
 	-- Teleport caster to perform an attack
 	caster:SetAbsOrigin(target:GetAbsOrigin())
-	caster:PerformAttack(target, true, true, true, true, true)
+	caster:PerformAttack(target, true, true, true, true, true, false, false)
 	caster:SetAbsOrigin(original_loc)
 end

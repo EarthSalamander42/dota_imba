@@ -156,7 +156,7 @@ function LiquidFire( keys )
 	target:EmitSound(sound_liquid_fire)
 
 	-- Attack the main target
-	caster:PerformAttack(target, true, true, true, true, false)
+	caster:PerformAttack(target, true, true, true, true, false, false, false)
 
 	-- Play explosion particle
 	local fire_pfx = ParticleManager:CreateParticle( particle_liquid_fire, PATTACH_ABSORIGIN, target )

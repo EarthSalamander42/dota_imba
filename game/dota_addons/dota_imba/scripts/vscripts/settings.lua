@@ -18,6 +18,8 @@ PRE_GAME_TIME = 90.0						-- How long after people select their heroes should th
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 20.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
+SHOWCASE_TIME = 0.0							-- How long should showcase time last?
+STRATEGY_TIME = 0.0							-- How long should strategy time last?
 
 GOLD_PER_TICK = 1							-- How much gold should players get per tick?
 GOLD_TICK_TIME = 0.6						-- How long should we wait in seconds between gold ticks?

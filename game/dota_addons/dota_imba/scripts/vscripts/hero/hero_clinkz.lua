@@ -68,7 +68,7 @@ function StrafeFire( keys )
 
 	-- If a target was successfully found, and attacking is possible, attack it
 	if target and not ( caster:HasModifier("modifier_invisible") or caster:IsDisarmed() or caster:IsStunned() or caster:IsOutOfGame() ) then
-		caster:PerformAttack(target, true, true, true, true, true)		
+		caster:PerformAttack(target, true, true, true, true, true, false, false)
 	end
 end
 

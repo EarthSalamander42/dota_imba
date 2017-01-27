@@ -6361,7 +6361,7 @@
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemAliases"					"calaminhs tutella plate;calaminh;tutella;turtle plate;nutella plate"
+		"ItemAliases"					"calaminhs tutela plate;calaminh;tutela;turtle plate;nutella plate"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -14876,7 +14876,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"2.0"
+		"AbilityCooldown"				"3.0"
 		"AbilityManaCost"				"0"
 		
 		// Item Info

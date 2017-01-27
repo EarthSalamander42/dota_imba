@@ -268,6 +268,6 @@ function MarksmanshipHit( keys )
 
 	-- Attack the target
 	ability:ApplyDataDrivenModifier(caster, caster, modifier_dmg_penalty, {})
-	caster:PerformAttack(target, true, true, true, true, false)
+	caster:PerformAttack(target, true, true, true, true, false, false, false)
 	caster:RemoveModifierByName(modifier_dmg_penalty)
 end

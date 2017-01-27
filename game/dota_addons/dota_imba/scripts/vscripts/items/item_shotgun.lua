@@ -66,11 +66,11 @@ function ShotgunHit( keys )
 
 	-- Attack the target
 	if caster:IsRangedAttacker() then
-		caster:PerformAttack(target, true, true, true, true, false)
+		caster:PerformAttack(target, true, true, true, true, false, false, false)
 	else
 		local original_loc = caster:GetAbsOrigin()
 		caster:SetAbsOrigin(target:GetAbsOrigin())
-		caster:PerformAttack(target, true, true, true, true, true)
+		caster:PerformAttack(target, true, true, true, true, true, false, false)
 		caster:SetAbsOrigin(original_loc)
 	end
 end
