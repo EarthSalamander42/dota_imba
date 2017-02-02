@@ -1,0 +1,202 @@
+/* General layout
+=================================================================*/
+#LeftPlayers {
+	padding-top: 56px;
+	width: 12%;
+	height: 100%;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #000000 ), to( #001050 ) );
+	flow-children: down;
+}
+
+#RightPlayers {
+	padding-top: 56px;
+	width: 12%;
+	height: 100%;
+	background-color: gradient( linear, 100% 0%, 0% 0%, from( #500000 ), to( #000000 ) );
+	horizontal-align: right;
+	flow-children: down;
+}
+
+#PickingScreen {
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+}
+
+#PickList {
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+	visibility: visible;
+}
+
+#PostPickScreen {
+	width: 100%;
+	height: 100%;
+	visibility: collapse;
+	flow-children: down;
+}
+
+.ClassContainer{
+	width: 74%;
+	height: 100%;
+	position: 13% 0 0;
+	background-color: #151515;
+	flow-children: down;
+	color: #ffffff;
+	padding: 56px 0 24px 0;
+	background-color: gradient( linear, 0% 0%, 100% 0%, from( #000000 ), color-stop( 0.1, #303038 ), color-stop( 0.5, #000000 ), color-stop( 0.9, #383030 ), to( #000000 ) );
+}
+
+#HeroPreview {
+	width:600px;
+	horizontal-align: center;
+	height:600px;
+}
+
+/* 'Enter game' button
+=================================================================*/
+#EnterGameBtn {
+	horizontal-align: center;
+	margin-top: 20px;
+
+	box-shadow: fill #00000066 -4px -4px 8px 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 320px 120px;
+	height: 55px;
+	width: 420px;
+	padding-top: 6px;
+}
+
+#EnterGameBtn.disabled, #EnterGameBtn.disabled:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
+}
+
+#EnterGameBtn:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+}
+
+#EnterGameBtn Label {
+	horizontal-align: center;
+	color: #fff;
+	font-size: 36px;
+}
+
+/* 'Pick random hero' button
+=================================================================*/
+#RandomPickBtn {
+	horizontal-align: center;
+	margin-top: 2.5%;
+
+	box-shadow: fill #00000066 -4px -4px 8px 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 320px 120px;
+	height: 55px;
+	width: 420px;
+	padding-top: 6px;
+}
+
+#RandomPickBtn:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+}
+
+#RandomPickBtn Label {
+	horizontal-align: center;
+	color: #FFFFFF;
+	font-size: 36px;
+}
+
+/* Hero options
+=================================================================*/
+.ClassOptionRow {
+	width: 98%;
+	height: 7.5%;
+	vertical-align: top;
+	margin-left: 1%;
+	margin-right: 1%;
+	margin-top: 0.4%;
+	margin-bottom: 0.4%;
+	flow-children: right;
+}
+
+.ClassOption {
+	width: 9.09%;
+	height: 100%;
+	horizontal-align: left;
+	background-size: 100% 100%;
+	background-position: 0px 0px;
+	saturation: 0.8;
+	opacity-mask: url("file://{images}/custom_game/skew_mask.tga");
+}
+
+.ClassOption:hover {
+	saturation: 1;
+	transform: translateX( 3px );
+	transform: translateY( -3px);
+}
+
+.ClassOption.taken {
+	saturation: 0.0;
+	transform: none;
+	opacity: 0.2;
+}
+
+
+/* Text elements and timer
+=================================================================*/
+.HeroSelectText {
+	horizontal-align: center;
+	margin-top: 5px;
+	font-size: 48px;
+	color: #fff;
+	visibility: collapse;
+}
+
+#PickTextPanel {
+	horizontal-align: center;
+	flow-children: right;
+}
+
+#PickTimer {
+	width: 70px;
+	height: 70px;
+	border: 3px solid #fff;
+	border-radius: 35px;
+	margin: 0px 20px 20px 0px;
+}
+
+#TimerTxt {
+	width: 60px;
+	text-align: center;
+	font-size: 44px;
+	color:#fff;
+	margin: 8px 0px 0px 2px;
+}
+
+.PickScreenTeamTitle {
+	width: 100%;
+	height: 8%;
+	text-align: center;
+	font-size: 36px;
+	color:#fff;
+	vertical-align: middle;
+	margin-bottom: 2%;
+}
+
+#ImbaPickListText {
+	horizontal-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 48px;
+	color: #FF7800;
+}
+
+#LazyPickListText {
+	horizontal-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 48px;
+	color: #ffffff;
+}

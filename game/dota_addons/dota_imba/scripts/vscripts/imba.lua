@@ -72,12 +72,11 @@ function GameMode:OnFirstPlayerLoaded()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Random OMG forced hero selection
+	-- IMBA: Pre-pick forced hero selection
 	-------------------------------------------------------------------------------------------------
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		GameRules:SetSameHeroSelectionEnabled(true)
-		GameRules:GetGameModeEntity():SetCustomGameForceHero(RANDOM_OMG_HEROES[tostring(RandomInt(1, 90))])
-	end
+
+	GameRules:SetSameHeroSelectionEnabled(true)
+	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -1111,61 +1110,6 @@ end
 	The hero parameter is the hero entity that just spawned in
 ]]
 function GameMode:OnHeroInGame(hero)
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: First hero spawn initialization
-	-------------------------------------------------------------------------------------------------
-
-	-- Fetch this hero's associated player ID
-	local player_id = hero:GetPlayerID()
-
-	-- Initializes player data if this is a bot
-	if PlayerResource:GetConnectionState(player_id) == 1 then
-		PlayerResource:InitPlayerData(player_id)
-	end
-
-	-- Check if initial setup was already performed
-	if PlayerResource:IsPlayerSpawnSetupDone(player_id) then
-		return nil
-	end
-
-	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
-	Timers:CreateTimer(0.5, function()
-		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
-		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
-	end)
-
-	-- Set up initial level 1 experience bounty
-	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
-
-	-- Set up initial level
-	if HERO_STARTING_LEVEL > 1 then
-		Timers:CreateTimer(1, function()
-			hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-		end)
-	end
-
-	-- Set up initial gold
-	hero:ModifyGold(HERO_INITIAL_GOLD, false, DOTA_ModifyGold_SelectionPenalty)
-	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
-	local has_not_repicked = PlayerResource:CanRepick(hero:GetPlayerID())
-
-	if not has_not_repicked then
-		hero:ModifyGold(HERO_REPICK_GOLD_LOSS, false, DOTA_ModifyGold_SelectionPenalty)
-	elseif has_randomed or IMBA_ABILITY_MODE_RANDOM_OMG or IMBA_PICK_MODE_ALL_RANDOM then
-		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, false, DOTA_ModifyGold_SelectionPenalty)
-	end
-
-	-- Randomize abilities
-	if IMBA_ABILITY_MODE_RANDOM_OMG then
-		ApplyAllRandomOmgAbilities(hero)
-	end
-
-	-- Initialize innate hero abilities
-	InitializeInnateAbilities(hero)
-
-	-- Set initial spawn setup as having been done
-	PlayerResource:SetPlayerSpawnSetupDone(player_id)
 
 end
 

@@ -1,0 +1,48 @@
+<root>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/Modular.js" />
+	</scripts>
+
+	<styles>
+		<include src="file://{resources}/styles/custom_game/modules/picking_player.css" />
+	</styles>
+
+	<script>
+		//Module definition
+		Modular.DefineThis({
+
+			//Set the player for this avatar
+			SetPlayer : function( playerID ) {
+				var pID = playerID;
+				var playerInfo = Game.GetPlayerInfo( playerID );
+				$('#PlayerAvatar').steamid = playerInfo.player_steamid;
+			},
+
+			//Sets if the panel is on the right or left side of the screen
+			SetIsRight : function( isRight ) {
+				var panel = $.GetContextPanel();
+				if (isRight) {
+					panel.AddClass( "right" );
+					//Swap the order of elements
+					panel.MoveChildBefore( $("#HeroPanel"), $("#PlayerAvatar") );
+				} else {
+					panel.RemoveClass( "right" );
+					//Swap the order of elements
+					panel.MoveChildBefore( $("#PlayerAvatar"), $("#HeroPanel") );
+				}
+			},
+
+			//Set the hero of the player, then set the transform to none,
+			//which animates the hero portrait panel
+			SetHero : function( heroName ) {
+				$('#HeroPanel').style.backgroundImage = 'url("s2r://panorama/images/heroes/'+ heroName +'_png.vtex")';
+				$('#HeroPanel').style.transform = 'none';
+			}
+		});
+	</script>
+
+	<Panel class="PickingPlayer">
+		<DOTAAvatarImage id="PlayerAvatar" class="AvatarImg" />
+		<Panel id="HeroPanel" />
+	</Panel>
+</root>
