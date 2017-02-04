@@ -380,7 +380,8 @@ function BorrowedTimeActivate( keys )
 
 	-- Apply the modifier
 	if ability:GetCooldownTimeRemaining() == 0 then
-		if caster:GetHealth() < 400 and not caster.break_duration_left then
+    -- If health is less than 22%, activate Borrowed Time
+		if (caster:GetHealth() / caster:GetMaxHealth()) < .22 and not caster.break_duration_left then
 
 			-- Prevents illusions from gaining the borrowed time buff
 			if not caster:IsIllusion() and caster:IsAlive() then
