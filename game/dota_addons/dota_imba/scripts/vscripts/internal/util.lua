@@ -807,7 +807,8 @@ function InitializeInnateAbilities( hero )
 		"imba_sandking_treacherous_sands",
 		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
-		"imba_skywrath_mage_concussive_shot_ghastly"
+		"imba_skywrath_mage_concussive_shot_ghastly",
+		"imba_silencer_arcane_supremacy"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them

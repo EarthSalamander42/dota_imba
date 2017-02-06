@@ -26248,14 +26248,20 @@
 	{
 		// General
 		//--------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
+		"ScriptFile"							"hero/hero_silencer/imba_arcane_curse"
+
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags" 				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityTextureName"					"silencer_curse_of_the_silent"
+		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
+
+		"AbilityTextureName"					"silencer_curse_of_the_silent"
+
+		"MaxLevel"								"7"
+		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -26274,11 +26280,11 @@
 		
 		// Time		
 		//---------------------------------------------
-		"AbilityCooldown"				"20 18 16 14"
+		"AbilityCooldown"				"20 18 16 14 14 14 14"
 
 		// Cost
 		//---------------------------------------------
-		"AbilityManaCost"				"75 95 115 135"
+		"AbilityManaCost"				"75 95 115 135 135 135 135"
 		
 		// Special
 		//---------------------------------------------
@@ -26287,7 +26293,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_per_second"	"20 30 40 50"
+				"damage_per_second"	"14 22 30 38 42 46 50"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"burn_per_second"	"7 11 15 19 21 23 25"
 			}
 			"02"
 			{
@@ -26302,65 +26313,17 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"penalty_duration"	"6"
+				"penalty_duration"	"4"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"curse_slow"		"-18"
+				"curse_slow"		"-9 -12 -15 -18 -21 -23 -25"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"tick_rate"			"1.0"
-			}
-		}
-
-		// Spell Actions (based on Pizzalol's SpellLibrary)
-		//---------------------------------------------
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{	
-				"EffectName"	"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"
-				"EffectAttachType"	"start_at_customorigin"
-				"TargetPoint"	"POINT"
-
-				"ControlPoints"
-				{
-					"01"	"%radius 0 0"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"	"Hero_Silencer.Curse.Cast"
-				"Target"		"CASTER"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"	"POINT"
-					"Radius"	"%radius"
-
-					"Teams"  	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"  	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-
-				"Action"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_silencer.lua"
-						"Function"		"ArcaneCurseCast"
-
-						"Target"		"TARGET"
-						"curse_debuff"	"modifier_imba_arcane_curse_debuff"
-					}
-				}
 			}
 		}
 	}
@@ -26379,6 +26342,9 @@
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"				"silencer_glaives_of_wisdom"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+
+		"MaxLevel"								"7"
+		"LevelsBetweenUpgrades"					"2"
 
 		// Cost and cast stuff
 		//-------------------------------------------------------------------------------------------------------------		
@@ -26402,7 +26368,32 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"intellect_damage_pct"		"45 70 95 120"
+				"intellect_damage_pct"		"35 50 65 80 85 90 95"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hits_to_silence"			"3"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"hit_count_duration"		"10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"silence_duration"			"0.05 0.1 0.15 0.2 0.25 0.3 0.35"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"int_reduction_pct"			"1 2 3 4 5 6 7"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_reduction_duration"	"3.5"
 			}
 		}
 
@@ -26440,11 +26431,10 @@
 						"EffectName"			"Hero_Silencer.GlaivesOfWisdom.Damage"
 						"Target"				"TARGET"
 					}
-
 					"RunScript"
 					{
 						"ScriptFile"			"hero/hero_silencer.lua"
-						"Function"				"IntToDamage"
+						"Function"				"GlaiveHit"
 						"Target"				"TARGET"
 					}
 				}
@@ -26454,13 +26444,14 @@
 
 	//=================================================================================================================
 	// Silencer's Last Word
-	// (Based on Pizzalol's SpellLibrary)
 	//=================================================================================================================
 	"imba_silencer_last_word"
 	{
 		// General
 		//--------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
+		"ScriptFile"							"hero/hero_silencer/imba_last_word"
+
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -26468,6 +26459,9 @@
 		"AbilityUnitTargetFlags" 				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"					"silencer_last_word"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
+
+		"MaxLevel"								"7"
+		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -26479,6 +26473,10 @@
 			"particle"					"particles/generic_gameplay/generic_silence.vpcf"
 		}
 
+		// Damage
+		//---------------------------------------------
+		"AbilityDamage"					"150 200 250 300 330 360 390"
+		
 		// Casting
 		//---------------------------------------------
 		"AbilityCastRange"				"900"
@@ -26486,7 +26484,8 @@
 		
 		// Time		
 		//---------------------------------------------
-		"AbilityCooldown"				"30 24 18 12"
+		"AbilityCooldown"				"30 24 18 12 12 12 12"
+		"AbilityDuration"				"2.5 2.5 2.5 2.5 3.0 3.5 4.0"
 
 		// Cost
 		//---------------------------------------------
@@ -26498,153 +26497,71 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"180 240 300 360"
+				"var_type"			"FIELD_FLOAT"
+				"silence_duration"	"3 4 5 6 6 6 6"
 			}
 			"02"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"4.0 3.5 3.0 2.5"
+				"var_type"			"FIELD_INTEGER"
+				"aura_radius"		"1200"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"debuff_duration"	"4.5 5.0 5.5 6.0"
+				"aura_silence"		"2"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.5 2.5 2.5 2.5 3.0 3.5 4.0"
 			}
 		}
+	}
 
-		// Spell Actions
-		//---------------------------------------------
-		"OnSpellStart"
+	//=================================================================================================================
+	// Silencer's Arcane Supremacy
+	//=================================================================================================================
+	"imba_silencer_arcane_supremacy"
+	{
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_silencer/imba_arcane_supremacy"
+
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName" 				"custom/arcane_supremacy"
+
+		"MaxLevel"							"1"
+
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"		"hero/hero_silencer.lua"
-				"Function"			"LastWordCast"
-
-				"modifier_debuff"	"modifier_imba_last_word"
-				"sound_cast"		"Hero_Silencer.LastWord.Cast"
+				"var_type"			"FIELD_INTEGER"
+				"int_steal_range"	"1200"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_last_word"
+			"02"
 			{
-				"IsDebuff"			"1"
-				"Duration"			"%duration"
-				"ThinkInterval"		"%duration"
-				"EffectName"		"particles/units/heroes/hero_silencer/silencer_last_word_status.vpcf"
-				"EffectAttachType"	"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"	
-				}
-				
-				"OnIntervalThink"
-				{
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_Silencer.LastWord.Damage"
-						"Target"			"TARGET"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_last_word_silence"
-						"Target"			"TARGET"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_silencer.lua"
-						"Function"			"LastWordDamageNoCast"
-						"Target"			"TARGET"
-
-						"modifier"			"modifier_imba_last_word"
-					}
-				}
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"		"Hero_Silencer.LastWord.Target"
-						"Target"			"TARGET"
-					}
-				}
-
-				"OnSpentMana"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_silencer.lua"
-						"Function"			"LastWordDamage"
-						"Target"			"UNIT"
-
-						"modifier"			"modifier_imba_last_word"
-					}
-				}
-
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_silencer.lua"
-						"Function"			"LastWordDebuff"
-						"Target"			"UNIT"
-
-						"modifier"			"modifier_imba_last_word"
-						"silence_modifier"	"modifier_imba_last_word_silence"
-
-						"sound"				"Hero_Silencer.LastWord.Target"
-						"damage_sound"		"Hero_Silencer.LastWord.Damage"
-					}
-				}
-
-				"OnAbilityEndChannel"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_silencer.lua"
-						"Function"			"LastWordDebuff"
-						"Target"			"UNIT"
-
-						"modifier"			"modifier_imba_last_word"
-						"silence_modifier"	"modifier_imba_last_word_silence"
-
-						"sound"				"Hero_Silencer.LastWord.Target"
-						"damage_sound"		"Hero_Silencer.LastWord.Damage"
-					}
-				}
+				"var_type"			"FIELD_INTEGER"
+				"int_steal_amount"	"2"
 			}
-
-			"modifier_imba_last_word_silence"
+			"03"
 			{
-				"IsDebuff"					"1"
-				"Duration"					"%debuff_duration"
-				"EffectName"				"particles/generic_gameplay/generic_silence.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"				"FIELD_FLOAT"
+				"silence_reduction_pct"	"50"
 			}
 		}
 	}
 
 	//=================================================================================================================
 	// Silencer's Global Silence
-	// (Based on Pizzalol's SpellLibrary)
 	//=================================================================================================================
 	"imba_silencer_global_silence"
 	{
 		// General
 		//--------------------------------------------
-		"BaseClass"					"ability_datadriven"
+		"BaseClass"					"ability_lua"
+		"ScriptFile"				"hero/hero_silencer/imba_global_silence"
+
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -26653,14 +26570,17 @@
 		"AbilityTextureName" 		"silencer_global_silence"
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
+		"MaxLevel"								"6"
+		"LevelsBetweenUpgrades"					"6"
+
 		// Casting
 		//---------------------------------------------
 		"AbilityCastPoint"			"0.2"
-		"AbilityCooldown"			"120 110 100"
+		"AbilityCooldown"			"130 130 130 120 110 100"
 
 		// Time
 		//---------------------------------------------
-		"AbilityDuration"			"5.0 7.0 9.0"
+		"AbilityDuration"			"4 5 6 6.3 6.7 7"
 
 		// Precache
 		//---------------------------------------------
@@ -26672,7 +26592,7 @@
 
 		// Cost
 		//--------------------------------------------
-		"AbilityManaCost" 			"250 375 500"
+		"AbilityManaCost" 			"250 375 500 500 500 500"
 
 		// Special
 		//--------------------------------------------
@@ -26681,74 +26601,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"			"5 7 9"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			//Only applies the sound on caster, otherwise RIP headphones in 10v10
-			"FireSound"
-			{
-				"EffectName"		"Hero_Silencer.GlobalSilence.Cast"
-				"Target"			"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"		"Hero_Silencer.GlobalSilence.Effect"
-				"Target"			"CASTER"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_silencer/silencer_global_silence.vpcf"
-				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"				"CASTER"
-					"Radius"				"GLOBAL"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-
-				"Action"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_silencer.lua"
-						"Function"			"GlobalSilenceCast"
-						"Target"			"TARGET"
-
-						"curse_name"		"imba_silencer_arcane_curse"
-						"curse_modifier"	"modifier_imba_arcane_curse_debuff"
-						"silence_modifier"	"modifier_imba_global_silence"
-					}
-				}
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_global_silence"
-			{
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
-				"Duration"			"%duration"
-
-				"EffectName"		"particles/generic_gameplay/generic_silence.vpcf"
-				"EffectAttachType"	"follow_overhead"
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"duration"			"4 5 6 6.3 6.7 7"
 			}
 		}
 	}

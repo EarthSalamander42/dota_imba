@@ -213,6 +213,22 @@ function GameMode:ExperienceFilter( keys )
 	return true
 end
 
+---------------------------------------------------------------------
+-- Arcane Supremacy duration reduction applicable debuffs
+---------------------------------------------------------------------
+arcane_supremacy_eligible_debuffs = {
+	["modifier_silence"] = true,
+	["modifier_item_imba_orchid_debuff"] = true,
+	["modifier_item_imba_bloodthorn_debuff"] = true,
+	["modifier_imba_drow_ranger_gust_debuff"] = true,
+	["modifier_imba_crippling_fear_day"] = true,
+	["modifier_imba_crippling_fear_night"] = true,
+	["modifier_imba_stifling_dagger_silence"] = true,
+	["modifier_imba_ancient_seal_silence"] = true,
+	["modifier_imba_silencer_last_word_repeat_thinker"] = true,
+	["modifier_imba_silencer_global_silence"] = true,
+}
+
 -- Modifier gained filter function
 function GameMode:ModifierFilter( keys )
 	-- entindex_parent_const	215
@@ -282,6 +298,22 @@ function GameMode:ModifierFilter( keys )
 		end
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- Silencer Arcane Supremacy silence duration reduction
+	-------------------------------------------------------------------------------------------------
+	if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
+		if not modifier_owner:PassivesDisabled() then
+			local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
+			local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
+				-- if more than 100 reduction, don't even apply the modifier
+				if silence_reduction_pct >= 100 then
+					return false
+				end
+				keys.duration = keys.duration * (1 - silence_reduction_pct/100)
+			end
+		end
+	end
 	return true
 end
 
