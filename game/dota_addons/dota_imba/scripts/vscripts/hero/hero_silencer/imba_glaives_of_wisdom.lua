@@ -27,7 +27,7 @@ function imba_silencer_glaives_hit_counter:IsDebuff()
 end
 
 function imba_silencer_glaives_hit_counter:IsHidden()
-	return false --true
+	return true
 end
 
 ---------------------------------

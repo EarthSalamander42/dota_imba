@@ -6,7 +6,7 @@ function imba_silencer_global_silence:OnSpellStart()
 	if IsServer() then
 		EmitSoundOn("Hero_Silencer.GlobalSilence.Cast", caster)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl( particle, 0, caster )
+			ParticleManager:SetParticleControl( particle, 0, caster:GetAbsOrigin() )
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for _, enemy in pairs(enemies) do
 			enemy:AddNewModifier(caster, self, "modifier_imba_silencer_global_silence", {duration = self:GetDuration()})
