@@ -13,8 +13,8 @@ START_GAME_AUTOMATICALLY = true				-- Should the game start automatically
 ENABLE_HERO_RESPAWN = true					-- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = false					-- Should the main shop contain Secret Shop items as well as regular items
 
-HERO_SELECTION_TIME = 50.0					-- How long should we let people select their hero?
-PRE_GAME_TIME = 90.0						-- How long after people select their heroes should the horn blow and the game start?
+HERO_SELECTION_TIME = 45.0					-- How long should we let people select their hero?
+PRE_GAME_TIME = 90.0 + HERO_SELECTION_TIME + 10.0	-- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0						-- How long should we let people look at the scoreboard before closing the server automatically?
 AUTO_LAUNCH_DELAY = 20.0					-- How long should we wait for the host to setup the game, after all players have loaded in?
 TREE_REGROW_TIME = 180.0					-- How long should it take individual trees to respawn after being cut down/destroyed?
@@ -176,26 +176,26 @@ TEAM_COLORS[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }							-- Olive
 TEAM_COLORS[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }							-- Purple
 
 PLAYER_COLORS = {}															-- Stores individual player colors
-PLAYER_COLORS[0] = { 64, 128, 208 }
-PLAYER_COLORS[1]  = { 88, 224, 160 }
-PLAYER_COLORS[2] = { 160, 0, 160 }
-PLAYER_COLORS[3] = { 208, 208, 8 }
-PLAYER_COLORS[4] = { 224, 96, 0 }
-PLAYER_COLORS[5] = { 0, 252, 64 }
-PLAYER_COLORS[6] = { 56, 0, 116 }
-PLAYER_COLORS[7] = { 252, 0, 128 }
-PLAYER_COLORS[8] = { 244, 124, 0 }
-PLAYER_COLORS[9] = { 120, 120, 0 }
-PLAYER_COLORS[10] = { 220, 116, 168 }
-PLAYER_COLORS[11]  = { 116, 128, 48 }
-PLAYER_COLORS[12] = { 88, 188, 228 }
-PLAYER_COLORS[13] = { 0, 112, 28 }
-PLAYER_COLORS[14] = { 136, 84, 0 }
-PLAYER_COLORS[15] = { 244, 124, 244 }
-PLAYER_COLORS[16] = { 240, 0, 0 }
-PLAYER_COLORS[17] = { 248, 128, 0 }
-PLAYER_COLORS[18] = { 224, 184, 24 }
-PLAYER_COLORS[19] = { 160, 255, 96 }
+PLAYER_COLORS[0] = { 67, 133, 255 }
+PLAYER_COLORS[1]  = { 170, 255, 195 }
+PLAYER_COLORS[2] = { 130, 0, 150 }
+PLAYER_COLORS[3] = { 255, 234, 0 }
+PLAYER_COLORS[4] = { 255, 153, 0 }
+PLAYER_COLORS[5] = { 190, 255, 0 }
+PLAYER_COLORS[6] = { 255, 0, 0 }
+PLAYER_COLORS[7] = { 0, 128, 128 }
+PLAYER_COLORS[8] = { 255, 250, 200 }
+PLAYER_COLORS[9] = { 1, 1, 1 }
+PLAYER_COLORS[10] = { 255, 0, 255 }
+PLAYER_COLORS[11]  = { 128, 128, 0 }
+PLAYER_COLORS[12] = { 100, 255, 255 }
+PLAYER_COLORS[13] = { 0, 190, 0 }
+PLAYER_COLORS[14] = { 170, 110, 40 }
+PLAYER_COLORS[15] = { 0, 0, 128 }
+PLAYER_COLORS[16] = { 230, 190, 255 }
+PLAYER_COLORS[17] = { 128, 0, 0 }
+PLAYER_COLORS[18] = { 128, 128, 128 }
+PLAYER_COLORS[19] = { 254, 254, 254 }
 
 USE_AUTOMATIC_PLAYERS_PER_TEAM = false										-- Should we set the number of players to 10 / MAX_NUMBER_OF_TEAMS?
 
@@ -239,7 +239,7 @@ ALLOW_SAME_HERO_SELECTION = false											-- Allows people to select the same 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts when all heroes are randomed
 
-IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 3									-- Number of regular abilities in Random OMG mode
+IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 5									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
 
 CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
@@ -276,9 +276,9 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
 MAP_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
-HERO_INITIAL_GOLD = 0														-- Gold to add to players as soon as they spawn into the game
-HERO_REPICK_GOLD_LOSS = 0													-- Gold lost by players who repick their hero
-HERO_RANDOM_GOLD_BONUS = 0													-- Gold granted to players who random their hero
+HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
+HERO_REPICK_GOLD = 525														-- Gold lost by players who repick their hero
+HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their hero
 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
@@ -286,9 +286,9 @@ USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custo
 MAX_LEVEL = 35																-- What level should we let heroes get to?
 
 if GetMapName() == "imba_10v10" then										-- 10v10 defaults
-	MAP_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD_LOSS = -400
-	HERO_RANDOM_GOLD_BONUS = 300
+	HERO_INITIAL_GOLD = 2000
+	HERO_REPICK_GOLD = 1500
+	HERO_RANDOM_GOLD = 2500
 	HERO_STARTING_LEVEL = 5
 	HERO_RESPAWN_TIME_MULTIPLIER = 50
 	CUSTOM_GOLD_BONUS = 60
@@ -298,9 +298,9 @@ if GetMapName() == "imba_10v10" then										-- 10v10 defaults
 	TOWER_POWER_FACTOR = 1
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	MAX_LEVEL = 50
-	MAP_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD_LOSS = -400
-	HERO_RANDOM_GOLD_BONUS = 300
+	HERO_INITIAL_GOLD = 2000
+	HERO_REPICK_GOLD = 1500
+	HERO_RANDOM_GOLD = 2500
 	HERO_STARTING_LEVEL = 5
 	HERO_RESPAWN_TIME_MULTIPLIER = 50
 	CUSTOM_GOLD_BONUS = 200

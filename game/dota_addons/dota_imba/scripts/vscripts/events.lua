@@ -103,34 +103,18 @@ function GameMode:OnGameRulesStateChange(keys)
 	local new_state = GameRules:State_Get()
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Pick screen stuff
+	-------------------------------------------------------------------------------------------------
+
+	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
+        HeroSelection:Start()
+    end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Start-of-pre-game stuff
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Player greeting and explanations
-	-------------------------------------------------------------------------------------------------
-
-		local initial_time = 2
-		local line_duration = 5
-	
-		Timers:CreateTimer(initial_time, function()
-
-			-- First line
-			Notifications:BottomToAll( {text = "#imba_introduction_line_01", duration = line_duration, style = {color = "DodgerBlue"} } )
-			Notifications:BottomToAll( {text = "#imba_introduction_line_02", duration = line_duration, style = {color = "Orange"}, continue = true}	)
-				
-			-- Second line
-			Timers:CreateTimer(line_duration, function()
-				Notifications:BottomToAll( {text = "#imba_introduction_line_03", duration = line_duration, style = {color = "DodgerBlue"} }	)
-
-				-- Third line
-				Timers:CreateTimer(line_duration, function()
-					Notifications:BottomToAll( {text = "#imba_introduction_line_04", duration = line_duration, style = {["font-size"] = "30px", color = "Orange"} }	)
-				end)
-			end)
-		end)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Extra asset loading
@@ -142,34 +126,6 @@ function GameMode:OnGameRulesStateChange(keys)
 	--		print("loading...")
 	--		PrecacheUnitByNameAsync("npc_dota_hero_brewmaster", function(...) end)
 	--	end)
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Force-random picks after the pick time has elapsed 
-	-------------------------------------------------------------------------------------------------
-
-	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		Timers:CreateTimer(HERO_SELECTION_TIME - 10.1, function()
-			for player_id = 0, 19 do
-				if PlayerResource:IsImbaPlayer(player_id) then
-
-					-- If this player still hasn't picked a hero, random one
-					if not PlayerResource:HasSelectedHero(player_id) then
-						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
-						PlayerResource:SetCanRepick(player_id, false)
-						PlayerResource:SetHasRandomed(player_id)
-						print("tried to random a hero for "..player_id)
-					end
-				end
-			end
-		end)
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Skip strategy time
-	-------------------------------------------------------------------------------------------------
-
-	if new_state == DOTA_GAMERULES_STATE_STRATEGY_TIME then
 	end
 
 	-------------------------------------------------------------------------------------------------

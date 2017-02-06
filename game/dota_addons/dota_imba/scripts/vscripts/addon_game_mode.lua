@@ -4,6 +4,7 @@ require('statcollection/init')
 require('internal/util')
 require('player_resource')
 require('imba')
+require('hero_selection')
 
 function Precache( context )
 --[[

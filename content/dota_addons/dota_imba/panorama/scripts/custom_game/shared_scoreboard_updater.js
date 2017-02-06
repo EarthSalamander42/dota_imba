@@ -103,19 +103,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		var playerColorBar = playerPanel.FindChildInLayoutFile( "PlayerColorBar" );
 		if ( playerColorBar !== null )
 		{
-			if ( GameUI.CustomUIConfig().team_colors )
-			{
-				var teamColor = GameUI.CustomUIConfig().team_colors[ playerInfo.player_team_id ];
-				if ( teamColor )
-				{
-					playerColorBar.style.backgroundColor = teamColor;
-				}
-			}
-			else
-			{
-				var playerColor = "#000000";
-				playerColorBar.style.backgroundColor = playerColor;
-			}
+			var playerColor = GameUI.CustomUIConfig().player_colors[ playerInfo.player_id ]
+			playerColorBar.style.backgroundColor = playerColor;
 		}
 	}
 	
@@ -143,6 +132,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 					if ( itemInfo.item_name.indexOf( "recipe" ) >= 0 )
 					{
 						item_image_name = "file://{images}/items/recipe.png"
+					}
+					else if ( itemInfo.item_name.indexOf( "imba" ) >= 0 )
+					{
+						item_image_name = "file://{images}/items/" + itemInfo.item_name.replace( "item_imba_", "" ) + ".png"
 					}
 					itemPanel.SetImage( item_image_name );
 				}
@@ -397,8 +390,8 @@ function ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, scoreboardPan
 	GameUI.CustomUIConfig().teamsPrevPlace = [];
 	if ( typeof(scoreboardConfig.shouldSort) === 'undefined')
 	{
-		// default to true
-		scoreboardConfig.shouldSort = true;
+		// default to false
+		scoreboardConfig.shouldSort = false;
 	}
 	_ScoreboardUpdater_UpdateAllTeamsAndPlayers( scoreboardConfig, scoreboardPanel );
 	return { "scoreboardConfig": scoreboardConfig, "scoreboardPanel":scoreboardPanel }

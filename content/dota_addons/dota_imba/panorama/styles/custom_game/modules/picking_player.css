@@ -1,0 +1,33 @@
+.PickingPlayer {
+	width: 100%;
+	height: 8%;
+	vertical-align: middle;
+	flow-children: right;
+	margin-bottom: 2%;
+}
+
+.PickingPlayer.right {
+	horizontal-align: right;
+}
+
+#PlayerAvatar {
+	height: 100%;
+	vertical-align: middle;
+	margin-left: 10px;
+	margin-right: 10px;
+	z-index: 3;
+}
+
+#HeroPanel {
+	width: 128px;
+	height: 72px;
+	vertical-align: middle;
+	background-size: 100% 100%;
+	background-position: 0px 0px;
+	transform: translateX( -200px );
+	transition: transform 500ms cubic-bezier(.69,1.64,.7,.7) 0.0ms;
+}
+
+.right #HeroPanel {
+	transform: translateX( 200px );
+}

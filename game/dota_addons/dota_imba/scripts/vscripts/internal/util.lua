@@ -1792,14 +1792,28 @@ end
 function SpawnImbaRunes()
 
 	-- Locate the rune spots on the map
-	local bounty_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_bounty")
-	local powerup_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_powerup")
+	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
+	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
+	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
+	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
+	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
+	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
+	local bounty_rune_locations = {
+		bounty_rune_spawner_a[1]:GetAbsOrigin(),
+		bounty_rune_spawner_b[1]:GetAbsOrigin(),
+		bounty_rune_spawner_c[1]:GetAbsOrigin(),
+		bounty_rune_spawner_d[1]:GetAbsOrigin()
+	}
+	local powerup_rune_locations = {
+		powerup_rune_spawner_a[1]:GetAbsOrigin(),
+		powerup_rune_spawner_b[1]:GetAbsOrigin()
+	}
 
 	-- Spawn bounty runes
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		 CreateItemOnPositionForLaunch(bounty_loc:GetAbsOrigin(), bounty_rune)
+		 CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
@@ -1816,7 +1830,7 @@ function SpawnImbaRunes()
 
 	-- Spawn a random powerup rune in a random powerup location
 	if game_time > 1 then
-		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)]:GetAbsOrigin(), CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
 	end
 end
 

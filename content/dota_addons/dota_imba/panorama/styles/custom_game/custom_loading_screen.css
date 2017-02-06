@@ -76,8 +76,8 @@
 {
 	width: 400px;
 	height: 35px;
-	margin-top: 35px;
-	margin-left: 500px;
+	margin-top: 60px;
+	margin-left: 100px;
 	flow-children: down;
 	background-color: #111111;
 	box-shadow: black -3px -3px 6px 6px;
@@ -109,9 +109,9 @@
 
 #Community
 {
-	width: 350px;
-	margin-top: 80px;
-	margin-left: 525px;
+	width: 400px;
+	margin-top: 105px;
+	margin-left: 100px;
 	flow-children: down;
 	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.01, #202327 ), color-stop( 0.2, #141619ff ), to( #000000dd ) );
 	box-shadow: black -3px -3px 6px 6px;

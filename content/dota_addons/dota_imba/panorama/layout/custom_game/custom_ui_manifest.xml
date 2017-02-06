@@ -17,67 +17,41 @@
 
 	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );						//Heroes and team score at the top of the HUD.
 	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );			//Lefthand flyout scoreboard.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
-	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );			//Hero selection Radiant and Dire player lists.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );		//Hero selection game mode name display.
+	GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );			//Hero selection clock.
 	//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );						//Endgame scoreboard.
 
 	// These lines set up the panorama colors used by each team (for game select/setup, etc)
 	GameUI.CustomUIConfig().team_colors = {}
-	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#004080;";
-	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#802020;";
+	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#001050;";
+	GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#500000;";
 
 	// These lines set up the panorama colors used by each player on the top scoreboard
 	GameUI.CustomUIConfig().player_colors = {}
-	GameUI.CustomUIConfig().player_colors[0] = "#4080D0;";
-	GameUI.CustomUIConfig().player_colors[1] = "#58E0A0;";
-	GameUI.CustomUIConfig().player_colors[2] = "#A000A0;";
-	GameUI.CustomUIConfig().player_colors[3] = "#D0D008;";
-	GameUI.CustomUIConfig().player_colors[4] = "#E06000;";
-	GameUI.CustomUIConfig().player_colors[5] = "#00FC40;";
-	GameUI.CustomUIConfig().player_colors[6] = "#380074;";
-	GameUI.CustomUIConfig().player_colors[7] = "#FC0080;";
-	GameUI.CustomUIConfig().player_colors[8] = "#F47B00;";
-	GameUI.CustomUIConfig().player_colors[9] = "#787800;";
-	GameUI.CustomUIConfig().player_colors[10] = "#DC74A8;";
-	GameUI.CustomUIConfig().player_colors[11] = "#748030;";
-	GameUI.CustomUIConfig().player_colors[12] = "#58BCD4;";
-	GameUI.CustomUIConfig().player_colors[13] = "#00701C;";
-	GameUI.CustomUIConfig().player_colors[14] = "#885400;";
-	GameUI.CustomUIConfig().player_colors[15] = "#F37AF3;";
-	GameUI.CustomUIConfig().player_colors[16] = "#F00000;";
-	GameUI.CustomUIConfig().player_colors[17] = "#F88000;";
-	GameUI.CustomUIConfig().player_colors[18] = "#E0B818;";
-	GameUI.CustomUIConfig().player_colors[19] = "#A0FF60;";
+	GameUI.CustomUIConfig().player_colors[0] = "#4385FF;";
+	GameUI.CustomUIConfig().player_colors[1] = "#AAFFC3;";
+	GameUI.CustomUIConfig().player_colors[2] = "#820096;";
+	GameUI.CustomUIConfig().player_colors[3] = "#FFEA00;";
+	GameUI.CustomUIConfig().player_colors[4] = "#FF9900;";
+	GameUI.CustomUIConfig().player_colors[5] = "#BEFF00;";
+	GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
+	GameUI.CustomUIConfig().player_colors[7] = "#008080;";
+	GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
+	GameUI.CustomUIConfig().player_colors[9] = "#010101;";
+	GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
+	GameUI.CustomUIConfig().player_colors[11] = "#808000;";
+	GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
+	GameUI.CustomUIConfig().player_colors[13] = "#00BE00;";
+	GameUI.CustomUIConfig().player_colors[14] = "#AA6E28;";
+	GameUI.CustomUIConfig().player_colors[15] = "#000080;";
+	GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
+	GameUI.CustomUIConfig().player_colors[17] = "#800000;";
+	GameUI.CustomUIConfig().player_colors[18] = "#808080;";
+	GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
 
-	// Find root panel of the HUD:
-	//var hudRoot;
-	//var panel;
-	//for ( panel = $.GetContextPanel(); panel != null; panel = panel.GetParent() )
-	//{
-	//	hudRoot = panel;
-	//}
-
-	//if ( hudRoot != null )
-	//{
-	//	var pregameHud = hudRoot.FindChildTraverse( "PreGame" );
-	//	if ( pregameHud != null )
-	//	{
-	//		pregameHud.style.visibility = "collapse";
-	//	}
-	//}
-						
-	//Use this line if you want to keep 4 ability minimum size, and only use 160 if you want ~2 ability min size
-	//newUI.FindChildTraverse("AbilitiesAndStatBranch").style.minWidth = "284px";
-	//newUI.FindChildTraverse("StatBranch").FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
-
-	//you are not spawning the talent UI, fuck off (Disabling mouseover and onactivate)
-	//We also don't want to crash, valve plz
-	//newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
-	//newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
-
-	//Fuck that levelup button
-	//newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
+	// Hide normal picking screen
+	$.GetContextPanel().GetParent().GetParent().FindChildTraverse("PreGame").style.visibility = "collapse";
 
 	</script>
 
@@ -85,9 +59,9 @@
 	<!-- CustomUIElements go here.  They are not provided currently as valve's parser reads commented lines and attempts to link them in.-->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/game_mode.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
-		<CustomUIElement type="HudTopBar" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
-		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/imba_game_info.xml" />
 	</Panel>
 	
 </root>
