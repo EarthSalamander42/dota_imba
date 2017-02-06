@@ -195,10 +195,6 @@ function modifier_imba_silencer_last_word_repeat_thinker:IsDebuff()
 	return true
 end
 
-function modifier_imba_silencer_last_word_repeat_thinker:IsHidden()
-	return true
-end
-
 function modifier_imba_silencer_last_word_repeat_thinker:IsPurgable()
 	return true
 end

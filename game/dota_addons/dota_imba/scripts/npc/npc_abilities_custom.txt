@@ -26577,6 +26577,7 @@
 		//---------------------------------------------
 		"AbilityCastPoint"			"0.2"
 		"AbilityCooldown"			"130 130 130 120 110 100"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time
 		//---------------------------------------------

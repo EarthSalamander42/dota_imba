@@ -1,5 +1,5 @@
-LinkLuaModifier("imba_silencer_glaives_hit_counter", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("imba_silencer_glaives_int_damage", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_int_damage", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
 
 function GlaiveHit( keys )
 	local caster = keys.caster
@@ -34,18 +34,18 @@ function GlaiveHit( keys )
 
 	ApplyDamage( damage_table )
 
-	local hit_counter = target:FindModifierByName("imba_silencer_glaives_hit_counter")
+	local hit_counter = target:FindModifierByName("modifier_imba_silencer_glaives_hit_counter")
 	if not hit_counter then
-		target:AddNewModifier(caster, ability, "imba_silencer_glaives_hit_counter", {req_hits = hits_to_silence, silence_dur = silence_duration})
-		hit_counter = target:FindModifierByName("imba_silencer_glaives_hit_counter")
+		target:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_hit_counter", {req_hits = hits_to_silence, silence_dur = silence_duration})
+		hit_counter = target:FindModifierByName("modifier_imba_silencer_glaives_hit_counter")
 	end
 	hit_counter:IncrementStackCount()
 	hit_counter:SetDuration(hit_count_duration, true)
 
-	local int_damage = target:FindModifierByName("imba_silencer_glaives_int_damage")
+	local int_damage = target:FindModifierByName("modifier_imba_silencer_glaives_int_damage")
 	if not int_damage then
-		target:AddNewModifier(caster, ability, "imba_silencer_glaives_int_damage", {int_reduction = int_reduction_pct})
-		int_damage = target:FindModifierByName("imba_silencer_glaives_int_damage")
+		target:AddNewModifier(caster, ability, "modifier_imba_silencer_glaives_int_damage", {int_reduction = int_reduction_pct})
+		int_damage = target:FindModifierByName("modifier_imba_silencer_glaives_int_damage")
 	end
 	int_damage:IncrementStackCount()
 	int_damage:SetDuration(int_reduction_duration, true)
