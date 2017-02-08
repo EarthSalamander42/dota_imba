@@ -1906,3 +1906,40 @@ function PickupRegenerationRune(item, unit)
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
 end
+
+-- Talent handling
+
+function CDOTA_BaseNPC:HasTalent(talentName)
+	if self:HasAbility(talentName) then
+		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
+	end
+	return false
+end
+
+function CDOTA_BaseNPC:FindTalentValue(talentName)
+	if self:HasAbility(talentName) then
+		return self:FindAbilityByName(talentName):GetSpecialValueFor("value")
+	end
+	return 0
+end
+
+
+function CDOTABaseAbility:GetTalentSpecialValueFor(value)
+	local base = self:GetSpecialValueFor(value)
+	local talentName
+	local kv = self:GetAbilityKeyValues()
+	for k,v in pairs(kv) do -- trawl through keyvalues
+		if k == "AbilitySpecial" then
+			for l,m in pairs(v) do
+				if m[value] then
+					talentName = m["LinkedSpecialBonus"]
+				end
+			end
+		end
+	end
+	if talentName then 
+		local talent = self:GetCaster():FindAbilityByName(talentName)
+		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
+	end
+	return base
+end
