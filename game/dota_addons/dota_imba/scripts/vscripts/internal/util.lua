@@ -808,7 +808,8 @@ function InitializeInnateAbilities( hero )
 		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
-		"imba_silencer_arcane_supremacy"
+		"imba_silencer_arcane_supremacy",
+		"imba_tiny_rolling_stone"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1904,4 +1905,41 @@ function PickupRegenerationRune(item, unit)
 
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
+end
+
+-- Talent handling
+
+function CDOTA_BaseNPC:HasTalent(talentName)
+	if self:HasAbility(talentName) then
+		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
+	end
+	return false
+end
+
+function CDOTA_BaseNPC:FindTalentValue(talentName)
+	if self:HasAbility(talentName) then
+		return self:FindAbilityByName(talentName):GetSpecialValueFor("value")
+	end
+	return 0
+end
+
+
+function CDOTABaseAbility:GetTalentSpecialValueFor(value)
+	local base = self:GetSpecialValueFor(value)
+	local talentName
+	local kv = self:GetAbilityKeyValues()
+	for k,v in pairs(kv) do -- trawl through keyvalues
+		if k == "AbilitySpecial" then
+			for l,m in pairs(v) do
+				if m[value] then
+					talentName = m["LinkedSpecialBonus"]
+				end
+			end
+		end
+	end
+	if talentName then 
+		local talent = self:GetCaster():FindAbilityByName(talentName)
+		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
+	end
+	return base
 end
