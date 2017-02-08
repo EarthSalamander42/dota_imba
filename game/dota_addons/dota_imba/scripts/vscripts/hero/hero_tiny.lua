@@ -42,15 +42,15 @@ function modifier_imba_tiny_rolling_stone:OnIntervalThink()
 		self:IncrementStackCount()
 	end
 	if not self.talent8 then
-		if self:GetParent():FindAbilityByName("special_bonus_unique_tiny_8"):GetLevel() > 0 then
+		if self:GetParent():HasTalent("special_bonus_unique_tiny_8") then
 			self.talent8 = true
 			self:GetParent():AddNewModifier(self:GetParent(), self:GetParent():FindAbilityByName("special_bonus_unique_tiny_8"), "modifier_special_bonus_unique_tiny_8", {})
 		end
 	end
 	if not self.talent2 then
-		if self:GetParent():FindAbilityByName("special_bonus_unique_tiny_2"):GetLevel() > 0 then
+		if self:GetParent():HasTalent("special_bonus_unique_tiny_2") then
 			self.talent2 = true
-			self:SetStackCount(self:GetStackCount() + self:GetParent():FindAbilityByName("special_bonus_unique_tiny_2"):GetSpecialValueFor("value") )
+			self:SetStackCount(self:GetStackCount() + self:GetParent():FindTalentValue("special_bonus_unique_tiny_2") )
 		end
 	end
 end
@@ -138,14 +138,14 @@ if IsServer() then
 		local toss_mult = self:GetSpecialValueFor("toss_damage_multiplier")
 		local radius = self:GetSpecialValueFor("radius") + caster:FindModifierByName("modifier_imba_tiny_rolling_stone"):GetStackCount() * caster:FindAbilityByName("imba_tiny_grow"):GetSpecialValueFor("rolling_stones_aoe")
 		local interval = self:GetSpecialValueFor("tick_interval")
-		local damage = self:GetSpecialValueFor("avalanche_damage") / self:GetSpecialValueFor("num_ticks")
+		local damage = self:GetTalentSpecialValueFor("avalanche_damage") / self:GetSpecialValueFor("num_ticks")
 		local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, nil) 
 				ParticleManager:SetParticleControl(avalanche, 0, vLocation)
 				ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 		local offset = 0
 		local ticks = extradata.ticks
-		if self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_3"):GetLevel() > 0 then
-			offset = self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_3"):GetSpecialValueFor("value")
+		if self:GetCaster():HasAbility("special_bonus_unique_tiny_3") then
+			offset = self:GetCaster():FindTalentValue("special_bonus_unique_tiny_3")
 			local projDuration = offset * 0.03 / (ticks * interval) 
 			local newLoc = vLocation
 			local distanceTravelled = 0
@@ -162,7 +162,6 @@ if IsServer() then
 		Timers:CreateTimer(function()
 			local enemies_tick = FindUnitsInRadius(caster:GetTeamNumber(), hitLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 			for _,enemy in pairs(enemies_tick) do
-				damage = damage + self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_6"):GetSpecialValueFor("value") / self:GetSpecialValueFor("num_ticks")
 				if enemy:HasModifier("modifier_tiny_toss_movement") then damage = damage * toss_mult end
 				ApplyDamage({victim = enemy, attacker = caster, damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
 				enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = duration})
@@ -188,13 +187,11 @@ LinkLuaModifier("modifier_imba_tiny_avalanche_passive", "hero/hero_tiny", LUA_MO
 modifier_imba_tiny_avalanche_passive = class({})
 function modifier_imba_tiny_avalanche_passive:OnCreated()
 	self.chance = self:GetAbility():GetSpecialValueFor("passive_chance")
-	self.instance = self:GetAbility():GetSpecialValueFor("passive_ticks")
 	self.prng = -10
 end
 
 function modifier_imba_tiny_avalanche_passive:OnRefresh()
 	self.chance = self:GetAbility():GetSpecialValueFor("passive_chance")
-	self.instance = self:GetAbility():GetSpecialValueFor("passive_ticks")
 end
 
 function modifier_imba_tiny_avalanche_passive:IsHidden()
@@ -225,7 +222,7 @@ function modifier_imba_tiny_avalanche_passive:OnAttackLanded(params)
 				local velocity = distance/delay * direction
 				velocity.z = 0
 				
-				local ticks = self.instance + self:GetParent():FindAbilityByName("special_bonus_unique_tiny_1"):GetSpecialValueFor("value")
+				local ticks = self:GetAbility():GetTalentSpecialValueFor("passive_ticks")
 
 				local info = {
 					EffectName = "particles/units/heroes/hero_tiny/tiny_avalanche_projectile.vpcf",
@@ -276,7 +273,7 @@ if IsServer() then
 		for _, victim in pairs(tossVictims) do
 			if victim ~= caster then
 				victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-				if self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_7"):GetLevel() == 0 then
+				if self:GetCaster():HasTalent("special_bonus_unique_tiny_7") then
 					break
 				end
 			end
@@ -628,9 +625,9 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 		if params.target == self:GetParent() then
 			local caster = self:GetCaster()
 			if RollPercentage(self.chance + self.prng) then
-				if self:GetParent():FindAbilityByName("special_bonus_unique_tiny_4"):GetLevel() > 0 then
+				if self:GetParent():HasTalent("special_bonus_unique_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
-					local radius = self:GetParent():FindAbilityByName("special_bonus_unique_tiny_4"):GetSpecialValueFor("value")
+					local radius = self:GetParent():FindTalentValue("special_bonus_unique_tiny_4")
 					local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker) 
 						ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 						ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
@@ -669,8 +666,8 @@ function modifier_craggy_exterior_blunt:OnCreated()
 	self.verified = false
 	self:SetStackCount(1)
 	if IsServer() then
-		if self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_5"):GetLevel() > 0 then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self.reduction + self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_5"):GetSpecialValueFor("value")})
+		if self:GetCaster():HasTalent("special_bonus_unique_tiny_5") then
+			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
 		end
 	end
 end
@@ -679,8 +676,8 @@ function modifier_craggy_exterior_blunt:OnRefresh()
 	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
 	self.verified = false
 	if IsServer() then
-		if self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_5"):GetLevel() > 0 then
-			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self.reduction + self:GetCaster():FindAbilityByName("special_bonus_unique_tiny_5"):GetSpecialValueFor("value")})
+		if self:GetCaster():HasTalent("special_bonus_unique_tiny_5") then
+			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
 		end
 	end
 	self:IncrementStackCount()
