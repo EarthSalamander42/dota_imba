@@ -132,19 +132,6 @@ function AddStacks(ability, caster, unit, modifier, stack_amount, refresh)
 	end
 end
 
--- Adds [stack_amount] stacks to a lua-based modifier
-function AddStacksLua(ability, caster, unit, modifier, stack_amount, refresh)
-	if unit:HasModifier(modifier) then
-		if refresh then
-			unit:AddNewModifier(caster, ability, modifier, {})
-		end
-		unit:SetModifierStackCount(modifier, ability, unit:GetModifierStackCount(modifier, nil) + stack_amount)
-	else
-		unit:AddNewModifier(caster, ability, modifier, {})
-		unit:SetModifierStackCount(modifier, ability, stack_amount)
-	end
-end
-
 -- Removes [stack_amount] stacks from a modifier
 function RemoveStacks(ability, unit, modifier, stack_amount)
 	if unit:HasModifier(modifier) then
@@ -391,47 +378,30 @@ function GetRandomUltimateAbility()
 	return ability.ability_name, ability.owner_hero
 end
 
--- Picks a random tower ability of level in the interval [level - 1, level]
-function GetRandomTowerAbility(tier, type)
+
+function GetRandomTowerAbility(tier)
 
 	local ability
 
-	if tier == 1 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.attack)
-		end
-	elseif tier == 2 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.attack)
-		end
-	elseif tier == 3 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.attack)
-		end
-	elseif tier == 4 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.attack)
-		end
+	if tier == 1 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_one)		
+		
+	elseif tier == 2 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_two)			
+		
+	elseif tier == 3 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_three)					
+	
+	elseif tier == 4 then		
+			ability = RandomFromTable(TOWER_ABILITIES.active)		
 	end
 
 	return ability.ability_name
 end
+
+
+
+
 
 -- Returns the upgrade cost to a specific tower ability
 function GetTowerAbilityUpgradeCost(ability_name, level)
@@ -807,9 +777,8 @@ function InitializeInnateAbilities( hero )
 		"imba_sandking_treacherous_sands",
 		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
-		"imba_skywrath_mage_concussive_shot_ghastly",
-		"imba_silencer_arcane_supremacy",
-		"imba_tiny_rolling_stone"
+		"imba_ursa_territorial_hunter",
+		"imba_lycan_wolfsbane"		
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1793,28 +1762,14 @@ end
 function SpawnImbaRunes()
 
 	-- Locate the rune spots on the map
-	local bounty_rune_spawner_a = Entities:FindAllByName("bounty_rune_location_dire_bot")
-	local bounty_rune_spawner_b = Entities:FindAllByName("bounty_rune_location_dire_top")
-	local bounty_rune_spawner_c = Entities:FindAllByName("bounty_rune_location_radiant_bot")
-	local bounty_rune_spawner_d = Entities:FindAllByName("bounty_rune_location_radiant_top")
-	local powerup_rune_spawner_a = Entities:FindAllByName("powerup_rune_location_bot")
-	local powerup_rune_spawner_b = Entities:FindAllByName("powerup_rune_location_top")
-	local bounty_rune_locations = {
-		bounty_rune_spawner_a[1]:GetAbsOrigin(),
-		bounty_rune_spawner_b[1]:GetAbsOrigin(),
-		bounty_rune_spawner_c[1]:GetAbsOrigin(),
-		bounty_rune_spawner_d[1]:GetAbsOrigin()
-	}
-	local powerup_rune_locations = {
-		powerup_rune_spawner_a[1]:GetAbsOrigin(),
-		powerup_rune_spawner_b[1]:GetAbsOrigin()
-	}
+	local bounty_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_bounty")
+	local powerup_rune_locations = Entities:FindAllByName("dota_item_rune_spawner_powerup")
 
 	-- Spawn bounty runes
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		 CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
+		 CreateItemOnPositionForLaunch(bounty_loc:GetAbsOrigin(), bounty_rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
@@ -1831,7 +1786,7 @@ function SpawnImbaRunes()
 
 	-- Spawn a random powerup rune in a random powerup location
 	if game_time > 1 then
-		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)]:GetAbsOrigin(), CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
 	end
 end
 
@@ -1905,41 +1860,4 @@ function PickupRegenerationRune(item, unit)
 
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
-end
-
--- Talent handling
-
-function CDOTA_BaseNPC:HasTalent(talentName)
-	if self:HasAbility(talentName) then
-		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
-	end
-	return false
-end
-
-function CDOTA_BaseNPC:FindTalentValue(talentName)
-	if self:HasAbility(talentName) then
-		return self:FindAbilityByName(talentName):GetSpecialValueFor("value")
-	end
-	return 0
-end
-
-
-function CDOTABaseAbility:GetTalentSpecialValueFor(value)
-	local base = self:GetSpecialValueFor(value)
-	local talentName
-	local kv = self:GetAbilityKeyValues()
-	for k,v in pairs(kv) do -- trawl through keyvalues
-		if k == "AbilitySpecial" then
-			for l,m in pairs(v) do
-				if m[value] then
-					talentName = m["LinkedSpecialBonus"]
-				end
-			end
-		end
-	end
-	if talentName then 
-		local talent = self:GetCaster():FindAbilityByName(talentName)
-		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
-	end
-	return base
 end
