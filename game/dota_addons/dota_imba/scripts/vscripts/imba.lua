@@ -72,11 +72,12 @@ function GameMode:OnFirstPlayerLoaded()
 	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Pre-pick forced hero selection
+	-- IMBA: Random OMG forced hero selection
 	-------------------------------------------------------------------------------------------------
-
-	GameRules:SetSameHeroSelectionEnabled(true)
-	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_wisp")
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		GameRules:SetSameHeroSelectionEnabled(true)
+		GameRules:GetGameModeEntity():SetCustomGameForceHero(RANDOM_OMG_HEROES[tostring(RandomInt(1, 90))])
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Contributor models
@@ -212,22 +213,6 @@ function GameMode:ExperienceFilter( keys )
 	return true
 end
 
----------------------------------------------------------------------
--- Arcane Supremacy duration reduction applicable debuffs
----------------------------------------------------------------------
-arcane_supremacy_eligible_debuffs = {
-	["modifier_silence"] = true,
-	["modifier_item_imba_orchid_debuff"] = true,
-	["modifier_item_imba_bloodthorn_debuff"] = true,
-	["modifier_imba_drow_ranger_gust_debuff"] = true,
-	["modifier_imba_crippling_fear_day"] = true,
-	["modifier_imba_crippling_fear_night"] = true,
-	["modifier_imba_stifling_dagger_silence"] = true,
-	["modifier_imba_ancient_seal_silence"] = true,
-	["modifier_imba_silencer_last_word_repeat_thinker"] = true,
-	["modifier_imba_silencer_global_silence"] = true,
-}
-
 -- Modifier gained filter function
 function GameMode:ModifierFilter( keys )
 	-- entindex_parent_const	215
@@ -297,22 +282,6 @@ function GameMode:ModifierFilter( keys )
 		end
 	end
 
-	-------------------------------------------------------------------------------------------------
-	-- Silencer Arcane Supremacy silence duration reduction
-	-------------------------------------------------------------------------------------------------
-	if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
-		if not modifier_owner:PassivesDisabled() then
-			local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-			local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
-				-- if more than 100 reduction, don't even apply the modifier
-				if silence_reduction_pct >= 100 then
-					return false
-				end
-				keys.duration = keys.duration * (1 - silence_reduction_pct/100)
-			end
-		end
-	end
 	return true
 end
 
@@ -496,7 +465,7 @@ function GameMode:ItemAddedFilter( keys )
 	-- Tempest Double forbidden items
 	-------------------------------------------------------------------------------------------------
 	
-	if unit:IsTempestDouble() then
+	if unit:HasModifier("modifier_arc_warden_tempest_double") then
 
 		-- List of items the clone can't carry
 		local clone_forbidden_items = {
@@ -541,7 +510,7 @@ function GameMode:OrderFilter( keys )
 	--position_y	 ==> 	-6381.1127929688
 	--issuer_player_id_const	 ==> 	0
 
-	local units = keys["units"]
+	local units = keys.units
 	local unit = EntIndexToHScript(units["0"])
 
 	------------------------------------------------------------------------------------
@@ -949,7 +918,66 @@ function GameMode:DamageFilter( keys )
 			return true
 		end
 	end
-
+	
+	-- Vicious Aura Tower Spell crit
+	if attacker:HasModifier("modifier_imba_tower_vicious_aura_buff") and (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) then
+	
+		-- Find modifier, caster and ability		
+		local vicious_modifier = attacker:FindModifierByName("modifier_imba_tower_vicious_aura_buff")
+		local caster = vicious_modifier:GetCaster()
+		local vicious_ability = vicious_modifier:GetAbility()
+		
+		-- Calculate chance to crit
+		local crit_damage = vicious_ability:GetSpecialValueFor("crit_damage")		
+		local crit_chance = vicious_ability:GetSpecialValueFor("crit_chance")
+		local crit_chance_per_protective = vicious_ability:GetSpecialValueFor("crit_chance_per_protective")
+		local protective_instinct_stacks = CustomNetTables:GetTableValue("towers", tostring(caster:GetName())).protective_instinct_stacks				
+		
+		local actual_crit_chance = crit_chance + crit_chance_per_protective * protective_instinct_stacks
+		
+		-- Roll for a crit
+		local rand_num = RandomInt(1, 100)
+		if rand_num <= actual_crit_chance then
+		
+			-- Apply crit and show alert
+			keys.damage = keys.damage * (crit_damage/100)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
+		end
+	end
+		
+	
+	-- Barrier Aura Tower damage block
+	if victim:HasModifier("modifier_imba_tower_barrier_aura_buff") then
+				
+		-- Increase damage count
+		victim.tower_barrier_damage = victim.tower_barrier_damage + keys.damage					
+		
+		-- If barrier stands firm, deal no damage, otherwise break it
+		if victim.tower_barrier_max > victim.tower_barrier_damage then
+			keys.damage = 0
+			
+			-- Exit
+			return true
+			
+		else
+			-- Deal the unblocked damage
+			keys.damage = victim.tower_barrier_damage - victim.tower_barrier_max
+			
+			-- Find modifier, destroy it and apply the cooldown modifier
+			local modifier_barrier = victim:FindModifierByName("modifier_imba_tower_barrier_aura_buff")
+			local caster = modifier_barrier:GetCaster()
+			local ability = modifier_barrier:GetAbility()
+			local modifier_cooldown = "modifier_imba_tower_barrier_aura_cooldown"
+			
+			victim:AddNewModifier(caster, ability, modifier_cooldown, {duration = 8})
+			modifier_barrier:Destroy()
+			
+			-- Exit
+			return true
+		end		
+	end			
+		
+		
 	return true
 end
 
@@ -1017,9 +1045,9 @@ function GameMode:OnAllPlayersLoaded()
 
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_tower_grievous_wounds")
+			building:AddAbility("imba_fountain_grievous_wounds")
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_tower_grievous_wounds")
+			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(1)
 		elseif string.find(building_name, "tower") then
@@ -1143,6 +1171,61 @@ end
 ]]
 function GameMode:OnHeroInGame(hero)
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: First hero spawn initialization
+	-------------------------------------------------------------------------------------------------
+
+	-- Fetch this hero's associated player ID
+	local player_id = hero:GetPlayerID()
+
+	-- Initializes player data if this is a bot
+	if PlayerResource:GetConnectionState(player_id) == 1 then
+		PlayerResource:InitPlayerData(player_id)
+	end
+
+	-- Check if initial setup was already performed
+	if PlayerResource:IsPlayerSpawnSetupDone(player_id) then
+		return nil
+	end
+
+	-- Make heroes briefly visible on spawn (to prevent bad fog interactions)
+	Timers:CreateTimer(0.5, function()
+		hero:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, 0.5)
+		hero:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, 0.5)
+	end)
+
+	-- Set up initial level 1 experience bounty
+	hero:SetCustomDeathXP(HERO_XP_BOUNTY_PER_LEVEL[1])
+
+	-- Set up initial level
+	if HERO_STARTING_LEVEL > 1 then
+		Timers:CreateTimer(1, function()
+			hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+		end)
+	end
+
+	-- Set up initial gold
+	hero:ModifyGold(HERO_INITIAL_GOLD, false, DOTA_ModifyGold_SelectionPenalty)
+	local has_randomed = PlayerResource:HasRandomed(hero:GetPlayerID())
+	local has_not_repicked = PlayerResource:CanRepick(hero:GetPlayerID())
+
+	if not has_not_repicked then
+		hero:ModifyGold(HERO_REPICK_GOLD_LOSS, false, DOTA_ModifyGold_SelectionPenalty)
+	elseif has_randomed or IMBA_ABILITY_MODE_RANDOM_OMG or IMBA_PICK_MODE_ALL_RANDOM then
+		hero:ModifyGold(HERO_RANDOM_GOLD_BONUS, false, DOTA_ModifyGold_SelectionPenalty)
+	end
+
+	-- Randomize abilities
+	if IMBA_ABILITY_MODE_RANDOM_OMG then
+		ApplyAllRandomOmgAbilities(hero)
+	end
+
+	-- Initialize innate hero abilities
+	InitializeInnateAbilities(hero)
+
+	-- Set initial spawn setup as having been done
+	PlayerResource:SetPlayerSpawnSetupDone(player_id)
+
 end
 
 --[[	This function is called once and only once when the game completely begins (about 0:00 on the clock).  At this point,
@@ -1257,61 +1340,82 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_ABILITY_MODE then
-
+		local protective_instict = "imba_tower_protective_instinct"		
+		
 		-- Roll the random tower abilities for this game
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1)		
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2)
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
-
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3)		
 		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1)
 		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
-
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2)
 		
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3)
+
+		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1)
 		
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
+		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2)
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3)
 
-		-- Make sure tier 4s are unique between themselves
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(4, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] = GetRandomTowerAbility(4, "active")
-
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
-		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(3)	
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(3)
+		
+		-- Make sure tier 3 abilities are unique between themselves. Includes tier 4 towers
+		local tier_3_and_4_towers = {} -- towers to index
+		local tier_3_abilities = {} -- distinct abilities		
+		local is_distinct = false	
+		local tower_ability_found = false
+		
+		-- Insert all tower upgrade trees into the table for easy looping		
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_3"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_41"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_42"][1])
+		
+		
+		-- First T3 tower ability is used for sure, no checking needed
+		table.insert(tier_3_abilities, TOWER_UPGRADE_TREE["safelane"]["tier_3"][1])
+		
+		-- Roll unique abilities for each tower. 
+		-- i resembles the current ability that was picked for a certain tower.
+		-- j resembles the current ability that former towers have already picked.
+		for i=1, #tier_3_and_4_towers do			
+			is_distinct = false		
+			while not is_distinct do
+				tower_ability_found = false
+				for j=1, #tier_3_abilities do				
+					if tier_3_and_4_towers[i] == tier_3_abilities[j] then						
+						tower_ability_found = true
+						tier_3_and_4_towers[i] = GetRandomTowerAbility(3)						
+						break
+					end				
+				end
+				
+				if not tower_ability_found then
+					is_distinct = true
+					table.insert(tier_3_abilities, tier_3_and_4_towers[i])
+				end			
+			end
 		end
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+		
+		-- Assign final tower abilities from the table
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = tier_3_and_4_towers[1]
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = tier_3_and_4_towers[2]
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = tier_3_and_4_towers[3]
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = tier_3_and_4_towers[4]
+		
+		-- Make sure that Tier 4 towers are distinct in the actives they get
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4)
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		end
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
-		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
-		end
+				
 		
 		-- Safelane towers
 		for i = 1, 3 do
@@ -1323,6 +1427,14 @@ function GameMode:OnGameInProgress()
 			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
+			
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
 
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
@@ -1340,6 +1452,7 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_3"][1]
 			end
 
+			
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
 			dire_tower:AddAbility(ability_name)
@@ -1360,6 +1473,14 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
+			
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
@@ -1374,7 +1495,7 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_2"][1]
 			elseif i == 3 then
 				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_3"][1]
-			end
+			end			
 
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
@@ -1396,6 +1517,14 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
+			
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
@@ -1410,8 +1539,9 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1]
 			elseif i == 3 then
 				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1]
-			end
-
+			end			
+			
+			
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
 			dire_tower:AddAbility(ability_name)
@@ -1445,21 +1575,38 @@ function GameMode:OnGameInProgress()
 		dire_left_t4.tower_lane = "midlane"
 		dire_right_t4.tower_lane = "midlane"
 
-		-- Add and level up the multishot ability
-		local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][1]
-		local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][1]
-		radiant_left_t4:AddAbility(ability_name_1)
-		dire_left_t4:AddAbility(ability_name_1)
-		radiant_right_t4:AddAbility(ability_name_2)
-		dire_right_t4:AddAbility(ability_name_2)
-		local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
-		local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
-		local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
-		local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
-		radiant_left_ability:SetLevel(1)
-		dire_left_ability:SetLevel(1)
-		radiant_right_ability:SetLevel(1)
-		dire_right_ability:SetLevel(1)
+		-- Grant Protective Instinct ability to each tower
+		radiant_left_t4:AddAbility(protective_instict)
+		radiant_right_t4:AddAbility(protective_instict)
+		dire_left_t4:AddAbility(protective_instict)
+		dire_right_t4:AddAbility(protective_instict)
+		local radiant_protective_left = radiant_left_t4:FindAbilityByName(protective_instict)
+		local radiant_protective_right = radiant_right_t4:FindAbilityByName(protective_instict)
+		local dire_protective_left = dire_left_t4:FindAbilityByName(protective_instict)
+		local dire_protective_right = dire_right_t4:FindAbilityByName(protective_instict)
+		radiant_protective_left:SetLevel(1)
+		radiant_protective_right:SetLevel(1)
+		dire_protective_left:SetLevel(1)
+		dire_protective_right:SetLevel(1)
+		
+		-- Add and level up the aura and active
+		
+		for i = 1, 2 do
+			local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
+			local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
+			radiant_left_t4:AddAbility(ability_name_1)
+			dire_left_t4:AddAbility(ability_name_1)
+			radiant_right_t4:AddAbility(ability_name_2)
+			dire_right_t4:AddAbility(ability_name_2)
+			local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
+			local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
+			local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
+			local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
+			radiant_left_ability:SetLevel(1)
+			dire_left_ability:SetLevel(1)
+			radiant_right_ability:SetLevel(1)
+			dire_right_ability:SetLevel(1)
+		end
 	end
 
 end
