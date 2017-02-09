@@ -2192,6 +2192,500 @@
 		"CombatClassDefend"     "DOTA_COMBAT_CLASS_DEFEND_STRONG"
 		"UnitRelationShipClass" "DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	}
+	
+	
+	//=================================================================================
+	// Lycan Wolf Pups
+	//=================================================================================
+	"npc_lycan_wolf1"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/lycan/summon_wolves.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"1"
+		"ModelScale"				"0.9"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf1"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"1"
+		"MagicalResistance"			"40"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"15"
+		"AttackDamageMax"			"20"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"41"
+		"BountyGoldMin"				"5"
+		"BountyGoldMax"				"10"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"400"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+	
+	
+	//=================================================================================
+	// Lycan Wolves
+	//=================================================================================
+	"npc_lycan_wolf2"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/ambry_summon/ambry_summon.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"2"
+		"ModelScale"				"0.95"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf2"	
+		"IsSummoned"                "1"		
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"50"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"25"
+		"AttackDamageMax"			"30"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"48"
+		"BountyGoldMin"				"10"
+		"BountyGoldMax"				"15"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"420"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"240"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+	
+	
+	
+	
+	//=================================================================================
+	// Lycan Wolf Dire Wolves
+	//=================================================================================
+	"npc_lycan_wolf3"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/icewrack_pack/icewrack_pack.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"3"
+		"ModelScale"				"0.98"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf3"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"
+		"MagicalResistance"			"60"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"33"
+		"AttackDamageMax"			"39"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"55"
+		"BountyGoldMin"				"15"
+		"BountyGoldMax"				"20"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"440"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"280"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+	
+	
+	//=================================================================================
+	// Lycan Wolf Alpha Wolves
+	//=================================================================================
+	"npc_lycan_wolf4"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/alpha_summon_01/alpha_summon_01.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"4"
+		"ModelScale"				"1.0"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf4"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"70"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"42"
+		"AttackDamageMax"			"48"
+		"AttackRate"				"0.97"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"62"
+		"BountyGoldMin"				"20"
+		"BountyGoldMax"				"25"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"460"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"320"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+	
+	
+	
+	//=================================================================================
+	// Lycan Wolf Shadow Wolves
+	//=================================================================================
+	"npc_lycan_wolf5"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/blood_moon_hunter_wolves/blood_moon_hunter_wolves.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"5"
+		"ModelScale"				"1.02"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf5"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"80"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"52"
+		"AttackDamageMax"			"56"
+		"AttackRate"				"0.97"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"62"
+		"BountyGoldMin"				"25"
+		"BountyGoldMax"				"30"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"480"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"360"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}
+	
+	
+	//=================================================================================
+	// Lycan Wolf Nightclaw
+	//=================================================================================
+	"npc_lycan_wolf6"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/items/lycan/wolves/hunter_kings_wolves/hunter_kings_wolves.vmdl"
+		"SoundSet"					"Hero_Lycan.SummonWolves"
+		"Level"						"6"
+		"ModelScale"				"1.08"
+		"IsAncient"					"0"
+		"ConsideredHero"			"0"
+		"CanBeDominated"			"0"
+		"HasInventory"				"0"
+		"UnitLabel"					"lycan_wolf6"		
+		"IsSummoned"                "1"
+		"SelectionGroup"            "wolves"
+		
+		// Abilities
+		//----------------------------------------------------------------				
+		"Ability1"					"imba_summoned_wolf_wicked_crunch"
+		"Ability3"					"imba_summoned_wolf_hunter_instincts"
+		"Ability2"					"imba_summoned_wolf_invisibility"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"6"
+		"MagicalResistance"			"80"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"60"
+		"AttackDamageMax"			"66"
+		"AttackRate"				"1"
+		"AttackAnimationPoint"		"0.33"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"HealthBarOffset"			"225"
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"75"
+		"BountyGoldMin"				"30"
+		"BountyGoldMax"				"35"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"500"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"400"
+		"StatusHealthRegen"			"0.5"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_HERO"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_HERO"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1200"
+		"VisionNighttimeRange"		"800"
+	}	
+	
+	
+	
+	
 
 	//=================================================================================
 	// Roshan

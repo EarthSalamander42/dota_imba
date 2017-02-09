@@ -628,10 +628,10 @@
 	{
 		"override_hero"				"npc_dota_hero_disruptor"
 
-		//"Ability1"					"imba_disruptor_thunder_strike"
-		//"Ability2"					"imba_disruptor_glimpse"
-		//"Ability3"					"imba_disruptor_kinetic_field"
-		//"Ability4"					"imba_disruptor_static_storm"
+		"Ability1"					"imba_disruptor_thunder_strike"
+		"Ability2"					"imba_disruptor_glimpse"
+		"Ability3"					"imba_disruptor_kinetic_field"
+		"Ability4"					"imba_disruptor_static_storm"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_cast_range_100"
@@ -1034,7 +1034,7 @@
 		"Ability21"					"special_bonus_unique_invoker_2"
 		"Ability22"					"special_bonus_attack_speed_30"
 		"Ability23"					"special_bonus_unique_invoker_3"
-		"Ability24"					"special_bonus_cooldown_reduction_12"
+		"Ability24"					"imba_unlimited_level_powerup"
 
 		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 	}
@@ -1117,9 +1117,9 @@
 		"Ability11"					"special_bonus_movement_speed_25"
 		"Ability12"					"special_bonus_strength_6"
 		"Ability13"					"special_bonus_respawn_reduction_35"
-		"Ability14"					"special_bonus_magic_resistance_10"
-		"Ability15"					"special_bonus_armor_9"
-		"Ability16"					"special_bonus_cast_range_150"
+		"Ability14"					"special_bonus_magic_resistance_6"
+		"Ability15"					"special_bonus_armor_12"
+		"Ability16"					"imba_unlimited_level_powerup"
 		"Ability17"					"special_bonus_unique_keeper_of_the_light"
 
 		"ProjectileModel"			"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_base_attack.vpcf"
@@ -1284,17 +1284,17 @@
 		"Ability4"					"imba_lina_laguna_blade"
 		"Ability5"					"imba_lina_dragon_slave_aux"
 		"Ability6"					"imba_lina_dragon_slave_fiery"
-		"Ability7"					"imba_lina_light_strike_array_fiery"
-		"Ability8"					"imba_lina_blazing_soul"
-		"Ability9"					"imba_lina_laguna_blade_fiery"
-		"Ability10"					"special_bonus_gold_income_15"
-		"Ability11"					"special_bonus_cast_range_50"
-		"Ability12"					"special_bonus_intelligence_8"
-		"Ability13"					"special_bonus_cast_range_60"
-		"Ability14"					"special_bonus_cooldown_reduction_12"
-		"Ability15"					"special_bonus_cast_range_75"
-		"Ability16"					"special_bonus_spell_lifesteal_20"
-		"Ability17"					"special_bonus_cast_range_100"
+		"Ability7"					"imba_lina_dragon_slave_aux_fiery"
+		"Ability8"					"imba_lina_light_strike_array_fiery"
+		"Ability9"					"imba_lina_blazing_soul"
+		"Ability10"					"imba_lina_laguna_blade_fiery"
+		"Ability11"					"special_bonus_gold_income_15"
+		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability13"					"special_bonus_spell_lifesteal_20"
+		"Ability14"					"special_bonus_cast_range_60"
+		"Ability15"					"special_bonus_spell_amplify_12"
+		"Ability16"					"special_bonus_cast_range_60"
+		"Ability17"					"imba_unlimited_level_powerup"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 	}
@@ -1306,10 +1306,10 @@
 	{
 		"override_hero"				"npc_dota_hero_lion"
 
-		"Ability1"					"imba_lion_earth_spike"				
-		"Ability2"					"imba_lion_hex"				
-		"Ability3"					"imba_lion_mana_drain"			
-		"Ability4"					"imba_lion_finger_of_death"
+		//"Ability1"				"lion_impale"				
+		//"Ability2"				"lion_voodoo"				
+		//"Ability3"				"lion_mana_drain"			
+		//"Ability4"				"lion_finger_of_death"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_25"
@@ -1319,7 +1319,7 @@
 		"Ability14"					"special_bonus_magic_resistance_15"
 		"Ability15"					"special_bonus_spell_amplify_8"
 		"Ability16"					"special_bonus_all_stats_12"
-		"Ability17"					"special_bonus_cast_range_125"
+		"Ability17"					"special_bonus_unique_lion"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
@@ -1350,6 +1350,37 @@
 
 		"ProjectileModel"			"particles/units/heroes/hero_luna/luna_base_attack.vpcf"
 	}
+	
+	
+	//=================================================================================================================
+	// HERO: Lycan
+	//=================================================================================================================
+	"npc_imba_hero_lycan"
+	{
+		"override_hero"				"npc_dota_hero_lycan"		
+		
+		"AbilityLayout"				"5"
+
+		"Ability1"					"imba_lycan_summon_wolves"
+		"Ability2"					"imba_lycan_howl"
+		"Ability3"					"imba_lycan_feral_impulse"
+		"Ability5"					"imba_lycan_shapeshift"
+		"Ability4"					"imba_lycan_wolfsbane"
+		
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_hp_150"
+		"Ability11"					"special_bonus_agility_8"
+		"Ability12"					"special_bonus_attack_damage_30"
+		"Ability13"					"special_bonus_armor_4"
+		"Ability14"					"special_bonus_attack_speed_25"
+		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability16"					"special_bonus_all_stats_10"
+		"Ability17"					"special_bonus_cooldown_reduction_20"
+
+		"ProjectileSpeed"			"900"
+	}
+	
+	
 
 	//=================================================================================================================
 	// HERO: Magnus
@@ -1880,7 +1911,7 @@
 		//"Ability8"					"imba_phoenix_sun_ray_stop"
 		//"Ability9"					"imba_phoenix_sun_ray_toggle_move"
 
-		"Ability10"					"special_bonus_exp_boost_15"
+		"Ability10"					"imba_unlimited_level_powerup"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_strength_5"
 		"Ability13"					"special_bonus_gold_income_25"
@@ -2097,7 +2128,7 @@
 		"Ability15"					"special_bonus_cast_range_100"
 		"Ability16"					"special_bonus_spell_amplify_8"
 		"Ability17"					"special_bonus_cooldown_reduction_20"
-		"Ability18"					"special_bonus_spell_lifesteal_20"
+		"Ability18"					"imba_unlimited_level_powerup"
 
 		"ProjectileModel"			"particles/units/heroes/hero_rubick/rubick_base_attack.vpcf"
 	}
@@ -2212,21 +2243,12 @@
 
 		"AttributeIntelligenceGain"	"3.0"
 
-		"Ability1"					"imba_silencer_arcane_curse"
-		"Ability2"					"imba_silencer_glaives_of_wisdom"
-		"Ability3"					"imba_silencer_last_word"
-		"Ability4"					"imba_silencer_arcane_supremacy"
-		"Ability5"					"imba_silencer_global_silence"
+		//"Ability1"					"imba_silencer_curse_of_the_silent"
+		//"Ability2"					"imba_silencer_glaives_of_wisdom"
+		//"Ability3"					"imba_silencer_last_word"
+		//"Ability4"					"imba_silencer_global_silence"
 
 		"Ability9"					"imba_unlimited_level_powerup"
-		"Ability10"					"special_bonus_armor_3"
-		"Ability11"					"special_bonus_gold_income_10"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_intelligence_12"
-		"Ability14"					"special_bonus_attack_speed_30"
-		"Ability15"					"special_bonus_magic_resistance_15"
-		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_cooldown_reduction_15"
 
 		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 	}
@@ -2265,11 +2287,10 @@
 	{
 		"override_hero"				"npc_dota_hero_skywrath_mage"
 
-		"Ability1"					"imba_skywrath_mage_arcane_bolt"
-		"Ability2"					"imba_skywrath_mage_concussive_shot"
-		"Ability3"					"imba_skywrath_mage_ancient_seal"
-		"Ability4"					"imba_skywrath_mage_mystic_flare"
-		"Ability5"					"imba_skywrath_mage_concussive_shot_ghastly"
+		//"Ability1"					"imba_skywrath_mage_arcane_bolt"
+		//"Ability2"					"imba_skywrath_mage_concussive_shot"
+		//"Ability3"					"imba_skywrath_mage_ancient_seal"
+		//"Ability4"					"imba_skywrath_mage_mystic_flare"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
@@ -2279,7 +2300,7 @@
 		"Ability14"					"special_bonus_movement_speed_25"
 		"Ability15"					"special_bonus_magic_resistance_15"
 		"Ability16"					"special_bonus_mp_regen_14"
-		"Ability17"					"special_bonus_spell_lifesteal_20"
+		"Ability17"					"special_bonus_unique_skywrath"
 
 		"ProjectileModel"			"particles/units/heroes/hero_skywrath_mage/skywrath_mage_base_attack.vpcf"
 	}
@@ -2430,13 +2451,13 @@
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_mp_regen_1"
+		"Ability11"					"special_bonus_mp_regen_2"
 		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_mp_regen_2"
+		"Ability13"					"special_bonus_mp_regen_3"
 		"Ability14"					"special_bonus_attack_speed_25"
 		"Ability15"					"special_bonus_mp_regen_3"
 		"Ability16"					"special_bonus_unique_storm_spirit"
-		"Ability17"					"special_bonus_mp_regen_4"
+		"Ability17"					"special_bonus_mp_regen_3"
 
 		"ProjectileModel"			"particles/units/heroes/hero_stormspirit/stormspirit_base_attack.vpcf"
 	}
@@ -2670,21 +2691,20 @@
 
 		"AttackRange"				"250"
 
-		"Ability1"			"imba_tiny_avalanche"				// Ability 1
-		"Ability2"			"imba_tiny_toss"
-		"Ability3"			"imba_tiny_craggy_exterior"
-		"Ability4"			"imba_tiny_rolling_stone"
-		"Ability5"			"imba_tiny_grow"
+		//"Ability1"				"imba_tiny_avalanche"
+		//"Ability2"				"imba_tiny_toss"
+		//"Ability3"				"imba_tiny_craggy_exterior"
+		//"Ability4"				"imba_tiny_grow"
 
-		"Ability9"			"imba_unlimited_level_powerup"
-		"Ability10"			"special_bonus_unique_tiny_1"
-		"Ability11"			"special_bonus_unique_tiny_2"
-		"Ability12"			"special_bonus_unique_tiny_3"
-		"Ability13"			"special_bonus_unique_tiny_4"
-		"Ability14"			"special_bonus_unique_tiny_5"
-		"Ability15"			"special_bonus_unique_tiny_6"
-		"Ability16"			"special_bonus_unique_tiny_7"
-		"Ability17"			"special_bonus_unique_tiny_8"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_strength_5"
+		"Ability11"					"special_bonus_intelligence_8"
+		"Ability12"					"special_bonus_attack_damage_50"
+		"Ability13"					"special_bonus_movement_speed_20"
+		"Ability14"					"special_bonus_attack_speed_30"
+		"Ability15"					"special_bonus_mp_regen_6"
+		"Ability16"					"special_bonus_cooldown_reduction_15"
+		"Ability17"					"special_bonus_unique_tiny"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2855,7 +2875,7 @@
 	"npc_imba_hero_ursa"
 	{
 		"override_hero"				"npc_dota_hero_ursa"
-
+		"AbilityLayout"				"5"
 		"ModelScale" 				".88"
 
 		"AttackAnimationPoint"		"0.2"
@@ -2864,10 +2884,12 @@
 
 		"MovementSpeed"				"320"
 
-		//"Ability1"					"imba_ursa_earthshock"
-		//"Ability2"					"imba_ursa_overpower"
-		//"Ability3"					"imba_ursa_fury_swipes"
-		//"Ability4"					"ursa_enrage"
+		"Ability1"					"imba_ursa_earthshock"
+		"Ability2"					"imba_ursa_overpower"
+		"Ability3"					"imba_ursa_fury_swipes"
+		"Ability4"					"imba_ursa_territorial_hunter"
+		"Ability5"					"imba_ursa_enrage"
+		"Ability6"					""
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
@@ -3129,7 +3151,7 @@
 		"Ability15"					"special_bonus_hp_regen_10"
 		"Ability16"					"special_bonus_respawn_reduction_40"
 		"Ability17"					"special_bonus_unique_wisp"
-		"Ability18"					"special_bonus_attack_range_125"
+		"Ability18"					"imba_unlimited_level_powerup"
 
 		"ProjectileModel"			"particles/units/heroes/hero_wisp/wisp_base_attack.vpcf"
 	}
@@ -3141,10 +3163,10 @@
 	{
 		"override_hero"				"npc_dota_hero_witch_doctor"
 
-		"Ability1"					"imba_witch_doctor_paralyzing_cask"
-		"Ability2"					"imba_witch_doctor_voodoo_restoration"
-		"Ability3"					"imba_witch_doctor_maledict"
-		"Ability4"					"imba_witch_doctor_death_ward"
+		//"Ability1"					"imba_witch_doctor_paralyzing_cask"
+		//"Ability2"					"imba_witch_doctor_voodoo_restoration"
+		//"Ability3"					"imba_witch_doctor_maledict"
+		//"Ability4"					"imba_witch_doctor_death_ward"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
@@ -3153,8 +3175,8 @@
 		"Ability13"					"special_bonus_respawn_reduction_35"
 		"Ability14"					"special_bonus_armor_6"
 		"Ability15"					"special_bonus_magic_resistance_20"
-		"Ability16"					"special_bonus_cooldown_reduction_20"
-		"Ability17"					"special_bonus_intelligence_25"
+		"Ability16"					"special_bonus_unique_witch_doctor_1"
+		"Ability17"					"special_bonus_unique_witch_doctor_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_witchdoctor/witchdoctor_base_attack.vpcf"
 	}

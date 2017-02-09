@@ -3,7 +3,8 @@
     custom_net_tables =
     [
 		"player_table",
-		"towers"
+		"towers",
+		"talents"
     ]
 }
 
