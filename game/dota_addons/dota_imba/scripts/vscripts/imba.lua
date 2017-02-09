@@ -282,6 +282,21 @@ function GameMode:ModifierFilter( keys )
 		end
 	end
 
+	-------------------------------------------------------------------------------------------------
+	-- Enrage Talent #8 debuff duration reduction
+	-------------------------------------------------------------------------------------------------
+	if modifier_owner:HasModifier("modifier_imba_enrage_buff") and modifier_owner:HasModifier("special_talent_8") then
+	
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			-- Get Enrage debuff
+			local ability = modifier_owner:FindAbilityByName("imba_ursa_enrage")
+			local talent_8_debuff_reduction = ability:GetSpecialValueFor("talent_8_debuff_reduction")
+			
+			keys.duration = keys.duration * (1 - talent_8_debuff_reduction)			
+		end
+	end
+	
+	
 	return true
 end
 
