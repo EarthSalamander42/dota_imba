@@ -37,6 +37,12 @@ function imba_lycan_summon_wolves:OnUpgrade()
 	-- Ability specials
 	local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")
 	local max_charges = ability:GetSpecialValueFor("max_charges")
+	local talent_5_max_wolves_charges = ability:GetSpecialValueFor("talent_5_max_wolves_charges")
+	
+	-- #5 Talent extra max charges
+	if caster:HasModifier("special_talent_5") then
+		max_charges = max_charges + talent_5_max_wolves_charges
+	end
 	
 	-- Give buff, set stacks to maximum count.
 	if not caster:HasModifier(charges_buff) then
@@ -74,6 +80,18 @@ function imba_lycan_summon_wolves:OnSpellStart()
 	local wolves_count = ability:GetSpecialValueFor("wolves_count")
 	local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")		
 	local wolf_type = ability:GetSpecialValueFor("wolf_type")
+	local talent_1_wolf_type_up = ability:GetSpecialValueFor("talent_1_wolf_type_up")
+	local talent_5_max_wolves_charges = ability:GetSpecialValueFor("talent_5_max_wolves_charges")
+	
+	-- #1 Talent (wolves upgrade by one level)
+	if caster:HasModifier("special_talent_1") then
+		wolf_type = wolf_type + talent_1_wolf_type_up
+	end
+	
+	-- #5 Talent (wolves count)
+	if caster:HasModifier("special_talent_5") then
+		wolves_count = wolves_count + talent_5_max_wolves_charges
+	end
 	
 	-- Fine and kill any living wolves on the map
 	local creatures = FindUnitsInRadius(caster:GetTeamNumber(),
@@ -200,7 +218,14 @@ function modifier_imba_lycan_wolf_charge:OnIntervalThink()
 		local max_charges = ability:GetSpecialValueFor("max_charges")
 		local charge_cooldown = ability:GetSpecialValueFor("charge_cooldown")
 		local wolves_count = ability:GetSpecialValueFor("wolves_count")				
-			
+		local talent_5_max_wolves_charges = ability:GetSpecialValueFor("talent_5_max_wolves_charges")
+		
+		-- #5 Talent (extra max charges and wolves)
+		if caster:HasModifier("special_talent_5") then
+			max_charges = max_charges + talent_5_max_wolves_charges
+			wolves_count = wolves_count + talent_5_max_wolves_charges
+		end
+		
 		-- if we're not at maximum charges yet, refresh it		
 		if stacks < max_charges then
 		
@@ -289,6 +314,13 @@ function ReviveWolves (caster, ability)
 		local distance = ability:GetSpecialValueFor("distance")	
 		local HP_bonus_per_lycan_level = ability:GetSpecialValueFor("HP_bonus_per_lycan_level")
 		local wolf_type = ability:GetSpecialValueFor("wolf_type")		
+		local talent_1_wolf_type_up = ability:GetSpecialValueFor("talent_1_wolf_type_up")
+	
+		-- #1 Talent (wolves upgrade by one level)
+		if caster:HasModifier("special_talent_1") then
+			wolf_type = wolf_type + talent_1_wolf_type_up
+		end
+		
 		
 		if caster:HasModifier(charge_modifier) then -- prevents error if Lycan is dead
 			local charge_modifier_handler = caster:FindModifierByName(charge_modifier)
@@ -381,9 +413,15 @@ function imba_lycan_howl:OnSpellStart()
 	-- Ability specials
 	local duration = ability:GetSpecialValueFor("duration")
 	local bonus_health_heroes = ability:GetSpecialValueFor("bonus_health_heroes")
+	local talent_3_howl_duration = ability:GetSpecialValueFor("talent_3_howl_duration")
 	
-	if IsServer() then -- set custom nettable to store day time
-			CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID()).."daytime", { dayTime = GameRules:IsDaytime()} )
+	-- #3 Talent howl duration
+	if caster:HasModifier("special_talent_3") then
+		duration = talent_3_howl_duration
+	end
+	
+	if IsServer() then -- set custom nettable to store current day/night cycle on the time of cast
+		CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID()).."daytime", { dayTime = GameRules:IsDaytime()} )
 	end
 		
 	-- Play global cast sound, only for allies
@@ -497,6 +535,14 @@ function modifier_imba_howl_buff:GetModifierBaseAttack_BonusDamage()
 		-- Ability specials
 		local bonus_damage_hero = ability:GetSpecialValueFor("bonus_damage_hero")
 		local bonus_damage_units = ability:GetSpecialValueFor("bonus_damage_units")
+		local talent_7_hero_damage = ability:GetSpecialValueFor("talent_7_hero_damage")
+		local talent_7_units_damage = ability:GetSpecialValueFor("talent_7_units_damage")
+		
+		-- #7 Talent (increased damage)
+		if caster:HasModifier("special_talent_7") then
+			bonus_damage_hero = bonus_damage_hero + talent_7_hero_damage
+			bonus_damage_units = bonus_damage_units + talent_7_units_damage
+		end
 		
 		-- If hero, give appropriate hero damage bonus, else creep damage
 		if parent:IsHero() then
@@ -526,6 +572,14 @@ function modifier_imba_howl_buff:GetModifierExtraHealthBonus()
 		-- Ability specials
 		local bonus_health_heroes = ability:GetSpecialValueFor("bonus_health_heroes")
 		local bonus_health_units = ability:GetSpecialValueFor("bonus_health_units")
+		local talent_7_hero_health = ability:GetSpecialValueFor("talent_7_hero_health")
+		local talent_7_units_health = ability:GetSpecialValueFor("talent_7_units_health")
+		
+		-- #7 Talent (increased health)
+		if caster:HasModifier("special_talent_7") then
+			bonus_health_heroes = bonus_health_heroes + talent_7_hero_health
+			bonus_health_units = bonus_health_units + talent_7_units_health
+		end
 		
 		-- If hero, give appropriate hero health bonus based on current day cycle
 		if parent:IsHero() then
@@ -563,6 +617,14 @@ function modifier_imba_howl_buff:GetModifierMoveSpeedBonus_Constant()
 		-- Ability specials
 		local bonus_ms_heroes = ability:GetSpecialValueFor("bonus_ms_heroes")
 		local bonus_ms_units = ability:GetSpecialValueFor("bonus_ms_units")		
+		local talent_7_ms_heroes = ability:GetSpecialValueFor("talent_7_ms_heroes")
+		local talent_7_ms_units = ability:GetSpecialValueFor("talent_7_ms_units")
+		
+		-- #7 Talent (increase move speed)
+		if caster:HasModifier("special_talent_7") then
+			bonus_ms_heroes = bonus_ms_heroes + talent_7_ms_heroes
+			bonus_ms_units = bonus_ms_units + talent_7_ms_units
+		end
 		
 		-- If hero, give appropriate hero move speed bonus based on current day cycle
 		if parent:IsHero() then					
@@ -777,6 +839,12 @@ function modifier_imba_feral_impulse:GetModifierBaseDamageOutgoing_Percentage()
 	-- Ability specials
 	local base_bonus_damage_perc = ability:GetSpecialValueFor("base_bonus_damage_perc")
 	local damage_inc_per_unit = ability:GetSpecialValueFor("damage_inc_per_unit")		
+	local talent_2_unit_inc = ability:GetSpecialValueFor("talent_2_unit_inc")	
+	
+	-- #2 Talent - damage increase bonus 
+	if caster:HasModifier("special_talent_2") then
+		damage_inc_per_unit = damage_inc_per_unit + talent_2_unit_inc
+	end
 	
 	-- Calculate damage percents
 	local damage_perc_increase = base_bonus_damage_perc + damage_inc_per_unit * stacks			
@@ -793,6 +861,13 @@ function modifier_imba_feral_impulse:GetModifierConstantHealthRegen()
 	-- Ability specials
 	local health_regen = ability:GetSpecialValueFor("health_regen")
 	local regen_inc_per_unit = ability:GetSpecialValueFor("regen_inc_per_unit")		
+	local talent_2_unit_inc = ability:GetSpecialValueFor("talent_2_unit_inc")	
+	
+	-- #2 Talent - HP regen increase bonus 
+	if caster:HasModifier("special_talent_2") then
+		damage_inc_per_unit = damage_inc_per_unit + talent_2_unit_inc
+	end
+	
 	
 	-- Calculate damage percents
 	local health_increase = health_regen + regen_inc_per_unit * stacks			
@@ -828,6 +903,12 @@ function imba_lycan_shapeshift:OnSpellStart()
 	-- Ability specials
 	local transformation_time = ability:GetSpecialValueFor("transformation_time")
 	local duration = ability:GetSpecialValueFor("duration")
+	local talent_8_bonus_duration = ability:GetSpecialValueFor("talent_8_bonus_duration")
+	
+	-- #8 Talent (increased shapeshift duration)
+	if caster:HasModifier("special_talent_8") then
+		duration = duration + talent_8_bonus_duration
+	end
 	
 	-- Start transformation gesture
 	caster:StartGesture(ACT_DOTA_OVERRIDE_ABILITY_4)
@@ -1334,10 +1415,18 @@ function modifier_imba_wolfsbane_wolves:DeclareFunctions()
 end
 
 function modifier_imba_wolfsbane_wolves:GetModifierBaseAttack_BonusDamage()
+	local caster = self:GetCaster()
 	local parent = self:GetParent()
 	local ability = self:GetAbility()
+	
 	local damage_bonus = ability:GetSpecialValueFor("damage_bonus")
 	local stacks = self:GetStackCount()
+	local talent_4_wolfsbane_damage = ability:GetSpecialValueFor("talent_4_wolfsbane_damage")
+	
+	-- #4 Talent wolfsbane bonus damage
+	if caster:HasModifier("special_talent_4") then
+		damage_bonus = talent_4_wolfsbane_damage
+	end	
 	
 	if parent:PassivesDisabled() then
 		return nil
@@ -1581,6 +1670,12 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 		local max_stacks = ability:GetSpecialValueFor("max_stacks")	
 		local lycan_lifesteal = ability:GetSpecialValueFor("lycan_lifesteal")
 		local certain_crit = "modifier_imba_shapeshift_certain_crit"		
+		local talent_6_max_stacks = ability:GetSpecialValueFor("talent_6_max_stacks")
+		
+		-- #6 Talent (double max stacks)
+		if caster:HasModifier("special_talent_6") then
+			max_stacks = max_stacks * talent_6_max_stacks
+		end
 		
 		-- If wolves are the attackers, grant modifier or increment stacks if already present.
 		if caster == keys.attacker then
@@ -1603,8 +1698,7 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 				target:AddNewModifier(caster, ability, debuff, {duration =  duration})
 				--AddStacksLua(ability, caster, target, debuff, 1, true) -- Activate when function is in place
 				debuff_handler = target:FindModifierByName(debuff)
-				debuff_handler:IncrementStackCount()
-				stacks = 1
+				debuff_handler:IncrementStackCount()				
 			else		
 				debuff_handler = target:FindModifierByName(debuff)				
 				stacks = debuff_handler:GetStackCount()		
@@ -1613,6 +1707,12 @@ function modifier_imba_summoned_wolf_wicked_crunch:OnAttackLanded ( keys )
 					--AddStacksLua(ability, caster, target, debuff, 1, true)	-- Activate when function is in place
 				end		
 			end			
+			
+			-- #6 Talent (wolves generate two stacks per attack)
+			-- When AddStacksLua becomes functional, the following debuff incremention can be changed to it.
+			if caster:HasModifier("special_talent_6") then
+				debuff_handler:IncrementStackCount()
+			end
 			
 			debuff_handler:ForceRefresh()
 			
