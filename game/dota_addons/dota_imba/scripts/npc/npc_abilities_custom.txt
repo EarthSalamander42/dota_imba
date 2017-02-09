@@ -17929,38 +17929,51 @@
 		{	
 			"01"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"distance"					"120"
+				"var_type"						"FIELD_INTEGER"
+				"distance"						"120"
 			}
 			
 			"02"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"wolves_count"				"2 2 2 3 3 3 4"
+				"var_type"						"FIELD_INTEGER"
+				"wolves_count"					"2 2 2 3 3 3 4"
 			}
 			
 			"03"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"HP_bonus_per_lycan_level"	"10"
+				"var_type"						"FIELD_INTEGER"
+				"HP_bonus_per_lycan_level"		"10"
 			}
 			
 			"04"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"wolf_type"					"1 2 3 3 4 5 5" 
+				"var_type"						"FIELD_INTEGER"
+				"wolf_type"						"1 2 3 3 4 5 5" 
 			}
 			
 			"05"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"max_charges"				"4"
+				"var_type"						"FIELD_INTEGER"
+				"max_charges"					"4"
 			}
 			
 			"06"
 			{
-					"var_type"					"FIELD_INTEGER"
-					"charge_cooldown"			"25"
+				"var_type" 						"FIELD_INTEGER"
+				"charge_cooldown"				"25"
+			}
+			
+			// TALENTS
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_1_wolf_type_up"			"1"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_5_max_wolves_charges"	"2"
 			}
 		}		
 	}
@@ -17997,8 +18010,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"3"				
+				"var_type"							"FIELD_INTEGER"
+				"damage_bonus"						"3"				
 			}
 			
 			"02"
@@ -18029,6 +18042,13 @@
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_radius"					"900"
+			}
+			
+			// TALENTS
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"talent_4_wolfsbane_damage"			"5"
 			}
 		}
 	}
@@ -18121,6 +18141,49 @@
 				"var_type"						"FIELD_INTEGER"
 				"duration"						"13"
 			}
+			
+			// TALENTS
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_3_howl_duration"		"25"
+			}
+			
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_hero_damage"			"25"
+			}
+			
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_units_damage"			"20"
+			}
+			
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_hero_health"			"250"				
+			}
+			
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_units_health"			"125"
+			}
+			
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_ms_heroes"			"0"
+			}
+			
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_7_ms_units"				"15"
+			}		
 		}		
 	}
 	
@@ -18187,6 +18250,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"aura_radius"				"1200"
+			}
+			
+			// TALENTS
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_2_unit_inc"			"2"
 			}
 		}		
 	}
@@ -18273,8 +18343,15 @@
 			
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"certain_crit_cooldown"		"5"
+			}
+			
+			// TALENTS
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_8_bonus_duration"	"15"
 			}
 		}		
 	}
@@ -18336,6 +18413,13 @@
 			{
 				"var_type"						"FIELD_INTEGER"
 				"fixed_lifesteal"				"15 20 25 30 35 40"
+			}
+			
+			// TALENTS
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"talent_6_max_stacks"			"2"
 			}
 		}		
 	}
