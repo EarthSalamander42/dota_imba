@@ -36054,6 +36054,13 @@
 				"var_type"					"FIELD_FLOAT"
 				"enrage_bonus_dmg_pct"		"1"
 			}
+			
+			// TALENTS
+			"16"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_1_point_blank_dmg"	"1"
+			}
 		}
 	}
 	
@@ -36128,6 +36135,19 @@
 				"var_type"				"FIELD_FLOAT"
 				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"
 			}
+			
+			// TALENTS
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"talent_4_attacks"		"3"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"talent_5_disarm_dur"	"1"
+			}
 		}
 	}
 	
@@ -36196,6 +36216,19 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"deep_stack_attacks"	"3"
+			}
+			
+			// TALENTS
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"talent_2_swipe_dmg"	"10"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"talent_3_deep_mult"	"2"
 			}
 		}
 	}
@@ -36302,6 +36335,20 @@
 				"var_type"					"FIELD_FLOAT"
 				"scepter_enrage_cooldown"	"20"
 			}
+			
+			//TALENTS
+			
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_6_bonus_radius"		"100"
+			}
+			
+			"13"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_8_debuff_reduction"	"0.25"
+			}
 		}
 	}
 	
@@ -36348,6 +36395,19 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"vision_range"			"1800"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_cooldown"			"180"
+			}
+			
+			//TALENTS
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"talent_7_reduced_cd"	"90"
 			}
 		}
 	}
