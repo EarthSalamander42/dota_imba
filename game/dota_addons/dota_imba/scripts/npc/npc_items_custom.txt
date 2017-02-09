@@ -10,6 +10,7 @@
 		"ID"                            "1999"
 		"BaseClass"                     "item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
 		"ItemBaseLevel"                 "1"
 		"ItemPurchasable" 				"0"
 		"ItemSellable"					"0"
@@ -2616,7 +2617,7 @@
 		"BaseClass"						"item_force_staff"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH | DOTA_UNIT_TARGET_TEAM_CUSTOM"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_MECHANICAL"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"FightRecapLevel"				"1"
 		
@@ -6361,7 +6362,6 @@
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemAliases"					"calaminhs tutela plate;calaminh;tutela;turtle plate;nutella plate"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -14275,7 +14275,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE"		"%bonus_cooldown"
+					"MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING"		"%bonus_cooldown"
 				}
 			}
 
@@ -14876,7 +14876,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"3.0"
+		"AbilityCooldown"				"2.0"
 		"AbilityManaCost"				"0"
 		
 		// Item Info
@@ -18465,5 +18465,283 @@
 		}
 	}
 
-	//next free ID: 2222
+	
+	
+	//=================================================================================================================
+	// Recipe: Curseblade
+	//=================================================================================================================
+	"item_recipe_imba_curseblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2222"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"		
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_curseblade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_diffusal_blade;item_claymore;item_lifesteal;item_belt_of_strength"
+		}
+	}
+	
+	
+	
+	
+	//=================================================================================================================
+	// Curseblade
+	//=================================================================================================================
+	"item_imba_curseblade"
+	{
+		"ID"							"2223"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_curseblade"
+		"ScriptFile"					"items/item_curseblade.lua"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" "5200"
+		"ItemKillable" "1" 
+		"ItemSellable" "1"
+		"ItemPurchasable" "1"
+		"ItemDroppable" "1"	
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"	
+		"ItemShopTags"					"agi;str;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"diffusal blade 2;curseblade;curse"
+	
+		// Casting
+        //--------------------------------------------
+        "AbilityCastRange"              "500" 
+        "AbilityCastPoint"              "0.25"
+        "AbilityCooldown"               "35"
+        "AbilityManaCost"               "75"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilitySharedCooldown"			"curseblade"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" 				"soundevents/imba_item_soundevents.vsndevts"
+			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+			"particle"					"particles/item/curseblade/imba_curseblade_curse.vpcf"
+		}
+		
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_bonus"					"16"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"intelligence_bonus"			"10"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"strength_bonus"				"9"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"45"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifedrain_per_second"			"60"
+			}	
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"manadrain_per_second"			"60"
+			}		
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"5"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_amount"					"-35"
+			}
+			
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_rate"						"0.1"
+			}
+			
+		}
+		
+	
+	}
+	
+	
+	//=================================================================================================================
+	// Recipe: Hellblade
+	//=================================================================================================================
+	"item_recipe_imba_hellblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2224"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"		
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_hellblade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_curseblade;item_claymore;item_lifesteal;item_belt_of_strength"
+		}
+	}
+	
+	
+	
+	
+	//=================================================================================================================
+	// Hellblade
+	//=================================================================================================================
+	"item_imba_hellblade"
+	{
+		"ID"							"2225"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_hellblade"
+		"ScriptFile"					"items/item_hellblade.lua"
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" "8250"
+		"ItemKillable" "1" 
+		"ItemSellable" "1"
+		"ItemPurchasable" "1"
+		"ItemDroppable" "1"	
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"	
+		"ItemShopTags"					"agi;str;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"diffusal blade 3;hellblade;curse"		
+	
+		// Casting
+        //--------------------------------------------
+        "AbilityCastRange"              "500" 
+        "AbilityCastPoint"              "0.25"
+        "AbilityCooldown"               "35"
+        "AbilityManaCost"               "75"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilitySharedCooldown"			"curseblade"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile" 				"soundevents/imba_item_soundevents.vsndevts"
+			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+			"particle"					"particles/item/curseblade/imba_hellblade_curse.vpcf"
+		}
+		
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_bonus"					"18"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"intelligence_bonus"			"12"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"strength_bonus"				"16"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"90"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifedrain_per_second"			"80"
+			}	
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"manadrain_per_second"			"80"
+			}		
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"5"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_amount"					"-40"
+			}
+			
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_rate"						"0.1"
+			}
+			
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"transfer_chance"				"20"
+			}
+			
+		}
+		
+	
+	}
+	//next free ID: 2226
 }
