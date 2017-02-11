@@ -145,21 +145,15 @@ function GameMode:OnNPCSpawned(keys)
 	local npc = EntIndexToHScript(keys.entindex)
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: Replace Silencer Int Steal with IMBA version
+	-- IMBA: Remove Silencers innate intelligence steal
 	--
 	-- Unfortunately, needs to be done every time Silencer spawns as his modifier is permanently
 	-- embedded into his character and he'll gain it every time he spawns
 	-------------------------------------------------------------------------------------------------
-
 	if npc:IsRealHero() then
 		Timers:CreateTimer(1, function()
 			if npc:HasModifier("modifier_silencer_int_steal") then
 				npc:RemoveModifierByName("modifier_silencer_int_steal")
-				
-				-- Only add the modifier once, since it persists through death and whatnot
-				if not npc:HasModifier("modifier_imba_silencer_int_steal") then
-					npc:AddNewModifier(npc, nil, "modifier_imba_silencer_int_steal", {steal_range = 925, steal_amount = 2})
-				end
 			end
 		end)
 	end
@@ -191,7 +185,7 @@ function GameMode:OnNPCSpawned(keys)
 			"modifier_imba_moon_shard_consume_3",
 			"modifier_item_imba_soul_of_truth"
 		}
-
+		
 		-- Iterate through the main hero's potential modifiers
 		local main_hero = npc:GetOwner():GetAssignedHero()
 		for _, shared_buff in pairs(clone_shared_buffs) do
