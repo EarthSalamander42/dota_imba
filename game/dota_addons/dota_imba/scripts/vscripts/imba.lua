@@ -1048,10 +1048,10 @@ function GameMode:OnAllPlayersLoaded()
 		local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
 		if respawn_time == 100 then
 			respawn_time = "normal respawn time."
+		elseif respawn_time == 75 then
+			respawn_time = "25% reduced respawn time."
 		elseif respawn_time == 50 then
 			respawn_time = "half respawn time."
-		elseif respawn_time == 0 then
-			respawn_time = "instant respawn time."
 		end
 
 		-- Starting gold & level

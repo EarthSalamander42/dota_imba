@@ -105,7 +105,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pick screen stuff
 	-------------------------------------------------------------------------------------------------
-
+	
 	if new_state == DOTA_GAMERULES_STATE_HERO_SELECTION then
         HeroSelection:Start()
     end
@@ -115,7 +115,7 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-
+		
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Extra asset loading
 	-------------------------------------------------------------------------------------------------
@@ -350,7 +350,7 @@ function GameMode:OnItemPickedUp(keys)
 	--local itemname = keys.itemname
 end
 
--- A player has reconnected to the game.  This function can be used to repaint Player-based particles or change
+-- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
 -- state as necessary
 function GameMode:OnPlayerReconnect(keys)
 	PrintTable(keys)
@@ -364,6 +364,17 @@ function GameMode:OnPlayerReconnect(keys)
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
+
+	-- Reinitialize the player's pick screen panorama, if necessary
+	if HeroSelection.playerPicks then
+		local pick_state = HeroSelection.playerPickState[player_id].pick_state
+		local repick_state = HeroSelection.playerPickState[player_id].repick_state
+		if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+		else
+			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+		end
+	end
 
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
@@ -585,12 +596,6 @@ function GameMode:OnPlayerPickHero(keys)
 
 	local hero_entity = EntIndexToHScript(keys.heroindex)
 	local player_id = hero_entity:GetPlayerID()
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Assign hero to player
-	-------------------------------------------------------------------------------------------------
-
-	PlayerResource:SetPickedHero(player_id, hero_entity)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: All Pick hero pick logic

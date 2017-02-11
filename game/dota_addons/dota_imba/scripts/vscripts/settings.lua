@@ -65,6 +65,7 @@ FOUNTAIN_PERCENTAGE_MANA_REGEN = 6			-- What should we use for the percentage fo
 FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 6		-- What should we use for the percentage fountain health regen?  Use -1 to keep the default dota behavior.
 MAXIMUM_ATTACK_SPEED = 600					-- What should we use for the maximum attack speed?
 MINIMUM_ATTACK_SPEED = 10					-- What should we use for the minimum attack speed?
+DOTA_MAX_PLAYERS = 20						-- Maximum amount of players allowed in a game
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: gameplay globals
@@ -163,6 +164,7 @@ IMBA_PLAYERS_ON_GAME = 10													-- Number of players in the game
 USE_CUSTOM_TEAM_COLORS = false												-- Should we use custom team colors?
 USE_CUSTOM_TEAM_COLORS_FOR_PLAYERS = false									-- Should we use custom team colors to color the players/minimap?
 
+
 TEAM_COLORS = {}															-- If USE_CUSTOM_TEAM_COLORS is set, use these colors.
 TEAM_COLORS[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }							-- Teal
 TEAM_COLORS[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }							-- Yellow
@@ -234,7 +236,9 @@ GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 25												-- How many kills for a team should signify the end of the game?
 			
-ALLOW_SAME_HERO_SELECTION = false											-- Allows people to select the same hero as each other if true
+ALLOW_SAME_HERO_SELECTION = true											-- Allows people to select the same hero as each other if true
+
+IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts when all heroes are randomed
@@ -245,7 +249,7 @@ IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abiliti
 CUSTOM_GOLD_BONUS = 30														-- Amount of bonus gold gained (in %)
 CUSTOM_XP_BONUS = 30														-- Amount of bonus XP gained (in %)
 
-BOUNTY_RAMP_PER_SECOND = 0.05												-- Bounty increase (in %) based on game time
+BOUNTY_RAMP_PER_SECOND = 0.04												-- Bounty increase (in %) based on game time
 CREEP_POWER_FACTOR = 1														-- Creep power increase multiplier factor
 CREEP_POWER_MAX_UPGRADES = 30												-- Maximum amount of creep/structure upgrades
 
@@ -283,30 +287,65 @@ HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their 
 HERO_STARTING_LEVEL = 1														-- User-defined starting level
 
 USE_CUSTOM_HERO_LEVELS = true												-- Should we allow heroes to have custom levels?
-MAX_LEVEL = 35																-- What level should we let heroes get to?
+MAX_LEVEL = 40																-- What level should we let heroes get to?
 
-if GetMapName() == "imba_10v10" then										-- 10v10 defaults
-	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1500
-	HERO_RANDOM_GOLD = 2500
-	HERO_STARTING_LEVEL = 5
-	HERO_RESPAWN_TIME_MULTIPLIER = 50
-	CUSTOM_GOLD_BONUS = 60
-	CUSTOM_XP_BONUS = 100
-	TOWER_UPGRADE_MODE = true
-	CREEP_POWER_FACTOR = 2
+-- Changes settings according to the current map
+if GetMapName() == "imba_standard" then										-- Standard map defaults
+	END_GAME_ON_KILLS = false
+	CUSTOM_GOLD_BONUS = 35
+	CUSTOM_XP_BONUS = 35
+	CREEP_POWER_FACTOR = 1
+	SPAWN_ANCIENT_BEHEMOTHS = true
+	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
+	HERO_RESPAWN_TIME_MULTIPLIER = 100
+	HERO_INITIAL_GOLD = 625
+	HERO_REPICK_GOLD = 525
+	HERO_RANDOM_GOLD = 825
+	HERO_STARTING_LEVEL = 1
+	MAX_LEVEL = 40
+elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
+	END_GAME_ON_KILLS = false
+	CUSTOM_GOLD_BONUS = 35
+	CUSTOM_XP_BONUS = 35
+	CREEP_POWER_FACTOR = 1
+	SPAWN_ANCIENT_BEHEMOTHS = true
+	TOWER_UPGRADE_MODE = false
+	TOWER_POWER_FACTOR = 1
+	HERO_RESPAWN_TIME_MULTIPLIER = 100
+	HERO_INITIAL_GOLD = 625
+	HERO_REPICK_GOLD = 525
+	HERO_RANDOM_GOLD = 825
+	HERO_STARTING_LEVEL = 1
+	MAX_LEVEL = 40
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
-	MAX_LEVEL = 50
-	HERO_INITIAL_GOLD = 2000
-	HERO_REPICK_GOLD = 1500
-	HERO_RANDOM_GOLD = 2500
-	HERO_STARTING_LEVEL = 5
-	HERO_RESPAWN_TIME_MULTIPLIER = 50
-	CUSTOM_GOLD_BONUS = 200
-	CUSTOM_XP_BONUS = 200
+	END_GAME_ON_KILLS = false
+	CUSTOM_GOLD_BONUS = 150
+	CUSTOM_XP_BONUS = 150
 	CREEP_POWER_FACTOR = 2
+	SPAWN_ANCIENT_BEHEMOTHS = true
+	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
+	HERO_RESPAWN_TIME_MULTIPLIER = 75
+	HERO_INITIAL_GOLD = 2000
+	HERO_REPICK_GOLD = 1600
+	HERO_RANDOM_GOLD = 2400
+	HERO_STARTING_LEVEL = 5
+	MAX_LEVEL = 50
+elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
+	END_GAME_ON_KILLS = false
+	CUSTOM_GOLD_BONUS = 60
+	CUSTOM_XP_BONUS = 60
+	CREEP_POWER_FACTOR = 1
+	SPAWN_ANCIENT_BEHEMOTHS = true
+	TOWER_UPGRADE_MODE = true
+	TOWER_POWER_FACTOR = 1
+	HERO_RESPAWN_TIME_MULTIPLIER = 75
+	HERO_INITIAL_GOLD = 2000
+	HERO_REPICK_GOLD = 1600
+	HERO_RANDOM_GOLD = 2400
+	HERO_STARTING_LEVEL = 5
+	MAX_LEVEL = 40
 end
 
 -- XP per level table (only active if custom hero levels are enabled) 

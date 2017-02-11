@@ -1,0 +1,6 @@
+-- Initializes custom net table names
+{
+	custom_net_tables =
+	[
+	]
+}
