@@ -18,6 +18,7 @@ end
 function HeroSelection:Start()
 
 	-- Figure out which players have to pick
+	HeroSelection.HorriblyImplementedReconnectDetection = {}
 	HeroSelection.radiantPicks = {}
 	HeroSelection.direPicks = {}
 	HeroSelection.playerPicks = {}
@@ -29,6 +30,7 @@ function HeroSelection:Start()
 			HeroSelection.playerPickState[pID] = {}
 			HeroSelection.playerPickState[pID].pick_state = "selecting_hero"
 			HeroSelection.playerPickState[pID].repick_state = false
+			HeroSelection.HorriblyImplementedReconnectDetection[pID] = true
 		end
 	end
 
@@ -43,6 +45,7 @@ function HeroSelection:Start()
 	HeroSelection.listener_select = CustomGameEventManager:RegisterListener("hero_selected", HeroSelection.HeroSelect )
 	HeroSelection.listener_select = CustomGameEventManager:RegisterListener("hero_randomed", HeroSelection.RandomHero )
 	HeroSelection.listener_repick = CustomGameEventManager:RegisterListener("hero_repicked", HeroSelection.HeroRepicked )
+	HeroSelection.listener_ui_initialize = CustomGameEventManager:RegisterListener("ui_initialized", HeroSelection.UiInitialized )
 
 	-- Play relevant pick lines
 	if IMBA_PICK_MODE_ALL_PICK then
@@ -84,6 +87,13 @@ function HeroSelection:Start()
 		end)
 	end
 end
+
+-- Horribly implemented reconnection detection
+function HeroSelection:UiInitialized(event)
+	Timers:CreateTimer(0.04, function()
+		HeroSelection.HorriblyImplementedReconnectDetection[event.PlayerID] = true
+	end)
+end 
 
 --[[
 	Tick
@@ -159,10 +169,8 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_razor",
 		"npc_dota_hero_riki",
 		"npc_dota_hero_sand_king",
-		"npc_dota_hero_shadow_shaman",
 		"npc_dota_hero_slardar",
 		"npc_dota_hero_sniper",
-		"npc_dota_hero_spectre",
 		"npc_dota_hero_storm_spirit",
 		"npc_dota_hero_sven",
 		"npc_dota_hero_tidehunter",
@@ -191,9 +199,6 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_clinkz",
 		"npc_dota_hero_obsidian_destroyer",
 		"npc_dota_hero_shadow_demon",
-		"npc_dota_hero_lycan",
-		"npc_dota_hero_lone_druid",
-		"npc_dota_hero_brewmaster",
 		"npc_dota_hero_phantom_lancer",
 		"npc_dota_hero_treant",
 		"npc_dota_hero_ogre_magi",
@@ -210,7 +215,6 @@ function HeroSelection:RandomHero(event)
 		"npc_dota_hero_nyx_assassin",
 		"npc_dota_hero_keeper_of_the_light",
 		"npc_dota_hero_visage",
-		"npc_dota_hero_meepo",
 		"npc_dota_hero_magnataur",
 		"npc_dota_hero_centaur",
 		"npc_dota_hero_slark",
@@ -239,18 +243,22 @@ function HeroSelection:RandomHero(event)
 	local random_hero = valid_heroes[RandomInt(1, #valid_heroes)]
 
 	-- Check if this random hero hasn't already been picked
-	local picked_heroes
 	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
-		picked_heroes = HeroSelection.radiantPicks
+		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+			if random_hero == picked_hero then
+				HeroSelection:RandomHero({PlayerID = event.PlayerID})
+				break
+			end
+		end
 	else
-		picked_heroes = HeroSelection.direPicks
-	end
-	for _, picked_hero in pairs(picked_heroes) do
-		if random_hero == picked_hero then
-			HeroSelection:RandomHero({PlayerID = event.PlayerID})
-			break
+		for _, picked_hero in pairs(HeroSelection.direPicks) do
+			if random_hero == picked_hero then
+				HeroSelection:RandomHero({PlayerID = event.PlayerID})
+				break
+			end
 		end
 	end
+	
 
 	-- If it's a valid hero, allow the player to select it
 	HeroSelection:HeroSelect({PlayerID = event.PlayerID, HeroName = random_hero})
@@ -264,6 +272,21 @@ end
 		- event {table} - A table containing PlayerID and HeroID.
 ]]
 function HeroSelection:HeroSelect( event )
+
+	-- Check if this random hero hasn't already been picked
+	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
+		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
+			if event.HeroName == picked_hero then
+				return nil
+			end
+		end
+	else
+		for _, picked_hero in pairs(HeroSelection.direPicks) do
+			if event.HeroName == picked_hero then
+				return nil
+			end
+		end
+	end
 
 	-- If this player has not picked yet give him the hero
 	if not HeroSelection.playerPicks[ event.PlayerID ] then
@@ -285,6 +308,7 @@ function HeroSelection:HeroSelect( event )
 		if HeroSelection.TimeLeft <= 0 then
 			HeroSelection:AssignHero( event.PlayerID, event.HeroName )
 			HeroSelection.playerPickState[event.PlayerID].pick_state = "in_game"
+			CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
 		end
 	end
 
@@ -483,6 +507,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		if HERO_STARTING_LEVEL > 1 then
 			Timers:CreateTimer(1, function()
 				hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
+				hero:SetAbilityPoints(HERO_STARTING_LEVEL)
 			end)
 		end
 
@@ -510,6 +535,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
 		-- Set initial spawn setup as having been done
+		PlayerResource:IncrementTeamPlayerCount(player_id)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
 	end, player_id)
 end

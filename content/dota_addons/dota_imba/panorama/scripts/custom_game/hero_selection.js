@@ -125,7 +125,7 @@ function OnHeroUnpicked(player, hero, team) {
  * pickable heroes. */
 function SwitchToHeroPreview( heroName ) {
 	var previewPanel = $.CreatePanel("Panel", $('#PostPickScreen'), "HeroPreview");
-	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width: 600px; height: 600px; opacity-mask: url(\'s2r://panorama/images/masks/softedge_box_png.vtex\');" unit="'+heroName+'"/></Panel></root>', false, false );
+	previewPanel.BLoadLayoutFromString('<root><Panel><DOTAScenePanel style="width: 600px; height: 600px; opacity-mask: url(\'s2r://panorama/images/masks/softedge_box_png.vtex\');" map="background" camera="camera_01" unit="'+heroName+'"/></Panel></root>', false, false );
 
 	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
 
@@ -182,33 +182,39 @@ function EnterGame() {
 
 function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, repick_state) {
 
-	// If the player is already in-game, destroy the pick interface and ignore the rest
-	if (pick_state == "in_game") {
-		$('#Background').DeleteAsync( 0.0 );
-		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
+	// If this is not the local player, ignore everything
+	if ( player_id == Players.GetLocalPlayer() ) {
+		
+		// If the player is already in-game, destroy the pick interface and ignore the rest
+		if (pick_state == "in_game") {
+			$('#Background').DeleteAsync( 0.0 );
+			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 
-	// Else, repopulate player pick panels
-	} else {
-		for (i = 1; i <= player_picks.length; i++) {
-			if (player_picks[i] != null) {
-				playerPanels[i].SetHero(player_picks[i])
+		// Else, repopulate player pick panels
+		} else {
+			var i = 1;
+			var j = 1;
+			for (i = 1; i <= player_picks.length; i++) {
+				if (player_picks[i] != null) {
+					playerPanels[i].SetHero(player_picks[i])
+				}
 			}
-		}
 
-		// If the player has already repicked, make the repick button unavailable
-		if (repick_state) {
-			$("#RepickBtn").AddClass("disabled");
-		}
+			// If the player has already repicked, make the repick button unavailable
+			if (repick_state) {
+				$("#RepickBtn").AddClass("disabled");
+			}
 
-		// If the player has already selected a hero, go to the hero preview screen
-		if (pick_state == "selected_hero" && player_picks[player_id] != null) {
-			SwitchToHeroPreview(player_picks[player_id])
-		}
+			// If the player has already selected a hero, go to the hero preview screen
+			if (pick_state == "selected_hero" && player_picks[player_id] != null) {
+				SwitchToHeroPreview(player_picks[player_id])
+			}
 
-		// Gray out heroes already selected by the player's team
-		for (i = 1; i <= picked_heroes.length; i++) {
-			if (picked_heroes[i] != null) {
-				$('#'+picked_heroes[i]).AddClass("taken");
+			// Gray out heroes already selected by the player's team
+			for (j = 1; j <= picked_heroes.length; j++) {
+				if (picked_heroes[i] != null) {
+					$('#'+picked_heroes[i]).AddClass("taken");
+				}
 			}
 		}
 	}
@@ -238,4 +244,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 
 	// Hide the top scoreboard during the pick phase
 	parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+
+	// Tell the server this player's UI was initialized
+	GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
 })();

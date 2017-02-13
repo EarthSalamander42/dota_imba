@@ -350,28 +350,36 @@ function GameMode:OnPlayerReconnect(keys)
 	PrintTable(keys)
 
 	local player_id = keys.PlayerID
-	local player_name = keys.name
-	local hero = PlayerResource:GetPickedHero(player_id)
-	local hero_name = PlayerResource:GetPickedHeroName(player_id)
-	local line_duration = 7
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Player reconnect logic
 	-------------------------------------------------------------------------------------------------
 
 	-- Reinitialize the player's pick screen panorama, if necessary
-	if HeroSelection.playerPicks then
-		local pick_state = HeroSelection.playerPickState[player_id].pick_state
-		local repick_state = HeroSelection.playerPickState[player_id].repick_state
-		if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-		else
-			CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
-		end
+	if HeroSelection.HorriblyImplementedReconnectDetection then
+		HeroSelection.HorriblyImplementedReconnectDetection[player_id] = false
+		Timers:CreateTimer(0.1, function()
+			if HeroSelection.HorriblyImplementedReconnectDetection[player_id] then
+				print("updating player "..player_id.."'s pick screen state")
+				local pick_state = HeroSelection.playerPickState[player_id].pick_state
+				local repick_state = HeroSelection.playerPickState[player_id].repick_state
+				if PlayerResource:GetTeam(player_id) == DOTA_TEAM_GOODGUYS then
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.radiantPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				else
+					CustomGameEventManager:Send_ServerToAllClients("player_reconnected", {PlayerID = player_id, PickedHeroes = HeroSelection.direPicks, PlayerPicks = HeroSelection.playerPicks, pickState = pick_state, repickState = repick_state})
+				end
+			else
+				return 0.1
+			end
+		end)
 	end
 
 	-- If this is a reconnect from abandonment due to a long disconnect, remove the abandon state
 	if PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id) then
+		local player_name = keys.name
+		local hero = PlayerResource:GetPickedHero(player_id)
+		local hero_name = PlayerResource:GetPickedHeroName(player_id)
+		local line_duration = 7
 		Notifications:BottomToAll({hero = hero_name, duration = line_duration})
 		Notifications:BottomToAll({text = player_name.." ", duration = line_duration, continue = true})
 		Notifications:BottomToAll({text = "#imba_player_reconnect_message", duration = line_duration, style = {color = "DodgerBlue"}, continue = true})

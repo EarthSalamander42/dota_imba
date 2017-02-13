@@ -361,6 +361,9 @@
 							<Panel id="npc_dota_hero_tusk" class="ClassOption" 
 								onactivate="SelectHero('npc_dota_hero_tusk')" 
 								style="background-image: url('file://{images}/heroes/npc_dota_hero_tusk.png');" />
+							<Panel id="npc_dota_hero_abyssal_underlord" class="ClassOption" 
+								onactivate="SelectHero('npc_dota_hero_abyssal_underlord')" 
+								style="background-image: url('file://{images}/heroes/npc_dota_hero_abyssal_underlord.png');" />
 							<Panel id="npc_dota_hero_undying" class="ClassOption" 
 								onactivate="SelectHero('npc_dota_hero_undying')" 
 								style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" />
