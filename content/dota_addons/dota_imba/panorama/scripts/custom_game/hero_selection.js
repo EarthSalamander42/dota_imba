@@ -8,6 +8,14 @@
 //Define variables
 var playerPanels = {};
 var canEnter = false;
+var selectedHero = null;
+var abilityPanels = [ 
+	$('#PickedHeroAbility1'),
+	$('#PickedHeroAbility2'),
+	$('#PickedHeroAbility3'),
+	$('#PickedHeroAbility4'),
+	$('#PickedHeroAbility5'),
+	$('#PickedHeroAbility6') ]
 
 //Subscribe to events
 GameEvents.Subscribe( "picking_done", OnPickingDone );
@@ -16,6 +24,7 @@ GameEvents.Subscribe( "picking_time_update", OnTimeUpdate );
 GameEvents.Subscribe( "hero_picked", OnHeroPicked );
 GameEvents.Subscribe( "hero_unpicked", OnHeroUnpicked );
 GameEvents.Subscribe( "player_reconnected", OnPlayerReconnect );
+GameEvents.Subscribe( "pick_abilities", OnReceiveAbilities );
 
 /* Event Handlers
 =========================================================================*/
@@ -40,18 +49,24 @@ function OnTimeUpdate( data ) {
 
 /* A player has picked a hero */
 function OnHeroPicked( data ) {
-	HeroPicked( data.PlayerID, data.HeroName, data.Team );
+	HeroPicked( data.PlayerID, data.HeroName, data.Team, data.HasRandomed);
 }
 
 /* A player has un-picked a hero */
 function OnHeroUnpicked( data ) {
-	OnHeroUnpicked( data.PlayerID, data.HeroName, data.Team );
+	HeroUnpicked( data.PlayerID, data.HeroName, data.Team );
 }
 
 /* A player has reconnected to the game */
 function OnPlayerReconnect( data ) {
 	PlayerReconnected( data.PlayerID, data.PickedHeroes, data.PlayerPicks, data.pickState, data.repickState);
 }
+
+/* A player has received the list of nonhidden abilities for the selected hero */
+function OnReceiveAbilities( data ) {
+	UpdateAbilities( data.heroAbilities);
+}
+
 
 /* Functionality
 =========================================================================*/
@@ -85,7 +100,7 @@ function LoadPlayers() {
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
  * show the hero was taken and if the player that picked is the local player
  * swap to the hero preview screen. */
-function HeroPicked(player, hero, team) {
+function HeroPicked(player, hero, team, has_randomed) {
 
 	// Update the player panel and hero selection, if appropriate
 	if ( player != null ) {
@@ -100,6 +115,13 @@ function HeroPicked(player, hero, team) {
 
 	// Check if the pick was by the local player
 	if ( player == LocalPlayer ) {
+
+		// If the player has randomed, set up hero portrait/ability information
+		if (has_randomed) {
+			SelectHero(hero)
+		}
+
+		// Switch to hero preview state
 		SwitchToHeroPreview(hero);
 	}
 }
@@ -107,17 +129,17 @@ function HeroPicked(player, hero, team) {
 /* A player on the same team has picked a hero, tell the player's panel a hero was picked,
  * show the hero was taken and if the player that picked is the local player
  * swap to the hero preview screen. */
-function OnHeroUnpicked(player, hero, team) {
+function HeroUnpicked(player, hero, team) {
+
+	// Re-enable the hero button for the player's team
+	if ( Players.GetTeam(Players.GetLocalPlayer()) == team) {
+		var parent_panel = $.GetContextPanel().GetParent().GetParent()
+		parent_panel.FindChildTraverse(hero).RemoveClass( "taken" );
+	}
 
 	// Update the player panel and hero selection, if appropriate
 	if ( player != null ) {
 		playerPanels[player].SetHero(null);
-	}
-
-	// Disable the hero button for the player's team
-	if ( Players.GetTeam(Players.GetLocalPlayer()) == team) {
-		var parent_panel = $.GetContextPanel().GetParent().GetParent()
-		parent_panel.FindChildTraverse(hero).RemoveClass( "taken" );
 	}
 }
 
@@ -129,8 +151,8 @@ function SwitchToHeroPreview( heroName ) {
 
 	$('#PostPickScreen').MoveChildBefore( previewPanel, $("#EnterGameBtn") );
 
-	var parent_panel = $.GetContextPanel().GetParent().GetParent()
-	parent_panel.FindChildTraverse("ImbaPickListText").style.visibility = "collapse";
+	// Hide/show relevant panels
+	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
 	$('#PostPickScreen').style.visibility = 'visible';
 }
@@ -138,11 +160,61 @@ function SwitchToHeroPreview( heroName ) {
 /* Select a hero, called when a player clicks a hero panel in the layout */
 function SelectHero( heroName ) {
 
-	//Send the pick to the server, if it is available
-	var parent_panel = $.GetContextPanel().GetParent().GetParent()
-	var selected_panel = parent_panel.FindChildTraverse(heroName)
+	// Do nothing if this hero is not available for the player's team
+	var selected_panel = $("#PickList").FindChildTraverse(heroName)
+	if (selected_panel.BHasClass( "taken" )) {
+		$('#PickHeroBtn').AddClass("disabled");
+	} else {
+		$('#PickHeroBtn').RemoveClass("disabled");
+	}
+
+	// Set the appropriate hero image
+	$("#PickedHeroImage").heroname = heroName;
+	$("#PickedHeroImage").style.visibility = 'visible';
+
+	// Update the hero name
+	$("#PickedHeroName").text = $.Localize( heroName );
+	selectedHero = heroName;
+
+	// Make the abilities panel visible
+	$("#HeroAbilitiesParentPanel").style.visibility = 'visible';
+
+	// Request the hero's abilities table to the server 
+	GameEvents.SendCustomGameEventToServer("pick_abilities_requested", { HeroName: heroName} );
+}
+
+/* Updates the selected hero abilities panel */
+function UpdateAbilities(abilityList) {
+	for ( var i = 1; i <= 6; i++ ) {
+		var j = parseInt(i)
+		var abilityPanel = abilityPanels[i-1]
+		var ability = abilityList[j]
+		if ( ability != null ) {
+			abilityPanel.abilityname = ability;
+			abilityPanel.style.visibility = 'visible';
+			(function (abilityPanel, ability) {
+				abilityPanel.SetPanelEvent("onmouseover", function() {
+					$.DispatchEvent("DOTAShowAbilityTooltip", abilityPanel, ability);
+				})
+				abilityPanel.SetPanelEvent("onmouseout", function() {
+					$.DispatchEvent("DOTAHideAbilityTooltip", abilityPanel);
+				})
+			})(abilityPanel, ability);
+		} else {
+			abilityPanel.abilityname = null;
+			abilityPanel.style.visibility = 'collapse';
+			abilityPanel.onmouseover = null;
+		}
+	}
+}
+
+/* Pick a hero, called when a player confirms his hero selection */
+function PickHero() {
+
+	// Send the pick to the server, if it is available
+	var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
 	if (selected_panel.BHasClass( "taken" ) == false) {
-		GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: heroName} );
+		GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
 	}
 }
 
@@ -155,12 +227,24 @@ function RepickHero() {
 		// Send the repick event to the server
 		GameEvents.SendCustomGameEventToServer("hero_repicked", {} );
 
+		// Reset the hero selection image
+		$("#PickedHeroImage").heroname = null;
+
+		// Update the hero name
+		$("#PickedHeroName").text = $.Localize( "imba_hero_name_filler" );
+		selectedHero = null;
+
+		// Make the abilities panel invisible
+		$("#HeroAbilitiesParentPanel").style.visibility = 'collapse';
+
 		// Disable the repick button
 		$("#RepickBtn").AddClass("disabled");
 
+		// Re-enable the "select hero" button
+		$("#PickHeroBtn").style.visibility = 'visible';
+
 		// Show the hero pick menu again
 		$('#HeroPreview').DeleteAsync( 0.0 );
-		$('#ImbaPickListText').style.visibility = 'visible';
 		$('#PickList').style.visibility = 'visible';
 		$('#PostPickScreen').style.visibility = 'collapse';
 	}
@@ -175,7 +259,7 @@ function SelectRandomHero() {
  * clicks a button in the layout. */
 function EnterGame() {
 	if ( canEnter ) {
-		$('#Background').DeleteAsync( 0.0 );
+		$('#Background').GetParent().DeleteAsync( 0.0 );
 		$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 	}
 }
@@ -187,7 +271,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		
 		// If the player is already in-game, destroy the pick interface and ignore the rest
 		if (pick_state == "in_game") {
-			$('#Background').DeleteAsync( 0.0 );
+			$('#Background').GetParent().DeleteAsync( 0.0 );
 			$.GetContextPanel().GetParent().GetParent().FindChildTraverse("ScoreboardContainer").style.visibility = "visible";
 
 		// Else, repopulate player pick panels
@@ -231,7 +315,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 	LoadPlayers();
 
 	// Show only map-specific elements
-	var parent_panel = $.GetContextPanel().GetParent().GetParent()
+	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 	var map_info = Game.GetMapInfo();
 
 	if (map_info.map_display_name == "imba_random_omg") {

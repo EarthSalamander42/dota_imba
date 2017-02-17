@@ -235,6 +235,8 @@ GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 25												-- How many kills for a team should signify the end of the game?
+
+IMBA_WISP_PICKERS_TABLE = {}												-- Stores the pick-dummy wisps
 			
 ALLOW_SAME_HERO_SELECTION = true											-- Allows people to select the same hero as each other if true
 
@@ -279,7 +281,7 @@ TOWER_UPGRADE_TREE["hardlane"]["tier_3"] = {}
 
 HERO_RESPAWN_TIME_MULTIPLIER = 100											-- User-defined respawn time multiplier
 
-MAP_INITIAL_GOLD = 625														-- Gold granted to players at the start of the game on a normal pick
+MAP_INITIAL_GOLD = 0														-- Gold granted to players at the start of the game on a normal pick
 HERO_INITIAL_GOLD = 625														-- Gold to add to players as soon as they spawn into the game
 HERO_REPICK_GOLD = 525														-- Gold lost by players who repick their hero
 HERO_RANDOM_GOLD = 825														-- Gold granted to players who random their hero
@@ -406,6 +408,7 @@ IS_BANNED_PLAYER = false													-- Is this player banned from playing the g
 -- IMBA: Keyvalue tables
 -------------------------------------------------------------------------------------------------
 
+HERO_ABILITY_LIST = LoadKeyValues("scripts/npc//KV/nonhidden_ability_list.kv")
 TOWER_ABILITIES = LoadKeyValues("scripts/npc/KV/tower_abilities.kv")
 RANDOM_OMG_HEROES = LoadKeyValues("scripts/npc/KV/random_omg_heroes.kv")
 RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")

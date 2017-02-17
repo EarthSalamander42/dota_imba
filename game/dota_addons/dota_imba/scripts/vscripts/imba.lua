@@ -974,32 +974,6 @@ function GameMode:OnAllPlayersLoaded()
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter( Dynamic_Wrap(GameMode, "ItemAddedFilter"), self )
 
 	-------------------------------------------------------------------------------------------------
-	-- IMBA: All Random setup
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_PICK_MODE_ALL_RANDOM then
-
-		-- Pick setup
-		for player_id = 0, 19 do
-			Timers:CreateTimer(0, function()
-				if PlayerResource:IsImbaPlayer(player_id) then
-					
-					-- If this player is connected to the game, random a hero for it
-					if PlayerResource:GetConnectionState(player_id) == 1 or PlayerResource:GetConnectionState(player_id) == 2 then
-						PlayerResource:GetPlayer(player_id):MakeRandomHeroSelection()
-						PlayerResource:SetCanRepick(player_id, false)
-						PlayerResource:SetHasRandomed(player_id)
-
-					-- Else, keep trying
-					else
-						return 0.5
-					end
-				end
-			end)
-		end
-	end
-
-	-------------------------------------------------------------------------------------------------
 	-- IMBA: Fountain abilities setup
 	-------------------------------------------------------------------------------------------------
 
@@ -1037,101 +1011,6 @@ function GameMode:OnAllPlayersLoaded()
 			Say(nil, "You are banned from playing IMBA. Game will not start.", false)
 		end)
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Selected game mode confirmation messages
-	-------------------------------------------------------------------------------------------------
-
-	-- Delay the message a bit so it shows up during hero picks
-	Timers:CreateTimer(3, function()
-
-		-- If no options were chosen, use the default ones
-		if not GAME_OPTIONS_SET then
-			Say(nil, "Host did not select any game options, using the default ones.", false)
-		end
-
-		-- Game mode
-		local game_mode = "ALL PICK"
-		if IMBA_PICK_MODE_ALL_RANDOM then
-			game_mode = "ALL RANDOM"
-		elseif IMBA_ABILITY_MODE_RANDOM_OMG then
-			game_mode = "RANDOM OMG, "..IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT.." abilities, "..IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT.." ultimates, skills are randomed on every respawn"
-		end
-
-		-- Same hero
-		local same_hero = ""
-		if ALLOW_SAME_HERO_SELECTION then
-			same_hero = ", same hero allowed"
-		end
-
-		-- Bounties
-		local gold_bounty = 100 + CUSTOM_GOLD_BONUS
-		gold_bounty = gold_bounty.."%"
-		local XP_bounty = 100 + CUSTOM_XP_BONUS
-		XP_bounty = XP_bounty.."%"
-
-		-- Buyback
-		local buyback_cooldown = ""
-		if not BUYBACK_COOLDOWN_ENABLED then
-			buyback_cooldown = "no buyback cooldown, "
-		end
-
-		-- Respawn
-		local respawn_time = HERO_RESPAWN_TIME_MULTIPLIER
-		if respawn_time == 100 then
-			respawn_time = "normal respawn time."
-		elseif respawn_time == 75 then
-			respawn_time = "25% reduced respawn time."
-		elseif respawn_time == 50 then
-			respawn_time = "half respawn time."
-		end
-
-		-- Starting gold & level
-		local start_status = "Heroes will start with "..HERO_INITIAL_GOLD.." gold, at level "..HERO_STARTING_LEVEL..", and can progress up to level "..MAX_LEVEL.."."
-
-		-- Creep power setting
-		local creep_power = "Lane creeps' power is set to "
-		if CREEP_POWER_FACTOR == 1 then
-			creep_power = creep_power.."normal,"
-		elseif CREEP_POWER_FACTOR == 2 then
-			creep_power = creep_power.."high,"
-		elseif CREEP_POWER_FACTOR == 4 then
-			creep_power = creep_power.."extreme,"
-		end
-
-		-- Tower power setting
-		local tower_power = " and tower power is set to "
-		if TOWER_POWER_FACTOR == 0 then
-			tower_power = tower_power.."normal."
-		elseif TOWER_POWER_FACTOR == 1 then
-			tower_power = tower_power.."high."
-		elseif TOWER_POWER_FACTOR == 2 then
-			tower_power = tower_power.."extreme."
-		end
-
-		-- Tower abilities
-		local tower_abilities = ""
-		if TOWER_ABILITY_MODE then
-			if TOWER_UPGRADE_MODE then
-				tower_abilities = "Towers will gain upgradable random abilities."
-			else
-				tower_abilities = "Towers will gain random abilities."
-			end
-		end
-
-		-- Kills to end the game
-		local kills_to_end = ""
-		if END_GAME_ON_KILLS then
-			kills_to_end = "ARENA MODE: the game will only end when one team reaches "..KILLS_TO_END_GAME_FOR_TEAM.." kills."
-		end
-		
-		Say(nil, game_mode..same_hero, false)
-		Say(nil, gold_bounty.." gold rate, "..XP_bounty.." experience rate, "..buyback_cooldown..respawn_time, false)
-		Say(nil, start_status, false)
-		Say(nil, creep_power..tower_power, false)
-		Say(nil, tower_abilities, false)
-		Say(nil, kills_to_end, false)
-	end)
 end
 
 --[[
@@ -1156,6 +1035,15 @@ function GameMode:OnGameInProgress()
 	
 	local adjusted_gold_tick_time = GOLD_TICK_TIME / ( 1 + CUSTOM_GOLD_BONUS * 0.01 )
 	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Destroy wisp dummy pickers
+	-------------------------------------------------------------------------------------------------
+
+	for _, wisp in pairs(IMBA_WISP_PICKERS_TABLE) do
+		wisp:Destroy()
+	end
+	IMBA_WISP_PICKERS_TABLE = nil
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
@@ -1468,7 +1356,6 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function GameMode:InitGameMode()
 	GameMode = self
-	DebugPrint('[IMBA] Started loading Dota IMBA...')
 
 	-- Call the internal function to set up the rules/behaviors specified in constants.lua
 	-- This also sets up event hooks for all event handlers in events.lua
@@ -1480,8 +1367,6 @@ function GameMode:InitGameMode()
 
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
-
-	DebugPrint('[IMBA] Finished loading Dota IMBA!\n\n')
 end
 
 -- This is an example console command

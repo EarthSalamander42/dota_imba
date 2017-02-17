@@ -115,17 +115,12 @@ function GameMode:OnGameRulesStateChange(keys)
 	-------------------------------------------------------------------------------------------------
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
-		
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Extra asset loading
-	-------------------------------------------------------------------------------------------------
-
-	--	print("loading started")
-
-	--	Timers:CreateTimer(5, function()
-	--		print("loading...")
-	--		PrecacheUnitByNameAsync("npc_dota_hero_brewmaster", function(...) end)
-	--	end)
+		Timers:CreateTimer(1.5, function()
+			IMBA_WISP_PICKERS_TABLE = HeroList:GetAllHeroes()
+			for _, hero in pairs(IMBA_WISP_PICKERS_TABLE) do
+				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
+			end
+		end)
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -598,28 +593,6 @@ function GameMode:OnPlayerPickHero(keys)
 
 	local hero_entity = EntIndexToHScript(keys.heroindex)
 	local player_id = hero_entity:GetPlayerID()
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: All Pick hero pick logic
-	-------------------------------------------------------------------------------------------------
-
-	if IMBA_PICK_MODE_ALL_PICK then
-
-		-- Fetch player's team and chosen hero
-		--local team = PlayerResource:GetTeam(player:GetPlayerID())
-		--local hero = player:GetAssignedHero()
-		--local hero_name = hero:GetName()
-
-		-- Check if the hero was already picked in the same team
-		--if PlayerResource:IsHeroSelected(hero_name) then
-		--	local all_heroes = HeroList:GetAllHeroes()
-		--	for _,picked_hero in pairs(all_heroes) do
-		--		if hero_name == picked_hero:GetName() and team == picked_hero:GetTeam() then
-		--			player:MakeRandomHeroSelection()
-		--		end
-		--	end
-		--end
-	end
 end
 
 -- A player killed another player in a multi-team context
