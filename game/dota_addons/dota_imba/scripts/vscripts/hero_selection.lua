@@ -54,14 +54,15 @@ function HeroSelection:Start()
 	HeroSelection.listener_abilities_requested = CustomGameEventManager:RegisterListener("pick_abilities_requested", HeroSelection.PickAbilitiesRequested )
 
 	-- Play relevant pick lines
-	if IMBA_PICK_MODE_ALL_PICK then
-		EmitGlobalSound("announcer_announcer_type_all_pick")
+	if IMBA_PICK_MODE_ALL_RANDOM then
+		EmitGlobalSound("announcer_announcer_type_all_random")
 	elseif IMBA_ABILITY_MODE_RANDOM_OMG then
 		EmitGlobalSound("announcer_announcer_type_random_draft")
 	elseif IMBA_PICK_MODE_ARENA_MODE then
 		EmitGlobalSound("announcer_announcer_type_death_match")
+	else
+		EmitGlobalSound("announcer_announcer_type_all_pick")
 	end
-	--EmitGlobalSound("announcer_announcer_type_all_random")
 
 	-- Block-pick heroes forbidden in certain modes
 	if IMBA_ABILITY_MODE_RANDOM_OMG then
@@ -116,9 +117,6 @@ function HeroSelection:Tick()
 	-- Tick away a second of time
 	HeroSelection.TimeLeft = HeroSelection.TimeLeft - 1
 	if HeroSelection.TimeLeft < 0 then
-
-		-- Resolve votes
-		HeroSelection:SelectGameMode()
 
 		-- End picking phase
 		HeroSelection:EndPicking()
@@ -278,6 +276,11 @@ end
 ]]
 function HeroSelection:HeroSelect( event )
 
+	-- If this is All Random and the player picked a hero manually, refuse it
+	if IMBA_PICK_MODE_ALL_RANDOM and (not event.HasRandomed) then
+		return nil
+	end
+
 	-- Check if this hero hasn't already been picked
 	if PlayerResource:GetTeam(event.PlayerID) == DOTA_TEAM_GOODGUYS then
 		for _, picked_hero in pairs(HeroSelection.radiantPicks) do
@@ -366,72 +369,6 @@ function HeroSelection:HeroRepicked( event )
 
 	-- Play pick sound to the player
 	EmitSoundOnClient("ui.pick_repick", PlayerResource:GetPlayer(player_id))
-end
-
-function HeroSelection:SelectGameMode()
-
-	-- Change settings if hyper mode is active.
-	if IMBA_HYPER_MODE_ON then
-		
-		-- Change settings according to the current map
-		if GetMapName() == "imba_standard" then
-			END_GAME_ON_KILLS = false
-			CUSTOM_GOLD_BONUS = 75
-			CUSTOM_XP_BONUS = 75
-			CREEP_POWER_FACTOR = 2
-			SPAWN_ANCIENT_BEHEMOTHS = true
-			TOWER_UPGRADE_MODE = true
-			TOWER_POWER_FACTOR = 1
-			HERO_RESPAWN_TIME_MULTIPLIER = 100
-			HERO_INITIAL_GOLD = 1200
-			HERO_REPICK_GOLD = 1000
-			HERO_RANDOM_GOLD = 1500
-			HERO_STARTING_LEVEL = 1
-			MAX_LEVEL = 50
-		elseif GetMapName() == "imba_random_omg" then
-			END_GAME_ON_KILLS = false
-			CUSTOM_GOLD_BONUS = 75
-			CUSTOM_XP_BONUS = 75
-			CREEP_POWER_FACTOR = 2
-			SPAWN_ANCIENT_BEHEMOTHS = true
-			TOWER_UPGRADE_MODE = true
-			TOWER_POWER_FACTOR = 1
-			HERO_RESPAWN_TIME_MULTIPLIER = 100
-			HERO_INITIAL_GOLD = 1200
-			HERO_REPICK_GOLD = 1000
-			HERO_RANDOM_GOLD = 1500
-			HERO_STARTING_LEVEL = 1
-			MAX_LEVEL = 50
-		elseif GetMapName() == "imba_custom" then
-			END_GAME_ON_KILLS = false
-			CUSTOM_GOLD_BONUS = 300
-			CUSTOM_XP_BONUS = 300
-			CREEP_POWER_FACTOR = 3
-			SPAWN_ANCIENT_BEHEMOTHS = true
-			TOWER_UPGRADE_MODE = true
-			TOWER_POWER_FACTOR = 2
-			HERO_RESPAWN_TIME_MULTIPLIER = 50
-			HERO_INITIAL_GOLD = 5000
-			HERO_REPICK_GOLD = 4000
-			HERO_RANDOM_GOLD = 6000
-			HERO_STARTING_LEVEL = 12
-			MAX_LEVEL = 100
-		elseif GetMapName() == "imba_10v10" then
-			END_GAME_ON_KILLS = false
-			CUSTOM_GOLD_BONUS = 125
-			CUSTOM_XP_BONUS = 125
-			CREEP_POWER_FACTOR = 2
-			SPAWN_ANCIENT_BEHEMOTHS = true
-			TOWER_UPGRADE_MODE = true
-			TOWER_POWER_FACTOR = 2
-			HERO_RESPAWN_TIME_MULTIPLIER = 50
-			HERO_INITIAL_GOLD = 2000
-			HERO_REPICK_GOLD = 1600
-			HERO_RANDOM_GOLD = 2400
-			HERO_STARTING_LEVEL = 5
-			MAX_LEVEL = 60
-		end
-	end
 end
 
 --[[

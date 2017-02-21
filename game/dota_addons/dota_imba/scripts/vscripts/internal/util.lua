@@ -1813,13 +1813,26 @@ function SpawnImbaRunes()
 	-- Spawn bounty runes
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
-		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		 CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
+		
+		-- Arena map randomization
+		local bounty_rune
+		if GetMapName() == "imba_arena" then
+			bounty_loc = bounty_loc + RandomVector(RandomInt(0, 175))
+			bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
+		else
+			bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
+		end
+		CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
 			bounty_rune.is_initial_bounty_rune = true
 		end
+	end
+
+	-- On arena mode, there's a 75% chance of doing nothing
+	if GetMapName() == "imba_arena" and RandomInt(1, 4) < 4 then
+		return nil
 	end
 
 	-- List of powerup rune types
@@ -1942,4 +1955,27 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
 	end
 	return base
+end
+
+function UpdateComebackBonus(points, team)
+
+	-- Calculate both teams' networths
+	local team_networth = {}
+	team_networth[DOTA_TEAM_GOODGUYS] = 0
+	team_networth[DOTA_TEAM_BADGUYS] = 0
+	for player_id = 0, 19 do
+		if PlayerResource:IsImbaPlayer(player_id) and PlayerResource:GetConnectionState(player_id) <= 2 and (not PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)) then
+			team_networth[PlayerResource:GetTeam(player_id)] = team_networth[PlayerResource:GetTeam(player_id)] + PlayerResource:GetTotalEarnedGold(player_id)
+		end
+	end
+
+	-- Update teams' score
+	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
+
+	-- If one of the teams is eligible, apply the bonus
+	if (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) and (team_networth[DOTA_TEAM_GOODGUYS] < team_networth[DOTA_TEAM_BADGUYS]) then
+		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
+	elseif (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) and (team_networth[DOTA_TEAM_BADGUYS] < team_networth[DOTA_TEAM_GOODGUYS]) then
+		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
+	end
 end

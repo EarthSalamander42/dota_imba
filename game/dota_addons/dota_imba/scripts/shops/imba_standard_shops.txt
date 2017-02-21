@@ -1,4 +1,4 @@
-"imba_all_pick_shops"
+"imba_standard_shops"
 {
 	"consumables"
 	{

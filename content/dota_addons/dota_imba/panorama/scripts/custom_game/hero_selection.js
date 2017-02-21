@@ -161,8 +161,9 @@ function SwitchToHeroPreview( heroName ) {
 function SelectHero( heroName ) {
 
 	// Do nothing if this hero is not available for the player's team
+	var all_random_enabled = CustomNetTables.GetTableValue( "game_options", "all_random" );
 	var selected_panel = $("#PickList").FindChildTraverse(heroName)
-	if (selected_panel.BHasClass( "taken" )) {
+	if (selected_panel.BHasClass( "taken" ) || (all_random_enabled != null && all_random_enabled[1] == 1)) {
 		$('#PickHeroBtn').AddClass("disabled");
 	} else {
 		$('#PickHeroBtn').RemoveClass("disabled");
@@ -212,9 +213,11 @@ function UpdateAbilities(abilityList) {
 function PickHero() {
 
 	// Send the pick to the server, if it is available
-	var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
-	if (selected_panel.BHasClass( "taken" ) == false) {
-		GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
+	if ($("#PickHeroBtn").BHasClass( "disabled" ) == false) {
+		var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
+		if (selected_panel.BHasClass( "taken" ) == false) {
+			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
+		}
 	}
 }
 
@@ -307,28 +310,78 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 /* Initialisation - runs when the element is created
 =========================================================================*/
 (function () {
-	// Set panel visibility
-	$('#PickList').style.visibility = 'visible';
-	$('#PostPickScreen').style.visibility = 'collapse';
 
-	///Load player elements
-	LoadPlayers();
+	// If this player is a spectator, just kill the whole pick screen
+	if ( Players.IsSpectator( Players.GetLocalPlayer() ) ) {
+		$('#Background').GetParent().DeleteAsync( 0.0 );
 
-	// Show only map-specific elements
-	var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
-	var map_info = Game.GetMapInfo();
-
-	if (map_info.map_display_name == "imba_random_omg") {
-		parent_panel.FindChildTraverse("HeroSelectTextRandomOmg").style.visibility = "visible";
-	} else if (map_info.map_display_name == "imba_arena") {
-		parent_panel.FindChildTraverse("HeroSelectTextArenaMode").style.visibility = "visible";
+	// Else, do pick screen stuff
 	} else {
-		parent_panel.FindChildTraverse("HeroSelectTextAllPick").style.visibility = "visible";
+
+		// Set panel visibility
+		$('#PickList').style.visibility = 'visible';
+		$('#PostPickScreen').style.visibility = 'collapse';
+
+		///Load player elements
+		LoadPlayers();
+
+		// Show only map-specific elements
+		var parent_panel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
+		var map_info = Game.GetMapInfo();
+
+		if (map_info.map_display_name == "imba_random_omg") {
+			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_random_omg' );
+		} else if (map_info.map_display_name == "imba_arena") {
+			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_arena_mode' );
+		}
+
+		// Hide the top scoreboard during the pick phase
+		parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
+
+		// Update the game options display
+		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+		var creep_power = CustomNetTables.GetTableValue("game_options", "creep_power");
+		var tower_power = CustomNetTables.GetTableValue("game_options", "tower_power");
+		var respawn_multiplier = CustomNetTables.GetTableValue("game_options", "respawn_multiplier");
+		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
+		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
+		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
+		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
+		$("#InitialGoldValue").text = initial_gold[1];
+		$("#InitialLevelValue").text = initial_level[1];
+		$("#MaxLevelValue").text = max_level[1];
+
+		if (tower_power[1] == 0) {
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+		} else if (tower_power[1] == 1) {
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+		} else if (tower_power[1] == 2) {
+			$("#TowerPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+		}
+
+		if (map_info.map_display_name == "imba_arena") {
+			$("#CreepPowerLabel").text = $.Localize( '#imba_gamemode_settings_kills_to_end' );
+			$("#CreepPowerValue").text = kills_to_end[1];
+		} else if (creep_power[1] == 1) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_1' );
+		} else if (creep_power[1] == 2) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
+		} else if (creep_power[1] == 3) {
+			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+		}
+
+		// If All Random is enabled, pick a random hero
+		var all_random_enabled = CustomNetTables.GetTableValue("game_options", "all_random" );
+		if (all_random_enabled != null && all_random_enabled[1] == 1) {
+			$("#PickHeroBtn").AddClass( "disabled" );
+			$("#RepickBtn").AddClass( "disabled" );
+			$('#HeroSelectText').text = $.Localize( '#imba_gamemode_name_all_random' );
+			$.Schedule(5, SelectRandomHero);
+		}
+
+		// Tell the server this player's UI was initialized
+		GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
 	}
-
-	// Hide the top scoreboard during the pick phase
-	parent_panel.FindChildTraverse("ScoreboardContainer").style.visibility = "collapse";
-
-	// Tell the server this player's UI was initialized
-	GameEvents.SendCustomGameEventToServer( "ui_initialized", {} );
 })();

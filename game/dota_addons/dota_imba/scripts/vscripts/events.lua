@@ -611,6 +611,12 @@ function GameMode:OnTeamKillCredit(keys)
 	local killer_team = keys.teamnumber
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Comeback gold logic
+	-------------------------------------------------------------------------------------------------
+
+	UpdateComebackBonus(1, killer_team)
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------
 
@@ -961,7 +967,17 @@ function GameMode:OnTowerKill(keys)
 			EmitGlobalSound("powerup_02")
 		end
 	end
-	
+
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Update comeback gold logic
+	-------------------------------------------------------------------------------------------------
+
+	local points = 1
+	if tower.tower_tier then
+		points = tower.tower_tier
+	end
+	local team = PlayerResource:GetTeam(keys.killer_userid)
+	UpdateComebackBonus(points, team)
 end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup 

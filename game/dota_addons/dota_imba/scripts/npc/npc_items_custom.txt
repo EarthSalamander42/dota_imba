@@ -1782,7 +1782,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_ITEM_UNIQUE"	"%magic_resistance"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance"
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%health_regen"
 				}
 			}
@@ -16720,7 +16720,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_ITEM_UNIQUE"	"%magic_resist"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%magic_resist"
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"				"1.0"		// this is hardcoded due to an obscure engine bug
 				}
 			}
@@ -18133,6 +18133,26 @@
 	}
 
 	//=================================================================================================================
+	// Bounty Rune (Arena Mode)
+	//=================================================================================================================
+	"item_imba_rune_bounty_arena"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"									"2222"
+		"BaseClass"								"item_datadriven"
+		"Model"									"models/props_gameplay/gold_bag.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"								"0"
+		"ItemQuality"							"artifact"
+		"ItemPurchasable"						"0"
+		"ItemSellable"							"0"
+		"ItemKillable"							"1"
+	}
+
+	//=================================================================================================================
 	// Nightmare Shadow (haste rune)
 	//=================================================================================================================
 	"item_imba_rune_haste"
@@ -18465,5 +18485,5 @@
 		}
 	}
 
-	//next free ID: 2222
+	//next free ID: 2223
 }

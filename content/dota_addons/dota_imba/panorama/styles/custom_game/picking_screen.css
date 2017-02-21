@@ -139,7 +139,7 @@
 	background-size: 320px 120px;
 	height: 55px;
 	width: 420px;
-	padding-top: 6px;
+	border-radius: 10px;
 }
 
 #EnterGameBtn.disabled, #EnterGameBtn.disabled:Hover {
@@ -152,6 +152,7 @@
 
 #EnterGameBtn Label {
 	horizontal-align: center;
+	vertical-align: center;
 	color: #fff;
 	font-size: 36px;
 	font-family: "Radiance";
@@ -169,7 +170,7 @@
 	background-size: 320px 120px;
 	height: 55px;
 	width: 420px;
-	padding-top: 6px;
+	border-radius: 10px;
 }
 
 #RepickBtn.disabled, #RepickBtn.disabled:Hover {
@@ -182,6 +183,7 @@
 
 #RepickBtn Label {
 	horizontal-align: center;
+	vertical-align: center;
 	color: #fff;
 	font-size: 36px;
 	font-family: "Radiance";
@@ -191,15 +193,15 @@
 =================================================================*/
 #RandomPickBtn {
 	horizontal-align: center;
-	margin-top: 4%;
+	margin-top: 15px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
 	background-size: 320px 120px;
-	height: 55px;
+	height: 42px;
 	width: 420px;
-	padding-top: 6px;
+	border-radius: 10px;
 }
 
 #RandomPickBtn:Hover {
@@ -207,9 +209,10 @@
 }
 
 #RandomPickBtn Label {
+	vertical-align: center;
 	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 36px;
+	font-size: 30px;
 	font-family: "Radiance";
 }
 
@@ -279,12 +282,12 @@
 =================================================================*/
 #PickInfoPanel {
 	width: 100%;
-	height: 170px;
+	height: 220px;
 	horizontal-align: center;
 	vertical-align: middle;
 	flow-children: right;
-	padding-left: 50px;
-	padding-right: 50px;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 
 .HeroSelectText {
@@ -292,32 +295,88 @@
 	font-size: 48px;
 	font-family: "Goudy Trajan Medium";
 	color: #fff;
-	visibility: collapse;
 	vertical-align: middle;
 }
 
 #PickTextPanel {
 	horizontal-align: left;
 	vertical-align: center;
+	flow-children: down;
+}
+
+#PickTimerPanel {
+	horizontal-align: center;
+	vertical-align: top;
 	flow-children: right;
 }
 
 #PickTimer {
-	width: 70px;
-	height: 70px;
+	width: 60px;
+	height: 60px;
 	border: 3px solid #fff;
-	border-radius: 35px;
+	border-radius: 30px;
 	margin: 0px 20px 0px 0px;
 	vertical-align: middle;
 }
 
 #TimerTxt {
-	width: 60px;
+	width: 50px;
 	text-align: center;
-	font-size: 44px;
+	font-size: 40px;
 	font-family: "Radiance";
 	color:#fff;
-	margin: 8px 0px 0px 2px;
+	margin: 4px 0px 0px 2px;
+}
+
+#GameOptionsPanelContainer {
+	width: 580px;
+	margin-top: 10px;
+	height: 140px;
+	horizontal-align: center;
+	vertical-align: bottom;
+	flow-children: right;
+}
+
+#GameOptionsPanel1 {
+	margin-top: 5px;
+	horizontal-align: left;
+	vertical-align: top;
+	flow-children: down;
+}
+
+#GameOptionsPanel2 {
+	margin-top: 5px;
+	horizontal-align: right;
+	vertical-align: top;
+	flow-children: down;
+}
+
+.GameModeLabelPanel {
+	width: 280px;
+	margin-right: 10px;
+	flow-children: right;
+}
+
+.GameModeLabel {
+	horizontal-align: left;
+	text-align: center;
+	font-size: 22px;
+	font-family: "Radiance";
+	color:#FFFFFF;
+}
+
+.GameModeLabelPanel2 {
+	width: 300px;
+	flow-children: down;
+}
+
+.GameModeValue {
+	horizontal-align: right;
+	margin-left: 3px;
+	text-align: center;
+	font-size: 22px;
+	font-family: "Radiance";
+	color:#FF7800;
 }
 
 .PickScreenTeamTitle {
@@ -352,7 +411,7 @@
 =================================================================*/
 #HeroDetailsPanel {
 	height: 100%;
-	horizontal-align: center;
+	horizontal-align: right;
 	vertical-align: center;
 	flow-children: right;
 }
@@ -382,7 +441,7 @@
 	horizontal-align: right;
 	vertical-align: center;
 	flow-children: down;
-	margin-left: 30px;
+	margin-left: 10px;
 	visibility: collapse;
 }
 
@@ -392,24 +451,26 @@
 }
 
 .PickedHeroAbility {
-	height: 80px;
-	width: 80px;
-	margin-left: 6px;
-	margin-right: 6px;
+	height: 68px;
+	width: 68px;
+	margin-left: 1px;
+	margin-right: 1px;
+	border-radius: 10px;
 }
 
 /* 'Confirm pick' button
 =================================================================*/
 #PickHeroBtn {
 	horizontal-align: center;
-	margin-top: 20px;
+	margin-top: 15px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
 	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
 	background-size: 320px 120px;
-	height: 50px;
+	height: 42px;
 	width: 420px;
+	border-radius: 10px;
 }
 
 #PickHeroBtn:Hover {
@@ -423,6 +484,6 @@
 	vertical-align: center;
 	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 36px;
+	font-size: 30px;
 	font-family: "Radiance";
 }

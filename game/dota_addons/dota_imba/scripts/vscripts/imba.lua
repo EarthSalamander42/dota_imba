@@ -68,8 +68,22 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Roshan initialization
 	-------------------------------------------------------------------------------------------------
 
-	local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
-	local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	if not GetMapName() == "imba_arena" then
+		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
+		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
+	end
+	
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arena mode center vision
+	-------------------------------------------------------------------------------------------------
+ 	if GetMapName() == "imba_arena" then
+		local fow_viewer_a = Entities:FindByName(nil, "bounty_rune_location_dire_top"):GetAbsOrigin()
+		local fow_viewer_b = Entities:FindByName(nil, "bounty_rune_location_radiant_top"):GetAbsOrigin()
+		AddFOWViewer(DOTA_TEAM_GOODGUYS, fow_viewer_a, 650, 6000, true)
+		AddFOWViewer(DOTA_TEAM_GOODGUYS, fow_viewer_b, 550, 6000, true)
+		AddFOWViewer(DOTA_TEAM_BADGUYS, fow_viewer_a, 650, 6000, true)
+		AddFOWViewer(DOTA_TEAM_BADGUYS, fow_viewer_b, 550, 6000, true)
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -184,6 +198,12 @@ function GameMode:GoldFilter( keys )
 	if keys.gold > 0 then
 		local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
 		keys.gold = keys.gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	end
+
+	-- Comeback gold gain
+	local team = PlayerResource:GetTeam(keys.player_id_const)
+	if COMEBACK_BOUNTY_BONUS[team] > 0 then
+		keys.gold = keys.gold * (1 + COMEBACK_BOUNTY_BONUS[team])
 	end
 
 	-- Show gold earned message??
@@ -336,11 +356,11 @@ function GameMode:ItemAddedFilter( keys )
 	-- Rune pickup logic
 	-------------------------------------------------------------------------------------------------
 
-	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
+	if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" or item_name == "item_imba_rune_double_damage" or item_name == "item_imba_rune_haste" or item_name == "item_imba_rune_regeneration" then
 
 		-- Only real heroes can pick up runes
 		--if unit:IsRealHero() then
-			if item_name == "item_imba_rune_bounty" then
+			if item_name == "item_imba_rune_bounty" or "item_imba_rune_bounty_arena" then
 				PickupBountyRune(item, unit)
 				return false
 			end
@@ -1041,7 +1061,7 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	for _, wisp in pairs(IMBA_WISP_PICKERS_TABLE) do
-		wisp:Destroy()
+		UTIL_Remove(wisp)
 	end
 	IMBA_WISP_PICKERS_TABLE = nil
 

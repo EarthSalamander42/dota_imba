@@ -31,12 +31,48 @@
 				<Panel class="ClassContainer" >
 					<Panel id="PickInfoPanel">
 						<Panel id="PickTextPanel">
-							<Panel id='PickTimer'>
-								<Label id='TimerTxt' text="" />
+							<Panel id='PickTimerPanel'>
+								<Panel id='PickTimer'>
+									<Label id='TimerTxt' text="" />
+								</Panel>
+								<Label id="HeroSelectText" class="HeroSelectText" text="#imba_gamemode_name_all_pick" />
 							</Panel>
-							<Label id="HeroSelectTextAllPick" class="HeroSelectText" text="#imba_gamemode_name_all_pick" />
-							<Label id="HeroSelectTextRandomOmg" class="HeroSelectText" text="#imba_gamemode_name_random_omg" />
-							<Label id="HeroSelectTextArenaMode" class="HeroSelectText" text="#imba_gamemode_name_arena_mode" />
+
+							<Panel id='GameOptionsPanelContainer'>
+								<Panel id="GameOptionsPanel1">
+									<Panel id="GameOptionsLabelPanel1" class="GameModeLabelPanel">
+										<Label id="BountyMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_bounty_multiplier" />
+										<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel2" class="GameModeLabelPanel">
+										<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
+										<Label id="CreepPowerValue" class="GameModeValue" text="0" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel3" class="GameModeLabelPanel">
+										<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
+										<Label id="TowerPowerValue" class="GameModeValue" text="1" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel4" class="GameModeLabelPanel">
+										<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
+										<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
+									</Panel>
+								</Panel>
+
+								<Panel id="GameOptionsPanel2">
+									<Panel id="GameOptionsLabelPanel5" class="GameModeLabelPanel">
+										<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
+										<Label id="InitialGoldValue" class="GameModeValue" text="625" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel6" class="GameModeLabelPanel">
+										<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
+										<Label id="InitialLevelValue" class="GameModeValue" text="1" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel7" class="GameModeLabelPanel">
+										<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
+										<Label id="MaxLevelValue" class="GameModeValue" text="40" />
+									</Panel>
+								</Panel>
+							</Panel>
 						</Panel>
 
 						<Panel id="HeroDetailsPanel">
@@ -55,6 +91,9 @@
 								</Panel>
 								<Button id="PickHeroBtn" onactivate="PickHero()" >
 									<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
+								</Button>
+								<Button id="RandomPickBtn" onactivate="SelectRandomHero()" >
+									<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
 								</Button>
 							</Panel>
 						</Panel>
@@ -413,10 +452,6 @@
 								onactivate="SelectHero('npc_dota_hero_zuus')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_zuus.png');" />
 						</Panel>
-
-						<Button id="RandomPickBtn" onactivate="SelectRandomHero()" >
-							<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
-						</Button>
 					</Panel>
 
 					<!-- Post-pick screen (hero view) -->

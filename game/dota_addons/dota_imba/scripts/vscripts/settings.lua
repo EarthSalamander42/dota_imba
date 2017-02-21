@@ -90,6 +90,13 @@ AEGIS_DURATION = 300														-- Aegis expiration timer (in seconds)
 
 IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF = 2500									-- Range at which most on-damage effects no longer trigger
 
+COMEBACK_BOUNTY_SCORE = {}													-- Extra comeback gold based on hero and tower kills
+COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] = 0
+COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] = 0
+COMEBACK_BOUNTY_BONUS = {}													-- Extra comeback gold based on hero and tower kills
+COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = 0
+COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = 0
+
 HERO_RESPAWN_TIME_PER_LEVEL = {}											-- Hero respawn time per level
 HERO_RESPAWN_TIME_PER_LEVEL[1] = 6
 HERO_RESPAWN_TIME_PER_LEVEL[2] = 8
@@ -224,6 +231,11 @@ elseif GetMapName() == "imba_10v10" then
 	IMBA_PLAYERS_ON_GAME = 20
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 10
 	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 10
+elseif GetMapName() == "imba_arena" then
+	IMBA_PICK_MODE_ALL_PICK = true
+	IMBA_PLAYERS_ON_GAME = 16
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_GOODGUYS] = 8
+	CUSTOM_TEAM_PLAYER_COUNT[DOTA_TEAM_BADGUYS]  = 8
 end
 
 -------------------------------------------------------------------------------------------------
@@ -234,7 +246,7 @@ GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 25												-- How many kills for a team should signify the end of the game?
+KILLS_TO_END_GAME_FOR_TEAM = 40												-- How many kills for a team should signify the end of the game?
 
 IMBA_WISP_PICKERS_TABLE = {}												-- Stores the pick-dummy wisps
 			
@@ -243,7 +255,7 @@ ALLOW_SAME_HERO_SELECTION = true											-- Allows people to select the same h
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
-IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 10.0									-- Time we need to wait before the game starts when all heroes are randomed
+IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
 
 IMBA_RANDOM_OMG_NORMAL_ABILITY_COUNT = 5									-- Number of regular abilities in Random OMG mode
 IMBA_RANDOM_OMG_ULTIMATE_ABILITY_COUNT = 1									-- Number of ultimate abilities in Random OMG mode
@@ -297,7 +309,6 @@ if GetMapName() == "imba_standard" then										-- Standard map defaults
 	CUSTOM_GOLD_BONUS = 35
 	CUSTOM_XP_BONUS = 35
 	CREEP_POWER_FACTOR = 1
-	SPAWN_ANCIENT_BEHEMOTHS = true
 	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 100
@@ -311,7 +322,6 @@ elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
 	CUSTOM_GOLD_BONUS = 35
 	CUSTOM_XP_BONUS = 35
 	CREEP_POWER_FACTOR = 1
-	SPAWN_ANCIENT_BEHEMOTHS = true
 	TOWER_UPGRADE_MODE = false
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 100
@@ -320,12 +330,12 @@ elseif GetMapName() == "imba_random_omg" then								-- ROMG map defaults
 	HERO_RANDOM_GOLD = 825
 	HERO_STARTING_LEVEL = 1
 	MAX_LEVEL = 40
+	IMBA_PICK_MODE_ALL_RANDOM = true
 elseif GetMapName() == "imba_custom" then									-- Custom map defaults
 	END_GAME_ON_KILLS = false
 	CUSTOM_GOLD_BONUS = 150
 	CUSTOM_XP_BONUS = 150
 	CREEP_POWER_FACTOR = 2
-	SPAWN_ANCIENT_BEHEMOTHS = true
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 75
@@ -339,7 +349,6 @@ elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	CUSTOM_GOLD_BONUS = 60
 	CUSTOM_XP_BONUS = 60
 	CREEP_POWER_FACTOR = 1
-	SPAWN_ANCIENT_BEHEMOTHS = true
 	TOWER_UPGRADE_MODE = true
 	TOWER_POWER_FACTOR = 1
 	HERO_RESPAWN_TIME_MULTIPLIER = 75
@@ -348,7 +357,38 @@ elseif GetMapName() == "imba_10v10" then									-- 10v10 map defaults
 	HERO_RANDOM_GOLD = 2400
 	HERO_STARTING_LEVEL = 5
 	MAX_LEVEL = 40
+elseif GetMapName() == "imba_arena" then									-- Arena map defaults
+	END_GAME_ON_KILLS = true
+	TOWER_ABILITY_MODE = false
+	TOWER_UPGRADE_MODE = false
+	SPAWN_ANCIENT_BEHEMOTHS = false
+	UNIVERSAL_SHOP_MODE = true
+	CUSTOM_GOLD_BONUS = 100
+	CUSTOM_XP_BONUS = 100
+	TOWER_POWER_FACTOR = 2
+	HERO_RESPAWN_TIME_MULTIPLIER = 50
+	HERO_INITIAL_GOLD = 1000
+	HERO_REPICK_GOLD = 750
+	HERO_RANDOM_GOLD = 1250
+	HERO_STARTING_LEVEL = 3
+	MAX_LEVEL = 40
+	RUNE_SPAWN_TIME = 15
+	FOUNTAIN_PERCENTAGE_MANA_REGEN = 15
+	FOUNTAIN_PERCENTAGE_HEALTH_REGEN = 15
+	PRE_GAME_TIME = 15.0 + HERO_SELECTION_TIME + 10.0
 end
+
+-- Update game mode net tables
+CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
+CustomNetTables:SetTableValue("game_options", "tower_upgrades", {TOWER_UPGRADE_MODE})
+CustomNetTables:SetTableValue("game_options", "kills_to_end", {END_GAME_ON_KILLS})
+CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
+CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
+CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})
+CustomNetTables:SetTableValue("game_options", "respawn_multiplier", {100 - HERO_RESPAWN_TIME_MULTIPLIER})
+CustomNetTables:SetTableValue("game_options", "initial_gold", {HERO_INITIAL_GOLD})
+CustomNetTables:SetTableValue("game_options", "initial_level", {HERO_STARTING_LEVEL})
+CustomNetTables:SetTableValue("game_options", "max_level", {MAX_LEVEL})
 
 -- XP per level table (only active if custom hero levels are enabled) 
 XP_PER_LEVEL_TABLE = {}

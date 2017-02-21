@@ -19,6 +19,10 @@ function modifier_imba_prevent_actions_game_start:CheckState()
 	return state
 end
 
+function modifier_imba_prevent_actions_game_start:GetDuration()
+	return 60
+end
+
 function modifier_imba_prevent_actions_game_start:IsHidden()
 	return true
 end
