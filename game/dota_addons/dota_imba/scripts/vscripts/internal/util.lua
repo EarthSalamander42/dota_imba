@@ -1813,26 +1813,13 @@ function SpawnImbaRunes()
 	-- Spawn bounty runes
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
-		
-		-- Arena map randomization
-		local bounty_rune
-		if GetMapName() == "imba_arena" then
-			bounty_loc = bounty_loc + RandomVector(RandomInt(0, 175))
-			bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
-		else
-			bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		end
+		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
 		CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
 			bounty_rune.is_initial_bounty_rune = true
 		end
-	end
-
-	-- On arena mode, there's a 75% chance of doing nothing
-	if GetMapName() == "imba_arena" and RandomInt(1, 4) < 4 then
-		return nil
 	end
 
 	-- List of powerup rune types
@@ -1845,6 +1832,42 @@ function SpawnImbaRunes()
 	-- Spawn a random powerup rune in a random powerup location
 	if game_time > 1 then
 		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+	end
+end
+
+-- Spawns runes on the arena map
+function SpawnArenaRunes()
+
+	-- Locate the rune spots on the map
+	local powerup_rune_spawner = Entities:FindAllByName("powerup_rune_spawner")
+	powerup_rune_spawner = powerup_rune_spawner[1]:GetAbsOrigin()
+
+	-- Decide what type of rune to spawn
+	if not ARENA_RUNE_COUNTER then
+		ARENA_RUNE_COUNTER = 3
+	end
+	ARENA_RUNE_COUNTER = ARENA_RUNE_COUNTER + 1
+
+	-- Spawn bounty rune
+	if ARENA_RUNE_COUNTER < 4 then
+	
+		local bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
+		CreateItemOnPositionForLaunch(powerup_rune_spawner, bounty_rune)
+		bounty_rune:LaunchLoot(false, 200, 0.4, powerup_rune_spawner + RandomVector(1) * RandomInt(200, 400))
+
+	-- Spawn powerup rune
+	else
+
+		-- List of powerup rune types
+		local powerup_rune_types = {
+			"item_imba_rune_double_damage",
+			"item_imba_rune_haste",
+			"item_imba_rune_regeneration"
+		}
+
+		-- Spawn a random powerup rune
+		CreateItemOnPositionForLaunch(powerup_rune_spawner, CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		ARENA_RUNE_COUNTER = 0
 	end
 end
 
@@ -1877,10 +1900,7 @@ function PickupBountyRune(item, unit)
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_CreepKill)
 
 	-- Show the gold gained message to everyone
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
-
-	-- Play the gold gained sound
-	unit:EmitSound("General.Coins")
+	SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
@@ -1957,6 +1977,7 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 	return base
 end
 
+-- Controls comeback gold
 function UpdateComebackBonus(points, team)
 
 	-- Calculate both teams' networths
@@ -1978,4 +1999,14 @@ function UpdateComebackBonus(points, team)
 	elseif (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) and (team_networth[DOTA_TEAM_BADGUYS] < team_networth[DOTA_TEAM_GOODGUYS]) then
 		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
 	end
+end
+
+-- Controls arena control points
+function ArenaControlPointThink(control_point)
+	--VARIABLE_LUL = 0
+	--Timers:CreateTimer(0, function()
+	--	VARIABLE_LUL = VARIABLE_LUL + 1
+	--	GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS) + VARIABLE_LUL)
+	--	return 1
+	--end)
 end

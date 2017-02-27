@@ -211,7 +211,7 @@ function TimeDilation( keys )
 
 		-- Iterate through the target's abilities
 		local abilities_on_cooldown = 0
-		for i = 0, 15 do
+		for i = 0, 8 do
 			local current_ability = target:GetAbilityByIndex(i)
 			if current_ability then
 				if current_ability:IsCooldownReady() then

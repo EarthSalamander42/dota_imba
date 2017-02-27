@@ -416,7 +416,7 @@ end
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
 
-		PlayerResource:ReplaceHeroWith( player_id, hero_name, 0, 0 )
+		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		PlayerResource:SetCameraTarget(player_id, nil)
 
 		-------------------------------------------------------------------------------------------------

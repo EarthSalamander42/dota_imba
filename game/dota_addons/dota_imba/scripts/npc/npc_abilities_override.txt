@@ -19468,7 +19468,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.1"
+				"damage_reduction"		"-0.03"
 			}
 			"02"
 			{
