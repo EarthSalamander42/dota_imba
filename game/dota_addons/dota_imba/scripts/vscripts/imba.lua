@@ -72,18 +72,7 @@ function GameMode:OnFirstPlayerLoaded()
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
-	
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode center vision
-	-------------------------------------------------------------------------------------------------
- 	if GetMapName() == "imba_arena" then
-		local fow_viewer_a = Entities:FindByName(nil, "bounty_rune_location_dire_top"):GetAbsOrigin()
-		local fow_viewer_b = Entities:FindByName(nil, "bounty_rune_location_radiant_top"):GetAbsOrigin()
-		AddFOWViewer(DOTA_TEAM_GOODGUYS, fow_viewer_a, 650, 6000, true)
-		AddFOWViewer(DOTA_TEAM_GOODGUYS, fow_viewer_b, 550, 6000, true)
-		AddFOWViewer(DOTA_TEAM_BADGUYS, fow_viewer_a, 650, 6000, true)
-		AddFOWViewer(DOTA_TEAM_BADGUYS, fow_viewer_b, 550, 6000, true)
-	end
+
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -360,7 +349,7 @@ function GameMode:ItemAddedFilter( keys )
 
 		-- Only real heroes can pick up runes
 		--if unit:IsRealHero() then
-			if item_name == "item_imba_rune_bounty" or "item_imba_rune_bounty_arena" then
+			if item_name == "item_imba_rune_bounty" or item_name == "item_imba_rune_bounty_arena" then
 				PickupBountyRune(item, unit)
 				return false
 			end
@@ -1057,6 +1046,68 @@ function GameMode:OnGameInProgress()
 	GameRules:SetGoldTickTime( adjusted_gold_tick_time )
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arena mode initialization
+	-------------------------------------------------------------------------------------------------
+
+	if GetMapName() == "imba_arena" then
+
+		-- Define the bonus gold positions
+		local bonus_gold_positions = {}
+		bonus_gold_positions.fountain_radiant = {
+			stacks = 20,
+			center = Vector(-3776, -3776, 384),
+			radius = 1300
+		}
+		bonus_gold_positions.fountain_dire = {
+			stacks = 20,
+			center = Vector(3712, 3712, 384),
+			radius = 1300
+		}
+		bonus_gold_positions.center_arena = {
+			stacks = 40,
+			center = Vector(0, 0, 256),
+			radius = 900
+		}
+
+		-- Continuously update the amount of gold/exp to gain
+		Timers:CreateTimer(0, function()
+
+			-- Apply the modifier
+			local nearby_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 6000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+			for _, hero in pairs(nearby_heroes) do
+				if not hero:HasModifier("modifier_imba_arena_passive_gold_thinker") then
+					hero:AddNewModifier(hero, nil, "modifier_imba_arena_passive_gold_thinker", {})
+				end
+				hero:FindModifierByName("modifier_imba_arena_passive_gold_thinker"):SetStackCount(12)
+			end
+
+			-- Update stack amount, when relevant
+			for _, position in pairs(bonus_gold_positions) do
+				nearby_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, position.center, nil, position.radius, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+				for _, hero in pairs(nearby_heroes) do
+					hero:FindModifierByName("modifier_imba_arena_passive_gold_thinker"):SetStackCount(position.stacks)
+				end
+			end
+
+			-- Adjust ward vision
+			local nearby_wards = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0, 0, 0), nil, 6000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+			for v, ward in pairs(nearby_wards) do
+				ward:SetDayTimeVisionRange(1000)
+				ward:SetNightTimeVisionRange(1000)
+			end
+			return 0.1
+		end)
+
+		-- Set up control points
+		local radiant_control_point_loc = Entities:FindByName(nil, "radiant_capture_point"):GetAbsOrigin()
+		local dire_control_point_loc = Entities:FindByName(nil, "dire_capture_point"):GetAbsOrigin()
+		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
+		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
+		ArenaControlPointThink(RADIANT_CONTROL_POINT_DUMMY)
+		ArenaControlPointThink(DIRE_CONTROL_POINT_DUMMY)
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Destroy wisp dummy pickers
 	-------------------------------------------------------------------------------------------------
 
@@ -1081,7 +1132,11 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	Timers:CreateTimer(0, function()
-		SpawnImbaRunes()
+		if GetMapName() == "imba_arena" then
+			SpawnArenaRunes()
+		else
+			SpawnImbaRunes()
+		end
 		return RUNE_SPAWN_TIME
 	end)
 
