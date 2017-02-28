@@ -36142,7 +36142,7 @@
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
-			"particle"	"particles/bloodseeker_boiling_blood.vpcf"
+			"particle"	"particles/hero/bloodseeker/bloodseeker_boiling_blood.vpcf"
 			"particle"	"particles/status_fx/status_effect_bloodrage.vpcf"
 			"particle"	"particles/generic_gameplay/generic_lifesteal.vpcf"
 		}
