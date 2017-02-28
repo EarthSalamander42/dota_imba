@@ -102,10 +102,10 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/bloodseeker_boiling_blood_streak_glow.vpcf"
+			m_ChildRef = resource:"particles/hero/bloodseeker/bloodseeker_boiling_blood_streak_glow.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/bloodseeker_boiling_blood_streak_light.vpcf"
+			m_ChildRef = resource:"particles/hero/bloodseeker/bloodseeker_boiling_blood_streak_light.vpcf"
 		},
 	]
 }
