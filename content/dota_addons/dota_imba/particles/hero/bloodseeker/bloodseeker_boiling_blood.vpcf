@@ -19,10 +19,10 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/bloodseeker_boiling_blood_start.vpcf"
+			m_ChildRef = resource:"particles/hero/bloodseeker/bloodseeker_boiling_blood_start.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/bloodseeker_boiling_blood_streak.vpcf"
+			m_ChildRef = resource:"particles/hero/bloodseeker/bloodseeker_boiling_blood_streak.vpcf"
 		},
 		{
 			m_ChildRef = resource:"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodrage.vpcf"
