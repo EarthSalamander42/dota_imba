@@ -262,20 +262,19 @@
 
 		"AttackRate"				"1.6"
 
-		//"Ability1"					"bloodseeker_bloodrage"
-		//"Ability2"					"bloodseeker_blood_bath"
-		//"Ability3"					"bloodseeker_thirst"
-		//"Ability4"					"bloodseeker_rupture"
-
-		"Ability9"					"imba_unlimited_level_powerup"
-		"Ability10"					"special_bonus_armor_4"
-		"Ability11"					"special_bonus_attack_damage_35"
-		"Ability12"					"special_bonus_attack_speed_20"
-		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_respawn_reduction_35"
-		"Ability15"					"special_bonus_all_stats_12"
-		"Ability16"					"special_bonus_lifesteal_30"
-		"Ability17"					"special_bonus_unique_bloodseeker"
+		"Ability1"			"imba_bloodseeker_bloodrage"				// Ability 1
+		"Ability2"			"imba_bloodseeker_blood_bath"
+		"Ability3"			"imba_bloodseeker_thirst"
+		"Ability4"			"imba_bloodseeker_rupture"
+		
+		"Ability10"			"special_bonus_unique_bloodseeker_1"
+		"Ability11"			"special_bonus_unique_bloodseeker_2"
+		"Ability12"			"special_bonus_unique_bloodseeker_3"
+		"Ability13"			"special_bonus_unique_bloodseeker_4"
+		"Ability14"			"special_bonus_unique_bloodseeker_5"
+		"Ability15"			"special_bonus_unique_bloodseeker_6"
+		"Ability16"			"special_bonus_unique_bloodseeker_7"
+		"Ability17"			"special_bonus_unique_bloodseeker_8"
 
 		"ProjectileSpeed"			"900"
 	}
