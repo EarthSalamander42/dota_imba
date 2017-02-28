@@ -22,7 +22,6 @@ if IsServer() then
 			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
 				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
 				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
-				print(self.ampin, self.ampout)
 			else
 				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
 				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
@@ -106,11 +105,11 @@ if IsServer() then
 end
 
 function modifier_imba_bloodseeker_bloodrage:GetEffectName()
-	return "particles/bloodseeker_boiling_blood.vpcf"
+	return "particles/hero/bloodseeker/bloodseeker_boiling_blood.vpcf"
 end
 
 function modifier_imba_bloodseeker_bloodrage:GetStatusEffectName()
-	return "particles/bloodseeker_boiling_blood.vpcf"
+	return "particles/status_fx/status_effect_bloodrage.vpcf"
 end
 
 function modifier_imba_bloodseeker_bloodrage:StatusEffectPriority()
@@ -345,7 +344,6 @@ end
 
 function modifier_imba_bloodseeker_thirst_passive:OnTakeDamage(params)
 	if IsServer() then
-		print(params.attacker:GetName(), params.unit:GetName())
 		if params.attacker:GetTeam() == self:GetCaster():GetTeam() and params.unit:GetTeam() ~= self:GetCaster():GetTeam() and params.attacker:IsRealHero() and params.unit:IsRealHero() then
 			local duration = self:GetAbility():GetTalentSpecialValueFor("atk_buff_duration")
 			local attackList = self:GetCaster():FindAllModifiersByName("modifier_imba_bloodseeker_thirst_attack_buff")
