@@ -276,6 +276,10 @@
 	vertical-align: center;
 }
 
+#FranticToggle {
+	visibility: collapse;
+}
+
 .GameOptionsDropdown
 {
 	margin-left: 10px;

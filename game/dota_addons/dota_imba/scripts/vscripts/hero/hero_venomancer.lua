@@ -112,6 +112,11 @@ function GaleHit( keys )
 	local ability_level = ability:GetLevel() - 1
 	local sound_hit = keys.sound_hit
 	local modifier_slow = keys.modifier_slow
+
+	-- If the target is magic immune, do nothing
+	if target:IsMagicImmune() then
+		return nil
+	end
 	
 	-- Parameters
 	local damage = ability:GetLevelSpecialValueFor("initial_damage", ability_level)

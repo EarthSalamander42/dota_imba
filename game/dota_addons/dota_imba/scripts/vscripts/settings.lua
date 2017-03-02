@@ -246,13 +246,12 @@ GAME_WINNER_TEAM = "none"													-- Tracks game winner
 GAME_ROSHAN_KILLS = 0														-- Tracks amount of Roshan kills
 
 END_GAME_ON_KILLS = false													-- Should the game end after a certain number of kills?
-KILLS_TO_END_GAME_FOR_TEAM = 40												-- How many kills for a team should signify the end of the game?
-
-IMBA_WISP_PICKERS_TABLE = {}												-- Stores the pick-dummy wisps
+KILLS_TO_END_GAME_FOR_TEAM = 70												-- How many kills for a team should signify the end of the game?
 			
 ALLOW_SAME_HERO_SELECTION = true											-- Allows people to select the same hero as each other if true
 
 IMBA_HYPER_MODE_ON = false													-- Is Hyper mode activated?
+IMBA_FRANTIC_MODE_ON = false												-- Is Frantic mode activated?
 
 IMBA_PICK_MODE_ALL_RANDOM = false											-- Activates All Random mode when true
 IMBA_ALL_RANDOM_HERO_SELECTION_TIME = 5.0									-- Time we need to wait before the game starts when all heroes are randomed
@@ -384,7 +383,7 @@ end
 -- Update game mode net tables
 CustomNetTables:SetTableValue("game_options", "all_random", {IMBA_PICK_MODE_ALL_RANDOM})
 CustomNetTables:SetTableValue("game_options", "tower_upgrades", {TOWER_UPGRADE_MODE})
-CustomNetTables:SetTableValue("game_options", "kills_to_end", {END_GAME_ON_KILLS})
+CustomNetTables:SetTableValue("game_options", "kills_to_end", {KILLS_TO_END_GAME_FOR_TEAM})
 CustomNetTables:SetTableValue("game_options", "bounty_multiplier", {100 + CUSTOM_GOLD_BONUS})
 CustomNetTables:SetTableValue("game_options", "creep_power", {CREEP_POWER_FACTOR})
 CustomNetTables:SetTableValue("game_options", "tower_power", {TOWER_POWER_FACTOR})

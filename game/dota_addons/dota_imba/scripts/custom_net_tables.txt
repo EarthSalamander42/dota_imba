@@ -3,6 +3,7 @@
   custom_net_tables =
   [
   	"talents",
-  	"game_options"
+  	"game_options",
+  	"arena_capture"
   ]
 }

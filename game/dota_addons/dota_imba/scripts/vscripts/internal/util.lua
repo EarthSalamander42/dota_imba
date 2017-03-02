@@ -1941,7 +1941,6 @@ function PickupRegenerationRune(item, unit)
 end
 
 -- Talent handling
-
 function CDOTA_BaseNPC:HasTalent(talentName)
 	if self:HasAbility(talentName) then
 		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
@@ -1955,7 +1954,6 @@ function CDOTA_BaseNPC:FindTalentValue(talentName)
 	end
 	return 0
 end
-
 
 function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
@@ -2001,12 +1999,128 @@ function UpdateComebackBonus(points, team)
 	end
 end
 
--- Controls arena control points
-function ArenaControlPointThink(control_point)
-	--VARIABLE_LUL = 0
-	--Timers:CreateTimer(0, function()
-	--	VARIABLE_LUL = VARIABLE_LUL + 1
-	--	GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS) + VARIABLE_LUL)
-	--	return 1
-	--end)
+-- Arena control point logic
+function ArenaControlPointThinkRadiant(control_point)
+
+	-- Create the control point particle, if this is the first iteration
+	if not control_point.particle then
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+	end
+
+	-- Check how many heroes are near the control point
+	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local score_change = #allied_heroes - #enemy_heroes
+
+	-- Calculate the new score
+	local old_score = control_point.score
+	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
+
+	-- If this control point changed disposition, update the UI and particle accordingly
+	if old_score >= 0 and control_point.score < 0 then
+		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_dire", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_wind_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	elseif old_score < 0 and control_point.score >= 0 then
+		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_radiant", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	end
+
+	-- Update the progress bar
+	CustomNetTables:SetTableValue("arena_capture", "radiant_progress", {control_point.score})
+	CustomGameEventManager:Send_ServerToAllClients("radiant_progress_update", {})
+
+	-- Run this function again after a second
+	Timers:CreateTimer(1, function()
+		ArenaControlPointThinkRadiant(control_point)
+	end)
+end
+
+function ArenaControlPointThinkDire(control_point)
+
+	-- Create the control point particle, if this is the first iteration
+	if not control_point.particle then
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+	end
+
+	-- Check how many heroes are near the control point
+	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local score_change = #allied_heroes - #enemy_heroes
+
+	-- Calculate the new score
+	local old_score = control_point.score
+	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
+
+	-- If this control point changed disposition, update the UI and particle accordingly
+	if old_score >= 0 and control_point.score < 0 then
+		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_radiant", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_metal.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	elseif old_score < 0 and control_point.score >= 0 then
+		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_dire", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	end
+
+	-- Update the progress bar
+	CustomNetTables:SetTableValue("arena_capture", "dire_progress", {control_point.score})
+	CustomGameEventManager:Send_ServerToAllClients("dire_progress_update", {})
+
+	-- Run this function again after a second
+	Timers:CreateTimer(1, function()
+		ArenaControlPointThinkDire(control_point)
+	end)
+end
+
+function ArenaControlPointScoreThink(radiant_cp, dire_cp)
+
+	-- Fetch current scores
+	local radiant_score = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
+	local dire_score = CustomNetTables:GetTableValue("arena_capture", "dire_score")
+
+	-- Update scores
+	if radiant_cp.score >= 0 then
+		radiant_score["1"] = radiant_score["1"] + 1
+	else
+		dire_score["1"] = dire_score["1"] + 1
+	end
+	if dire_cp.score >= 0 then
+		dire_score["1"] = dire_score["1"] + 1
+	else
+		radiant_score["1"] = radiant_score["1"] + 1
+	end
+
+	-- Set new values
+	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant_score["1"]})
+	CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire_score["1"]})
+
+	-- Update scoreboard
+	CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
+	CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
+
+	-- Check if one of the teams won the game
+	if radiant_score["1"] >= KILLS_TO_END_GAME_FOR_TEAM then
+		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+		GAME_WINNER_TEAM = "Radiant"
+	elseif dire_score["1"] >= KILLS_TO_END_GAME_FOR_TEAM then
+		GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+		GAME_WINNER_TEAM = "Dire"
+	end
+
+	-- Call this function again after 10 seconds
+	Timers:CreateTimer(10, function()
+		ArenaControlPointScoreThink(radiant_cp, dire_cp)
+	end)
 end

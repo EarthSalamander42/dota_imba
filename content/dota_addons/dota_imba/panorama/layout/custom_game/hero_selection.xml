@@ -71,6 +71,10 @@
 										<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
 										<Label id="MaxLevelValue" class="GameModeValue" text="40" />
 									</Panel>
+									<Panel id="GameOptionsLabelPanel8" class="GameModeLabelPanel">
+										<Label id="FranticModeLabel" class="GameModeLabel" text="#imba_gamemode_game_options_frantic" />
+										<Label id="FranticModeValue" class="GameModeValue" text="#imba_gamemode_game_options_frantic_disabled" />
+									</Panel>
 								</Panel>
 							</Panel>
 						</Panel>
@@ -92,9 +96,12 @@
 								<Button id="PickHeroBtn" onactivate="PickHero()" >
 									<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
 								</Button>
-								<Button id="RandomPickBtn" onactivate="SelectRandomHero()" >
+							</Panel>
+							<Panel id="RandomButtonContainer">
+								<Panel id="RandomButtonPanel">
+									<Image id="RandomPickBtnImage" src="file://{images}/custom_game/random_button.png" onactivate="SelectRandomHero()"/>
 									<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
-								</Button>
+								</Panel>
 							</Panel>
 						</Panel>
 					</Panel>

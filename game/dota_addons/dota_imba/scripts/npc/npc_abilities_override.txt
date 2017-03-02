@@ -3164,7 +3164,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.2 1.0 0.8"
+				"base_attack_time"		"1.1 0.85 0.65"
 			}
 			"04"
 			{
@@ -4482,7 +4482,7 @@
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"back_damage_reduction"			"27 36 45 54"
+				"back_damage_reduction"			"30 40 50 60"
 			}
 			"03"
 			{
@@ -4579,8 +4579,8 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_min"				"1"
+				"var_type"				"FIELD_FLOAT"
+				"stun_min"				"1.0 1.5 2.0 2.5"
 			}
 			"03"
 			{
@@ -4643,7 +4643,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"15 14 13 12"
+				"crit_chance"				"15"
 			}
 			"02"
 			{
@@ -5662,7 +5662,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"totem_damage_percentage"	"300 375 450 525"
+				"totem_damage_percentage"	"300 400 500 600"
 			}
 			"02"
 			{
@@ -5708,7 +5708,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"0.6 0.9 1.2 1.5"
+				"tooltip_duration"		"0.9 1.1 1.3 1.5"
 			}
 		}
 	}
@@ -7518,176 +7518,6 @@
 	}
 
 	//=================================================================================================================
-	// Lion: Impale
-	//================================================================================================================
-	"lion_impale"
-	{
-		"AbilityCastRange"			"1000"
-		"AbilityCastPoint"			"0.2"
-		
-		"AbilityCooldown"			"11.0"
-
-		"AbilityManaCost"			"100 110 120 130"
-		
-		"AbilityDamage"				"120 200 280 360"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"width"				"225"
-			}
-			"02"
-			{	
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.6"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"length_buffer"		"325"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"2000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lion: Voodoo
-	//=================================================================================================================
-	"lion_voodoo"
-	{
-		"AbilityCastRange"				"700"
-
-		"AbilityCooldown"				"30.0 24.0 18.0 12.0"
-
-		"AbilityManaCost"				"100"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"2.5 3 3.5 4"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lion: Mana Drain
-	//=================================================================================================================
-	"lion_mana_drain"
-	{
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"5.1"
-
-		"AbilityCooldown"				"18.0 13.0 8.0 3.0"
-
-		"AbilityManaCost"				"0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_second"		"100 200 300 400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"1400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"0.1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Lion: bonus Mana Drain targets
-	//=================================================================================================================
-	"special_bonus_unique_lion"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lion: Finger of Death
-	//=================================================================================================================
-	"lion_finger_of_death"
-	{
-		"AbilityCastRange"					"900"
-		"AbilityCastPoint"					"0.3"
-
-		"AbilityCooldown"					"100.0 60.0 30.0"
-
-		"AbilityManaCost"					"200 300 400"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"650 850 1050"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"800 1025 1250"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_cost_scepter"			"200 300 400"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_delay"				"0.2"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"55.0 35.0 15.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"splash_radius_scepter"		"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Luna: Lucent Beam
 	//=================================================================================================================
 	"luna_lucent_beam"
@@ -8666,12 +8496,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"incoming_damage"						"225 175 125 75"
+				"incoming_damage"						"125 100 75 50"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"tooltip_incoming_damage_total_pct"		"325 275 225 175"
+				"tooltip_incoming_damage_total_pct"		"225 200 175 150"
 			}
 			"06"
 			{
@@ -8713,14 +8543,14 @@
 
 		"AbilityManaCost"				"75"
 		
-		"AbilityCastRange"				"600 750 900 1050"
+		"AbilityCastRange"				"500 700 900 1100"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.5 4.0 4.5 5.0"
+				"duration"					"5.0"
 			}
 			"02"
 			{
@@ -8753,7 +8583,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"armor_reduction"			"-3.5 -5 -6.5 -8"
+				"armor_reduction"			"-5 -6 -7 -8"
 			}
 			"02"
 			{
@@ -8975,7 +8805,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
 
-		"AbilityCooldown"				"10.0 8.0 6.0 4.0"
+		"AbilityCooldown"				"16.0 12.0 8.0 4.0"
 
 		"AbilityManaCost"				"100"
 		
@@ -8984,7 +8814,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"float_multiplier"		"3.75 4.5 5.25 6.0"
+				"float_multiplier"		"5.0"
 			}
 		}
 	}
@@ -9574,17 +9404,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_illusions"				"5 7 9"
+				"max_illusions"				"2 3 4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"proc_chance_pct"			"50 75 100"
+				"proc_chance_pct"			"30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_proc_chance_pct"	"10 15 20"
+				"illusion_proc_chance_pct"	"30"
 			}			
 			"04"
 			{
@@ -9594,12 +9424,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_out_pct"	"-50"
+				"illusion_damage_out_pct"	"0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_damage"	"50"
+				"tooltip_illusion_damage"	"100"
 			}
 			"07"
 			{
@@ -10082,6 +9912,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"silence_duration"			"1.5 2.0 2.5 3.0"
 			}
+
 		}
 	}
 
@@ -13326,197 +13157,6 @@
 	}
 
 	//=================================================================================================================
-	// Skywrath Mage: Arcane Bolt
-	//=================================================================================================================
-	"skywrath_mage_arcane_bolt"
-	{
-		"AbilityCastRange"				"1000"
-
-		"AbilityCooldown"				"3.5 3.0 2.5 2.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bolt_speed"			"500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bolt_vision"			"400"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bolt_damage"			"90 100 110 120"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"int_multiplier"		"1.8"
-				"CalculateSpellDamageTooltip"	"1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.5"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"700"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Skywrath Mage: Concussive Shot
-	//=================================================================================================================
-	"skywrath_mage_concussive_shot"
-	{
-		"AbilityCastRange"			"2000"
-		
-		"AbilityCooldown"			"18.0 15.0 12.0 9.0"
-
-		"AbilityManaCost"			"90" 
-
-		"AbilitySpecial"
-		{ 
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"launch_radius"		"2000"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"slow_radius"		"500"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"speed"				"1000"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"90 160 230 300"
-			}
-			"05"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"slow_duration"		"4.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_speed_pct"	"35 40 45 50"
-			}
-			"07"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"shot_vision"		"400"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.34"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Skywrath Mage: Ancient Seal
-	//=================================================================================================================
-	"skywrath_mage_ancient_seal"
-	{
-		"AbilityCastRange"				"1000"
-
-		"AbilityCooldown"				"14 13 12 11"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"resist_debuff"			"-30 -40 -50 -60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"seal_duration"			"6.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Skywrath Mage: Ancient Seal cooldown reduction
-	//=================================================================================================================
-	"special_bonus_unique_skywrath"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"4"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Skywrath Mage: Mystic Flare
-	//=================================================================================================================
-	"skywrath_mage_mystic_flare"
-	{
-		"AbilityCastRange"				"1200 1300 1400"
-
-		"AbilityCooldown"				"45.0 30.0 15.0"
-
-		"AbilityManaCost"				"400 500 600"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"240 190 140"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 3.0 2.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"2400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_interval"		"0.1"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scepter_radius"		"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Underlord: Firestorm
 	//=================================================================================================================
 	"abyssal_underlord_firestorm"
@@ -14848,194 +14488,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"return_time"				"12.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Witch Doctor: Paralyzing Cask
-	//=================================================================================================================
-	"witch_doctor_paralyzing_cask"
-	{
-		"AbilityCastPoint"				"0.3"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_duration"			"1.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"creep_duration"		"5.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hero_damage"			"50"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"750"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounces"				"7 11 15 19"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.15"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounces_tooltip"		"6 10 14 18"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Witch Doctor: Voodoo Restoration
-	//=================================================================================================================
-	"witch_doctor_voodoo_restoration"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"8 10 12 14"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"525 550 575 600"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"heal"						"16 24 32 40"
-				"LinkedSpecialBonus"		"special_bonus_unique_witch_doctor_2"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"heal_interval"				"0.2"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Witch Doctor: Maledict
-	//=================================================================================================================
-	"witch_doctor_maledict"
-	{
-		"AbilityCastRange"				"750"
-
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityDamage"					"15 20 25 30"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"225 250 275 300"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration_tooltip"			"12"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"20 30 40 50"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_threshold"	"100"
-			}			
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"ticks"						"4"
-			}			
-		}
-	}
-	
-	//=================================================================================================================
-	// Witch Doctor: Death Ward
-	//=================================================================================================================
-	"witch_doctor_death_ward"
-	{
-		"AbilityCastRange"				"750"
-
-		"AbilityCastPoint"				"0.3"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 180 270"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounces"				"1"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounces_scepter"		"9"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"650 725 800"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Witch Doctor: Death Ward attack range increase
-	//=================================================================================================================
-	"special_bonus_unique_witch_doctor_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"225"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ability: Special Bonus
-	//=================================================================================================================
-	"special_bonus_unique_witch_doctor_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
 			}
 		}
 	}

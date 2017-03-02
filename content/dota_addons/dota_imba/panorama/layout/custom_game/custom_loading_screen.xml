@@ -33,6 +33,7 @@
 					<Panel id="TowerUpgradeOptionsPanel">
 
 						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>
+						<ToggleButton id="FranticToggle" text="#imba_gamemode_game_options_frantic" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_game_options_frantic_tooltip )" onmouseout="UIHideTextTooltip()"/>
 						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
 
 					</Panel>
@@ -42,8 +43,7 @@
 						<Label id="KillsToEndOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_kills_to_end" />
 						
 						<DropDown id="KillsToEndOptionsDropdown" class="GameOptionsDropdown">
-							<Label text="40" id="40"/>
-							<Label text="75" id="75"/>
+							<Label text="70" id="70"/>
 							<Label text="150" id="150"/>
 							<Label text="250" id="250"/>
 						</DropDown>

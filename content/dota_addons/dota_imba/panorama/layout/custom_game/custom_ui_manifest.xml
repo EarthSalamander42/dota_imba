@@ -61,6 +61,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/hero_selection.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/multiteam_top_scoreboard.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/arena_topbar.xml" />
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 	</Panel>
 	

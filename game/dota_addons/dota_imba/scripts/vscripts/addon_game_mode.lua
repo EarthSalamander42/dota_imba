@@ -29,6 +29,7 @@ function Precache( context )
 	LinkLuaModifier("modifier_imba_chronosphere_ally_slow", "modifier/modifier_imba_chronosphere_ally_slow.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_prevent_actions_game_start", "modifier/modifier_imba_prevent_actions_game_start.lua", LUA_MODIFIER_MOTION_NONE )
 	LinkLuaModifier("modifier_imba_arena_passive_gold_thinker", "modifier/modifier_imba_arena_passive_gold_thinker.lua", LUA_MODIFIER_MOTION_NONE )
+	LinkLuaModifier("modifier_imba_frantic", "modifier/modifier_imba_frantic.lua", LUA_MODIFIER_MOTION_NONE )
 
 	-- Silencer lua modifiers
 	LinkLuaModifier("modifier_imba_arcane_curse_debuff", "modifier/modifier_imba_arcane_curse_debuff.lua", LUA_MODIFIER_MOTION_NONE )
@@ -97,6 +98,7 @@ function Precache( context )
 	PrecacheResource("particle_folder", "particles/items2_fx", context)
 	PrecacheResource("particle_folder", "particles/items3_fx", context)
 	PrecacheResource("particle_folder", "particles/creeps/lane_creeps/", context)
+	PrecacheResource("particle_folder", "particles/customgames/capturepoints/", context)
 
 	-- Models can also be precached by folder or individually
 	PrecacheResource("model_folder", "models/development", context)

@@ -68,11 +68,10 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Roshan initialization
 	-------------------------------------------------------------------------------------------------
 
-	if not GetMapName() == "imba_arena" then
+	if GetMapName() ~= "imba_arena" then
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
-
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -148,6 +147,12 @@ function GameMode:OnFirstPlayerLoaded()
 	--local maxime_model = CreateUnitByName("npc_imba_contributor_maxime", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	--maxime_model:SetForwardVector(RandomVector(100))
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arena mode score initialization
+	-------------------------------------------------------------------------------------------------
+
+	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {0})
+	CustomNetTables:SetTableValue("arena_capture", "dire_score", {0})
 end
 
 -- Multiplies bounty rune experience and gold according to the gamemode multiplier
@@ -252,6 +257,16 @@ function GameMode:ModifierFilter( keys )
 		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
 	else
 		return true
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Frantic mode duration adjustment
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_FRANTIC_MODE_ON then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			keys.duration = keys.duration * 0.3
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -1103,18 +1118,15 @@ function GameMode:OnGameInProgress()
 		local dire_control_point_loc = Entities:FindByName(nil, "dire_capture_point"):GetAbsOrigin()
 		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
 		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
-		ArenaControlPointThink(RADIANT_CONTROL_POINT_DUMMY)
-		ArenaControlPointThink(DIRE_CONTROL_POINT_DUMMY)
+		RADIANT_CONTROL_POINT_DUMMY.score = 20
+		DIRE_CONTROL_POINT_DUMMY.score = 20
+		ArenaControlPointThinkRadiant(RADIANT_CONTROL_POINT_DUMMY)
+		ArenaControlPointThinkDire(DIRE_CONTROL_POINT_DUMMY)
+		Timers:CreateTimer(10, function()
+			ArenaControlPointScoreThink(RADIANT_CONTROL_POINT_DUMMY, DIRE_CONTROL_POINT_DUMMY)
+		end)
+		CustomGameEventManager:Send_ServerToAllClients("contest_started", {})
 	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Destroy wisp dummy pickers
-	-------------------------------------------------------------------------------------------------
-
-	for _, wisp in pairs(IMBA_WISP_PICKERS_TABLE) do
-		UTIL_Remove(wisp)
-	end
-	IMBA_WISP_PICKERS_TABLE = nil
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment
