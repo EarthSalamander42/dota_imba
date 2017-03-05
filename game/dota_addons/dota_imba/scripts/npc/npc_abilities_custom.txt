@@ -6550,19 +6550,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bounty_hunter_shuriken_toss"	
+		"ScriptFile"					"hero/hero_bounty_hunter"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_bounty_hunter.vsndevts"
 			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
-			"particle"    				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
-			"particle"					"particles/econ/items/pudge/pudge_trapper_beam_chain/pudge_nx_meathook_chain.vpcf"
+			"particle"    				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"			
+			"particle"					"particles/hero/bounty_hunter/shuriken_toss_leash.vpcf"
+			"particle"					"particles/hero/bounty_hunter/shuriken_toss_hook.vpcf"
 		}
 		
 		// Unit Targeting
@@ -6574,10 +6579,10 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"400 400 400 400 500 600 700"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"9"
-		"AbilityManaCost"				"90 100 110 120"	
+		"AbilityManaCost"				"120 130 140 150 150 150 150"	
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -6585,295 +6590,234 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"150 225 300 375"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150 225 300 375 400 425 450"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_3"
 			}
+
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"1500"
+				"var_type"				"FIELD_INTEGER"
+				"bounce_radius"			"1200"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_5"
 			}
+
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"mini_stun"					"0.1"
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"0.1"
 			}
+
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"chain_range"				"400"
+				"var_type"			"FIELD_INTEGER"
+				"projectile_speed"	"1000"
 			}
+
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"chain_duration"			"3.0"
+				"var_type"				"FIELD_FLOAT"
+				"scepter_stun_duration"	"0.75"
 			}
+
 			"06"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"pull_duration"			"1.25 1.25 1.25 1.25 2.0 2.75 3.5"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"minimum_pull_power"	"30"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"minimum_pull_distance"	"120"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_pull_power"	"400"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_power_increase"	"50"
+			}
+
+			"11"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_strength_tooltip"		"450"
+				"pull_increase_distance"	"75"
 			}
+
+			"12"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_throw_delay"		"1"
+			}
+
 		}	
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_bounty_hunter.lua"
-				"Function"					"ShurikenToss"
-
-				"track_modifier"			"modifier_imba_track"
-				"track_scepter_modifier"	"modifier_imba_track_scepter"
-				"shuriken_particle"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_BountyHunter.Shuriken"
-				"Target"					"CASTER"
-			}	
-		}	
-
-		"OnProjectileHitUnit"
-		{
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_impact.vpcf"
-				"Target"					"TARGET"
-				"EffectAttachType"			"attach_hitloc"
-			}	
-
-			"Damage"
-			{
-				"Type"						"DAMAGE_TYPE_MAGICAL"
-				"Damage"					"%damage"
-				"Target"					"TARGET"
-			}	
-
-			"Stun"
-			{
-				"Duration"					"%mini_stun"
-				"Target"					"TARGET"        	
-			}	
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_BountyHunter.Shuriken.Impact"
-				"Target"					"TARGET"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_bounty_hunter.lua"
-				"Function"					"ShurikenTossImpact"
-
-				"chain_particle"			"particles/econ/items/pudge/pudge_trapper_beam_chain/pudge_nx_meathook_chain.vpcf"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_shuriken_toss_chain"
-				"Target" 					"TARGET"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_shuriken_toss_chain"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%chain_duration"
-				
-				"ThinkInterval"  		"0.05"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"ShurikenTossChain"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"ShurikenTossChainEnd"
-					}
-				}
-			}
-		}
+		
 	}
 
+
+
+
 	//=================================================================================================================
-	// Bounty Hunter's Shadow Walk
+	// Bounty Hunter's Jinada
 	//=================================================================================================================
-	"imba_bounty_hunter_wind_walk"
+	"imba_bounty_hunter_jinada"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"bounty_hunter_wind_walk"
-		
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"bounty_hunter_jinada"	
+		"ScriptFile"					"hero/hero_bounty_hunter"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-		  "soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
-		  "particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-		  "particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
-		}	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
-		"AbilityCastPoint"				"0.0"
+			"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"						
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinda_slow.vpcf"
+			"particle"					"particles/units/heroes/hero_bounty_hunter/status_effect_bounty_hunter_jinda_slow.vpcf"
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_hand_l.vpcf"
+		}
 		
-		// Cost
+		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600 600 600 600 700 800 900"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"12 10 8 6 6 6 6"
+		"AbilityManaCost"				"65"	
+			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"40.0"
+				"var_type"				"FIELD_INTEGER"
+				"crit_damage"			"150 175 200 225 240 255 270"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_time"				"0.5"
+				"var_type"				"FIELD_INTEGER"
+				"slow_duration"			"3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30 60 90 120"
+				"ms_slow_pct"			"30"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_2"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_speed"			"8 12 16 20"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
-				"Target"				"CASTER"
-				"EffectAttachType"		"attach_origin"
+				"as_slow"				"30"
 			}
 
-			"FireSound"
-			{
-				"Target"				"CASTER"
-				"EffectName"			"Hero_BountyHunter.WindWalk"
-			}	
-
-			"ApplyModifier"
-			{
-				"Target"				"CASTER"
-				"ModifierName"			"modifier_imba_wind_walk_fade"
-			}	
 		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_wind_walk_fade"
-			{
-				"Duration"				"%fade_time"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
-				}
-
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_imba_wind_walk"
-						"Target" 		"CASTER"
-					}
-
-					"ApplyModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_invisible"
-					}
-				}
-			}
-
-			"modifier_imba_wind_walk"
-			{
-				"Duration"				"%duration"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"Target"		"CASTER"
-						"ModifierName"	"modifier_imba_wind_walk"
-					}
-				}	
-
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_bounty_hunter.lua"
-						"Function"		"WindWalk"
-
-						"modifier"		"modifier_imba_wind_walk"
-					}
-				}	
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_speed" 
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"						"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-				}	
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"Target"
-						{
-							"Center"	"CASTER"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_DEAD"
-						}
-
-						"ModifierName"	"modifier_invisible"
-					}
-				}	
-			}
-		}
+		
 	}
+
+
+	//=================================================================================================================
+	// Bounty Hunter's Shadow Walk
+	//=================================================================================================================
+	"imba_bounty_hunter_shadow_walk"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"bounty_hunter_wind_walk"	
+		"ScriptFile"					"hero/hero_bounty_hunter"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"						
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_bounty_hunter.vsndevts"
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"			
+		}
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"65"	
+			
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"20 25 30 35 40 45 50"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"30 60 90 120 130 140 150"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"invis_ms_bonus"		"10"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"true_sight_radius"		"200 200 200 200 300 400 500"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_1"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_time"				"1 0.75 0.5 0.25 0.25 0.25 0.25"
+			}
+		}	
+		
+	}
+
 
 	//=================================================================================================================
 	// Bounty Hunter's Track
@@ -6882,385 +6826,89 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"bounty_hunter_track"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"3.0"
-		"AbilityManaCost"				"25"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
-			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track.vpcf"
-			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
-			"particle"  				"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-		}
-			
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_move_speed_pct"			"20"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_radius"				"1200"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self"				"150 250 350"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_self_per_lvl"		"15"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_gold"					"60 90 120"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_gold_per_lvl"			"10"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"duration"						"40"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_damage_scepter"			"15"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_bounty_hunter.lua"
-				"Function"						"UpgradeJaunt"
-
-				"ability_jaunt"					"imba_bounty_hunter_shadow_jaunt"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_bounty_hunter.lua"
-				"Function"						"TrackCast"
-
-				"modifier_track"				"modifier_imba_track"
-				"modifier_track_scepter"		"modifier_imba_track_scepter"
-				"modifier_track_aura"			"modifier_imba_track_aura"
-				"sound_track"					"Hero_BountyHunter.Target"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
-				"EffectAttachType"				"start_at_customorigin"	
-
-				"ControlPointEntities"
-				{
-					"CASTER" 					"attach_attack1"
-					"TARGET" 					"attach_hitloc"
-				}	
-			}
-		}	
-
-		"Modifiers"
-		{	
-			"modifier_imba_track_aura"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-
-				"Duration"						"%duration"
-
-				"Aura"							"modifier_imba_track_speed"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"1"
-			}
-
-			"modifier_imba_track_speed"
-			{
-				"Passive"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"0"
-
-				"EffectName"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
-				"EffectAttachType"				"follow_origin"	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%bonus_move_speed_pct"
-				}
-			}
-
-			"modifier_imba_track_reveal"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-
-				"Duration"						"0.25"
-
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-
-			"modifier_imba_track"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-				"IsHidden"						"0"
-
-				"Duration"						"%duration"
-
-				"ThinkInterval"					"0.2"
-				
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_track_reveal"
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}	
-
-					"ApplyModifier"
-					{
-						"ModifierName"			"modifier_imba_track_reveal"
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"TrackParticle"
-
-						"particle_trail"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-						"particle_shield"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"TrackParticleEnd"
-
-						"modifier_track_aura"	"modifier_imba_track_aura"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"Track"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-
-			"modifier_imba_track_scepter"
-			{
-				"Passive"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-
-				"Duration"						"%duration"
-
-				"ThinkInterval"					"0.2"
-				
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_track_reveal"
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}	
-
-					"ApplyModifier"
-					{
-						"ModifierName"			"modifier_imba_track_reveal"
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_BOTH"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"TrackParticle"
-
-						"particle_trail"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
-						"particle_shield"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"TrackParticleEnd"
-
-						"modifier_track_aura"	"modifier_imba_track_aura"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bounty_hunter.lua"
-						"Function"				"Track"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%bonus_damage_scepter"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"				"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Bounty Hunter's Shadow Jaunt
-	//=================================================================================================================
-	"imba_bounty_hunter_shadow_jaunt"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"custom/imba_bounty_hunter_shadow_jaunt"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"MaxLevel"						"1"
 		"FightRecapLevel"				"1"
-		"CastFilterRejectCaster"		"1"
+		"AbilityTextureName"			"bounty_hunter_track"	
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"ScriptFile"					"hero/hero_bounty_hunter"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"soundfile"   				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_bounty_hunter.vsndevts"			
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield.vpcf"			
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_haste.vpcf"
+			"particle"					"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail.vpcf"
 		}
+		
+		// Unit Targeting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"		
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"		
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"7"
-		"AbilityManaCost"				"0"	
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"4"
+		"AbilityManaCost"				"65"	
 			
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
-		{
+		{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1200"
+				"projectile_speed"		"900"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"02"
 			{
-				"ScriptFile"				"hero/hero_bounty_hunter.lua"
-				"Function"					"ShadowJaunt"
-
-				"modifier_track"			"modifier_imba_track"
-				"modifier_track_scepter"	"modifier_imba_track_scepter"
-				"sound_cast"				"Hero_Riki.Blink_Strike"
+				"var_type"				"FIELD_INTEGER"
+				"ms_bonus_allies_pct"	"16 18 20 22 24 26"
 			}
-		}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"
+				"LinkedSpecialBonus"	"special_bonus_imba_bounty_hunter_6"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold_self"		"150 250 350 375 400 425"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold_allies"		"40 80 120 160 200 240"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"haste_radius"			"900"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"haste_linger"			"0.5"
+			}
+
+		}			
 	}	
 
 	//=================================================================================================================
@@ -36647,6 +36295,190 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value2"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 1 (Level 10): Shadow Walk true sight radius increase
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 2 (Level 10): Jinada's slow increase
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 3 (Level 20): Shuriken Toss Damage increase
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 4 (Level 20): Track cooldown decrease
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 5 (Level 30): Global Shuriken Toss bounce range
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 6 (Level 30): Increased Track duration
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 7 (Level 40): Decreased Jinada's Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Bounty Hunter Talent 8 (Level 40): Track hidden and unpurgable
+	//=================================================================================================================
+	"special_bonus_imba_bounty_hunter_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
