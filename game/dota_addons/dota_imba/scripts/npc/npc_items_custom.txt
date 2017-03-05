@@ -386,12 +386,13 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2006"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName" 			"custom/imba_hand_of_midas"
+		"ScriptFile"					"items/item_midas_rework.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -433,35 +434,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"passive_gold_bonus"	"10"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_midas.lua"
-				"Function"				"Midas"
-
-				"sound_cast"			"DOTA_Item.Hand_Of_Midas"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_hand_of_midas"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%bonus_attack_speed"
-				}
-			}
-		}
+		}				
 	}
 
 	//=================================================================================================================
