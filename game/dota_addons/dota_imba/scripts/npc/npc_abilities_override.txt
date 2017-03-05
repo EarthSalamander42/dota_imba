@@ -5485,15 +5485,17 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_health_regen"		"6 12 18 24"
-				"LinkedSpecialBonus"		"special_bonus_unique_dragon_knight"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_health_regen"			"6 12 18 24"
+				"LinkedSpecialBonus"			"special_bonus_unique_dragon_knight"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"8 12 16 20"
-				"LinkedSpecialBonus"		"special_bonus_unique_dragon_knight"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"8 12 16 20"
+				"LinkedSpecialBonus"			"special_bonus_unique_dragon_knight"
+				"LinkedSpecialBonusOperation"	"SPECIAL_BONUS_MULTIPLY"
 			}
 		}
 	}
@@ -8089,6 +8091,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"strike_crit_mult"			"225"
+				"LinkedSpecialBonus"		"special_bonus_unique_monkey_king"
 			}
 			"03"
 			{
@@ -10965,46 +10968,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_range"			"250"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Silencer: Glaives of Wisdom
-	//=================================================================================================================
-	"silencer_glaives_of_wisdom"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"intellect_damage_pct"	"45 70 95 120"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"steal_range"			"925"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Silencer: Global Silence
-	//=================================================================================================================
-	"silencer_global_silence"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"120.0 110.0 100.0"
-		"AbilityDuration"				"5.0 7.0 9.0"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tooltip_duration"		"5.0 7.0 9.0"
 			}
 		}
 	}
@@ -19505,7 +19468,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"0.1"
+				"damage_reduction"		"-0.03"
 			}
 			"02"
 			{
@@ -21242,7 +21205,105 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Lycan: Howl
+	//=================================================================================================================
+	"lycan_howl"
+	{
+		"AbilityCastPoint"				"0.2"
+
+		"AbilityCooldown"				"50 40 30 20"
+		"AbilityDuration"				"12"
 	
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"howl_duration"			"12.0"		
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_bonus_damage"		"30 45 60 75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"unit_bonus_damage"		"7 14 21 28"
+			}
+		}
+	}
+
+	//=====================================================================================================
+	// Lycan: Feral Impulse
+	//=================================================================================================================
+	"lycan_feral_impulse"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"25 40 55 70"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_hp_regen"		"5 10 15 20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lycan: Shapeshift
+	//=================================================================================================================
+	"lycan_shapeshift"
+	{
+		"AbilityCooldown"					"100.0 70.0 40.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"20"
+				"LinkedSpecialBonus"		"special_bonus_unique_lycan_1"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"700 800 900"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_night_vision"		"1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"transformation_time"		"1.0"
+			}		
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"40"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_multiplier"			"150 175 200"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Magnus: Skewer

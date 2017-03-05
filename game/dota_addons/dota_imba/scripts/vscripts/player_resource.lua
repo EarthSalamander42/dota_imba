@@ -9,10 +9,10 @@ PlayerResource.PlayerData = {}
 -- Initializes a player's data
 function PlayerResource:InitPlayerData(player_id)
 	self.PlayerData[player_id] = {}
-	self.PlayerData[player_id]["first_spawn_setup_done"] = false
 	self.PlayerData[player_id]["current_deathstreak"] = 0
 	self.PlayerData[player_id]["has_abandoned_due_to_long_disconnect"] = false
 	self.PlayerData[player_id]["distribute_gold_to_allies"] = false
+	self.PlayerData[player_id]["has_repicked"] = false
 	print("player data set up for player with ID "..player_id)
 end
 
@@ -50,21 +50,17 @@ function PlayerResource:GetPickedHeroName(player_id)
 	return nil
 end
 
--- Set a player's first spawn setup as done
-function PlayerResource:SetPlayerSpawnSetupDone(player_id)
+-- Set a player's repick status
+function PlayerResource:CustomSetHasRepicked(player_id, state)
 	if self:IsImbaPlayer(player_id) then
-		self.PlayerData[player_id]["first_spawn_setup_done"] = true
-		print("Performed first spawn setup for player "..player_id)
-
-		-- Add one to the team's player count
-		self:IncrementTeamPlayerCount(player_id)
+		self.PlayerData[player_id]["has_repicked"] = state
 	end
 end
 
--- Fetch if a player's first spawn setup was already done
-function PlayerResource:IsPlayerSpawnSetupDone(player_id)
+-- Fetch a player's repick state
+function PlayerResource:CustomGetHasRepicked(player_id)
 	if self:IsImbaPlayer(player_id) then
-		return self.PlayerData[player_id]["first_spawn_setup_done"]
+		return self.PlayerData[player_id]["has_repicked"]
 	else
 		return false
 	end

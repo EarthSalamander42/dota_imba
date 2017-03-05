@@ -9,36 +9,137 @@
 		<include src="file://{resources}/scripts/custom_game/game_mode.js" />
 	</scripts>
 
-	<script>
-		DrawGameModeUi();
-	</script>
-
 	<Panel class="AddonLoadingRoot">
 
-		<Panel id="CustomBg" >
-			<Image id="loading_screen_bg" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_bg.png" />
-		</Panel>
+		<Panel id="CustomBg">
 
-		<Panel id="TitlePanel">
-			<Image id="loading_screen_title" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_title.png" />
-		</Panel>
+			<Panel id="game_options_container" >
+				<Panel id="GameOptionsPanel">
 
-		<Panel id="ShowCommunityPanel">
-			<Button id="show_community_panel_button" onactivate="ShowCommunityButton();" style="" >
-				<Label id="community_header" class="Header" html="true" text="#imba_community_header" />
-			</Button>
-		</Panel>
+					<Label id="game_options_game_mode_title" text="#imba_gamemode_name_all_pick" />
 
-		<Panel id="Community">
-			<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description" />
+					<Panel id="QuickOptionsPanel" class="GameOptionsSubPanel" >
 
-			<Button id="community_discord_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" >
-				<Image src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
-			</Button>
-			<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
+						<Button id="QuickOptionsNormalBtn" onactivate="SetQuickOptionsNormal();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_regular_tooltip )" onmouseout="UIHideTextTooltip()">
+							<Label id="QuickOptionsNormalBtnLabel" class="QuickOptionsBtnLabel" text="#imba_gamemode_settings_regular" />
+						</Button>
 
-			<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
-			<Label id="community_post_description_02" class="CommunityText" html="true" text="#community_post_description_02"/>
+						<Button id="QuickOptionsHighBtn" onactivate="SetQuickOptionsHigh();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_high_tooltip )" onmouseout="UIHideTextTooltip()">
+							<Label id="QuickOptionsHighBtnLabel" class="QuickOptionsBtnLabel" text="#imba_gamemode_settings_high" />
+						</Button>
+
+					</Panel>
+
+					<Panel id="TowerUpgradeOptionsPanel">
+
+						<ToggleButton id="AllRandomToggle" text="#imba_gamemode_name_all_random" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_name_all_random_tooltip )" onmouseout="UIHideTextTooltip()"/>
+						<ToggleButton id="TowerUpgradesToggle" text="#imba_gamemode_settings_tower_upgrades" class="GameOptionsToggle" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_upgrades_tooltip )" onmouseout="UIHideTextTooltip()"/>
+
+					</Panel>
+
+					<Panel id="KillsToEndOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_kills_to_end_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="KillsToEndOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_kills_to_end" />
+						
+						<DropDown id="KillsToEndOptionsDropdown" class="GameOptionsDropdown">
+							<Label text="40" id="40"/>
+							<Label text="75" id="75"/>
+							<Label text="150" id="150"/>
+							<Label text="250" id="250"/>
+						</DropDown>
+
+					</Panel>
+
+					<Panel id="GoldExpOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_bounty_multiplier_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="GoldExpOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_bounty_multiplier" />
+						
+						<DropDown id="GoldExpOptionsDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_power_1" id="GoldExpOption1"/>
+							<Label text="#imba_gamemode_settings_power_2" id="GoldExpOption2"/>
+						</DropDown>
+
+					</Panel>
+
+					<Panel id="CreepPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_creep_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="CreepPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_creep_power_title" />
+						
+						<DropDown id="CreepPowerOptionsDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_power_1" id="CreepPowerOption1"/>
+							<Label text="#imba_gamemode_settings_power_2" id="CreepPowerOption2"/>
+						</DropDown>
+
+					</Panel>
+
+					<Panel id="TowerPowerOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_tower_power_title_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="TowerPowerOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_tower_power_title" />
+						
+						<DropDown id="TowerPowerOptionsDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_power_1" id="TowerPowerOption1"/>
+							<Label text="#imba_gamemode_settings_power_2" id="TowerPowerOption2"/>
+						</DropDown>
+
+					</Panel>
+
+					<Panel id="RespawnTimeOptionsPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_respawn_time_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="RespawnTimeOptionsLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_respawn_time" />
+						
+						<DropDown id="RespawnTimeOptionsDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_power_1" id="RespawnTimeOption1"/>
+							<Label text="#imba_gamemode_settings_power_2" id="RespawnTimeOption2"/>
+						</DropDown>
+
+					</Panel>
+
+					<Panel id="InitialGoldExpPanel" class="GameOptionsSubPanel" onmouseover="UIShowTextTooltip( imba_gamemode_settings_initial_gold_exp_title_tooltip )" onmouseout="UIHideTextTooltip()">
+
+						<Label id="InitialGoldExpLabel" class="GameOptionsLabel" text="#imba_gamemode_settings_initial_gold_exp_title" />
+						
+						<DropDown id="InitialGoldExpDropdown" class="GameOptionsDropdown">
+							<Label text="#imba_gamemode_settings_power_1" id="InitialGoldExp1"/>
+							<Label text="#imba_gamemode_settings_power_2" id="InitialGoldExp2"/>
+						</DropDown>
+
+					</Panel>
+
+					<Button id="ConfirmOptionsBtn" onactivate="SetGameOptions();" onmouseover="UIShowTextTooltip( imba_gamemode_settings_lock_options_tooltip )" onmouseout="UIHideTextTooltip()">
+						<Label id="ConfirmOptionsBtnLabel" text="#imba_gamemode_settings_lock_options" />
+					</Button>
+
+				</Panel>
+			</Panel>
+
+			<Panel id="community_stuff_container" >
+
+				<Button id="show_community_panel_button" onactivate="ShowCommunityButton();" >
+					<Label id="show_community_panel_button_label" html="true" text="#imba_community_header" />
+				</Button>
+
+				<Panel id="CommunityPanel">
+				
+					<Label id="community_description" class="CommunityText" html="true" text="#imba_community_description" />
+					<Label id="community_post_description_01" class="CommunityText" html="true" text="#community_post_description_01"/>
+
+					<Button id="community_discord_header" class="CommunityImg" onactivate="DOTADisplayURL('http://tinyurl.com/imba-discord');" >
+						<Image src="file://{images}/custom_game/loading_screen/community_discord_header.png" />
+					</Button>
+					<Label id="community_discord_description" class="CommunityText" html="true" text="#community_discord_description"/>
+
+					<Button id="community_chinese_blog_header" class="CommunityImg" onactivate="DOTADisplayURL('http://www.bilibiliduang.cn/imba');" >
+						<Image src="file://{images}/custom_game/loading_screen/community_chinese_blog.png" />
+					</Button>
+					<Label id="community_chinese_blog_description_01" class="CommunityText" html="true" text="(this space is for the chinese community)"/>
+					<Label id="community_chinese_blog_description_02" class="CommunityText" html="true" text="更新日志中文翻译请查看此页面! 全新的IMBA中文翻译已经添加，尽情享用吧！如果您发现了任何翻译的错误或有其他建议，可以访问IMBA的中文页面在任意文章下评论"/>
+
+				</Panel>
+
+				<Panel id="TitlePanel">
+					<Image id="loading_screen_title" class="SeqImg" src="file://{images}/custom_game/loading_screen/loading_screen_title.png" />
+				</Panel>
+			</Panel>
 		</Panel>
 	</Panel>
 </root>

@@ -4,8 +4,13 @@
 	visibility: collapse;
 	transition-property: opacity;
 	transition-delay: 0.0s;
-	transition-duration: 0.8s;
+	transition-duration: 0.4s;
 	transition-timing-function: ease-in-out;
+}
+
+.disabled
+{
+	saturation: 0.4;
 }
 
 .AddonLoadingRoot
@@ -16,105 +21,97 @@
 	overflow: clip;
 }
 
-.SeqImg
-{
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 100% 100%;
-}
-
 #TitlePanel
 {
 	horizontal-align: left;
 	vertical-align: bottom;
 	margin-bottom: 50px;
-	margin-left: 420px;
+	animation-name: title_animation;
+	animation-delay: 5s;
+	animation-duration: 15s;
+	animation-iteration-count: 12;
+}
+
+@keyframes 'title_animation'
+{
+	50%
+	{
+		pre-transform-scale2d: 1.1;
+	}
 }
 
 #CustomBg
 {
-	margin-top: 0px;
-	margin-right: 400px;
-		overflow: clip;
-	pre-transform-scale2d: 1.0;
-	animation-name: background_animation;
-	animation-delay: 5s;
-	animation-duration: 180s;
-	animation-timing-function: linear;
-	animation-iteration-count: 3;
-}
-
-#Shopkeeper
-{
-	margin-top: -249px;
-	margin-left: 440px;
-	width: 605px;
-	height: 255px;
-	animation-name: shopkeeper_animation;
-	animation-delay: 15s;
-	animation-duration: 90s;
-	animation-timing-function: linear;
-	animation-iteration-count: 2;
-	transform-origin: 50% 50%;
-}
-
-#Gaben
-{
-	margin-top: -249px;
-	margin-left: 440px;
-	width: 605px;
-	height: 255px;
-	animation-name: shopkeeper_animation;
-	animation-delay: 16s;
-	animation-duration: 90s;
-	animation-timing-function: linear;
-	animation-iteration-count: 2;
-	transform-origin: 50% 50%;
-}
-
-#ShowCommunityPanel
-{
-	width: 400px;
-	height: 35px;
-	margin-top: 60px;
-	margin-left: 100px;
-	flow-children: down;
-	background-color: #111111;
-	box-shadow: black -3px -3px 6px 6px;
-	color: #ffffff;
-}
-
-#show_community_panel_button
-{
-	border-width: 0px;
 	width: 100%;
 	height: 100%;
-	horizontal-align: center;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2d2cc836 ), to( #4844ab4e ) );
-	box-shadow: fill #486ca922 -4px -4px 8px 8px;
-	border-top: 1px solid #ffffff03;
-	border-left: 1px solid #ffffff03;
+	overflow: clip;
+	background-image: url("file://{images}/custom_game/loading_screen/loading_screen_bg.png");
+	background-repeat: no-repeat;
+	background-position: -275px 0px;
+	background-size: 100% 100%;
+}
+
+#game_options_container
+{
+	width: 350px;
+	height: 100%;
+	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.02, #202327 ), color-stop( 0.3, #141619 ), to( #000000B0 ) );
+	box-shadow: #000000 0px 0px 20px 0px;
+	flow-children: down;
+	visibility: collapse;
+	position: -250px 0px 0px;
+}
+
+#community_stuff_container
+{
+	height: 100%;
+	position: 400px 0px 0px;
+}
+
+#CommunityPanel
+{
+	padding-top: 10px;
+	margin-top: 80px;
+	width: 400px;
+	flow-children: down;
+	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.3, #202327 ), color-stop( 0.7, #141619 ), to( #000000B0 ) );
+	transition-property: opacity;
+	transition-delay: 0.0s;
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in-out;
+}
+
+/* Show community button */
+#show_community_panel_button
+{
+	margin-top: 30px;
+	width: 400px;
+	height: 40px;
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 100% 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #303090FF ), to( #4444D0FF ) );
+	box-shadow: #000000 0px 0px 18px 0px;
+	transition-property: background-color;
+	transition-duration: 0.2s;
 }
 
 #show_community_panel_button:hover
 {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2d2cc836 ), to( #06ee2c ) );
-	box-shadow: fill #486ca966 -4px -4px 18px 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4444D0FF ), to( #6464F0FF ) );
+	box-shadow: #000000 0px 0px 25px 0px;
 }
 
 #show_community_panel_button:active
 {
+	transform: translate3d(1px, 1px, 0px);
 	sound: "ui_team_select_lock_and_start";
 }
 
-#Community
+#show_community_panel_button Label
 {
-	width: 400px;
-	margin-top: 105px;
-	margin-left: 100px;
-	flow-children: down;
-	background-color: gradient( linear, 100% 0%, 100% 100%, from( #111111 ), color-stop( 0.01, #202327 ), color-stop( 0.2, #141619ff ), to( #000000dd ) );
-	box-shadow: black -3px -3px 6px 6px;
+	font-size: 24px;
+	horizontal-align: center;
+	vertical-align: center;
 	color: #ffffff;
 }
 
@@ -131,184 +128,191 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	horizontal-align: center;
+	border-radius: 10px;
+	saturation: 0.9;
+	transition-property: saturation, box-shadow;
+	transition-duration: 0.2s;
+}
+
+.CommunityImg:hover
+{
+	saturation: 1.0;
+	box-shadow: #ffffff 0px 0px 10px 0px;
 }
 
 .CommunityImg:active
 {
+	transform: translate3d(1px, 1px, 0px);
 	sound: "ui_team_select_lock_and_start";
 }
 
 .CommunityText
 {
-	width: 95%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 10px;
+	margin-right: 10px;
+	text-align: center;
+	horizontal-align: center;
+}
+
+#GameOptionsPanel
+{
+	margin-top: 60px;
+	margin-bottom: 300px;
+	margin-left: 20px;
+	margin-right: 20px;
+	width: 100%;
+	height: 100%;
+	flow-children: down;
+	transition-property: opacity;
+	transition-delay: 0.0s;
+	transition-duration: 0.4s;
+	transition-timing-function: ease-in-out;
+}
+
+#game_options_game_mode_title
+{
+	font-size: 32px;
+	color: #FF7800;
+	text-align: center;
+	font-weight: bold;
+	horizontal-align: center;
+}
+
+.GameOptionsSubPanel
+{
+	margin-top: 20px;
+	width: 100%;
+	flow-children: right;
+}
+
+#KillsToEndOptionsPanel {
+	visibility: collapse;
+}
+
+#TowerUpgradeOptionsPanel
+{
+	margin-top: 20px;
+	width: 100%;
+	flow-children: down;
+}
+
+/* Quick Pick: "normal" button */
+#QuickOptionsNormalBtn
+{
+	width: 45%;
+	height: 40px;
+	margin-left: 2%;
 	horizontal-align: left;
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 300% 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #207020FF ), to( #28B028FF ) );
+	box-shadow: #000000 0px 0px 15px 0px;
+	transition-property: background-color;
+	transition-duration: 0.2s;
 }
 
-@keyframes 'background_animation'
+#QuickOptionsNormalBtn:hover
 {
-	0%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-	}
-
-	44%
-	{
-		transform: translateX( -400px ) translateY( 0px );
-	}
-
-	50%
-	{
-		transform: translateX( -400px ) translateY( 0px );
-	}
-
-	94%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-	}
-
-	100%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-	}
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #28B028FF ), to( #40F040FF ) );
+	box-shadow: #000000 0px 0px 20px 0px;
 }
 
-@keyframes 'shopkeeper_animation'
+#QuickOptionsNormalBtn:active
 {
-	0%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-	}
+	transform: translate3d(1px, 1px, 0px);
+	sound: "ui_team_select_lock_and_start";
+}
 
-	3%
-	{
-		transform: translateX( 0px ) translateY( 1500px );
-	}
+/* Quick Pick: "high" button */
+#QuickOptionsHighBtn
+{
+	width: 45%;
+	height: 40px;
+	margin-right: 2%;
+	horizontal-align: right;
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 300% 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #702020FF ), to( #B02828FF ) );
+	box-shadow: #000000 0px 0px 15px 0px;
+	transition-property: background-color;
+	transition-duration: 0.2s;
+}
 
-	4%
-	{
-		transform: translateX( 1500px ) translateY( 1500px );
-	}
+#QuickOptionsHighBtn:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #B02828FF ), to( #F04040FF ) );
+	box-shadow: #000000 0px 0px 20px 0px;
+}
 
-	15%
-	{
-		transform: translateX( 1500px ) translateY( 140px );
-	}
+#QuickOptionsHighBtn:active
+{
+	transform: translate3d(1px, 1px, 0px);
+	sound: "ui_team_select_lock_and_start";
+}
 
-	21%
-	{
-		transform: translateX( -1200px ) translateY( 140px );
-	}
+.QuickOptionsBtnLabel
+{
+	font-size: 28px;
+	color: #FFFFFF;
+	text-align: center;
+	font-weight: bold;
+	horizontal-align: center;
+	vertical-align: center;
+}
 
-	30%
-	{
-		transform: translateX( -1200px ) translateY( 500px );
-	}
+.GameOptionsLabel
+{
+	text-align: center;
+	horizontal-align: left;
+	vertical-align: center;
+}
 
-	35%
-	{
-		transform: translateX( -600px ) translateY( 500px );
-	}
+.GameOptionsToggle
+{
+	text-align: center;
+	horizontal-align: left;
+	vertical-align: center;
+}
 
-	37%
-	{
-		transform: translateX( -600px ) translateY( 500px );
-	}
+.GameOptionsDropdown
+{
+	margin-left: 10px;
+	width: 120px;
+	horizontal-align: right;
+}
 
-	38%
-	{
-		transform: translateX( -1200px ) translateY( 500px );
-	}
+/* Confirm options button */
+#ConfirmOptionsBtn
+{
+	margin-top: 30px;
+	width: 400px;
+	height: 40px;
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 100% 100%;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #303090FF ), to( #4444D0FF ) );
+	box-shadow: #000000 0px 0px 18px 0px;
+	transition-property: background-color;
+	transition-duration: 0.2s;
+}
 
-	39%
-	{
-		transform: translateX( -1200px ) translateY( 1500px );
-	}
+#ConfirmOptionsBtn:hover
+{
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #4444D0FF ), to( #6464F0FF ) );
+	box-shadow: #000000 0px 0px 25px 0px;
+}
 
-	54%
-	{
-		transform: translateX( -300px ) translateY( 1500px );
-	}
+#ConfirmOptionsBtn:active
+{
+	transform: translate3d(1px, 1px, 0px);
+	sound: "ui_team_select_lock_and_start";
+}
 
-	60%
-	{
-		transform: translateX( -300px ) translateY( 300px );
-	}
-
-	64%
-	{
-		transform: translateX( -300px ) translateY( 300px ) rotateZ(180deg);
-	}
-
-	65%
-	{
-		transform: translateX( 600px ) translateY( -500px );
-	}
-
-	66%
-	{
-		transform: translateX( 600px ) translateY( -100px );
-	}
-
-	77%
-	{
-		transform: translateX( 600px ) translateY( -100px );
-	}
-
-	80%
-	{
-		transform: translateX( 100px ) translateY( 600px );
-	}
-
-	81%
-	{
-		transform: translateX( -100px ) translateY( 400px );
-	}
-
-	82%
-	{
-		transform: translateX( -300px ) translateY( 300px );
-	}
-
-	83%
-	{
-		transform: translateX( 100px ) translateY( 100px );
-	}
-
-	84%
-	{
-		transform: translateX( 250px ) translateY( 300px );
-	}
-
-	85%
-	{
-		transform: translateX( 150px ) translateY( 500px );
-	}
-
-	86%
-	{
-		transform: translateX( -50px ) translateY( 750px );
-	}
-
-	87%
-	{
-		transform: translateX( -250px ) translateY( 550px );
-	}
-
-	88%
-	{
-		transform: translateX( -600px ) translateY( 400px );
-	}
-
-	89%
-	{
-		transform: translateX( -1200px ) translateY( -100px );
-	}
-
-	100%
-	{
-		transform: translateX( 0px ) translateY( 0px );
-	}
+#ConfirmOptionsBtn Label
+{
+	font-size: 24px;
+	horizontal-align: center;
+	vertical-align: center;
+	color: #ffffff;
 }

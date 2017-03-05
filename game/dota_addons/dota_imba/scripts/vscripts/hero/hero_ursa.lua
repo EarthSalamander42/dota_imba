@@ -1,9 +1,6 @@
 -- Author: Shush
 -- Date: 11/1/2017
 
-
-
-
 ---------------------------------------------------
 ---------------------------------------------------
 ---------------------------------------------------
@@ -12,14 +9,11 @@
 ---------------------------------------------------
 ---------------------------------------------------
 
-
 imba_ursa_earthshock = class({})
 LinkLuaModifier("modifier_imba_earthshock_slow", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_buff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_prevent", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_trembling_steps_debuff", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
-
-
 
 function imba_ursa_earthshock:OnSpellStart()
 	if IsServer() then
@@ -49,18 +43,6 @@ function imba_ursa_earthshock:OnSpellStart()
 		local bonus_slow_pct = ability:GetSpecialValueFor("bonus_slow_pct")
 		local enrage_bonus_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
 		local enrage_bonus_dmg_pct = ability:GetSpecialValueFor("enrage_bonus_dmg_pct")
-		local talent_1_point_blank_dmg = ability:GetSpecialValueFor("talent_1_point_blank_dmg")
-		local talent_6_bonus_radius = enrage_ability:GetSpecialValueFor("talent_6_bonus_radius")
-		
-		-- #1 Talent (increased point blank damage)
-		if caster:HasModifier("special_talent_1") then
-			bonus_damage_pct = talent_1_point_blank_dmg
-		end
-		
-		-- #6 Talent (increased enraged bonus radius)
-		if caster:HasModifier("special_talent_6") then
-			enrage_bonus_radius = enrage_bonus_radius + talent_6_bonus_radius
-		end
 		
 		-- Check if Ursa has Enrage buff active, increase radius, damage percents and set Enrage particles
 		if caster:HasModifier(enrage_buff) then
@@ -351,25 +333,6 @@ function imba_ursa_overpower:OnSpellStart()
 		local disarm_radius = ability:GetSpecialValueFor("disarm_radius")
 		local disarm_duration = ability:GetSpecialValueFor("disarm_duration")
 		local enrage_disarm_radius = enrage_ability:GetSpecialValueFor("bonus_radius_skills")
-		local talent_4_attacks = ability:GetSpecialValueFor("talent_4_attacks")
-		local talent_5_disarm_dur = ability:GetSpecialValueFor("talent_5_disarm_dur")
-		local talent_6_bonus_radius = enrage_ability:GetSpecialValueFor("talent_6_bonus_radius")
-		
-		-- #4 Talent (increased overpower attacks)
-		if caster:HasModifier("special_talent_4") then
-			attacks_num = attacks_num + talent_4_attacks
-		end
-		
-		-- #5 Talent (increased disarm duration)
-		if caster:HasModifier("special_talent_5") then
-			disarm_duration = disarm_duration + talent_5_disarm_dur
-		end
-		
-		-- #6 Talent (increased enrage bonus radius)
-		if caster:HasModifier("special_talent_6") then
-			enrage_disarm_radius = enrage_disarm_radius + talent_6_bonus_radius
-		end
-		
 		
 		-- Play cast sound
 		EmitSoundOn(sound_cast, caster)
@@ -609,18 +572,6 @@ function modifier_imba_fury_swipes:OnAttackLanded( keys )
 		local deep_stack_multiplier = ability:GetSpecialValueFor("deep_stack_multiplier")
 		local deep_stack_attacks = ability:GetSpecialValueFor("deep_stack_attacks")
 		local enrage_swipes_multiplier = enrage_ability:GetSpecialValueFor("fury_swipes_multiplier")
-		local talent_2_swipe_dmg = ability:GetSpecialValueFor("talent_2_swipe_dmg")
-		local talent_3_deep_mult = ability:GetSpecialValueFor("talent_3_deep_mult")
-		
-		-- #2 Talent (increased fury swipes damage)
-		if caster:HasModifier("special_talent_2") then
-			damage_per_stack = damage_per_stack + talent_2_swipe_dmg
-		end
-		
-		-- #3 Talent (increased Deep Strike multiplier)
-		if caster:HasModifier("special_talent_3") then
-			deep_stack_multiplier = talent_3_deep_mult
-		end
 		
 		if caster:PassivesDisabled() then
 			return nil
@@ -795,11 +746,9 @@ function modifier_imba_enrage_buff:OnCreated()
 	local caster = self:GetCaster()
 	local ability = self:GetAbility()
 	local reduce_cd_interval = ability:GetSpecialValueFor("reduce_cd_interval")
-	
-	if IsServer() then	
-		caster:SetRenderColor(255,0,0)
-		caster:SetModelScale(1.2)
-	end
+		
+	caster:SetRenderColor(255,0,0)
+	caster:SetModelScale(1.2)
 	
 	self:StartIntervalThink(reduce_cd_interval)
 end
@@ -807,38 +756,33 @@ end
 function modifier_imba_enrage_buff:OnDestroy()
 	local caster = self:GetCaster()	
 	
-	if IsServer() then
-		caster:SetRenderColor(255,255,255)
-		caster:SetModelScale(1)
-	end
-
+	caster:SetRenderColor(255,255,255)
+	caster:SetModelScale(1)
 
 	self:StartIntervalThink(-1)
 end
 
 function modifier_imba_enrage_buff:OnIntervalThink()
 	-- Ability properties
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()	
-		local ability_earthshock = caster:GetAbilityByIndex(0)		
-		local ability_overpower = caster:GetAbilityByIndex(1)	
-		
-		-- Ability specials
-		local reduce_cd_amount = ability:GetSpecialValueFor("reduce_cd_amount")
-		
-		-- Find current CD of skills, lower it if above reduction, else refresh	it	
-		local ability_earthshock_cd = ability_earthshock:GetCooldownTimeRemaining()
-		ability_earthshock:EndCooldown()		
-		if ability_earthshock_cd > reduce_cd_amount then		
-			ability_earthshock:StartCooldown(ability_earthshock_cd - reduce_cd_amount)	
-		end
-		
-		local ability_overpower_cd = ability_overpower:GetCooldownTimeRemaining()
-		ability_overpower:EndCooldown()		
-		if ability_overpower_cd > reduce_cd_amount then		
-			ability_overpower:StartCooldown(ability_overpower_cd - reduce_cd_amount)	
-		end
+	local caster = self:GetCaster()
+	local ability = self:GetAbility()	
+	local ability_earthshock = caster:GetAbilityByIndex(0)		
+	local ability_overpower = caster:GetAbilityByIndex(1)	
+	
+	-- Ability specials
+	local reduce_cd_amount = ability:GetSpecialValueFor("reduce_cd_amount")
+	
+	-- Find current CD of skills, lower it if above reduction, else refresh	it	
+	local ability_earthshock_cd = ability_earthshock:GetCooldownTimeRemaining()
+	ability_earthshock:EndCooldown()		
+	if ability_earthshock_cd > reduce_cd_amount then		
+		ability_earthshock:StartCooldown(ability_earthshock_cd - reduce_cd_amount)	
+	end
+	
+	local ability_overpower_cd = ability_overpower:GetCooldownTimeRemaining()
+	ability_overpower:EndCooldown()		
+	if ability_overpower_cd > reduce_cd_amount then		
+		ability_overpower:StartCooldown(ability_overpower_cd - reduce_cd_amount)	
 	end
 end
 
@@ -846,7 +790,6 @@ function modifier_imba_enrage_buff:DeclareFunctions()
 		local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}					 
 		return decFuncs		
 end
-
 
 function modifier_imba_enrage_buff:GetModifierIncomingDamage_Percentage()
 	local ability = self:GetAbility()
@@ -961,21 +904,7 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 	
 end
 
-function imba_ursa_territorial_hunter:GetCooldown()
-	local caster = self:GetCaster()
-	local ability = self	
-	local base_cooldown = ability:GetSpecialValueFor("base_cooldown")
-	local talent_7_reduced_cd = ability:GetSpecialValueFor("talent_7_reduced_cd")
-	
-	local cooldown = base_cooldown	
-	
-	-- #7 Talent (decreased cooldown)
-	if caster:HasModifier("special_talent_7") then
-		cooldown = talent_7_reduced_cd
-	end
-	
-	return cooldown	
-end
+
 
 modifier_terrorital_hunter_aura = class({})
 
@@ -1064,42 +993,3 @@ end
 function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
 	return 1
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
