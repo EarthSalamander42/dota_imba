@@ -1,0 +1,41 @@
+<root>
+    <styles>
+        <include src="file://{resources}/styles/custom_game/shared_scoreboard_styles.css" />
+        <include src="file://{resources}/styles/custom_game/multiteam_flyout_scoreboard.css" />
+    </styles>
+	<Panel class="PlayerRow">
+		<Panel id="PlayerRowContainer">
+			<Panel class="ScoreCol_DisplayPic ScoreboardPanel">
+				<Panel id="PlayerColorBar" />
+				<DOTAAvatarImage id="AvatarImage" steamid="" />
+			</Panel>
+			<Panel id="Hero" class="ScoreCol_HeroPic ScoreboardPanel">
+				<Image id="HeroIcon" heroimagestyle="landscape" scaling="stretch-to-fit-preserve-aspect" />
+			</Panel>
+			<Panel id="PlayerDetailsContainer" class="ScoreCol_PlayerDetails ScoreboardPanel">
+				<Panel id="PlayerAndHeroName">
+					<Label id="PlayerName" text="AAAAA" />
+					<Label id="HeroNameAndDescription" text="#custom_scoreboard_hero_name_and_desc" />
+				</Panel>
+			</Panel>
+			<Panel class="ScoreCol_HeroLevel ScoreboardPanel">
+				<Label id="Level" text="999" />
+			</Panel>
+			<Panel class="ScoreCol_Gold ScoreboardPanel">
+				<Label id="TeammateGoldAmount" text="999" />
+			</Panel>
+			<Panel id="KillsContainer" class="ScoreCol_Kills ScoreboardPanel">
+				<Label id="Kills" text="999" />
+			</Panel>
+			<Panel id="DeathsContainer" class="ScoreCol_Deaths ScoreboardPanel">
+				<Label id="Deaths" text="999" />
+			</Panel>
+			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
+				<Label id="Assists" text="999" />
+			</Panel>
+			<Panel id="UltimateIndicator" class="ScoreCol_Ultimate UltimateIndicatorShared" />
+		</Panel>
+	</Panel>
+</root>
+
+
