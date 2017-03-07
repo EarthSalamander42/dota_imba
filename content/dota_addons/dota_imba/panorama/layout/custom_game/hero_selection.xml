@@ -14,388 +14,463 @@
 	</scripts>
 
 	<Panel hittest="false" style="width: 100%; height: 100%;">
-		<Panel hittest="true" id="PickingScreen">
+		<Panel hittest="true" id="Background">
+			<Button id="ReturnToMenuButton" onactivate="DOTAHUDShowDashboard();" onmouseover="UIShowTextTooltip( DOTA_HUD_BackToDashboard )"  onmouseout="UIHideTextTooltip()">
+			</Button>
+			<Panel hittest="true" id="PickingScreen">
 
-			<!--Left-hand player section 
-			==================================================================-->
-			<Panel id="LeftPlayers">
-				<Label id="LeftTeamTitle" class="PickScreenTeamTitle" text="#imba_radiant_team_title" />
-				<!-- JS Inserts player elements here -->
-			</Panel>
-
-			<!-- Middle section 
-			==================================================================-->
-			<Panel class="ClassContainer" >
-				<Panel id="PickTextPanel">
-					<Panel id='PickTimer'>
-						<Label id='TimerTxt' text="" />
-					</Panel>
-					<Label id="HeroSelectTextAllPick" class="HeroSelectText" text="#imba_gamemode_name_all_pick" />
-					<Label id="HeroSelectTextRandomOmg" class="HeroSelectText" text="#imba_gamemode_name_random_omg" />
-					<Label id="HeroSelectTextArenaMode" class="HeroSelectText" text="#imba_gamemode_name_arena_mode" />
+				<!--Left-hand player section 
+				==================================================================-->
+				<Panel id="LeftPlayers">
+					<Label id="LeftTeamTitle" class="PickScreenTeamTitle" text="#imba_radiant_team_title" />
+					<!-- JS Inserts player elements here -->
 				</Panel>
 
-				<Label id="ImbaPickListText" text="#imba_imba_hero_pick_list_title" />
+				<!-- Middle section 
+				==================================================================-->
+				<Panel class="ClassContainer" >
+					<Panel id="PickInfoPanel">
+						<Panel id="PickTextPanel">
+							<Panel id='PickTimerPanel'>
+								<Panel id='PickTimer'>
+									<Label id='TimerTxt' text="" />
+								</Panel>
+								<Label id="HeroSelectText" class="HeroSelectText" text="#imba_gamemode_name_all_pick" />
+							</Panel>
 
-				<!-- Pick list (showing options) -->
-				<Panel id="PickList">
-					<Panel id="PickListColumn1" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_abaddon" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_abaddon')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_abaddon.png');" />
-						<Panel id="npc_dota_hero_antimage" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_antimage')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_antimage.png');" />
-						<Panel id="npc_dota_hero_axe" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_axe')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_axe.png');" />
-						<Panel id="npc_dota_hero_bane" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_bane')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_bane.png');" />
-						<Panel id="npc_dota_hero_bounty_hunter" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_bounty_hunter')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_bounty_hunter.png');" />
-						<Panel id="npc_dota_hero_centaur" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_centaur')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_centaur.png');" />
-						<Panel id="npc_dota_hero_clinkz" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_clinkz')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_clinkz.png');" />
-						<Panel id="npc_dota_hero_crystal_maiden" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_crystal_maiden')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_crystal_maiden.png');" />
-						<Panel id="npc_dota_hero_dazzle" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_dazzle')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_dazzle.png');" />
-						<Panel id="npc_dota_hero_drow_ranger" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_drow_ranger')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_drow_ranger.png');" />
-						<Panel id="npc_dota_hero_enigma" class="ClassOption"
-							onactivate="SelectHero('npc_dota_hero_enigma')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_enigma.png');" />
-					</Panel>
-					<Panel id="PickListColumn2" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_faceless_void" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_faceless_void')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_faceless_void.png');" />
-						<Panel id="npc_dota_hero_jakiro" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_jakiro')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_jakiro.png');" />
-						<Panel id="npc_dota_hero_juggernaut" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_juggernaut')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_juggernaut.png');" />
-						<Panel id="npc_dota_hero_kunkka" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_kunkka')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_kunkka.png');" />
-						<Panel id="npc_dota_hero_lich" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_lich')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_lich.png');" />
-						<Panel id="npc_dota_hero_lina" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_lina')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_lina.png');" />
-						<Panel id="npc_dota_hero_lion" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_lion')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_lion.png');" />
-						<Panel id="npc_dota_hero_magnataur" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_magnataur')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_magnataur.png');" />
-						<Panel id="npc_dota_hero_mirana" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_mirana')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_mirana.png');" />
-						<Panel id="npc_dota_hero_necrolyte" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_necrolyte')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_necrolyte.png');" />
-						<Panel id="npc_dota_hero_night_stalker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_night_stalker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_night_stalker.png');" />
-					</Panel>
-					<Panel id="PickListColumn3" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_nyx_assassin" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_nyx_assassin')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_nyx_assassin.png');" />
-						<Panel id="npc_dota_hero_omniknight" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_omniknight')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_omniknight.png');" />
-						<Panel id="npc_dota_hero_obsidian_destroyer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_obsidian_destroyer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_obsidian_destroyer.png');" />
-						<Panel id="npc_dota_hero_phantom_assassin" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_phantom_assassin')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_phantom_assassin.png');" />
-						<Panel id="npc_dota_hero_pudge" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_pudge')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_pudge.png');" />
-						<Panel id="npc_dota_hero_pugna" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_pugna')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_pugna.png');" />
-						<Panel id="npc_dota_hero_queenofpain" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_queenofpain')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_queenofpain.png');" />
-						<Panel id="npc_dota_hero_sand_king" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_sand_king')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_sand_king.png');" />
-						<Panel id="npc_dota_hero_nevermore" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_nevermore')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_nevermore.png');" />
-						<Panel id="npc_dota_hero_skywrath_mage" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_skywrath_mage')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_skywrath_mage.png');" />
-						<Panel id="npc_dota_hero_sniper" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_sniper')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_sniper.png');" />
-					</Panel>
-					<Panel id="PickListColumn4" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_sven" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_sven')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_sven.png');" />
-						<Panel id="npc_dota_hero_tinker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_tinker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_tinker.png');" />
-						<Panel id="npc_dota_hero_troll_warlord" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_troll_warlord')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_troll_warlord.png');" />
-						<Panel id="npc_dota_hero_vengefulspirit" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_vengefulspirit')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_vengefulspirit.png');" />
-						<Panel id="npc_dota_hero_venomancer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_venomancer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_venomancer.png');" />
-						<Panel id="npc_dota_hero_warlock" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_warlock')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_warlock.png');" />
-						<Panel id="npc_dota_hero_witch_doctor" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_witch_doctor')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_witch_doctor.png');" />
-						<Panel id="npc_dota_hero_skeleton_king" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_skeleton_king.png');" />
+							<Panel id='GameOptionsPanelContainer'>
+								<Panel id="GameOptionsPanel1">
+									<Panel id="GameOptionsLabelPanel1" class="GameModeLabelPanel">
+										<Label id="BountyMultiplierLabel" class="GameModeLabel" text="#imba_gamemode_settings_bounty_multiplier" />
+										<Label id="BountyMultiplierValue" class="GameModeValue" text="135%" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel2" class="GameModeLabelPanel">
+										<Label id="CreepPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_creep_power_title" />
+										<Label id="CreepPowerValue" class="GameModeValue" text="0" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel3" class="GameModeLabelPanel">
+										<Label id="TowerPowerLabel" class="GameModeLabel" text="#imba_gamemode_settings_tower_power_title" />
+										<Label id="TowerPowerValue" class="GameModeValue" text="1" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel4" class="GameModeLabelPanel">
+										<Label id="RespawnTimerLabel" class="GameModeLabel" text="#imba_gamemode_settings_respawn_time" />
+										<Label id="RespawnTimerValue" class="GameModeValue" text="0%" />
+									</Panel>
+								</Panel>
+
+								<Panel id="GameOptionsPanel2">
+									<Panel id="GameOptionsLabelPanel5" class="GameModeLabelPanel">
+										<Label id="InitialGoldLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_gold" />
+										<Label id="InitialGoldValue" class="GameModeValue" text="625" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel6" class="GameModeLabelPanel">
+										<Label id="InitialLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_initial_level" />
+										<Label id="InitialLevelValue" class="GameModeValue" text="1" />
+									</Panel>
+									<Panel id="GameOptionsLabelPanel7" class="GameModeLabelPanel">
+										<Label id="MaxLevelLabel" class="GameModeLabel" text="#imba_gamemode_settings_max_level" />
+										<Label id="MaxLevelValue" class="GameModeValue" text="40" />
+									</Panel>
+								</Panel>
+							</Panel>
+						</Panel>
+
+						<Panel id="HeroDetailsPanel">
+							<Panel id="PickedHeroPanel">
+								<Label id="PickedHeroName" text="#imba_hero_name_filler"/>
+								<DOTAHeroImage id="PickedHeroImage" heroname="" />
+							</Panel>
+							<Panel id="HeroAbilitiesParentPanel">
+								<Panel id="HeroAbilitiesPanel">
+									<DOTAAbilityImage id="PickedHeroAbility1" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname=""/>
+									<DOTAAbilityImage id="PickedHeroAbility2" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility3" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility4" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility5" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+									<DOTAAbilityImage id="PickedHeroAbility6" class="PickedHeroAbility" onmouseout="DOTAHideAbilityTooltip()" abilityname="" />
+								</Panel>
+								<Button id="PickHeroBtn" onactivate="PickHero()" >
+									<Label id="PickHeroBtnTxt" text="#imba_confirm_pick_button" />
+								</Button>
+								<Button id="RandomPickBtn" onactivate="SelectRandomHero()" >
+									<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
+								</Button>
+							</Panel>
+						</Panel>
 					</Panel>
 
-					<Label id="LazyPickListText" text="#imba_lazy_hero_pick_list_title" />
+					<!-- Pick list (showing options) -->
+					<Panel id="PickList">
 
-					<Panel id="PickListColumn5" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_alchemist" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_alchemist')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_alchemist.png');" />
-						<Panel id="npc_dota_hero_ancient_apparition" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_ancient_apparition')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_ancient_apparition.png');" />
-						<Panel id="npc_dota_hero_arc_warden" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_arc_warden')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_arc_warden.png');" />
-						<Panel id="npc_dota_hero_batrider" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_batrider')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_batrider.png');" />
-						<Panel id="npc_dota_hero_beastmaster" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_beastmaster')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_beastmaster.png');" />
-						<Panel id="npc_dota_hero_bloodseeker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_bloodseeker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_bloodseeker.png');" />
-						<Panel id="npc_dota_hero_bristleback" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_bristleback')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_bristleback.png');" />
-						<Panel id="npc_dota_hero_broodmother" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_broodmother')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_broodmother.png');" />
-						<Panel id="npc_dota_hero_chaos_knight" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_chaos_knight')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_chaos_knight.png');" />
-						<Panel id="npc_dota_hero_chen" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_chen')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_chen.png');" />
-						<Panel id="npc_dota_hero_rattletrap" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_rattletrap')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_rattletrap.png');" />
-					</Panel>
-					<Panel id="PickListColumn6" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_dark_seer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_dark_seer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_dark_seer.png');" />
-						<Panel id="npc_dota_hero_death_prophet" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_death_prophet')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_death_prophet.png');" />
-						<Panel id="npc_dota_hero_disruptor" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_disruptor')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_disruptor.png');" />
-						<Panel id="npc_dota_hero_doom_bringer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_doom_bringer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_doom_bringer.png');" />
-						<Panel id="npc_dota_hero_dragon_knight" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_dragon_knight')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_dragon_knight.png');" />
-						<Panel id="npc_dota_hero_earth_spirit" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_earth_spirit')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_earth_spirit.png');" />
-						<Panel id="npc_dota_hero_earthshaker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_earthshaker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_earthshaker.png');" />
-						<Panel id="npc_dota_hero_elder_titan" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_elder_titan')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_elder_titan.png');" />
-						<Panel id="npc_dota_hero_ember_spirit" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_ember_spirit')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_ember_spirit.png');" />
-						<Panel id="npc_dota_hero_enchantress" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_enchantress')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_enchantress.png');" />
-						<Panel id="npc_dota_hero_gyrocopter" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_gyrocopter')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_gyrocopter.png');" />
-					</Panel>
-					<Panel id="PickListColumn7" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_huskar" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_huskar')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_huskar.png');" />
-						<Panel id="npc_dota_hero_invoker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_invoker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_invoker.png');" />
-						<Panel id="npc_dota_hero_keeper_of_the_light" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_keeper_of_the_light')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_keeper_of_the_light.png');" />
-						<Panel id="npc_dota_hero_legion_commander" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_legion_commander')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_legion_commander.png');" />
-						<Panel id="npc_dota_hero_leshrac" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_leshrac')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_leshrac.png');" />
-						<Panel id="npc_dota_hero_life_stealer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_life_stealer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_life_stealer.png');" />
-						<Panel id="npc_dota_hero_luna" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_luna')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_luna.png');" />
-						<Panel id="npc_dota_hero_medusa" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_medusa')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_medusa.png');" />
-						<Panel id="npc_dota_hero_morphling" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_morphling')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_morphling.png');" />
-						<Panel id="npc_dota_hero_naga_siren" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_naga_siren')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_naga_siren.png');" />
-						<Panel id="npc_dota_hero_furion" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_furion')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_furion.png');" />
-					</Panel>
-					<Panel id="PickListColumn8" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_ogre_magi" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_ogre_magi')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_ogre_magi.png');" />
-						<Panel id="npc_dota_hero_oracle" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_oracle')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_oracle.png');" />
-						<Panel id="npc_dota_hero_phantom_lancer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_phantom_lancer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_phantom_lancer.png');" />
-						<Panel id="npc_dota_hero_phoenix" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_phoenix')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_phoenix.png');" />
-						<Panel id="npc_dota_hero_puck" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_puck')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_puck.png');" />
-						<Panel id="npc_dota_hero_razor" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_razor')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_razor.png');" />
-						<Panel id="npc_dota_hero_riki" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_riki')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_riki.png');" />
-						<Panel id="npc_dota_hero_rubick" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_rubick')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_rubick.png');" />
-						<Panel id="npc_dota_hero_shadow_demon" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_shadow_demon')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_shadow_demon.png');" />
-						<Panel id="npc_dota_hero_silencer" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_silencer')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_silencer.png');" />
-						<Panel id="npc_dota_hero_slardar" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_slardar')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_slardar.png');" />
-					</Panel>
-					<Panel id="PickListColumn9" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_slark" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_slark')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_slark.png');" />
-						<Panel id="npc_dota_hero_spirit_breaker" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_spirit_breaker')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_spirit_breaker.png');" />
-						<Panel id="npc_dota_hero_storm_spirit" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_storm_spirit')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_storm_spirit.png');" />
-						<Panel id="npc_dota_hero_techies" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_techies')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_techies.png');" />
-						<Panel id="npc_dota_hero_templar_assassin" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_templar_assassin')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_templar_assassin.png');" />
-						<Panel id="npc_dota_hero_terrorblade" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_terrorblade')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_terrorblade.png');" />
-						<Panel id="npc_dota_hero_tidehunter" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_tidehunter')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_tidehunter.png');" />
-						<Panel id="npc_dota_hero_shredder" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_shredder')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_shredder.png');" />
-						<Panel id="npc_dota_hero_tiny" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_tiny')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_tiny.png');" />
-						<Panel id="npc_dota_hero_treant" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_treant')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_treant.png');" />
-						<Panel id="npc_dota_hero_tusk" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_tusk')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_tusk.png');" />
-					</Panel>
-					<Panel id="PickListColumn10" class="ClassOptionRow">
-						<Panel id="npc_dota_hero_undying" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_undying')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_undying.png');" />
-						<Panel id="npc_dota_hero_ursa" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_ursa')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_ursa.png');" />
-						<Panel id="npc_dota_hero_viper" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_viper')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_viper.png');" />
-						<Panel id="npc_dota_hero_visage" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_visage')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_visage.png');" />
-						<Panel id="npc_dota_hero_weaver" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_weaver')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_weaver.png');" />
-						<Panel id="npc_dota_hero_windrunner" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_windrunner')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_windrunner.png');" />
-						<Panel id="npc_dota_hero_winter_wyvern" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_winter_wyvern')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_winter_wyvern.png');" />
-						<Panel id="npc_dota_hero_wisp" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_wisp')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_wisp.png');" />
-						<Panel id="npc_dota_hero_zuus" class="ClassOption" 
-							onactivate="SelectHero('npc_dota_hero_zuus')" 
-							style="background-image: url('file://{images}/heroes/npc_dota_hero_zuus.png');" />
+						<Panel id="StrPickListPanel" class="PickListTitlePanel">
+							<Image id="StrPickListPip" class="PickListPip" src="file://{images}/hud/pip_str.png"/>
+							<Label id="StrPickListText" class="PickListText" text="#imba_strength_hero_pick_list_title" />
+						</Panel>
+
+						<Panel id="PickListColumn1" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_abaddon" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_abaddon')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_abaddon.png');" />
+							<Panel id="npc_dota_hero_alchemist" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_alchemist')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_alchemist.png');" />
+							<Panel id="npc_dota_hero_axe" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_axe')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_axe.png');" />
+							<Panel id="npc_dota_hero_beastmaster" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_beastmaster')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_beastmaster.png');" />
+							<Panel id="npc_dota_hero_bristleback" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_bristleback')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_bristleback.png');" />
+							<Panel id="npc_dota_hero_centaur" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_centaur')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_centaur.png');" />
+							<Panel id="npc_dota_hero_chaos_knight" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_chaos_knight')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_chaos_knight.png');" />
+							<Panel id="npc_dota_hero_rattletrap" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_rattletrap')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_rattletrap.png');" />
+							<Panel id="npc_dota_hero_doom_bringer" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_doom_bringer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_doom_bringer.png');" />
+							<Panel id="npc_dota_hero_dragon_knight" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_dragon_knight')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_dragon_knight.png');" />
+							<Panel id="npc_dota_hero_earth_spirit" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_earth_spirit')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_earth_spirit.png');" />
+							<Panel id="npc_dota_hero_earthshaker" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_earthshaker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_earthshaker.png');" />
+							<Panel id="npc_dota_hero_elder_titan" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_elder_titan')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_elder_titan.png');" />
+							<Panel id="npc_dota_hero_huskar" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_huskar')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_huskar.png');" />
+							<Panel id="npc_dota_hero_wisp" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_wisp')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_wisp.png');" />
+							<Panel id="npc_dota_hero_kunkka" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_kunkka')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_kunkka.png');" />
+							<Panel id="npc_dota_hero_legion_commander" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_legion_commander')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_legion_commander.png');" />
+							<Panel id="npc_dota_hero_life_stealer" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_life_stealer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_life_stealer.png');" />
+							<Panel id="npc_dota_hero_magnataur" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_magnataur')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_magnataur.png');" />
+							<Panel id="npc_dota_hero_night_stalker" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_night_stalker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_night_stalker.png');" />
+							<Panel id="npc_dota_hero_omniknight" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_omniknight')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_omniknight.png');" />
+						</Panel>
+						<Panel id="PickListColumn2" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_phoenix" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_phoenix')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phoenix.png');" />
+							<Panel id="npc_dota_hero_pudge" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_pudge')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_pudge.png');" />
+							<Panel id="npc_dota_hero_sand_king" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_sand_king')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_sand_king.png');" />
+							<Panel id="npc_dota_hero_slardar" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_slardar')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_slardar.png');" />
+							<Panel id="npc_dota_hero_spirit_breaker" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_spirit_breaker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_spirit_breaker.png');" />
+							<Panel id="npc_dota_hero_sven" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_sven')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_sven.png');" />
+							<Panel id="npc_dota_hero_tidehunter" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_tidehunter')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_tidehunter.png');" />
+							<Panel id="npc_dota_hero_shredder" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_shredder')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_shredder.png');" />
+							<Panel id="npc_dota_hero_tiny" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_tiny')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_tiny.png');" />
+							<Panel id="npc_dota_hero_treant" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_treant')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_treant.png');" />
+							<Panel id="npc_dota_hero_tusk" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_tusk')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_tusk.png');" />
+							<Panel id="npc_dota_hero_abyssal_underlord" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_abyssal_underlord')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_abyssal_underlord.png');" />
+							<Panel id="npc_dota_hero_undying" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_undying')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_undying.png');" />
+							<Panel id="npc_dota_hero_skeleton_king" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_skeleton_king')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_skeleton_king.png');" />
+						</Panel>
+
+						<Panel id="AgiPickListPanel" class="PickListTitlePanel">
+							<Image id="AgiPickListPip" class="PickListPip" src="file://{images}/hud/pip_agi.png"/>
+							<Label id="AgiPickListText" class="PickListText" text="#imba_agility_hero_pick_list_title" />
+						</Panel>
+
+						<Panel id="PickListColumn3" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_antimage" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_antimage')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_antimage.png');" />
+							<Panel id="npc_dota_hero_arc_warden" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_arc_warden')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_arc_warden.png');" />
+							<Panel id="npc_dota_hero_bloodseeker" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_bloodseeker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_bloodseeker.png');" />
+							<Panel id="npc_dota_hero_bounty_hunter" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_bounty_hunter')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_bounty_hunter.png');" />
+							<Panel id="npc_dota_hero_broodmother" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_broodmother')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_broodmother.png');" />
+							<Panel id="npc_dota_hero_clinkz" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_clinkz')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_clinkz.png');" />
+							<Panel id="npc_dota_hero_drow_ranger" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_drow_ranger')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_drow_ranger.png');" />
+							<Panel id="npc_dota_hero_ember_spirit" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_ember_spirit')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_ember_spirit.png');" />
+							<Panel id="npc_dota_hero_faceless_void" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_faceless_void')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_faceless_void.png');" />
+							<Panel id="npc_dota_hero_gyrocopter" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_gyrocopter')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_gyrocopter.png');" />
+							<Panel id="npc_dota_hero_juggernaut" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_juggernaut')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_juggernaut.png');" />
+							<Panel id="npc_dota_hero_luna" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_luna')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_luna.png');" />
+							<Panel id="npc_dota_hero_medusa" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_medusa')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_medusa.png');" />
+							<Panel id="npc_dota_hero_mirana" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_mirana')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_mirana.png');" />
+							<Panel id="npc_dota_hero_monkey_king" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_monkey_king')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_monkey_king.png');" />
+							<Panel id="npc_dota_hero_morphling" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_morphling')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_morphling.png');" />
+							<Panel id="npc_dota_hero_naga_siren" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_naga_siren')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_naga_siren.png');" />
+							<Panel id="npc_dota_hero_nyx_assassin" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_nyx_assassin')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_nyx_assassin.png');" />
+							<Panel id="npc_dota_hero_phantom_assassin" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_phantom_assassin')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phantom_assassin.png');" />
+							<Panel id="npc_dota_hero_phantom_lancer" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_phantom_lancer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phantom_lancer.png');" />
+							<Panel id="npc_dota_hero_razor" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_razor')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_razor.png');" />
+						</Panel>
+						<Panel id="PickListColumn4" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_riki" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_riki')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_riki.png');" />
+							<Panel id="npc_dota_hero_nevermore" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_nevermore')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_nevermore.png');" />
+							<Panel id="npc_dota_hero_slark" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_slark')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_slark.png');" />
+							<Panel id="npc_dota_hero_sniper" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_sniper')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_sniper.png');" />
+							<Panel id="npc_dota_hero_templar_assassin" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_templar_assassin')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_templar_assassin.png');" />
+							<Panel id="npc_dota_hero_terrorblade" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_terrorblade')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_terrorblade.png');" />
+							<Panel id="npc_dota_hero_troll_warlord" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_troll_warlord')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_troll_warlord.png');" />
+							<Panel id="npc_dota_hero_ursa" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_ursa')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_ursa.png');" />
+							<Panel id="npc_dota_hero_vengefulspirit" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_vengefulspirit')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_vengefulspirit.png');" />
+							<Panel id="npc_dota_hero_venomancer" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_venomancer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_venomancer.png');" />
+							<Panel id="npc_dota_hero_viper" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_viper')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_viper.png');" />
+							<Panel id="npc_dota_hero_weaver" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_weaver')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_weaver.png');" />
+						</Panel>
+
+						<Panel id="IntPickListPanel" class="PickListTitlePanel">
+							<Image id="IntPickListPip" class="PickListPip" src="file://{images}/hud/pip_int.png"/>
+							<Label id="IntPickListText" class="PickListText" text="#imba_intelligence_hero_pick_list_title" />
+						</Panel>
+
+						<Panel id="PickListColumn5" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_ancient_apparition" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_ancient_apparition')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_ancient_apparition.png');" />
+							<Panel id="npc_dota_hero_bane" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_bane')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_bane.png');" />
+							<Panel id="npc_dota_hero_batrider" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_batrider')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_batrider.png');" />
+							<Panel id="npc_dota_hero_chen" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_chen')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_chen.png');" />
+							<Panel id="npc_dota_hero_crystal_maiden" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_crystal_maiden')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_crystal_maiden.png');" />
+							<Panel id="npc_dota_hero_dark_seer" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_dark_seer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_dark_seer.png');" />
+							<Panel id="npc_dota_hero_dazzle" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_dazzle')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_dazzle.png');" />
+							<Panel id="npc_dota_hero_death_prophet" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_death_prophet')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_death_prophet.png');" />
+							<Panel id="npc_dota_hero_disruptor" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_disruptor')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_disruptor.png');" />
+							<Panel id="npc_dota_hero_enchantress" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_enchantress')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_enchantress.png');" />
+							<Panel id="npc_dota_hero_enigma" class="ClassImbaOption"
+								onactivate="SelectHero('npc_dota_hero_enigma')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_enigma.png');" />
+							<Panel id="npc_dota_hero_invoker" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_invoker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_invoker.png');" />
+							<Panel id="npc_dota_hero_jakiro" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_jakiro')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_jakiro.png');" />
+							<Panel id="npc_dota_hero_keeper_of_the_light" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_keeper_of_the_light')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_keeper_of_the_light.png');" />
+							<Panel id="npc_dota_hero_leshrac" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_leshrac')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_leshrac.png');" />
+							<Panel id="npc_dota_hero_lich" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_lich')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_lich.png');" />
+							<Panel id="npc_dota_hero_lina" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_lina')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_lina.png');" />
+							<Panel id="npc_dota_hero_lion" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_lion')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_lion.png');" />
+							<Panel id="npc_dota_hero_furion" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_furion')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_furion.png');" />
+							<Panel id="npc_dota_hero_necrolyte" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_necrolyte')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_necrolyte.png');" />
+							<Panel id="npc_dota_hero_ogre_magi" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_ogre_magi')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_ogre_magi.png');" />
+						</Panel>
+						<Panel id="PickListColumn6" class="ClassOptionRow">
+							<Panel id="npc_dota_hero_oracle" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_oracle')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_oracle.png');" />
+							<Panel id="npc_dota_hero_obsidian_destroyer" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_obsidian_destroyer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_obsidian_destroyer.png');" />
+							<Panel id="npc_dota_hero_puck" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_puck')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_puck.png');" />
+							<Panel id="npc_dota_hero_pugna" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_pugna')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_pugna.png');" />
+							<Panel id="npc_dota_hero_queenofpain" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_queenofpain')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_queenofpain.png');" />
+							<Panel id="npc_dota_hero_rubick" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_rubick')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_rubick.png');" />
+							<Panel id="npc_dota_hero_shadow_demon" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_shadow_demon')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_shadow_demon.png');" />
+							<Panel id="npc_dota_hero_silencer" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_silencer')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_silencer.png');" />
+							<Panel id="npc_dota_hero_skywrath_mage" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_skywrath_mage')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_skywrath_mage.png');" />
+							<Panel id="npc_dota_hero_storm_spirit" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_storm_spirit')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_storm_spirit.png');" />
+							<Panel id="npc_dota_hero_techies" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_techies')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_techies.png');" />
+							<Panel id="npc_dota_hero_tinker" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_tinker')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_tinker.png');" />
+							<Panel id="npc_dota_hero_visage" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_visage')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_visage.png');" />
+							<Panel id="npc_dota_hero_warlock" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_warlock')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_warlock.png');" />
+							<Panel id="npc_dota_hero_windrunner" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_windrunner')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_windrunner.png');" />
+							<Panel id="npc_dota_hero_winter_wyvern" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_winter_wyvern')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_winter_wyvern.png');" />
+							<Panel id="npc_dota_hero_witch_doctor" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_witch_doctor')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_witch_doctor.png');" />
+							<Panel id="npc_dota_hero_zuus" class="ClassNormalOption" 
+								onactivate="SelectHero('npc_dota_hero_zuus')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_zuus.png');" />
+						</Panel>
 					</Panel>
 
-					<Button id="RandomPickBtn" onactivate="SelectRandomHero()" >
-						<Label id="RandomPickBtnTxt" text="#imba_random_pick_button" />
-					</Button>
+					<!-- Post-pick screen (hero view) -->
+					<Panel id="PostPickScreen">
+						<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
+							<Label id="EnterGameBtnTxt" text="#imba_waiting_for_other_players_button" />
+						</Button>
+						<Button id="RepickBtn" onactivate="RepickHero()" >
+							<Label id="RepickBtnTxt" text="#imba_repick_button" />
+						</Button>
+					</Panel>
 				</Panel>
 
-				<!-- Post-pick screen (hero view) -->
-				<Panel id="PostPickScreen">
-					<Button id="EnterGameBtn" class="disabled" onactivate="EnterGame()" >
-						<Label id="EnterGameBtnTxt" text="#imba_waiting_for_other_players_button" />
-					</Button>
+				<!-- Right-hand player section 
+				==================================================================-->
+				<Panel id="RightPlayers">
+					<Label id="RightTeamTitle" class="PickScreenTeamTitle" text="#imba_dire_team_title" />
+					<!-- JS Inserts player elements here -->
 				</Panel>
-			</Panel>
-
-			<!-- Right-hand player section 
-			==================================================================-->
-			<Panel id="RightPlayers">
-				<Label id="RightTeamTitle" class="PickScreenTeamTitle" text="#imba_dire_team_title" />
-				<!-- JS Inserts player elements here -->
 			</Panel>
 		</Panel>
 	</Panel>

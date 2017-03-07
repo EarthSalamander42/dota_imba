@@ -2,25 +2,98 @@
 =================================================================*/
 #LeftPlayers {
 	padding-top: 56px;
-	width: 12%;
+	width: 13%;
 	height: 100%;
-	background-color: gradient( linear, 100% 0%, 0% 0%, from( #000000 ), to( #001050 ) );
 	flow-children: down;
+	animation-name: left_animation;
+	animation-delay: 0s;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+	animation-iteration-count: 15;
+}
+
+@keyframes 'left_animation'
+{
+	0%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105055 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
+
+	50%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105000 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
+
+	100%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #00000000 ), to( #00105055 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
 }
 
 #RightPlayers {
 	padding-top: 56px;
-	width: 12%;
+	width: 13%;
 	height: 100%;
-	background-color: gradient( linear, 100% 0%, 0% 0%, from( #500000 ), to( #000000 ) );
 	horizontal-align: right;
 	flow-children: down;
+	animation-name: right_animation;
+	animation-delay: 0s;
+	animation-duration: 5s;
+	animation-timing-function: linear;
+	animation-iteration-count: 15;
+}
+
+@keyframes 'right_animation'
+{
+	0%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000000 ), to( #00000000 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
+
+	50%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000055 ), to( #00000000 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
+
+	100%
+	{
+		background-color: gradient( linear, 100% 0%, 0% 0%, from( #50000000 ), to( #00000000 ) );
+		animation-timing-function: ease-in, ease-out;
+	}
+}
+
+#ReturnToMenuButton {
+	margin-left: 16px;
+	margin-top: 12px;
+	width: 30px;
+	height: 30px;
+	background-image: url("s2r://panorama/images/control_icons/return_to_game_png.vtex");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+	transform: scaleY(-1);
+	tooltip-position: bottom;
+	opacity: 0.5;
+	wash-color: #CDF;
+
+	transition-property: opacity;
+	transition-duration: 0.2s;
+}
+
+#Background {
+	width: 100%;
+	height: 100%;
+	background-image: url("s2r://panorama/images/backgrounds/dashboard_background_png.vtex");
 }
 
 #PickingScreen {
 	width: 100%;
 	height: 100%;
-	background-color: #000000;
 }
 
 #PickList {
@@ -44,8 +117,8 @@
 	background-color: #151515;
 	flow-children: down;
 	color: #ffffff;
-	padding: 56px 0 24px 0;
-	background-color: gradient( linear, 0% 0%, 100% 0%, from( #000000 ), color-stop( 0.1, #303038 ), color-stop( 0.5, #000000 ), color-stop( 0.9, #383030 ), to( #000000 ) );
+	padding: 20px 0 0px 0;
+	background-color: gradient( radial, 50% 0%, 0% 0%, 40% 40%, from( #000000 ), color-stop(0.4, #000000), to( #00000000 ) );
 }
 
 #HeroPreview {
@@ -66,7 +139,7 @@
 	background-size: 320px 120px;
 	height: 55px;
 	width: 420px;
-	padding-top: 6px;
+	border-radius: 10px;
 }
 
 #EnterGameBtn.disabled, #EnterGameBtn.disabled:Hover {
@@ -79,15 +152,17 @@
 
 #EnterGameBtn Label {
 	horizontal-align: center;
+	vertical-align: center;
 	color: #fff;
 	font-size: 36px;
+	font-family: "Radiance";
 }
 
-/* 'Pick random hero' button
+/* 'Repick hero' button
 =================================================================*/
-#RandomPickBtn {
+#RepickBtn {
 	horizontal-align: center;
-	margin-top: 2.5%;
+	margin-top: 20px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
@@ -95,7 +170,38 @@
 	background-size: 320px 120px;
 	height: 55px;
 	width: 420px;
-	padding-top: 6px;
+	border-radius: 10px;
+}
+
+#RepickBtn.disabled, #RepickBtn.disabled:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
+}
+
+#RepickBtn:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+}
+
+#RepickBtn Label {
+	horizontal-align: center;
+	vertical-align: center;
+	color: #fff;
+	font-size: 36px;
+	font-family: "Radiance";
+}
+
+/* 'Pick random hero' button
+=================================================================*/
+#RandomPickBtn {
+	horizontal-align: center;
+	margin-top: 15px;
+
+	box-shadow: fill #00000066 -4px -4px 8px 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 320px 120px;
+	height: 42px;
+	width: 420px;
+	border-radius: 10px;
 }
 
 #RandomPickBtn:Hover {
@@ -103,76 +209,174 @@
 }
 
 #RandomPickBtn Label {
+	vertical-align: center;
 	horizontal-align: center;
 	color: #FFFFFF;
-	font-size: 36px;
+	font-size: 30px;
+	font-family: "Radiance";
 }
 
 /* Hero options
 =================================================================*/
 .ClassOptionRow {
 	width: 98%;
-	height: 7.5%;
+	height: 10.5%;
 	vertical-align: top;
 	margin-left: 1%;
 	margin-right: 1%;
-	margin-top: 0.4%;
-	margin-bottom: 0.4%;
 	flow-children: right;
 }
 
-.ClassOption {
-	width: 9.09%;
-	height: 100%;
+.ClassNormalOption {
+	width: 4.5%;
+	height: 95%;
 	horizontal-align: left;
-	background-size: 100% 100%;
-	background-position: 0px 0px;
-	saturation: 0.8;
-	opacity-mask: url("file://{images}/custom_game/skew_mask.tga");
+	vertical-align: center;
+	background-position: center;
+	saturation: 0.6;
+	wash-color: #7090B060;
+	border: 3px solid #000000FF;
+	border-radius: 6px;
 }
 
-.ClassOption:hover {
-	saturation: 1;
-	transform: translateX( 3px );
-	transform: translateY( -3px);
+.ClassNormalOption:hover {
+	saturation: 1.0;
+	pre-transform-scale2d: 1.05;
+	wash-color: #00000000;
 }
 
-.ClassOption.taken {
+.ClassNormalOption.taken {
 	saturation: 0.0;
 	transform: none;
 	opacity: 0.2;
+	wash-color: #00000000;
 }
 
+.ClassImbaOption {
+	width: 4.5%;
+	height: 95%;
+	horizontal-align: left;
+	vertical-align: center;
+	background-position: center;
+	saturation: 0.6;
+	wash-color: #7090B060;
+	border: 3px solid #FF7800FF;
+	border-radius: 6px;
+}
+
+.ClassImbaOption:hover {
+	saturation: 1.0;
+	pre-transform-scale2d: 1.05;
+	wash-color: #00000000;
+	border-radius: 6px;
+}
+
+.ClassImbaOption.taken {
+	saturation: 0.0;
+	transform: none;
+	opacity: 0.2;
+	wash-color: #00000000;
+}
 
 /* Text elements and timer
 =================================================================*/
+#PickInfoPanel {
+	width: 100%;
+	height: 220px;
+	horizontal-align: center;
+	vertical-align: middle;
+	flow-children: right;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
 .HeroSelectText {
 	horizontal-align: center;
-	margin-top: 5px;
 	font-size: 48px;
+	font-family: "Goudy Trajan Medium";
 	color: #fff;
-	visibility: collapse;
+	vertical-align: middle;
 }
 
 #PickTextPanel {
+	horizontal-align: left;
+	vertical-align: center;
+	flow-children: down;
+}
+
+#PickTimerPanel {
 	horizontal-align: center;
+	vertical-align: top;
 	flow-children: right;
 }
 
 #PickTimer {
-	width: 70px;
-	height: 70px;
+	width: 60px;
+	height: 60px;
 	border: 3px solid #fff;
-	border-radius: 35px;
-	margin: 0px 20px 20px 0px;
+	border-radius: 30px;
+	margin: 0px 20px 0px 0px;
+	vertical-align: middle;
 }
 
 #TimerTxt {
-	width: 60px;
+	width: 50px;
 	text-align: center;
-	font-size: 44px;
+	font-size: 40px;
+	font-family: "Radiance";
 	color:#fff;
-	margin: 8px 0px 0px 2px;
+	margin: 4px 0px 0px 2px;
+}
+
+#GameOptionsPanelContainer {
+	width: 580px;
+	margin-top: 10px;
+	height: 140px;
+	horizontal-align: center;
+	vertical-align: bottom;
+	flow-children: right;
+}
+
+#GameOptionsPanel1 {
+	margin-top: 5px;
+	horizontal-align: left;
+	vertical-align: top;
+	flow-children: down;
+}
+
+#GameOptionsPanel2 {
+	margin-top: 5px;
+	horizontal-align: right;
+	vertical-align: top;
+	flow-children: down;
+}
+
+.GameModeLabelPanel {
+	width: 280px;
+	margin-right: 10px;
+	flow-children: right;
+}
+
+.GameModeLabel {
+	horizontal-align: left;
+	text-align: center;
+	font-size: 22px;
+	font-family: "Radiance";
+	color:#FFFFFF;
+}
+
+.GameModeLabelPanel2 {
+	width: 300px;
+	flow-children: down;
+}
+
+.GameModeValue {
+	horizontal-align: right;
+	margin-left: 3px;
+	text-align: center;
+	font-size: 22px;
+	font-family: "Radiance";
+	color:#FF7800;
 }
 
 .PickScreenTeamTitle {
@@ -180,23 +384,106 @@
 	height: 8%;
 	text-align: center;
 	font-size: 36px;
+	font-family: "Radiance";
 	color:#fff;
 	vertical-align: middle;
 	margin-bottom: 2%;
 }
 
-#ImbaPickListText {
-	horizontal-align: center;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: 48px;
-	color: #FF7800;
+.PickListTitlePanel {
+	horizontal-align: left;
+	margin-left: 20px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	flow-children: right;
 }
 
-#LazyPickListText {
-	horizontal-align: center;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: 48px;
+.PickListText {
+	horizontal-align: left;
+	vertical-align: center;
+	margin-left: 5px;
+	font-size: 32px;
+	font-family: "Radiance";
 	color: #ffffff;
+}
+
+/* Hero details panel
+=================================================================*/
+#HeroDetailsPanel {
+	height: 100%;
+	horizontal-align: right;
+	vertical-align: center;
+	flow-children: right;
+}
+
+#PickedHeroPanel {
+	vertical-align: center;
+	horizontal-align: left;
+	flow-children: down;
+}
+
+#PickedHeroName {
+	horizontal-align: center;
+	font-size: 28px;
+	font-family: "Radiance";
+	color: #ffffff;
+}
+
+#PickedHeroImage {
+	horizontal-align: center;
+	margin-top: 8px;
+	width: 192px;
+	height: 108px;
+	border-radius: 20px;
+}
+
+#HeroAbilitiesParentPanel {
+	horizontal-align: right;
+	vertical-align: center;
+	flow-children: down;
+	margin-left: 10px;
+	visibility: collapse;
+}
+
+#HeroAbilitiesPanel {
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.PickedHeroAbility {
+	height: 68px;
+	width: 68px;
+	margin-left: 1px;
+	margin-right: 1px;
+	border-radius: 10px;
+}
+
+/* 'Confirm pick' button
+=================================================================*/
+#PickHeroBtn {
+	horizontal-align: center;
+	margin-top: 15px;
+
+	box-shadow: fill #00000066 -4px -4px 8px 8px;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
+	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
+	background-size: 320px 120px;
+	height: 42px;
+	width: 420px;
+	border-radius: 10px;
+}
+
+#PickHeroBtn:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
+}
+#PickHeroBtn.disabled, #PickHeroBtn.disabled:Hover {
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #9C9C9C ), to( #D1D1D133 ) );
+}
+
+#PickHeroBtn Label {
+	vertical-align: center;
+	horizontal-align: center;
+	color: #FFFFFF;
+	font-size: 30px;
+	font-family: "Radiance";
 }

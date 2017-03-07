@@ -808,7 +808,8 @@ function InitializeInnateAbilities( hero )
 		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
-		"imba_silencer_arcane_supremacy"
+		"imba_silencer_arcane_supremacy",
+		"imba_tiny_rolling_stone"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1099,8 +1100,17 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
+	local talentMult = 1 - caster:HighestTalentTypeValue("cooldown_reduction")/100
+	reduction = reduction * talentMult
 
 	return reduction
+end
+
+function CDOTABaseAbility:GetTrueCooldown()
+	local cooldown = self:GetCooldown(-1)
+	local cdr = GetCooldownReduction(self:GetCaster())
+	cooldown = cooldown * cdr
+	return cooldown
 end
 
 -- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)
@@ -1813,7 +1823,7 @@ function SpawnImbaRunes()
 	local game_time = GameRules:GetDOTATime(false, false)
 	for _, bounty_loc in pairs(bounty_rune_locations) do
 		local bounty_rune = CreateItem("item_imba_rune_bounty", nil, nil)
-		 CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
+		CreateItemOnPositionForLaunch(bounty_loc, bounty_rune)
 
 		-- If these are the 00:00 runes, double their worth
 		if game_time < 1 then
@@ -1831,6 +1841,42 @@ function SpawnImbaRunes()
 	-- Spawn a random powerup rune in a random powerup location
 	if game_time > 1 then
 		CreateItemOnPositionForLaunch(powerup_rune_locations[RandomInt(1, #powerup_rune_locations)], CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+	end
+end
+
+-- Spawns runes on the arena map
+function SpawnArenaRunes()
+
+	-- Locate the rune spots on the map
+	local powerup_rune_spawner = Entities:FindAllByName("powerup_rune_spawner")
+	powerup_rune_spawner = powerup_rune_spawner[1]:GetAbsOrigin()
+
+	-- Decide what type of rune to spawn
+	if not ARENA_RUNE_COUNTER then
+		ARENA_RUNE_COUNTER = 3
+	end
+	ARENA_RUNE_COUNTER = ARENA_RUNE_COUNTER + 1
+
+	-- Spawn bounty rune
+	if ARENA_RUNE_COUNTER < 4 then
+	
+		local bounty_rune = CreateItem("item_imba_rune_bounty_arena", nil, nil)
+		CreateItemOnPositionForLaunch(powerup_rune_spawner, bounty_rune)
+		bounty_rune:LaunchLoot(false, 200, 0.4, powerup_rune_spawner + RandomVector(1) * RandomInt(200, 400))
+
+	-- Spawn powerup rune
+	else
+
+		-- List of powerup rune types
+		local powerup_rune_types = {
+			"item_imba_rune_double_damage",
+			"item_imba_rune_haste",
+			"item_imba_rune_regeneration"
+		}
+
+		-- Spawn a random powerup rune
+		CreateItemOnPositionForLaunch(powerup_rune_spawner, CreateItem(powerup_rune_types[RandomInt(1, #powerup_rune_types)], nil, nil))
+		ARENA_RUNE_COUNTER = 0
 	end
 end
 
@@ -1863,10 +1909,7 @@ function PickupBountyRune(item, unit)
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_CreepKill)
 
 	-- Show the gold gained message to everyone
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
-
-	-- Play the gold gained sound
-	unit:EmitSound("General.Coins")
+	SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
@@ -1904,4 +1947,101 @@ function PickupRegenerationRune(item, unit)
 
 	-- Play the double damage rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Regen", unit)
+end
+
+-- Talent handling
+
+function CDOTA_BaseNPC:HasTalent(talentName)
+	if self:HasAbility(talentName) then
+		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
+	end
+	return false
+end
+
+function CDOTA_BaseNPC:FindTalentValue(talentName)
+	if self:HasAbility(talentName) then
+		return self:FindAbilityByName(talentName):GetSpecialValueFor("value")
+	end
+	return 0
+end
+
+function CDOTA_BaseNPC:FindSpecificTalentValue(talentName, valname)
+	if self:HasAbility(talentName) then
+		return self:FindAbilityByName(talentName):GetSpecialValueFor(valname)
+	end
+	return 0
+end
+
+function CDOTA_BaseNPC:HighestTalentTypeValue(talentType)
+	local value = 0
+	for i = 0, 23 do
+		local talent = self:GetAbilityByIndex(i)
+		if talent and string.match(talent:GetName(), "special_bonus_"..talentType.."_(%d+)") and self:FindTalentValue(talent:GetName()) > value then
+			value = self:FindTalentValue(talent:GetName())
+		end
+	end
+	return value
+end
+
+function CDOTABaseAbility:GetTalentSpecialValueFor(value)
+	local base = self:GetSpecialValueFor(value)
+	local talentName
+	local kv = self:GetAbilityKeyValues()
+	for k,v in pairs(kv) do -- trawl through keyvalues
+		if k == "AbilitySpecial" then
+			for l,m in pairs(v) do
+				if m[value] then
+					talentName = m["LinkedSpecialBonus"]
+				end
+			end
+		end
+	end
+	if talentName then 
+		local talent = self:GetCaster():FindAbilityByName(talentName)
+		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
+	end
+	return base
+end
+
+-- Controls comeback gold
+function UpdateComebackBonus(points, team)
+
+	-- Calculate both teams' networths
+	local team_networth = {}
+	team_networth[DOTA_TEAM_GOODGUYS] = 0
+	team_networth[DOTA_TEAM_BADGUYS] = 0
+	for player_id = 0, 19 do
+		if PlayerResource:IsImbaPlayer(player_id) and PlayerResource:GetConnectionState(player_id) <= 2 and (not PlayerResource:GetHasAbandonedDueToLongDisconnect(player_id)) then
+			team_networth[PlayerResource:GetTeam(player_id)] = team_networth[PlayerResource:GetTeam(player_id)] + PlayerResource:GetTotalEarnedGold(player_id)
+		end
+	end
+
+	-- Update teams' score
+	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
+
+	-- If one of the teams is eligible, apply the bonus
+	if (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) and (team_networth[DOTA_TEAM_GOODGUYS] < team_networth[DOTA_TEAM_BADGUYS]) then
+		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_GOODGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
+	elseif (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] < COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS]) and (team_networth[DOTA_TEAM_BADGUYS] < team_networth[DOTA_TEAM_GOODGUYS]) then
+		COMEBACK_BOUNTY_BONUS[DOTA_TEAM_BADGUYS] = (COMEBACK_BOUNTY_SCORE[DOTA_TEAM_GOODGUYS] - COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS]) / ( COMEBACK_BOUNTY_SCORE[DOTA_TEAM_BADGUYS] + 60 - GameRules:GetDOTATime(false, false) / 60 )
+	end
+end
+
+-- Controls arena control points
+function ArenaControlPointThink(control_point)
+	--VARIABLE_LUL = 0
+	--Timers:CreateTimer(0, function()
+	--	VARIABLE_LUL = VARIABLE_LUL + 1
+	--	GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS) + VARIABLE_LUL)
+	--	return 1
+	--end)
+end
+
+function CalculateDistance(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local distance = (pos1 - pos2):Length2D()
+	return distance
 end
