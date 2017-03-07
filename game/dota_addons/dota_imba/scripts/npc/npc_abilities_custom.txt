@@ -7264,13 +7264,48 @@
 	}	
 
 	//=================================================================================================================
+	// Centaur's Thick Hide
+	//=================================================================================================================
+	"imba_centaur_thick_hide"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"				
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/centaur_thick_hide"
+		"ScriptFile"					"hero/hero_centaur.lua"
+		"MaxLevel"						"1"
+		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"				
+				"damage_reduction_pct"		"10"
+			}
+
+			"02" // Hardcoded in modifierfilter in imba.lua
+			{
+				"var_type"					"FIELD_INTEGER"
+				"debuff_duration_red_pct"	"10"
+			}
+		}	
+	}
+
+
+
+	//=================================================================================================================
 	// Centaur's Hoof Stomp
 	//=================================================================================================================
 	"imba_centaur_hoof_stomp"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -7278,21 +7313,23 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"centaur_hoof_stomp"
+		"ScriptFile"					"hero/hero_centaur.lua"
+		"MaxLevel"						"7"		
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.36"
-		"AbilityCastRange"				"375"
-		"AbilityCooldown"				"12.0"
-		"AbilityManaCost"				"100"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"315"
+		"AbilityCooldown"				"13"
+		"AbilityManaCost"				"130"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
-			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_centaur.vsndevts"
+			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"			
 			"particle"					"particles/hero/centaur/centaur_hoof_stomp_arena.vpcf"
 		}	
 		
@@ -7303,127 +7340,44 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"radius"				"315"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_4"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0 2.25 2.5 2.75"
+				"stun_duration"			"2.0 2.25 2.5 2.75 2.75 2.75 2.75"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_5"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stomp_damage"			"100 160 220 280"
+				"stomp_damage"			"100 150 200 250 275 300 325"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"pit_duration"			"4.75"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pit_dmg_reduction"		"-20 -30 -40 -50"
+				"pit_dmg_reduction"		"10 10 10 10 15 20 25"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_2"
 			}
-		}	
 
-		"OnSpellStart"
-		{
-			"FireEffect"
+			"06"
 			{
-				"EffectName"			"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-				"EffectAttachType" 		"follow_origin"
-				"EffectRadius"			"%radius"
-				"Target" 				"CASTER"
-				"ControlPoints"
-				{
-					"01"				"%radius 0 %radius"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"maximum_distance"		"2000"
 			}
 
-			"DestroyTrees"
-			{
-				"Target"				"CASTER"
-				"Radius"				"%radius"
-			}
-			
-			"FireSound"
-			{
-				"EffectName"			"Hero_Centaur.HoofStomp"
-				"Target" 				"CASTER"
-			}
 
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_hoof_stomp_caster"
-				"Target"				"CASTER"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"  			"CASTER"
-					"Radius" 			"%radius"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}	
-
-				"Action"
-				{
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%stomp_damage"
-					}
-
-					"Stun"
-					{
-						"Duration"		"%stun_duration"
-						"Target"		"TARGET"
-					}
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_centaur.lua"
-				"Function"				"HoofStomp"
-
-				"modifier_caster"		"modifier_imba_hoof_stomp_caster"
-				"modifier_enemies"		"modifier_imba_hoof_stomp_marker"
-				"particle_pit"			"particles/hero/centaur/centaur_hoof_stomp_arena.vpcf"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_hoof_stomp_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%pit_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%pit_dmg_reduction"
-				}
-			}
-
-			"modifier_imba_hoof_stomp_marker"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
-		}
+		}							
 	}
 
 	//=================================================================================================================
@@ -7433,7 +7387,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -7441,19 +7395,21 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"centaur_double_edge"	
+		"ScriptFile"					"hero/hero_centaur.lua"
+		"MaxLevel"						"7"		
 
 		// Casting		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"4"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"5 5 5 5 4.5 4 3.5"		
 		"AbilityCastRange"				"150"
-		"AbilityCastPoint"				"0.36"
+		"AbilityCastPoint"				"0.5"
 
 		// Precache	
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_centaur.vsndevts"
 			"particle"					"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 		}
 
@@ -7464,52 +7420,21 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"edge_damage"			"180 270 360 450"
+				"damage"				"175 250 325 400 450 500 550"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
+				"radius"				"190"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_percentage"		"100"
+				"str_damage_reduction"	"100"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_1"
 			}
-		}		
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"Target" 				"CASTER"
-				"EffectName"			"Hero_Centaur.DoubleEdge"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_centaur.lua"
-				"Function"				"DoubleEdge"
-
-				"modifier_caster"		"modifier_imba_double_edge_prevent_deny"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_double_edge_prevent_deny"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MIN_HEALTH"		"1"
-				}
-			}
-		}
+		}					
 	}
 
 	//=================================================================================================================
@@ -7519,11 +7444,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"centaur_return"
+		"ScriptFile"					"hero/hero_centaur.lua"
+		"MaxLevel"						"7"		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -7539,50 +7466,37 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"strength_pct"			"100"
+				"damage"				"16 18 20 22 24 26 28"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown"				"1.5 1.2 0.9 0.6"
+				"var_type"				"FIELD_INTEGER"
+				"str_pct_as_damage"		"30 45 60 75 80 85 90"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dmg_ignore"			"6 9 12 15"
+				"damage_block"			"1 1 1 2 3 4 5"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_7"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_duration"		"3.5"				
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+				"LinkedSpecialBonus"	"special_bonus_imba_centaur_6"
 			}
 		}	
 
-		"Modifiers"
-		{
-			"modifier_imba_centaur_return"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_centaur.lua"
-						"Function"			"Return"
-
-						"modifier_prevent"	"modifier_imba_centaur_prevent_return"
-						"particle_return"	"particles/units/heroes/hero_centaur/centaur_return.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_centaur_prevent_return"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-				"IsDebuff"					"1"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
-		}
+		
 	}
 
 	//=================================================================================================================
@@ -7592,18 +7506,20 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"centaur_stampede"
-		"AbilityCastAnimation"			"ACT_DOTA_CENTAUR_STAMPEDE"
+		"AbilityTextureName"			"centaur_stampede"		
+		"ScriptFile"					"hero/hero_centaur.lua"
+		"MaxLevel"						"6"		
+		"LevelsBetweenUpgrades"			"6"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90.0 75.0 60.0"
+		"AbilityCooldown"				"90 75 60 57 54 50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7615,8 +7531,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 			"particle"					"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-			"particle"					"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"					"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"			
 		}	
 
 		// Special
@@ -7626,154 +7541,65 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.5"
+				"duration"					"4 4 4 4.5 5 5.5"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"strength_damage"			"200 250 300"
+				"strength_damage"			"100 200 300 300 300 300"
 			}
+
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.5"
+				"var_type"					"FIELD_INTEGER"
+				"stun_duration"				"1"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"105"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction_scepter"	"-75"
+				"damage_reduction_scepter"	"75"
 			}
+
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration_scepter"			"4.5"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"absolute_move_speed"		"550"
+			}			
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tree_radius"				"200"
+				"ms_slow_pct"				"80"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"0.5 0.5 0.5 1 1.5 2"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tree_destruction_radius"	"200"
+			}
+
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"nether_ward_damage"		"20"
 			}
 		}	
 
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_centaur.lua"
-				"Function"					"StampedeStart"
-
-				"modifier_stampede"			"modifier_imba_centaur_stampede"
-				"modifier_scepter"			"modifier_imba_centaur_stampede_scepter"
-			}	
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_centaur_stampede"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"EffectName"				"particles/units/heroes/hero_centaur/centaur_stampede.vpcf"
-				"EffectAttachType"			"follow_origin"	
-
-				"Aura"						"modifier_imba_centaur_stampede_collision"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"	"522"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"				"particles/units/heroes/hero_centaur/centaur_stampede_overhead.vpcf"
-						"EffectAttachType"			"follow_overhead"
-						"Target"					"TARGET"
-					}
-				}	
-
-				"OnUnitMoved"
-				{
-					"Random"
-					{
-						"Chance"					"1.0"
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"		"Hero_Centaur.Stampede.Movement"
-								"Target" 			"UNIT"
-							}
-						}
-					}				
-				}
-			}	
-
-			"modifier_imba_centaur_stampede_collision"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_centaur.lua"
-						"Function"			"Stampede"
-
-						"sound_impact"		"Hero_Centaur.Stampede.Stun"
-					}
-				}
-			}	
-
-			"modifier_imba_centaur_stampede_scepter"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"  			"0.1"
-
-				"OnIntervalThink"
-				{
-					"DestroyTrees"
-					{
-						"Target"			"TARGET"
-						"Radius"			"%tree_radius"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_reduction_scepter"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+		
 	}
 
 	//=================================================================================================================
@@ -36647,6 +36473,192 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value2"				"5"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 1 (Level 10): Double Edge self-damage reduction
+	//=================================================================================================================
+	"special_bonus_imba_centaur_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 2 (Level 10): Arena damage reduction extends to allies
+	//=================================================================================================================
+	"special_bonus_imba_centaur_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 3 (Level 20): Radius increase for Double Edge
+	//=================================================================================================================
+	"special_bonus_imba_centaur_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"110"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 4 (Level 20): Radius increase for Hoof Stomp
+	//=================================================================================================================
+	"special_bonus_imba_centaur_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"85"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 5 (Level 30): Arena/stun duration increase
+	//=================================================================================================================
+	"special_bonus_imba_centaur_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 6 (Level 30): Return becomes an aura
+	//=================================================================================================================
+	"special_bonus_imba_centaur_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 7 (Level 40): Increased return damage block
+	//=================================================================================================================
+	"special_bonus_imba_centaur_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Warrunner Talent 8 (Level 40): Stampede duration increase per trampled enemy
+	//=================================================================================================================
+	"special_bonus_imba_centaur_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}

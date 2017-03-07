@@ -322,6 +322,22 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Centaur Thick Hide debuff duration decrease
+	-------------------------------------------------------------------------------------------------	
+	if modifier_owner:HasModifier("modifier_imba_thick_hide") then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			-- Check for break
+			if not modifier_owner:PassivesDisabled() then
+				local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
+				local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
+
+				keys.duration = keys.duration * (1 - debuff_duration_red_pct/100)
+			end
+		end
+	end
+
 	return true
 end
 
