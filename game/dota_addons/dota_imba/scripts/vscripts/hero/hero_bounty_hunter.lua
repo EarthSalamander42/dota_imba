@@ -216,14 +216,15 @@ function Track( keys )
 	end
 
 	-- Calculate total bonus gold
-	local target_level = target:GetLevel()
-	bonus_gold_self = bonus_gold_self + ( target_level - 1 ) * bonus_gold_self_per_lvl
-	bonus_gold = bonus_gold + ( target_level - 1 ) * bonus_gold_per_lvl
+	local target_level_multiplier = target:GetLevel() - 1
+	bonus_gold_self = bonus_gold_self + target_level_multiplier * bonus_gold_self_per_lvl
+	bonus_gold = bonus_gold + target_level_multiplier * bonus_gold_per_lvl
 
 	-- Multiply gold bounties according to the game options
 	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
-	bonus_gold_self = bonus_gold_self * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
-	bonus_gold = bonus_gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	local target_time_multiplier = (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
+	bonus_gold_self = bonus_gold_self * target_time_multiplier
+	bonus_gold = bonus_gold * target_time_multiplier
 
 	-- Find all valid friendly heroes within the bonus gold radius
 	local bonus_gold_targets = FindUnitsInRadius(caster:GetTeam() , target:GetAbsOrigin(), nil, bonus_gold_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
