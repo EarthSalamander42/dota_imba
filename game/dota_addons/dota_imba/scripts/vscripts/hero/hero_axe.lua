@@ -29,13 +29,15 @@ function BattleHungerStart( keys )
 
 	-- If the caster doesnt have the stack modifier then we create it, otherwise
 	-- we just update the value
+	local stack_count
 	if not caster:HasModifier(caster_modifier) then
 		ability:ApplyDataDrivenModifier(caster, caster, caster_modifier, {})
-		caster:SetModifierStackCount(caster_modifier, ability, 1)		
+		stack_count = 0
 	else
-		local stack_count = caster:GetModifierStackCount(caster_modifier, ability)
-		caster:SetModifierStackCount(caster_modifier, ability, stack_count + 1)
+		stack_count = caster:GetModifierStackCount(caster_modifier, ability)
 	end
+
+	caster:SetModifierStackCount(caster_modifier, ability, stack_count + 1)
 
 	-- Apply the movement speed modifier
 	ability:ApplyDataDrivenModifier(caster, caster, speed_modifier, {})
@@ -131,10 +133,11 @@ function CounterHelix( keys )
 		caster:EmitSound(sound_spin)
 
 		-- Play particles
+		local origin = caster:GetAbsOrigin()
 		local helix_pfx_1 = ParticleManager:CreateParticle(particle_spin_1, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(helix_pfx_1, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(helix_pfx_1, 0, origin)
 		local helix_pfx_2 = ParticleManager:CreateParticle(particle_spin_2, PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(helix_pfx_2, 0, caster:GetAbsOrigin())
+		ParticleManager:SetParticleControl(helix_pfx_2, 0, origin)
 
 		-- Spin animation
 		StartAnimation(caster, {duration = 0.3, activity = ACT_DOTA_CAST_ABILITY_3, rate = 1.0})
@@ -143,7 +146,7 @@ function CounterHelix( keys )
 		local damage = base_damage + caster:GetStrength() * str_as_damage / 100
 
 		-- Find nearby enemies
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), origin, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		
 		-- Apply damage to valid enemies
 		for _,enemy in pairs(enemies) do
