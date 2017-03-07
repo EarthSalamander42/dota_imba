@@ -2215,7 +2215,8 @@
 		"Ability1"					"imba_silencer_arcane_curse"
 		"Ability2"					"imba_silencer_glaives_of_wisdom"
 		"Ability3"					"imba_silencer_last_word"
-		"Ability4"					"imba_silencer_global_silence"
+		"Ability4"					"imba_silencer_arcane_supremacy"
+		"Ability5"					"imba_silencer_global_silence"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_armor_3"
