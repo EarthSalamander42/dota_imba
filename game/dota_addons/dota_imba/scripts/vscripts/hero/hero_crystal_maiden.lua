@@ -254,8 +254,10 @@ function FreezingFieldExplode( keys )
 	local explosion_dummy = CreateUnitByName("npc_dummy_unit", attackPoint, false, nil, nil, caster:GetTeamNumber())
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, explosion_dummy)
-	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
+	do
+		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, explosion_dummy)
+		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
+	end
 	
 	-- Fire sound at the center position
 	explosion_dummy:EmitSound(sound_name)
