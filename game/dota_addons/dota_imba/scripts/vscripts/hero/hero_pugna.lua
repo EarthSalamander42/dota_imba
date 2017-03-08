@@ -577,7 +577,7 @@ function NetherWardZap( keys )
 	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_POINT == 0 then
 
 		-- If the ability targets allies, use it on the ward's vicinity
-		if ability_target_team == 1 then
+		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
 			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = ward:GetAbsOrigin(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
 			ability_was_used = true
 
@@ -596,7 +596,7 @@ function NetherWardZap( keys )
 	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_UNIT_TARGET == 0 then
 
 		-- If the ability targets allies, use it on a random nearby ally
-		if ability_target_team == 1 then
+		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
 			
 			-- Find nearby allies
 			local allies = FindUnitsInRadius(caster:GetTeamNumber(), ward_position, nil, ability_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
