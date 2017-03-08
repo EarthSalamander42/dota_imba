@@ -565,13 +565,16 @@ function NetherWardZap( keys )
 	-- Memorize if an ability was actually cast
 	local ability_was_used = false
 	
+	if ability_behavior == DOTA_ABILITY_BEHAVIOR_NONE then
+		--Do nothing, not suppose to happen
+
 	-- Toggle ability
-	if ( ability_behavior - math.floor( ability_behavior / 512 ) * 512 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_TOGGLE == 0 then
 		ability:ToggleAbility()
 		ability_was_used = true
 
 	-- Point target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 16 ) * 16 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_POINT == 0 then
 
 		-- If the ability targets allies, use it on the ward's vicinity
 		if ability_target_team == 1 then
@@ -590,7 +593,7 @@ function NetherWardZap( keys )
 		end
 
 	-- Unit target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 8 ) * 8 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_UNIT_TARGET == 0 then
 
 		-- If the ability targets allies, use it on a random nearby ally
 		if ability_target_team == 1 then
@@ -623,7 +626,7 @@ function NetherWardZap( keys )
 		end
 
 	-- No-target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 4 ) * 4 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_NO_TARGET == 0 then
 		ability:CastAbility()
 		ability_was_used = true
 	end
