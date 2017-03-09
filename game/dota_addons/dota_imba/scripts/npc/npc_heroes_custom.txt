@@ -161,20 +161,20 @@
 	//=================================================================================================================
 	"npc_imba_hero_bane"
 	{
-		"override_hero"				"npc_dota_hero_bane"
+		"override_hero"			"npc_dota_hero_bane"
 
 		"ModelScale"				"1.1"
 
-		"AttackDamageMin"			"58"
-		"AttackDamageMax"			"64"
+		"AttackDamageMin"		"58"
+		"AttackDamageMax"		"64"
 
 		"AttackRate"				"2.0"
 
 		"AttackRange"				"500"
 
-		"ProjectileSpeed"			"500"
+		"ProjectileSpeed"		"500"
 
-		"AbilityLayout"				"5"
+		"AbilityLayout"			"5"
 
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
@@ -183,14 +183,14 @@
 		"Ability5"					"imba_bane_fiends_grip"
 
 		"Ability9"					"imba_unlimited_level_powerup"
-		"Ability10"					"special_bonus_armor_4"
-		"Ability11"					"special_bonus_mp_175"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_exp_boost_20"
-		"Ability14"					"special_bonus_movement_speed_30"
-		"Ability15"					"special_bonus_cast_range_100"
-		"Ability16"					"special_bonus_cooldown_reduction_12"
-		"Ability17"					"special_bonus_spell_amplify_12"
+    "Ability10"         "special_bonus_unique_bane_1"
+    "Ability11"         "special_bonus_unique_bane_2"
+    "Ability12"         "special_bonus_unique_bane_3"
+    "Ability13"         "special_bonus_unique_bane_4"
+    "Ability14"         "special_bonus_unique_bane_5"
+    "Ability15"         "special_bonus_unique_bane_6"
+    "Ability16"         "special_bonus_unique_bane_7"
+    "Ability17"         "special_bonus_unique_bane_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
