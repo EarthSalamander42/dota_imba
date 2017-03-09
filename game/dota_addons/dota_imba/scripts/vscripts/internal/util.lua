@@ -805,7 +805,6 @@ function InitializeInnateAbilities( hero )
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
 		"imba_sandking_treacherous_sands",
-		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
 		"imba_silencer_arcane_supremacy",
@@ -1100,7 +1099,7 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
-	local talentMult = 1 - caster:HighestTalentTypeValue("cooldown_reduction")/100
+	local talentMult = 1 - unit:HighestTalentTypeValue("cooldown_reduction")/100
 	reduction = reduction * talentMult
 
 	return reduction
