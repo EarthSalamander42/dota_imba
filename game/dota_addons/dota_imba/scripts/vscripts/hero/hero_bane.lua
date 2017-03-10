@@ -56,7 +56,6 @@ LinkLuaModifier("modifier_imba_bane_nightmare_invuln_period",   "hero/hero_bane"
 LinkLuaModifier("modifier_imba_bane_nightmare_baleful_visions", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_bane_fiends_grip",               "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
 
-local talents          = "hero_bane_talents"  
 local talentnamescheme = "special_bonus_unique_bane_"
 local baneabilities    = 5 -- bane has 5 abilities
 local banetalents      = 8 -- bane has 8 talents
@@ -68,63 +67,58 @@ local function findtarget(source) -- simple list return function for finding a p
   if t and c then return t,c end
 end
 
-function banePopulateNetTable(ability,banetalentTable,talentnamescheme)               -- The idea here is to minimize 'setting' the nettables after game creation.
-  if ability:GetCaster().nettablesSet == 1 then return end                            -- We'll just populate a table with 8 empty keys when this is called.
-  local playerstalenttable = banetalentTable..ability:GetCaster():GetPlayerOwnerID()  -- This should run once per player creation, on the server only.
-  local emptykvpair = {}                                                              -- Honestly this isn't the best solution but it seems the java running
-  for i=1,banetalents do                                                              -- nettables doesn't accept coercion so i have to do it this really shitty hacky way
-    emptykvpair[talentnamescheme..i] = 0                                              -- I'm probably just gonna change to using the key = one talent, because this way is retarded
-  end
-  CustomNetTables:SetTableValue("talents", playerstalenttable, emptykvpair)
-  ability:GetCaster().talentsettings = emptykvpair
-  ability:GetCaster().nettablesSet = 1
-end
-
-function talentcheck(ability, banetalentTable, talentnamescheme,...) 
-  local returnvalues = {}
-  local values = {...}  
-  local namestyle = talentnamescheme
-  local playerstalenttable = banetalentTable..ability:GetCaster():GetPlayerOwnerID()
-  for i,k in ipairs(values) do 
-    local talentname,talentnumber = k[1],k[2]                       -- split variable array into variables "talent_cooldown_bonus" "8"
-    local currenttalent = talentnamescheme..talentnumber            -- concat table id to playerowner to prevent talent overlap "special_bonus_imba_bane_"
-    if IsServer() then                                              -- only operate on nettables through server dll
-      if talentname ~= nil then                                     -- talentname is a useless var but i guess it makes the below code more associatable with a talent 'name' rather than referencing just a number. 
-        if not ability:GetCaster().nettablesSet then ability:GetCaster().nettablesSet = 0 end -- check if array has been populated at least once
-        if ability:GetCaster().nettablesSet ~= 1 and not IsStolenSpell(ability:GetCaster()) then banePopulateNetTable(ability,talents,talentnamescheme) end  -- have we prepopulated the nettable? is our caster not the talent holder?
-        if ability:GetCaster():HasTalent(currenttalent) then                               -- do we have the talent?
-          local tablevalue = ability:GetCaster():FindTalentValue(currenttalent)            -- what is the expected talent value?
-          local talentarray = CustomNetTables:GetTableValue("talents", playerstalenttable) -- Grab whole table once
-          for key,val in pairs(ability:GetCaster().talentsettings) do
-            if key == currenttalent then 
-              ability:GetCaster().talentsettings[currenttalent] = tablevalue
-              if ability:GetCaster().talentsettings[currenttalent] ~= talentarray[currenttalent] then
-                CustomNetTables:SetTableValue("talents", playerstalenttable, ability:GetCaster().talentsettings) -- Only rewrite if it's not set
-              end
+-- talentmanager usage: talentmanager(entity,nameScheme,isParityNeeded,{(talentnumber)},{(talentnumber,"extra data requested")}
+-- real example: nightmareduration = talentmanager(self:GetCaster,nameScheme,false,{1})
+-- complex example: rupturebonus,thirstmove,thirstdmg = talentmanager(self:GetCaster,nameScheme,true,{5},{7,"value1","value2"})
+function talentmanager(ability, nameScheme, isParityNeeded, ...) -- todo: add support for keys with multiple values (key_ability_1){value=1,value=2}
+  --if IsStolenSpell(ability:GetCaster()) then end -- we probably need to do some special shit to avoid giving stolen spells talents, not sure  
+  local values = {...}
+  local returnvalues = {} 
+  local nettableentry = {}
+  local subrequest = {}
+  local playerstalenttable = "player_"..ability:GetCaster():GetPlayerOwnerID().."_"..nameScheme
+  for k,v in ipairs(values) do  
+    local talentnumber = v[1]   
+    local talentname = nameScheme..talentnumber
+    local keyname = playerstalenttable..talentnumber    
+    print(keyname)
+    if IsServer() then
+      local nettablekey = CustomNetTables:GetTableValue("talents", keyname)      
+      if ability:GetCaster():HasTalent(talentname) then
+        if #v > 1 then             -- if our subvalue has more than 1 entry, enter it into a table and iterate further
+          for i=2,#v do 
+            if ability:GetCaster():HasTalent(talentname) then
+              table.insert(subrequest,ability:GetCaster():FindSpecificTalentValue(v[i]))
+            else
+              table.insert(subrequest,0)
             end
           end
+        else
+          table.insert(subrequest,ability:GetCaster():
+        end
+        local talentvalue = ability:GetCaster():FindTalentValue(talentname)
+        local nettableentry = {value = talentvalue} 
+        if not nettablekey then -- We have talent and value isn't populated
+          CustomNetTables:SetTableValue("talents", keyname, nettableentry)
+        elseif nettablekey.value ~= talentvalue then -- We have talent and value is populated but incorrect
+          CustomNetTables:SetTableValue("talents", keyname, nettableentry)
+        end
+      else
+        if not CustomNetTables:GetTableValue("talents", keyname) then -- We don't have talent, doublecheck nettable and set to 0
+          CustomNetTables:SetTableValue("talents", keyname, {value = 0})
         end
       end
-    end
-    if CustomNetTables:GetTableValue("talents", playerstalenttable) then -- This small code is for the client only, it returns either the net table or changes any nil entries to 0 to prevent crashes
-      local talentarray = CustomNetTables:GetTableValue("talents", playerstalenttable)
-      for key,val in pairs(talentarray) do
-        if key == talentnamescheme..tostring(talentnumber) then
-          table.insert(returnvalues,tonumber(val))
-        end
-      end
-    else
-      if #returnvalues == 0 then
-        for i=1,#values do
-          table.insert(returnvalues,0)
-        end
+      table.insert(returnvalues,CustomNetTables:GetTableValue("talents", keyname).value)      -- Insert a result 
+    else -- We're a client
+      if CustomNetTables:GetTableValue("talents", keyname) then -- Talent value is set
+        table.insert(returnvalues,CustomNetTables:GetTableValue("talents", keyname).value)
+      else -- It's not set, 0
+        table.insert(returnvalues,0)
       end
     end
   end    
-
-return unpack(returnvalues) --unpack returnvalues in order
-end 
-
+  return unpack(returnvalues) --unpack returnvalues in order
+end
 
 
 function getkvValues(ability, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for ability (typically self)
@@ -157,7 +151,7 @@ function imba_bane_brain_sap:OnSpellStart()
   if not IsServer() then return end
   local target,caster = findtarget(self)
   local sapdamage,sapduration = getkvValues(self,"brain_sap_damage","brain_sap_duration")  
-  local talentdamagebonus,talentdurationbonus = talentcheck(self,talents,talentnamescheme,{"talent_damage_bonus",5},{"talent_duration_bonus",1})
+  local talentdamagebonus,talentdurationbonus = talentmanager(self,talentnamescheme,false,{5},{1})
   print(talentdamagebonus,talentdurationbonus)
   if target:TriggerSpellAbsorb(self) then return end -- Does player have linkins or another spell absorb?
   damage = {
@@ -178,7 +172,7 @@ function imba_bane_brain_sap:OnSpellStart()
 end
 
 function imba_bane_brain_sap:GetCastRange(l,t)
-  local talentrangebonus = talentcheck(self,talents,talentnamescheme,{"talent_range_bonus",4}) -- lol i should just have a function to populate these but w/e maybe next hero
+  local talentrangebonus = talentmanager(self,talentnamescheme,false,{4}) -- lol i should just have a function to populate these but w/e maybe next hero
   return (self.BaseClass.GetCastRange(self,l,t)+talentrangebonus)                        
 end
 
@@ -197,7 +191,7 @@ function imba_bane_nightmare:OnSpellStart()
   local target,caster = findtarget(self) -- who did we target? who are we?
   if target:TriggerSpellAbsorb(self) then return end    -- 'ting!' linkins
   local invulnduration,nightmareduration = getkvValues(self,"nightmare_invuln_duration","nightmare_duration")    -- get kv valuse
-  local talentinvulnbonus = talentcheck(self,talents,talentnamescheme,{"talent_invuln_duration_bonus",7})        -- get talent bonus
+  local talentinvulnbonus = talentmanager(self,talentnamescheme,false,{7})        -- get talent bonus
   
   if caster:GetTeamNumber() == target:GetTeamNumber() then -- are we on the same team? if so buff the invuln duration by the talent 
     invulnduration=invulnduration+talentinvulnbonus
@@ -224,12 +218,12 @@ function imba_bane_nightmare_end:GetAssociatedPrimaryAbilities()
 -- Fiends Grip Spell Cast
 
 function imba_bane_fiends_grip:GetChannelTime()
-  local talentchannelbonus = talentcheck(self,talents,talentnamescheme,{"talent_channel_bonus",6})  --probably needlessly complex, i will have a better way to do this later
+  local talentchannelbonus = talentmanager(self,talentnamescheme,false,{6})  --probably needlessly complex, i will have a better way to do this later
 	return (self:GetSpecialValueFor("fiends_grip_duration")+talentchannelbonus)
 end
 
 function imba_bane_fiends_grip:GetCooldown(nLevel)
-  local talentcooldownbonus = talentcheck(self,talents,talentnamescheme,{"talent_cooldown_bonus",8}) --probably needlessly complex, i will have a better way to do this later   
+  local talentcooldownbonus = talentmanager(self,talentnamescheme,false,{8}) --probably needlessly complex, i will have a better way to do this later   
   return self.BaseClass.GetCooldown( self, nLevel )-talentcooldownbonus                    
 end
 
@@ -239,7 +233,7 @@ function imba_bane_fiends_grip:OnSpellStart()
   self.fiendtarget,self.fiendcaster = findtarget(self) -- we append fiendcaster and fiendtarget into class values for use later in cases of channel interruption or spell reflection to avoid conflicts
   if self.fiendtarget:TriggerSpellAbsorb(self) then self.fiendcaster:Interrupt() return end    
   local fiends_grip_duration = getkvValues(self,"fiends_grip_duration")  
-  local talentchannelbonus = talentcheck(self,talents,talentnamescheme,{"talent_channel_bonus",6}) 
+  local talentchannelbonus = talentmanager(self,talentnamescheme,false,{6}) 
   self.fiendgriptable = {} -- set table to blank when skill is invoked to avoid weird shit
   table.insert(self.fiendgriptable,self.fiendtarget)  -- o ur about to get spooked really good now fiendtarget!
   self.fiendtarget:Interrupt()  -- !
@@ -263,7 +257,7 @@ function imba_bane_fiends_grip:OnChannelThink()
 if not IsServer() then return end
   if self:GetCaster():HasScepter() then
     local vision_radius,vision_cone,fiends_grip_duration = getkvValues(self,"fiends_grip_duration","fiends_grip_scepter_radius","fiends_grip_scepter_vision_cone") 
-    local talentchannelbonus = talentcheck(self,talents,talentnamescheme,{"talent_channel_bonus",6}) 
+    local talentchannelbonus = talentmanager(self,talentnamescheme,false,{6}) 
     local caster_location = self.fiendcaster:GetAbsOrigin()
     local enemies_to_check = FindUnitsInRadius(self.fiendcaster:GetTeamNumber(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, FIND_CLOSEST, false)
     for _,v in pairs(enemies_to_check) do
@@ -297,9 +291,7 @@ end
 function modifier_imba_bane_enfeeble:OnCreated()
 if not IsServer() then return end
   local statreduction,damagereduction = getkvValues(self:GetAbility(),"stat_reduction","damage_reduction") 
-  print(damagereduction)
-  local talentdamagereduction = talentcheck(self,talents,talentnamescheme,{"talent_damage_reduction",3}) 
-  print(talentdamagereduction)
+  local talentdamagereduction = talentmanager(self,talentnamescheme,false,{3}) 
   self.strengthmodifier  = self:GetParent():GetStrength()  * (statreduction/100) -- Note these are only evaluated once, on spell cast.  On refresh they will                      
   self.agilitymodifier   = self:GetParent():GetAgility()   * (statreduction/100) -- NOT be recalculated, this can be rewritten to calculate stat reduction on
   self.intellectmodifier = self:GetParent():GetIntellect() * (statreduction/100) -- recast or w/e is required
@@ -391,7 +383,7 @@ function modifier_imba_bane_nightmare:OnDestroy()
   if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then -- when nightmare is destroyed, are we an enemy?
     if not self:GetParent():IsMagicImmune() then  -- are we magic immune if we're an enemy?
       local nightmare_baleful_visions_duration = getkvValues(self:GetAbility(),"nightmare_baleful_visions_duration") 
-      local talentdurationbonus = talentcheck(self,talents,talentnamescheme,{"talent_debuff_duration_bonus",2}) 
+      local talentdurationbonus = talentmanager(self,talentnamescheme,false,{2}) 
       self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_bane_nightmare_baleful_visions", {duration = nightmare_baleful_visions_duration+talentdurationbonus}) -- blind them
     end
   end
