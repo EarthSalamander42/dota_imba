@@ -41,6 +41,11 @@ function VladmirOffering( keys )
 	end
 end
 
+function VladmirOfferingProjectile(keys)
+	local caster = keys.caster
+	ChangeAttackProjectileImba(caster)
+end
+
 function VladmirBlood( keys )
 	local caster = keys.caster
 	local attacker = keys.attacker

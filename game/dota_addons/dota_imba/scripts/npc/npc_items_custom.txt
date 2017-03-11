@@ -1362,6 +1362,24 @@
 		{
 			"modifier_item_imba_vladmir"
 			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirOfferingProjectile"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirOfferingProjectile"
+					}
+				}
+
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
@@ -1492,6 +1510,24 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirOfferingProjectile"
+					}
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_vladmir.lua"
+						"Function"			"VladmirOfferingProjectile"
+					}
+				}
 				
 				"Properties"
 				{
