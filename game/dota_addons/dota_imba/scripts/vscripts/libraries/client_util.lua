@@ -24,52 +24,28 @@ function PrintAll(t)
 	end
 end
 
-function printObj(obj, hierarchyLevel) 
-    if (hierarchyLevel == nil) then
-        hierarchyLevel = 0
-    elseif (hierarchyLevel == 4) then
-        return 0
-    end
-local whitespace = ""
-for i=0,hierarchyLevel,1 do
-    whitespace = whitespace .. "-"
-end
-io.write(whitespace)
-print(obj)
-if (type(obj) == "table") then
-    for k,v in pairs(obj) do
-        io.write(whitespace .. "-")
-        if (type(v) == "table") then
-            printObj(v, hierarchyLevel+1)
-        else
-            print(v)
-        end         
-    end
-else
-    print(obj)
-end
-end
-
-function C_DOTA_BaseNPC:HasTalent(_,modifierName) -- We need to know modifier! not talent name, but we also want this check to appear seamless server side, so just ignore first value
-	if self:HasModifier(modifierName) then
-		if self:HasModifier("modifier_"..modifierName) then return true end
-	end
+function C_DOTA_BaseNPC:HasTalent(talentName)
+  if self:HasModifier("modifier_"..talentName) then
+    return true 
+  end
 	return false
 end
 
-function C_DOTA_BaseNPC:FindTalentValue(talentName) -- This value is not protected by a HasAbility check clientside! so hopefully you encased your code with HasTalent first!
-  local specialVal = AbilityKV[talentName]["AbilitySpecial"]
-	for l,m in pairs(specialVal) do
-		if m["value"] then
-			return m["value"]
-		end
-	end
+function C_DOTA_BaseNPC:FindTalentValue(talentName)
+  if self:HasModifier("modifier_"..talentName) then  
+    local specialVal = AbilityKV[talentName]["AbilitySpecial"]
+	  for l,m in pairs(specialVal) do
+		  if m["value"] then
+	  		return m["value"]
+	  	end
+	  end
+  end    
 	return 0
 end
 
-function C_DOTA_BaseNPC:FindSpecificTalentValue(talentName,valname)  --Same deal as FindTalentValue.
-  local specialVal = AbilityKV[talentName]["AbilitySpecial"]
+function C_DOTA_BaseNPC:FindSpecificTalentValue(talentName,valname)
 	for l,m in pairs(specialVal) do
+    local specialVal = AbilityKV[talentName]["AbilitySpecial"]    
 		if m[valname] then
 			return m[valname]
 		end
@@ -90,8 +66,8 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 			end
 		end
 	end
-	if talentName and self:GetCaster():HasTalent(talentName) then 
-		base = base + self:GetCaster():FindTalentValue(talentName) 
+	if talentName and self:HasModifier("modifier_"..talentName) then 
+		base = base + self:FindTalentValue(talentName) 
 	end
 	return base
 end
