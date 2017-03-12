@@ -1,3 +1,79 @@
+--require('/vscripts/addon_init.lua')
+local talentnamescheme = "special_bonus_unique_bloodseeker_"
+-- talentmanager usage: talentmanager(entity,nameScheme,isParityNeeded,{(talentnumber)},{(talentnumber,"extra data requested")}
+-- real example: nightmareduration = talentmanager(self:GetCaster,nameScheme,false,{1})
+-- complex example: rupturebonus,thirstmove,thirstdmg = talentmanager(self:GetCaster,nameScheme,true,{5},{7,"value1","value2"})
+function talentmanager(tEntity, nameScheme, isParityNeeded, ...) 
+  local values = {...}                                                                        -- Our user input
+  local returnvalues = {}                                                                     -- table that will be unpacked for result                                                    
+  local playerstalenttable = "player_"..tEntity:GetPlayerOwnerID().."_"..nameScheme
+    for k,v in ipairs(values) do  
+      local talentnumber = v[1]                                                               -- should be 1-8, but probably can be extrapolated later on to be any number
+      local talentname = nameScheme..talentnumber                                             -- special_bonus_unique_bane_1 (for keyvalue txt)
+      local keyname = playerstalenttable..talentnumber                                        -- player_(#)_special_bonus_unique_bane(1-8)
+      if IsServer() then
+        local netTableKey = netTableCmd(false,"talents",keyname)                              -- Command to grab our key set
+        if tEntity:HasTalent(talentname) then                                                 -- Do we have the talent?
+          local has_talent = createNetTableKey(tEntity,true,nameScheme,v)                     -- [HAVE TALENT] call function to write my net table key with flag has talent (which can be any number of arguments)
+          if not netTableKey then                                                             -- [HAVE TALENT] We have talent and value isn't populated (rare)        
+            netTableCmd(true,"talents",keyname,has_talent)                                    -- [HAVE TALENT] We didn't find a current kv pair, so create one 
+          end
+        else                                                                                  -- [NO TALENT] this should be the 'we don't have talent' else, but serverside
+          local has_talent = createNetTableKey(tEntity,false,nameScheme,v)
+          if not netTableKey then                                                             -- [NO TALENT] We don't have talent, and the kv pair doesn't exist so...
+            if type(netTableKey) == 'boolean' then                                            -- [NO TALENT] The table exists but we only got a true/false statement that it does, it is not populated if this is true.
+              netTableCmd(true,"talents",keyname,has_talent)                                  -- [NO TALENT] Write a value for clients to be able to read (which will be 0 instead of nil)
+            end
+          end
+        end
+      end
+      local allkeys = netTableCmd(false,"talents",keyname)
+      if allkeys[1] == 1 then
+        table.insert(returnvalues, true)    
+      else
+        table.insert(returnvalues, false)    
+      end
+    end
+return unpack(testtable)
+end
+
+function netTableCmd(send,readtable,key,tabletosend)
+  if send == false then
+    local finalresulttable = {}
+    local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
+    if not nettabletemp then return false end
+    for key,value in pairs(nettabletemp) do
+      table.insert(finalresulttable,value)
+    end          
+    if #finalresulttable > 0 then 
+      return finalresulttable
+    else
+      return true
+    end
+  else
+    CustomNetTables:SetTableValue(readtable, key, tabletosend)
+  end
+end
+
+function createNetTableKey(tEntity, talentrequest,nameScheme,v)
+  local valuePair = {}
+  if talentrequest == true then                                           -- Single values only, only difference is it just returns the first talentvalue
+    table.insert(valuePair,1)                                             -- true
+  else 
+    table.insert(valuePair,0)                                                -- talent check failed, so set our value pair to 0 
+  end
+  return valuePair  
+end
+
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+  local values = {...}
+  local data = {}
+  for i,v in ipairs(values) do
+    table.insert(data,tEntity:GetSpecialValueFor(v))
+  end
+  return unpack(data)
+end
+
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
@@ -273,26 +349,30 @@ function modifier_imba_bloodseeker_thirst_passive:OnRefresh()
 	self.damage = self:GetAbility():GetSpecialValueFor("bonus_damage") / (self.minhp - self.maxhp)
 	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
 	self.talent7 = false
-	if IsServer() then
-		if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
-			self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value") / (self.minhp - self.maxhp)
-			self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
-			CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
-		end
+	if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7","modifier_imba_bloodseeker_thirst_passive") then
+    print('we have talent!!')
+  	self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value","modifier_imba_bloodseeker_thirst_passive") / (self.minhp - self.maxhp)
+	  self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2","modifier_imba_bloodseeker_thirst_passive") / (self.minhp - self.maxhp)
 	end
 end
 
 function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 	if IsServer() then
-		if not self.talent7 then
-			if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
+			if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7","modifier_imba_bloodseeker_thirst_passive") then
+        print('we have talent!')
 				self.talent7 = true
 				self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
 				self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
-				CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
 			end
-		end
-		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
+      self:GetParent():GetAbsOrigin(),
+      nil,
+      FIND_UNITS_EVERYWHERE,
+      DOTA_UNIT_TARGET_TEAM_ENEMY,
+      DOTA_UNIT_TARGET_HERO,
+      DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+      0,
+      false)
 		local hpDeficit = 0
 		for _,enemy in pairs(enemies) do
 			if self:GetCaster():PassivesDisabled() then 
@@ -316,12 +396,12 @@ function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 			end
 		end
 		self:SetStackCount(hpDeficit)
-	else
-		if CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents") and not self.talent7 then
-			self.movespeed = CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents").talent7_ms
-			self.damage = CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents").talent7_dmg
-			self.talent7 = true
-		end
+  end
+  if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7","modifier_imba_bloodseeker_thirst_passive") then
+    print('we have talent!!')
+		self.talent7 = true
+		self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
+		self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
 	end
 end
 
@@ -568,7 +648,7 @@ if IsServer() then
             self:SetDuration(self.kv.replenish_time*octarine, true)
             self:StartIntervalThink(self.kv.replenish_time*octarine)
         end
-		
+  
 		if self:GetStackCount() == self.kv.max_count then
 			self:SetDuration(-1, true)
 		elseif self:GetStackCount() > self.kv.max_count then
