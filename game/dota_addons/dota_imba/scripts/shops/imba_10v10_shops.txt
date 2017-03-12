@@ -65,7 +65,7 @@
 		"item"		"item_cloak"
 		"item"		"item_ring_of_health"
 		"item"		"item_void_stone"
-		"item"		"item_lifesteal"
+		"item"		"item_imba_morbid_mask"
 		"item"		"item_shadow_amulet"
 		"item"		"item_ghost"
 		"item"		"item_imba_blink"
@@ -169,7 +169,7 @@
 	// Level 4 - Orange / Orb / Artifacts				
 	"artifacts"
 	{
-		"item"		"item_mask_of_madness"
+		"item"		"item_imba_mask_of_madness"
 		"item"		"item_helm_of_the_dominator"
 		"item"		"item_imba_sange"
 		"item"		"item_imba_yasha"
@@ -181,7 +181,7 @@
 		"item"		"item_imba_heavens_halberd"
 		"item"		"item_imba_skadi"
 		"item"		"item_imba_mjollnir"
-		"item"		"item_satanic"
+		"item"		"item_imba_satanic"
 		"item"		"item_imba_sange_and_azura_and_yasha"
 	}
 
@@ -196,7 +196,7 @@
 		"item"		"item_cloak"
 		"item"		"item_ring_of_health"
 		"item"		"item_void_stone"
-		"item"		"item_lifesteal"
+		"item"		"item_imba_morbid_mask"
 		"item"		"item_helm_of_iron_will"
 		"item"		"item_energy_booster"
 	}
