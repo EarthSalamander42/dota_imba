@@ -191,8 +191,11 @@
     "Ability15"         "special_bonus_unique_bane_6"
     "Ability16"         "special_bonus_unique_bane_7"
     "Ability17"         "special_bonus_unique_bane_8"
-
-		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
+    "precache"
+    {
+    "soundfile"         "soundevents/voscripts/game_sounds_vo_bane.vsndevts"
+		}
+    "ProjectileModel"		"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
 
 	//=================================================================================================================
