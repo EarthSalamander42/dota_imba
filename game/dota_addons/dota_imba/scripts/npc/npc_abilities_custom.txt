@@ -5734,6 +5734,11 @@
     "AbilityCastAnimation"      "ACT_DOTA_ENFEEBLE"
 		"ScriptFile"					      "hero/hero_bane"
 		"MaxLevel"                  "7"
+    "precache"
+    {
+    "soundfile"         "soundevents/voscripts/game_sounds_vo_bane.vsndevts"
+		}    
+    
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				  "1000"
@@ -5890,7 +5895,7 @@
       "04"
       {
       "var_type"                "FIELD_FLOAT"
-      "nightmare_baleful_visions_duration" "2 2 2 2 3 4 5"
+      "nightmare_baleful_visions_duration" "4 4 5 5 6 6 7"
       }
       
       "05"
