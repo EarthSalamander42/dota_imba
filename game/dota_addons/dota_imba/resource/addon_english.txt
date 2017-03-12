@@ -3894,6 +3894,7 @@
 		"DOTA_Tooltip_Ability_item_imba_recipe_urn_of_shadows"		"Urn of Shadows Recipe"
 		"DOTA_Tooltip_Ability_item_imba_vanguard"					"Vanguard"
 		"DOTA_Tooltip_Ability_item_imba_vitality_booster"			"Vitality Booster"
+		"DOTA_Tooltip_Ability_item_imba_morbid_mask"				"Morbid Mask"
 		"DOTA_Tooltip_Ability_item_imba_vladmir"					"Vladmir's Offering"
 		"DOTA_Tooltip_Ability_item_imba_vladmir_2"					"Vladmir's Blood"
 		"DOTA_Tooltip_Ability_item_imba_void_stone"					"Void Stone"
@@ -4182,6 +4183,18 @@
 
 		"DOTA_Tooltip_modifier_imba_rune_regeneration_owner"								"Boundless Energy"
 		"DOTA_Tooltip_modifier_imba_rune_regeneration_owner_Description"					"Constantly regenerating health and mana"
+
+		"DOTA_Tooltip_modifier_imba_mask_of_madness_berserk"								"Berserk"
+		"DOTA_Tooltip_modifier_imba_mask_of_madness_berserk_Description"					"Gains attack and move speed, but loses armor and silenced for the duration."
+
+		"DOTA_Tooltip_modifier_imba_mask_of_madness_rage"									"Raging Curse"
+		"DOTA_Tooltip_modifier_imba_mask_of_madness_rage_Description"						"Losing control and being forced to attack your target, but gains immense powers in return."
+
+		"DOTA_Tooltip_modifier_imba_satanic_active"											"Unholy Rage"
+		"DOTA_Tooltip_modifier_imba_satanic_active_Description"								"Gains huge amounts of lifesteal for the duration."
+
+		"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter"									"Soul Slaughter"
+		"DOTA_Tooltip_modifier_imba_satanic_soul_slaughter_Description"						"Slain creeps and heroes's souls bestow you with bonus health and damage."
 
 		//=================================================================================================================
 		// Item descriptions
@@ -5115,6 +5128,28 @@
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_armor_aura"						"AURA BONUS ARMOR:"
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_hp_regen"							"+$hp_regen"
 		"DOTA_Tooltip_ability_item_imba_vladmir_2_stat_bonus"						"+$all"
+
+		"DOTA_Tooltip_ability_item_imba_morbid_mask_Description"					"Passive - Lifesteal: Heals the attacker for a percentage of attack damage dealt. Stacks additively with other sources of lifesteal. \n\n<font color='#00FF40'>Does not count as a unique attack modifier.</font>"
+		"DOTA_Tooltip_ability_item_imba_morbid_mask_Lore"							"A mask that drains the energy of those caught in its gaze."
+		"DOTA_Tooltip_ability_item_imba_morbid_mask_damage_bonus"					"+$damage"
+		"DOTA_Tooltip_ability_item_imba_morbid_mask_lifesteal_pct"					"%LIFESTEAL:"		
+
+		"DOTA_Tooltip_Ability_item_imba_mask_of_madness_Description"				"Active - Berserk: Gives %berserk_attack_speed% attack speed and %berserk_ms_bonus_pct%% movement speed, but reduces your armor by %berserk_armor_reduction% and silences you. Lasts %berserk_duration% seconds.\nPassive - Lifesteal: Heals the attacker for a percentage of attack damage dealt. \n<font color='#FF7800'>Raging Curse:</font> attacking an enemy hero while under the influence of Berserk allows the curse to fully take control, granting %rage_ms_bonus_pct%% bonus move speed, %rage_lifesteal_bonus_pct%% increased lifesteal, and %rage_damage_bonus% damage. However, the caster is forced to attack that hero and cannot do anything else until that hero dies, Berserk ends, the target hero moves too far or cannot be seen.\n\n<font color='#00FF40'>Does not count as a unique attack modifier.</font>"
+		"DOTA_Tooltip_Ability_item_imba_mask_of_madness_Note0"						"If the target hero is hidden from sight, the caster will still try to pursue it until the rage ends."		
+		"DOTA_Tooltip_Ability_item_imba_mask_of_madness_damage_bonus"				"+$damage"
+		"DOTA_Tooltip_Ability_item_imba_mask_of_madness_lifesteal_pct"				"LIFESTEAL:"				
+		"DOTA_Tooltip_Ability_item_imba_mask_of_madness_rage_max_distance"			"RAGE BREAK DISTANCE:"				
+
+		"DOTA_Tooltip_Ability_item_imba_satanic_Description"						"Active - Unholy Rage: Increases Lifesteal percentage to 200% for %unholy_rage_duration% seconds.\nPassive - Lifesteal: Heals the attacker for a percentage of attack damage dealt. \n<font color='#FF7800'>Passive - Soul Slaughter:</font> Killing an enemy through auto attacks grants stacks of Soul Slaughter equal to %soul_slaughter_hp_increase_pct%% of the target's maximum health. Each stack increases your maximum HP and damage for the duration. Slain heroes apply the buff for a longer duration.\n\n<font color='#00FF40'>Does not count as a unique attack modifier.</font>"
+		"DOTA_Tooltip_Ability_item_imba_satanic_Note0"								"Soul Slaughter refreshes when killing a creep or a hero depending on its duration, but it can never reduce the duration."
+		"DOTA_Tooltip_Ability_item_imba_satanic_Note1"								"Only gains buffs when directly auto attacking an enemy unit. AoE effects and spells do not count."
+		"DOTA_Tooltip_Ability_item_imba_satanic_damage_bonus"						"+$damage"
+		"DOTA_Tooltip_Ability_item_imba_satanic_strength_bonus"						"+$str"
+		"DOTA_Tooltip_Ability_item_imba_satanic_lifesteal_pct"						"LIFESTEAL:"
+		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_creep_duration"		"SOUL SLAUGHTER CREEP DURATION:"
+		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_hero_duration"		"SOUL SLAUGHTER HERO DURATION:"
+		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_damage_per_stack"	"SOUL SLAUGHTER DAMAGE PER STACK:"
+		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_hp_per_stack"		"SOUL SLAUGHTER HP PER STACK:"
 		
 		"DOTA_Tooltip_ability_item_imba_void_stone_Description"						""
 		"DOTA_Tooltip_ability_item_imba_void_stone_Lore"							"Jewelry that was once used to channel nether realm magic, this ring pulses with energy."

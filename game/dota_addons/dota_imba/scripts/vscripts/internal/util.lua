@@ -1178,6 +1178,7 @@ function ChangeAttackProjectileImba( unit )
 
 	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
 	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
 	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
@@ -1198,6 +1199,10 @@ function ChangeAttackProjectileImba( unit )
 	-- If only a Skadi, use its attack projectile instead
 	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
 		unit:SetRangedProjectileName(particle_skadi)
+
+	-- If the unit has any form of lifesteal, use the lifesteal projectile
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir") or unit:HasModifier("modifier_item_imba_vladmir_2") then
+		unit:SetRangedProjectileName(particle_lifesteal)
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
 	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
