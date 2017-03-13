@@ -2002,6 +2002,23 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 	return base
 end
 
+function ApplyAllTalentModifiers()
+  Timers:CreateTimer(0.1,function()
+    local current_hero_list = HeroList:GetAllHeroes()
+    for k,v in pairs(current_hero_list) do
+      hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
+      for i=1,8 do
+        local talent_name = "special_bonus_unique_"..hero_name.."_"..i
+        local modifier_name = "modifier_special_bonus_unique_"..hero_name.."_"..i
+        if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
+          v:AddNewModifier(v,v,modifier_name,{})
+        end
+      end
+    end
+    return 0.1
+  end)
+end
+
 -- Controls comeback gold
 function UpdateComebackBonus(points, team)
 
