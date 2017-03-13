@@ -14182,7 +14182,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"effect_radius"			"325 350 375 400"
+				"effect_radius"			"350"
 			}
 			"02"
 			{
