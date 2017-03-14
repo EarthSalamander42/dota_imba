@@ -976,6 +976,10 @@
 
 		"DOTA_Tooltip_modifier_imba_track_buff"												"Track"
 		"DOTA_Tooltip_modifier_imba_track_buff_Description"									"Gaining move speed due to a nearby tracked target"
+
+		"DOTA_Tooltip_modifier_imba_headhunter_buff"										"Headhunter"
+		"DOTA_Tooltip_modifier_imba_headhunter_buff_Description"							"Ongoing contract! Kill the marked enemy before time runs out to earn the reward in bonus gold."
+
 		"DOTA_Tooltip_modifier_imba_hoof_stomp_caster"										"Gladiator's Pride"
 		"DOTA_Tooltip_modifier_imba_hoof_stomp_caster_Description"							"Taking reduced damage while inside the arena"
 
@@ -1715,6 +1719,14 @@
 		"DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_self"						"BOUNTY GOLD SELF:"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_track_bonus_gold_allies"					"BOUNTY GOLD ALLIES:"
 		"DOTA_Tooltip_ability_imba_bounty_hunter_track_haste_radius"						"AURA RADIUS:"				
+
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter"								"Headhunter"
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_Description"					"When Bounty Hunter is in the fountain area, he accepts contracts from the Shopkeeper to kill a hero. Those contracts are automatically applied to a random hero on the other team. During the duration of the contract, if Bounty Hunter succeeds in killing the target, or the target was killed while being affected by Track, Bounty Hunter collects the gold. The gold is equal to the Track's allies gold bonus and stacks fully with Track's original gold bonus. When the target dies or the duration ends, a new contract can be accepted by being in the fountain area. If a contract is completed while Track is unlearned, a minimum of bounty is granted nontheless. \n<font color='#00FF40'>The first contract can only be accepted when the game begins, and is marked by a cooldown on the ability.</font>"
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_Note0"							"Enemies can't neighter see the contract debuff or the visual effect on their head."
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_Note1"							"The projectile reveals its path and the target enemy briefly, but Headhunter do not reveal the target during the contract duration. Enemies can see the projectile marking them."
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_Lore"							"A job of a Bounty Hunter is a job done professionally by the hands of true mercenaries, earning their keep through the cycle of endless killing."
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_duration"						"CONTRACT DURATION:"
+		"DOTA_Tooltip_ability_imba_bounty_hunter_headhunter_gold_minimum"					"MINIMUM GOLD REWARD:"
 		
 		"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage"								"Bloodrage"
 		"DOTA_Tooltip_ability_imba_bloodseeker_bloodrage_Description"					"Drives a unit into a bloodthirsty rage during which a unit deals, and takes, increased damage. Units affected by Bloodrage will be healed for a percentage of the max health of any units they kill. Units affected by Bloodrage when killed will heal a percentage of their max health to their killer.\n<font color='#FF7800'>Boiling Blood:</font> Units affected by Bloodrage take damage every second and deal this damage to all units within its radius; units allied to Bloodseeker only take half the damage."
@@ -3398,14 +3410,14 @@
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_8"				"Bloodrage +3% Bonus Amp Per 5% Missing Health"
 
 		// BOUNTY HUNTER
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_1"			"+200 Shadow Walk True sight"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_2"			"+15% Jinada slow"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_3"			"+75 Shuriken Toss damage"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_4"			"-2 Track cooldown"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_5"			"Global Shuriken Toss bounce"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_6"			"+30 Track duration"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_7"			"-5 Jinada cooldown"
-		"Dota_Tooltip_Ability_special_bonus_imba_bounty_hunter_8"			"Track is hidden and unpurgable"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_1"			"+200 Shadow Walk True sight"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_2"			"+15% Jinada slow"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_3"			"+75 Shuriken Toss damage"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_4"			"-2 Track cooldown"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_5"			"Global Shuriken Toss bounce"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_6"			"+30 Track duration"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_7"			"-5 Jinada cooldown"
+		"Dota_Tooltip_Ability_special_bonus_unique_bounty_hunter_8"			"Track is hidden and unpurgable"
 		
 		//=================================================================================================================
 		// Vanilla talent overrides
