@@ -1,3 +1,4 @@
+CreateEmptyTalents("bane")
 imba_bane_enfeeble       = imba_bane_enfeeble       or class({})  
 imba_bane_brain_sap      = imba_bane_brain_sap      or class({})  
 imba_bane_nightmare      = imba_bane_nightmare      or class({})  
@@ -59,51 +60,9 @@ LinkLuaModifier("modifier_imba_bane_fiends_grip",               "hero/hero_bane"
 
 
 -- Generic Subroutines to make code easier (for me at least) to read
-
-local function findtarget(source) -- simple list return function for finding a players current target entity
-  local t = source:GetCursorTarget()
-  local c = source:GetCaster()
-  if t and c then return t,c end
-end
-
 local talentnamescheme = "special_bonus_unique_bane_"
--- talentmanager usage: talentmanager(entity,nameScheme,isParityNeeded,{(talentnumber)},{(talentnumber,"extra data requested")}
--- real example: nightmareduration = talentmanager(self:GetCaster,nameScheme,false,{1})
--- complex example: rupturebonus,thirstmove,thirstdmg = talentmanager(self:GetCaster,nameScheme,true,{5},{7,"value1","value2"})
-function TalentManager(tEntity, nameScheme, ...)
-  local talents = {...}
-  local return_values = {}
-  for k,v in pairs(talents) do
-    if IsServer() then
-      if tEntity:HasTalent(nameScheme..v[1]) then
-        if not tEntity:HasModifier("modifier_"..nameScheme..v[1]) then
-          print('adding modifier', v[1])
-          tEntity:AddNewModifier(tEntity, tEntity,"modifier_"..nameScheme..v[1],{})
-          print("modifier_"..nameScheme..v[1])
-        end
-      end
-    end      
-    if #v > 1 then
-      for i=1,#v do
-        table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
-      end
-    else
-      table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
-    end
-  end    
-return unpack(return_values)
-end
 
-function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
-  local values = {...}
-  local data = {}
-  for i,v in ipairs(values) do
-    table.insert(data,tEntity:GetSpecialValueFor(v))
-  end
-  return unpack(data)
-end
 
--- End Generic Subs
 
 -- ####Main Ability Functions Start####
 -- define one line functions here because they look make working code look confusing
@@ -210,8 +169,6 @@ function imba_bane_nightmare_end:GetAssociatedPrimaryAbilities()
 
 function imba_bane_fiends_grip:GetChannelTime()
   local talentchannelbonus = TalentManager(self:GetCaster(),talentnamescheme,{6})  -- net tables
-  if IsClient() then print(talentchannelbonus, 'client') end
-  if IsServer() then print(talentchannelbonus, 'server') end
   return (self:GetSpecialValueFor("fiends_grip_duration")+talentchannelbonus)
 end
 
@@ -287,7 +244,6 @@ end
 function modifier_imba_bane_enfeeble:OnCreated()
   local statreduction,damagereduction = getkvValues(self:GetAbility(),"stat_reduction","damage_reduction") 
   local talentdamagereduction = TalentManager(self:GetCaster(),talentnamescheme,{3})
-  print(talentdamagereduction)
   self.damagereduction   = damagereduction+talentdamagereduction   
   if not IsServer() then return end
   self.strengthmodifier  = self:GetParent():GetStrength()  * (statreduction/100) -- Note these are only evaluated once, on spell cast.  On refresh they will                      
@@ -358,7 +314,6 @@ function modifier_imba_bane_nightmare:OnIntervalThink()
   if not IsServer() then return end
   local CurHP = self:GetParent():GetHealth()
   local nightmare_damage = getkvValues(self:GetAbility(),"nightmare_damage")
-  print(talentinvulnbonus)
   if (CurHP <= nightmare_damage) then
     local damage = {
       victim      = self:GetParent(),
@@ -492,54 +447,3 @@ end
 
 -- Talents
 
-LinkLuaModifier("modifier_special_bonus_unique_bane_1", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_1 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end
-    })
-
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_2", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_2 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_3", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_3 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_4", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_4 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_5", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_5 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_6", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_6 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_7", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_7 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
-LinkLuaModifier("modifier_special_bonus_unique_bane_8", "hero/hero_bane", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bane_8 = class({
-    IsHidden      = function(self) return true  end,
-    RemoveOnDeath = function(self) return false end    
-    })
-
--- Modifier Definitions End

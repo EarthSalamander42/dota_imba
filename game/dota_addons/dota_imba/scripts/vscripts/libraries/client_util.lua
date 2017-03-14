@@ -145,6 +145,30 @@ function createNetTableKey(v)
   return valuePair  
 end
 
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+  local values = {...}
+  local data = {}
+  for i,v in ipairs(values) do
+    table.insert(data,tEntity:GetSpecialValueFor(v))
+  end
+  return unpack(data)
+end
+
+function TalentManager(tEntity, nameScheme, ...)
+  local talents = {...}
+  local return_values = {}
+  for k,v in pairs(talents) do    
+    if #v > 1 then
+      for i=1,#v do
+        table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
+      end
+    else
+      table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
+    end
+  end    
+return unpack(return_values)
+end
+
 
 function C_DOTA_BaseNPC:HealDisabled()
 	if self:HasModifier("Disabled_silence") or 

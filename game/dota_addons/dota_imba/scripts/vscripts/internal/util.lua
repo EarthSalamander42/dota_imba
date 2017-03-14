@@ -2011,7 +2011,6 @@ function ApplyAllTalentModifiers()
         local talent_name = "special_bonus_unique_"..hero_name.."_"..i
         local modifier_name = "modifier_special_bonus_unique_"..hero_name.."_"..i
         if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
-          print('we need modifier!')
           v:AddNewModifier(v,v,modifier_name,{})
         end
       end
@@ -2093,6 +2092,41 @@ function createNetTableKey(v)
   return valuePair  
 end
 
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+  local values = {...}
+  local data = {}
+  for i,v in ipairs(values) do
+    table.insert(data,tEntity:GetSpecialValueFor(v))
+  end
+  return unpack(data)
+end
+
+function TalentManager(tEntity, nameScheme, ...)
+  local talents = {...}
+  local return_values = {}
+  for k,v in pairs(talents) do    
+    if #v > 1 then
+      for i=1,#v do
+        table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
+      end
+    else
+      table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
+    end
+  end    
+return unpack(return_values)
+end
+
+function findtarget(source) -- simple list return function for finding a players current target entity
+  local t = source:GetCursorTarget()
+  local c = source:GetCaster()
+  if t and c then return t,c end
+end
+
+function findgroundtarget(source) -- simple list return function for finding a players current target entity
+  local t = source:GetCursorPosition()
+  local c = source:GetCaster()
+  if t and c then return t,c end
+end
 
 -- Controls comeback gold
 function UpdateComebackBonus(points, team)
