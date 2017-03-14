@@ -1100,8 +1100,17 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
+	local talentMult = 1 - caster:HighestTalentTypeValue("cooldown_reduction")/100
+	reduction = reduction * talentMult
 
 	return reduction
+end
+
+function CDOTABaseAbility:GetTrueCooldown()
+	local cooldown = self:GetCooldown(-1)
+	local cdr = GetCooldownReduction(self:GetCaster())
+	cooldown = cooldown * cdr
+	return cooldown
 end
 
 -- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)
@@ -1899,6 +1908,24 @@ function CDOTA_BaseNPC:FindTalentValue(talentName)
 	return 0
 end
 
+function CDOTA_BaseNPC:FindSpecificTalentValue(talentName, valname)
+	if self:HasAbility(talentName) then
+		return self:FindAbilityByName(talentName):GetSpecialValueFor(valname)
+	end
+	return 0
+end
+
+function CDOTA_BaseNPC:HighestTalentTypeValue(talentType)
+	local value = 0
+	for i = 0, 23 do
+		local talent = self:GetAbilityByIndex(i)
+		if talent and string.match(talent:GetName(), "special_bonus_"..talentType.."_(%d+)") and self:FindTalentValue(talent:GetName()) > value then
+			value = self:FindTalentValue(talent:GetName())
+		end
+	end
+	return value
+end
+
 function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
 	local talentName
@@ -2120,4 +2147,13 @@ function CDOTA_BaseNPC:GetSpellPower()
 
 	-- Return current spell power
 	return spell_power
+end
+
+function CalculateDistance(ent1, ent2)
+	local pos1 = ent1
+	local pos2 = ent2
+	if ent1.GetAbsOrigin then pos1 = ent1:GetAbsOrigin() end
+	if ent2.GetAbsOrigin then pos2 = ent2:GetAbsOrigin() end
+	local distance = (pos1 - pos2):Length2D()
+	return distance
 end
