@@ -258,11 +258,9 @@
 	//=================================================================================================================
 	"npc_imba_hero_bloodseeker"
 	{
-		"override_hero"				"npc_dota_hero_bloodseeker"
+		"override_hero"		"npc_dota_hero_bloodseeker"
 
-		"AttackRate"				"1.6"
-
-		"Ability1"			"imba_bloodseeker_bloodrage"				// Ability 1
+		"Ability1"			"imba_bloodseeker_bloodrage"
 		"Ability2"			"imba_bloodseeker_blood_bath"
 		"Ability3"			"imba_bloodseeker_thirst"
 		"Ability4"			"imba_bloodseeker_rupture"

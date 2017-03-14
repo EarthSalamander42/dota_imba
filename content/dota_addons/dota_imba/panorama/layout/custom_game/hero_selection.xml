@@ -236,7 +236,7 @@
 							<Panel id="npc_dota_hero_arc_warden" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_arc_warden')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_arc_warden.png');" />
-							<Panel id="npc_dota_hero_bloodseeker" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_bloodseeker" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_bloodseeker')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_bloodseeker.png');" />
 							<Panel id="npc_dota_hero_bounty_hunter" class="ClassImbaOption"
