@@ -464,7 +464,7 @@ function NetherWardZap( keys )
 	-- Refresh the ability
 	ability:EndCooldown()
 
-	local ability_range = ability:GetCastRange()
+  local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
 	local target_point = target:GetAbsOrigin()
 	local ward_position = ward:GetAbsOrigin()
 

@@ -5716,832 +5716,508 @@
 		}
 	}
 
-	//=================================================================================================================
+  //=================================================================================================================
 	// Bane Enfeeble
 	//=================================================================================================================
-	"imba_bane_enfeeble"
+  
+  "imba_bane_enfeeble"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"BaseClass"						      "ability_lua"
+		"AbilityBehavior"					  "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"bane_enfeeble"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
-			"particle"						"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"		
-		}	
-
+    "AbilityCastAnimation"      "ACT_DOTA_ENFEEBLE"
+		"ScriptFile"					      "hero/hero_bane"
+		"MaxLevel"                  "7"
+    "precache"
+    {
+    "soundfile"         "soundevents/voscripts/game_sounds_vo_bane.vsndevts"
+		}    
+    
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1000"
-		"AbilityCastPoint"					"0.3"	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"95"			
+		"AbilityCastRange"				  "1000"
+		"AbilityCastPoint"				  "0.3"
+		"AbilityCooldown"				    "8"
+		"AbilityManaCost"				    "95"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_reduction"			"-80 -120 -160 -200"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stat_reduction"			"20 30 40 50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"20.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"think_interval"			"0.5"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Bane.Enfeeble.Cast"
-				"Target"					"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_Bane.Enfeeble"
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_bane.lua"
-				"Function"					"CastEnfeeble"
-				"Target"					"TARGET"
-				
-				"modifier_debuff"			"modifier_imba_bane_enfeeble"		
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_bane_enfeeble"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%duration"
-				
-				"EffectName"				"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_bane.lua"
-						"Function"			"Enfeeble"
-
-						"modifier_str"		"modifier_imba_bane_enfeeble_str_stacks"
-						"modifier_agi"		"modifier_imba_bane_enfeeble_agi_stacks"
-						"modifier_int"		"modifier_imba_bane_enfeeble_int_stacks"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_bane.lua"
-						"Function"			"EnfeebleEnd"
-
-						"modifier_str"		"modifier_imba_bane_enfeeble_str_stacks"
-						"modifier_agi"		"modifier_imba_bane_enfeeble_agi_stacks"
-						"modifier_int"		"modifier_imba_bane_enfeeble_int_stacks"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%attack_reduction"
-				}
-			}
-
-			"modifier_imba_bane_enfeeble_str_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-1"
-				}
-			}
-
-			"modifier_imba_bane_enfeeble_agi_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-1"
-				}
-			}
-
-			"modifier_imba_bane_enfeeble_int_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
-				}
-			}
+      "01"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "enfeeble_duration"       "20"
+      }
+      
+      "02"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "stat_reduction"          "-5 -10 -15 -20 -30 -40 -50"
+      }
+      
+      "03"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "damage_reduction"        "-30 -60 -90 -120 -130 -140 -150"
+      }    
+      "04"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_damage_reduction" "-75"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_3"
+      }      
 		}
 	}
-
-	//=================================================================================================================
-	// Bane Nightmare
-	//=================================================================================================================
-	"imba_bane_nightmare"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"			"bane_nightmare"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
-			"particle"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
-		}		
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.3"	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 15 14 13"	
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150"		
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"nightmare_dot_interval"	"1.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"nightmare_invuln_time"		"1.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.5 6.0 7.5 9.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"animation_rate"			"0.3"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"3000"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"30"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Bane.Nightmare"
-				"Target"					"TARGET"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_bane.lua"
-				"Function"					"CastNightmare"
-				"Target"					"TARGET"
-				
-				"modifier_debuff"			"modifier_imba_bane_nightmare"	
-				"loop_sound"				"Hero_Bane.Nightmare.Loop"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_bane_nightmare"
-			{
-				"Duration"					"%duration"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"EffectName"    			"particles/units/heroes/hero_bane/bane_nightmare.vpcf"
-				"EffectAttachType"      	"follow_overhead"	
-
-				"OverrideAnimation"     	"ACT_DOTA_FLAIL"
-				"AnimationPlaybackRate"		"%animation_rate"	
-
-				"OnTakeDamage"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_bane_nightmare"
-						"Target" 			"UNIT"
-					}
-				}	
-
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_bane_nightmare_invul"
-						"Target" 			"TARGET"
-						"Duration"			"%nightmare_invuln_time"
-					}	
-				}	
-
-				"OnDestroy"
-				{
-					"FireSound"
-					{
-						"EffectName"		"Hero_Bane.Nightmare.End"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-						}
-					}		
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_bane.lua"
-						"Function"			"NightmareEnd"
-
-						"loop_sound"		"Hero_Bane.Nightmare.Loop"
-					}
-				}
-
-				"ThinkInterval"  			"%nightmare_dot_interval"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_bane.lua"
-						"Function"			"NightmareDamage"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NIGHTMARED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SPECIALLY_DENIABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"-5000"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"-5000"
-				}
-
-				"Aura"          			"modifier_imba_bane_nightmare_debuff"
-				"Aura_Radius"   			"%aura_radius"
-				"Aura_Teams"    			"DOTA_UNIT_TARGET_TEAM_BOTH"
-				"Aura_Types"    			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster" 		"1"
-			}		
-
-			"modifier_imba_bane_nightmare_debuff"
-			{
-				"IsHidden"		"1"
-				"IsDebuff"		"1"
-				"IsPurgable"	"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bane.lua"
-						"Function"				"NightmareSpread"
-
-						"nightmare_modifier"	"modifier_imba_bane_nightmare"
-					}
-				}
-			}	
-
-			"modifier_imba_bane_nightmare_invul"
-			{
-				"IsDebuff"		"1"
-				"IsPurgable"	"1"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bane.lua"
-						"Function"				"NightmareInvulEnd"
-
-						"nightmare_modifier"	"modifier_imba_bane_nightmare"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Bane Nightmare End
-	//=================================================================================================================
-	"imba_bane_nightmare_end"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"bane_nightmare_end"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-		"AbilityCastRange"				"25000"	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_bane.lua"
-				"Function"				"NightmareEndCast"
-
-				"modifier_nightmare"	"modifier_imba_bane_nightmare"
-				"modifier_invul"		"modifier_imba_bane_nightmare_invul"
-			}
-		}
-	}
-
-	//=================================================================================================================
+  
+  //=================================================================================================================
 	// Bane Brain Sap
-	//=================================================================================================================
+	//=================================================================================================================  
+  
 	"imba_bane_brain_sap"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"		
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"bane_brain_sap"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-			"particle"					"particles/generic_gameplay/generic_manaburn.vpcf"
-			"particle"					"particles/units/heroes/hero_bane/bane_sap.vpcf"		
-		}	
-
+		"BaseClass"						      "ability_lua"
+		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"	    "DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"	    "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"	    "DAMAGE_TYPE_PURE"		
+		"SpellImmunityType"			    "SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				    "1"
+		"AbilityTextureName"		    "bane_brain_sap"	
+		"ScriptFile"					      "hero/hero_bane"
+		"MaxLevel"                  "7"
+    
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"650"	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 90 120 150"	
+		"AbilityCastRange"				  "650"
+		"AbilityCastPoint"				  "0.3"
+		"AbilityCooldown"				    "10"
+		"AbilityManaCost"				    "60 90 120 150"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amt"				"100 175 250 325"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_percent"			"25 30 35 40"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_bane.lua"
-				"Function"				"BrainSap"
-
-				"sound_cast"			"Hero_Bane.BrainSap"
-				"sound_target"			"Hero_Bane.BrainSap.Target"
-				"modifier_sap"			"modifier_imba_bane_brain_sap"
-				"particle_sap"			"particles/units/heroes/hero_bane/bane_sap.vpcf"
-			}
+      "01"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "brain_sap_duration"       "3.5"
+      }
+      
+      "02"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "manapool_reduction"      "-0.50 -0.50 -0.50 -0.50 -0.60 -0.70 -0.80"
+      }
+      
+      "03"
+      {
+      "var_type"                "FIELD_INTEGER"
+      "brain_sap_damage"         "90 160 230 300 330 360 390"
+      }      
+      "04"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_duration_bonus"   "1.5"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_1"
+      }  
+      "05"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_damage_bonus"     "200"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_1"
+      }
+      "06"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_range_bonus"      "300"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_4"
+      }            
 		}
+	}  
+  
+  //=================================================================================================================
+	// Bane Nightmare
+	//=================================================================================================================  
+  
+	"imba_bane_nightmare"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						      "ability_lua"
+		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_MAGIC_IMMUNE_ALLIES"
+		"SpellImmunityType"				  "SPELL_IMMUNITY_ALLIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			  "bane_nightmare"	
+		"ScriptFile"					      "hero/hero_bane"
+    "MaxLevel"                  "7"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				  "650"
+		"AbilityCastPoint"				  "0.3"
+		"AbilityCooldown"				    "16 15 14 13"
+		"AbilityManaCost"				    "150"
 
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_bane_brain_sap"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-				
-				"OnSpentMana"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_bane.lua"
-						"Function"				"BrainSapSpellCast"
-
-						"sound_manaburn"		"Hero_NyxAssassin.ManaBurn.Target"
-						"modifier_sap"			"modifier_imba_bane_brain_sap"
-						"particle_manaburn"		"particles/generic_gameplay/generic_manaburn.vpcf"
-						"particle_sap"			"particles/units/heroes/hero_bane/bane_sap.vpcf"
-					}
-				}
-			}
+      "01"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "nightmare_duration"      "4 5 6 7 7 7 7"
+      }
+      
+      "02"
+      {
+      "var_type"                "FIELD_INTEGER"
+      "nightmare_damage"        "20"
+      }
+      
+      "03"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "nightmare_invuln_duration" "1"
+      }      
+      
+      "04"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "nightmare_baleful_visions_duration" "4 4 5 5 6 6 7"
+      }
+      
+      "05"
+      {
+      "var_type"                "FIELD_INTEGER"
+      "nightmare_baleful_visions_sight_reduction" "100"
+      }
+      "06"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_debuff_duration_bonus"   "1"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_2"
+      }          
+      "07"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_invuln_duration_bonus"     "6"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_7"
+      }            
 		}
 	}
 
-	//=================================================================================================================
-	// Bane Fiend's Grip
-	//=================================================================================================================
+	"imba_bane_nightmare_end"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						      "ability_lua"
+		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"MaxLevel"						      "1"
+		"AbilityTextureName"			  "bane_nightmare_end"
+    "ScriptFile"					      "hero/hero_bane"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				  "0.0"
+		"AbilityCastRange"				  "25000"	
+		"AbilityCooldown"				    "0.1"
+		"AbilityManaCost"				    "0"
+	}
+  
+  //=================================================================================================================
+	// Bane Fiends Grip
+	//=================================================================================================================  
+  
 	"imba_bane_fiends_grip"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"BaseClass"						      "ability_lua"
+		"AbilityType"					      "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"				  "SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"bane_fiends_grip"	
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"		
-			"particle"					"particles/units/heroes/hero_bane/bane_nightmare.vpcf"		
-			"particle"					"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"		
-		}		
-
+    "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_4"
+    "AnimationPlaybackRate"     "1"
+		"FightRecapLevel"				    "1"
+		"AbilityTextureName"		    "bane_fiends_grip"	    
+		"ScriptFile"					      "hero/hero_bane"
+    "MaxLevel"                  "6"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"625"
-		"AbilityCastPoint"				"0.4"	
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityChannelTime"			"4.0"
-		"AbilityCooldown"				"100 85 70"	
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"			
+		"AbilityCastRange"				  "625 625 625 675 725 775 "
+		"AbilityCastPoint"				  "0.3"
+		"AbilityCooldown"				    "100 100 100 90 80 70"
+		"AbilityManaCost"				    "200 300 400 425 450 475"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"									"FIELD_FLOAT"
-				"fiends_grip_tick_interval"					"0.1"
-			}
-			"02"
-			{
-				"var_type"									"FIELD_FLOAT"
-				"fiends_grip_mana_drain"					"0.8"
-			}
-			"03"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_duration"						"4"
-			}
-			"04"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_damage"						"10 16 22"
-			}
+      "01"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "fiends_grip_duration"     "5.0"
+      }
+
+      "02"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "fiends_grip_linger_duration" "0.5 1.0 1.5 2.0 2.5 3.0"
+      }      
+      
+      "03"
+      {
+      "var_type"                "FIELD_INTEGER"
+      "fiends_grip_damage"       "100 160 220 240 260 280"
+      }
+      
+      "04"
+      {
+      "var_type"                "FIELD_INTEGER"
+      "fiends_grip_mana_damage"  "5 5 5 6 7 8"
+      }
+      
 			"05"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"fiends_grip_mana_drain_scepter"			"1.0"
+				"var_type"							"FIELD_INTEGER"
+				"fiends_grip_scepter_radius" "900"
 			}
 			"06"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"fiends_grip_extra_duration"				"1.0 1.5 2.0"
+				"var_type"							"FIELD_INTEGER"
+				"fiends_grip_scepter_vision_cone"			"45"
 			}
 			"07"
 			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_damage_scepter"				"16 22 28"
-			}
-			"08"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_mana_drain_tooltip"			"8"
-			}
-			"09"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_mana_drain_tooltip_scepter"	"12"
-			}
-			"10"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_damage_tooltip"				"100 160 220"
-			}
-			"11"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_damage_tooltip_scepter"		"160 220 280"
-			}
-			"12"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_scepter_radius"				"900"
-			}
-			"13"
-			{
-				"var_type"									"FIELD_INTEGER"
-				"fiends_grip_scepter_vision_cone"			"45"
-			}
-			"14"
-			{
-				"var_type"									"FIELD_FLOAT"
+				"var_type"							"FIELD_FLOAT"
 				"fiends_grip_extra_duration_scepter"		"3.0 3.5 4.0"
-			}
-		}	
-
-		"OnSpellStart"
-		{	
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_bane.lua"
-				"Function"				"CastFiendsGrip"
-				"Target"				"TARGET"
-				
-				"damage"				"%fiends_grip_damage"
-				"modifier_debuff"		"modifier_imba_bane_fiends_grip"
-				"modifier_caster"		"modifier_imba_bane_fiends_grip_caster"
-				"cast_sound"			"Hero_Bane.FiendsGrip.Cast"
-			}
-		}	
-
-		"OnChannelInterrupted"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types"				"DOTA_UNIT_TARGET_HERO"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_bane.lua"
-				"Function"				"FiendsGripStopChannel"
-				"Target"				"TARGET"
-
-				"modifier"				"modifier_imba_bane_fiends_grip"
-				"sound1"				"Hero_Bane.FiendsGrip"
-				"sound2"				"Hero_Bane.FiendsGrip.Cast"
-			}
-		}	
-
-		"OnChannelFinish"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"			"modifier_imba_bane_fiends_grip_caster"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types"				"DOTA_UNIT_TARGET_HERO"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_bane.lua"
-				"Function"				"FiendsGripStopChannel"
-				"Target"				"TARGET"
-
-				"modifier"				"modifier_imba_bane_fiends_grip"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_bane_fiends_grip"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"EffectName"			"particles/units/heroes/hero_bane/bane_fiends_grip.vpcf"
-				"EffectAttachType"		"attach_origin"
-
-				"OverrideAnimation" 	"ACT_DOTA_FLAIL"	
-
-				"ThinkInterval"			"%fiends_grip_tick_interval"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"		"TARGET"
-						"Type"			"DAMAGE_TYPE_MAGICAL"
-						"Damage"		"%fiends_grip_damage"
-					}	
-
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_bane.lua"
-						"Function"		"FiendsGripManaDrain"
-						"Target"		"TARGET"
-					}				
-				}	
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"	"Hero_Bane.FiendsGrip"
-						"Target"
-						{
-							"Center"	"TARGET"
-							"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_bane.lua"
-						"Function"		"FiendsGripTruesight"
-
-						"Target"		"TARGET"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_bane.lua"
-						"Function"		"FiendsGripEndSound"
-
-						"Target"		"TARGET"
-						"sound_1"		"Hero_Bane.FiendsGrip"
-						"sound_2"		"Hero_Bane.FiendsGrip.Cast"
-					}
-				}
-				
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-
-			"modifier_imba_bane_fiends_grip_caster"
-			{
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval" 		"0.03"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_bane.lua"
-						"Function"					"FiendsGripScepter"
-
-						"modifier_fiends_grip"		"modifier_imba_bane_fiends_grip"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_LOW_ATTACK_PRIORITY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
+			}  
+      "08"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_channel_bonus"    "2"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_6"
+      }            
+      "09"
+      {
+      "var_type"                "FIELD_FLOAT"
+      "talent_cooldown_bonus"   "30"
+      "LinkedSpecialBonus"      "special_bonus_imba_bane_8"
+      }            
 		}
-	}
+	} 
+  
+  //=================================================================================================================
+	// Bane Talent #1 (Brain Sap Debuff Duration Increase)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_1"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_FLOAT"
+                "value"                        "1.5"
+            }
+        }
+    }  
+    
+  //=================================================================================================================
+	// Bane Talent #2 (Baleful Vision Duration Increase)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_2"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_FLOAT"
+                "value"                        "1"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #3 (Enfeeble Damage Reduction)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_3"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_INTEGER"
+                "value"                        "-75"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #4 (Brain Sap Cast Range)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_4"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_FLOAT"
+                "value"                        "300"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #5 (Brain Sap Damage & Heal Bonus)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_5"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_INTEGER"
+                "value"                        "200"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #6 (Fiends Grip Channel Time Increase)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_6"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"               "FIELD_FLOAT"
+                "value"                  "2"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #7 (Ally Nightmare Invulnerability duration)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_7"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                      "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"               "FIELD_FLOAT"
+                "value"                  "6"
+            }
+        }
+    }
+    
+  //=================================================================================================================
+	// Bane Talent #8 (Fiends Grip Cooldown)
+	//=================================================================================================================
+  
+  "special_bonus_unique_bane_8"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                        "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                    "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"                "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                    "FIELD_INTEGER"
+                "value"                        "30"
+            }
+        }
+    }
 
 	//=================================================================================================================
 	// Bounty Hunter's Shuriken Toss

@@ -32,7 +32,7 @@ require('internal/events')
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
-
+ApplyAllTalentModifiers()
 -- storage API
 --require('libraries/json')
 --require('libraries/storage')
@@ -534,7 +534,7 @@ function GameMode:ItemAddedFilter( keys )
 	end
 
 	return true
-end
+end 
 
 -- Order filter function
 function GameMode:OrderFilter( keys )
@@ -1110,7 +1110,7 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Destroy wisp dummy pickers
 	-------------------------------------------------------------------------------------------------
-
+  
 	for _, wisp in pairs(IMBA_WISP_PICKERS_TABLE) do
 		UTIL_Remove(wisp)
 	end
