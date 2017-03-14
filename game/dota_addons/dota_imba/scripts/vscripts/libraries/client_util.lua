@@ -75,7 +75,7 @@ end
 function CreateEmptyTalents(hero)
   for i=1,8 do
     LinkLuaModifier("modifier_special_bonus_unique_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-    class = "modifier_special_bonus_unique_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+    local class = "modifier_special_bonus_unique_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
     load(class)()
   end
 end
