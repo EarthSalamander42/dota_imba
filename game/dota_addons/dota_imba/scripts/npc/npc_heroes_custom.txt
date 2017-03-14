@@ -2051,13 +2051,10 @@
 	{
 		"override_hero"				"npc_dota_hero_riki"
 
-		"AttributeBaseAgility"		"40"
-		"AttributeAgilityGain"		"2.5"
-
-		//"Ability1"					"imba_riki_smoke_screen"
-		//"Ability2"					"imba_riki_blink_strike"
-		//"Ability3"					"imba_riki_permanent_invisibility"
-		//"Ability4"					"imba_riki_tricks_of_the_trade"
+		"Ability1"					"imba_riki_smoke_screen"
+		"Ability2"					"imba_riki_blink_strike"
+		"Ability3"					"imba_riki_cloak_and_dagger"
+		"Ability4"					"imba_riki_tricks_of_the_trade"
 
 		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"

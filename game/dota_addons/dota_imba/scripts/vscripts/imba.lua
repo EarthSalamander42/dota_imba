@@ -666,33 +666,6 @@ function GameMode:DamageFilter( keys )
 		return false
 	end
 
-	-- Spell power handling
-	if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and attacker:IsRealHero() then
-
-		-- If the attacker and victim are on the same team, do nothing
-		if victim:GetTeam() ~= attacker:GetTeam() then
-
-			-- Compensate for in-built spell power mechanics
-			local base_damage_amp = attacker:GetIntellect() * 0.000625 + GetSpellPowerFromTalents(attacker) * 0.01
-			keys.damage = keys.damage / (1 + base_damage_amp)
-
-			-- Fetch player's current spell power
-			local spell_power = GetSpellPower(attacker) * 0.01
-
-			-- If the target is too far away, do nothing
-			local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
-			if distance <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-				
-				-- Adjust damage depending on its type
-				if damage_type == DAMAGE_TYPE_MAGICAL then
-					keys.damage = keys.damage * (1 + spell_power)
-				elseif damage_type == DAMAGE_TYPE_PURE then
-					keys.damage = keys.damage * (1 + spell_power * 0.3)
-				end
-			end
-		end
-	end
-
 	-- Bloodthorn active crit
 	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
 

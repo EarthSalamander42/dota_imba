@@ -295,7 +295,7 @@
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_razor.png');" />
 						</Panel>
 						<Panel id="PickListColumn4" class="ClassOptionRow">
-							<Panel id="npc_dota_hero_riki" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_riki" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_riki')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_riki.png');" />
 							<Panel id="npc_dota_hero_nevermore" class="ClassImbaOption" 

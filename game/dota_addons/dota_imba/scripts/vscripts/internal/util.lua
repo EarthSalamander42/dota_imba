@@ -1097,7 +1097,7 @@ function GetCooldownReduction( unit )
 	local reduction = 1.0
 
 	-- Octarine Core
-	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
+	if unit:HasModifier("modifier_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
 
@@ -1728,62 +1728,6 @@ function IsGinger(unit)
 	return false
 end
 
--- Fetches a hero's current spell power
-function GetSpellPower(unit)
-
-	-- If this is not a hero, or the unit is invulnerable, do nothing
-	if not unit:IsHero() or unit:IsInvulnerable() then
-		return 0
-	end
-
-	-- Adjust base spell power based on current intelligence
-	local unit_intelligence = unit:GetIntellect()
-	local spell_power = unit_intelligence * 0.125
-
-	-- Adjust spell power based on War Veteran stacks
-	if unit:HasModifier("modifier_imba_unlimited_level_powerup") then
-		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
-	end
-
-	-- Fetch current bonus spell power from modifiers, if existing
-	for current_modifier, modifier_spell_power in pairs(MODIFIER_SPELL_POWER) do
-		if unit:HasModifier(current_modifier) then
-			spell_power = spell_power + modifier_spell_power
-		end
-	end
-
-	-- Fetch current bonus spell power from items, if existing
-	for i = 0, 5 do
-		local current_item = unit:GetItemInSlot(i)
-		if current_item then
-			local current_item_name = current_item:GetName()
-			if ITEM_SPELL_POWER[current_item_name] then
-				spell_power = spell_power + ITEM_SPELL_POWER[current_item_name]
-			end
-		end
-	end
-
-	-- Fetch bonus spell power from talents
-	spell_power = spell_power + GetSpellPowerFromTalents(unit)
-
-	-- Return current spell power
-	return spell_power
-end
-
--- Fetches a hero's current spell power from talents
-function GetSpellPowerFromTalents(unit)
-	local spell_power = 0
-
-	-- Iterate through all spell power talents
-	for talent_name,spell_power_bonus in pairs(SPELL_POWER_TALENTS) do
-		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
-			spell_power = spell_power + spell_power_bonus
-		end
-	end
-
-	return spell_power
-end
-
 -- Directly reduces a hero's HP without killing it
 function ApplyHealthReductionDamage(unit, damage)
 	unit:SetHealth(math.max(unit:GetHealth() - damage, 2))
@@ -2123,4 +2067,57 @@ function ArenaControlPointScoreThink(radiant_cp, dire_cp)
 	Timers:CreateTimer(10, function()
 		ArenaControlPointScoreThink(radiant_cp, dire_cp)
 	end)
+end
+
+----------------------------------------------------------------
+-- "Custom" modifier value fetching
+----------------------------------------------------------------
+
+-- Spell lifesteal
+function CDOTA_BaseNPC:GetSpellLifesteal()
+	local lifesteal = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellLifesteal then
+			lifesteal = lifesteal + parent_modifier:GetModifierSpellLifesteal()
+		end
+	end
+	return lifesteal
+end
+
+-- Autoattack lifesteal
+function CDOTA_BaseNPC:GetLifesteal()
+	local lifesteal = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierLifesteal then
+			lifesteal = lifesteal + parent_modifier:GetModifierLifesteal()
+		end
+	end
+	return lifesteal
+end
+
+-- Spell power
+function CDOTA_BaseNPC:GetSpellPower()
+
+	-- If this is not a hero, or the unit is invulnerable, do nothing
+	if not self:IsHero() or self:IsInvulnerable() then
+		return 0
+	end
+
+	-- Adjust base spell power based on current intelligence
+	local spell_power = self:GetIntellect() * 0.1
+
+	-- Mega Treads increase spell power from intelligence by 30%
+	if self:HasModifier("modifier_imba_mega_treads_stat_multiplier_02") then
+		spell_power = self:GetIntellect() * 0.13
+	end
+
+	-- Fetch spell power from modifiers
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellAmplify_Percentage then
+			spell_power = spell_power + parent_modifier:GetModifierSpellAmplify_Percentage()
+		end
+	end
+
+	-- Return current spell power
+	return spell_power
 end

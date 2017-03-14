@@ -26015,6 +26015,255 @@
 	}
 
 	//=================================================================================================================
+	// Riki's Smoke Screen
+	//=================================================================================================================
+	"imba_riki_smoke_screen"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_riki.lua"
+		"AbilityTextureName"			"riki_smoke_screen"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCooldown"				"4 3 2 1"
+		"AbilityManaCost"				"100 80 60 40"
+		"AbilityCastRange"				"200 400 600 800"
+		"AbilityCastPoint"				"0.25"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_smokebomb_smoke.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_smokebomb.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"5 6 7 8"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"area_of_effect"			"300 350 400 450"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"miss_chance"				"15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"						"10 15 20 25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"turn_rate_slow"			"15"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_vision_reduction_pcnt"	"100"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Riki's Blink Strike
+	//=================================================================================================================
+	"imba_riki_blink_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_riki.lua"
+		"AbilityTextureName"			"riki_blink_strike"
+		"FightRecapLevel"				"1"
+		
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		
+		"AbilityCooldown"				"4 3 2 1"
+		"AbilityManaCost"				"100 80 60 40"
+		"AbilityCastPoint"				"0.3"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_blink_strike_start.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 555"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"turn_rate_slow"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"full_cast_range"		"1000 1600 2200 2800"	// max range (+600 per jump)
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"no_jump_cast_range"	"1000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_range"			"600"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_jumps"				"0 1 2 3" 				// last jump is the targeted unit
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Riki's Cloak and Dagger
+	//=================================================================================================================
+	"imba_riki_cloak_and_dagger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_riki.lua"
+		"AbilityTextureName"			"riki_permanent_invisibility"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_backstab.vpcf"
+			"particle"					"particles/generic_hero_status/status_invisibility_start.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"fade_time"							"10 8 6 4"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"backstab_angle"					"120"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"agility_damage_multiplier"			"1 1.5 2 2.5"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"agility_damage_multiplier_smoke"	"0.5 0.75 1 1.52"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"invis_break_agility_multiplier"	"3"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Riki's Tricks of the Trade
+	//=================================================================================================================
+	"imba_riki_tricks_of_the_trade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_riki.lua"
+		"AbilityTextureName"			"riki_tricks_of_the_trade"
+		"FightRecapLevel"				"2"
+		
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+		
+		"AbilityCooldown"				"3 2 1"
+		"AbilityManaCost"				"80 60 40"
+		"AbilityCastPoint"				"0.35"
+		"AbilityChannelTime"			"10 12 14"
+	
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_riki.vsndevts"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks_end.vpcf"
+			"particle"					"particles/units/heroes/hero_riki/riki_tricks.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"area_of_effect"			"800 900 1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_interval"			"1 0.9 0.8"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scepter_attack_speed_mult"	"1 1.5 2"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_cast_range"		"600"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Rubick's Telekinesis
 	//=================================================================================================================
 	"imba_rubick_telekinesis"
