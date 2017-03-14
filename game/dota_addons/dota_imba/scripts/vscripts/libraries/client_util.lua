@@ -80,6 +80,72 @@ function CreateEmptyTalents(hero)
   end
 end
 
+function NetTableM(tablename,keyname,...) 
+  local values = {...}                                                                  -- Our user input
+  local returnvalues = {}                                                               -- table that will be unpacked for result                                                    
+  for k,v in ipairs(values) do  
+    local keyname = keyname..v[1]                                                       -- should be 1-8, but probably can be extrapolated later on to be any number
+    if IsServer() then
+      local netTableKey = netTableCmd(false,tablename,keyname)                              -- Command to grab our key set
+      local my_key = createNetTableKey(v)                                               -- key = 250,444,111 as table, stored in key as 1 2 3
+      if not netTableKey then                                                           -- No key with requested name exists
+        netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+      elseif type(netTableKey) == 'boolean' then                                        -- Our check returned that a key exists but that it is empty, we need to populate it for clients
+        netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+      else                                                                              -- Our key exists and we got some values, now we need to check the key against the requested value from other scripts  
+        if #v > 1 then
+          for i=1,#netTableKey do
+            if netTableKey[i] ~= v[i-1] then                                              -- compare each value, does server 1 = our 250? does server 2 = our 444? 
+              netTableCmd(true,tablename,keyname,my_key)                                      -- If our key is different from the sent value, rewrite it ONCE and break execution to main loop again
+              break
+            end
+          end
+        end
+      end      
+    end
+    local allkeys = netTableCmd(false,tablename,keyname)
+    if allkeys and type(allkeys) ~= 'boolean' then
+      for i=1,#allkeys do
+        table.insert(returnvalues, allkeys[i])    
+      end
+    else
+      for i=1,#v do
+        table.insert(returnvalues, 0)
+      end
+    end
+  end
+return unpack(returnvalues)
+end
+
+function netTableCmd(send,readtable,key,tabletosend)
+  if send == false then
+    local finalresulttable = {}
+    local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
+    if not nettabletemp then return false end
+    for key,value in pairs(nettabletemp) do
+      table.insert(finalresulttable,value)
+    end          
+    if #finalresulttable > 0 then 
+      return finalresulttable
+    else
+      return true
+    end
+  else
+    CustomNetTables:SetTableValue(readtable, key, tabletosend)
+  end
+end
+
+function createNetTableKey(v)
+  local valuePair = {}
+  if #v > 1 then
+    for i=2,#v do
+      table.insert(valuePair,v[i])                                              -- returns just numbers 2-x from sent value...
+    end    
+  end
+  return valuePair  
+end
+
+
 function C_DOTA_BaseNPC:HealDisabled()
 	if self:HasModifier("Disabled_silence") or 
 	   self:HasModifier("primal_avatar_miss_aura") or 
