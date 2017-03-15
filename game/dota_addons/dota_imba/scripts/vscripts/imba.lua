@@ -322,6 +322,23 @@ function GameMode:ModifierFilter( keys )
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- Centaur Thick Hide debuff duration decrease
+	-------------------------------------------------------------------------------------------------	
+
+	if modifier_owner:HasModifier("modifier_imba_thick_hide") then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+
+			-- Check for break
+			if not modifier_owner:PassivesDisabled() then
+				local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
+				local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
+ 
+				keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+			end
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
 	-------------------------------------------------------------------------------------------------
 	if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
@@ -864,7 +881,7 @@ function GameMode:DamageFilter( keys )
 		
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
 			-- Find the cheese item handle
 			local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
@@ -902,7 +919,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
 			-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
 			if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
@@ -934,7 +951,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
+		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection")) then
 			
 			-- Prevent death
 			keys.damage = 0

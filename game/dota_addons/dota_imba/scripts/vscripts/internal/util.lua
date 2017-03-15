@@ -252,13 +252,16 @@ end
 
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
-	
-	-- Shallow Grave is peskier
-	target:RemoveModifierByName("modifier_imba_shallow_grave")
 
 	-- Extremely specific blademail interaction because fuck everything
 	if caster:HasModifier("modifier_item_blade_mail_reflect") then
 		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
+
+	local nothlProtection = target:FindModifierByName("modifier_imba_dazzle_nothl_protection")
+	if nothlProtection and nothlProtection:GetStackCount() < 1 then
+		nothlProtection:SetStackCount(1)
+		nothlProtection:StartIntervalThink(1)
 	end
 
 	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
@@ -268,7 +271,7 @@ function TrueKill(caster, target, ability)
 
 	-- Removes the relevant modifiers
 	target:RemoveModifierByName("modifier_invulnerable")
-	target:RemoveModifierByName("modifier_imba_shallow_grave")
+	target:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_borrowed_time")
@@ -685,8 +688,8 @@ end
 function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_tidebringer_cooldown")
 	hero:RemoveModifierByName("modifier_imba_hunter_in_the_night")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive")
+	hero:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
+	hero:RemoveModifierByName("modifier_imba_dazzle_nothl_protection")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_cooldown")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 	hero:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
@@ -809,7 +812,8 @@ function InitializeInnateAbilities( hero )
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
 		"imba_silencer_arcane_supremacy",
-		"imba_tiny_rolling_stone"
+		"imba_tiny_rolling_stone",
+		"imba_centaur_thick_hide"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -819,110 +823,6 @@ function InitializeInnateAbilities( hero )
 			current_ability:SetLevel(1)
 		end
 	end
-end
-			
--- Break (remove passive skills from) a target
-function PassiveBreak( unit, duration )
-
-	-- Check if the target already has break status
-	if unit.break_duration_left then
-		
-		-- Increase remaining break duration if appropriate
-		if duration > unit.break_duration_left then
-			unit.break_duration_left = duration
-		end
-
-		-- Break and do nothing more
-		return nil
-	end
-
-	-- Initialize break globals
-	unit.break_duration_left = duration
-	unit.break_learn_levels = {}
-
-	local passive_detected = false
-
-	-- Exceptions
-	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
-	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_active")
-	while unit:HasModifier("modifier_imba_fervor_stacks") do
-		unit:RemoveModifierByName("modifier_imba_fervor_stacks")
-	end
-
-	-- Non-passive abilities disabled by break
-	local break_exceptions = {
-		"imba_antimage_spell_shield"
-	}
-
-	-- Passive abilities not disabled by break
-	local break_immunities = {
-		"imba_wraith_king_reincarnation",
-		"imba_drow_ranger_marksmanship"
-	}
-
-	-- Set all passive abilities' levels to zero
-	for i = 0, 15 do
-		local ability = unit:GetAbilityByIndex(i)
-		if ability and ability:GetLevel() > 0 then
-			
-			-- Check for regular passives
-			if ability:IsPassive() then
-				passive_detected = true
-				unit.break_learn_levels[i] = ability:GetLevel()
-				ability:SetLevel(0)
-			end
-
-			-- Check for exceptions (togglable/activable "passives")
-			for _,ability_exception in pairs(break_exceptions) do
-				if ability_exception == ability:GetName() then
-					passive_detected = true
-					unit.break_learn_levels[i] = ability:GetLevel()
-					ability:SetLevel(0)
-				end
-			end
-
-			-- Check for immunities (passives which are not disabled by Break)
-			for _,ability_immunity in pairs(break_immunities) do
-				if ability_immunity == ability:GetName() then
-					ability:SetLevel(unit.break_learn_levels[i])
-					unit.break_learn_levels[i] = 0
-				end
-			end
-
-		end
-	end
-
-	-- If at least one passive was broken, count down the duration
-	if passive_detected then
-		Timers:CreateTimer(0.1, function()
-
-			-- Update duration left
-			unit.break_duration_left = unit.break_duration_left - 0.1
-
-			-- Restore ability levels if duration has elapsed
-			if unit.break_duration_left <= 0 then
-				if not ( not unit:IsAlive() and IMBA_ABILITY_MODE_RANDOM_OMG ) then
-					for i = 0, 15 do
-						if unit.break_learn_levels[i] and unit.break_learn_levels[i] > 0 then
-							local ability = unit:GetAbilityByIndex(i)
-							local excess_levels = ability:GetLevel()
-							unit:SetAbilityPoints( unit:GetAbilityPoints() + excess_levels )
-							ability:SetLevel(unit.break_learn_levels[i])
-						end
-					end
-				end
-				unit.break_duration_left = nil
-				unit.break_learn_levels = nil
-			else
-				return 0.1
-			end
-		end)
-	end
-end
-
--- End an ongoing Break condition
-function PassiveBreakEnd( unit )
-	unit.break_duration_left = 0
 end
 
 -- Check if an ability should proc magic stick/wand
