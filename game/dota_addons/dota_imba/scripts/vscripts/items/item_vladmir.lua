@@ -120,11 +120,15 @@ function modifier_item_imba_vladmir_aura:OnCreated(keys)
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
+	ChangeAttackProjectileImba(self:GetParent())
 end
 
-function VladmirOfferingProjectile(keys)
-	local caster = keys.caster
-	ChangeAttackProjectileImba(caster)
+-- Possible projectile change
+function modifier_item_imba_vladmir_aura:OnDestroy()
+	local parent = self:GetParent()
+	Timers:CreateTimer(0.03, function()
+		ChangeAttackProjectileImba(parent)
+	end)
 end
 
 -- Lifesteal
@@ -320,6 +324,15 @@ function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
+	ChangeAttackProjectileImba(self:GetParent())
+end
+
+-- Possible projectile change
+function modifier_item_imba_vladmir_blood_aura:OnDestroy()
+	local parent = self:GetParent()
+	Timers:CreateTimer(0.03, function()
+		ChangeAttackProjectileImba(parent)
+	end)
 end
 
 -- Lifesteal

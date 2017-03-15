@@ -1201,7 +1201,7 @@ function ChangeAttackProjectileImba( unit )
 		unit:SetRangedProjectileName(particle_skadi)
 
 	-- If the unit has any form of lifesteal, use the lifesteal projectile
-	elseif unit:HasModifier("modifier_item_mask_of_death") or unit:HasModifier("modifier_item_mask_of_madness") or unit:HasModifier("modifier_item_satanic") or unit:HasModifier("modifier_item_imba_vladmir") or unit:HasModifier("modifier_item_imba_vladmir_2") then
+	elseif unit:HasModifier("modifier_item_mask_of_death") or unit:HasModifier("modifier_item_mask_of_madness") or unit:HasModifier("modifier_item_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
 		unit:SetRangedProjectileName(particle_lifesteal)
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
