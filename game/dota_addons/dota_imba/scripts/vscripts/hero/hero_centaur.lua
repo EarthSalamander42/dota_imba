@@ -2,10 +2,11 @@
 -- Date: 05.03.2017
 
 
+CreateEmptyTalents("centaur")
+
 ---------------------------------
 -- 		   Thick Hide          --
 ---------------------------------
-
 
 imba_centaur_thick_hide = class({})
 LinkLuaModifier("modifier_imba_thick_hide", "hero/hero_centaur.lua", LUA_MODIFIER_MOTION_NONE)
@@ -75,16 +76,12 @@ function imba_centaur_hoof_stomp:OnSpellStart()
 		local stomp_damage = ability:GetSpecialValueFor("stomp_damage")
 		local pit_duration = ability:GetSpecialValueFor("pit_duration")	
 
-		-- #4 Talent: Radius increase for Hoof Stomp
-		if caster:HasTalent("special_bonus_imba_centaur_4") then
-			radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")
-		end
+		-- #4 Talent: Radius increase for Hoof Stomp		
+		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_4")		
 
-		-- #5 Talent: Arena/stun duration increase
-		if caster:HasTalent("special_bonus_imba_centaur_5") then
-			stun_duration = stun_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
-			pit_duration = pit_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
-		end
+		-- #5 Talent: Arena/stun duration increase		
+		stun_duration = stun_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")
+		pit_duration = pit_duration + caster:FindTalentValue("special_bonus_imba_centaur_5")		
 
 		-- Roll for cast response
 		local cast_response_chance = 50
@@ -437,10 +434,8 @@ function imba_centaur_double_edge:OnSpellStart()
 		local radius = ability:GetSpecialValueFor("radius")
 		local str_damage_reduction = ability:GetSpecialValueFor("str_damage_reduction")
 
-		-- #3 Talent: Radius increase for Double Edge
-		if caster:HasTalent("special_bonus_imba_centaur_3") then
-			radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_3")
-		end
+		-- #3 Talent: Radius increase for Double Edge		
+		radius = radius + caster:FindTalentValue("special_bonus_imba_centaur_3")		
 
 		-- Cast responses are troublesome for this spell so they get their own section
 		-- Roll for a cast response
@@ -676,15 +671,11 @@ function modifier_imba_return_passive:OnAttacked(keys)
 		local damage_block = ability:GetSpecialValueFor("damage_block")
 		local block_duration = ability:GetSpecialValueFor("block_duration")	
 
-		-- #1 Talent: Double Edge self-damage reduction
-		if caster:HasTalent("special_bonus_imba_centaur_1") then
-			str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")
-		end
+		-- #1 Talent: Double Edge self-damage reduction		
+		str_pct_as_damage = str_pct_as_damage + caster:FindTalentValue("special_bonus_imba_centaur_1")		
 
-		-- #7 Talent: Increased return damage block
-		if caster:HasTalent("special_bonus_imba_centaur_7")	then
-			damage_block = damage_block + caster:FindTalentValue("special_bonus_imba_centaur_7")
-		end
+		-- #7 Talent: Increased return damage block		
+		damage_block = damage_block + caster:FindTalentValue("special_bonus_imba_centaur_7")		
 
 		-- Not inherited by illusions
 		if not target:IsRealHero() then

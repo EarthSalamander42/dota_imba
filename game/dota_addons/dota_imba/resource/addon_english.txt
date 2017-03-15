@@ -1791,7 +1791,7 @@
 		"DOTA_Tooltip_ability_imba_centaur_thick_hide_Description"							"Centaur's skin is hard and thick, allowing it to shake away damage and debuffs. Lessens debuffs durations on Centaur and causes him to take less damage from all sources."
 		"DOTA_Tooltip_ability_imba_centaur_thick_hide_Lore"									"The pride of the race of the Centaurs stems from their brute power and toughness."
 		"DOTA_Tooltip_ability_imba_centaur_thick_hide_damage_reduction_pct"					"DAMAGE REDUCTION:"
-		"DOTA_Tooltip_ability_imba_centaur_thick_hide_debuff_duration_red_pct"				"DEBUFF DURATIONS REDUCTION:"
+		"DOTA_Tooltip_ability_imba_centaur_thick_hide_debuff_duration_red_pct"				"%DEBUFF DURATIONS REDUCTION:"
 
 		"DOTA_Tooltip_ability_imba_centaur_hoof_stomp"										"Hoof Stomp"
 		"DOTA_Tooltip_ability_imba_centaur_hoof_stomp_Description"							"Slams the ground, stunning and damaging nearby enemy units.\n<font color='#FF7800'>Gladiators' Pit:</font> Creates an arena where Centaur and his enemies can fight. Enemies cannot leave the arena by any means, and the Warrunner, while inside it, takes reduced damage from all sources."
@@ -1808,7 +1808,7 @@
 		"DOTA_Tooltip_ability_imba_centaur_double_edge_Description"							"Centaur strikes a mighty blow at melee range, damaging both himself and a small area around the target.\n<font color='#FF7800'>Recoil Mastery:</font> Centaur takes reduced damage from Double Edge based on his strength. \n<font color='#00FF40'>Centaur cannot die from Double Edge's damage.</font>"
 		"DOTA_Tooltip_ability_imba_centaur_double_edge_Lore"								"In the spurs of combat, Bradwarden's vicious strikes sometimes cause self-inflicted collateral damage."
 		"DOTA_Tooltip_ability_imba_centaur_double_edge_radius"								"RADIUS:"
-		"DOTA_Tooltip_ability_imba_centaur_double_edge_edge_damage"							"DAMAGE:"
+		"DOTA_Tooltip_ability_imba_centaur_double_edge_damage"								"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_centaur_double_edge_str_damage_reduction"				"%STRENGTH AS DAMAGE REDUCTION:"
 
 		"DOTA_Tooltip_ability_imba_centaur_return"											"Return"
