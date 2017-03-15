@@ -25,10 +25,12 @@ function NetherBlast( keys )
 	nether_blast_dummy:EmitSound(sound_cast)
 
 	-- Play central blast particle
-	local nether_blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleAlwaysSimulate(nether_blast_pfx)
-	ParticleManager:SetParticleControl(nether_blast_pfx, 0, target)
-	ParticleManager:SetParticleControl(nether_blast_pfx, 1, Vector(radius, 0, 0))
+	do
+		local nether_blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleAlwaysSimulate(nether_blast_pfx)
+		ParticleManager:SetParticleControl(nether_blast_pfx, 0, target)
+		ParticleManager:SetParticleControl(nether_blast_pfx, 1, Vector(radius, 0, 0))
+	end
 
 	-- Find enemies in the central blast area
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -44,19 +46,25 @@ function NetherBlast( keys )
 	end
 
 	-- Calculate secondary blast positions
-	local caster_pos = caster:GetAbsOrigin()
-	local forward_vector = (target - caster_pos):Normalized()
 	local secondary_targets = {}
-	for i = 1, secondary_blasts do
-		secondary_targets[i] = RotatePosition(target, QAngle(0, (i - 1) * 360 / secondary_blasts, 0), target + forward_vector * (radius - center_radius))
+	do
+		local caster_pos = caster:GetAbsOrigin()
+		local forward_vector = (target - caster_pos):Normalized()
+		local input_vector = target + forward_vector * (radius - center_radius)
+		for i = 1, secondary_blasts do
+			secondary_targets[i] = RotatePosition(target, QAngle(0, (i - 1) * 360 / secondary_blasts, 0), input_vector)
+		end
 	end
 
 	-- Create pre-blast particles
-	for _,blast_target in pairs(secondary_targets) do
-		local secondary_blast_pre_pfx = ParticleManager:CreateParticle(particle_pre_blast, PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleAlwaysSimulate(secondary_blast_pre_pfx)
-		ParticleManager:SetParticleControl(secondary_blast_pre_pfx, 0, blast_target)
-		ParticleManager:SetParticleControl(secondary_blast_pre_pfx, 1, Vector(1, secondary_delay, 1))
+	do
+		local pre_blast_vector = Vector(1, secondary_delay, 1)
+		for _,blast_target in pairs(secondary_targets) do
+			local secondary_blast_pre_pfx = ParticleManager:CreateParticle(particle_pre_blast, PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleAlwaysSimulate(secondary_blast_pre_pfx)
+			ParticleManager:SetParticleControl(secondary_blast_pre_pfx, 0, blast_target)
+			ParticleManager:SetParticleControl(secondary_blast_pre_pfx, 1, pre_blast_vector)
+		end
 	end
 
 	-- Delayed secondary blasts
@@ -71,13 +79,17 @@ function NetherBlast( keys )
 		end)
 
 		-- Iterate through blast positions
+		local secondary_blast_vector = Vector(radius, 0, 0)
 		for _,blast_target in pairs(secondary_targets) do
 
 			-- Play blast particles
-			local secondary_blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
-			ParticleManager:SetParticleAlwaysSimulate(secondary_blast_pfx)
-			ParticleManager:SetParticleControl(secondary_blast_pfx, 0, blast_target)
-			ParticleManager:SetParticleControl(secondary_blast_pfx, 1, Vector(radius, 0, 0))
+			do
+				local secondary_blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
+
+				ParticleManager:SetParticleAlwaysSimulate(secondary_blast_pfx)
+				ParticleManager:SetParticleControl(secondary_blast_pfx, 0, blast_target)
+				ParticleManager:SetParticleControl(secondary_blast_pfx, 1, secondary_blast_vector)
+			end
 
 			-- Find enemies in each secondary blast area
 			local secondary_enemies = FindUnitsInRadius(caster:GetTeamNumber(), blast_target, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -115,11 +127,13 @@ function Decrepify( keys )
 	target:EmitSound(sound_cast)
 
 	-- Apply relevant modifier
+	local modifier_team
 	if target:GetTeam() == caster:GetTeam() then
-		ability:ApplyDataDrivenModifier(caster, target, modifier_ally, {})
+		modifier_team = modifier_ally
 	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_enemy, {})
+		modifier_team = modifier_enemy
 	end
+	ability:ApplyDataDrivenModifier(caster, target, modifier_team, {})
 
 	-- Initialize damage counter if necessary
 	if not target.decrepify_damage_counter then
@@ -163,10 +177,12 @@ function DecrepifyBlast( keys )
 	local blast_dummy = CreateUnitByName("npc_dummy_unit", blast_position, false, nil, nil, caster:GetTeamNumber())
 
 	-- Play pre-blast particle
-	local pre_blast_pfx = ParticleManager:CreateParticle(particle_pre_blast, PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleAlwaysSimulate(pre_blast_pfx)
-	ParticleManager:SetParticleControl(pre_blast_pfx, 0, blast_position)
-	ParticleManager:SetParticleControl(pre_blast_pfx, 1, Vector(1, blast_delay, 1))
+	do
+		local pre_blast_pfx = ParticleManager:CreateParticle(particle_pre_blast, PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleAlwaysSimulate(pre_blast_pfx)
+		ParticleManager:SetParticleControl(pre_blast_pfx, 0, blast_position)
+		ParticleManager:SetParticleControl(pre_blast_pfx, 1, Vector(1, blast_delay, 1))
+	end
 
 	-- Wait for [delay] seconds
 	Timers:CreateTimer(blast_delay, function()
@@ -180,21 +196,25 @@ function DecrepifyBlast( keys )
 		end)
 
 		-- Play blast particle
-		local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleAlwaysSimulate(blast_pfx)
-		ParticleManager:SetParticleControl(blast_pfx, 0, blast_position)
-		ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, 0, 0))
+		do
+			local blast_pfx = ParticleManager:CreateParticle(particle_blast, PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleAlwaysSimulate(blast_pfx)
+			ParticleManager:SetParticleControl(blast_pfx, 0, blast_position)
+			ParticleManager:SetParticleControl(blast_pfx, 1, Vector(blast_radius, 0, 0))
+		end
 
 		-- Find enemies in blast area
 		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), blast_position, nil, blast_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 		-- Damage blasted enemies
 		for _,enemy in pairs(enemies) do
+			local damage_modifier
 			if enemy:IsBuilding() then
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage * structure_damage / 100, damage_type = DAMAGE_TYPE_MAGICAL})
+				damage_modifier = damage * structure_damage / 100
 			else
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})			
+				damage_modifier = damage
 			end
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage_modifier, damage_type = DAMAGE_TYPE_MAGICAL})	
 		end
 	end)
 end
@@ -299,16 +319,16 @@ function NetherWardZap( keys )
 	target:EmitSound(sound_target)
 
 	-- Play zap particle
-	if mana_spent < 200 then
-		local zap_pfx = ParticleManager:CreateParticle(particle_light, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControlEnt(zap_pfx, 0, ward, PATTACH_POINT_FOLLOW, "attach_hitloc", ward:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(zap_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	elseif mana_spent < 400 then
-		local zap_pfx = ParticleManager:CreateParticle(particle_medium, PATTACH_ABSORIGIN, target)
-		ParticleManager:SetParticleControlEnt(zap_pfx, 0, ward, PATTACH_POINT_FOLLOW, "attach_hitloc", ward:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControlEnt(zap_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-	else
-		local zap_pfx = ParticleManager:CreateParticle(particle_heavy, PATTACH_ABSORIGIN, target)
+	do
+		local zap_pfx
+		if mana_spent < 200 then
+			zap_pfx = ParticleManager:CreateParticle(particle_light, PATTACH_ABSORIGIN, target)
+		elseif mana_spent < 400 then
+			zap_pfx = ParticleManager:CreateParticle(particle_medium, PATTACH_ABSORIGIN, target)
+		else
+			zap_pfx = ParticleManager:CreateParticle(particle_heavy, PATTACH_ABSORIGIN, target)
+		end
+
 		ParticleManager:SetParticleControlEnt(zap_pfx, 0, ward, PATTACH_POINT_FOLLOW, "attach_hitloc", ward:GetAbsOrigin(), true)
 		ParticleManager:SetParticleControlEnt(zap_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	end
@@ -320,128 +340,131 @@ function NetherWardZap( keys )
 
 	-- Ability replication
 	local cast_ability_name = cast_ability:GetName()
-	local forbidden_abilities = {
-		"imba_pugna_nether_ward",
-		"ancient_apparition_ice_blast",
-		"furion_teleportation",
-		"furion_wrath_of_nature",
-		"imba_juggernaut_healing_ward",
-		"imba_juggernaut_omni_slash",
-		"imba_kunkka_x_marks_the_spot",
-		"imba_lich_dark_ritual",
-		"life_stealer_infest",
-		"life_stealer_assimilate",
-		"life_stealer_assimilate_eject",
-		"imba_lina_fiery_soul",
-		"imba_night_stalker_darkness",
-		"imba_sandking_sand_storm",
-		"imba_sandking_epicenter",
-		"storm_spirit_static_remnant",
-		"storm_spirit_ball_lightning",
-		"imba_tinker_rearm",
-		"imba_venomancer_plague_ward",
-		"imba_witch_doctor_paralyzing_cask",
-		"imba_witch_doctor_voodoo_restoration",
-		"imba_witch_doctor_maledict",
-		"imba_witch_doctor_death_ward",
-		"imba_queenofpain_blink",
-		"imba_jakiro_fire_breath",
-		"imba_jakiro_ice_breath",
-		"alchemist_unstable_concoction",
-		"alchemist_chemical_rage",
-		"ursa_overpower",
-		"imba_bounty_hunter_wind_walk",
-		"invoker_ghost_walk",
-		"imba_clinkz_strafe",
-		"imba_clinkz_skeleton_walk",
-		"imba_clinkz_death_pact",
-		"imba_obsidian_destroyer_arcane_orb",
-		"imba_obsidian_destroyer_sanity_eclipse",
-		"shadow_demon_shadow_poison",
-		"shadow_demon_demonic_purge",
-		"phantom_lancer_doppelwalk",
-		"chaos_knight_phantasm",
-		"imba_phantom_assassin_phantom_strike",
-		"wisp_relocate",
-		"templar_assassin_refraction",
-		"templar_assassin_meld",
-		"naga_siren_mirror_image",
-		"imba_nyx_assassin_vendetta",
-		"imba_centaur_stampede",
-		"ember_spirit_activate_fire_remnant",
-		"legion_commander_duel",
-		"phoenix_fire_spirits",
-		"terrorblade_conjure_image",
-		"imba_techies_land_mines",
-		"imba_techies_stasis_trap",
-		"techies_suicide",
-		"winter_wyvern_arctic_burn",
-		"imba_wraith_king_kingdom_come",
-		"imba_faceless_void_chronosphere",
-		"magnataur_skewer",
-		"imba_tinker_march_of_the_machines",
-		"riki_blink_strike",
-		"riki_tricks_of_the_trade",
-		"imba_necrolyte_death_pulse",
-		"beastmaster_call_of_the_wild",
-		"beastmaster_call_of_the_wild_boar",
-		"dark_seer_ion_shell",
-		"dark_seer_wall_of_replica",
-		"morphling_waveform",
-		"morphling_adaptive_strike",
-		"morphling_replicate",
-		"morphling_morph_replicate",
-		"morphling_hybrid",
-		"leshrac_pulse_nova",
-		"rattletrap_power_cogs",
-		"rattletrap_rocket_flare",
-		"rattletrap_hookshot",
-		"spirit_breaker_charge_of_darkness",
-		"shredder_timber_chain",
-		"shredder_chakram",
-		"shredder_chakram_2",
-		"imba_enigma_demonic_conversion",
-		"spectre_haunt",
-		"windrunner_focusfire",
-		"viper_poison_attack",
-		"arc_warden_tempest_double",
-		"broodmother_insatiable_hunger",
-		"weaver_time_lapse",
-		"death_prophet_exorcism",
-		"treant_eyes_in_the_forest",
-		"treant_living_armor",
-		"enchantress_impetus",
-		"chen_holy_persuasion",
-		"batrider_firefly",
-		"undying_decay",
-		"undying_tombstone",
-		"tusk_walrus_kick",
-		"tusk_walrus_punch",
-		"tusk_frozen_sigil",
-		"gyrocopter_flak_cannon",
-		"elder_titan_echo_stomp_spirit",
-		"visage_soul_assumption",
-		"visage_summon_familiars",
-		"earth_spirit_geomagnetic_grip",
-		"keeper_of_the_light_recall",
-		"monkey_king_boundless_strike",
-		"monkey_king_mischief",
-		"monkey_king_tree_dance",
-		"monkey_king_primal_spring",
-		"monkey_king_wukongs_command",
-		"imba_skywrath_mage_concussive_shot",
-		"imba_silencer_glaives_of_wisdom"
-	}
 
 	-- Ignore items
 	if string.find(cast_ability_name, "item") then
 		return nil
 	end
 
-	-- If the ability is on the list of uncastable abilities, do nothing
-	for _,forbidden_ability in pairs(forbidden_abilities) do
-		if cast_ability_name == forbidden_ability then
-			return nil
+	do
+		local forbidden_abilities = {
+			"imba_pugna_nether_ward",
+			"ancient_apparition_ice_blast",
+			"furion_teleportation",
+			"furion_wrath_of_nature",
+			"imba_juggernaut_healing_ward",
+			"imba_juggernaut_omni_slash",
+			"imba_kunkka_x_marks_the_spot",
+			"imba_lich_dark_ritual",
+			"life_stealer_infest",
+			"life_stealer_assimilate",
+			"life_stealer_assimilate_eject",
+			"imba_lina_fiery_soul",
+			"imba_night_stalker_darkness",
+			"imba_sandking_sand_storm",
+			"imba_sandking_epicenter",
+			"storm_spirit_static_remnant",
+			"storm_spirit_ball_lightning",
+			"imba_tinker_rearm",
+			"imba_venomancer_plague_ward",
+			"imba_witch_doctor_paralyzing_cask",
+			"imba_witch_doctor_voodoo_restoration",
+			"imba_witch_doctor_maledict",
+			"imba_witch_doctor_death_ward",
+			"imba_queenofpain_blink",
+			"imba_jakiro_fire_breath",
+			"imba_jakiro_ice_breath",
+			"alchemist_unstable_concoction",
+			"alchemist_chemical_rage",
+			"ursa_overpower",
+			"imba_bounty_hunter_wind_walk",
+			"invoker_ghost_walk",
+			"imba_clinkz_strafe",
+			"imba_clinkz_skeleton_walk",
+			"imba_clinkz_death_pact",
+			"imba_obsidian_destroyer_arcane_orb",
+			"imba_obsidian_destroyer_sanity_eclipse",
+			"shadow_demon_shadow_poison",
+			"shadow_demon_demonic_purge",
+			"phantom_lancer_doppelwalk",
+			"chaos_knight_phantasm",
+			"imba_phantom_assassin_phantom_strike",
+			"wisp_relocate",
+			"templar_assassin_refraction",
+			"templar_assassin_meld",
+			"naga_siren_mirror_image",
+			"imba_nyx_assassin_vendetta",
+			"imba_centaur_stampede",
+			"ember_spirit_activate_fire_remnant",
+			"legion_commander_duel",
+			"phoenix_fire_spirits",
+			"terrorblade_conjure_image",
+			"imba_techies_land_mines",
+			"imba_techies_stasis_trap",
+			"techies_suicide",
+			"winter_wyvern_arctic_burn",
+			"imba_wraith_king_kingdom_come",
+			"imba_faceless_void_chronosphere",
+			"magnataur_skewer",
+			"imba_tinker_march_of_the_machines",
+			"riki_blink_strike",
+			"riki_tricks_of_the_trade",
+			"imba_necrolyte_death_pulse",
+			"beastmaster_call_of_the_wild",
+			"beastmaster_call_of_the_wild_boar",
+			"dark_seer_ion_shell",
+			"dark_seer_wall_of_replica",
+			"morphling_waveform",
+			"morphling_adaptive_strike",
+			"morphling_replicate",
+			"morphling_morph_replicate",
+			"morphling_hybrid",
+			"leshrac_pulse_nova",
+			"rattletrap_power_cogs",
+			"rattletrap_rocket_flare",
+			"rattletrap_hookshot",
+			"spirit_breaker_charge_of_darkness",
+			"shredder_timber_chain",
+			"shredder_chakram",
+			"shredder_chakram_2",
+			"imba_enigma_demonic_conversion",
+			"spectre_haunt",
+			"windrunner_focusfire",
+			"viper_poison_attack",
+			"arc_warden_tempest_double",
+			"broodmother_insatiable_hunger",
+			"weaver_time_lapse",
+			"death_prophet_exorcism",
+			"treant_eyes_in_the_forest",
+			"treant_living_armor",
+			"enchantress_impetus",
+			"chen_holy_persuasion",
+			"batrider_firefly",
+			"undying_decay",
+			"undying_tombstone",
+			"tusk_walrus_kick",
+			"tusk_walrus_punch",
+			"tusk_frozen_sigil",
+			"gyrocopter_flak_cannon",
+			"elder_titan_echo_stomp_spirit",
+			"visage_soul_assumption",
+			"visage_summon_familiars",
+			"earth_spirit_geomagnetic_grip",
+			"keeper_of_the_light_recall",
+			"monkey_king_boundless_strike",
+			"monkey_king_mischief",
+			"monkey_king_tree_dance",
+			"monkey_king_primal_spring",
+			"monkey_king_wukongs_command",
+			"imba_skywrath_mage_concussive_shot",
+			"imba_silencer_glaives_of_wisdom"
+		}
+
+		-- If the ability is on the list of uncastable abilities, do nothing
+		for _,forbidden_ability in pairs(forbidden_abilities) do
+			if cast_ability_name == forbidden_ability then
+				return nil
+			end
 		end
 	end
 

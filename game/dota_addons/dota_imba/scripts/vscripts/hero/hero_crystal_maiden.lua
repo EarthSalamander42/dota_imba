@@ -56,20 +56,26 @@ function CastFrostBite( keys )
 	end
 
 	-- Parameters
-	local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-	local creep_duration = ability:GetLevelSpecialValueFor("creep_duration", ability_level)
 	local damage_interval = ability:GetLevelSpecialValueFor("damage_interval", ability_level)
 	
+	local root_duration
+	local damage_duration
 	-- Ministuns, roots and damages target according to its type
 	if target:IsHero() or IsRoshan(target) then
+		local stun_duration = ability:GetLevelSpecialValueFor("stun_duration", ability_level)
 		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = duration})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = duration - damage_interval})
+
+		local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+		root_duration = duration
+		damage_duration = duration - damage_interval
 	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = creep_duration})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = creep_duration - damage_interval})
+		local creep_duration = ability:GetLevelSpecialValueFor("creep_duration", ability_level)
+		root_duration = creep_duration
+		damage_duration = creep_duration - damage_interval
 	end
+
+	ability:ApplyDataDrivenModifier(caster, target, modifier_root, {duration = root_duration})
+	ability:ApplyDataDrivenModifier(caster, target, modifier_damage, {duration = damage_duration})
 end
 	
 function Frostbite( keys )
@@ -145,49 +151,55 @@ function FreezingFieldCast( keys )
 	local modifier_sector_3 = keys.modifier_sector_3
 
 	-- Defines the center point (caster or dummy unit)
-	caster.freezing_field_center = caster
+	local center_point
+	local particle_point
 	local scepter = HasScepter(caster)
 	if scepter then
-		caster.freezing_field_center = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, nil, nil, caster:GetTeamNumber())
-		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, keys.target_points[1])
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
+		center_point = CreateUnitByName("npc_dummy_unit", keys.target_points[1], false, nil, nil, caster:GetTeamNumber())
+		particle_point = keys.target_points[1]
 	else
-		caster.freezing_field_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 0, caster:GetAbsOrigin())
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 1, Vector (1000, 0, 0))
-		ParticleManager:SetParticleControl(caster.freezing_field_particle, 5, Vector (1000, 0, 0))
+		center_point = caster
+		particle_point = caster:GetAbsOrigin()
 	end
+
+	caster.freezing_field_center = center_point
+
+	local particle_obj = ParticleManager:CreateParticle("particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf", PATTACH_CUSTOMORIGIN, caster.freezing_field_center)
+	caster.freezing_field_particle = particle_obj
+
+	local common_vector = Vector (1000, 0, 0)
+	ParticleManager:SetParticleControl(particle_obj, 0, particle_point)
+	ParticleManager:SetParticleControl(particle_obj, 1, common_vector)
+	ParticleManager:SetParticleControl(particle_obj, 5, common_vector)
 
 	-- Plays the channeling animation
 	StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 0.7})
 
 	-- Plays ult ambient sound
 	if RandomInt(1, 100) <= 20 then
-		caster.freezing_field_center:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))
+		center_point:EmitSound("Imba.CrystalMaidenLetItGo0"..RandomInt(1, 3))
 	else
-		caster.freezing_field_center:EmitSound("hero_Crystal.freezingField.wind")
+		center_point:EmitSound("hero_Crystal.freezingField.wind")
 	end
 
 	-- Grants the slowing aura to the center unit
-	ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_aura, {})
+	ability:ApplyDataDrivenModifier(caster, center_point, modifier_aura, {})
 
 	-- Initializes each sector's thinkers
 	Timers:CreateTimer(0.1, function()
-		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_0, {} )
+		ability:ApplyDataDrivenModifier(caster, center_point, modifier_sector_0, {} )
 	end)
 		
 	Timers:CreateTimer(0.2, function()
-		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_1, {} )
+		ability:ApplyDataDrivenModifier(caster, center_point, modifier_sector_1, {} )
 	end)
 	
 	Timers:CreateTimer(0.3, function()
-		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_2, {} )
+		ability:ApplyDataDrivenModifier(caster, center_point, modifier_sector_2, {} )
 	end)
 	
 	Timers:CreateTimer(0.4, function()
-		ability:ApplyDataDrivenModifier(caster, caster.freezing_field_center, modifier_sector_3, {} )
+		ability:ApplyDataDrivenModifier(caster, center_point, modifier_sector_3, {} )
 	end)
 end
 
@@ -195,19 +207,23 @@ function FreezingFieldExplode( keys )
 	local ability = keys.ability
 	local ability_level = ability:GetLevel() - 1
 	local caster = keys.caster
-	local target_loc = caster:GetAbsOrigin()
 	local min_distance = ability:GetLevelSpecialValueFor("explosion_min_dist", ability_level)
 	local max_distance = ability:GetLevelSpecialValueFor("explosion_max_dist", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("explosion_radius", ability_level)
 	local direction_constraint = keys.section
 	local particle_name = "particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
 	local sound_name = "hero_Crystal.freezingField.explosion"
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+
 	local scepter = caster:HasScepter()
 
+	local damage
+	local target_loc
 	if scepter then
 		damage = ability:GetLevelSpecialValueFor("damage_scepter", ability_level)
 		target_loc = caster.freezing_field_center:GetAbsOrigin()
+	else
+		damage = ability:GetLevelSpecialValueFor("damage", ability_level)
+		target_loc = caster:GetAbsOrigin()
 	end
 	
 	-- Get random point
@@ -215,8 +231,8 @@ function FreezingFieldExplode( keys )
 	local angle = RandomInt( 0, 90 )
 	local dy = castDistance * math.sin( angle )
 	local dx = castDistance * math.cos( angle )
-	local attackPoint = Vector( 0, 0, 0 )
-	
+	local attackPoint
+
 	if direction_constraint == 0 then			-- NW
 		attackPoint = Vector( target_loc.x - dx, target_loc.y + dy, target_loc.z )
 	elseif direction_constraint == 1 then		-- NE
@@ -238,8 +254,10 @@ function FreezingFieldExplode( keys )
 	local explosion_dummy = CreateUnitByName("npc_dummy_unit", attackPoint, false, nil, nil, caster:GetTeamNumber())
 	
 	-- Fire effect
-	local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, explosion_dummy)
-	ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
+	do
+		local fxIndex = ParticleManager:CreateParticle(particle_name, PATTACH_CUSTOMORIGIN, explosion_dummy)
+		ParticleManager:SetParticleControl(fxIndex, 0, attackPoint)
+	end
 	
 	-- Fire sound at the center position
 	explosion_dummy:EmitSound(sound_name)

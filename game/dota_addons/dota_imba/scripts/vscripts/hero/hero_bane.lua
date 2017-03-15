@@ -42,22 +42,28 @@ function Enfeeble( keys )
 	local total_stacks = math.floor( ( target_str + target_agi + target_int ) * reduce_factor )
 	
 	-- Reduce Intelligence to a minimum of 1 (prevents making the target manaless for the rest of the match)
-	if math.floor(total_stacks / 3) < target_int then
-		AddStacks(ability, caster, target, modifier_int, math.floor(total_stacks / 3), true)
-		total_stacks = total_stacks - math.floor(total_stacks / 3)
+	local reduce_int = math.floor(total_stacks / 3)
+	local final_int_reduction
+	if reduce_int < target_int then
+		final_int_reduction = reduce_int
 	else
-		AddStacks(ability, caster, target, modifier_int, target_int - 1, true)
-		total_stacks = total_stacks - (target_int - 1)
+		final_int_reduction = target_int - 1
 	end
+
+	AddStacks(ability, caster, target, modifier_int, final_int_reduction, true)
+	total_stacks = total_stacks - final_int_reduction
 	
 	-- Reduce Strength to a minimum of 1 (prevents making the target a "zombie" for the rest of the match)
-	if math.floor(total_stacks / 2) < target_str then
-		AddStacks(ability, caster, target, modifier_str, math.floor(total_stacks / 2), true)
-		total_stacks = total_stacks - math.floor(total_stacks / 2)
+	local reduce_str = math.floor(total_stacks / 2)
+	local final_str_reduction
+	if reduce_str < target_str then
+		final_str_reduction = reduce_str
 	else
-		AddStacks(ability, caster, target, modifier_str, target_str - 1, true)
-		total_stacks = total_stacks - (target_str - 1)
+		final_str_reduction = target_str - 1
 	end
+
+	AddStacks(ability, caster, target, modifier_str, final_str_reduction, true)
+	total_stacks = total_stacks - final_str_reduction
 
 	-- Reduce Agility (no minimum value)
 	AddStacks(ability, caster, target, modifier_agi, total_stacks, true)
@@ -158,10 +164,11 @@ function BrainSapSpellCast( keys )
 		target:EmitSound(sound_manaburn)
 
 		-- Grant the caster health and mana
-		caster:Heal(mana_to_drain / 2, caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, mana_to_drain / 2, nil)
-		caster:GiveMana(mana_to_drain / 2)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, mana_to_drain / 2, nil)
+		local gain = mana_to_drain / 2
+		caster:Heal(gain, caster)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, gain, nil)
+		caster:GiveMana(gain)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_MANA_ADD, caster, gain, nil)
 
 		-- Destroy the debuff
 		target:RemoveModifierByName(modifier_sap)
@@ -207,11 +214,15 @@ function FiendsGripManaDrain( keys )
 	local caster = keys.caster
 	local ability = keys.ability
 	local scepter = HasScepter(caster)
-	local mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain", ability:GetLevel() -1) / 100
-	
+
+	local mana_drain_resource
 	if scepter == true then
-		mana_drain = ability:GetLevelSpecialValueFor("fiends_grip_mana_drain_scepter", ability:GetLevel() -1) / 100
+		mana_drain_resource = "fiends_grip_mana_drain_scepter"
+	else
+		mana_drain_resource = "fiends_grip_mana_drain"
 	end
+
+	local mana_drain = ability:GetLevelSpecialValueFor(mana_drain_resource, ability:GetLevel() -1) / 100
 
 	local target_max_mana = target:GetMaxMana()
 	local actual_mana_drained = mana_drain * target_max_mana
@@ -226,11 +237,15 @@ function FiendsGripStopChannel( keys )
 	local ability = keys.ability
 	local modifier = keys.modifier
 	local scepter = HasScepter(caster)
-	local extra_duration = ability:GetLevelSpecialValueFor("fiends_grip_extra_duration", (ability:GetLevel() -1))
 
+	local extra_duration_resource
 	if scepter == true then
-		extra_duration = ability:GetLevelSpecialValueFor("fiends_grip_extra_duration_scepter", (ability:GetLevel() -1))
+		extra_duration_resource = "fiends_grip_extra_duration_scepter"
+	else
+		extra_duration_resource = "fiends_grip_extra_duration"
 	end
+
+	local extra_duration = ability:GetLevelSpecialValueFor(extra_duration_resource, (ability:GetLevel() -1))
 
 	local enemies_affected = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_CLOSEST, false)
 	for _,v in pairs(enemies_affected) do
@@ -266,7 +281,7 @@ function FiendsGripScepter( keys )
 		local enemies_to_check = FindUnitsInRadius(target:GetTeam(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, ability:GetAbilityTargetType() , 0, FIND_CLOSEST, false)
 		
 		for _,v in pairs(enemies_to_check) do
-			caster_location = caster:GetAbsOrigin()
+			--caster_location = caster:GetAbsOrigin()
 			local target_location = v:GetAbsOrigin()
 			local direction = (caster_location - target_location):Normalized()
 			local forward_vector = v:GetForwardVector()

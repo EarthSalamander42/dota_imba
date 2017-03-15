@@ -19,10 +19,6 @@ function DeathCoil( keys )
 	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
 		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
 	end
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-	local modifier_buff = "modifier_imba_frostmourne_buff"
 
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -39,42 +35,44 @@ function DeathCoil( keys )
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
 
+		local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+		local modifier_debuff = "modifier_imba_frostmourne_debuff"
+
+		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+
 		if target:HasModifier(modifier_debuff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 
 			if stack_count < max_stacks then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 				target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-			else
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 			end
 		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 			target:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
+
 	else
+		local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+		local modifier_buff = "modifier_imba_frostmourne_buff"
+
 		target:Heal(heal, caster)
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+
+		ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
+		ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
+
 		if target:HasModifier(modifier_buff_base) then
 			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
 
 			if stack_count < max_stacks then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
 				target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
 			else
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
 				target:SetModifierStackCount(modifier_buff, ability, stack_count)
 			end
 		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
 			target:SetModifierStackCount(modifier_buff, ability, 1)
 		end
+
 	end
 
 	-- Self Heal
@@ -168,9 +166,10 @@ function AphoticShield( keys )
 		-- Particle. Need to wait one frame for the older particle to be destroyed
 		Timers:CreateTimer(0.01, function() 
 			target.ShieldParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(target.ShieldParticle, 1, Vector(shield_size,0,shield_size))
-			ParticleManager:SetParticleControl(target.ShieldParticle, 2, Vector(shield_size,0,shield_size))
-			ParticleManager:SetParticleControl(target.ShieldParticle, 4, Vector(shield_size,0,shield_size))
+			local commonVector = Vector(shield_size,0,shield_size)
+			ParticleManager:SetParticleControl(target.ShieldParticle, 1, commonVector)
+			ParticleManager:SetParticleControl(target.ShieldParticle, 2, commonVector)
+			ParticleManager:SetParticleControl(target.ShieldParticle, 4, commonVector)
 			ParticleManager:SetParticleControl(target.ShieldParticle, 5, Vector(shield_size,0,0))	
 
 			-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
@@ -210,36 +209,36 @@ function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charg
 end
 
 function AphoticShieldAbsorb( keys )
-	local damage = keys.DamageTaken
+
 	local attacker = keys.attacker
 	local unit = keys.unit
-	local ability = keys.ability
+	-- local ability = keys.ability
 
 	-- If the attacker is the unit, do nothing
 	if attacker == unit then
 		return nil
 	end
-	
-	-- Track how much damage was already absorbed by the shield
-	local shield_remaining = unit.AphoticShieldRemaining
 
 	if unit:HasModifier("modifier_borrowed_time") == false then
+
+		local damage = keys.DamageTaken
+		-- Track how much damage was already absorbed by the shield
+		local shield_remaining = unit.AphoticShieldRemaining
 		
+		local modifier_value
+
 		-- If the damage is bigger than what the shield can absorb, heal a portion
 		if damage > shield_remaining then
-			local health_before = unit:GetHealth()
-			unit:Heal(shield_remaining, unit)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, shield_remaining, nil)
-			if unit:GetHealth() == health_before then
-				unit:SetHealth(unit:GetHealth() + shield_remaining)
-			end
+			modifier_value = shield_remaining
 		else
-			local health_before = unit:GetHealth()
-			unit:Heal(damage, unit)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, damage, nil)
-			if unit:GetHealth() == health_before then
-				unit:SetHealth(unit:GetHealth() + damage)
-			end
+			modifier_value = damage
+		end
+
+		local health_before = unit:GetHealth()
+		unit:Heal(modifier_value, unit)
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, modifier_value, nil)
+		if unit:GetHealth() == health_before then
+			unit:SetHealth(unit:GetHealth() + modifier_value)
 		end
 
 		-- Reduce the shield remaining and remove
@@ -312,55 +311,48 @@ function FrostMourne( keys )
 	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
 	local modifier_buff = "modifier_imba_frostmourne_buff"
 
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
+	ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 
 	if caster:HasModifier(modifier_buff_base) then
 		local stack_count = caster:GetModifierStackCount(modifier_buff, ability)
 
 		if stack_count < max_stacks then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 			caster:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
-		else
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 		end
 	else
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
 		caster:SetModifierStackCount(modifier_buff, ability, 1)
 	end
+
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
+	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
+
 	if target:HasModifier(modifier_debuff_base) then
 		local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 
 		if stack_count < max_stacks then
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 			target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 		end
 	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
 		target:SetModifierStackCount(modifier_debuff, ability, 1)
 	end
 end
 
 function FrostMourneAttacked( keys )
 	local attacker = keys.attacker
-	
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-	local modifier_buff = "modifier_imba_frostmourne_buff"
-
-	local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
 
 	if attacker:HasModifier("modifier_frostmourne") == false then
+		local caster = keys.caster
+		local target = keys.target
+		local ability = keys.ability
+		-- local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
+		local modifier_debuff = "modifier_imba_frostmourne_debuff"
+
+		local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
+
+		local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
+		local modifier_buff = "modifier_imba_frostmourne_buff"
+
 		ability:ApplyDataDrivenModifier(caster, attacker, modifier_buff_base, {})
 		ability:ApplyDataDrivenModifier(caster, attacker, modifier_buff, {})
 		attacker:SetModifierStackCount(modifier_buff, ability, stack_count)
@@ -372,10 +364,10 @@ function BorrowedTimeActivate( keys )
 	-- Variables
 	local caster = keys.caster
 	local ability = keys.ability
-	local threshold = ability:GetLevelSpecialValueFor( "hp_threshold" , ability:GetLevel() - 1  )
+	-- local threshold = ability:GetLevelSpecialValueFor( "hp_threshold" , ability:GetLevel() - 1  )
 	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
-	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
-	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
+	-- local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
+	-- local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
 	local scepter = HasScepter(caster)
 
 	-- Apply the modifier
@@ -428,8 +420,6 @@ end
 function BorrowedTimePurge( keys )
 	local caster = keys.caster
 	local ability = keys.ability
-	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
-	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
 	local scepter = HasScepter(caster)
 
 	-- Strong Dispel
@@ -439,11 +429,19 @@ function BorrowedTimePurge( keys )
 	local RemoveStuns = true
 	local RemoveExceptions = false
 	caster:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)
+
+	local durationResource
 	if scepter == true then
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = duration_scepter })
+		-- Scepter Duration
+		durationResource = "duration_scepter"
 	else
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = duration })
+		-- Normal Duration
+		durationResource = "duration"
 	end
+
+	local pickDuration = ability:GetLevelSpecialValueFor( durationResource , ability:GetLevel() - 1  )
+
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = pickDuration })
 
 	-- Toggle the ability off
 	ability:ToggleAbility()

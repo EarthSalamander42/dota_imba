@@ -32,14 +32,17 @@ function WhirlingAxesMelee( keys )
 		local caster_direction = caster:GetForwardVector()
 
 		-- Create axe particles
+		local input_vector = caster_pos + caster_direction * (radius-175)
+		local rotation_minus = 72 * elapsed_duration
+		local common_vector = Vector(0, 0, 100)
 		for i = 1,5 do
-			local axe_target_point = RotatePosition(caster_pos, QAngle(0, i * 72 - 72 * elapsed_duration, 0), caster_pos + caster_direction * (radius-175))
+			local axe_target_point = RotatePosition(caster_pos, QAngle(0, i * 72 - rotation_minus, 0), input_vector)
 			local axe_pfx = ParticleManager:CreateParticle(particle_axe, PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(axe_pfx, 0, caster_pos + Vector(0, 0, 100))
-			ParticleManager:SetParticleControl(axe_pfx, 1, axe_target_point + Vector(0, 0, 100))
+			ParticleManager:SetParticleControl(axe_pfx, 0, caster_pos + common_vector)
+			ParticleManager:SetParticleControl(axe_pfx, 1, axe_target_point + common_vector)
 			ParticleManager:SetParticleControl(axe_pfx, 4, Vector(0.65, 0, 0))	
 			Timers:CreateTimer(0.4, function()
-				ParticleManager:SetParticleControl(axe_pfx, 1, caster:GetAbsOrigin() + Vector(0, 0, 100))
+				ParticleManager:SetParticleControl(axe_pfx, 1, caster:GetAbsOrigin() + common_vector)
 			end)		
 		end
 		
@@ -135,16 +138,18 @@ function WhirlingAxesRanged( keys )
 		total_axes = base_axes + math.floor(caster:GetAgility() / agility_per_axe)
 	end
 
+	local total_axe_minus_one = total_axes - 1
 	-- Reduce spread angle if too many axes are present
-	if (total_axes - 1) * spread_angle > 72 then
-		spread_angle = 72 / (total_axes - 1)
+	if total_axe_minus_one * spread_angle > 72 then
+		spread_angle = 72 / total_axe_minus_one
 	end
 
 	-- Projectile creation loop
+	local start_angle = total_axe_minus_one * spread_angle / 2
+	local input_vector = caster_pos + direction * range
 	for i = 1, total_axes do
-		
-		local start_angle = (total_axes - 1) * spread_angle / 2
-		local target_pos = RotatePosition(caster_pos, QAngle(0, start_angle - (i-1) * spread_angle, 0), caster_pos + direction * range)
+
+		local target_pos = RotatePosition(caster_pos, QAngle(0, start_angle - (i-1) * spread_angle, 0), input_vector)
 		local this_axe_direction = (target_pos - caster_pos):Normalized()
 
 		ProjectileManager:CreateLinearProjectile( {
@@ -216,14 +221,15 @@ function BerserkersRageAttack( keys )
 
 	-- Parameters
 	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
-	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
-	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
-
-	-- Calculate bash damage
-	bash_damage = caster:GetAttackDamage() * bash_damage / 100
 
 	-- Roll for a bash proc
 	if RandomInt(1, 100) <= bash_chance and not target:IsBuilding() then
+
+		local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
+		local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
+
+		-- Calculate bash damage
+		bash_damage = caster:GetAttackDamage() * bash_damage / 100
 		
 		-- Apply bash damage
 		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})

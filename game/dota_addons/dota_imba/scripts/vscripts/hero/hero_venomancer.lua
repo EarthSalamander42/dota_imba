@@ -127,12 +127,14 @@ function GaleHit( keys )
 	target:EmitSound(sound_hit)
 
 	-- Apply slow modifier stacks
+	local total_slow_stack
 	if not target:HasModifier(modifier_slow) then
-		AddStacks(ability, caster, target, modifier_slow, initial_slow, true)
+		total_slow_stack = initial_slow
 	else
 		local current_slow = target:GetModifierStackCount(modifier_slow, caster)
-		AddStacks(ability, caster, target, modifier_slow, initial_slow - current_slow, true)
+		total_slow_stack = initial_slow - current_slow
 	end
+	AddStacks(ability, caster, target, modifier_slow, total_slow_stack, true)
 
 	-- Calculate damage
 	local target_health = target:GetMaxHealth()
@@ -197,11 +199,13 @@ function PoisonSting( keys )
 	local current_stacks = target:GetModifierStackCount(modifier_sting, caster)
 
 	-- Add stacks according to the current amount
+	local final_stacks
 	if (current_stacks + caster_stacks) < initial_stacks then
-		AddStacks(ability, caster, target, modifier_sting, initial_stacks, true)
+		final_stacks = initial_stacks
 	else
-		AddStacks(ability, caster, target, modifier_sting, caster_stacks, true)
+		final_stacks = caster_stacks
 	end
+	AddStacks(ability, caster, target, modifier_sting, final_stacks, true)
 end
 
 function PoisonStingTick( keys )
@@ -225,8 +229,9 @@ function PoisonStingTick( keys )
 	local current_stacks = target:GetModifierStackCount(modifier_sting, caster)
 
 	-- Deal damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = current_stacks * dmg_per_stack, damage_type = DAMAGE_TYPE_MAGICAL})
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, current_stacks * dmg_per_stack, nil)
+	local stack_damage = current_stacks * dmg_per_stack
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = stack_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_BONUS_POISON_DAMAGE, target, stack_damage, nil)
 
 	-- Remove 10% of the stacks (minimum 2)
 	AddStacks(ability, caster, target, modifier_sting, (-1) * math.max(stack_decay_min, current_stacks * stack_decay / 100), true)
@@ -235,6 +240,12 @@ function PoisonStingTick( keys )
 	if target:GetModifierStackCount(modifier_sting, caster) < 1 then
 		target:RemoveModifierByName(modifier_sting)
 	end
+end
+
+function AddWardAbilityLevelOne( scourge_or_plague_ward, ability_name )
+	scourge_or_plague_ward:AddAbility(ability_name)
+	local learned_ability = scourge_or_plague_ward:FindAbilityByName(ability_name)
+	learned_ability:SetLevel(1)
 end
 
 function WardCast( keys )
@@ -281,15 +292,11 @@ function WardCast( keys )
 	scourge_ward:SetForwardVector(caster:GetForwardVector())
 
 	-- Grant the multiattack ability to the scourge ward
-	scourge_ward:AddAbility(ability_scourge)
-	local learned_multiattack = scourge_ward:FindAbilityByName(ability_scourge)
-	learned_multiattack:SetLevel(1)
+	AddWardAbilityLevelOne(scourge_ward, ability_scourge)
 
 	-- Grant the ward poison sting if the caster has learned it
 	if ability_caster_sting and ability_caster_sting:GetLevel() > 0 then
-		scourge_ward:AddAbility(ability_sting)
-		local learned_sting = scourge_ward:FindAbilityByName(ability_sting)
-		learned_sting:SetLevel(1)
+		AddWardAbilityLevelOne(scourge_ward, ability_sting)
 	end
 
 	-- Kill the ward if too near the enemy fountain
@@ -298,8 +305,10 @@ function WardCast( keys )
 	end
 
 	-- Spawn Plague Wards
+	local inputVector = target + caster:GetForwardVector() * 125
+	local rotation_percentile = 360 / plague_amount
 	for i = 1,plague_amount do
-		local spawn_point = RotatePosition(target, QAngle(0, i * 360 / plague_amount, 0), target + caster:GetForwardVector() * 125 )
+		local spawn_point = RotatePosition(target, QAngle(0, i * rotation_percentile, 0), inputVector )
 		local plague_ward = CreateUnitByName("npc_imba_venomancer_plague_ward", spawn_point, true, caster, caster, caster:GetTeamNumber())
 		plague_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 
@@ -317,9 +326,7 @@ function WardCast( keys )
 
 		-- Grant the ward poison sting if the caster has learned it
 		if ability_caster_sting and ability_caster_sting:GetLevel() > 0 then
-			plague_ward:AddAbility(ability_sting)
-			local learned_sting = plague_ward:FindAbilityByName(ability_sting)
-			learned_sting:SetLevel(1)
+			AddWardAbilityLevelOne(plague_ward, ability_sting)
 		end
 
 		-- Kill the ward if too near the enemy fountain
@@ -470,15 +477,18 @@ function PoisonNova( keys )
 	-- Play random cast line
 	Timers:CreateTimer(0.5, function()
 		local random_int = RandomInt(1,4)
+		local sound_name
 		if random_int == 1 then
-			caster:EmitSound("venomancer_venm_ability_nova_01")
+			sound_name = "venomancer_venm_ability_nova_01"
 		elseif random_int == 2 then
-			caster:EmitSound("venomancer_venm_ability_nova_02")
+			sound_name = "venomancer_venm_ability_nova_02"
 		elseif random_int == 3 then
-			caster:EmitSound("venomancer_venm_ability_nova_06")
+			sound_name = "venomancer_venm_ability_nova_06"
 		elseif random_int == 4 then
-			caster:EmitSound("venomancer_venm_ability_nova_21")
+			sound_name = "venomancer_venm_ability_nova_21"
 		end
+
+		caster:EmitSound(sound_name)
 	end)
 
 	-- Make caster briefly visible
@@ -506,12 +516,14 @@ function PoisonNovaTick( keys )
 	
 	-- Parameters
 	local ability_level = ability:GetLevel() - 1
-	local damage_min = ability:GetLevelSpecialValueFor("damage_min", ability_level)
 	local damage_pct = ability:GetLevelSpecialValueFor("damage_pct", ability_level)
 	local contagion_extra_duration = ability:GetLevelSpecialValueFor("contagion_extra_duration", ability_level)
 	local contagion_radius_scepter = ability:GetLevelSpecialValueFor("contagion_radius_scepter", ability_level)
+	local damage_min
 	if scepter then
 		damage_min = ability:GetLevelSpecialValueFor("damage_min_scepter", ability_level)
+	else
+		damage_min = ability:GetLevelSpecialValueFor("damage_min", ability_level)
 	end
 
 	-- Calculate damage to deal
