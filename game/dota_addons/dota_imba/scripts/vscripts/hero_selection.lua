@@ -129,6 +129,10 @@ end
 -- Randoms a valid hero for the player who requested it
 function HeroSelection:RandomHero(event)
 
+	if HeroSelection.playerPickState[event.PlayerID].pick_state ~= "selecting_hero" then
+		return nil
+	end
+
 	-- Flag the player as having randomed
 	PlayerResource:SetHasRandomed(event.PlayerID)
 
@@ -450,7 +454,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		if HERO_STARTING_LEVEL > 1 then
 			Timers:CreateTimer(1, function()
 				hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-				hero:SetAbilityPoints(HERO_STARTING_LEVEL)
+				hero:SetAbilityPoints(hero:GetAbilityPoints() + HERO_STARTING_LEVEL - 1)
 			end)
 		end
 
