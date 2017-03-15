@@ -122,6 +122,11 @@ function modifier_item_imba_vladmir_aura:OnCreated(keys)
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
 end
 
+function VladmirOfferingProjectile(keys)
+	local caster = keys.caster
+	ChangeAttackProjectileImba(caster)
+end
+
 -- Lifesteal
 function modifier_item_imba_vladmir_aura:GetModifierLifesteal()
 	return self:GetAbility():GetSpecialValueFor("vampiric_aura") end

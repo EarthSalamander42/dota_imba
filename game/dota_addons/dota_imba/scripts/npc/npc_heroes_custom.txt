@@ -711,23 +711,25 @@
     "npc_imba_hero_drow_ranger"
 	{
 		"override_hero"				"npc_dota_hero_drow_ranger"
-
 		"AttackAcquisitionRange"	"900"
+
+		"AbilityLayout"				"5"
 		
 		"Ability1"					"imba_drow_ranger_frost_arrows"
 		"Ability2"					"imba_drow_ranger_gust"
 		"Ability3"					"imba_drow_ranger_trueshot"
-		"Ability4"					"imba_drow_ranger_marksmanship"
+		"Ability4"					"imba_drow_ranger_deadeye"
+		"Ability5"					"imba_drow_ranger_marksmanship"
 
 		"Ability9"					"imba_unlimited_level_powerup"
-		"Ability10"					"special_bonus_movement_speed_15"
-		"Ability11"					"special_bonus_agility_8"
-		"Ability12"					"special_bonus_all_stats_4"
-		"Ability13"					"special_bonus_agility_13"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_agility_14"
-		"Ability16"					"special_bonus_strength_9"
-		"Ability17"					"special_bonus_agility_15"
+		"Ability10"					"special_bonus_imba_drow_ranger_1"
+		"Ability11"					"special_bonus_imba_drow_ranger_2"
+		"Ability12"					"special_bonus_imba_drow_ranger_3"
+		"Ability13"					"special_bonus_imba_drow_ranger_4"
+		"Ability14"					"special_bonus_imba_drow_ranger_5"
+		"Ability15"					"special_bonus_imba_drow_ranger_6"
+		"Ability16"					"special_bonus_imba_drow_ranger_7"
+		"Ability17"					"special_bonus_imba_drow_ranger_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
 	}

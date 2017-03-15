@@ -10671,31 +10671,70 @@
 	}
 
 	//=================================================================================================================
-	// Drow Ranger's Frost Arrows (No Marksmanship)
+	// Drow Ranger's Deadeye
+	//=================================================================================================================
+	"imba_drow_ranger_deadeye"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+		"AbilityTextureName"					"custom/drow_deadeye"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/hero_drow_ranger.lua"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"day_vision"					"200"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"night_vision"					"500"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Drow Ranger's Frost Arrows
 	//=================================================================================================================
 	"imba_drow_ranger_frost_arrows"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"		
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"					"drow_ranger_frost_arrows"
-
-		// Casting
+		"MaxLevel"								"7"
+		"ScriptFile"							"hero/hero_drow_ranger.lua"
+		
+		// Precache
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"625"
-		"AbilityCastPoint"						"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"							"0"
+		"precache"
+		{
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
+			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
+			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
+			"particle"							"particles/hero/drow/lifesteal_arrows/drow_lifedrain_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/skadi_arrows/drow_skadi_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/deso_arrows/drow_deso_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/deso_skadi_arrows/drow_deso_skadi_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/lifesteal_skadi_arrows/drow_lifesteal_skadi_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/lifesteal_deso_arrows/drow_lifedrain_deso_frost_arrow.vpcf"
+			"particle"							"particles/hero/drow/lifesteal_deso_skadi_arrows/drow_lifesteal_deso_skadi_frost_arrow.vpcf"
+		}
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10708,764 +10747,43 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"frost_arrows_slow"				"-20 -35 -50 -65"
+				"ms_slow_pct"					"16 32 48 64 66 68 70"
 			}
+
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_hero_duration"	"1.75"
+				"var_type"						"FIELD_INTEGER"
+				"as_slow"						"10 10 10 10 30 50 70"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_creep_duration"	"10.0"
+				"hero_duration"					"1.5"
+				"LinkedSpecialBonus"			"special_bonus_imba_drow_ranger_1"
 			}
+
 			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creep_duration"				"7"
+			}			
+
+			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"stacks_to_freeze"				"4"
 			}
-			"05"
+
+			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"freeze_duration"				"1.75"
+				"freeze_duration"				"0.6 0.6 0.6 0.6 1 1.4 1.8"
 			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_frost_arrows_caster"
-			{
-				"Passive"               		"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_DrowRanger.FrostArrows"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_creep_duration"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-						}
-
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_hero_duration"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_drow_ranger.lua"
-						"Function"				"FrostArrows"
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-						"freeze_modifier"		"modifier_imba_frost_arrows_frozen"
-					}
-				}
-			}
-			
-			"modifier_imba_frost_arrows_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-			
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_slow"
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%frost_arrows_hero_duration"
-			}
-
-			"modifier_imba_frost_arrows_frozen"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%freeze_duration"
-				"TextureName"					"custom/imba_drow_ranger_frost_arrows"
-				
-				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName"				"particles/status_fx/status_effect_frost.vpcf"
-				"StatusEffectPriority"			"10"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"hero_Crystal.frostbite"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+		}		
 	}
 
-	//=================================================================================================================
-	// Drow Ranger's Frost Arrows (Marksmanship level 1)
-	//=================================================================================================================
-	"imba_drow_ranger_frost_arrows_mark1"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"					"drow_ranger_frost_arrows"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"675"
-		"AbilityCastPoint"						"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"							"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"9"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"frost_arrows_slow"				"-20 -35 -50 -65"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_hero_duration"	"1.75"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_creep_duration"	"10.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stacks_to_freeze"				"4"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"freeze_duration"				"1.75"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_frost_arrows_caster"
-			{
-				"Passive"               		"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_DrowRanger.FrostArrows"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_creep_duration"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-						}
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_hero_duration"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_drow_ranger.lua"
-						"Function"				"FrostArrows"
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-						"freeze_modifier"		"modifier_imba_frost_arrows_frozen"
-					}
-				}
-			}
-			
-			"modifier_imba_frost_arrows_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-			
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_slow"
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%frost_arrows_hero_duration"
-			}
-
-			"modifier_imba_frost_arrows_frozen"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%freeze_duration"
-				"TextureName"					"imba_drow_ranger_frost_arrows"
-				
-				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
-				"StatusEffectPriority" 			"10"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"hero_Crystal.frostbite"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Drow Ranger's Frost Arrows (Marksmanship level 2)
-	//=================================================================================================================
-	"imba_drow_ranger_frost_arrows_mark2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"					"drow_ranger_frost_arrows"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"700"
-		"AbilityCastPoint"						"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"							"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"9"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"frost_arrows_slow"				"-20 -35 -50 -65"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_hero_duration"	"1.75"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_creep_duration"	"10.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stacks_to_freeze"				"4"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"freeze_duration"				"1.75"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_frost_arrows_caster"
-			{
-				"Passive"               		"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_DrowRanger.FrostArrows"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_creep_duration"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-						}
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_hero_duration"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_drow_ranger.lua"
-						"Function"				"FrostArrows"
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-						"freeze_modifier"		"modifier_imba_frost_arrows_frozen"
-					}
-				}
-			}
-			
-			"modifier_imba_frost_arrows_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-			
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_slow"
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%frost_arrows_hero_duration"
-			}
-
-			"modifier_imba_frost_arrows_frozen"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%freeze_duration"
-				"TextureName"					"imba_drow_ranger_frost_arrows"
-				
-				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
-				"StatusEffectPriority" 			"10"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"hero_Crystal.frostbite"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Drow Ranger's Frost Arrows (Marksmanship level 3)
-	//=================================================================================================================
-	"imba_drow_ranger_frost_arrows_mark3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
-		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"					"drow_ranger_frost_arrows"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"725"
-		"AbilityCastPoint"						"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"							"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"9"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"frost_arrows_slow"				"-20 -35 -50 -65"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_hero_duration"	"1.75"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"frost_arrows_creep_duration"	"10.0"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stacks_to_freeze"				"4"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"freeze_duration"				"1.75"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"							"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-			"particle"  						"particles/status_fx/status_effect_frost.vpcf"
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_frost_arrows_caster"
-			{
-				"Passive"               		"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_drow/drow_frost_arrow.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_DrowRanger.FrostArrows"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_creep_duration"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"
-						{
-							"Center"			"TARGET"
-							"Types"				"DOTA_UNIT_TARGET_HERO"
-						}
-						"ModifierName"			"modifier_imba_frost_arrows_slow"
-						"Duration"				"%frost_arrows_hero_duration"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_drow_ranger.lua"
-						"Function"				"FrostArrows"
-						"Target"
-						{
-							"Center"  			"TARGET"
-							"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-
-						"stack_modifier"		"modifier_imba_frost_arrows_slow_stacks"
-						"freeze_modifier"		"modifier_imba_frost_arrows_frozen"
-					}
-				}
-			}
-			
-			"modifier_imba_frost_arrows_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-			
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%frost_arrows_slow"
-				}
-			}
-
-			"modifier_imba_frost_arrows_slow_stacks"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%frost_arrows_hero_duration"
-			}
-
-			"modifier_imba_frost_arrows_frozen"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%freeze_duration"
-				"TextureName"					"imba_drow_ranger_frost_arrows"
-				
-				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName" 				"particles/status_fx/status_effect_frost.vpcf" 	   
-				"StatusEffectPriority" 			"10"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"hero_Crystal.frostbite"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
+	
 
 	//=================================================================================================================
 	// Drow Ranger's Gust
@@ -11474,24 +10792,36 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"1"
 		"AbilityTextureName"					"drow_ranger_wave_of_silence"
+		"MaxLevel"								"7"
+		"ScriptFile"							"hero/hero_drow_ranger.lua"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"						"1150"
-		"AbilityCastPoint"						"0.1"
+		"AbilityCastRange"						"1100"
+		"AbilityCastPoint"						"0.25"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"13"
+		"AbilityCooldown"						"16 15 14 13 13 13 13"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"						"90"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
+			"particle"					"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
+			"particle"					"particles/generic_gameplay/generic_silence.vpcf"
+			"particle"					"particles/generic_gameplay/generic_slowed_cold.vpcf"			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11499,142 +10829,58 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"wave_speed"					"2000.0"
+				"var_type"						"FIELD_INTEGER"
+				"wave_speed"					"2000"
 			}
+
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wave_range"					"900"
+				"wave_distance"					"900"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"wave_width"					"250"
 			}
+
 			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"attack_slow"					"-20"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"move_slow"						"-20"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"silence_duration"				"3 4 5 6"
-			}
-			"07"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"knockback_duration"			"0.9"
 			}
-			"08"
+
+			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"knockback_height"				"30"
-			}
-			"09"
+				"max_distance"					"625"
+			}			
+
+			"06"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"self_knockback_duration"		"0.3"
+				"chill_duration"				"1.5"
 			}
-			"10"
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"chill_stacks"					"1 1 1 1 1 2 3"
+			}
+
+			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"50"
 			}
-			"11"
+
+			"09"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"wave_range_tooltip"			"1150"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
-			"particle"					"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
-			"particle"					"particles/generic_gameplay/generic_silence.vpcf"
-			"particle"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"LinearProjectile"
-			{
-				"Target"				"POINT"
-				"EffectName"			"particles/units/heroes/hero_drow/drow_silence_wave.vpcf"
-				"MoveSpeed"				"%wave_speed"
-				"StartRadius"			"%wave_width"
-				"StartPosition"			"attach_attack1"
-				"EndRadius"				"%wave_width"
-				"FixedDistance"			"%wave_range"
-				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				"HasFrontalCone"		"0"
-			}
-			
-			"FireSound"
-			{
-				"EffectName"			"Hero_DrowRanger.Silence"
-				"Target"				"CASTER"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%damage"
-			}
-		
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_drow_ranger_gust_debuff"
-				"Target"				"TARGET"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_drow_ranger.lua"
-				"Function"				"Gust"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_drow_ranger_gust_debuff"
-			{
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-				"Duration"						"%silence_duration"
-				
-				"EffectName"					"particles/generic_gameplay/generic_silence.vpcf"
-				"EffectAttachType"				"follow_overhead"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%attack_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%move_slow" 
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+				"silence_duration"				"3 4 5 6 6 6 6"
+			}			
+		}	
 	}
 
 	//=================================================================================================================
@@ -11644,16 +10890,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityTextureName"				"drow_ranger_trueshot"
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_drow_ranger.lua"
 
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"0"
-		"AbilityCastPoint"					"0"
-		"AbilityCooldown"					"40"		
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCooldown"					"100"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11662,130 +10908,30 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trueshot_ranged_damage"	"21 28 35 42"
+				"agi_to_damage_pct"			"20 26 32 38 40 42 44"
+				"LinkedSpecialBonus"		"special_bonus_imba_drow_ranger_3"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"global_radius"				"25000"
+				"active_duration"			"30"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_duration"			"10"
+				"melee_reduction_pct"		"50"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_agi"					"14 21 28 35"
+				"active_bonus_agi_pct"		"5 5 5 5 10 20 30"
 			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"					"CASTER"
-				"ModifierName"				"modifier_imba_trueshot_aura_owner_creep"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_trueshot_aura_owner_hero"
-			{
-				"Passive"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-				
-				"Aura"						"modifier_imba_trueshot_aura"
-				"Aura_Radius"				"%global_radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster" 		"1"
 
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_trueshot_aura_owner_hero"
-					}
-				}
-			}
 			
-			"modifier_imba_trueshot_aura_owner_creep"
-			{
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Duration"					"%active_duration"
-				
-				"Aura"						"modifier_imba_trueshot_aura"
-				"Aura_Radius"				"%global_radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_trueshot_aura_owner_creep"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
-				}
-			}
-			
-			"modifier_imba_trueshot_aura"
-			{
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-				
-				"ThinkInterval"  			"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_drow_ranger.lua"
-						"Function"			"Trueshot"
-
-						"modifier_stack"	"modifier_imba_trueshot_damage_stack"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_trueshot_damage_stack"
-						"Target" 			"TARGET"
-					}
-				}
-			}
-		
-			"modifier_imba_trueshot_damage_stack"
-			{
-				"IsPurgable"			"0"
-				"IsHidden"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
-				}
-			}
-		}
+		}			
 	}
 
 	//=================================================================================================================
@@ -11795,12 +10941,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"			"drow_ranger_marksmanship"
-		"AbilityCastRange"				"300"
+		"AbilityCastRange"				"400"
 		"AbilityCooldown"				"0.6"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"		
+		"ScriptFile"					"hero/hero_drow_ranger.lua"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"								"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
+			"particle"								"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11809,173 +10966,31 @@
 			"01"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"agility_bonus"						"50 80 110"
+				"agility_bonus"						"40 60 80 90 100 110"
 			}
+			
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"movement_speed_bonus"				"10"
+				"range_bonus"						"25 25 25 50 100 150"
 			}
+			
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"range_bonus"						"50 75 100"
-			}
+				"radius"							"400"
+			}			
+
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"night_vision_bonus"				"1000"
+				"damage_reduction_scepter"			"50"
 			}
+
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"radius"							"300"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"think_interval"					"0.2"
-			}
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"damage_reduction_scepter"			"-50"
-			}
-			"08"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"splinter_radius_scepter"			"400"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"								"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
-			"particle"								"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
-		}
-
-		"OnUpgrade"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"						"modifier_imba_marksmanship_effect"
-				"Target" 							"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"						"hero/hero_drow_ranger.lua"
-				"Function"							"UpgradeFrostArrows"
-
-				"ability_0"							"imba_drow_ranger_frost_arrows"
-				"ability_1"							"imba_drow_ranger_frost_arrows_mark1"
-				"ability_2"							"imba_drow_ranger_frost_arrows_mark2"
-				"ability_3"							"imba_drow_ranger_frost_arrows_mark3"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"	"1"
-			
-			"RunScript"
-			{
-				"ScriptFile"						"hero/hero_drow_ranger.lua"
-				"Function"							"MarksmanshipHit"
-
-				"modifier_dmg_penalty"				"modifier_imba_marksmanship_splinter_dmg_penalty"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_marksmanship_passive"
-			{
-				"Passive"							"1"
-				"IsHidden"							"1"
-				"IsPurgable"						"0"
-			
-				"ThinkInterval"						"%think_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_drow_ranger.lua"
-						"Function"					"Marksmanship"
-
-						"modifier_effect"			"modifier_imba_marksmanship_effect"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_drow_ranger.lua"
-						"Function"					"MarksmanshipSplinter"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%range_bonus"
-				}
-			}
-			
-			"modifier_imba_marksmanship_effect"
-			{
-				"IsPurgable"					"0"
-				"IsHidden"						"0"
-				
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"Target"				"CASTER"
-						"EffectName"			"particles/units/heroes/hero_drow/drow_marksmanship_start.vpcf"
-						"EffectAttachType"		"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"			"attach_attack1"
-						}
-					}
-				
-					"AttachEffect"
-					{
-						"Target"				"CASTER"
-						"EffectName"			"particles/units/heroes/hero_drow/drow_marksmanship.vpcf"
-						"EffectAttachType"		"follow_origin"
-						"ControlPoints"
-						{
-							"02"				"150 150 150"
-						}
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%agility_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed_bonus"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"			"%night_vision_bonus"
-				}
-			}
-
-			"modifier_imba_marksmanship_splinter_dmg_penalty"
-			{
-				"Passive"						"0"
-				"IsPurgable"					"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-
-				"Duration"						"0.01"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_reduction_scepter"
-				}
+				"splinter_radius_scepter"			"375"
 			}
 		}
 	}
@@ -36896,6 +35911,190 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"value2"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 1 (Level 10): Frost Arrows duration increase
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 2 (Level 10): Chance to kill creeps instantly
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 3 (Level 20): Precision Aura damage increase
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 4 (Level 20): Gust effect/knockback range increase
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 5 (Level 30): Marksmanship Agility Increase
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 6 (Level 30): Deadeye vision bonuses
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Drow Range Talent 7 (Level 40): Deadeye becomes an aura
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Drow Range Talent 8 (Level 40): Marksmanship no longer disables itself
+	//=================================================================================================================
+	"special_bonus_imba_drow_ranger_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
