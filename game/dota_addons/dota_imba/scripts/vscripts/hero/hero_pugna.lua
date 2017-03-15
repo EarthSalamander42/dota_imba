@@ -559,7 +559,7 @@ function NetherWardZap( keys )
 		else
 
 			-- If target is not in range of the ability, use it on its general direction
-			if (target_point - ward_position):Length2D() > ability_range then
+			if ability_range > 0 and (target_point - ward_position):Length2D() > ability_range then
 				target_point = ward_position + (target_point - ward_position):Normalized() * (ability_range - 50)
 			end
 			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = target_point, AbilityIndex = ability:GetEntityIndex(), Queue = queue})
