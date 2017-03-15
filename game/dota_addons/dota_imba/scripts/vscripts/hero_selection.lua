@@ -129,6 +129,10 @@ end
 -- Randoms a valid hero for the player who requested it
 function HeroSelection:RandomHero(event)
 
+	if HeroSelection.playerPickState[event.PlayerID].pick_state ~= "selecting_hero" then
+		return nil
+	end
+
 	-- Flag the player as having randomed
 	PlayerResource:SetHasRandomed(event.PlayerID)
 

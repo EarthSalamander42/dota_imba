@@ -218,6 +218,8 @@ function PickHero() {
 		var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
 		if (selected_panel.BHasClass( "taken" ) == false) {
 			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
+			//Hide the random button
+			$("#RandomPickBtn").style.visibility = 'collapse';
 		}
 	}
 }
