@@ -14,9 +14,6 @@ game/*
 game/dota_addons/*
 !game/dota_addons/dota_imba/
 
-#addon_english, the bane of all PRs
-game/dota_addons/dota_imba/resource/addon_english.txt
-
 # Cache crap that Valve autogenerates
 *.bin
 *.cfg
