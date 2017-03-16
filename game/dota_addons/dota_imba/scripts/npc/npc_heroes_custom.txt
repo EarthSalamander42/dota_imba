@@ -971,10 +971,10 @@
 		"AttackRange"				"500"
 
 		"Ability1"					"imba_jakiro_fire_breath"
-		//"Ability2"					"jakiro_ice_path"
-		"Ability3"					"imba_jakiro_liquid_fire"
-		"Ability4"					"imba_jakiro_macropyre"
-		"Ability5"					"imba_jakiro_ice_breath"
+		"Ability2"					"imba_jakiro_ice_breath"
+		"Ability3"					"imba_jakiro_ice_path"
+		"Ability4"					"imba_jakiro_liquid_fire"
+		"Ability5"					"imba_jakiro_macropyre"
 
 		"Ability10"					"special_bonus_exp_boost_20"
 		"Ability11"					"special_bonus_spell_amplify_5"

@@ -5055,62 +5055,6 @@
 	}
 
 	//=================================================================================================================
-	// Jakiro: Ice Path
-	//=================================================================================================================
-	"jakiro_ice_path"
-	{
-		"AbilityCastRange"				"1200 1400 1600 1800"
-		"AbilityCastPoint"				"0.5"
-
-		"AbilityCooldown"				"11 10 9 8"
-		"AbilityDuration"				"1.0 1.5 2.0 2.5"
-
-		"AbilityDamage"					"0"
-
-		"AbilityManaCost"				"90"		
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"path_delay"			"0.3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0 1.5 2.0 2.5"
-				"LinkedSpecialBonus"	"special_bonus_unique_jakiro"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"200"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"
-			}
-		}		
-	}
-
-	//=================================================================================================================
-	//	Jakiro: Ice Path stun duration increase
-	//=================================================================================================================
-	"special_bonus_unique_jakiro"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"1.25"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Keeper of the Light: Illuminate
 	//=================================================================================================================
 	"keeper_of_the_light_illuminate"
