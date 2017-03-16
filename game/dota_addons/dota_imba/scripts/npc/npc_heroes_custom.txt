@@ -12,7 +12,6 @@
 		"Ability3"					"imba_abaddon_frostmourne"
 		"Ability4"					"imba_abaddon_borrowed_time"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_25"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_mp_150"
@@ -38,7 +37,6 @@
 		//"Ability4"					"imba_alchemist_chemical_rage"
 		//"Ability6"					"imba_alchemist_unstable_concoction_throw"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
 		"Ability11"					"special_bonus_armor_4"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -64,7 +62,6 @@
 		//"Ability4"					"ancient_apparition_ice_blast"		
 		//"Ability5"					"ancient_apparition_ice_blast_release"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_15"
 		"Ability11"					"special_bonus_spell_amplify_8"
 		"Ability12"					"special_bonus_intelligence_13"
@@ -91,7 +88,6 @@
 		"Ability3"					"imba_antimage_spell_shield"
 		"Ability4"					"imba_antimage_mana_void"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_antimage_1"
 		"Ability11"					"special_bonus_imba_antimage_2"
 		"Ability12"					"special_bonus_imba_antimage_3"
@@ -116,7 +112,6 @@
 		//"Ability3"					"imba_arc_warden_spark_wraith"
 		//"Ability4"					"imba_arc_warden_tempest_double"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_125"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_attack_damage_25"
@@ -143,7 +138,6 @@
 		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_mp_regen_3"
 		"Ability12"					"special_bonus_attack_damage_50"
@@ -198,7 +192,6 @@
 		//"Ability3"					"imba_batrider_firefly"
 		//"Ability4"					"imba_batrider_flaming_lasso"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_10"
 		"Ability11"					"special_bonus_armor_4"
 		"Ability12"					"special_bonus_spell_amplify_6"
@@ -226,7 +219,6 @@
 		//"Ability4"					"imba_beastmaster_inner_beast"
 		//"Ability5"					"imba_beastmaster_primal_roar"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"						"special_bonus_exp_boost_15"
 		"Ability11"						"special_bonus_movement_speed_25"
 		"Ability12"						"special_bonus_strength_8"
@@ -302,15 +294,14 @@
 		//"Ability3"					"imba_bristleback_bristleback"
 		//"Ability4"					"imba_bristleback_warpath"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_mp_regen_2"
-		"Ability12"					"special_bonus_movement_speed_20"
+		"Ability12"					"special_bonus_unique_bristleback"
 		"Ability13"					"special_bonus_hp_175"
 		"Ability14"					"special_bonus_attack_speed_25"
 		"Ability15"					"special_bonus_respawn_reduction_35"
 		"Ability16"					"special_bonus_hp_regen_20"
-		"Ability17"					"special_bonus_unique_bristleback"
+		"Ability17"					"special_bonus_unique_bristleback_2"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -329,7 +320,6 @@
 		//"Ability3"					"imba_broodmother_incapacitating_bite"
 		//"Ability4"					"imba_broodmother_insatiable_hunger"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_agility_13"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_cooldown_reduction_15"
@@ -388,7 +378,6 @@
 		//"Ability3"					"imba_chaos_knight_chaos_strike"
 		//"Ability4"					"imba_chaos_knight_phantasm"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_speed_15"
 		"Ability11"					"special_bonus_intelligence_8"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -419,7 +408,6 @@
 		//"Ability4"					"imba_chen_holy_persuasion"
 		//"Ability5"					"imba_chen_hand_of_god"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_25"
 		"Ability11"					"special_bonus_respawn_reduction_50"
 		"Ability12"					"special_bonus_movement_speed_30"
@@ -446,7 +434,6 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_8"
 		"Ability11"					"special_bonus_magic_resistance_8"
 		"Ability12"					"special_bonus_strength_5"
@@ -475,7 +462,6 @@
 		//"Ability3"					"imba_rattletrap_rocket_flare"
 		//"Ability4"					"imba_rattletrap_hookshot"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_armor_4"
 		"Ability11"					"special_bonus_mp_175"
 		"Ability12"					"special_bonus_attack_damage_40"
@@ -502,7 +488,6 @@
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
 		"Ability4"					"imba_crystal_maiden_freezing_field"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_20"
 		"Ability11"					"special_bonus_attack_damage_40"
 		"Ability12"					"special_bonus_cast_range_100"
@@ -531,7 +516,6 @@
 		//"Ability3"					"imba_dark_seer_surge"
 		//"Ability4"					"imba_dark_seer_wall_of_replica"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_evasion_12"
 		"Ability11"					"special_bonus_cast_range_75"
 		"Ability12"					"special_bonus_attack_damage_65"
@@ -582,7 +566,6 @@
 		//"Ability3"					"imba_death_prophet_spirit_siphon"
 		//"Ability4"					"imba_death_prophet_exorcism"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_spell_amplify_4"
 		"Ability11"					"special_bonus_strength_4"
 		"Ability12"					"special_bonus_magic_resistance_10"
@@ -638,7 +621,6 @@
 		//"Ability5"					"imba_doom_bringer_empty2"
 		//"Ability6"					"imba_doom_bringer_doom"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_intelligence_8"
 		"Ability12"					"special_bonus_movement_speed_25"
@@ -669,7 +651,6 @@
 		//"Ability3"				"imba_dragon_knight_dragon_blood"
 		//"Ability4"				"imba_dragon_knight_elder_dragon_form"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_exp_boost_15"
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_attack_speed_20"
@@ -698,7 +679,6 @@
 		"Ability4"					"imba_drow_ranger_deadeye"
 		"Ability5"					"imba_drow_ranger_marksmanship"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_drow_ranger_1"
 		"Ability11"					"special_bonus_imba_drow_ranger_2"
 		"Ability12"					"special_bonus_imba_drow_ranger_3"
@@ -730,7 +710,6 @@
 		//"Ability3"				"imba_earthshaker_aftershock"
 		//"Ability4"				"imba_earthshaker_echo_slam"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_movement_speed_15"
 		"Ability11"					"special_bonus_mp_150"
 		"Ability12"					"special_bonus_strength_6"
@@ -759,7 +738,6 @@
 		//"Ability5"					"imba_earth_spirit_petrify"
 		//"Ability6"					"imba_earth_spirit_magnetize"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_10"
 		"Ability11"					"special_bonus_armor_4"
 		"Ability12"					"special_bonus_magic_resistance_12"
@@ -787,7 +765,6 @@
 		//"Ability4"					"imba_elder_titan_return_spirit"
 		//"Ability5"					"imba_elder_titan_earth_splitter"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_25"
 		"Ability11"					"special_bonus_strength_5"
 		"Ability12"					"special_bonus_hp_175"
@@ -815,7 +792,6 @@
 		//"Ability4"					"imba_ember_spirit_activate_fire_remnant"
 		//"Ability5"					"imba_ember_spirit_fire_remnant"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_spell_amplify_5"
 		"Ability11"					"special_bonus_attack_damage_25"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -846,7 +822,6 @@
 		//"Ability3"					"imba_enchantress_natures_attendants"
 		//"Ability4"					"imba_enchantress_impetus"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_all_stats_5"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_unique_enchantress_1"
@@ -876,7 +851,6 @@
 		"Ability4"					"imba_enigma_gravity"
 		"Ability5"					"imba_enigma_black_hole"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_movement_speed_20"
 		"Ability11"					"special_bonus_magic_resistance_10"
 		"Ability12"					"special_bonus_cooldown_reduction_12"
@@ -904,7 +878,6 @@
 		"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"imba_faceless_void_chronosphere"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_speed_20"
 		"Ability11"					"special_bonus_strength_5"
 		"Ability12"					"special_bonus_armor_4"
@@ -932,7 +905,6 @@
 		"Ability4"					"gyrocopter_call_down"
 		"Ability6"					""
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_spell_amplify_5"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_magic_resistance_12"
@@ -961,7 +933,6 @@
 		//"Ability3"					"imba_huskar_berserkers_blood"
 		//"Ability4"					"imba_huskar_life_break"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_lifesteal_10"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_lifesteal_15"
@@ -1030,7 +1001,6 @@
 		"Ability4"					"imba_jakiro_macropyre"
 		"Ability5"					"imba_jakiro_ice_breath"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_exp_boost_20"
 		"Ability11"					"special_bonus_spell_amplify_5"
 		"Ability12"					"special_bonus_gold_income_30"
@@ -1055,7 +1025,6 @@
 		"Ability3"					"imba_juggernaut_blade_dance"
 		"Ability4"					"imba_juggernaut_omni_slash"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_armor_4"
@@ -1119,7 +1088,6 @@
 		"Ability5"					"imba_kunkka_ghostship"
 		"Ability6"					""
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_25"
 		"Ability11"					"special_bonus_mp_150"
 		"Ability12"					"special_bonus_hp_regen_8"
@@ -1148,7 +1116,6 @@
 		//"Ability3"				"imba_legion_commander_moment_of_courage"
 		//"Ability4"				"imba_legion_commander_duel"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -1176,7 +1143,6 @@
 		//"Ability3"					"imba_leshrac_lightning_storm"
 		//"Ability4"					"imba_leshrac_pulse_nova"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_mp_300"
@@ -1203,7 +1169,6 @@
 		"Ability3"					"imba_lich_dark_ritual"
 		"Ability4"					"imba_lich_chain_frost"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_cast_range_100"
@@ -1234,7 +1199,6 @@
 		//"Ability7"				"imba_life_stealer_control"
 		//"Ability8"				"imba_life_stealer_consume"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_all_stats_5"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_hp_175"
@@ -1287,7 +1251,6 @@
 		"Ability3"					"imba_lion_mana_drain"			
 		"Ability4"					"imba_lion_finger_of_death"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_25"
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_hp_175"
@@ -1314,7 +1277,6 @@
 		//"Ability3"					"imba_luna_lunar_blessing"
 		//"Ability4"					"imba_luna_eclipse"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_unique_luna_1"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -1348,7 +1310,6 @@
 		"Ability4"					"imba_magnus_magnetize"
 		"Ability5"					"imba_magnus_reverse_polarity"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_speed_15"
 		"Ability11"					"special_bonus_spell_amplify_6"
 		"Ability12"					"special_bonus_gold_income_25"
@@ -1375,7 +1336,6 @@
 		//"Ability3"					"medusa_mana_shield"
 		//"Ability4"					"medusa_stone_gaze"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_8"
 		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_attack_speed_20"
@@ -1400,7 +1360,6 @@
 		//"Ability3"					"imba_meepo_geostrike"
 		//"Ability4"					"imba_meepo_divided_we_stand"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_armor_4"
 		"Ability11"					"special_bonus_attack_damage_15"
 		"Ability12"					"special_bonus_lifesteal_15"
@@ -1438,7 +1397,6 @@
 		"Ability4"					"imba_mirana_cosmic_dust"
 		"Ability5"					"mirana_invis"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_agility_13"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_spell_amplify_6"
@@ -1471,7 +1429,6 @@
 		//"Ability7"					"imba_morphling_morph"
 		//"Ability8"					"imba_morphling_morph_replicate"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_agility_13"
 		"Ability11"					"special_bonus_mp_150"
 		"Ability12"					"special_bonus_attack_speed_20"
@@ -1500,7 +1457,6 @@
 		//"Ability7"					"imba_monkey_king_untransform"
 		//"Ability8"					"imba_monkey_king_wukongs_command"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_speed_20"
 		"Ability11"					"special_bonus_armor_4"
 		"Ability12"					"special_bonus_hp_175"
@@ -1529,7 +1485,6 @@
 		//"Ability4"				"imba_naga_siren_song_of_the_siren"
 		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_mp_150"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_hp_175"
@@ -1563,7 +1518,6 @@
 		//"Ability3"				"imba_furion_force_of_nature"
 		//"Ability4"				"imba_furion_wrath_of_nature"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_intelligence_12"
@@ -1593,7 +1547,6 @@
 		"Ability4"					"imba_necrolyte_reapers_scythe"
 		"Ability5"					"imba_necrolyte_death_pulse_aux"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_25"
 		"Ability11"					"special_bonus_strength_4"
 		"Ability12"					"special_bonus_all_stats_6"
@@ -1625,7 +1578,6 @@
 		"Ability3"					"imba_night_stalker_hunter_in_the_night"
 		"Ability4"					"imba_night_stalker_darkness"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_mp_175"
 		"Ability12"					"special_bonus_cast_range_100"
@@ -1657,7 +1609,6 @@
 		//"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_spell_amplify_4"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_gold_income_25"
@@ -1687,7 +1638,6 @@
 		//"Ability4"					"imba_ogre_magi_unrefined_fireblast"
 		//"Ability5"					"imba_ogre_magi_multicast"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_20"
 		"Ability11"					"special_bonus_cast_range_100"
 		"Ability12"					"special_bonus_attack_damage_35"
@@ -1715,7 +1665,6 @@
 		//"Ability3"					"imba_oracle_purifying_flames"
 		//"Ability4"					"imba_oracle_false_promise"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_25"
 		"Ability11"					"special_bonus_exp_boost_20"
 		"Ability12"					"special_bonus_hp_175"
@@ -1745,7 +1694,6 @@
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
 		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_mp_175"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_armor_5"
@@ -1770,7 +1718,6 @@
 		"Ability3"					"imba_omniknight_degen_aura"
 		"Ability4"					"imba_omniknight_guardian_angel"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_10"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_cast_range_75"
@@ -1797,7 +1744,6 @@
 		"Ability3"					"imba_phantom_assassin_blur"
 		"Ability4"					"imba_phantom_assassin_coup_de_grace"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_attack_damage_20"
 		"Ability12"					"special_bonus_lifesteal_15"
@@ -1826,7 +1772,6 @@
 		//"Ability3"					"imba_phantom_lancer_phantom_edge"
 		//"Ability4"					"imba_phantom_lancer_juxtapose"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_cooldown_reduction_10"
 		"Ability12"					"special_bonus_all_stats_6"
@@ -1885,7 +1830,6 @@
 		//"Ability4"				"imba_puck_ethereal_jaunt"
 		//"Ability5"				"imba_puck_dream_coil"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_7"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -1920,7 +1864,6 @@
 		"Ability5"					"imba_pudge_light_hook"
 		"Ability6"					"imba_pudge_dismember"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_6"
 		"Ability11"					"special_bonus_mp_regen_2"
 		"Ability12"					"special_bonus_gold_income_25"
@@ -1952,7 +1895,6 @@
 		"Ability4"					"imba_pugna_life_drain_end"
 		"Ability5"					"imba_pugna_life_drain"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_mp_regen_3"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_respawn_reduction_25"
@@ -1980,7 +1922,6 @@
 		"Ability4"					"imba_queenofpain_delightful_torment"
 		"Ability5"					"imba_queenofpain_sonic_wave"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
 		"Ability11"					"special_bonus_strength_5"
 		"Ability12"					"special_bonus_cooldown_reduction_10"
@@ -2007,7 +1948,6 @@
 		//"Ability3"					"imba_razor_unstable_current"
 		//"Ability4"					"imba_razor_eye_of_the_storm"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_movement_speed_15"
 		"Ability11"					"special_bonus_agility_13"
 		"Ability12"					"special_bonus_armor_5"
@@ -2032,7 +1972,6 @@
 		"Ability3"					"imba_riki_cloak_and_dagger"
 		"Ability4"					"imba_riki_tricks_of_the_trade"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_agility_14"
@@ -2090,7 +2029,6 @@
 		"Ability4"					"imba_sandking_treacherous_sands"
 		"Ability5"					"imba_sandking_epicenter"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_mp_150"
 		"Ability11"					"special_bonus_gold_income_15"
 		"Ability12"					"special_bonus_magic_resistance_10"
@@ -2116,7 +2054,6 @@
 		//"Ability4"					"imba_shadow_demon_shadow_poison_release"
 		//"Ability5"					"imba_shadow_demon_demonic_purge"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_cast_range_75"
@@ -2144,7 +2081,6 @@
 		"Ability6"					"imba_nevermore_requiem"
 		"Ability7"					"imba_nevermore_requiem_aux"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_movement_speed_15"
 		"Ability11"					"special_bonus_attack_speed_10"
 		"Ability12"					"special_bonus_spell_amplify_5"
@@ -2169,7 +2105,6 @@
 		//"Ability3"					"imba_shadow_shaman_shackles"
 		//"Ability4"					"imba_shadow_shaman_mass_serpent_ward"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 
 		"ProjectileModel"			"particles/units/heroes/hero_shadowshaman/shadowshaman_base_attack.vpcf"
 	}
@@ -2191,7 +2126,6 @@
 		//"Ability4"					"imba_silencer_arcane_supremacy"
 		//"Ability5"					"imba_silencer_global_silence"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_armor_3"
 		"Ability11"					"special_bonus_gold_income_10"
 		"Ability12"					"special_bonus_hp_175"
@@ -2218,7 +2152,6 @@
 		"Ability3"					"imba_wraith_king_mortal_strike"
 		"Ability4"					"imba_wraith_king_reincarnation"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_15"
 		"Ability11"					"special_bonus_intelligence_7"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -2244,7 +2177,6 @@
 		"Ability4"					"imba_skywrath_mage_mystic_flare"
 		"Ability5"					"imba_skywrath_mage_concussive_shot_ghastly"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_intelligence_8"
 		"Ability12"					"special_bonus_attack_damage_35"
@@ -2271,7 +2203,6 @@
 		//"Ability3"					"imba_slardar_bash"
 		//"Ability4"					"imba_slardar_amplify_damage"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_regen_5"
 		"Ability11"					"special_bonus_mp_150"
 		"Ability12"					"special_bonus_hp_175"
@@ -2298,7 +2229,6 @@
 		//"Ability3"					"imba_slark_essence_shift"
 		//"Ability4"					"imba_slark_shadow_dance"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_lifesteal_10"
 		"Ability11"					"special_bonus_attack_damage_15"
 		"Ability12"					"special_bonus_agility_14"
@@ -2331,7 +2261,6 @@
 		"Ability5"					"imba_sniper_assassinate"
 		"Ability6"					"imba_sniper_take_aim_normal"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_unique_sniper_1"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_unique_sniper_2"
@@ -2357,7 +2286,6 @@
 		//"Ability4"				"imba_spectre_reality"
 		//"Ability5"				"imba_spectre_haunt"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2376,7 +2304,6 @@
 		//"Ability3"					"imba_spirit_breaker_greater_bash"
 		//"Ability4"					"imba_spirit_breaker_nether_strike"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_all_stats_5"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -2401,7 +2328,6 @@
 		//"Ability3"					"imba_storm_spirit_overload"
 		//"Ability4"					"imba_storm_spirit_ball_lightning"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_20"
 		"Ability11"					"special_bonus_mp_regen_1"
 		"Ability12"					"special_bonus_hp_175"
@@ -2432,7 +2358,6 @@
 		"Ability3"					"imba_sven_warcry"
 		"Ability4"					"imba_sven_gods_strength"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_mp_150"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -2470,7 +2395,6 @@
 		//"Ability5"					"imba_techies_minefield_sign"
 		//"Ability6"					"imba_techies_remote_mines"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_movement_speed_20"
 		"Ability11"					"special_bonus_mp_regen_2"
 		"Ability12"					"special_bonus_exp_boost_25"
@@ -2500,7 +2424,6 @@
 		//"Ability4"				"imba_templar_assassin_trap"
 		//"Ability5"				"imba_templar_assassin_psionic_trap"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"				"special_bonus_attack_speed_15"
 		"Ability11"				"special_bonus_movement_speed_15"
 		"Ability12"				"special_bonus_all_stats_6"
@@ -2529,7 +2452,6 @@
 		//"Ability3"					"imba_terrorblade_metamorphosis"
 		//"Ability4"					"imba_terrorblade_sunder"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_regen_5"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -2558,7 +2480,6 @@
 		//"Ability3"					"imba_tidehunter_anchor_smash"
 		//"Ability4"					"imba_tidehunter_ravage"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_30"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_armor_5"
@@ -2583,7 +2504,6 @@
 		"Ability3"					"imba_tinker_march_of_the_machines"
 		"Ability4"					"imba_tinker_rearm"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_8"
 		"Ability11"					"special_bonus_armor_4"
 		"Ability12"					"special_bonus_hp_175"
@@ -2611,7 +2531,6 @@
 		//"Ability6"					"imba_shredder_chakram"
 		//"Ability7"					"imba_shredder_return_chakram"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_hp_regen_6"
@@ -2649,7 +2568,6 @@
 		//"Ability4"			"imba_tiny_rolling_stone"
 		//"Ability5"			"imba_tiny_grow"
 
-		"Ability9"			"imba_unlimited_level_powerup"
 		"Ability10"			"special_bonus_strength_5"
 		"Ability11"			"special_bonus_intelligence_8"
 		"Ability12"			"special_bonus_attack_damage_50"
@@ -2685,7 +2603,6 @@
 		//"Ability4"					"imba_treant_eyes_in_the_forest"
 		//"Ability5"					"imba_treant_overgrowth"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_speed_15"
 		"Ability11"					"special_bonus_mp_regen_2"
 		"Ability12"					"special_bonus_gold_income_25"
@@ -2721,7 +2638,6 @@
 		"Ability4"					"imba_troll_warlord_berserkers_rage"
 		"Ability5"					"imba_troll_warlord_battle_trance"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_agility_13"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -2750,7 +2666,6 @@
 		//"Ability5"					"imba_tusk_walrus_kick"
 		//"Ability6"					"imba_tusk_walrus_punch"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_exp_boost_20"
 		"Ability11"					"special_bonus_attack_damage_35"
 		"Ability12"					"special_bonus_strength_6"
@@ -2780,7 +2695,6 @@
 		//"Ability4"					"imba_abyssal_underlord_dark_rift"
 		//"Ability5"					"imba_abyssal_underlord_cancel_dark_rift"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_armor_4"
 		"Ability11"					"special_bonus_mp_regen_2"
 		"Ability12"					"special_bonus_hp_175"
@@ -2809,7 +2723,6 @@
 		//"Ability3"					"imba_undying_tombstone"
 		//"Ability4"					"imba_undying_flesh_golem"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_respawn_reduction_35"
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_exp_boost_25"
@@ -2841,9 +2754,9 @@
 		"Ability2"					"imba_ursa_overpower"
 		"Ability3"					"imba_ursa_fury_swipes"
 		"Ability4"					"imba_ursa_territorial_hunter"
-		"Ability5"					"imba_ursa_enrage"		
+		"Ability5"					"imba_ursa_enrage"
+		"Ability6"					""
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_ursa_1"
 		"Ability11"					"special_bonus_imba_ursa_2"
 		"Ability12"					"special_bonus_imba_ursa_3"
@@ -2868,7 +2781,6 @@
 		//"Ability3"				"imba_viper_corrosive_skin"
 		//"Ability4"				"imba_viper_viper_strike"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_15"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_strength_6"
@@ -2903,7 +2815,6 @@
 		"Ability6"					"imba_vengeful_nether_swap"
 		"Ability7"					"vengefulspirit_nether_swap"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_magic_resistance_8"
 		"Ability11"					"special_bonus_attack_speed_15"
 		"Ability12"					"special_bonus_all_stats_6"
@@ -2933,7 +2844,6 @@
 		"Ability4"					"imba_venomancer_toxicity"
 		"Ability5"					"imba_venomancer_poison_nova"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_exp_boost_15"
 		"Ability11"					"special_bonus_movement_speed_15"
 		"Ability12"					"special_bonus_hp_175"
@@ -2958,7 +2868,6 @@
 		//"Ability3"					"imba_visage_gravekeepers_cloak"
 		//"Ability4"					"imba_visage_summon_familiars"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_gold_income_20"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_attack_damage_35"
@@ -2983,7 +2892,6 @@
 		"Ability3"					"imba_warlock_upheaval"
 		"Ability4"					"imba_warlock_rain_of_chaos"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_exp_boost_15"
 		"Ability11"					"special_bonus_all_stats_6"
 		"Ability12"					"special_bonus_cast_range_100"
@@ -3012,7 +2920,6 @@
 		//"Ability3"					"imba_weaver_geminate_attack"
 		//"Ability4"					"imba_weaver_time_lapse"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_strength_5"
 		"Ability11"					"special_bonus_unique_weaver_1"
 		"Ability12"					"special_bonus_attack_damage_30"
@@ -3040,7 +2947,6 @@
 		//"Ability3"				"imba_windrunner_windrun"
 		//"Ability4"				"imba_windrunner_focusfire"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_attack_damage_15"
 		"Ability11"					"special_bonus_mp_regen_3"
 		"Ability12"					"special_bonus_hp_175"
@@ -3065,7 +2971,6 @@
 		//"Ability3"				"imba_winter_wyvern_cold_embrace"
 		//"Ability4"				"imba_winter_wyvern_winters_curse"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_intelligence_10"
 		"Ability11"					"special_bonus_strength_5"
 		"Ability12"					"special_bonus_movement_speed_20"
@@ -3120,7 +3025,6 @@
 		"Ability3"					"imba_witch_doctor_maledict"
 		"Ability4"					"imba_witch_doctor_death_ward"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_hp_150"
 		"Ability11"					"special_bonus_exp_boost_15"
 		"Ability12"					"special_bonus_attack_damage_50"
@@ -3151,7 +3055,6 @@
 		//"Ability3"					"imba_zuus_static_field"
 		//"Ability4"					"imba_zuus_thundergods_wrath"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_mp_regen_2"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_armor_4"
