@@ -32892,7 +32892,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_pct"				"-25 -35 -45 -55 -55 -55 -55"
+				"slow_pct"				"25 35 45 55 55 55 55"
 			}
 			
 			"05"
@@ -32916,7 +32916,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"trembling_steps_slow_pct"	"-10"
+				"trembling_steps_slow_pct"	"10"
 			}
 			
 			"09"
@@ -32946,19 +32946,20 @@
 			"13"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_damage_pct"			"0.5"
+				"bonus_damage_pct"			"50"
+                "LinkedSpecialBonus"        "special_bonus_imba_ursa_1"
 			}
 			
 			"14"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bonus_slow_pct"			"-15"
+				"bonus_slow_pct"			"15"
 			}
 			
 			"15"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"enrage_bonus_dmg_pct"		"1"
+				"enrage_bonus_dmg_pct"		"100"
 			}
 		}
 	}
@@ -33012,6 +33013,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"attacks_num"			"3 4 5 6 7 8 9"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_4"
 			}
 			
 			"03"
@@ -33023,13 +33025,14 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"disarm_radius"			"325"
+				"disarm_radius"			"325"                
 			}
 			
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"disarm_duration"		"2.0 2.5 3 3.5 3.75 4.0 4.25"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_5"
 			}
 		}
 	}
@@ -33068,6 +33071,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_per_stack"		"15 20 25 30 33 36 40"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_3"
 			}
 			
 			"02"
@@ -33085,7 +33089,8 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"deep_stack_multiplier"	"1.5"
+				"deep_stack_multiplier"	"150"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_2"
 			}
 			
 			"05"
@@ -33136,12 +33141,6 @@
 				"duration"				"4"
 			}
 			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_cooldown"			"50 40 30 30 30 30"
-			}
-			
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -33151,7 +33150,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_reduction"		"-80"
+				"damage_reduction"		"80"
 			}
 			
 			"05"
@@ -33164,6 +33163,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_radius_skills"	"100 120 140 160 180 200"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_6"
 			}
 			
 			"07"
@@ -33176,6 +33176,7 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"reduce_cd_amount"		"0.25"
+                "LinkedSpecialBonus"    "special_bonus_imba_ursa_8"
 			}
 			
 			"09"
@@ -33240,6 +33241,7 @@
 			}
 		}
 	}
+	
 	//=================================================================================================================
 	// Tiny: Rolling Stone
 	//=================================================================================================================
@@ -35151,4 +35153,168 @@
 			}
 		}
 	}
+
+
+	//=================================================================================================================
+    // Ursa Talents 
+    //=================================================================================================================
+    "special_bonus_imba_ursa_1" //Earthshock Point Blank bonus damage
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "50"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_2" //Fury Swipes Deep Wound stack damage
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "50"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_3" //Fury Swipes damage bonus per stack
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "10"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_4" //Additional Overpower attacks
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "3"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_5" //Overpower's Disarm duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_ursa_6" //Enrage Earthshock/Overpower radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "100"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_7"	//Territorial Hunter cooldown reduction
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "120"
+            }
+        }
+    }
+    
+    "special_bonus_imba_ursa_8" //Skill cooldowns ticks faster when Enrage is active
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "0.25"
+            }
+        }
+    }
 }
