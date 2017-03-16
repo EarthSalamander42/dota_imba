@@ -33188,6 +33188,39 @@
 	}
 
 	//=================================================================================================================
+	// Disruptor's Stormbearer
+	//=================================================================================================================
+	"imba_disruptor_stormbearer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+		"AbilityTextureName"			"custom/disruptor_stormbearer"
+		"ScriptFile"					"hero/hero_disruptor"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"1"				
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"ms_per_stack"				"0.25"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scepter_ms_per_stack"		"0.75"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
 	// Disruptor's Thunder Strike
 	//=================================================================================================================
 	"imba_disruptor_thunder_strike"
@@ -33203,6 +33236,8 @@
 		"AbilityTextureName"			"disruptor_thunder_strike"
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		"precache"
 		{
@@ -33210,6 +33245,7 @@
 			"particle"    	"particles/hero/disruptor/disruptor_thunder_strike_bolt.vpcf"
 			"particle"		"particles/hero/disruptor/disruptor_thuderstrike_aoe_area.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"			
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
 		}
 
 		// Casting
@@ -33220,7 +33256,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 11 10 9"				
+		"AbilityCooldown"				"12 11 10 9 8 7 6"				
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -33238,14 +33274,15 @@
 			
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"8"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"8"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_8"
 			}
 			
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"40 60 80 100"
+				"damage"			"40 60 80 100 110 120 130"
 			}
 			
 			"04"
@@ -33271,9 +33308,23 @@
 				"var_type"				"FIELD_FLOAT"
 				"add_strikes_interval"	"0.2"
 			}
+
+			"08"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"talent_4_slow_duration"	"0.25"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_4_slow_pct"			"100"
+			}
 		}
 	}
-
+	
+	
+	
 	//=================================================================================================================
 	// Disruptor's Glimpse
 	//=================================================================================================================
@@ -33289,6 +33340,8 @@
 		"AbilityTextureName"			"disruptor_glimpse"
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		"precache"
 		{						
@@ -33297,17 +33350,18 @@
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
 			"particle"		"particles/hero/disruptor/disruptor_static_storm.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"			
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------		
 		"AbilityCastPoint"				"0.05"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		"AbilityCastRange"				"800 1200 1500 1800"
+		"AbilityCastRange"				"800 1200 1500 1800 2000 2200 2400"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 46 32 18"				
+		"AbilityCooldown"				"60 46 32 18 16 14 12"				
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -33351,7 +33405,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"storm_damage"			"10 15 20 25"
+				"storm_damage"			"10 15 20 25 30 35 40"
 			}
 			
 			"07"
@@ -33371,10 +33425,15 @@
 				"var_type"				"FIELD_FLOAT"
 				"storm_interval"		"0.25"
 			}
-			
+
+			"10"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"storm_linger"			"0.35"
+			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Disruptor's Kinetic Field
 	//=================================================================================================================
@@ -33390,7 +33449,9 @@
 		"AbilityTextureName"			"disruptor_kinetic_field"
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
-		
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
 		"precache"
 		{						
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticdischarge_aoe_discharge_c.vpcf"
@@ -33398,6 +33459,7 @@
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_kineticfield_formation.vpcf"			
 			"particle"		"particles/hero/disruptor/disruptor_kinetic_field_attack.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"			
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
 		}
 
 		// Casting
@@ -33408,7 +33470,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13 12 11 10"
+		"AbilityCooldown"				"13 12 11 10"				
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -33423,55 +33485,47 @@
 				"var_type"			"FIELD_INTEGER"
 				"field_radius"		"340"
 			}
-			
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"formation_delay"	"1.2"
 			}
-			
 			"03"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.6 3.2 3.8 4.4"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.6 3.2 3.8 4.4 4.6 4.8 5.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_6"
 			}
-			
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"	
 				"vision_aoe"		"325"
 			}
-			
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"edge_damage_hero"	"25 50 75 100"
+				"edge_damage_hero"	"25 50 75 100 125 150 175"
 			}
-			
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"edge_damage_creep"		"15 30 45 60"
+				"edge_damage_creep"		"15 30 45 60 75 90 105"
 			}
-			
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"knockback_duration"	"0.5"
 			}
-			
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cooldown_reduction"	"1.5"
 			}
-			
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"scepter_stack_amount"	"5"
 			}
-			
 		}
 	}
 
@@ -33491,11 +33545,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
-
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		
 		"precache"
 		{						
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"			
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_disruptor.vsndevts"			
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_disruptor.vsndevts"
 		}
 
 		// Casting
@@ -33506,12 +33563,13 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"90 80 70"				
+		"AbilityCooldown"				"90 80 70 65 60 55"				
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 175 225"
-
+		"AbilityManaCost"				"125 175 225 250 275 300"
+		
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -33519,73 +33577,65 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"450"
+				"radius"				"450 465 480 500 520 540"
 			}
-			
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"5"
 			}
-			
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"scepter_duration"		"7"
 			}
-			
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"initial_damage"		"2 3 4"
+				"initial_damage"		"2 3 4 4.5 5"
 			}
-			
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_increase_pulse"	"2.5 3.125 3.75"
+				"damage_increase_pulse"	"2 2.5 3 3.25 3.5 3.75"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_7"
 			}
-			
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"200 250 300"
+				"max_damage"			"200 250 300 300 300 300"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
-			
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"scepter_max_damage"	"250 300 350"
+				"scepter_max_damage"	"250 300 350 350 350 350"
+				"LinkedSpecialBonus"	"special_bonus_imba_disruptor_5"
 			}
-			
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"interval"				"0.25"
 			}
-			
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_increase_enemy"	"2 2.5 3"
+				"var_type"					"FIELD_FLOAT"
+				"damage_increase_enemy"		"1 1.5 2 2.5 3 3.5"
 			}
-			
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"scepter_stack_move_speed"	"0.5"
-			}
-			
+				"var_type"				"FIELD_FLOAT"
+				"linger_time"			"1 1.5 2 2 2 2"
+			}			
 			"11"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"scepter_stack_damage"	"0.1"
+				"var_type"					"FIELD_FLOAT"
+				"stormbearer_stack_damage"	"0.05"
 			}
-			
 			"12"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"linger_time"			"1 1.5 2"
+				"var_type"							"FIELD_FLOAT"
+				"scepter_stormbearer_stack_damage"	"0.1"	
 			}
 		}
 	}
@@ -35279,6 +35329,196 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"-15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 1 (Level 10): Units are pulled from outside Kinetic Field
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 2 (Level 10): Glimpse Storm lingers longer
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 3 (Level 20): Increased movespeed per Stormbearer stack
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 4 (Level 20): Thunder Strikes slows the main target
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 5 (Level 30): Maximum Static Storm damage increase
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 6 (Level 30): Kinetic Field duration increase
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 7 (Level 40): Static Storm damage per pulse increase
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Disruptor Talent 8 (Level 40): Thunder Strike duration increase and interval reduction
+	//=================================================================================================================
+	"special_bonus_imba_disruptor_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value2"					"0.35"
 			}
 		}
 	}

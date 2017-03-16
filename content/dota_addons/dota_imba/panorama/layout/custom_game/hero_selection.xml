@@ -363,7 +363,7 @@
 							<Panel id="npc_dota_hero_death_prophet" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_death_prophet')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_death_prophet.png');" />
-							<Panel id="npc_dota_hero_disruptor" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_disruptor" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_disruptor')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_disruptor.png');" />
 							<Panel id="npc_dota_hero_enchantress" class="ClassNormalOption" 
