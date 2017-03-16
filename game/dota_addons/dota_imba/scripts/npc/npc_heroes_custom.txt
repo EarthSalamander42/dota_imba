@@ -2828,7 +2828,7 @@
 	"npc_imba_hero_ursa"
 	{
 		"override_hero"				"npc_dota_hero_ursa"
-
+		"AbilityLayout"				"5"
 		"ModelScale" 				".88"
 
 		"AttackAnimationPoint"		"0.2"
@@ -2837,20 +2837,21 @@
 
 		"MovementSpeed"				"320"
 
-		//"Ability1"					"imba_ursa_earthshock"
-		//"Ability2"					"imba_ursa_overpower"
-		//"Ability3"					"imba_ursa_fury_swipes"
-		//"Ability4"					"ursa_enrage"
+		"Ability1"					"imba_ursa_earthshock"
+		"Ability2"					"imba_ursa_overpower"
+		"Ability3"					"imba_ursa_fury_swipes"
+		"Ability4"					"imba_ursa_territorial_hunter"
+		"Ability5"					"imba_ursa_enrage"		
 
 		"Ability9"					"imba_unlimited_level_powerup"
-		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_magic_resistance_10"
-		"Ability12"					"special_bonus_armor_5"
-		"Ability13"					"special_bonus_attack_speed_20"
-		"Ability14"					"special_bonus_movement_speed_25"
-		"Ability15"					"special_bonus_hp_200"
-		"Ability16"					"special_bonus_all_stats_10"
-		"Ability17"					"special_bonus_unique_ursa"
+		"Ability10"					"special_bonus_imba_ursa_1"
+		"Ability11"					"special_bonus_imba_ursa_2"
+		"Ability12"					"special_bonus_imba_ursa_3"
+		"Ability13"					"special_bonus_imba_ursa_4"
+		"Ability14"					"special_bonus_imba_ursa_5"
+		"Ability15"					"special_bonus_imba_ursa_6"
+		"Ability16"					"special_bonus_imba_ursa_7"
+		"Ability17"					"special_bonus_imba_ursa_8"
 
 		"ProjectileSpeed"			"900"
 	}

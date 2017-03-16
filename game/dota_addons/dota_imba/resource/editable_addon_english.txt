@@ -1423,6 +1423,33 @@
 		"DOTA_Tooltip_modifier_imba_battle_trance_stacks"									"Battle Trance"
 		"DOTA_Tooltip_modifier_imba_battle_trance_stacks_Description"						"Each attack will increase your attack speed"
 
+		"DOTA_Tooltip_modifier_imba_earthshock_slow"										"Earthshocked"
+		"DOTA_Tooltip_modifier_imba_earthshock_slow_Description"							"Slowed for the duration."
+		
+		"DOTA_Tooltip_modifier_imba_trembling_steps_buff"									"Trembling Steps"
+		"DOTA_Tooltip_modifier_imba_trembling_steps_buff_Description"						"Moving will emit shockwaves from the ground, dealing damage and slowing nearby enemies."
+		
+		"DOTA_Tooltip_modifier_imba_trembling_steps_debuff"									"Trembling Steps"
+		"DOTA_Tooltip_modifier_imba_trembling_steps_debuff_Description"						"Slowed for the duration."
+		
+		"DOTA_Tooltip_modifier_imba_overpower_buff"											"Overpower"
+		"DOTA_Tooltip_modifier_imba_overpower_buff_Description"								"Gaining maximum attack speed for next attacks."
+		
+		"DOTA_Tooltip_modifier_imba_overpower_disarm"										"Fearsome Beast"
+		"DOTA_Tooltip_modifier_imba_overpower_disarm_Description"							"Disarmed for the duration."
+		
+		"DOTA_Tooltip_modifier_imba_fury_swipes_debuff"										"Fury Swipes"
+		"DOTA_Tooltip_modifier_imba_fury_swipes_debuff_Description"							"Taking increased damage from Ursa."
+		
+		"DOTA_Tooltip_modifier_imba_enrage_buff"											"Enrage"
+		"DOTA_Tooltip_modifier_imba_enrage_buff_Description"								"Reducing incoming damage. All skills cooldown twice as fast."
+		
+		"DOTA_Tooltip_modifier_imba_scepter_enrage_prevent"									"Enrage Recharging"
+		"DOTA_Tooltip_modifier_imba_scepter_enrage_prevent_Description"						"Scepter Enrage is recharging."
+		
+		"DOTA_Tooltip_modifier_imba_scepter_enrage_damage"									"Enrage Ready"
+		"DOTA_Tooltip_modifier_imba_scepter_enrage_damage_Description"						"Activating Enrage upon reaching the damage threshold."
+
 		"DOTA_Tooltip_modifier_imba_shadow_word_buff"										"Shadow Word"
 		"DOTA_Tooltip_modifier_imba_shadow_word_buff_Description"							"Receiving healing over time"
 
@@ -3253,6 +3280,51 @@
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_bat_scepter"					"%BAT REDUCTION:"
 		"DOTA_Tooltip_ability_imba_troll_warlord_battle_trance_aghanim_description"			"Further enhances allied heroes' attack speed by reducing their Base Attack Time for the trance's duration."
 
+		"DOTA_Tooltip_ability_imba_ursa_earthshock"											"Earthshock"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_Description"								"Ursa slams the earth, causing a powerful shock to damage and slow all enemy units in a nearby area for 4 seconds.\n\n<font color='#FF7800'>Point Blank:</font> Hitting an enemy that is very close to Ursa deals bonus damage and increases the effect's slow. Enemies that are farther but still in the AoE are dealt damage and slow that scales with distance to Ursa. \n<font color='#FF7800'>Trembling Steps:</font> After casting Earthshock, the ground trembles, causing shockwaves whenever Ursa moves. Shockwaves deal additional damage and slow that stack with Earthshock. Trembling Steps has the same duration as Earthshock. \n<font color='#FF7800'>Forceful Earthshock:</font> Casting Earthshock while Enrage is active deals additional damage to units in Point Blank range."
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_Lore"									"The very steps of a male ursine shake the ground as well as the resolve of opposing warriors."
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_Note0"									"Damage and slow start at base values on the edge of the AoE and increase every 25 units closer to Ursa."
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_Note1"									"Trembling Steps' radius is half the Earthshock radius on cast, meaning it grows when casting while Enraged."
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_Note2"									"Forceful Earthshock grants an addition 100% damage. The slow remains unaffected."
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_radius"									"RADIUS:"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_base_damage"								"BASE DAMAGE:"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_slow_pct"								"%SLOW:"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_bonus_effects_radius"					"POINT BLANK RANGE:"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_trembling_steps_damage"					"TREMBLING STEPS DAMAGE:"
+		"DOTA_Tooltip_ability_imba_ursa_earthshock_trembling_steps_cooldown"				"TREMBLING STEPS COOLDOWN:"		
+		
+		"DOTA_Tooltip_ability_imba_ursa_overpower"											"Overpower"
+		"DOTA_Tooltip_ability_imba_ursa_overpower_Description"								"Using his skill in combat, Ursa gains increased attack speed for a number of subsequent attacks.\n\n<font color='#FF7800'>Momentum:</font> Ursa gains maximum attack speed that cannot be reduced in any way.\n<font color='#FF7800'>Fearsome Beast:</font> Ursa lets out a terrifying roar which Disarms nearby enemies for a duration. \n<font color='#FF7800'>Wicked Roar:</font> Casting Overpower while Enrage is active increases the Disarm's area of effect."
+		"DOTA_Tooltip_ability_imba_ursa_overpower_Lore"										"For a behemoth of his size, Ursa is deceptively nimble."
+		"DOTA_Tooltip_ability_imba_ursa_overpower_attacks_num"								"NUMBER OF ATTACKS:"
+		"DOTA_Tooltip_ability_imba_ursa_overpower_aspd_duration"							"BUFF DURATION:"
+		"DOTA_Tooltip_ability_imba_ursa_overpower_disarm_radius"							"DISARM RADIUS:"
+		"DOTA_Tooltip_ability_imba_ursa_overpower_disarm_duration"							"DISARM DURATION:"
+		
+		"DOTA_Tooltip_ability_imba_ursa_fury_swipes"										"Fury Swipes"
+		"DOTA_Tooltip_ability_imba_ursa_fury_swipes_Description"							"Ursa's claws dig deeper wounds in the enemy, causing consecutive attacks to the same enemy to deal more damage. If the same target is not attacked after 20 seconds, the bonus damage is lost.\n\n<font color='#FF7800'>Deep Strike:</font> Every third attack, Ursa strikes an internal organ, ripping it apart, increasing the damage of the Fury Swipes."
+		"DOTA_Tooltip_ability_imba_ursa_fury_swipes_Lore"									"In nature, the wounded rarely survive the attacks of hungry predators."
+		"DOTA_Tooltip_ability_imba_ursa_fury_swipes_damage_per_stack"						"DAMAGE PER STACK:"
+		"DOTA_Tooltip_ability_imba_ursa_fury_swipes_roshan_stack_duration"					"ROSHAN DURATION:"
+		
+		"DOTA_Tooltip_ability_imba_ursa_enrage"												"Enrage"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_Description"									"Ursa goes into a frenzy, multiplying his Fury Swipes damage and causing him to take 80% less damage. Removes any existing debuffs. \n\n<font color='#FF7800'>Rage of the Ferocious:</font> While Enrage is active, Earthshock and Overpower cool down twice as fast, and the radius of those skills increases. \n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Reduces cooldown, and causes Enrage to activate automatically when taking damage above the threshold. This effect has an internal cooldown and does not affects the ultimate's cooldown. Damage resets after a certain period where Ursa is dealt no damage."
+		"DOTA_Tooltip_ability_imba_ursa_enrage_Lore"										"Ulfsaar succumbs to his ancient spirit, becoming the most ferocious creature on the battlefield."
+		"DOTA_Tooltip_ability_imba_ursa_enrage_duration"									"DURATION:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_base_cooldown"								"COOLDOWN:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_scepter_cooldown"							"SCEPTER COOLDOWN:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_fury_swipes_multiplier"						"FURY SWIPES MULTIPLIER:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_bonus_radius_skills"							"BONUS RADIUS:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_scepter_damage_threshold"					"SCEPTER DAMAGE THRESHOLD:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_scepter_damage_reset"						"SCEPTER DAMAGE RESET:"
+		"DOTA_Tooltip_ability_imba_ursa_enrage_scepter_enrage_cooldown"						"SCEPTER INTERNAL ENRAGE COOLDOWN:"
+		
+		"DOTA_Tooltip_ability_imba_ursa_territorial_hunter"									"Territorial Hunter"
+		"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Description"						"Ursa can sharpen his claws on a tree, marking the surrounding area as his hunting grounds. The target tree provides fogvision to Ursa and his team. Ursa can also sense invisible enemies near the marked tree, but cannot attack them until revealed. Marking a new tree forfeits the previous one. Has 300 cast range."
+		"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Lore"							"He who enters ursine territory can be many things: reckless, foolish, or overconfident. The Ursa Warrior cares not - fresh meat, willingly given, is a delicacy and a gift."
+		"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_Note0"							"The mark is visible to both teams and is destroyed if the marked tree is cut down."
+		"DOTA_Tooltip_ability_imba_ursa_territorial_hunter_vision_range"					"VISION RANGE:"
+
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile"									"Magic Missile"
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Description"						"Fires a magic missile at an enemy unit, stunning and dealing damage.\n<font color='#FF7800'>Spite:</font> Deals bonus damage to the initial target based on its current Rancor stacks.\n<font color='#FF7800'>Share the pain:</font> Launches extra magic missiles to any enemy with Rancor stacks in %rancor_radius% radius of each target."
 		"DOTA_Tooltip_ability_imba_vengeful_magic_missile_Lore"								"A simple Skywrath technique, the magic missile is Shendel's primary tool for vengeance."
@@ -3494,6 +3566,16 @@
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_6"				"+700 Rupture Distance Trigger Cap"
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_7"				"+5% Thirst Max Move Speed Bonus And +26 Max Damage Bonus"
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_8"				"Bloodrage +3% Bonus Amp Per 5% Missing Health"
+
+		// URSA
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_1"					"+50% Earthshock's Point Blank damage"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_2"					"+50% Fury Swipes's Deep Wound damage"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_3"					"+10 Fury Swipes damage per stack"	
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_4"					"+3 Overpower attacks"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_5"					"+1 Overpower's Disarm duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_6"					"+100 Enraged Earthshock/Overpower radius"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"					"-120 seconds Territorial Hunter cooldown"
+		"DOTA_Tooltip_ability_special_bonus_imba_ursa_8"					"+100% skills cooldown rate when Enraged"
 
 		//=================================================================================================================
 		// Vanilla talent overrides
