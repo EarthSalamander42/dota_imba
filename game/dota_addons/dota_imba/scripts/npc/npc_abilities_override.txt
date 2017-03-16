@@ -31,7 +31,7 @@
 	//"item_staff_of_wizardry"		"REMOVE"
 	//"item_ultimate_orb"			"REMOVE"
 	//"item_gloves"					"REMOVE"
-	//"item_lifesteal"				"REMOVE"
+	"item_lifesteal"				"REMOVE"
 	//"item_ring_of_regen"			"REMOVE"
 	//"item_sobi_mask"				"REMOVE"
 	//"item_boots"					"REMOVE"
@@ -172,8 +172,8 @@
 	"item_invis_sword"				"REMOVE"
 	"item_recipe_sange_and_yasha"	"REMOVE"
 	"item_sange_and_yasha"			"REMOVE"
-	//"item_recipe_satanic"			"REMOVE"
-	//"item_satanic"					"REMOVE"
+	"item_recipe_satanic"			"REMOVE"
+	"item_satanic"					"REMOVE"
 	"item_recipe_mjollnir"			"REMOVE"
 	"item_mjollnir"					"REMOVE"
 	"item_recipe_skadi"				"REMOVE"
@@ -188,8 +188,8 @@
 	"item_desolator"				"REMOVE"
 	"item_recipe_yasha"				"REMOVE"
 	"item_yasha"					"REMOVE"
-	//"item_recipe_mask_of_madness"	"REMOVE"
-	//"item_mask_of_madness"			"REMOVE"
+	"item_recipe_mask_of_madness"	"REMOVE"
+	"item_mask_of_madness"			"REMOVE"
 	"item_recipe_diffusal_blade"	"REMOVE"
 	"item_recipe_diffusal_blade_2"	"REMOVE"
 	"item_diffusal_blade"			"REMOVE"
@@ -1064,26 +1064,6 @@
 	"item_buckler"
 	{
 		"ItemCost"						"750"
-	}
-
-	//=================================================================================================================
-	// Recipe: Mask of Madness
-	//=================================================================================================================
-	"item_recipe_mask_of_madness"
-	{
-		"ItemCost"						"200"
-	}
-	
-	//=================================================================================================================
-	// Mask of Madness
-	//=================================================================================================================
-	"item_mask_of_madness"
-	{
-		"AbilityCooldown"				"16"
-
-		"AbilityManaCost"				"25"
-
-		"ItemCost"						"1400"
 	}
 
 	//=================================================================================================================

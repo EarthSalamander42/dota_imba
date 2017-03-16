@@ -4,6 +4,7 @@
   [
   	"talents",
   	"game_options",
-  	"arena_capture"
+  	"arena_capture",
+  	"player_table"
   ]
 }

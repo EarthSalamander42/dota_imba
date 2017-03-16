@@ -316,7 +316,7 @@
 							<Panel id="npc_dota_hero_troll_warlord" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_troll_warlord')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_troll_warlord.png');" />
-							<Panel id="npc_dota_hero_ursa" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_ursa" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_ursa')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_ursa.png');" />
 							<Panel id="npc_dota_hero_vengefulspirit" class="ClassImbaOption" 
