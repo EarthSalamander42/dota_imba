@@ -999,7 +999,7 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
-	local talent_mult = 1 - caster:HighestTalentTypeValue("cooldown_reduction") * 0.01
+	local talent_mult = 1 - unit:HighestTalentTypeValue("cooldown_reduction") * 0.01
 	reduction = reduction * talent_mult
 
 	return reduction
