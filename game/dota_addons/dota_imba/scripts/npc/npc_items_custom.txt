@@ -872,7 +872,7 @@
 		"ItemResult"					"item_imba_vladmir"
 		"ItemRequirements"
 		{
-			"01"						"item_headdress;item_ring_of_basilius;item_lifesteal"
+			"01"						"item_headdress;item_ring_of_basilius;item_imba_morbid_mask"
 		}
 	}
 
@@ -17209,5 +17209,496 @@
 		}
 	}
 
-	//next free ID: 2226
+	//=================================================================================================================
+	// Recipe: Curseblade
+	//=================================================================================================================
+	"item_recipe_imba_curseblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2226"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_curseblade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_diffusal_blade;item_claymore;item_imba_morbid_mask;item_belt_of_strength"
+		}
+	}
+
+	//=================================================================================================================
+	// Curseblade
+	//=================================================================================================================
+	"item_imba_curseblade"
+	{
+		"ID"							"2227"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_curseblade"
+		"ScriptFile"					"items/item_curseblade.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5200"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"	
+		"ItemShopTags"					"agi;str;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"diffusal blade 2;curseblade;curse"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500" 
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"75"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilitySharedCooldown"			"curseblade"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_bonus"					"16"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"intelligence_bonus"			"10"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"strength_bonus"				"9"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"45"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifedrain_per_second"			"60"
+			}	
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"manadrain_per_second"			"60"
+			}		
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"5"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_amount"					"-35"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_rate"						"0.1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Hellblade
+	//=================================================================================================================
+	"item_recipe_imba_hellblade"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2228"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"		
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_hellblade"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_curseblade;item_claymore;item_imba_morbid_mask;item_belt_of_strength"
+		}
+	}
+
+	//=================================================================================================================
+	// Hellblade
+	//=================================================================================================================
+	"item_imba_hellblade"
+	{
+		"ID"							"2229"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"custom/imba_hellblade"
+		"ScriptFile"					"items/item_curseblade.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"8250"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"agi;str;unique;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"diffusal blade 3;hellblade;curse"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500" 
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"75"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"AbilitySharedCooldown"			"curseblade"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"agility_bonus"					"18"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"intelligence_bonus"			"12"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"strength_bonus"				"16"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"90"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifedrain_per_second"			"80"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"manadrain_per_second"			"80"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"5"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_amount"					"-40"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tick_rate"						"0.1"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"transfer_chance"				"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Morbid Mask
+	//=================================================================================================================
+	"item_imba_morbid_mask"
+	{
+		"ID"							"2230"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_lifesteal"
+		"ScriptFile"					"items/item_lifesteal.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"1200"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"damage;hard_to_tag"
+		"ItemQuality"					"common"
+		"ItemAliases"					"lifesteal"
+		"SideShop" 						"1" 
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------        
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_bonus"					"15"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifesteal_pct"					"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Mask of Madness
+	//=================================================================================================================
+	"item_recipe_imba_mask_of_madness"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2231"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"		
+	
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"200"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_mask_of_madness"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_morbid_mask"
+		}
+	}
+
+	//=================================================================================================================
+	// Mask of Madness
+	//=================================================================================================================
+	"item_imba_mask_of_madness"
+	{
+		"ID"							"2232"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_mask_of_madness"
+		"ScriptFile"					"items/item_mask_of_madness.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1400"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"madness;berserk"
+		"SideShop"						"0"
+		"SecretShop"					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------        
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown"				"20"
+        "AbilityManaCost"				"25"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/econ/items/drow/drow_head_mania/mask_of_madness_active_mania.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_bonus"					"15"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifesteal_pct"					"15"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"berserk_attack_speed"			"100"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"berserk_ms_bonus_pct"			"17"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"berserk_armor_reduction"		"5"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"berserk_duration"				"8"
+			}
+			"07"
+			{			
+				"var_type"						"FIELD_INTEGER"
+				"rage_ms_bonus_pct"				"15"
+			}
+			"08"
+			{			
+				"var_type"						"FIELD_INTEGER"
+				"rage_lifesteal_bonus_pct"		"20"
+			}			
+			"09"
+			{			
+				"var_type"						"FIELD_INTEGER"
+				"rage_damage_bonus"				"20"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"rage_max_distance"				"800"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Satanic
+	//=================================================================================================================
+	"item_recipe_imba_satanic"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2233"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_satanic"
+		"ItemRequirements"
+		{
+			"01"						"item_reaver;item_imba_morbid_mask;item_mithril_hammer"
+		}
+	}
+
+	//=================================================================================================================
+	// Satanic
+	//=================================================================================================================
+	"item_imba_satanic"
+	{
+		"ID"							"2234"
+		"BaseClass"						"item_lua"
+		"AbilityTextureName"			"item_satanic"
+		"ScriptFile"					"items/item_satanic.lua"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost" 						"5800"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
+		"ItemShopTags"					"damage;str;hard_to_tag"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"satanic;lifesteal"
+		"SideShop" 						"0"
+		"SecretShop" 					"0"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------        
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCooldown"				"35"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_bonus"					"50"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"strength_bonus"				"25"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"lifesteal_pct"					"25"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"unholy_rage_duration"			"4.5"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"unholy_rage_lifesteal_bonus"	"175"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"soul_slaughter_hp_increase_pct"	"15"
+			}
+			"07"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"soul_slaughter_creep_duration"		"5"
+			}
+			"08"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"soul_slaughter_hero_duration"		"12"
+			}
+			"09"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"soul_slaughter_damage_per_stack"	"0.25"
+			}
+			"10"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"soul_slaughter_hp_per_stack"		"10"
+			}
+		}
+	}
+
+	//next free ID: 2235
 }

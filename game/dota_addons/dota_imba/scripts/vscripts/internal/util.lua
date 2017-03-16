@@ -1100,7 +1100,7 @@ function ChangeAttackProjectileImba( unit )
 		unit:SetRangedProjectileName(particle_skadi)
 
 	-- If the unit has any form of lifesteal, use the lifesteal projectile
-	elseif unit:HasModifier("modifier_item_mask_of_death") or unit:HasModifier("modifier_item_mask_of_madness") or unit:HasModifier("modifier_item_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
 		unit:SetRangedProjectileName(particle_lifesteal)
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
@@ -1852,7 +1852,6 @@ end
 
 function ApplyAllTalentModifiers()
 	Timers:CreateTimer(0.1,function()
-		print("lul")
 		local current_hero_list = HeroList:GetAllHeroes()
 		for k,v in pairs(current_hero_list) do
 			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
@@ -1864,7 +1863,7 @@ function ApplyAllTalentModifiers()
 				end
 			end
 		end
-		return 1
+		return 0.5
 	end)
 end
 
@@ -2194,7 +2193,6 @@ end
 -------------------------------------------------------------------------------------------------------
 
 TrackingProjectiles = TrackingProjectiles or class({})
-    
 
 function TrackingProjectiles:Projectile( params )
     --PrintTable(params)
