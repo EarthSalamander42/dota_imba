@@ -926,10 +926,7 @@
 		"DOTA_Tooltip_modifier_borrowed_time_allies_Description"							"Redirecting part of incoming damage to Abaddon"
 
 		"DOTA_Tooltip_modifier_imba_antimage_spell_shield_active"							"Spell Shield"
-		"DOTA_Tooltip_modifier_imba_antimage_spell_shield_active_Description"				"Increased magic resistance for a short duration"
-
-		"DOTA_Tooltip_modifier_imba_antimage_magehunter_stack_counter"						"Magehunter"
-		"DOTA_Tooltip_modifier_imba_antimage_magehunter_stack_counter_Description"			"Increased damage"
+		"DOTA_Tooltip_modifier_imba_antimage_spell_shield_active_Description"				"Counter and reflect every spell for a short duration"
 
 		"DOTA_Tooltip_modifier_imba_mana_void_ministun"										"Mana Void"
 		"DOTA_Tooltip_modifier_imba_mana_void_ministun_Description"							"Stunned by Anti-mage's mana void"
@@ -1603,33 +1600,35 @@
 		"DOTA_Tooltip_ability_imba_abaddon_borrowed_time_redirect_property"					"%DAMAGE REDIRECTED:"
 
 		"DOTA_Tooltip_ability_imba_antimage_mana_break"										"Mana Break"
-		"DOTA_Tooltip_ability_imba_antimage_mana_break_Description"							"With every attack, burns the target's mana.\n<font color='#FF7800'>The weight of mana:</font> burns extra mana equal to %bonus_mana_burn%%% of the target's maximum mana.\n<font color='#FF7800'>The price of magic:</font> deals physical damage equal to %damage_tooltip%%% of the target's missing mana.\n\nIllusions carry a weaker version of Mana Break, burning %illusion_factor_tooltip%%% less mana.\n\n<font color='#00FF40'>Not a unique attack modifier.</font>"
+		"DOTA_Tooltip_ability_imba_antimage_mana_break_Description"							"Burns an opponent's mana on each attack. Antimage deals %damage_per_burn% per mana burned as <font color='#FF7800'>bonus attack damage</font> to the target.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_Note0"								"Does not work on structures, units naturally without mana, or magic immune targets."
 		"DOTA_Tooltip_ability_imba_antimage_mana_break_Lore"								"Thy mana's weight, in life pay."
-		"DOTA_Tooltip_ability_imba_antimage_mana_break_base_mana_burn"						"BASE MANA BURNED:"
-		"DOTA_Tooltip_ability_imba_antimage_mana_break_bonus_mana_burn"						"%BONUS MANA BURNED:"
-		"DOTA_Tooltip_ability_imba_antimage_mana_break_illusion_factor_tooltip"				"%ILLUSION POWER REDUCTION:"
+		"DOTA_Tooltip_ability_imba_antimage_mana_break_base_mana_burn"						"MANA BURNED:"
+		"DOTA_Tooltip_ability_imba_antimage_mana_break_damage_per_burn"						"DAMAGE PER MANA BURNT:"
+		
+		"DOTA_Tooltip_ability_imba_antimage_blink"											"Blink"
+		"DOTA_Tooltip_ability_imba_antimage_blink_Description"								"Short distance teleportation that allows Anti-Mage to move in and out of combat.\n<font color='#FF7800'>Mana distortion:</font> Burns a percentage of the actual mana on every enemy in a %radius% radius of the destination point. Deals %percent_damage%%% of the burnt mana as magic damage."
+		"DOTA_Tooltip_ability_imba_antimage_blink_Note0"									"You can use Blink to dodge incoming projectiles."
+		"DOTA_Tooltip_ability_imba_antimage_blink_Lore"										"In his encounter with the Dead Gods, Anti-Mage learned the value of being elusive."
+		"DOTA_Tooltip_ability_imba_antimage_blink_percent_blink_range"						"RANGE:"
+		"DOTA_Tooltip_ability_imba_antimage_blink_percent_mana_burn"						"%CURRENT MANA BURNED:"
+		"DOTA_Tooltip_ability_imba_antimage_blink_percent_damage"							"%DAMAGE PER MANA:"
+		"DOTA_Tooltip_ability_imba_antimage_blink_radius"									"RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield"									"Spell Shield"
-		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"						"Passively increases magic resistance.\n<font color='#FF7800'>Purity of Will:</font> Can be activated to double the magic resistance bonus for a short duration."
-		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Note0"								"Doubles the magic resistance bonus additively, not multiplicatively."
+		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Description"						"Passively increases magic resistance.\n<font color='#FF7800'>Purity of Will:</font> Can be activated to block and reflect every targeted spell for a short duration.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Triggers Purity of Will automatically, and decreases the cooldown to %cooldown_scepter% seconds."
+		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Note0"								"Increases the magic resistance bonus additively, not multiplicatively."
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"								"Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"					"%MAGIC RESISTANCE:"
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"					"PURITY OF WILL DURATION:"
 
-		"DOTA_Tooltip_ability_imba_antimage_magehunter"										"Magehunter"
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_Description"							"Whenever Anti-Mage witnesses an enemy using mana, he will gain bonus attack damage."
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_Note0"								"Each instance of bonus damage's duration is independent from the others."
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_Lore"								"Magic users who dare exercise their craft in the Anti-Mage's sights usually meet a quick, tragic demise."
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_aura_radius"							"EFFECT RADIUS:"
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_stack_duration"						"DURATION:"
-		"DOTA_Tooltip_ability_imba_antimage_magehunter_mana_per_stack"						"MANA PER DAMAGE:"
-
 		"DOTA_Tooltip_ability_imba_antimage_mana_void"										"Mana Void"
-		"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"							"Damages enemies around the target according to its missing mana.\n<font color='#FF7800'>The magic ends here:</font> burns part of the target's mana pool before calculating damage.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Causes damage to be based on the missing mana of all enemies in the area of effect."
+		"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"							"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n<font color='#FF7800'>The magic ends here:</font> burns part of the target's mana pool before calculating damage."
 		"DOTA_Tooltip_ability_imba_antimage_mana_void_Note0"								"Damage is calculated based on the main target's missing mana."
 		"DOTA_Tooltip_ability_imba_antimage_mana_void_Lore"									"The magic ends here."
 		"DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_damage_per_mana"			"DAMAGE PER MANA MISSING:"
+		"DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_ministun"					"STUN DURATION:"
+		"DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_aoe_radius"					"RADIUS:"
 		"DOTA_Tooltip_ability_imba_antimage_mana_void_mana_void_mana_burn_pct"				"%MANA BURN:"
 
 		"DOTA_Tooltip_ability_imba_axe_berserkers_call"										"Berserker's Call"
@@ -3486,6 +3485,16 @@
 		// Custom talents
 		//=================================================================================================================
 		
+		// ANTIMAGE
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_1"			"-1 Blink cooldown"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_2"			"+1 Spell Shield duration"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_3"			"-0.2 Blink cast point"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_4"			"+10% of target's missing mana to Mana Break damage"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_5"			"+10% Blink mana burned"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_6"			"+35 Mana Break mana burned"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_7"			"-50 Mana Void cooldown"
+		"Dota_Tooltip_Ability_special_bonus_imba_antimage_8"			"Mana Void counts missing mana from all targets in the AOE"
+		
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_1"				"10% Bloodrage Amplification Shift"
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_2"				"+25 Blood Rite Cooldown Reduction"
 		"DOTA_Tooltip_ability_special_bonus_unique_bloodseeker_3"				"Rupture Heals For 100% Of Damage"
@@ -3721,7 +3730,6 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_witch_doctor_1"			"+200 Death Ward Attack Range"
 		"DOTA_Tooltip_Ability_special_bonus_unique_witch_doctor_2"			"+40 Voodoo Restoration Heal"
 		"DOTA_Tooltip_Ability_special_bonus_unique_necrophos"				"-1s Death Pulse Cooldown"
-		"DOTA_Tooltip_Ability_special_bonus_unique_antimage"				"-2s Blink Cooldown"
 		"DOTA_Tooltip_Ability_special_bonus_unique_mirana_1"				"+100 Leap Attack Speed"
 		"DOTA_Tooltip_Ability_special_bonus_unique_mirana_2"				"+2 Multishot Sacred Arrows"
 		"DOTA_Tooltip_Ability_special_bonus_unique_bounty_hunter"			"-2.5s Jinada Cooldown"
