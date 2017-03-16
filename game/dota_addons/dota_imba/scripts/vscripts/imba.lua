@@ -33,6 +33,12 @@ require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
 
+-- clientside KV loading and net table manager
+require('addon_init')
+require('nettablemanager')
+
+ApplyAllTalentModifiers()
+
 -- storage API
 --require('libraries/json')
 --require('libraries/storage')

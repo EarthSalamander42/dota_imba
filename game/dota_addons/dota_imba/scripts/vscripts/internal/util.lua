@@ -808,7 +808,6 @@ function InitializeInnateAbilities( hero )
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
 		"imba_sandking_treacherous_sands",
-		"imba_bane_nightmare_end",
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
 		"imba_silencer_arcane_supremacy",
@@ -1000,8 +999,8 @@ function GetCooldownReduction( unit )
 	if unit:HasModifier("modifier_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
-	local talentMult = 1 - caster:HighestTalentTypeValue("cooldown_reduction")/100
-	reduction = reduction * talentMult
+	local talent_mult = 1 - caster:HighestTalentTypeValue("cooldown_reduction") * 0.01
+	reduction = reduction * talent_mult
 
 	return reduction
 end
@@ -1849,6 +1848,133 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 		if talent and talent:GetLevel() > 0 then base = base + talent:GetSpecialValueFor("value") end
 	end
 	return base
+end
+
+function ApplyAllTalentModifiers()
+	Timers:CreateTimer(0.1,function()
+		print("lul")
+		local current_hero_list = HeroList:GetAllHeroes()
+		for k,v in pairs(current_hero_list) do
+			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
+			for i = 1, 8 do
+				local talent_name = "special_bonus_unique_"..hero_name.."_"..i
+				local modifier_name = "modifier_special_bonus_unique_"..hero_name.."_"..i
+				if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
+					v:AddNewModifier(v,v,modifier_name,{})
+				end
+			end
+		end
+		return 1
+	end)
+end
+
+function CreateEmptyTalents(hero)
+	for i=1,8 do
+		LinkLuaModifier("modifier_special_bonus_unique_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+		local class = "modifier_special_bonus_unique_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		load(class)()
+	end
+end
+
+function NetTableM(tablename,keyname,...) 
+	local values = {...}                                                                  -- Our user input
+	local returnvalues = {}                                                               -- table that will be unpacked for result                                                    
+	for k,v in ipairs(values) do  
+		local keyname = keyname..v[1]                                                       -- should be 1-8, but probably can be extrapolated later on to be any number
+		if IsServer() then
+			local netTableKey = netTableCmd(false,tablename,keyname)                              -- Command to grab our key set
+			local my_key = createNetTableKey(v)                                               -- key = 250,444,111 as table, stored in key as 1 2 3
+			if not netTableKey then                                                           -- No key with requested name exists
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			elseif type(netTableKey) == 'boolean' then                                        -- Our check returned that a key exists but that it is empty, we need to populate it for clients
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			else                                                                              -- Our key exists and we got some values, now we need to check the key against the requested value from other scripts  
+				if #v > 1 then
+					for i=1,#netTableKey do
+						if netTableKey[i] ~= v[i-1] then                                              -- compare each value, does server 1 = our 250? does server 2 = our 444? 
+							netTableCmd(true,tablename,keyname,my_key)                                      -- If our key is different from the sent value, rewrite it ONCE and break execution to main loop again
+							break
+						end
+					end
+				end
+			end      
+		end
+		local allkeys = netTableCmd(false,tablename,keyname)
+		if allkeys and type(allkeys) ~= 'boolean' then
+			for i=1,#allkeys do
+				table.insert(returnvalues, allkeys[i])    
+			end
+		else
+			for i=1,#v do
+				table.insert(returnvalues, 0)
+			end
+		end
+	end
+return unpack(returnvalues)
+end
+
+function netTableCmd(send,readtable,key,tabletosend)
+	if send == false then
+		local finalresulttable = {}
+		local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
+		if not nettabletemp then return false end
+		for key,value in pairs(nettabletemp) do
+			table.insert(finalresulttable,value)
+		end          
+		if #finalresulttable > 0 then 
+			return finalresulttable
+		else
+			return true
+		end
+	else
+		CustomNetTables:SetTableValue(readtable, key, tabletosend)
+	end
+end
+
+function createNetTableKey(v)
+	local valuePair = {}
+	if #v > 1 then
+		for i=2,#v do
+			table.insert(valuePair,v[i])                                              -- returns just numbers 2-x from sent value...
+		end    
+	end
+	return valuePair  
+end
+
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+	local values = {...}
+	local data = {}
+	for i,v in ipairs(values) do
+		table.insert(data,tEntity:GetSpecialValueFor(v))
+	end
+	return unpack(data)
+end
+
+function TalentManager(tEntity, nameScheme, ...)
+	local talents = {...}
+	local return_values = {}
+	for k,v in pairs(talents) do    
+		if #v > 1 then
+			for i=1,#v do
+				table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
+			end
+		else
+			table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
+		end
+	end    
+return unpack(return_values)
+end
+
+function findtarget(source) -- simple list return function for finding a players current target entity
+	local t = source:GetCursorTarget()
+	local c = source:GetCaster()
+	if t and c then return t,c end
+end
+
+function findgroundtarget(source) -- simple list return function for finding a players current target entity
+	local t = source:GetCursorPosition()
+	local c = source:GetCaster()
+	if t and c then return t,c end
 end
 
 -- Controls comeback gold

@@ -1,6 +1,8 @@
  -- Author: Shush
  -- Date: 08/03/2017
 
+ CreateEmptyTalents("drow_ranger")
+
 ----------------------------
 --		FROST ARROWS      --
 ----------------------------
@@ -162,17 +164,15 @@ function modifier_imba_frost_arrows_thinker:OnAttackLanded(keys)
 		-- Only apply on Drow's attacks
 		if self.caster == attacker then	
 
-			-- #2 Talent: Chance to kill creeps instantly			
-			if self.caster:HasTalent("special_bonus_imba_drow_ranger_2") then
-				local instakill_chance = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_2")
+			-- #2 Talent: Chance to kill creeps instantly						
+			local instakill_chance = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_2")
 
-				-- Only applicable on creeps, except ancients
-				if target:IsCreep() and not target:IsAncient() then
-					if RollPercentage(instakill_chance) then
-						target:Kill(self.ability, self.caster)
-					end
+			-- Only applicable on creeps, except ancients
+			if target:IsCreep() and not target:IsAncient() then
+				if RollPercentage(instakill_chance) then
+					target:Kill(self.ability, self.caster)
 				end
-			end
+			end			
 
 			-- Only apply if the arrow was a frost attack and the target is alive
 			if target:IsAlive() and self.frost_arrow_attack then 
@@ -194,10 +194,8 @@ function ApplyFrostAttack(modifier, target)
 		duration = modifier.creep_duration
 	end
 
-	-- #1 Talent: Frost Arrows duration increase
-	if modifier.caster:HasTalent("special_bonus_imba_drow_ranger_1") then
-		duration = duration + modifier.caster:FindTalentValue("special_bonus_imba_drow_ranger_1")
-	end
+	-- #1 Talent: Frost Arrows duration increase	
+	duration = duration + modifier.caster:FindTalentValue("special_bonus_imba_drow_ranger_1")	
 
 	-- Apply slow effect if the target didn't suddenly become magic immune				
 	if not target:IsMagicImmune() then
@@ -556,11 +554,9 @@ end
 
 function modifier_imba_deadeye_vision:GetBonusDayVision()
     if IsServer() then
-        -- #6 Talent: Deadeye vision bonuses
-        if self.caster:HasTalent("special_bonus_imba_drow_ranger_6") then
-            local vision_bonus = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_6")
-            CustomNetTables:SetTableValue("talents", "hero_drow_ranger_talents"..tostring(self.caster:GetPlayerOwnerID()), {vision_bonus = vision_bonus})
-        end        
+        -- #6 Talent: Deadeye vision bonuses        
+        local vision_bonus = self.caster:FindTalentValue("special_bonus_imba_drow_ranger_6")
+        CustomNetTables:SetTableValue("talents", "hero_drow_ranger_talents"..tostring(self.caster:GetPlayerOwnerID()), {vision_bonus = vision_bonus})        
     end
 
     local day_vision = self.day_vision
@@ -627,10 +623,8 @@ function imba_drow_ranger_gust:OnSpellStart()
  	-- Play cast sound
  	EmitSoundOn(sound_cast, caster) 	
 
- 	-- #4 Talent: Gust effect/knockback range increase
- 	if caster:HasTalent("special_bonus_imba_drow_ranger_4") then
- 		wave_distance = wave_distance + caster:FindTalentValue("special_bonus_imba_drow_ranger_4")
- 	end
+ 	-- #4 Talent: Gust effect/knockback range increase 	
+	wave_distance = wave_distance + caster:FindTalentValue("special_bonus_imba_drow_ranger_4") 	
 
  	-- Send Gust!
  	local gust_projectile = {	Ability = ability,
@@ -808,7 +802,7 @@ function modifier_imba_trueshot_aura:GetAuraDuration()
 end
 
 function modifier_imba_trueshot_aura:GetAuraRadius()	
-	return 50000 --global
+	return 25000 --global
 end
 
 function modifier_imba_trueshot_aura:GetAuraSearchFlags()
@@ -882,10 +876,8 @@ function modifier_imba_trueshot:OnIntervalThink()
 		  self.parent:CalculateStatBonus()
         end
 
-		-- #3 Talent: Precision Aura damage increase
-		if self.caster:HasTalent("special_bonus_imba_drow_ranger_3") then
-			drow_agility = drow_agility * (1 + (self.caster:FindTalentValue("special_bonus_imba_drow_ranger_3")/100))
-		end
+		-- #3 Talent: Precision Aura damage increase		
+		drow_agility = drow_agility * (1 + (self.caster:FindTalentValue("special_bonus_imba_drow_ranger_3")/100))		
 
 		-- Set the values in the nettable		
 		CustomNetTables:SetTableValue( "player_table", "precision_aura_drow_agility"..tostring(self.parent:GetPlayerOwnerID()), { precision_aura_drow_agility = drow_agility})			
@@ -1028,7 +1020,7 @@ function modifier_imba_marksmanship:OnIntervalThink()
 	if IsServer() then
 		-- #8 Talent: Marksmanship no longer disables itself
         -- Find enemies nearby
-            local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+        local enemies = FindUnitsInRadius(self.caster:GetTeamNumber(),
                                               self.caster:GetAbsOrigin(),
                                               nil,
                                               self.radius,
@@ -1039,8 +1031,6 @@ function modifier_imba_marksmanship:OnIntervalThink()
                                               false)
 
         if not self.caster:HasTalent("special_bonus_imba_drow_ranger_8") then
-            
-
             -- If there are enemies near drow, destroy particles and disable Marksmanship
             if #enemies > 0 and self.marksmanship_enabled then          
                 ParticleManager:DestroyParticle(self.particle_marksmanship_fx, false)
@@ -1100,10 +1090,8 @@ function modifier_imba_marksmanship:GetModifierBonusStats_Agility()
 		if self.marksmanship_enabled then
 			local agility_bonus = self.agility_bonus
 
-			-- #5 Talent: Marksmanship Agility Increase
-			if self.caster:HasTalent("special_bonus_imba_drow_ranger_5") then
-				agility_bonus = agility_bonus + self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5")
-			end
+			-- #5 Talent: Marksmanship Agility Increase			
+			agility_bonus = agility_bonus + self.caster:FindTalentValue("special_bonus_imba_drow_ranger_5")			
 
 			return agility_bonus
 		end
