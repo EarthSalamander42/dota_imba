@@ -56,7 +56,7 @@ end
 function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
 	local talentName
-	local kv = AbilityKV[talentName]
+	local kv = AbilityKV[self:GetName()]
 	for k,v in pairs(kv) do -- trawl through keyvalues
 		if k == "AbilitySpecial" then
 			for l,m in pairs(v) do
@@ -66,16 +66,16 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 			end
 		end
 	end
-	if talentName and self:HasModifier("modifier_"..talentName) then 
-		base = base + self:FindTalentValue(talentName) 
+	if talentName and self:GetCaster():HasModifier("modifier_"..talentName) then 
+		base = base + self:GetCaster():FindTalentValue(talentName) 
 	end
 	return base
 end
 
 function CreateEmptyTalents(hero)
 	for i=1,8 do
-		LinkLuaModifier("modifier_special_bonus_unique_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-		local class = "modifier_special_bonus_unique_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+		local class = "modifier_special_bonus_imba_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
 		load(class)()
 	end
 end
