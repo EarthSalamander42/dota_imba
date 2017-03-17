@@ -169,17 +169,20 @@
 							<Panel id="npc_dota_hero_life_stealer" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_life_stealer')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_life_stealer.png');" />
+							<Panel id="npc_dota_hero_lycan" class="ClassImbaOption" 
+								onactivate="SelectHero('npc_dota_hero_lycan')" 
+								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_lycan.png');" />
 							<Panel id="npc_dota_hero_magnataur" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_magnataur')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_magnataur.png');" />
 							<Panel id="npc_dota_hero_night_stalker" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_night_stalker')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_night_stalker.png');" />
+						</Panel>
+						<Panel id="PickListColumn2" class="ClassOptionRow">
 							<Panel id="npc_dota_hero_omniknight" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_omniknight')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_omniknight.png');" />
-						</Panel>
-						<Panel id="PickListColumn2" class="ClassOptionRow">
 							<Panel id="npc_dota_hero_phoenix" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_phoenix')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_phoenix.png');" />
@@ -189,7 +192,7 @@
 							<Panel id="npc_dota_hero_sand_king" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_sand_king')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_sand_king.png');" />
-							<Panel id="npc_dota_hero_slardar" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_slardar" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_slardar')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_slardar.png');" />
 							<Panel id="npc_dota_hero_spirit_breaker" class="ClassNormalOption" 

@@ -81,8 +81,6 @@
 	{
 		"override_hero"				"npc_dota_hero_antimage"
 
-		"AbilityLayout"				"4"
-
 		"Ability1"					"imba_antimage_mana_break"
 		"Ability2"					"imba_antimage_blink"
 		"Ability3"					"imba_antimage_spell_shield"
@@ -1295,16 +1293,13 @@
 	"npc_imba_hero_lycan"
 	{
 		"override_hero"				"npc_dota_hero_lycan"		
-		
-		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_lycan_summon_wolves"
 		"Ability2"					"imba_lycan_howl"
 		"Ability3"					"imba_lycan_feral_impulse"
 		"Ability5"					"imba_lycan_shapeshift"
 		"Ability4"					"imba_lycan_wolfsbane"
-		
-		"Ability9"					"imba_unlimited_level_powerup"
+
 		"Ability10"					"special_bonus_imba_lycan_1"
 		"Ability11"					"special_bonus_imba_lycan_2"
 		"Ability12"					"special_bonus_imba_lycan_3"

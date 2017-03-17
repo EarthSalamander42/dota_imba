@@ -15403,8 +15403,6 @@
 		}		
 	}
 	
-	
-	
 	//=================================================================================================================
 	// Lycan's Wolfsbane
 	//=================================================================================================================
@@ -35630,6 +35628,194 @@
 	}
 
 	//=================================================================================================================
+	// Lycan Talents
+	//=================================================================================================================
+	"special_bonus_imba_lycan_1"	// Wolf level increases
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_2"	// Feral Impulse damage and HP regen increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_3"	// Howl duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"12"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_4"	// Wolfsbane damage increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_5"	// Increased maximum summoned Wolves
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_6"	// Double Wicked Crunch max stacks, Wolves generate two on hit
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"12"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_7"	// Howl potency increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_hero"			"25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_creep"			"25"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_hero"				"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_creep"				"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_hero"			"250"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_creep"			"125"
+			}
+		}
+	}
+
+	"special_bonus_imba_lycan_8"	// Shapeshift duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Ursa Talents 
 	//=================================================================================================================
 	"special_bonus_imba_ursa_1"	// Earthshock Point Blank bonus damage
@@ -35791,197 +35977,4 @@
 			}
 		}
 	}
-	
-	//=================================================================================================================
-    // Lycan Talents
-    //=================================================================================================================
-    "special_bonus_imba_lycan_1" //Wolf level increases
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "1"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_2" //Feral Impulse damage and HP regen increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "2"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_3" //Howl duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "12"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_4" //Wolfsbane damage increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "2"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_5" //Increased maximum summoned Wolves
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "2"
-            }
-        }
-    }
-
-    "special_bonus_imba_lycan_6" //Double Wicked Crunch max stacks, Wolves generate two on hit
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "12"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_7" //Howl potency increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "damage_hero"               "25"
-            }
-
-            "02"
-            {
-            	"var_type"                  "FIELD_INTEGER"
-                "damage_creep"               "25"
-            }
-
-            "03"
-            {
-            	"var_type"                  "FIELD_INTEGER"
-                "ms_hero"		            "5"
-            }
-
-            "04"
-            {
-            	"var_type"                  "FIELD_INTEGER"
-                "ms_creep"			        "15"
-            }
-
-            "05"
-            {
-            	"var_type"                  "FIELD_INTEGER"
-                "health_hero"               "250"
-            }
-
-            "06"
-            {
-            	"var_type"                  "FIELD_INTEGER"
-                "health_creep"	            "125"
-            }
-        }
-    }
-    
-    "special_bonus_imba_lycan_8" //Shapeshift duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-                "value"                     "15"
-            }
-        }
-    }
 }
