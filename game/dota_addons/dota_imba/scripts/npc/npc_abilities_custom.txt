@@ -5923,7 +5923,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						      "ability_lua"
-		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				    "DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
@@ -11663,7 +11663,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -11672,6 +11672,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_malefice"
 		"AOERadius"						"%glitch_radius"
+    "ScriptFile"          "hero/hero_enigma"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11705,7 +11706,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tick_damage"				"30 50 70 90"
+				"tick_damage"				"30 50 70 90 100 110 120"
 			}
 			"02"
 			{
@@ -11715,7 +11716,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.25 0.5 0.75 1.0"
+				"stun_duration"				"0.25 0.5 0.75 1.0 1.0 1.0 1.0"
 			}
 			"04"
 			{
@@ -11815,7 +11816,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
@@ -11823,6 +11824,8 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_demonic_conversion"
+    "ScriptFile"          "hero/hero_enigma"    
+    "MaxLevel" "7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11871,7 +11874,7 @@
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_health"				"180 210 240 270"
+				"base_health"				"180 200 220 240 240 240 240 "
 			}
 			"06"
 			{
@@ -11881,7 +11884,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"20 28 36 44"
+				"base_damage"				"20 28 36 44 44 44 44"
 			}
 			"08"
 			{
@@ -11891,63 +11894,18 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_ms"					"260 280 300 320"
+				"base_ms"					"280 300 320 340 340 340 370"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"ms_per_level"				"1"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"DemonicConversion"
-
-				"sound_cast"				"Hero_Enigma.Demonic_Conversion"
-				"modifier_eidolons"			"modifier_imba_enigma_eidolon"
-				"modifier_buffs"			"modifier_imba_enigma_eidolon_buffs"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_enigma_eidolon"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"EidolonAttack"
-
-						"modifier_eidolons"	"modifier_imba_enigma_eidolon"
-						"modifier_buffs"	"modifier_imba_enigma_eidolon_buffs"
-					}
-				}
-			}
-
-			"modifier_imba_enigma_eidolon_buffs"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%damage_per_level"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_per_level"
-				}
-			}
+      "11"
+      {
+      "var_type" "FIELD_INTEGER"
+      "shard_percentage" "5 5 5 5 10 15 20"
+      }
 		}
 	}
 
@@ -11958,7 +11916,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -11967,6 +11925,7 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_midnight_pulse"
 		"AOERadius"						"%radius"
+    "ScriptFile"          "hero/hero_enigma"    
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -12043,13 +12002,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"				"custom/imba_enigma_gravity"
 		"MaxLevel"							"1"
+    "ScriptFile"          "hero/hero_enigma"    
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -12111,7 +12071,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -12121,6 +12081,7 @@
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"enigma_black_hole"
 		"AOERadius"							"%radius"
+    "ScriptFile"          "hero/hero_enigma"    
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------

@@ -1268,6 +1268,12 @@ function GetCastRangeIncrease( unit )
 	return cast_range_increase
 end
 
+-- Returns 'green' damage minus the average of basemin/basemax
+
+function CDOTA_BaseNPC:GetBonusDamage(tEntity)
+  return tEntity:GetAverageTrueAttackDamage(tEntity) - ( tEntity:GetBaseDamageMin()  + tEntity:GetBaseDamageMax() ) / 2 
+end
+
 -- Safely modify BAT while storing the unit's original value
 function ModifyBAT(unit, modify_percent, modify_flat)
 
