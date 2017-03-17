@@ -87,10 +87,8 @@ function imba_enigma_create_eidolons(target,caster,abilitysource,number_of_eidol
   shard_percentage = shard_percentage / 100
   local shard_damage_min          = caster:GetBaseDamageMin() * shard_percentage
   local shard_damage_max          = caster:GetBaseDamageMax() * shard_percentage
-  --local shard_green_damage        = caster:GetBonusDamage() * shard_percentage
-  for i=1,50 do
-  print(caster:GetAverageTrueAttackDamage(caster))  
-  end
+  local shard_green_damage        = caster:GetBonusDamage(caster)
+
   local shard_attack_speed        = caster:GetAttackSpeed()  * shard_percentage
   local shard_movespeed           = caster:GetBaseMoveSpeed() * shard_percentage
   local shard_armor               = caster:GetPhysicalArmorValue() * shard_percentage
