@@ -4723,12 +4723,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"				"antimage_mana_break"
+		"ScriptFile"						"hero/hero_antimage"
+		"MaxLevel"							"7"
+		"LevelsBetweenUpgrades"				"2"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -4745,52 +4748,73 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_burn"			"0.25"
+				"damage_per_burn"			"0.6"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_mana_burn"			"28 40 52 64"
+				"base_mana_burn"			"28 40 52 64 76 88 100"
+				"LinkedSpecialBonus"		"special_bonus_imba_antimage_6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Antimage Blink
+	//=================================================================================================================
+	"imba_antimage_blink"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"antimage_blink"	
+		"ScriptFile"					"hero/hero_antimage"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"particle"		"particles/hero/antimage/blink_manaburn_basher_ti_5.vpcf"
+			"particle"		"particles/hero/antimage/blink_basher_manaburn_impact_lightning.vpcf"
+		}
+			
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.35"
+		"AbilityCooldown"				"12 9 7 5 5 5 5"
+		"AbilityManaCost"				"60 50 40 30 20 10 0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"blink_range"				"925 1000 1075 1150 1175 1200 1225"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"percent_mana_burn"			"0 0 0 0 5 10 15"
+				"LinkedSpecialBonus"		"special_bonus_imba_antimage_5"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_burn"			"5 6 7 8"
+				"percent_damage"			"30"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_factor"			"0.5"
-			}
-			"05"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"illusion_factor_tooltip"	"50"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_tooltip"			"25"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_antimage_mana_break"
-			{
-				"IsHidden"					"1"
-				"Passive"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 		"hero/hero_antimage.lua"
-						"Target"			"TARGET"
-						"Function"			"ManaBreak"
-					}
-				}
+				"radius"					"400"
 			}
 		}
 	}
@@ -4803,12 +4827,16 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"antimage_spell_shield"
+		"ScriptFile"					"hero/hero_antimage"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0"
+		"AbilityCooldown"				"24.0"
 		"AbilityCastPoint"				"0.0"
 		
 		// Precache
@@ -4816,6 +4844,8 @@
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
@@ -4826,201 +4856,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"magic_resistance"		"26 34 42 50"
+				"magic_resistance"		"26 34 42 50 54 58 62"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"active_resistance"		"35.1 51.5 72.4 100"
+				"active_duration"		"1.5 1.5 1.5 1.5 2.0 2.5 3.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_antimage_2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_duration"		"8"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"				"CASTER"
-				"ModifierName"			"modifier_imba_antimage_spell_shield_active"
-			}
-
-			"FireEffect"
-			{
-				"EffectName" 			"particles\units\heroes\hero_antimage\antimage_blink_end_glow.vpcf"
-				"Target" 				"CASTER"
-				"EffectAttachType" 		"follow_origin"
-			}
-
-			"FireSound"
-			{
-				"EffectName" 			"Hero_Antimage.ManaVoidCast"
-				"Target" 				"CASTER"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_antimage_spell_shield_passive"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance"
-				}
-			}
-
-			"modifier_imba_antimage_spell_shield_active"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%active_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%active_resistance"
-				}
+				"cooldown_scepter"		"12"
 			}
 		}
 	}
 
-	//=================================================================================================================
-	// Antimage's Magehunter
-	//=================================================================================================================
-	"imba_antimage_magehunter"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"custom/imba_antimage_magehunter"
-		"AbilityCastRange"				"1200"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_duration"		"10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_per_stack"		"5"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"scale_up"				"0.002"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_antimage_magehunter_aura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Aura"					"modifier_imba_antimage_magehunter_detector"
-				"Aura_Radius"			"%aura_radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				"Aura_ApplyToCaster"	"0"
-			}
-
-			"modifier_imba_antimage_magehunter_detector"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnSpentMana"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_antimage.lua"
-						"Function"			"Magehunter"
-
-						"modifier_stacks"	"modifier_imba_antimage_magehunter_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_antimage_magehunter_stack_counter"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%stack_duration"
-			}
-
-			"modifier_imba_antimage_magehunter_stacks"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Duration"				"%stack_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_antimage.lua"
-						"Function"			"MagehunterCreate"
-
-						"modifier_counter"	"modifier_imba_antimage_magehunter_stack_counter"
-					}
-				}
-			
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_antimage.lua"
-						"Function"			"MagehunterDestroy"
-
-						"modifier_counter"	"modifier_imba_antimage_magehunter_stack_counter"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"1"
-				}
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Antimage Mana Void
@@ -5029,7 +4880,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_antimage"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -5038,6 +4890,7 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"		
 		"FightRecapLevel"				"2"
+		"MaxLevel"						"6"
 		"AbilityTextureName"			"antimage_mana_void"
 		"AOERadius"						"%mana_void_aoe_radius"
 
@@ -5063,7 +4916,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"125 200 275 300 325 350"
 	
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5072,7 +4925,7 @@
 			"01"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"mana_void_damage_per_mana"			"0.6 0.8 1.0"
+				"mana_void_damage_per_mana"			"0.6 0.85 1.1 1.15 1.2 1.25"
 			}
 			"02"
 			{
@@ -5087,87 +4940,191 @@
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"mana_void_mana_burn_pct"			"25 30 35"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"secondary_mana_scepter"			"100"
+				"mana_void_mana_burn_pct"			"10 15 20 25 30 35"
 			}
 		}
-
-		"OnAbilityPhaseStart"
+	}
+	
+	//=================================================================================================================
+	// Antimage Talent 1 (Level 10): Blink cooldown decrease
+	//=================================================================================================================
+	"special_bonus_imba_antimage_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"EffectName"		"Hero_Antimage.ManaVoidCast"
-				"Target"
-				{
-					"Center"		"TARGET"
-					"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
+	}
 
-		"OnSpellStart"
+	//=================================================================================================================
+	// Antimage Talent 2 (Level 10): Spell Shield active duration increase
+	//=================================================================================================================
+	"special_bonus_imba_antimage_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"EffectName"		"Hero_Antimage.ManaVoid"
-				"Target"
-				{
-					"Center"		"TARGET"
-					"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"		"particles/units/heroes/hero_antimage/antimage_manavoid.vpcf"
-				"EffectAttachType"	"attach_hitloc"
-				"Target"
-				{
-					"Center"		"TARGET"
-					"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-
-				"ControlPoints"
-				{
-					"00"	"0 0 0"
-					"01"	"%mana_void_aoe_radius 0 0"
-				}
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_imba_mana_void_ministun"
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"	"hero/hero_antimage.lua"
-				"Function"		"ManaVoid"
-				"Target"		"TARGET"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Antimage Talent 3 (Level 20): Blink cast point decrease
+	//=================================================================================================================
+	"special_bonus_imba_antimage_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_mana_void_ministun"
+			"01"
 			{
-				"Duration"		"%mana_void_ministun"
-				"IsDebuff"		"1"
-				"IsPurgable"	"0"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.2"
+			}
+		}
+	}
 
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+	//=================================================================================================================
+	// Antimage Talent 4 (Level 20): % of target's missing mana added to Mana Break damage
+	//=================================================================================================================
+	"special_bonus_imba_antimage_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 5 (Level 30): Blink mana burn increase
+	//=================================================================================================================
+	"special_bonus_imba_antimage_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 6 (Level 30): Mana Break manaburn increase
+	//=================================================================================================================
+	"special_bonus_imba_antimage_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"35"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 7 (Level 40): Decreased Mana Void Cooldown
+	//=================================================================================================================
+	"special_bonus_imba_antimage_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Antimage Talent 8 (Level 40): Mana Void counts missing mana from all targets in the AOE
+	//=================================================================================================================
+	"special_bonus_imba_antimage_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}

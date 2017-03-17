@@ -101,7 +101,22 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/antimage/blink_manaburn_basher_ti_5_c.vpcf"
+			m_ChildRef = resource:"particles/hero/antimage/blink_manaburn_basher_ti_5_c.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }
