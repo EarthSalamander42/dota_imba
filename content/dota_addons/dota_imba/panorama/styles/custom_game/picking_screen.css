@@ -189,33 +189,6 @@
 	font-family: "Radiance";
 }
 
-/* 'Pick random hero' button
-=================================================================*/
-#RandomPickBtn {
-	horizontal-align: center;
-	margin-top: 15px;
-
-	box-shadow: fill #00000066 -4px -4px 8px 8px;
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );
-	background-image: url("s2r://panorama/images/backgrounds/background_play_button_large_2x_png.vtex");
-	background-size: 320px 120px;
-	height: 42px;
-	width: 420px;
-	border-radius: 10px;
-}
-
-#RandomPickBtn:Hover {
-	background-color: gradient( linear, 0% 0%, 0% 100%, from( #6FDE75 ), to( #87d69533 ) );
-}
-
-#RandomPickBtn Label {
-	vertical-align: center;
-	horizontal-align: center;
-	color: #FFFFFF;
-	font-size: 30px;
-	font-family: "Radiance";
-}
-
 /* Hero options
 =================================================================*/
 .ClassOptionRow {
@@ -286,8 +259,8 @@
 	horizontal-align: center;
 	vertical-align: middle;
 	flow-children: right;
-	padding-left: 30px;
-	padding-right: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .HeroSelectText {
@@ -329,7 +302,7 @@
 }
 
 #GameOptionsPanelContainer {
-	width: 580px;
+	width: 480px;
 	margin-top: 10px;
 	height: 140px;
 	horizontal-align: center;
@@ -357,17 +330,16 @@
 	flow-children: right;
 }
 
+#GameOptionsLabelPanel8 {
+	visibility: collapse;
+}
+
 .GameModeLabel {
 	horizontal-align: left;
 	text-align: center;
 	font-size: 22px;
 	font-family: "Radiance";
 	color:#FFFFFF;
-}
-
-.GameModeLabelPanel2 {
-	width: 300px;
-	flow-children: down;
 }
 
 .GameModeValue {
@@ -424,6 +396,8 @@
 
 #PickedHeroName {
 	horizontal-align: center;
+	text-align: center;
+	width: 192px;
 	font-size: 28px;
 	font-family: "Radiance";
 	color: #ffffff;
@@ -440,6 +414,7 @@
 #HeroAbilitiesParentPanel {
 	horizontal-align: right;
 	vertical-align: center;
+	height: 100%;
 	flow-children: down;
 	margin-left: 10px;
 	visibility: collapse;
@@ -447,22 +422,63 @@
 
 #HeroAbilitiesPanel {
 	horizontal-align: center;
+	margin-top: 70px;
 	flow-children: right;
 }
 
 .PickedHeroAbility {
-	height: 68px;
-	width: 68px;
+	height: 67px;
+	width: 67px;
 	margin-left: 1px;
 	margin-right: 1px;
 	border-radius: 10px;
+}
+
+#RandomButtonContainer {
+	margin-left: 40px;
+	width: 160px;
+	height: 100%;
+	flow-children: down;
+}
+
+#RandomButtonPanel {
+	vertical-align: center;
+	margin-top: 50px;
+	height: 120px;
+	flow-children: down;
+}
+
+/* 'Pick random hero' button
+=================================================================*/
+#RandomPickBtnTxt {
+	horizontal-align: center;
+	margin-top: 7px;
+	color: #FFFFFF;
+	font-size: 30px;
+	font-family: "Radiance";
+}
+
+#RandomPickBtnImage {
+	width: 128px;
+	height: 72px;
+	border-radius: 15px;
+	vertical-align: center;
+	horizontal-align: center;
+	saturation: 0.7;
+}
+
+#RandomPickBtnImage:hover {
+	box-shadow: fill #FF7800FF -2px -2px 4px 4px;
+	saturation: 1.0;
 }
 
 /* 'Confirm pick' button
 =================================================================*/
 #PickHeroBtn {
 	horizontal-align: center;
-	margin-top: 15px;
+	vertical-align: bottom;
+	margin-top: 5px;
+	margin-bottom: 20px;
 
 	box-shadow: fill #00000066 -4px -4px 8px 8px;
 	background-color: gradient( linear, 0% 0%, 0% 100%, from( #5AA15E ), to( #87d69533 ) );

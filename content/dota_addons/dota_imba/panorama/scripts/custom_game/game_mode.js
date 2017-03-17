@@ -42,6 +42,7 @@ function InitializeUI() {
 			$('#TowerUpgradesToggle').SetSelected(true);
 		} else if (map_info.map_display_name == "imba_custom") {
 			$('#TowerUpgradesToggle').SetSelected(true);
+			$('#FranticToggle').style.visibility = 'visible';
 		} else if (map_info.map_display_name == "imba_arena") {
 			$('#game_options_game_mode_title').text = $.Localize( "#imba_gamemode_name_arena_mode" );
 			$('#KillsToEndOptionsPanel').style.visibility = 'visible';
@@ -105,6 +106,7 @@ function SetGameOptions()
 		"is_host": CheckForHostPrivileges(),
 		"modes": {
 			"all_random": $('#AllRandomToggle').checked,
+			"frantic_mode": $('#FranticToggle').checked,
 			"tower_upgrades": $('#TowerUpgradesToggle').checked,
 			"bounty_multiplier": $('#GoldExpOptionsDropdown').GetSelected().id,
 			"creep_power": $('#CreepPowerOptionsDropdown').GetSelected().id,

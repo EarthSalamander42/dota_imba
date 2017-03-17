@@ -1,0 +1,37 @@
+<root>
+	<!-- Include stylesheets -->
+	<styles>
+		<include src="file://{resources}/styles/custom_game/arena_topbar.css" />
+	</styles>
+
+	<!-- Include script files -->
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/arena_topbar.js" />
+	</scripts>
+
+	<Panel hittest="false" style="width: 100%; height: 100%;">
+		<Panel id="ArenaTopBarContainer">
+			<Panel id="RadiantContainer">
+				<Image id="RadiantPipImg" src="file://{images}/custom_game/radiant_pip.png"/>
+				<Panel id="RadiantProgressBarPanel">
+					<ProgressBar id="RadiantProgressBar" value="20" max="20"/>
+					<ProgressBar id="RadiantTakenProgressBar" value="20" max="20"/>
+				</Panel>
+				<Label id="RadiantScoreLabel" text="0" />
+			</Panel>
+			<Panel id="CenterContainer">
+				<Label id="CenterObjectiveTitle" text="#imba_arena_points_objective"/>
+				<Label id="CenterObjectivePoints" text="999"/>
+			</Panel>
+			<Panel id="DireContainer">
+				<Label id="DireScoreLabel" text="0" />
+				<Panel id="DireProgressBarPanel">
+					<ProgressBar id="DireProgressBar" value="20" max="20"/>
+					<ProgressBar id="DireTakenProgressBar" value="20" max="20"/>
+				</Panel>
+				<Image id="DirePipImg" src="file://{images}/custom_game/dire_pip.png"/>
+			</Panel>
+		</Panel>
+		
+	</Panel>
+</root>

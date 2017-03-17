@@ -155,6 +155,7 @@ function SwitchToHeroPreview( heroName ) {
 	$("#PickHeroBtn").style.visibility = 'collapse';
 	$('#PickList').style.visibility = 'collapse';
 	$('#PostPickScreen').style.visibility = 'visible';
+	$('#RandomButtonContainer').style.visibility = 'collapse';
 }
 
 /* Select a hero, called when a player clicks a hero panel in the layout */
@@ -217,6 +218,8 @@ function PickHero() {
 		var selected_panel = $("#PickList").FindChildTraverse(selectedHero)
 		if (selected_panel.BHasClass( "taken" ) == false) {
 			GameEvents.SendCustomGameEventToServer( "hero_selected", { HeroName: selectedHero, HasRandomed: false} );
+			//Hide the random button
+			$("#RandomPickBtn").style.visibility = 'collapse';
 		}
 	}
 }
@@ -250,6 +253,7 @@ function RepickHero() {
 		$('#HeroPreview').DeleteAsync( 0.0 );
 		$('#PickList').style.visibility = 'visible';
 		$('#PostPickScreen').style.visibility = 'collapse';
+		$('#RandomButtonContainer').style.visibility = 'visible';
 	}
 }
 
@@ -312,7 +316,8 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 (function () {
 
 	// If this player is a spectator, just kill the whole pick screen
-	if ( Players.IsSpectator( Players.GetLocalPlayer() ) ) {
+	var localTeam = Players.GetTeam(Players.GetLocalPlayer())
+	if ( localTeam != 2 && localTeam != 3 ) {
 		$('#Background').GetParent().DeleteAsync( 0.0 );
 
 	// Else, do pick screen stuff
@@ -347,6 +352,7 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
 		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
 		var kills_to_end = CustomNetTables.GetTableValue("game_options", "kills_to_end");
+		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
 		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
 		$("#RespawnTimerValue").text = respawn_multiplier[1] + "%";
 		$("#InitialGoldValue").text = initial_gold[1];
@@ -370,6 +376,13 @@ function PlayerReconnected(player_id, picked_heroes, player_picks, pick_state, r
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_2' );
 		} else if (creep_power[1] == 3) {
 			$("#CreepPowerValue").text = $.Localize( '#imba_gamemode_settings_power_3' );
+		}
+
+		if (map_info.map_display_name == "imba_custom") {
+			$("#GameOptionsLabelPanel8").style.visibility = 'visible';
+			if(frantic_mode) {
+				$("#FranticModeValue").text = $.Localize( '#imba_gamemode_game_options_frantic_enabled' );
+			}
 		}
 
 		// If All Random is enabled, pick a random hero

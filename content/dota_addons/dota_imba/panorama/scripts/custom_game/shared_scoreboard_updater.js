@@ -119,30 +119,86 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			{
 				var itemPanelName = "_dynamic_item_" + i;
 				var itemPanel = playerItemsContainer.FindChild( itemPanelName );
+				
+				var itemInfo = playerItems.inventory[i];
+
 				if ( itemPanel === null )
 				{
-					itemPanel = $.CreatePanel( "Image", playerItemsContainer, itemPanelName );
+					//Needs DOTAItemImage to be able to load from flash3 images (similar to those used for dota shop, hence reusing existing resources)
+					itemPanel = $.CreatePanel( "DOTAItemImage", playerItemsContainer, itemPanelName );
 					itemPanel.AddClass( "PlayerItem" );
+				}else{
+					itemPanel.RemoveClass( "RawImageBugFix" );
 				}
 
-				var itemInfo = playerItems.inventory[i];
+				var itemImagePath = "";
+
 				if ( itemInfo )
 				{
-					var item_image_name = "file://{images}/items/" + itemInfo.item_name.replace( "item_", "" ) + ".png"
 					if ( itemInfo.item_name.indexOf( "recipe" ) >= 0 )
 					{
-						item_image_name = "file://{images}/items/recipe.png"
+						itemImagePath = "file://{images}/items/recipe.png";
 					}
-					else if ( itemInfo.item_name.indexOf( "imba" ) >= 0 )
+					else
 					{
-						item_image_name = "file://{images}/items/" + itemInfo.item_name.replace( "item_imba_", "" ) + ".png"
+						var item_image_name = itemInfo.item_name.replace( "item_", "" );
+						if ( item_image_name.indexOf( "imba" ) >= 0 )
+						{
+							//Some imba items have same base image
+							switch(item_image_name){
+								case "imba_dagon":
+								case "imba_dagon_2":
+								case "imba_dagon_3":
+								case "imba_dagon_4":
+								case "imba_dagon_5":
+								case "imba_force_staff":
+								case "imba_cyclone":
+								case "imba_ring_of_basilius":
+								case "imba_null_talisman":
+								case "imba_wraith_band":
+								case "imba_bracer":
+								case "imba_poor_mans_shield":
+								case "imba_pers":
+								case "imba_refresher":
+								case "imba_black_king_bar":
+								case "imba_blade_mail":
+								case "imba_hood_of_defiance":
+								case "imba_basher":
+								case "imba_manta":
+								case "imba_ethereal_blade":
+								case "imba_orb_of_venom":
+								case "imba_ring_of_aquila":
+									//Reference to base image
+									item_image_name = item_image_name.replace("imba_", "");
+									itemImagePath = "file://{images}/items/" + item_image_name + ".png";
+								break;
+								case "imba_power_treads_2":
+									//Reference to image that does not match with its name
+									itemImagePath = "raw://resource/flash3/images/items/custom/imba_power_threads.png";
+								break;
+								case "item_imba_shadow_blade":
+									//Reference to image that does not match with its name
+									itemImagePath = "raw://resource/flash3/images/items/custom/imba_invis_sword.png";
+								break;
+								default:
+									//Reference to custom image
+									itemImagePath = "raw://resource/flash3/images/items/custom/" + item_image_name + ".png";
+								break;
+							}
+
+							//Bug fix for flash image display
+							if(itemImagePath.indexOf("raw://") == 0){
+								itemPanel.AddClass( "RawImageBugFix" );
+							}
+						}
+						else
+						{
+							itemImagePath = "file://{images}/items/" + item_image_name + ".png";
+						}
 					}
-					itemPanel.SetImage( item_image_name );
 				}
-				else
-				{
-					itemPanel.SetImage( "" );
-				}
+
+				itemPanel.SetImage( itemImagePath );
 			}
 		}
 	}
