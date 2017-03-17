@@ -34091,6 +34091,443 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Slardar's Guardian Sprint
+	//=================================================================================================================
+	"imba_slardar_guardian_sprint"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"				
+		"AbilityTextureName"			"slardar_sprint"		
+		"ScriptFile"					"hero/hero_slardar"		
+		"MaxLevel"						"7"				
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_slardar/slardar_sprint.vpcf"									
+			"particle"		"particles/hero/slardar/slardar_foward_propel.vpcf"
+			"soundfile"		"soundevents/game_sounds_creeps.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"						
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_bonus_pct"			"20 28 36 44 44 44 44"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_amp_pct"		"15 15 15 15 10 5 0"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"12"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"400"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"velocity"				"1200"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_duration"			"3"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"-18 -20 -22 -24 -28 -32 -36"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.5"
+			}
+			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"180"
+			}
+			
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 75 100 125 150 175 200"
+			}
+			
+			"11"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"rip_current_cd"		"2.5"
+			}
+			
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"sprint_cd"				"5"
+			}
+			
+			"13"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"search_radius"			"148"
+			}
+			
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_speed_rain_pct"		"15"
+			}
+			
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction_rain"	"10"
+			}
+		}
+	}	
+	
+	
+	//=================================================================================================================
+	// Slardar's Slithereen Crush
+	//=================================================================================================================
+	"imba_slardar_slithereen_crush"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"slardar_slithereen_crush"		
+		"ScriptFile"					"hero/hero_slardar"		
+		"MaxLevel"						"7"				
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_slardar/slardar_crush_start.vpcf"
+			"particle"		"particles/units/heroes/hero_slardar/slardar_crush.vpcf"
+			"particle"		"particles/units/heroes/hero_slardar/slardar_crush_entity.vpcf"
+			"particle"		"particles/status_fx/status_effect_slardar_crush.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"						
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.35"		
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8"						
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"80 95 105 115 120 125 130"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_inc_rain_pct"	"50"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.5 1.75 2 2.25 2.35 2.45 2.55"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"2"
+			}
+			
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"-20"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"as_slow"				"-20"
+			}
+			
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"75 125 175 225 250 275 300"
+			}
+			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"royal_break_duration"	"8"
+			}
+			
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"royal_break_attacks"	"3 3 3 3 4 5 6"
+			}
+		}		
+	}
+	
+	//=================================================================================================================
+	// Slardar's Bash of the Deep
+	//=================================================================================================================
+	"imba_slardar_bash_of_the_deep"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																				
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"		
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
+		"AbilityTextureName"			"slardar_bash"		
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		"ScriptFile"					"hero/hero_slardar"
+		"FightRecapLevel"				"1"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"						
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance_pct"		"10 15 20 25 25 25 25"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"60 80 100 120 130 140 150"
+			}
+			
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_stun_duration"	"1"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_duration_mult"	"2"
+			}
+			
+			"05"
+			{	
+				"var_type"				"FIELD_FLOAT"
+				"extend_duration"		"1"
+				"LinkedSpecialBonus"	"special_bonus_imba_slardar_3"
+			}
+			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_smack"			"20 20 20 20 40 60 80"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Slardar's Corrosive Haze
+	//=================================================================================================================
+	"imba_slardar_corrosive_haze"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																				
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"		
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"	
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityTextureName"			"slardar_amplify_damage"		
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"ScriptFile"					"hero/hero_slardar"
+		"FightRecapLevel"				"1"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.35"		
+		"AbilityCastRange"				"700"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"						
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_slardar/slardar_amp_damage.vpcf"
+			"particle"		"particles/hero/slardar/slardar_slip_up.vpcf"
+			"particle"		"particles/hero/slardar/slardar_rain_cloud_status_effect.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"						
+			"soundfile"		"soundevents/voscripts/game_sounds_vo_slardar.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"20"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"armor_reduction"				"10 15 20 23 26 30"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slip_up_chance_pct"			"12 14 16 19 22 25"
+				"LinkedSpecialBonus"			"special_bonus_imba_slardar_4"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slip_up_duration"				"2"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slip_up_ms_loss_pct"			"75"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slip_up_damage_negation"		"-100"
+			}
+			
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"rain_cloud_stunned_amp_pct"	"30"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Slardar's Rain Cloud
+	//=================================================================================================================
+	"imba_slardar_rain_cloud"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"																						
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+		"AbilityTextureName"			"custom/slardar_rain_cloud"		
+		"MaxLevel"						"1"		
+		"ScriptFile"					"hero/hero_slardar"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"					"particles/hero/slardar/slardar_rain_cloud.vpcf"			
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"velocity_pct"				"85"
+			}
+			
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"aura_radius"				"500"
+			}
+			
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_speed_up_1"		"900"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed_up_1_multiplier"		"2.5"				
+			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_speed_up_2"		"1500"
+			}
+			
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed_up_2_multiplier"		"3"
+			}
+		}
+	}
+
 	//////////////////////////////
 	// CUSTOM TALENTS
 	//////////////////////////////
@@ -35981,6 +36418,187 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"                     "15"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Slardar Talents 
+    //=================================================================================================================
+    "special_bonus_imba_slardar_1" //Rip Current land radius and damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "damage"                    "50"
+            }
+
+            "02"
+            {
+            	"var_type"					"FIELD_INTEGER"
+            	"radius"					"125"
+            }
+        }
+    } 
+    
+    "special_bonus_imba_slardar_2" //Sprinting through units slows their attack speed
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "60"
+            }
+        }
+    }  
+    
+    "special_bonus_imba_slardar_3" //Forceful Smack duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "0.25"
+            }
+        }
+    }   
+    
+    "special_bonus_imba_slardar_4" //Slipstream miss chance increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "12"
+            }
+        }
+    } 
+    
+    "special_bonus_imba_slardar_5" //Rip Current can always be cast without needing a unit
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+    
+    "special_bonus_imba_slardar_6" //Casts a second Slithereen Crush after a second delay
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }    
+    
+    "special_bonus_imba_slardar_7" //Corrosive Haze now applies to all targets
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"	                "350"
+            }
+
+            "02"
+            {
+            	"var_type"					"FIELD_INTEGER"
+            	"armor_loss_pct"			"50"
+            }
+        }
+    }  
+    
+    "special_bonus_imba_slardar_8" //Corrosive Haze decreases armor on physical instances
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "armor_per_stack"  			"3"
+            }
+
+            "02"
+            {
+            	"var_type"					"FIELD_INTEGER"
+            	"max_stacks"				"10"
             }
         }
     }
