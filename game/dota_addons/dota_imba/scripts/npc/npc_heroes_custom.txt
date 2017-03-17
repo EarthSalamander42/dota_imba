@@ -2222,10 +2222,9 @@
 		"Ability1"					"imba_slardar_guardian_sprint"
 		"Ability2"					"imba_slardar_slithereen_crush"
 		"Ability3"					"imba_slardar_bash_of_the_deep"
-		"Ability5"					"imba_slardar_corrosive_haze"
 		"Ability4"					"imba_slardar_rain_cloud"
+		"Ability5"					"imba_slardar_corrosive_haze"
 		
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_slardar_1"
 		"Ability11"					"special_bonus_imba_slardar_2"
 		"Ability12"					"special_bonus_imba_slardar_3"

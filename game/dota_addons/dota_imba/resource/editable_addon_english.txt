@@ -167,6 +167,7 @@
 		"npc_imba_hero_lina"																"Lina (IMBA)"
 		"npc_imba_hero_lion"																"Lion (IMBA)"
 		"npc_imba_hero_luna"																"Luna"
+		"npc_imba_hero_lycan"																"Lycan (IMBA)"
 		"npc_imba_hero_magnataur"															"Magnus (IMBA)"
 		"npc_imba_hero_medusa"																"Medusa"
 		"npc_imba_hero_meepo"																"Meepo"
@@ -196,7 +197,7 @@
 		"npc_imba_hero_nevermore"															"Shadow Fiend (IMBA)"
 		"npc_imba_hero_shadow_shaman"														"Shadow Shaman"
 		"npc_imba_hero_skywrath_mage"														"Skywrath Mage (IMBA)"
-		"npc_imba_hero_slardar"																"Slardar"
+		"npc_imba_hero_slardar"																"Slardar (IMBA)"
 		"npc_imba_hero_slark"																"Slark"
 		"npc_imba_hero_silencer"															"Silencer"
 		"npc_imba_hero_sniper"																"Sniper (IMBA)"
@@ -281,6 +282,7 @@
 		"npc_dota_hero_lina"																"Lina (IMBA)"
 		"npc_dota_hero_lion"																"Lion (IMBA)"
 		"npc_dota_hero_luna"																"Luna"
+		"npc_dota_hero_lycan"																"Lycan (IMBA)"
 		"npc_dota_hero_magnataur"															"Magnus (IMBA)"
 		"npc_dota_hero_medusa"																"Medusa"
 		"npc_dota_hero_meepo"																"Meepo"
@@ -310,7 +312,7 @@
 		"npc_dota_hero_nevermore"															"Shadow Fiend (IMBA)"
 		"npc_dota_hero_shadow_shaman"														"Shadow Shaman"
 		"npc_dota_hero_skywrath_mage"														"Skywrath Mage (IMBA)"
-		"npc_dota_hero_slardar"																"Slardar"
+		"npc_dota_hero_slardar"																"Slardar (IMBA)"
 		"npc_dota_hero_slark"																"Slark"
 		"npc_dota_hero_silencer"															"Silencer"
 		"npc_dota_hero_sniper"																"Sniper (IMBA)"
@@ -1541,74 +1543,74 @@
 		"DOTA_Tooltip_modifier_imba_finger_of_death_kill"									"Trigger Finger"
 		"DOTA_Tooltip_modifier_imba_finger_of_death_kill_Description"						"You have just killed a hero! Finger of Death cooldown reset, mana cost increased."
 
+		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge"										"Wolf Pack"
+		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"							"Whenever a wolf dies, a stack is consumed and another wolf joins Lycan."
+
+		"DOTA_Tooltip_modifier_imba_howl_buff"												"Howl"
+		"DOTA_Tooltip_modifier_imba_howl_buff_Description"									"Attack damage, move speed and maximum health increased. Phased if applied at night."
+
+		"DOTA_Tooltip_modifier_imba_feral_impulse"											"Feral Impulse"
+		"DOTA_Tooltip_modifier_imba_feral_impulse_Description"								"Attack damage and health regeneration increased."
+
+		"DOTA_Tooltip_modifier_imba_shapeshift"												"Shapeshift"
+		"DOTA_Tooltip_modifier_imba_shapeshift_Description"									"Unslowable, and moving beyond normal maximum speed. Attacks have a chance to crit."
+
+		"DOTA_Tooltip_modifier_imba_shapeshift_transform"									"Shapeshift"
+		"DOTA_Tooltip_modifier_imba_shapeshift_transform_Description"						"Transformed into a wolf."
+
+		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit"								"Unbound Savagery"
+		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit_Description"					"Next attack will be a guaranteed critical hit."
+
+		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves"										"Pack Tactics"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves_Description"							"Increased damage for each successful kill as a pack."
+
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan"										"Pack Tactics"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_Description"							"Increased damage for each successful kill as a pack. Each stack reduces Shapeshift cooldown by 1 second."
+
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent"								"Pack tactics cooldown"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"					"The pack has recently hunted! Cannot benefit from Pack tactics for the duration."
+
 		"DOTA_Tooltip_modifier_imba_arcane_int_stack"										"Arcane Magic"
 		"DOTA_Tooltip_modifier_imba_arcane_int_stack_Description"							"Intelligence and spell intelligence multiplier increased for each cast."
-		
+
 		"DOTA_Tooltip_modifier_imba_concussive_shot_slow"									"Ghastly Eyrie"
 		"DOTA_Tooltip_modifier_imba_concussive_shot_slow_Description"						"Slowed. Staying in the AoE will force you to shot Concussive Shots at your teammates."
-		
+
 		"DOTA_Tooltip_modifier_imba_ancient_seal_silence"									"Ancient Seal"
-		"DOTA_Tooltip_modifier_imba_ancient_seal_silence_Description"						"Silenced and suffers from reduced magic resistance. Spells cast on you by Skywrath increase the seal's duration."
+		"DOTA_Tooltip_modifier_imba_ancient_seal_silence_Description"						"Silenced, reduced magic resistance. Spells cast on you by Skywrath increase the seal's duration."
 
 		"DOTA_Tooltip_modifier_imba_guardian_sprint_buff"									"Guardian Sprint"
 		"DOTA_Tooltip_modifier_imba_guardian_sprint_buff_Description"						"Phased and gaining bonus move speed."		
-		
-		"DOTA_Tooltip_modifier_imba_rip_current_stun"										"Rip Current Stun"
-		"DOTA_Tooltip_modifier_imba_rip_current_stun_Description"							"Stunned by Rip Current."
-		
-		"DOTA_Tooltip_modifier_imba_rip_current_slow"										"Rip Current Slow"
+
+		"DOTA_Tooltip_modifier_imba_rip_current_stun"										"Rip Current"
+		"DOTA_Tooltip_modifier_imba_rip_current_stun_Description"							"Stunned."
+
+		"DOTA_Tooltip_modifier_imba_rip_current_slow"										"Rip Current"
 		"DOTA_Tooltip_modifier_imba_rip_current_slow_Description"							"Slowed by Rip Current."
-		
-		"DOTA_Tooltip_modifier_imba_slithereen_crush_stun"									"Slithereen Crush Stun"
-		"DOTA_Tooltip_modifier_imba_slithereen_crush_stun_Description"						"Stunned by Slithereen Crush."
-		
-		"DOTA_Tooltip_modifier_imba_slithereen_crush_slow"									"Slithereen Crush Slow"
-		"DOTA_Tooltip_modifier_imba_slithereen_crush_slow_Description"						"Slowed by Slithereen Crush."
-		
+
+		"DOTA_Tooltip_modifier_imba_slithereen_crush_stun"									"Slithereen Crush"
+		"DOTA_Tooltip_modifier_imba_slithereen_crush_stun_Description"						"Stunned."
+
+		"DOTA_Tooltip_modifier_imba_slithereen_crush_slow"									"Slithereen Crush"
+		"DOTA_Tooltip_modifier_imba_slithereen_crush_slow_Description"						"Movement speed slowed."
+
 		"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break"							"Royal Break"
 		"DOTA_Tooltip_modifier_imba_slithereen_crush_royal_break_Description"				"Unable to evade or block attacks."
-		
-		"DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun"									"Bash of The Deep Stun"
-		"DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun_Description"						"Stunned, bashed, ON YOUR FACE!"
-		
+
+		"DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun"									"Bash of The Deep"
+		"DOTA_Tooltip_modifier_imba_bash_of_the_deep_stun_Description"						"Stunned, bashed, IN YOUR FACE!"
+
 		"DOTA_Tooltip_modifier_imba_rain_cloud_buff"										"Rain Cloud"
-		"DOTA_Tooltip_modifier_imba_rain_cloud_buff_Description"							"Slardar's skills are stronger while under the Rain Cloud."
-		
+		"DOTA_Tooltip_modifier_imba_rain_cloud_buff_Description"							"Slardar's skills are stronger under the Rain Cloud."
+
 		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff"									"Corrosive Haze"
-		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_Description"						"Granting vision and suffering from reduced armor."
+		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_Description"						"Reduced armor. Visible to the enemy team."
 
 		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary"						"Corrosive Haze"
-		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary_Description"			"Granting vision and suffering from reduced armor."
-		
+		"DOTA_Tooltip_modifier_imba_corrosive_haze_debuff_secondary_Description"			"Reduced armor. Visible to the enemy team."
+
 		"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff"								"Slipstream"
-		"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff_Description"					"Losing a huge amount of move speed."
-
-		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge"										"Pack of Wolves"
-		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"							"Whenever a wolf dies, a stack is consumed in order to respawn a wolf near Lycan's location."
-		
-		"DOTA_Tooltip_modifier_imba_howl_buff"												"Howl"
-		"DOTA_Tooltip_modifier_imba_howl_buff_Description"									"Attack damage, move speed and maximum health increased. Phased if applied at night."
-		
-		"DOTA_Tooltip_modifier_imba_feral_impulse"											"Feral Impulse"
-		"DOTA_Tooltip_modifier_imba_feral_impulse_Description"								"Attack damage and health regeneration increased."
-		
-		"DOTA_Tooltip_modifier_imba_shapeshift"												"Shapeshift"
-		"DOTA_Tooltip_modifier_imba_shapeshift_Description"									"Gains insanely fast move speed, can't be slowed. Gains critical strikes."
-		
-		"DOTA_Tooltip_modifier_imba_shapeshift_transform"									"Shapeshift"
-		"DOTA_Tooltip_modifier_imba_shapeshift_transform_Description"						"Transformed into a wolf."
-		
-		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit"								"Wrath of the Claw"
-		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit_Description"					"Next attack will be a guaranteed critical."
-		
-		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves"										"Wolfsbane"
-		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves_Description"							"Increased damage for each successful kill as a pack."
-		
-		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan"										"Wolfsbane"
-		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_Description"							"Increased damage for each successful kill as a pack. Each stack reduces Shapeshift cooldown by 1 second."
-
-		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent"								"Wolfsbane Prevention"
-		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"					"The pack has recently hunted! Cannot get stacks of Wolfsbane for the duration."
+		"DOTA_Tooltip_modifier_imba_corrosive_haze_slip_debuff_Description"					"Movement speed greatly slowed."
 
 		"DOTA_Tooltip_modifier_imba_arcane_curse_debuff"									"Arcane Curse"
 		"DOTA_Tooltip_modifier_imba_arcane_curse_debuff_Description"						"Slowed and taking damage. Casting spells will extend the debuff's duration."
@@ -2551,26 +2553,22 @@
 		"DOTA_Tooltip_ability_imba_lion_finger_of_death_cooldown_scepter"					"SCEPTER COOLDOWN:"
 
 		"DOTA_Tooltip_ability_imba_lycan_summon_wolves"										"Summon Wolves"
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"							"Summons wolves to fight with you. The number and level of wolves increase with skill levels. Wolves have various skills that allow them to be a force to be reckoned with, especially when combined with their ruthless leader. As wolves get stronger, their skills increase as well in potency.\n\n<font color='#FF7800'>Eternal Pact:</font> Wolves last until killed. \n<font color='#FF7800'>Pack of Wolves:</font> Lycan gains a charge of Pack of Wolves every %charge_cooldown% seconds, up to a maximum of %max_charges%. Whenever a wolf dies, a stack is consumed and a wolf respawns near Lycan's location. Automatically revives wolves when charges are gained until reaching the maximum wolves count. \n<font color='#FF7800'>Wolf Among Wolves:</font> Wolves' health increase for every level Lycan has when they are spawned." 
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"							"Summons %wolves_count% wolves to fight with you. Wolves have passive evasion and invisibility, and their abilities and stats improve with their level.\n<font color='#FF7800'>The pack is for life:</font> wolves last until killed.\n<font color='#FF7800'>Wolf pack:</font> Lycan gains a charge of Wolf Pack every %charge_cooldown% seconds, up to a maximum of %max_charges%. Whenever a wolf dies, a stack is consumed and the wolf respawns near Lycan's location.\n<font color='#FF7800'>Alpha's leadership:</font> wolves gain bonus health based on Lycan's level." 
 		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Note0"								"Automatically revives wolves whenever there is a charge available, until the maximum of wolves is reached."
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Lore"								"The very enchantment that twisted his being also summons canine familiars."
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolves_count"						"NUMBER OF WOLVES:"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Lore"								"The very enchantment that twisted Banehallow's being also summons canine familiars."
 		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolf_type"							"WOLF LEVEL:"
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_HP_bonus_per_lycan_level"			"HEALTH INCREASE:"
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_max_charges"							"MAX CHARGES:"
-		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_charge_cooldown"						"CHARGE COOLDOWN:"
-		
-		"DOTA_Tooltip_ability_imba_lycan_wolfsbane"											"Wolfsbane"
-		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"								"Passively increases Lycan and his wolves damage whenever Lycan is present in a kill with at least %minimum_allies_required% allies in a radius of %radius% units. This effect can only occur once every %prevent_modifier_duration% seconds. \n\n<font color='#FF7800'>Full Moon Approaches:</font> Also decreases Lycan Shapeshift cooldown for each stack of Wolfsbane. \n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Wolfsbane now grants damage to any allied hero and any player controlled creep. Lycan doesn't have to be present in a kill to gain stacks, but the minimum allies is still required."
-		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"									"Lycan himself is not counted as an ally when counting nearby allies, including when he holds a scepter."
-		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"									"Lycan has devoted his life to the wolves that has adopted him to their pack, and as one, they hunt their prey. They hunt, with Lycan as their true Alpha Wolf. They hunt, and shall never stop." 
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_HP_bonus_per_lycan_level"			"BONUS HEALTH:"
+
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane"											"Pack tactics"
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"								"Passively increases Lycan and his wolves' damage whenever Lycan is near a kill with at least %minimum_allies_required% allies in a %radius% radius. This effect can only occur once every %prevent_modifier_duration% seconds.\n<font color='#FF7800'>Full moon:</font> also decreases Shapeshift's cooldown with each stack of Pack Tactics.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Now grants damage to all allied heroes and player controlled creeps. Lycan no longer has to be present in a kill for Pack Tactics to trigger, but the minimum amount of allies is still required."
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"									"Lycan himself is ignored for the minimum ally count requirement, even when he holds a scepter."
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"									"Lycan has devoted his life to the wolves that adopted him into their pack. Adapting his tactics to the neverending hunt in the Ancients' battlefield was a trivial matter." 
 		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_damage_bonus"							"DAMAGE PER STACK:"
 		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_radius"									"KILL SEARCH RADIUS:"
-		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_scepter_radius"							"SCEPTER KILL SEARCH RADIUS:"		
-		
+
 		"DOTA_Tooltip_ability_imba_lycan_howl"												"Howl"
-		"DOTA_Tooltip_ability_imba_lycan_howl_Description"									"Grants bonus damage, bonus health <font color='#FF7800'>and movement speed</font> to Lycan, all allied heroes and all units under their control. Howl has double effect during night. Lasts %duration% seconds. \n\n<font color='#FF7800'>Night Hunt:</font> When Howl is cast at night, all units and heroes become phased."
-		"DOTA_Tooltip_ability_imba_lycan_howl_Note0"										"Howl ignore lane creeps."
+		"DOTA_Tooltip_ability_imba_lycan_howl_Description"									"Grants bonus damage and health to all allied heroes, as well as all units under their control. Howl's effect is doubled during the night. Lasts for %duration% seconds.\n<font color='#FF7800'>The wolf is at your door:</font> also increases movement speed.\n<font color='#FF7800'>Moon phase:</font> when cast at night, Howl also grants phased movement."
+		"DOTA_Tooltip_ability_imba_lycan_howl_Note0"										"Ignores lane creeps."
 		"DOTA_Tooltip_ability_imba_lycan_howl_Note1"										"Level 40 Howl talent grants +25/25 damage, +5/15 move speed, and +250/125 health to heroes/creeps."
 		"DOTA_Tooltip_ability_imba_lycan_howl_Lore"											"Blood-curdling wolf cries signal to opponents that Banehallow is among them."
 		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_damage_hero"							"HERO DAMAGE BONUS:"
@@ -2579,44 +2577,41 @@
 		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_health_units"							"CREEP HEALTH BONUS:"
 		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_ms_heroes"								"HERO MOVESPEED BONUS:"
 		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_ms_units"								"CREEP MOVESPEED BONUS:"
-		
+
 		"DOTA_Tooltip_ability_imba_lycan_feral_impulse"										"Feral Impulse"
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"							"Increases the HP regeneration and damage of Lycan and all units under his control. \n\n<font color='#FF7800'>Welcome to the Pack:</font> The more units and heroes affected by the aura, the stronger the effects becomes. Heroes grant double the value."
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Note0"								"Lycan is not counted when counting units affected by Feral Impulse."
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"							"Increases the damage and health regeneration of Lycan and all units under his control.\n<font color='#FF7800'>Welcome to the pack:</font> the more units and heroes affected by the aura, the stronger its effects become. Heroes grant double the bonus."
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Note0"								"Lycan is ignored when counting units affected by Feral Impulse."
 		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Lore"								"His animalistic symbiosis with canine kind gives Banehallow enhanced reflexes and hunting capabilities."
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_base_bonus_damage_perc"				"%BASE DAMAGE INCREASE:"
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_damage_inc_per_unit"					"%DAMAGE INCREASE PER ALLY:"
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_health_regen"						"BASE HEALTH REGEN:"		
-		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_regen_inc_per_unit"					"HEALTH REGEN INCREASE PER ALLY:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_base_bonus_damage_perc"				"%DAMAGE BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_damage_inc_per_unit"					"%DAMAGE BONUS PER ALLY:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_health_regen"						"BONUS REGEN:"		
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_regen_inc_per_unit"					"BONUS REGEN PER ALLY:"
 		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_aura_radius"							"RADIUS:"		
-		
+
 		"DOTA_Tooltip_ability_imba_lycan_shapeshift"										"Shapeshift"
-		"DOTA_Tooltip_ability_imba_lycan_shapeshift_Description"							"Lycan assumes his lupine form, granting him and his units critical strikes and added vision at night. During Shapeshift, Lycan and all units under his control move at increased speed, cannot be slowed and have a %crit_chance%%% chance to deal a critical strike, dealing additional damage. \n\n<font color='#FF7800'>Wrath of the Claw:</font> Lycan and allies under his control gain a certain critical for one strike. This certain critical is regained after %certain_crit_cooldown% seconds, as long as Lycan is still in Shapeshift form. Wrath of the Claw also increases bonus damage and lifesteal from damage dealt by Wicked Crunch."
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_Description"							"Lycan assumes his lupine form, granting him and his units immunity to slows, movement speed beyond the normal maximum, bonus night vision and a %crit_chance%%% chance to crit for %crit_damage%%% damage with their attacks.\n<font color='#FF7800'>Unbound savagery:</font> grants Lycan and his units a guaranteed critical on their next attack. This benefit is regained %certain_crit_cooldown% seconds after being used, as long as Lycan is still Shapeshifted."
 		"DOTA_Tooltip_ability_imba_lycan_shapeshift_Lore"									"Forever a slave to his lycanthropy, Banehallow has come to accept his curse, and embrace his own savagery."
 		"DOTA_Tooltip_ability_imba_lycan_shapeshift_duration"								"DURATION:"
 		"DOTA_Tooltip_ability_imba_lycan_shapeshift_night_vision_bonus"						"BONUS NIGHT VISION:"
-		"DOTA_Tooltip_ability_imba_lycan_shapeshift_absolute_speed"							"HASTE SPEED:"
-		"DOTA_Tooltip_ability_imba_lycan_shapeshift_crit_damage"							"%CRITICAL DAMAGE:"		
-		
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_absolute_speed"							"HASTED SPEED:"
+
 		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch"								"Wicked Crunch"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Description"					"Lycan's wolves use an enormously strengthened teeth to crunch on their enemies, distracting it by lowering its attack speed. Every wolf's attack adds a stack of Wicked Crunch to the target, up to a maximum. Whenever Lycan attacks that target, he attacks the wounded area, consuming all stacks and dealing massive bonus damage based on the amount of stacks, and lifestealing 100%% of the bonus damage. \n\n<font color='#FF7800'>Food Chain:</font> Wolves take the meat of their target and chew on it, immediately recovering a fixed amount of health."
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Note0"						"Attack speed is constant across all stacks amounts."			
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Lore"						"As a pack, Wolves have a very specific role. Specifically, those cunning wolves prepare their targets for their master, who then slays it for them."
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_damage_bonus_per_stack"		"BOUNS DAMAGE PER STACK:"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_duration"					"DEBUFF DURATION:"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_max_stacks"					"MAX STACKS:"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_attack_speed_reduction"		"ATTACK SPEED REDUCTION:"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_fixed_lifesteal"				"RECOVER ON HIT:"
-		
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Description"					"Lycan's wolves use their vicious bite to crunch enemies' muscles, lowering their attack speed. Every attack adds a stack of Wicked Crunch to the target, up to %max_stacks%.\n<font color='#FF7800'>Top of the food chain:</font> if Lycan attacks a target with Wicked Crunch stacks, they are all consumed, dealing massive bonus damage, and lifestealing 100%% of that damage.\n<font color='#FF7800'>Savage feast:</font> wolves chew the meat off their targets, recovering %fixed_lifesteal% health with each attack."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Note0"						"Attack speed loss does not depend on stack amount."			
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Lore"						"Wolf packs are incredibly organized, even amidst the chaos of the hunt. Lower ranked wolves will rip apart their prey's flesh, only for the Alpha to feast on the tender meat within."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_damage_bonus_per_stack"		"DAMAGE PER STACK:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_duration"					"DURATION:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_attack_speed_reduction"		"ATTACK SPEED SLOW:"
+
 		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts"							"Hunter Instincts"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Description"				"Adds chance to evade attacks."
-		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Lore"						"Lycan's Wolves are flexible and nimble, trusting their guts and instincts more than anything else in the world. Except, perhaps, for their master."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Description"				"Grants a chance to evade attacks."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Lore"						"Lycan's Wolves are nimble and cunning, surprising many a hero by dodging surefire blows with their sharp instincts."
 		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_evasion"					"%EVASION:"
-		
+
 		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility"								"Invisibility"
-		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Description"					"Allows Wolves to disappear after not attacking for a certain amount of time. Can still be detected with true sight."
-		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Lore"							"Wolves scout silently, stalking their prey until the moment to strike arrives."
-		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_fade_time"					"FADE TIME:"		
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Description"					"Allows Wolves to disappear after not attacking for a certain amount of time. Detectable with true sight."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Lore"							"Wolves are silent scouts, stalking their prey until the moment to strike arrives."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_fade_time"					"FADE TIME:"
 
 		"DOTA_Tooltip_ability_imba_magnus_shockwave"										"Shockwave"
 		"DOTA_Tooltip_ability_imba_magnus_shockwave_Description"							"Magnus sends out a wave of force, damaging enemy units in a line.\n<font color='#FF7800'>Resonate:</font> Up to %max_secondary% enemies hit by shockwave will spawn 2 secondary shockwaves.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Resonate now spawns 4 secondary shockwaves instead of 2."
@@ -3299,18 +3294,15 @@
 		"DOTA_Tooltip_ability_imba_skywrath_mage_mystic_flare_explosion_radius"				"FLARE NOVA BASE RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint"									"Guardian Sprint"
-		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Description"						"Slardar slithers ahead, moving significantly faster and passing through units, though becoming more vulnerable to damage.\n<font color='#FF7800'>Rip Current:</font> While sprinting, Guardian Sprint is replaced with Rip Current, a new skill that allows him to propel forward. Rip Current can only be used while Slardar is moving through a unit, allied or enemy. Enemy units in the landing area take damage, become stunned and are slowed for %slow_duration% seconds. \n<font color='#5284BA'>Rain Cloud (Aghnaim upgrade):</font> When Slardar is drenched in water from Rain Cloud, he gains a %ms_speed_rain_pct%% increase move speed and decreases damage taken by %damage_reduction_rain%%." 
+		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Description"						"Slardar slithers to the van. For %duration% seconds, move significantly faster and phase through units, but become more vulnerable to damage.\n<font color='#FF7800'>Slippery fish:</font> while sprinting, Guardian Sprint is replaced by Rip Current, a skill that allows Slardar to propel himself forward. Can only be used while moving through an unit. Enemy units in %radius% radius of the landing point are stunned for %stun_duration% seconds, take damage, and are slowed for %slow_duration% seconds.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> while inside your Rain Cloud, gain %ms_speed_rain_pct%%% movement speed and decrease damage taken by %damage_reduction_rain%%%." 
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_Lore"							"As Slardar has made the transition from the Deeps, it has been necessary to use his powerful tail for sprinting instead of swimming."
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_bonus_pct"					"%INCREASED MOVE SPEED:"
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage_amp_pct"					"%DAMAGE AMPLIFICATION:"
-		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_duration"						"SPRINT DURATION:"		
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_ms_slow_pct"						"%RIP CURRENT SLOW:"
-		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_stun_duration"					"RIP CURRENT STUN DURATION:"
-		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_radius"							"RIP CURRENT RADIUS:"
 		"DOTA_Tooltip_ability_imba_slardar_guardian_sprint_damage"							"RIP CURRENT DAMAGE:"
 		
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush"								"Slithereen Crush"
-		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"					"Slams the ground, stunning and damaging nearby enemy land units. After the stun, the affected units are slowed.\n<font color='#FF7800'>Royal Break:</font> Enemy units hit by Slithereen Crush cannot block or evade for a number of attacks. \n<font color='#5284BA'>Rain Cloud (Aghnaim upgrade):</font> When Slardar is drenched in water from Rain Cloud, the radius of Slithereen Crush is increased by %radius_inc_rain_pct%%." 
+		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Description"					"Slams the ground, stunning and damaging nearby enemies. After the stun, the affected units are slowed.\n<font color='#FF7800'>Aquaman slam:</font> enemies hit by Slithereen Crush are affected by Royal Break, becoming unable to block or evade the next few attacks.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> while inside your Rain Cloud, Slithereen Crush's radius is increased by %radius_inc_rain_pct%%%." 
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_Lore"							"A swift crush of might and water breaks even the toughest of defenses."
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_radius"							"RADIUS:"
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_stun_duration"					"STUN DURATION:"
@@ -3321,20 +3313,17 @@
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_royal_break_duration"			"ROYAL BREAK DURATION:"
 		"DOTA_Tooltip_ability_imba_slardar_slithereen_crush_royal_break_attacks"			"ROYAL BREAK ATTACKS:"
 		
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep"								"Bash of The Deep"
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Description"					"Grants a chance that an attack will do bonus damage and stun an enemy. The duration is doubled against creeps. \n<font color='#FF7800'>Forceful Smack:</font> Attacking an enemy that is stunned from any source smacks the enemy in the face, dealing damage and increasing the source's stun duration. Extending a stun can only apply once per source of stun." 
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note0"							"Cannot extend a stun of any kind of passive Bash, including Abyssal's active."
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note1"							"Extending a stun comes instead of a bash, not additionally."
+		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep"								"Bash of the Deep"
+		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Description"					"Grants a chance that your attacks will do bonus damage and stun the enemy for %hero_stun_duration% second. Duration is doubled against creeps.\n<font color='#FF7800'>Sardine slap:</font> attacking an enemy that is already stunned (from any source) results in increased damage and extends the stun's duration by %extend_duration% second. Can only extend a particular stun once." 
+		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note0"							"Cannot extend stuns from passive bashes, including Abyssal's active."
+		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Note1"							"Stun extension and bonus damage happen in place of a bash, not in addition to it."
 		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_Lore"							"Thieves of the wealth of the Deep Ones meet the brutality of the Slithereen Guard in melee combat."
 		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_chance_pct"				"%BASH CHANCE:"
 		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_bash_damage"					"BASH DAMAGE:"
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_hero_stun_duration"				"HERO STUN DURATION:"
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_creep_duration_mult"			"CREEP DURATION MULTIPLIER:"
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_extend_duration"				"SMACK STUN EXTEND:"
-		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_damage_smack"					"SMACK DAMAGE:"		
+		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_damage_smack"					"SARDINE SLAP DAMAGE:"		
 		
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze"									"Corrosive Haze"
-		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"						"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility. \n<font color='#FF7800'>Slipstream:</font> When an enemy afflicted with Corrosive Haze attacks, it has a chance to slip, completely negating that attack's damage and gaining a debuff which slows it by %slip_up_ms_loss_pct%%. Enemy that is already affected by Slipstream cannot proc it again until the duration ends. \n<font color='#5284BA'>Rain Cloud (Aghnaim upgrade):</font> When Slardar is drenched in water from Rain Cloud, targets afflicted with Corrosive Haze that are also stunned from any source become extremely vulnerable and susceptible to attacks, increasing the damage they take by %rain_cloud_stunned_amp_pct%%." 		
+		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"						"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Tip the scales:</font> enemies are affected by Slipstream, gaining a chance to slip on every attack, completely negating that attack's damage and slowing their movement by %slip_up_ms_loss_pct%%% for %slip_up_duratio% seconds. Enemies already affected by Slipstream cannot proc it again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> while inside your Rain Cloud, enemies affected by Corrosive Haze take %rain_cloud_stunned_amp_pct%%% increased damage from any source while they are stunned." 		
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"								"Even the strongest armor counts for little when left to the brine of the sea."
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"							"DURATION:"
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"					"ARMOR REDUCTION:"
@@ -3342,10 +3331,10 @@
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_slip_up_duration"					"SLIPSTREAM DURATION:"		
 
 		"DOTA_Tooltip_ability_imba_slardar_rain_cloud"										"Rain Cloud"
-		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Description"							"A rain cloud passively chases Slardar, drenching him in seawater that restore his capabilities to their full potential. Slardar's skills become stronger when the Rain Cloud is in close proximity. The Rain Cloud's move speed is %velocity_pct%% of Slardar's. When Slardar's distance from the Rain Cloud is too far, the Rain Cloud's speed vastly increases."
-		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Note0"								"There are three stages of speed for Rain Cloud: Close, medium range and high range. Rain Cloud's speed is multiplied on each stage, until it reaches Slardar."
-		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Lore"									"A fighter of the sea having to fight on the land is a huge disadvantage. But even some drips can return such as a fighter to its glory."
-		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_aura_radius"							"RAIN CLOUD RADIUS:"
+		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Description"							"A rain cloud passively chases Slardar, drenching him in seawater that restores his full potential. Slardar's skills become stronger when below the Rain Cloud. Its movement speed is %velocity_pct%% of Slardar's. If Slardar wanders too far away from the Rain Cloud, it will speed up to catch up with him."
+		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Note0"								"If Slardar wanders even further away (through a teleport scroll, for example), the Rain Cloud becomes even faster, until it nears him again."
+		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_Lore"									"Merfolk are greatly disadvantaged when fighting on dry land, but even a few drops of water can be enough to restore their full potential."
+		"DOTA_Tooltip_ability_imba_slardar_rain_cloud_aura_radius"							"EFFECT RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_nevermore_shadowraze1"									"Shadowraze"
 		"DOTA_Tooltip_ability_imba_nevermore_shadowraze1_Description"						"Razes all enemies in a %radius% unit radius around Shadow Fiend.\n<font color='#FF7800'>Soul frenzy:</font> Hitting the same enemy hero with all three razes in under %combo_modifier_duration% seconds will reset their cooldown. Can only trigger once every %raze_refresh_cooldown% seconds."
@@ -3768,27 +3757,12 @@
 		//=================================================================================================================
 
 		"DOTA_Tooltip_ability_arc_warden_tempest_double_Description"						"Briefly refocusing its fractured elements into a single form, the Arc Warden is able to create a perfect electrical duplication of itself. The duplicate can use all of Arc Warden's current items and spells, except for <font color='#FF0000'>any consumables, Gem of True Sight, Soul of Truth, Moon Shards, Divine Rapiers, or Refresher Orb.</font> The duplicate has seperate item and ability cooldowns."
-		
-		"DOTA_Tooltip_ability_ancient_apparition_chilling_touch_Description"				"A frigid gust enchants allied heroes, granting them bonus magical damage for a given number of physical attacks, while <font color='#FF7800'>increasing</font> their attack speed. Ancient Apparition always receives the buff. Lasts 30 seconds."
 
 		"DOTA_Tooltip_ability_chen_test_of_faith_teleport_Description"						"Teleports an allied or enemy unit back to its base. Creeps are teleported instantly, while Heroes have a delay before teleporting. If cast on Chen, all units controlled by Chen through Holy Persuasion will be teleported to him after a delay."
 
 		"DOTA_Tooltip_ability_gyrocopter_flak_cannon_Description"							"Gyrocopter's attacks hit all enemy units in an area around it for a limited number of attacks.  Only the main target of attacks will receive attack bonuses such as Critical Strike. Lasts 9/12/15/18 seconds."
 
 		"DOTA_Tooltip_ability_naga_siren_mirror_image_Description"							"Creates 2/3/4/5 images of Naga Siren under her control."
-
-		"DOTA_Tooltip_ability_slardar_sprint"												"Slippery Fish"
-
-		"DOTA_Tooltip_ability_slardar_slithereen_crush"										"Aquaman Slam"
-
-		"DOTA_Tooltip_ability_slardar_bash"													"Sardine Slap"
-
-		"DOTA_Tooltip_ability_slardar_amplify_damage"										"Tip the Scales"
-
-		"DOTA_Tooltip_ability_skywrath_mage_mystic_flare_Description"						"Skywrath Mage uses his ultimate magical ability to conjure a precise and violent mystical field that lays waste to his adversaries. Deals massive damage distributed evenly among any Heroes in the area over %duration% seconds.\n\n<font color='#FF7800'>This ability's radius decreases as it is upgraded. Carefully consider if you want to level it up before doing so.</font>\n\nUpgradable by Aghanim's Scepter."
-
-		"DOTA_Tooltip_ability_slardar_sprint_Description"									"Slardar slithers ahead, moving significantly faster and passing through units, while also becoming more resistant to damage."
-		"DOTA_Tooltip_ability_slardar_sprint_bonus_damage"									"%REDUCED DAMAGE TAKEN:"
 
 		"DOTA_Tooltip_ability_weaver_time_lapse_aghanim_description"						"Reduces cooldown, and allows Weaver to cast Time Lapse on allies <font color='#FF7800'>and enemies</font>."
 
@@ -3873,6 +3847,26 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"					"Deadeye passively affects allied heroes as well"
 		"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"					"Marksmanship is no longer disabled"
 
+		// Lycan
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_1"						"+1 Wolves power level"		
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"						"+2%/2 Feral Impulse damage/regen per ally"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_3"						"+12 Howl duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_4"						"+2 Wolfsbane damage per stack"			
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_5"						"+2 Maximum summoned wolves/charges"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_6"						"x2 Wicked Crunch on-hit stacks/max stacks"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_7"						"Increase Howl's potency (details in Howl)"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_8"						"+15 Shapeshift duration"	
+
+		// Slardar
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_1"						"+125 radius and +50 damage to Rip Current"
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_2"						"-60 attack speed when Sprinting on enemies"
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_3"						"+0.25 Forceful Smack duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_4"						"+12% Slipstream miss/trigger chance"					
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_5"						"Rip Current can always be cast when sprinting"		
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_6"						"Casts a second free Slithereen Crush"	
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_7"						"Corrosive Haze applies in AoE for half armor"		
+		"DOTA_Tooltip_ability_special_bonus_imba_slardar_8"						"-3 armor per physical damage on Corrosive Haze"
+
 		// Ursa
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_1"						"+50% Earthshock's Point Blank damage"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_2"						"+50% Fury Swipes's Deep Wound damage"
@@ -3882,26 +3876,6 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_6"						"+100 Enraged Earthshock/Overpower radius"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"						"-120 seconds Territorial Hunter cooldown"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_8"						"+100% skills cooldown rate when Enraged"
-
-		// LYCAN
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_1"					"+1 Wolves power level"		
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"					"+2%/2 Feral Impulse damage/regen per ally"
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_3"					"+12 Howl duration"
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_4"					"+2 Wolfsbane damage per stack"			
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_5"					"+2 Maximum summoned wolves/charges"
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_6"					"x2 Wicked Crunch on-hit stacks/max stacks"
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_7"					"Increase Howl's potency (details in Howl)"
-		"DOTA_Tooltip_ability_special_bonus_imba_lycan_8"					"+15 Shapeshift duration"			
-
-		// SLARDAR
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_1"					"+125 radius and +50 damage to Rip Current"
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_2"					"-60 attack speed when Sprinting on enemies"
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_3"					"+0.25 Forceful Smack duration"
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_4"					"+12% Slipstream miss/trigger chance"					
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_5"					"Rip Current can always be cast when sprinting"		
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_6"					"Casts a second free Slithereen Crush"	
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_7"					"Corrosive Haze applies in AoE for half armor"		
-		"DOTA_Tooltip_ability_special_bonus_imba_slardar_8"					"-3 armor per physical damage on Corrosive Haze"
 
 		//=================================================================================================================
 		// Vanilla talent overrides
@@ -4172,7 +4146,8 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_doom_1"					"+3% Infernal Blade Damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_doom_2"					"Devour Can Target Ancients"
 		"DOTA_Tooltip_Ability_special_bonus_unique_brewmaster"				"+14 Primal Split Unit Armor"
-		"DOTA_Tooltip_Ability_special_bonus_unique_bristleback"				"+10 Max Goo Stacks"
+		"DOTA_Tooltip_Ability_special_bonus_unique_bristleback"				"+4 Max Goo Stacks"
+		"DOTA_Tooltip_Ability_special_bonus_unique_bristleback_2"			"+25 Quill Spray stack damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_furion"					"2x treant HP/damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_phoenix_1"				"+5 Supernova Hit Count"
 		"DOTA_Tooltip_Ability_special_bonus_unique_phoenix_2"				"+1.5s Supernova Stun Duration"
@@ -4190,7 +4165,7 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_abaddon"					"+200 Aphotic Shield Health"
 		"DOTA_Tooltip_Ability_special_bonus_unique_alchemist"				"+7 Acid Spray armor reduction"
 		"DOTA_Tooltip_Ability_special_bonus_unique_axe"						"+100 Battle Hunger DPS"
-		"DOTA_Tooltip_Ability_special_bonus_unique_beastmaster"				"+225 Wild Axes Damage"
+		"DOTA_Tooltip_Ability_special_bonus_unique_beastmaster"				"+240 Wild Axes Damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_clinkz_1"				"+30 Searing Arrows Damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_clinkz_2"				"+70 Strafe Attack Speed"
 		"DOTA_Tooltip_Ability_special_bonus_unique_juggernaut"				"+175 Blade Fury DPS"
@@ -4276,7 +4251,7 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_lone_druid_4"			"-10s Savage Roar Cooldown"
 		"DOTA_Tooltip_Ability_special_bonus_unique_wisp"					"+190 Spirits impact damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_techies"					"+500 Blast Off Damage"
-		"DOTA_Tooltip_Ability_special_bonus_unique_arc_warden"				"+175 Spark Wraith Damage"
+		"DOTA_Tooltip_Ability_special_bonus_unique_arc_warden"				"+250 Spark Wraith Damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_meepo"					"-3s Poof Cooldown"
 		"DOTA_Tooltip_Ability_special_bonus_unique_monkey_king"				"+100% Boundless Strike Crit"
 
