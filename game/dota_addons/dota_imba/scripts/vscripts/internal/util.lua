@@ -1856,8 +1856,8 @@ function ApplyAllTalentModifiers()
 		for k,v in pairs(current_hero_list) do
 			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
 			for i = 1, 8 do
-				local talent_name = "special_bonus_unique_"..hero_name.."_"..i
-				local modifier_name = "modifier_special_bonus_unique_"..hero_name.."_"..i
+				local talent_name = "special_bonus_imba_"..hero_name.."_"..i
+				local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
 				if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
 					v:AddNewModifier(v,v,modifier_name,{})
 				end
@@ -1869,8 +1869,8 @@ end
 
 function CreateEmptyTalents(hero)
 	for i=1,8 do
-		LinkLuaModifier("modifier_special_bonus_unique_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-		local class = "modifier_special_bonus_unique_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
 		load(class)()
 	end
 end
