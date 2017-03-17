@@ -358,6 +358,13 @@
 		"npc_imba_pugna_nether_ward_3"														"Nether Ward"
 		"npc_imba_pugna_nether_ward_4"														"Nether Ward"
 
+		"npc_lycan_wolf1"																	"Wolf Pup"
+		"npc_lycan_wolf2"																	"Wolf"
+		"npc_lycan_wolf3"																	"Dire Wolf"
+		"npc_lycan_wolf4"																	"Alpha Wolf"
+		"npc_lycan_wolf5"																	"Shadow Wolf"
+		"npc_lycan_wolf6"																	"Nightclaw"
+
 		"npc_imba_enigma_eidolon_1"															"Lesser Eidolon"
 		"npc_imba_enigma_eidolon_2"															"Eidolon"
 		"npc_imba_enigma_eidolon_3"															"Greater Eidolon"
@@ -1543,6 +1550,33 @@
 		"DOTA_Tooltip_modifier_imba_ancient_seal_silence"									"Ancient Seal"
 		"DOTA_Tooltip_modifier_imba_ancient_seal_silence_Description"						"Silenced and suffers from reduced magic resistance. Spells cast on you by Skywrath increase the seal's duration."
 
+		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge"										"Pack of Wolves"
+		"DOTA_Tooltip_modifier_imba_lycan_wolf_charge_Description"							"Whenever a wolf dies, a stack is consumed in order to respawn a wolf near Lycan's location."
+		
+		"DOTA_Tooltip_modifier_imba_howl_buff"												"Howl"
+		"DOTA_Tooltip_modifier_imba_howl_buff_Description"									"Attack damage, move speed and maximum health increased. Phased if applied at night."
+		
+		"DOTA_Tooltip_modifier_imba_feral_impulse"											"Feral Impulse"
+		"DOTA_Tooltip_modifier_imba_feral_impulse_Description"								"Attack damage and health regeneration increased."
+		
+		"DOTA_Tooltip_modifier_imba_shapeshift"												"Shapeshift"
+		"DOTA_Tooltip_modifier_imba_shapeshift_Description"									"Gains insanely fast move speed, can't be slowed. Gains critical strikes."
+		
+		"DOTA_Tooltip_modifier_imba_shapeshift_transform"									"Shapeshift"
+		"DOTA_Tooltip_modifier_imba_shapeshift_transform_Description"						"Transformed into a wolf."
+		
+		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit"								"Wrath of the Claw"
+		"DOTA_Tooltip_modifier_imba_shapeshift_certain_crit_Description"					"Next attack will be a guaranteed critical."
+		
+		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves"										"Wolfsbane"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_wolves_Description"							"Increased damage for each successful kill as a pack."
+		
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan"										"Wolfsbane"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_Description"							"Increased damage for each successful kill as a pack. Each stack reduces Shapeshift cooldown by 1 second."
+
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent"								"Wolfsbane Prevention"
+		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"					"The pack has recently hunted! Cannot get stacks of Wolfsbane for the duration."
+
 		"DOTA_Tooltip_modifier_imba_arcane_curse_debuff"									"Arcane Curse"
 		"DOTA_Tooltip_modifier_imba_arcane_curse_debuff_Description"						"Slowed and taking damage. Casting spells will extend the debuff's duration."
 
@@ -2482,6 +2516,74 @@
 		"DOTA_Tooltip_ability_imba_lion_finger_of_death_damage_scepter"						"SCEPTER DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lion_finger_of_death_radius_scepter"						"SCEPTER RADIUS:"
 		"DOTA_Tooltip_ability_imba_lion_finger_of_death_cooldown_scepter"					"SCEPTER COOLDOWN:"
+
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves"										"Summon Wolves"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Description"							"Summons wolves to fight with you. The number and level of wolves increase with skill levels. Wolves have various skills that allow them to be a force to be reckoned with, especially when combined with their ruthless leader. As wolves get stronger, their skills increase as well in potency.\n\n<font color='#FF7800'>Eternal Pact:</font> Wolves last until killed. \n<font color='#FF7800'>Pack of Wolves:</font> Lycan gains a charge of Pack of Wolves every %charge_cooldown% seconds, up to a maximum of %max_charges%. Whenever a wolf dies, a stack is consumed and a wolf respawns near Lycan's location. Automatically revives wolves when charges are gained until reaching the maximum wolves count. \n<font color='#FF7800'>Wolf Among Wolves:</font> Wolves' health increase for every level Lycan has when they are spawned." 
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Note0"								"Automatically revives wolves whenever there is a charge available, until the maximum of wolves is reached."
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_Lore"								"The very enchantment that twisted his being also summons canine familiars."
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolves_count"						"NUMBER OF WOLVES:"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_wolf_type"							"WOLF LEVEL:"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_HP_bonus_per_lycan_level"			"HEALTH INCREASE:"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_max_charges"							"MAX CHARGES:"
+		"DOTA_Tooltip_ability_imba_lycan_summon_wolves_charge_cooldown"						"CHARGE COOLDOWN:"
+		
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane"											"Wolfsbane"
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Description"								"Passively increases Lycan and his wolves damage whenever Lycan is present in a kill with at least %minimum_allies_required% allies in a radius of %radius% units. This effect can only occur once every %prevent_modifier_duration% seconds. \n\n<font color='#FF7800'>Full Moon Approaches:</font> Also decreases Lycan Shapeshift cooldown for each stack of Wolfsbane. \n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Wolfsbane now grants damage to any allied hero and any player controlled creep. Lycan doesn't have to be present in a kill to gain stacks, but the minimum allies is still required."
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Note0"									"Lycan himself is not counted as an ally when counting nearby allies, including when he holds a scepter."
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_Lore"									"Lycan has devoted his life to the wolves that has adopted him to their pack, and as one, they hunt their prey. They hunt, with Lycan as their true Alpha Wolf. They hunt, and shall never stop." 
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_damage_bonus"							"DAMAGE PER STACK:"
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_radius"									"KILL SEARCH RADIUS:"
+		"DOTA_Tooltip_ability_imba_lycan_wolfsbane_scepter_radius"							"SCEPTER KILL SEARCH RADIUS:"		
+		
+		"DOTA_Tooltip_ability_imba_lycan_howl"												"Howl"
+		"DOTA_Tooltip_ability_imba_lycan_howl_Description"									"Grants bonus damage, bonus health <font color='#FF7800'>and movement speed</font> to Lycan, all allied heroes and all units under their control. Howl has double effect during night. Lasts %duration% seconds. \n\n<font color='#FF7800'>Night Hunt:</font> When Howl is cast at night, all units and heroes become phased."
+		"DOTA_Tooltip_ability_imba_lycan_howl_Note0"										"Howl ignore lane creeps."
+		"DOTA_Tooltip_ability_imba_lycan_howl_Note1"										"Level 40 Howl talent grants +25/25 damage, +5/15 move speed, and +250/125 health to heroes/creeps."
+		"DOTA_Tooltip_ability_imba_lycan_howl_Lore"											"Blood-curdling wolf cries signal to opponents that Banehallow is among them."
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_damage_hero"							"HERO DAMAGE BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_damage_units"							"CREEP DAMAGE BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_health_heroes"							"HERO HEALTH BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_health_units"							"CREEP HEALTH BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_ms_heroes"								"HERO MOVESPEED BONUS:"
+		"DOTA_Tooltip_ability_imba_lycan_howl_bonus_ms_units"								"CREEP MOVESPEED BONUS:"
+		
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse"										"Feral Impulse"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Description"							"Increases the HP regeneration and damage of Lycan and all units under his control. \n\n<font color='#FF7800'>Welcome to the Pack:</font> The more units and heroes affected by the aura, the stronger the effects becomes. Heroes grant double the value."
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Note0"								"Lycan is not counted when counting units affected by Feral Impulse."
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_Lore"								"His animalistic symbiosis with canine kind gives Banehallow enhanced reflexes and hunting capabilities."
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_base_bonus_damage_perc"				"%BASE DAMAGE INCREASE:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_damage_inc_per_unit"					"%DAMAGE INCREASE PER ALLY:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_health_regen"						"BASE HEALTH REGEN:"		
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_regen_inc_per_unit"					"HEALTH REGEN INCREASE PER ALLY:"
+		"DOTA_Tooltip_ability_imba_lycan_feral_impulse_aura_radius"							"RADIUS:"		
+		
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift"										"Shapeshift"
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_Description"							"Lycan assumes his lupine form, granting him and his units critical strikes and added vision at night. During Shapeshift, Lycan and all units under his control move at increased speed, cannot be slowed and have a %crit_chance%%% chance to deal a critical strike, dealing additional damage. \n\n<font color='#FF7800'>Wrath of the Claw:</font> Lycan and allies under his control gain a certain critical for one strike. This certain critical is regained after %certain_crit_cooldown% seconds, as long as Lycan is still in Shapeshift form. Wrath of the Claw also increases bonus damage and lifesteal from damage dealt by Wicked Crunch."
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_Lore"									"Forever a slave to his lycanthropy, Banehallow has come to accept his curse, and embrace his own savagery."
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_duration"								"DURATION:"
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_night_vision_bonus"						"BONUS NIGHT VISION:"
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_absolute_speed"							"HASTE SPEED:"
+		"DOTA_Tooltip_ability_imba_lycan_shapeshift_crit_damage"							"%CRITICAL DAMAGE:"		
+		
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch"								"Wicked Crunch"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Description"					"Lycan's wolves use an enormously strengthened teeth to crunch on their enemies, distracting it by lowering its attack speed. Every wolf's attack adds a stack of Wicked Crunch to the target, up to a maximum. Whenever Lycan attacks that target, he attacks the wounded area, consuming all stacks and dealing massive bonus damage based on the amount of stacks, and lifestealing 100%% of the bonus damage. \n\n<font color='#FF7800'>Food Chain:</font> Wolves take the meat of their target and chew on it, immediately recovering a fixed amount of health."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Note0"						"Attack speed is constant across all stacks amounts."			
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_Lore"						"As a pack, Wolves have a very specific role. Specifically, those cunning wolves prepare their targets for their master, who then slays it for them."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_damage_bonus_per_stack"		"BOUNS DAMAGE PER STACK:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_duration"					"DEBUFF DURATION:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_max_stacks"					"MAX STACKS:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_attack_speed_reduction"		"ATTACK SPEED REDUCTION:"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_wicked_crunch_fixed_lifesteal"				"RECOVER ON HIT:"
+		
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts"							"Hunter Instincts"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Description"				"Adds chance to evade attacks."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_Lore"						"Lycan's Wolves are flexible and nimble, trusting their guts and instincts more than anything else in the world. Except, perhaps, for their master."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_hunter_instincts_evasion"					"%EVASION:"
+		
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility"								"Invisibility"
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Description"					"Allows Wolves to disappear after not attacking for a certain amount of time. Can still be detected with true sight."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_Lore"							"Wolves scout silently, stalking their prey until the moment to strike arrives."
+		"DOTA_Tooltip_ability_imba_summoned_wolf_invisibility_fade_time"					"FADE TIME:"		
 
 		"DOTA_Tooltip_ability_imba_magnus_shockwave"										"Shockwave"
 		"DOTA_Tooltip_ability_imba_magnus_shockwave_Description"							"Magnus sends out a wave of force, damaging enemy units in a line.\n<font color='#FF7800'>Resonate:</font> Up to %max_secondary% enemies hit by shockwave will spawn 2 secondary shockwaves.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Resonate now spawns 4 secondary shockwaves instead of 2."
@@ -3698,6 +3800,16 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_6"						"+100 Enraged Earthshock/Overpower radius"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"						"-120 seconds Territorial Hunter cooldown"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_8"						"+100% skills cooldown rate when Enraged"
+
+		// LYCAN
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_1"					"+1 Wolves power level"		
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"					"+2%/2 Feral Impulse damage/regen per ally"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_3"					"+12 Howl duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_4"					"+2 Wolfsbane damage per stack"			
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_5"					"+2 Maximum summoned wolves/charges"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_6"					"x2 Wicked Crunch on-hit stacks/max stacks"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_7"					"Increase Howl's potency (details in Howl)"
+		"DOTA_Tooltip_ability_special_bonus_imba_lycan_8"					"+15 Shapeshift duration"			
 
 		//=================================================================================================================
 		// Vanilla talent overrides
