@@ -9,7 +9,7 @@ function EchoSabreStart( keys )
 	local modifier_double = keys.modifier_double
 
 	-- If a higher-level echo sabre version is present, or the item is in cooldown, do nothing
-	if caster:HasModifier("modifier_item_imba_reverb_rapier_unique") or not ability:IsCooldownReady() then
+	if caster:HasModifier("modifier_item_imba_reverb_rapier_unique") or not ability:IsCooldownReady() or caster:HasModifier(modifier_double) then
 		return nil
 	end
 
