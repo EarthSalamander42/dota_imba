@@ -1,12 +1,22 @@
 function GetClientSync(key)
+<<<<<<< HEAD
  	local value = CustomNetTables:GetTableValue( "syncing_purposes", key).value
+=======
+	local value = CustomNetTables:GetTableValue( "syncing_purposes", key).value
+>>>>>>> upstream/developer
 	return value
 end
 
 function MergeTables( t1, t2 )
+<<<<<<< HEAD
     for name,info in pairs(t2) do
         t1[name] = info
     end
+=======
+		for name,info in pairs(t2) do
+				t1[name] = info
+		end
+>>>>>>> upstream/developer
 end
 
 
@@ -25,13 +35,20 @@ function PrintAll(t)
 end
 
 function C_DOTA_BaseNPC:HasTalent(talentName)
+<<<<<<< HEAD
   if self:HasModifier("modifier_"..talentName) then
     return true 
   end
+=======
+	if self:HasModifier("modifier_"..talentName) then
+		return true 
+	end
+>>>>>>> upstream/developer
 	return false
 end
 
 function C_DOTA_BaseNPC:FindTalentValue(talentName)
+<<<<<<< HEAD
   if self:HasModifier("modifier_"..talentName) then  
     local specialVal = AbilityKV[talentName]["AbilitySpecial"]
 	  for l,m in pairs(specialVal) do
@@ -40,23 +57,45 @@ function C_DOTA_BaseNPC:FindTalentValue(talentName)
 	  	end
 	  end
   end    
+=======
+	if self:HasModifier("modifier_"..talentName) then  
+		local specialVal = AbilityKV[talentName]["AbilitySpecial"]
+		for l,m in pairs(specialVal) do
+			if m["value"] then
+				return m["value"]
+			end
+		end
+	end    
+>>>>>>> upstream/developer
 	return 0
 end
 
 function C_DOTA_BaseNPC:FindSpecificTalentValue(talentName,valname)
 	for l,m in pairs(specialVal) do
+<<<<<<< HEAD
     local specialVal = AbilityKV[talentName]["AbilitySpecial"]    
+=======
+		local specialVal = AbilityKV[talentName]["AbilitySpecial"]    
+>>>>>>> upstream/developer
 		if m[valname] then
 			return m[valname]
 		end
 	end
+<<<<<<< HEAD
   return 0
+=======
+	return 0
+>>>>>>> upstream/developer
 end
 
 function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 	local base = self:GetSpecialValueFor(value)
 	local talentName
+<<<<<<< HEAD
 	local kv = AbilityKV[talentName]
+=======
+	local kv = AbilityKV[self:GetName()]
+>>>>>>> upstream/developer
 	for k,v in pairs(kv) do -- trawl through keyvalues
 		if k == "AbilitySpecial" then
 			for l,m in pairs(v) do
@@ -66,13 +105,19 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 			end
 		end
 	end
+<<<<<<< HEAD
 	if talentName and self:HasModifier("modifier_"..talentName) then 
 		base = base + self:FindTalentValue(talentName) 
+=======
+	if talentName and self:GetCaster():HasModifier("modifier_"..talentName) then 
+		base = base + self:GetCaster():FindTalentValue(talentName) 
+>>>>>>> upstream/developer
 	end
 	return base
 end
 
 function CreateEmptyTalents(hero)
+<<<<<<< HEAD
   for i=1,8 do
     LinkLuaModifier("modifier_special_bonus_unique_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
     local class = "modifier_special_bonus_unique_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
@@ -114,10 +159,54 @@ function NetTableM(tablename,keyname,...)
       end
     end
   end
+=======
+	for i=1,8 do
+		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+		local class = "modifier_special_bonus_imba_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		load(class)()
+	end
+end
+
+function NetTableM(tablename,keyname,...) 
+	local values = {...}                                                                  -- Our user input
+	local returnvalues = {}                                                               -- table that will be unpacked for result                                                    
+	for k,v in ipairs(values) do  
+		local keyname = keyname..v[1]                                                       -- should be 1-8, but probably can be extrapolated later on to be any number
+		if IsServer() then
+			local netTableKey = netTableCmd(false,tablename,keyname)                              -- Command to grab our key set
+			local my_key = createNetTableKey(v)                                               -- key = 250,444,111 as table, stored in key as 1 2 3
+			if not netTableKey then                                                           -- No key with requested name exists
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			elseif type(netTableKey) == 'boolean' then                                        -- Our check returned that a key exists but that it is empty, we need to populate it for clients
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			else                                                                              -- Our key exists and we got some values, now we need to check the key against the requested value from other scripts  
+				if #v > 1 then
+					for i=1,#netTableKey do
+						if netTableKey[i] ~= v[i-1] then                                              -- compare each value, does server 1 = our 250? does server 2 = our 444? 
+							netTableCmd(true,tablename,keyname,my_key)                                      -- If our key is different from the sent value, rewrite it ONCE and break execution to main loop again
+							break
+						end
+					end
+				end
+			end      
+		end
+		local allkeys = netTableCmd(false,tablename,keyname)
+		if allkeys and type(allkeys) ~= 'boolean' then
+			for i=1,#allkeys do
+				table.insert(returnvalues, allkeys[i])    
+			end
+		else
+			for i=1,#v do
+				table.insert(returnvalues, 0)
+			end
+		end
+	end
+>>>>>>> upstream/developer
 return unpack(returnvalues)
 end
 
 function netTableCmd(send,readtable,key,tabletosend)
+<<<<<<< HEAD
   if send == false then
     local finalresulttable = {}
     local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
@@ -166,12 +255,63 @@ function TalentManager(tEntity, nameScheme, ...)
       table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
     end
   end    
+=======
+	if send == false then
+		local finalresulttable = {}
+		local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
+		if not nettabletemp then return false end
+		for key,value in pairs(nettabletemp) do
+			table.insert(finalresulttable,value)
+		end          
+		if #finalresulttable > 0 then 
+			return finalresulttable
+		else
+			return true
+		end
+	else
+		CustomNetTables:SetTableValue(readtable, key, tabletosend)
+	end
+end
+
+function createNetTableKey(v)
+	local valuePair = {}
+	if #v > 1 then
+		for i=2,#v do
+			table.insert(valuePair,v[i])                                              -- returns just numbers 2-x from sent value...
+		end    
+	end
+	return valuePair  
+end
+
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+	local values = {...}
+	local data = {}
+	for i,v in ipairs(values) do
+		table.insert(data,tEntity:GetSpecialValueFor(v))
+	end
+	return unpack(data)
+end
+
+function TalentManager(tEntity, nameScheme, ...)
+	local talents = {...}
+	local return_values = {}
+	for k,v in pairs(talents) do    
+		if #v > 1 then
+			for i=1,#v do
+				table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
+			end
+		else
+			table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
+		end
+	end    
+>>>>>>> upstream/developer
 return unpack(return_values)
 end
 
 
 function C_DOTA_BaseNPC:HealDisabled()
 	if self:HasModifier("Disabled_silence") or 
+<<<<<<< HEAD
 	   self:HasModifier("primal_avatar_miss_aura") or 
 	   self:HasModifier("modifier_reflection_invulnerability") or 
 	   self:HasModifier("modifier_elite_burning_health_regen_block") or 
@@ -181,6 +321,17 @@ function C_DOTA_BaseNPC:HealDisabled()
 	   self:HasModifier("fire_aura_debuff") or 
 	   self:HasModifier("item_sange_and_yasha_4_debuff") or 
 	   self:HasModifier("cursed_effect") then
+=======
+		 self:HasModifier("primal_avatar_miss_aura") or 
+		 self:HasModifier("modifier_reflection_invulnerability") or 
+		 self:HasModifier("modifier_elite_burning_health_regen_block") or 
+		 self:HasModifier("modifier_elite_entangling_health_regen_block") or 
+		 self:HasModifier("modifier_plague_damage") or 
+		 self:HasModifier("modifier_rupture_datadriven") or 
+		 self:HasModifier("fire_aura_debuff") or 
+		 self:HasModifier("item_sange_and_yasha_4_debuff") or 
+		 self:HasModifier("cursed_effect") then
+>>>>>>> upstream/developer
 	return true
 	else return false end
 end

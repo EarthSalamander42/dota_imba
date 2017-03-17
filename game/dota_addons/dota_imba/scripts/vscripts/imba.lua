@@ -32,7 +32,16 @@ require('internal/events')
 require('settings')
 -- events.lua is where you can specify the actions to be taken when any event occurs and is one of the core barebones files.
 require('events')
+<<<<<<< HEAD
 ApplyAllTalentModifiers()
+=======
+
+-- clientside KV loading
+require('addon_init')
+
+ApplyAllTalentModifiers()
+
+>>>>>>> upstream/developer
 -- storage API
 --require('libraries/json')
 --require('libraries/storage')
@@ -68,11 +77,10 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Roshan initialization
 	-------------------------------------------------------------------------------------------------
 
-	if not GetMapName() == "imba_arena" then
+	if GetMapName() ~= "imba_arena" then
 		local roshan_spawn_loc = Entities:FindByName(nil, "roshan_spawn_point"):GetAbsOrigin()
 		local roshan = CreateUnitByName("npc_imba_roshan", roshan_spawn_loc, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	end
-
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Pre-pick forced hero selection
@@ -148,6 +156,12 @@ function GameMode:OnFirstPlayerLoaded()
 	--local maxime_model = CreateUnitByName("npc_imba_contributor_maxime", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
 	--maxime_model:SetForwardVector(RandomVector(100))
 
+	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arena mode score initialization
+	-------------------------------------------------------------------------------------------------
+
+	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {0})
+	CustomNetTables:SetTableValue("arena_capture", "dire_score", {0})
 end
 
 -- Multiplies bounty rune experience and gold according to the gamemode multiplier
@@ -228,7 +242,7 @@ arcane_supremacy_eligible_debuffs = {
 	["modifier_silence"] = true,
 	["modifier_item_imba_orchid_debuff"] = true,
 	["modifier_item_imba_bloodthorn_debuff"] = true,
-	["modifier_imba_drow_ranger_gust_debuff"] = true,
+	["modifier_imba_gust_silence"] = true,
 	["modifier_imba_crippling_fear_day"] = true,
 	["modifier_imba_crippling_fear_night"] = true,
 	["modifier_imba_stifling_dagger_silence"] = true,
@@ -252,6 +266,16 @@ function GameMode:ModifierFilter( keys )
 		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
 	else
 		return true
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Frantic mode duration adjustment
+	-------------------------------------------------------------------------------------------------
+
+	if IMBA_FRANTIC_MODE_ON then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+			keys.duration = keys.duration * 0.3
+		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -303,6 +327,23 @@ function GameMode:ModifierFilter( keys )
 	if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
 		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 			keys.duration = keys.duration * 0.5
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
+	-- Centaur Thick Hide debuff duration decrease
+	-------------------------------------------------------------------------------------------------	
+
+	if modifier_owner:HasModifier("modifier_imba_thick_hide") then
+		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+
+			-- Check for break
+			if not modifier_owner:PassivesDisabled() then
+				local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
+				local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
+ 
+				keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+			end
 		end
 	end
 
@@ -651,33 +692,6 @@ function GameMode:DamageFilter( keys )
 		return false
 	end
 
-	-- Spell power handling
-	if (damage_type == DAMAGE_TYPE_MAGICAL or damage_type == DAMAGE_TYPE_PURE) and attacker:IsRealHero() then
-
-		-- If the attacker and victim are on the same team, do nothing
-		if victim:GetTeam() ~= attacker:GetTeam() then
-
-			-- Compensate for in-built spell power mechanics
-			local base_damage_amp = attacker:GetIntellect() * 0.000625 + GetSpellPowerFromTalents(attacker) * 0.01
-			keys.damage = keys.damage / (1 + base_damage_amp)
-
-			-- Fetch player's current spell power
-			local spell_power = GetSpellPower(attacker) * 0.01
-
-			-- If the target is too far away, do nothing
-			local distance = (victim:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
-			if distance <= IMBA_DAMAGE_EFFECTS_DISTANCE_CUTOFF then
-				
-				-- Adjust damage depending on its type
-				if damage_type == DAMAGE_TYPE_MAGICAL then
-					keys.damage = keys.damage * (1 + spell_power)
-				elseif damage_type == DAMAGE_TYPE_PURE then
-					keys.damage = keys.damage * (1 + spell_power * 0.3)
-				end
-			end
-		end
-	end
-
 	-- Bloodthorn active crit
 	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
 
@@ -876,7 +890,7 @@ function GameMode:DamageFilter( keys )
 		
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
 			-- Find the cheese item handle
 			local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
@@ -914,7 +928,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive") ) then
+		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
 			-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
 			if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
@@ -946,7 +960,7 @@ function GameMode:DamageFilter( keys )
 
 		-- Check if death is imminent
 		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_shallow_grave") or victim:HasModifier("modifier_imba_shallow_grave_passive")) then
+		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection")) then
 			
 			-- Prevent death
 			keys.damage = 0
@@ -1103,6 +1117,7 @@ function GameMode:OnGameInProgress()
 		local dire_control_point_loc = Entities:FindByName(nil, "dire_capture_point"):GetAbsOrigin()
 		RADIANT_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", radiant_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
 		DIRE_CONTROL_POINT_DUMMY = CreateUnitByName("npc_dummy_unit", dire_control_point_loc, false, nil, nil, DOTA_TEAM_NOTEAM)
+<<<<<<< HEAD
 		ArenaControlPointThink(RADIANT_CONTROL_POINT_DUMMY)
 		ArenaControlPointThink(DIRE_CONTROL_POINT_DUMMY)
 	end
@@ -1113,8 +1128,17 @@ function GameMode:OnGameInProgress()
   
 	for _, wisp in pairs(IMBA_WISP_PICKERS_TABLE) do
 		UTIL_Remove(wisp)
+=======
+		RADIANT_CONTROL_POINT_DUMMY.score = 20
+		DIRE_CONTROL_POINT_DUMMY.score = 20
+		ArenaControlPointThinkRadiant(RADIANT_CONTROL_POINT_DUMMY)
+		ArenaControlPointThinkDire(DIRE_CONTROL_POINT_DUMMY)
+		Timers:CreateTimer(10, function()
+			ArenaControlPointScoreThink(RADIANT_CONTROL_POINT_DUMMY, DIRE_CONTROL_POINT_DUMMY)
+		end)
+		CustomGameEventManager:Send_ServerToAllClients("contest_started", {})
+>>>>>>> upstream/developer
 	end
-	IMBA_WISP_PICKERS_TABLE = nil
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Custom maximum level EXP tables adjustment

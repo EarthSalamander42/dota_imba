@@ -252,13 +252,16 @@ end
 
 -- 100% kills a unit. Activates death-preventing modifiers, then removes them. Does not killsteal from Reaper's Scythe.
 function TrueKill(caster, target, ability)
-	
-	-- Shallow Grave is peskier
-	target:RemoveModifierByName("modifier_imba_shallow_grave")
 
 	-- Extremely specific blademail interaction because fuck everything
 	if caster:HasModifier("modifier_item_blade_mail_reflect") then
 		target:RemoveModifierByName("modifier_imba_purification_passive")
+	end
+
+	local nothlProtection = target:FindModifierByName("modifier_imba_dazzle_nothl_protection")
+	if nothlProtection and nothlProtection:GetStackCount() < 1 then
+		nothlProtection:SetStackCount(1)
+		nothlProtection:StartIntervalThink(1)
 	end
 
 	-- Deals lethal damage in order to trigger death-preventing abilities... Except for Reincarnation
@@ -268,7 +271,7 @@ function TrueKill(caster, target, ability)
 
 	-- Removes the relevant modifiers
 	target:RemoveModifierByName("modifier_invulnerable")
-	target:RemoveModifierByName("modifier_imba_shallow_grave")
+	target:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
 	target:RemoveModifierByName("modifier_aphotic_shield")
 	target:RemoveModifierByName("modifier_imba_spiked_carapace")
 	target:RemoveModifierByName("modifier_borrowed_time")
@@ -685,8 +688,8 @@ end
 function RemovePermanentModifiersRandomOMG( hero )
 	hero:RemoveModifierByName("modifier_imba_tidebringer_cooldown")
 	hero:RemoveModifierByName("modifier_imba_hunter_in_the_night")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave")
-	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive")
+	hero:RemoveModifierByName("modifier_imba_dazzle_shallow_grave")
+	hero:RemoveModifierByName("modifier_imba_dazzle_nothl_protection")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_cooldown")
 	hero:RemoveModifierByName("modifier_imba_shallow_grave_passive_check")
 	hero:RemoveModifierByName("modifier_imba_vendetta_damage_stacks")
@@ -808,7 +811,8 @@ function InitializeInnateAbilities( hero )
 		"imba_rubick_telekinesis_land",
 		"imba_skywrath_mage_concussive_shot_ghastly",
 		"imba_silencer_arcane_supremacy",
-		"imba_tiny_rolling_stone"
+		"imba_tiny_rolling_stone",
+		"imba_centaur_thick_hide"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -818,110 +822,6 @@ function InitializeInnateAbilities( hero )
 			current_ability:SetLevel(1)
 		end
 	end
-end
-			
--- Break (remove passive skills from) a target
-function PassiveBreak( unit, duration )
-
-	-- Check if the target already has break status
-	if unit.break_duration_left then
-		
-		-- Increase remaining break duration if appropriate
-		if duration > unit.break_duration_left then
-			unit.break_duration_left = duration
-		end
-
-		-- Break and do nothing more
-		return nil
-	end
-
-	-- Initialize break globals
-	unit.break_duration_left = duration
-	unit.break_learn_levels = {}
-
-	local passive_detected = false
-
-	-- Exceptions
-	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_passive")
-	unit:RemoveModifierByName("modifier_imba_antimage_spell_shield_active")
-	while unit:HasModifier("modifier_imba_fervor_stacks") do
-		unit:RemoveModifierByName("modifier_imba_fervor_stacks")
-	end
-
-	-- Non-passive abilities disabled by break
-	local break_exceptions = {
-		"imba_antimage_spell_shield"
-	}
-
-	-- Passive abilities not disabled by break
-	local break_immunities = {
-		"imba_wraith_king_reincarnation",
-		"imba_drow_ranger_marksmanship"
-	}
-
-	-- Set all passive abilities' levels to zero
-	for i = 0, 15 do
-		local ability = unit:GetAbilityByIndex(i)
-		if ability and ability:GetLevel() > 0 then
-			
-			-- Check for regular passives
-			if ability:IsPassive() then
-				passive_detected = true
-				unit.break_learn_levels[i] = ability:GetLevel()
-				ability:SetLevel(0)
-			end
-
-			-- Check for exceptions (togglable/activable "passives")
-			for _,ability_exception in pairs(break_exceptions) do
-				if ability_exception == ability:GetName() then
-					passive_detected = true
-					unit.break_learn_levels[i] = ability:GetLevel()
-					ability:SetLevel(0)
-				end
-			end
-
-			-- Check for immunities (passives which are not disabled by Break)
-			for _,ability_immunity in pairs(break_immunities) do
-				if ability_immunity == ability:GetName() then
-					ability:SetLevel(unit.break_learn_levels[i])
-					unit.break_learn_levels[i] = 0
-				end
-			end
-
-		end
-	end
-
-	-- If at least one passive was broken, count down the duration
-	if passive_detected then
-		Timers:CreateTimer(0.1, function()
-
-			-- Update duration left
-			unit.break_duration_left = unit.break_duration_left - 0.1
-
-			-- Restore ability levels if duration has elapsed
-			if unit.break_duration_left <= 0 then
-				if not ( not unit:IsAlive() and IMBA_ABILITY_MODE_RANDOM_OMG ) then
-					for i = 0, 15 do
-						if unit.break_learn_levels[i] and unit.break_learn_levels[i] > 0 then
-							local ability = unit:GetAbilityByIndex(i)
-							local excess_levels = ability:GetLevel()
-							unit:SetAbilityPoints( unit:GetAbilityPoints() + excess_levels )
-							ability:SetLevel(unit.break_learn_levels[i])
-						end
-					end
-				end
-				unit.break_duration_left = nil
-				unit.break_learn_levels = nil
-			else
-				return 0.1
-			end
-		end)
-	end
-end
-
--- End an ongoing Break condition
-function PassiveBreakEnd( unit )
-	unit.break_duration_left = 0
 end
 
 -- Check if an ability should proc magic stick/wand
@@ -1096,11 +996,16 @@ function GetCooldownReduction( unit )
 	local reduction = 1.0
 
 	-- Octarine Core
-	if unit:HasModifier("modifier_item_imba_octarine_core_unique") then
+	if unit:HasModifier("modifier_imba_octarine_core_unique") then
 		reduction = reduction * 0.75
 	end
+<<<<<<< HEAD
 	local talentMult = 1 - unit:HighestTalentTypeValue("cooldown_reduction")/100
 	reduction = reduction * talentMult
+=======
+	local talent_mult = 1 - unit:HighestTalentTypeValue("cooldown_reduction") * 0.01
+	reduction = reduction * talent_mult
+>>>>>>> upstream/developer
 
 	return reduction
 end
@@ -1177,6 +1082,7 @@ function ChangeAttackProjectileImba( unit )
 
 	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
 	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
+	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
 	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
 	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
@@ -1197,6 +1103,10 @@ function ChangeAttackProjectileImba( unit )
 	-- If only a Skadi, use its attack projectile instead
 	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
 		unit:SetRangedProjectileName(particle_skadi)
+
+	-- If the unit has any form of lifesteal, use the lifesteal projectile
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
+		unit:SetRangedProjectileName(particle_lifesteal)
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
 	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
@@ -1742,62 +1652,6 @@ function IsGinger(unit)
 	return false
 end
 
--- Fetches a hero's current spell power
-function GetSpellPower(unit)
-
-	-- If this is not a hero, or the unit is invulnerable, do nothing
-	if not unit:IsHero() or unit:IsInvulnerable() then
-		return 0
-	end
-
-	-- Adjust base spell power based on current intelligence
-	local unit_intelligence = unit:GetIntellect()
-	local spell_power = unit_intelligence * 0.125
-
-	-- Adjust spell power based on War Veteran stacks
-	if unit:HasModifier("modifier_imba_unlimited_level_powerup") then
-		spell_power = spell_power + 2 * unit:GetModifierStackCount("modifier_imba_unlimited_level_powerup", unit)
-	end
-
-	-- Fetch current bonus spell power from modifiers, if existing
-	for current_modifier, modifier_spell_power in pairs(MODIFIER_SPELL_POWER) do
-		if unit:HasModifier(current_modifier) then
-			spell_power = spell_power + modifier_spell_power
-		end
-	end
-
-	-- Fetch current bonus spell power from items, if existing
-	for i = 0, 5 do
-		local current_item = unit:GetItemInSlot(i)
-		if current_item then
-			local current_item_name = current_item:GetName()
-			if ITEM_SPELL_POWER[current_item_name] then
-				spell_power = spell_power + ITEM_SPELL_POWER[current_item_name]
-			end
-		end
-	end
-
-	-- Fetch bonus spell power from talents
-	spell_power = spell_power + GetSpellPowerFromTalents(unit)
-
-	-- Return current spell power
-	return spell_power
-end
-
--- Fetches a hero's current spell power from talents
-function GetSpellPowerFromTalents(unit)
-	local spell_power = 0
-
-	-- Iterate through all spell power talents
-	for talent_name,spell_power_bonus in pairs(SPELL_POWER_TALENTS) do
-		if unit:FindAbilityByName(talent_name) and unit:FindAbilityByName(talent_name):GetLevel() > 0 then
-			spell_power = spell_power + spell_power_bonus
-		end
-	end
-
-	return spell_power
-end
-
 -- Directly reduces a hero's HP without killing it
 function ApplyHealthReductionDamage(unit, damage)
 	unit:SetHealth(math.max(unit:GetHealth() - damage, 2))
@@ -1955,7 +1809,6 @@ function PickupRegenerationRune(item, unit)
 end
 
 -- Talent handling
-
 function CDOTA_BaseNPC:HasTalent(talentName)
 	if self:HasAbility(talentName) then
 		if self:FindAbilityByName(talentName):GetLevel() > 0 then return true end
@@ -2009,6 +1862,7 @@ function CDOTABaseAbility:GetTalentSpecialValueFor(value)
 end
 
 function ApplyAllTalentModifiers()
+<<<<<<< HEAD
   Timers:CreateTimer(0.1,function()
     local current_hero_list = HeroList:GetAllHeroes()
     for k,v in pairs(current_hero_list) do
@@ -2067,10 +1921,71 @@ function NetTableM(tablename,keyname,...)
       end
     end
   end
+=======
+	Timers:CreateTimer(0.1,function()
+		local current_hero_list = HeroList:GetAllHeroes()
+		for k,v in pairs(current_hero_list) do
+			local hero_name = string.match(v:GetName(),"npc_dota_hero_(.*)")
+			for i = 1, 8 do
+				local talent_name = "special_bonus_imba_"..hero_name.."_"..i
+				local modifier_name = "modifier_special_bonus_imba_"..hero_name.."_"..i
+				if v:HasTalent(talent_name) and not v:HasModifier(modifier_name) then
+					v:AddNewModifier(v,v,modifier_name,{})
+				end
+			end
+		end
+		return 0.5
+	end)
+end
+
+function CreateEmptyTalents(hero)
+	for i=1,8 do
+		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		load(class)()
+	end
+end
+
+function NetTableM(tablename,keyname,...) 
+	local values = {...}                                                                  -- Our user input
+	local returnvalues = {}                                                               -- table that will be unpacked for result                                                    
+	for k,v in ipairs(values) do  
+		local keyname = keyname..v[1]                                                       -- should be 1-8, but probably can be extrapolated later on to be any number
+		if IsServer() then
+			local netTableKey = netTableCmd(false,tablename,keyname)                              -- Command to grab our key set
+			local my_key = createNetTableKey(v)                                               -- key = 250,444,111 as table, stored in key as 1 2 3
+			if not netTableKey then                                                           -- No key with requested name exists
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			elseif type(netTableKey) == 'boolean' then                                        -- Our check returned that a key exists but that it is empty, we need to populate it for clients
+				netTableCmd(true,tablename,keyname,my_key)                                          -- create database key with "tablename","myHealth1","1=250,2=444,3=111"
+			else                                                                              -- Our key exists and we got some values, now we need to check the key against the requested value from other scripts  
+				if #v > 1 then
+					for i=1,#netTableKey do
+						if netTableKey[i] ~= v[i-1] then                                              -- compare each value, does server 1 = our 250? does server 2 = our 444? 
+							netTableCmd(true,tablename,keyname,my_key)                                      -- If our key is different from the sent value, rewrite it ONCE and break execution to main loop again
+							break
+						end
+					end
+				end
+			end      
+		end
+		local allkeys = netTableCmd(false,tablename,keyname)
+		if allkeys and type(allkeys) ~= 'boolean' then
+			for i=1,#allkeys do
+				table.insert(returnvalues, allkeys[i])    
+			end
+		else
+			for i=1,#v do
+				table.insert(returnvalues, 0)
+			end
+		end
+	end
+>>>>>>> upstream/developer
 return unpack(returnvalues)
 end
 
 function netTableCmd(send,readtable,key,tabletosend)
+<<<<<<< HEAD
   if send == false then
     local finalresulttable = {}
     local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
@@ -2119,10 +2034,61 @@ function TalentManager(tEntity, nameScheme, ...)
       table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
     end
   end    
+=======
+	if send == false then
+		local finalresulttable = {}
+		local nettabletemp = CustomNetTables:GetTableValue(readtable,key)
+		if not nettabletemp then return false end
+		for key,value in pairs(nettabletemp) do
+			table.insert(finalresulttable,value)
+		end          
+		if #finalresulttable > 0 then 
+			return finalresulttable
+		else
+			return true
+		end
+	else
+		CustomNetTables:SetTableValue(readtable, key, tabletosend)
+	end
+end
+
+function createNetTableKey(v)
+	local valuePair = {}
+	if #v > 1 then
+		for i=2,#v do
+			table.insert(valuePair,v[i])                                              -- returns just numbers 2-x from sent value...
+		end    
+	end
+	return valuePair  
+end
+
+function getkvValues(tEntity, ...) -- KV Values look hideous in finished code, so this function will parse through all sent KV's for tEntity (typically self)
+	local values = {...}
+	local data = {}
+	for i,v in ipairs(values) do
+		table.insert(data,tEntity:GetSpecialValueFor(v))
+	end
+	return unpack(data)
+end
+
+function TalentManager(tEntity, nameScheme, ...)
+	local talents = {...}
+	local return_values = {}
+	for k,v in pairs(talents) do    
+		if #v > 1 then
+			for i=1,#v do
+				table.insert(return_values, tEntity:FindSpecificTalentValue(nameScheme..v[1],v[i]))
+			end
+		else
+			table.insert(return_values, tEntity:FindTalentValue(nameScheme..v[1]))
+		end
+	end    
+>>>>>>> upstream/developer
 return unpack(return_values)
 end
 
 function findtarget(source) -- simple list return function for finding a players current target entity
+<<<<<<< HEAD
   local t = source:GetCursorTarget()
   local c = source:GetCaster()
   if t and c then return t,c end
@@ -2132,6 +2098,17 @@ function findgroundtarget(source) -- simple list return function for finding a p
   local t = source:GetCursorPosition()
   local c = source:GetCaster()
   if t and c then return t,c end
+=======
+	local t = source:GetCursorTarget()
+	local c = source:GetCaster()
+	if t and c then return t,c end
+end
+
+function findgroundtarget(source) -- simple list return function for finding a players current target entity
+	local t = source:GetCursorPosition()
+	local c = source:GetCaster()
+	if t and c then return t,c end
+>>>>>>> upstream/developer
 end
 
 -- Controls comeback gold
@@ -2158,14 +2135,183 @@ function UpdateComebackBonus(points, team)
 	end
 end
 
--- Controls arena control points
-function ArenaControlPointThink(control_point)
-	--VARIABLE_LUL = 0
-	--Timers:CreateTimer(0, function()
-	--	VARIABLE_LUL = VARIABLE_LUL + 1
-	--	GameRules:GetGameModeEntity():SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS) + VARIABLE_LUL)
-	--	return 1
-	--end)
+-- Arena control point logic
+function ArenaControlPointThinkRadiant(control_point)
+
+	-- Create the control point particle, if this is the first iteration
+	if not control_point.particle then
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+	end
+
+	-- Check how many heroes are near the control point
+	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local score_change = #allied_heroes - #enemy_heroes
+
+	-- Calculate the new score
+	local old_score = control_point.score
+	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
+
+	-- If this control point changed disposition, update the UI and particle accordingly
+	if old_score >= 0 and control_point.score < 0 then
+		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_dire", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_wind_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	elseif old_score < 0 and control_point.score >= 0 then
+		CustomGameEventManager:Send_ServerToAllClients("radiant_point_to_radiant", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_wind.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	end
+
+	-- Update the progress bar
+	CustomNetTables:SetTableValue("arena_capture", "radiant_progress", {control_point.score})
+	CustomGameEventManager:Send_ServerToAllClients("radiant_progress_update", {})
+
+	-- Run this function again after a second
+	Timers:CreateTimer(1, function()
+		ArenaControlPointThinkRadiant(control_point)
+	end)
+end
+
+function ArenaControlPointThinkDire(control_point)
+
+	-- Create the control point particle, if this is the first iteration
+	if not control_point.particle then
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+	end
+
+	-- Check how many heroes are near the control point
+	local allied_heroes = FindUnitsInRadius(DOTA_TEAM_BADGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local enemy_heroes = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, control_point:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	local score_change = #allied_heroes - #enemy_heroes
+
+	-- Calculate the new score
+	local old_score = control_point.score
+	control_point.score = math.max(math.min(control_point.score + score_change, 20), -20)
+
+	-- If this control point changed disposition, update the UI and particle accordingly
+	if old_score >= 0 and control_point.score < 0 then
+		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_radiant", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_allied_metal.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	elseif old_score < 0 and control_point.score >= 0 then
+		CustomGameEventManager:Send_ServerToAllClients("dire_point_to_dire", {})
+		ParticleManager:DestroyParticle(control_point.particle, true)
+		control_point.particle = ParticleManager:CreateParticle("particles/customgames/capturepoints/cp_metal_captured.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(control_point.particle, 0, control_point:GetAbsOrigin())
+		control_point:EmitSound("Imba.ControlPointTaken")
+	end
+
+	-- Update the progress bar
+	CustomNetTables:SetTableValue("arena_capture", "dire_progress", {control_point.score})
+	CustomGameEventManager:Send_ServerToAllClients("dire_progress_update", {})
+
+	-- Run this function again after a second
+	Timers:CreateTimer(1, function()
+		ArenaControlPointThinkDire(control_point)
+	end)
+end
+
+function ArenaControlPointScoreThink(radiant_cp, dire_cp)
+
+	-- Fetch current scores
+	local radiant_score = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
+	local dire_score = CustomNetTables:GetTableValue("arena_capture", "dire_score")
+
+	-- Update scores
+	if radiant_cp.score >= 0 then
+		radiant_score["1"] = radiant_score["1"] + 1
+	else
+		dire_score["1"] = dire_score["1"] + 1
+	end
+	if dire_cp.score >= 0 then
+		dire_score["1"] = dire_score["1"] + 1
+	else
+		radiant_score["1"] = radiant_score["1"] + 1
+	end
+
+	-- Set new values
+	CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant_score["1"]})
+	CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire_score["1"]})
+
+	-- Update scoreboard
+	CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
+	CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
+
+	-- Check if one of the teams won the game
+	if radiant_score["1"] >= KILLS_TO_END_GAME_FOR_TEAM then
+		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+		GAME_WINNER_TEAM = "Radiant"
+	elseif dire_score["1"] >= KILLS_TO_END_GAME_FOR_TEAM then
+		GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+		GAME_WINNER_TEAM = "Dire"
+	end
+
+	-- Call this function again after 10 seconds
+	Timers:CreateTimer(10, function()
+		ArenaControlPointScoreThink(radiant_cp, dire_cp)
+	end)
+end
+
+----------------------------------------------------------------
+-- "Custom" modifier value fetching
+----------------------------------------------------------------
+
+-- Spell lifesteal
+function CDOTA_BaseNPC:GetSpellLifesteal()
+	local lifesteal = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellLifesteal then
+			lifesteal = lifesteal + parent_modifier:GetModifierSpellLifesteal()
+		end
+	end
+	return lifesteal
+end
+
+-- Autoattack lifesteal
+function CDOTA_BaseNPC:GetLifesteal()
+	local lifesteal = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierLifesteal then
+			lifesteal = lifesteal + parent_modifier:GetModifierLifesteal()
+		end
+	end
+	return lifesteal
+end
+
+-- Spell power
+function CDOTA_BaseNPC:GetSpellPower()
+
+	-- If this is not a hero, or the unit is invulnerable, do nothing
+	if not self:IsHero() or self:IsInvulnerable() then
+		return 0
+	end
+
+	-- Adjust base spell power based on current intelligence
+	local spell_power = self:GetIntellect() * 0.1
+
+	-- Mega Treads increase spell power from intelligence by 30%
+	if self:HasModifier("modifier_imba_mega_treads_stat_multiplier_02") then
+		spell_power = self:GetIntellect() * 0.13
+	end
+
+	-- Fetch spell power from modifiers
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierSpellAmplify_Percentage then
+			spell_power = spell_power + parent_modifier:GetModifierSpellAmplify_Percentage()
+		end
+	end
+
+	-- Return current spell power
+	return spell_power
 end
 
 function CalculateDistance(ent1, ent2)
@@ -2176,3 +2322,204 @@ function CalculateDistance(ent1, ent2)
 	local distance = (pos1 - pos2):Length2D()
 	return distance
 end
+
+-------------------------------------------------------------------------------------------------------
+-- lua based Tracking Projectiles manager, allowing for some custom and dynamic tracking projectiles.
+-------------------------------------------------------------------------------------------------------
+
+TrackingProjectiles = TrackingProjectiles or class({})
+
+function TrackingProjectiles:Projectile( params )
+    --PrintTable(params)
+    local target = params.hTarget
+    local caster = params.hCaster
+    local speed = params.iMoveSpeed
+
+    -- Reset target dodge state
+    target.dodged = false
+
+    --Set creation time in the parameters
+    params.creation_time = GameRules:GetGameTime()
+    
+    --Fetch initial projectile location
+    local projectile
+    if params.vSpawnOrigin then
+        projectile = params.vSpawnOrigin
+    elseif params.iSourceAttachment then
+        projectile = caster:GetAttachmentOrigin( params.iSourceAttachment )
+    else
+        projectile = caster:GetAbsOrigin()
+    end
+    --Make the particle
+    local particle = ParticleManager:CreateParticle( params.EffectName, PATTACH_CUSTOMORIGIN, caster)
+    --Source CP
+    ParticleManager:SetParticleControl( particle, 0, projectile )
+    --TargetCP
+    ParticleManager:SetParticleControlEnt( particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true )
+    --Speed CP
+    ParticleManager:SetParticleControl( particle, 2, Vector( speed, 0, 0 ) )
+
+    -- Creating a projectileID so it can be referred to later
+    params.bProjectileDodged = false
+    local projectileID = {projectile=projectile,particle=particle}
+    TrackingProjectiles:Think(params,projectileID)
+    return projectileID
+end
+
+function TrackingProjectiles:Think(params,projectileID)
+    local target = params.hTarget
+    local caster = params.hCaster
+    local speed = params.iMoveSpeed
+    local projectile = projectileID.projectile
+    local particle = projectileID.particle
+    local visionRadius = params.flVisionRadius or 0
+    local acceleration = params.flAcceleration or 1
+    acceleration = math.pow(acceleration,1/32) -- Converting it to 1/32th second
+    
+
+    Timers:CreateTimer(function()
+        -- Check if the destroy function has been called
+        if projectileID.destroy then
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            return nil
+        end
+        -- Check if this projectile has been dodged and if it should be destroyed because of that
+        if params.bDestroyOnDodge and params.bDodgeable and target.dodged then
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            return nil
+        end
+        -- Check if the particle has been dodged to prevent it from firing on hit effects
+        if params.bDodgeable and target.dodged then
+            params.bProjectileDodged = true
+        end
+        -- Check if the timer for the projectile has ran out
+        if params.flExpireTime and GameRules:GetGameTime() - params.creation_time > params.flExpireTime then
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            pcall(params.OnProjectileDestroy, params, projectileID)
+            return nil
+        end
+        -- If there is a new speed, store that
+        if projectileID.newSpeed then
+            speed = projectileID.flSpeed
+            projectileID.flSpeed = nil
+        end
+        -- If there is a new acceleration, store that
+        if projectileID.Acceleration then
+            acceleration = projectileID.flAcceleration
+            projectileID.flAcceleration = nil
+        end
+        -- If there is a new target, store that
+        if projectileID.hTarget then
+            target = projectileID.hTarget
+            projectileID.hTarget = nil
+        end
+
+
+
+        --Get the target location
+        local target_location = target:GetAbsOrigin()
+
+        -- Multiply speed by acceleration
+        speed = speed * acceleration
+
+        --Move the projectile towards the target and update the position
+        projectile = projectile + ( target_location - projectile ):Normalized() * speed * 1/32
+        projectileID.position = projectile
+        -- Add vision
+        if visionRadius then
+            AddFOWViewer(caster:GetTeam(),projectile,visionRadius,2/32,true)
+        end
+
+        -- Check if projectile has hit a platform
+        if params.bDestroyOnGroundHit and GetGroundPosition(projectile,nil).z - 50 > projectile.z then
+            -- Platform hit
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            pcall(params.OnProjectileDestroy, params, projectileID)
+            return nil
+        end
+
+        -- Check if projectile has hit a wall
+        if params.bDestroyOnWallHit and Gridnav:IsWall(projectiles) then
+            -- Platform hit
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            pcall(params.OnProjectileDestroy, params, projectileID)
+            return nil
+        end
+
+        --Check the distance to the target
+        if ( target_location - projectile ):Length()- params.flRadius < speed * 1/32 then -- Length2D() / Length()!
+            --Target has reached destination!
+            TrackingProjectiles:OnProjectileHitUnit( params,projectileID )
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex(particle)
+            return nil
+        -- Check if the target is too far
+        elseif params.flMaxDistance and (target_location - projectile):Length() > params.flMaxDistance then
+                ParticleManager:DestroyParticle( particle, false )
+                ParticleManager:ReleaseParticleIndex(particle)
+                pcall(params.OnProjectileDestroy, params, projectileID)
+                return nil
+        else
+            return 1/32
+        end
+    end)
+end
+
+
+function TrackingProjectiles:GetProjectilePosition(projectileID)
+    return projectileID.position
+end
+
+-- Use this to destroy the particle at any time you want it to
+function TrackingProjectiles:DestroyProjectile(projectileID)
+    projectileID.destroy = true
+end
+
+-- Function to redirect to a new target
+function TrackingProjectiles:ChangeTarget(projectileID,hTarget)
+    projectileID.hTarget = hTarget
+end
+-- Function to update the speed
+function TrackingProjectiles:ChangeSpeed(projectileID,flSpeed)
+    projectileID.flSpeed = flSpeed
+end
+-- Function to update the acceleration
+function TrackingProjectiles:ChangeAcceleration(projectileID,flAcceleration)
+    projectileID.flAcceleration = flAcceleration
+end
+--Called when the projectile hits the target, params contains the params of the projectile plus a creation_time field.
+function TrackingProjectiles:OnProjectileHitUnit( params,projectileID )
+    --[[print( params.hCaster:GetUnitName() .. '\'s particle hit ' .. params.hTarget:GetUnitName() .. ' after ' ..
+        ( GameRules:GetGameTime() - params.creation_time ) .. ' seconds.' )]]
+    if not params.bProjectileDodged then
+        pcall(params.OnProjectileHitUnit, params, projectileID)
+    end
+end
+
+-- Based on the hooking done in statcollection.
+-- This makes sure that when a projectile is dodgeable and the ProjectileManager.ProjectileDodge function gets called you dodge the projectile.
+-- Not sure if this makes these projectiles dodgeable with the default spells
+function TrackingProjectiles:hookFunctions()
+    local this = self
+    
+    local oldProjectileDodge = ProjectileManager.ProjectileDodge
+    ProjectileManager.ProjectileDodge = function(projectileManager,unit)
+        -- Set the unit do be dodging
+        if unit then
+            unit.dodged = true
+        end
+        -- Run the real function for other projectiles
+        oldProjectileDodge(projectileManager,unit)
+    end
+end
+    
+function TrackingProjectiles:init()
+    self:hookFunctions()    
+end
+
+TrackingProjectiles:init()

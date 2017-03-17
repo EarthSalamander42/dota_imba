@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 if IsClient() then -- Load clientside utility lib
   print("T R I G G E R E D")
   UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")  
@@ -13,4 +14,11 @@ if IsClient() then -- Load clientside utility lib
 	MergeTables(AbilityKV, LoadKeyValues("scripts/npc/npc_abilities.txt"))
 	MergeTables(AbilityKV, LoadKeyValues("scripts/npc/npc_items_custom.txt"))
 	MergeTables(AbilityKV, LoadKeyValues("scripts/npc/items.txt"))
+=======
+if IsClient() then	-- Load clientside utility lib
+	require("/libraries/client_util")
+
+	--Load ability KVs
+	AbilityKV = LoadKeyValues("scripts/npc/npc_abilities_custom.txt")
+>>>>>>> upstream/developer
 end
