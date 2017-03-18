@@ -347,6 +347,7 @@ function NetherWardZap( keys )
 		"imba_queenofpain_blink",
 		"imba_jakiro_fire_breath",
 		"imba_jakiro_ice_breath",
+		"imba_jakiro_liquid_fire",
 		"alchemist_unstable_concoction",
 		"alchemist_chemical_rage",
 		"ursa_overpower",
