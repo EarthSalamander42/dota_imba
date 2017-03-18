@@ -1067,25 +1067,23 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2028"
 		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_vladmir.lua"
-		"AbilityTextureName"			"custom/imba_vladmir_2"
+		"ScriptFile"					"items/item_sheepstick.lua"
+		"AbilityTextureName"			"custom/imba_sheepstick"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"25"
+		"AbilityManaCost"				"100"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
 		"ItemCost"						"5700"
 		"ItemShopTags"					"int;regen_mana;agi;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1097,7 +1095,6 @@
 		"precache"
 		{
 			"model" 					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
-			"model"						"models/props_gameplay/pig.vmdl"
 		}
 
 		// Special	
@@ -1127,86 +1124,22 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"sheep_duration"		"3.5"
+				"hex_duration"			"3.5"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resist_reduction"	"25"
+				"var_type"				"FIELD_INTEGER"
+				"enemy_move_speed"		"140"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
+			"07"
 			{
-				"EffectName"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"self_move_speed"		"550"
 			}
-
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"items/item_sheepstick.lua"
-				"Function"				"Sheepstick"
-
-				"modifier_debuff"		"modifier_item_imba_sheepstick_disable"
-				"modifier_demagic"		"modifier_item_imba_sheepstick_demagic"
-				"particle_cast"			"particles/items_fx/item_sheepstick.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_sheepstick"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"				"%bonus_intellect"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"				"%bonus_strength"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"				"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_sheepstick_disable"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"IsHidden"								"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_EVADE_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_HEXED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MUTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_PASSIVES_DISABLED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-500"
-				}
-			}
-
-			"modifier_item_imba_sheepstick_demagic"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"IsHidden"								"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"tree_radius"			"175"
 			}
 		}
 	}
@@ -1245,27 +1178,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2170"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_orchid"
+		"ID"							"2030"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_orchid.lua"
+		"AbilityTextureName"			"custom/imba_orchid"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"15.0"
+		"AbilityCooldown"				"18"
+		"AbilityManaCost"				"100"
 		"AbilitySharedCooldown"			"orchid"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
 		"ItemCost"						"4075"
 		"ItemShopTags"					"int;attack_speed;damage;regen_mana;damage;hard_to_tag"
 		"ItemQuality"					"rare"
@@ -1279,22 +1212,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"35"
+				"bonus_intellect"			"25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"40"
+				"bonus_attack_speed"		"30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"40"
+				"bonus_damage"				"30"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"175"
+				"bonus_mana_regen"			"150"
 			}
 			"05"
 			{
@@ -1306,98 +1239,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"silence_damage_percent"	"30"
 			}
-			// hardcoded to GetSpellPower() on util.lua
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"25"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"distance_taper_start"		"2500"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{	
-				"ScriptFile"				"items/item_orchid.lua"
-				"Function"					"OrchidCast"
-				
-				"modifier_debuff"			"modifier_item_imba_orchid_debuff"
-				"target"					"TARGET"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_orchid"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_intellect"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_orchid_debuff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"TextureName"		 			"custom/imba_orchid"
-			
-				"EffectName"					"particles/items2_fx/orchid.vpcf"
-				"EffectAttachType"				"follow_overhead"
-
-				"Duration"						"%silence_duration"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"			"DOTA_Item.Orchid.Activate"
-						"Target"				"TARGET"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidDamageStorage"
-
-						"damage"				"%attack_damage"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"OrchidEnd"
-
-						"particle_pop"			"particles/items2_fx/orchid_pop.vpcf"
-					}
-				}
-			
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"spell_power"				"7"
 			}
 		}
 	}
@@ -1425,7 +1270,7 @@
 		"ItemResult"					"item_imba_bloodthorn"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_orchid;item_imba_lesser_crit"
+			"01"						"item_imba_orchid;item_lesser_crit"
 		}
 	}
 	
@@ -1437,30 +1282,30 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2140"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_bloodthorn"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_orchid.lua"
+		"AbilityTextureName"			"custom/imba_bloodthorn"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"11.0"
+		"AbilityCooldown"				"14"
+		"AbilityManaCost"				"100"
 		"AbilitySharedCooldown"			"orchid"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"7225"
+		"ItemCost"						"7195"
 		"ItemShopTags"					"int;attack_speed;damage;regen_mana;damage;hard_to_tag"
 		"ItemQuality"					"rare"
-		"ItemAliases"					"orchid malevolence"
+		"ItemAliases"					"bloodthorn;orchid malevolence"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
@@ -1470,22 +1315,22 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"35"
+				"bonus_intellect"			"25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"40"
+				"bonus_attack_speed"		"30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"80"
+				"bonus_damage"				"60"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_mana_regen"			"175"
+				"bonus_mana_regen"			"150"
 			}
 			"05"
 			{
@@ -1500,7 +1345,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"40"
+				"crit_chance"				"20"
 			}
 			"08"
 			{
@@ -1510,232 +1355,12 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"target_crit_multiplier"	"135"
+				"target_crit_multiplier"	"145"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"distance_taper_start"		"2500"
-			}
-			// hardcoded to GetSpellPower() on util.lua
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spell_power"				"30"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{	
-				"ScriptFile"				"items/item_orchid.lua"
-				"Function"					"BloodthornCast"
-				
-				"modifier_debuff"			"modifier_item_imba_bloodthorn_debuff"
-				"target"					"TARGET"				
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_bloodthorn"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_intellect"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"			"%bonus_mana_regen"
-				}
-			}
-
-			"modifier_item_imba_bloodthorn_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornCritRoll"
-
-						"modifier_crit"			"modifier_imba_bloodthorn_crit"
-					}
-				}
-			}
-
-			"modifier_imba_bloodthorn_crit"
-			{
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_damage"
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornCritHit"
-
-						"modifier_crit"			"modifier_imba_bloodthorn_crit"
-					}
-				}
-			}
-
-			"modifier_item_imba_bloodthorn_debuff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_bloodthorn"
-			
-				"EffectName"					"particles/items2_fx/orchid.vpcf"
-				"EffectAttachType"				"follow_overhead"
-
-				"Duration"						"%silence_duration"
-
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"EffectName"			"DOTA_Item.Bloodthorn.Activate"
-						"Target"				"TARGET"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornDamageStorage"
-
-						"damage"				"%attack_damage"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_orchid.lua"
-						"Function"				"BloodthornEnd"
-
-						"particle_pop"			"particles/items2_fx/orchid_pop.vpcf"
-					}
-				}
-			
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_EVADE_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Cyclone
-	//=================================================================================================================
-	"item_recipe_imba_cyclone"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2030"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"315"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_cyclone"
-		"ItemRequirements"
-		{
-			"01"						"item_staff_of_wizardry;item_void_stone;item_wind_lace"
-		}
-	}
-	
-	//=================================================================================================================
-	// Cyclone
-	//=================================================================================================================
-	"item_imba_cyclone"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1100"
-		"BaseClass"						"item_cyclone"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"FightRecapLevel"				"1"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.0"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		"ItemCost"						"2400"
-		"ItemShopTags"					"int;regen_mana;move_speed;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"cyclone euls;eul's scepter of divinity"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"14"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"175"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cyclone_duration"		"2.5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"1000"
+				"spell_power"				"10"
 			}
 		}
 	}
@@ -6077,7 +5702,7 @@
 		"ItemResult"					"item_imba_greater_crit"
 		"ItemRequirements"
 		{
-			"01"						"item_imba_lesser_crit;item_demon_edge"
+			"01"						"item_lesser_crit;item_demon_edge"
 		}
 	}
 	
@@ -6564,73 +6189,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cooldown_ranged_tooltip"		"40"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Recipe: Lesser Crit
-	//=================================================================================================================
-	"item_recipe_imba_lesser_crit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2075"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"530"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_lesser_crit"
-		"ItemRequirements"
-		{
-			"01"						"item_broadsword;item_blades_of_attack"
-		}
-	}
-	
-	//=================================================================================================================
-	// Lesser Crit
-	//=================================================================================================================
-	"item_imba_lesser_crit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1149"
-		"BaseClass"						"item_lesser_crit"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2150"
-		"ItemShopTags"					"damage;crit"
-		"ItemQuality"					"epic"
-		"ItemAliases"					"crystalys"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"36"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"crit_multiplier"		"180"
 			}
 		}
 	}

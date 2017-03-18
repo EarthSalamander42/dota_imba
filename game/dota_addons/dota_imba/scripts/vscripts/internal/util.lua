@@ -2185,17 +2185,17 @@ end
 
 function ChangeUnitModel(unit, model)
 	if not unit.original_model then
-		unit.original_model = target:GetModelName()
+		unit.original_model = unit:GetModelName()
 	end
 
-	target:SetOriginalModel(model)
-	target:SetModel(model)
+	unit:SetOriginalModel(model)
+	unit:SetModel(model)
 end
 
 function RevertUnitModel(unit)
 	if unit.original_model then
-		target:SetOriginalModel(unit.original_model)
-		target:SetModel(unit.original_model)
+		unit:SetOriginalModel(unit.original_model)
+		unit:SetModel(unit.original_model)
 		unit.original_model = nil
 	end
 end

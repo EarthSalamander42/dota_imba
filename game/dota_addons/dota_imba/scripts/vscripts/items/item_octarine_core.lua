@@ -7,8 +7,8 @@
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_octarine_core == nil then item_imba_octarine_core = class({}) end
-LinkLuaModifier( "modifier_imba_octarine_core_basic", "items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stat
-LinkLuaModifier( "modifier_imba_octarine_core_unique", "items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- lifesteal + magus pressence handler
+LinkLuaModifier( "modifier_imba_octarine_core_basic", "items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stats
+LinkLuaModifier( "modifier_imba_octarine_core_unique", "items/item_octarine_core.lua", LUA_MODIFIER_MOTION_NONE )	-- Lifesteal + magus presence handler
 
 function item_imba_octarine_core:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
@@ -54,6 +54,7 @@ if modifier_imba_octarine_core_basic == nil then modifier_imba_octarine_core_bas
 function modifier_imba_octarine_core_basic:IsHidden() return true end
 function modifier_imba_octarine_core_basic:IsDebuff() return false end
 function modifier_imba_octarine_core_basic:IsPurgable() return false end
+function modifier_imba_octarine_core_basic:IsPermanent() return true end
 function modifier_imba_octarine_core_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_imba_octarine_core_basic:OnCreated()

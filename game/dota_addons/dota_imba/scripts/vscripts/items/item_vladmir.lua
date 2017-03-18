@@ -1,5 +1,5 @@
 --	Author: Firetoad
---	Date: 			03.08.2015	
+--	Date: 			03.08.2015
 --	Last Update:	14.03.2017
 
 -----------------------------------------------------------------------------------------------------------
@@ -28,6 +28,7 @@ if modifier_item_imba_vladmir == nil then modifier_item_imba_vladmir = class({})
 function modifier_item_imba_vladmir:IsHidden() return true end
 function modifier_item_imba_vladmir:IsDebuff() return false end
 function modifier_item_imba_vladmir:IsPurgable() return false end
+function modifier_item_imba_vladmir:IsPermanent() return true end
 function modifier_item_imba_vladmir:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the aura emitter to the caster when created
@@ -51,7 +52,6 @@ function modifier_item_imba_vladmir:OnDestroy(keys)
 		end)
 	end
 end
-
 
 -- Attribute bonuses
 function modifier_item_imba_vladmir:DeclareFunctions()
@@ -89,7 +89,14 @@ function modifier_item_imba_vladmir_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
 	
 function modifier_item_imba_vladmir_aura_emitter:GetModifierAura()
-	return "modifier_item_imba_vladmir_aura" end
+	if IsServer() then
+		if self:GetParent():IsAlive() then
+			return "modifier_item_imba_vladmir_aura"
+		else
+			return nil
+		end
+	end
+end
 	
 function modifier_item_imba_vladmir_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
@@ -120,15 +127,19 @@ function modifier_item_imba_vladmir_aura:OnCreated(keys)
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
-	ChangeAttackProjectileImba(self:GetParent())
+	if IsServer() and self:GetParent():IsHero() then
+		ChangeAttackProjectileImba(self:GetParent())
+	end
 end
 
 -- Possible projectile change
 function modifier_item_imba_vladmir_aura:OnDestroy()
-	local parent = self:GetParent()
-	Timers:CreateTimer(0.03, function()
-		ChangeAttackProjectileImba(parent)
-	end)
+	if IsServer() and self:GetParent():IsHero() then
+		local parent = self:GetParent()
+		Timers:CreateTimer(0.03, function()
+			ChangeAttackProjectileImba(parent)
+		end)
+	end
 end
 
 -- Lifesteal
@@ -239,6 +250,7 @@ if modifier_item_imba_vladmir_blood == nil then modifier_item_imba_vladmir_blood
 function modifier_item_imba_vladmir_blood:IsHidden() return true end
 function modifier_item_imba_vladmir_blood:IsDebuff() return false end
 function modifier_item_imba_vladmir_blood:IsPurgable() return false end
+function modifier_item_imba_vladmir_blood:IsPermanent() return true end
 function modifier_item_imba_vladmir_blood:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 -- Adds the aura emitter to the caster when created
@@ -300,7 +312,14 @@ function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraSearchType()
 	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO end
 	
 function modifier_item_imba_vladmir_blood_aura_emitter:GetModifierAura()
-	return "modifier_item_imba_vladmir_blood_aura" end
+	if IsServer() then
+		if self:GetParent():IsAlive() then
+			return "modifier_item_imba_vladmir_blood_aura"
+		else
+			return nil
+		end
+	end
+end
 	
 function modifier_item_imba_vladmir_blood_aura_emitter:GetAuraRadius()
 	return self:GetAbility():GetSpecialValueFor("aura_radius") end
@@ -324,15 +343,19 @@ function modifier_item_imba_vladmir_blood_aura:OnCreated(keys)
 	self.armor_aura = self:GetAbility():GetSpecialValueFor("armor_aura")
 	self.hp_regen_aura = self:GetAbility():GetSpecialValueFor("hp_regen_aura")
 	self.mana_regen_aura = self:GetAbility():GetSpecialValueFor("mana_regen_aura")
-	ChangeAttackProjectileImba(self:GetParent())
+	if IsServer() and self:GetParent():IsHero() then
+		ChangeAttackProjectileImba(self:GetParent())
+	end
 end
 
 -- Possible projectile change
 function modifier_item_imba_vladmir_blood_aura:OnDestroy()
-	local parent = self:GetParent()
-	Timers:CreateTimer(0.03, function()
-		ChangeAttackProjectileImba(parent)
-	end)
+	if IsServer() and self:GetParent():IsHero() then
+		local parent = self:GetParent()
+		Timers:CreateTimer(0.03, function()
+			ChangeAttackProjectileImba(parent)
+		end)
+	end
 end
 
 -- Lifesteal

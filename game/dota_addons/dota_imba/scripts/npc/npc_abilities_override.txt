@@ -103,8 +103,8 @@
 	"item_sheepstick"				"REMOVE"
 	"item_recipe_orchid"			"REMOVE"
 	"item_orchid"					"REMOVE"
-	"item_recipe_cyclone"			"REMOVE"
-	"item_cyclone"					"REMOVE"
+	//"item_recipe_cyclone"			"REMOVE"
+	//"item_cyclone"					"REMOVE"
 	//"item_recipe_force_staff"		"REMOVE"
 	//"item_force_staff"				"REMOVE"
 	"item_recipe_dagon"				"REMOVE"
@@ -164,8 +164,8 @@
 	"item_bfury"					"REMOVE"
 	"item_recipe_manta"				"REMOVE"
 	"item_manta"					"REMOVE"
-	"item_recipe_lesser_crit"		"REMOVE"
-	"item_lesser_crit"				"REMOVE"
+	//"item_recipe_lesser_crit"		"REMOVE"
+	//"item_lesser_crit"			"REMOVE"
 	"item_recipe_armlet"			"REMOVE"
 	"item_armlet"					"REMOVE"
 	"item_recipe_invis_sword"		"REMOVE"
@@ -1085,6 +1085,24 @@
 	"item_urn_of_shadows"
 	{
 		"ItemCost"						"575"
+	}
+
+	//=================================================================================================================
+	// Recipe: Cyclone
+	//=================================================================================================================
+	"item_recipe_cyclone"
+	{
+		"ItemCost"						"100"	
+	}
+
+	//=================================================================================================================
+	// Cyclone
+	//=================================================================================================================
+	"item_cyclone"
+	{
+		"AbilityCooldown"				"16"
+
+		"ItemCost"						"2200"
 	}
 
 	//=================================================================================================================

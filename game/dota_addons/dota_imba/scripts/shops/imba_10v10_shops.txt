@@ -119,7 +119,7 @@
 		"item"		"item_imba_veil_of_discord"
 		"item"		"item_imba_necronomicon"
 		"item"		"item_imba_dagon"
-		"item"		"item_imba_cyclone"
+		"item"		"item_cyclone"
 		"item"		"item_rod_of_atos"
 		//"item"		"item_imba_lotus_orb"
 		"item"		"item_imba_orchid"
@@ -150,7 +150,7 @@
 	"weapons"
 	{
 		"item"		"item_dragon_lance"
-		"item"		"item_imba_lesser_crit"
+		"item"		"item_lesser_crit"
 		"item"		"item_imba_armlet"
 		"item"		"item_imba_shadow_blade"
 		"item"		"item_basher"
