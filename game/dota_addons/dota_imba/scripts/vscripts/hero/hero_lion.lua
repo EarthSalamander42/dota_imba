@@ -248,25 +248,13 @@ function HexModelChange( keys )
 	local target = keys.target
 	local model_frog = keys.model_frog
 
-	-- Stores the day model to revert to it later
-	if not target.hex_original_model then
-		target.hex_original_model = target:GetModelName()
-	end
-
-	-- Changes the target's model to its night mode
-	target:SetOriginalModel(model_frog)
-	target:SetModel(model_frog)
+	ChangeUnitModel(target, model_frog)
 end
 
 function HexModelRevert( keys )
 	local target = keys.target
 
-	-- Checking for errors
-	if target.hex_original_model then
-		target:SetModel(target.hex_original_model)
-		target:SetOriginalModel(target.hex_original_model)
-		target.hex_original_model = nil
-	end
+	RevertUnitModel(target)
 end
 
 function HexBounce ( keys )

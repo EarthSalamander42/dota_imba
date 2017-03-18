@@ -502,7 +502,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"AbilityTextureName"			"custom/imba_mekansm"
 		
@@ -514,7 +513,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"225"
-		"ItemCost"						"2175"
+		"ItemCost"						"2275"
 		"ItemShopTags"					"agi;int;str;armor;boost_health"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"mechanism;mekansm"
@@ -681,7 +680,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"FightRecapLevel"				"2"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"AbilityTextureName"			"custom/imba_mekansm_2"
 		
@@ -693,7 +691,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"250"
-		"ItemCost"						"4775"
+		"ItemCost"						"4925"
 		"ItemShopTags"					"agi;int;str;armor;boost_health"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"mechanism;mekansm"
@@ -911,11 +909,10 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_vladmir.lua"
 		"AbilityTextureName"			"custom/imba_vladmir"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2250"
+		"ItemCost"						"2325"
 		"ItemShopTags"					"lifesteal;damage;armor;regen_mana"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"vladmir's offering;vlads"
@@ -979,12 +976,11 @@
 		"ID"							"2020"
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_vladmir.lua"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"AbilityTextureName"			"custom/imba_vladmir_2"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"4550"
+		"ItemCost"						"4625"
 		"ItemShopTags"					"lifesteal;damage;armor;regen_mana;damage;crit"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"vladmir's blood;vlads"
@@ -1036,224 +1032,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Pipe
-	//=================================================================================================================
-	"item_recipe_imba_pipe"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2023"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_pipe"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_hood_of_defiance;item_headdress"
-		}
-	}
-	
-	//=================================================================================================================
-	// Pipe
-	//=================================================================================================================
-	"item_imba_pipe"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2024"
-		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"FightRecapLevel"				"2"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"custom/imba_pipe"
-		
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0"
-		"AbilityManaCost"				"100"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"3050"
-		"ItemShopTags"					"regen_health;boost_magic_resist"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"pipe of insight"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemAlertable"					"1"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_regen"				"12"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_resistance"			"36"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"barrier_radius"			"1200"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"barrier_duration"			"12"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"1200"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"aura_health_regen"			"5"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"aura_magic_resist"			"15"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"barrier_resist"			"60"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/items2_fx/pipe_of_insight_launch.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"
-				{
-					"Center"  		"CASTER"
-					"Radius" 		"%barrier_radius"
-					"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"		"DOTA_Item.Pipe.Activate"
-				"Target" 			"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_item_imba_pipe_block"
-
-				"Target"
-				{
-					"Center"  		"CASTER"
-					"Radius" 		"%barrier_radius"
-					"Teams" 		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_pipe"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%health_regen"
-				}
-			}
-
-			"modifier_item_imba_pipe_aura_emitter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"Aura"					"modifier_item_imba_pipe_aura"
-				"Aura_Radius"			"%aura_radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"			"DOTA_UNIT_TARGET_FLAG_NONE"
-				"Aura_ApplyToCaster"	"1"
-			}
-
-			"modifier_item_imba_pipe_aura"
-			{
-				"IsHidden"			"0"
-				"IsBuff"			"1"
-
-				"TextureName"		"custom/imba_pipe"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%aura_magic_resist"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"			"%aura_health_regen"
-				}
-			}
-
-			"modifier_item_imba_pipe_block"
-			{
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"TextureName"				"custom/imba_pipe"
-
-				"Duration"					"%barrier_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_pipe.lua"
-						"Function"			"PipeParticle"
-
-						"particle_pipe"		"particles/item/pipe_of_insight/pipe_of_insight.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_pipe.lua"
-						"Function"			"PipeParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%barrier_resist"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Recipe: Sheepstick
 	//=================================================================================================================
 	"item_recipe_imba_sheepstick"
@@ -1264,12 +1042,12 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_recipe"
 		"Model"							"models/props_gameplay/recipe.mdl"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"0"	
 		"ItemShopTags"					""
-		
+
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
@@ -1288,31 +1066,40 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2028"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_sheepstick"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_vladmir.lua"
+		"AbilityTextureName"			"custom/imba_vladmir_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"FightRecapLevel"				"2"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"800"
 		"AbilityCastPoint"				"0.0"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0"
+		"AbilityCooldown"				"25"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100"
-		"ItemCost"						"5650"
+		"ItemCost"						"5700"
 		"ItemShopTags"					"int;regen_mana;agi;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"hex;sheepstick;scythe of vyse"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"model" 					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
+			"model"						"models/props_gameplay/pig.vmdl"
+		}
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -1320,22 +1107,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"bonus_strength"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"16"
+				"bonus_agility"			"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_intellect"		"60"
+				"bonus_intellect"		"35"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana_regen"		"175"
+				"bonus_mana_regen"		"150"
 			}
 			"05"
 			{
@@ -1344,8 +1131,8 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction"		"8"
+				"var_type"					"FIELD_INTEGER"
+				"magic_resist_reduction"	"25"
 			}
 		}
 
@@ -1364,9 +1151,7 @@
 				"Function"				"Sheepstick"
 
 				"modifier_debuff"		"modifier_item_imba_sheepstick_disable"
-				"modifier_dearmor"		"modifier_item_imba_sheepstick_dearmor"
 				"modifier_demagic"		"modifier_item_imba_sheepstick_demagic"
-				"modifier_prevent"		"modifier_item_imba_sheepstick_prevent"
 				"particle_cast"			"particles/items_fx/item_sheepstick.vpcf"
 			}
 		}
@@ -1412,18 +1197,6 @@
 				}
 			}
 
-			"modifier_item_imba_sheepstick_dearmor"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"IsHidden"								"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS" 		"-1"
-				}
-			}
-
 			"modifier_item_imba_sheepstick_demagic"
 			{
 				"IsDebuff"								"1"
@@ -1434,16 +1207,6 @@
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
 				}
-			}
-
-			"modifier_item_imba_sheepstick_prevent"
-			{
-				"Passive"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-				"IsHidden"								"0"
-
-				"TextureName"	"custom/imba_sheepstick_recast"
 			}
 		}
 	}
@@ -1490,7 +1253,6 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"FightRecapLevel"				"1"
 
@@ -1682,7 +1444,6 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"	
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"FightRecapLevel"				"1"
 
@@ -4457,7 +4218,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_heart"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5244,7 +5004,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1325"
+		"ItemCost"						"1000"
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -5278,7 +5038,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5125"
+		"ItemCost"						"4850"
 		"ItemShopTags"					"regen_health;regen_mana;str;agi;int;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"ls;linken's sphere"
@@ -5354,7 +5114,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_vanguard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -5470,7 +5229,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -5669,7 +5427,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -5835,88 +5592,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Hood of Defiance
-	//=================================================================================================================
-	"item_recipe_imba_hood_of_defiance"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2063"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_hood_of_defiance"
-		"ItemRequirements"
-		{
-			"01"						"item_ring_of_health;item_cloak;item_ring_of_regen"
-		}
-	}
-	
-	//=================================================================================================================
-	// Hood of Defiance
-	//=================================================================================================================
-	"item_imba_hood_of_defiance"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1131"
-		"BaseClass"						"item_hood_of_defiance"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30.0"
-		"AbilityManaCost"				"50"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1725"
-		"ItemShopTags"					"regen_health;magic_resist"
-		"ItemQuality"					"epic"
-		"ItemAliases"					"hood of defiance"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_spell_resist"	"36"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_health_regen"	"12"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_resist"		"36"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"barrier_block"			"400"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"barrier_duration"		"15.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Recipe: Monkey King Bar
 	//=================================================================================================================
 	"item_recipe_imba_monkey_king_bar"
@@ -5953,7 +5628,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_monkey_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -6116,7 +5790,6 @@
 		"ID"							"2068"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_radiance"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "items/item_radiance.lua"
 		
@@ -6786,7 +6459,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"110"
-		"ItemCost"						"4950"
+		"ItemCost"						"5000"
 		"ItemShopTags"					"agi;str;int;attack_speed;move_speed;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"manta style"
@@ -6999,7 +6672,6 @@
 		"ID"							"2077"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_armlet"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "items/item_armlet.lua"
 		
@@ -7119,7 +6791,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"custom/imba_invis_sword"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
@@ -7464,7 +7135,6 @@
 		"AbilityTextureName"				"custom/imba_silver_edge"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"Model"								"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"					"1"
 		
 		// Stats		
@@ -7475,7 +7145,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"							"5100"
+		"ItemCost"							"5150"
 		"ItemShopTags"						"damage;attack_speed;movespeed;strength;hard_to_tag"
 		"ItemQuality"						"epic"
 		"ItemAliases"						"sb;invis;shadow blade"
@@ -8246,12 +7916,11 @@
 		"BaseClass"							"item_datadriven"
 		"AbilityTextureName" 				"custom/imba_skadi"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"Model"								"models/props_gameplay/red_box.vmdl" 
 		"Effect"							"particles/generic_gameplay/dropped_item.vpcf"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"							"6575"
+		"ItemCost"							"6725"
 		"ItemShopTags"						"agi;str;int;hard_to_tag;unique"
 		"ItemQuality"						"artifact"
 		"ItemAliases"						"eos;eye of skadi"
@@ -9089,7 +8758,6 @@
 		"ID"							"2197"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_desolator"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -9351,7 +9019,6 @@
 		"ID"							"2199"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_desolator_2"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
@@ -9862,7 +9529,6 @@
 		"ID"							"2201"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -10039,7 +9705,6 @@
 		"ID"							"2202"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade_2"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -10221,7 +9886,6 @@
 		"ID"							"2203"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_diffusal_blade_3"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -10539,7 +10203,6 @@
 		"ID"							"2095"
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"AbilityTextureName"			"custom/imba_arcane_boots"
 
@@ -12976,7 +12639,6 @@
 		"ID"							"2121"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName" 			"custom/imba_octarine_core"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "items/item_octarine_core.lua"
 
@@ -13088,7 +12750,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"7150"
+		"ItemCost"						"7225"
 		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"guardian greaves"
@@ -13548,7 +13210,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_shotgun"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -13694,7 +13355,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_starfury"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -14148,7 +13808,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName" 			"custom/imba_phase_boots_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 
 		// Stats		
@@ -14285,7 +13944,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_tranquil_boots_2"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -14508,7 +14166,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 
@@ -14593,7 +14250,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		"ScriptFile"                    "items/item_blink.lua"
 
@@ -14686,7 +14342,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_echo_sabre"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
@@ -14941,7 +14596,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_reverb_rapier"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
@@ -15196,7 +14850,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_initiate_robe"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 		"FightRecapLevel"				"1"
 		
 		// Stats		
@@ -15353,7 +15006,6 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName" 			"custom/imba_ultimate_scepter_synth"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -15485,7 +15137,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_aether_lens"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15612,7 +15263,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_nether_wand"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -15781,7 +15431,6 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"custom/imba_elder_staff"
-		"Model"							"models/props_gameplay/red_box.vmdl"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -17107,7 +16756,6 @@
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"custom/imba_angelic_alliance"
 		"ScriptFile"					"items/item_angelic_alliance.lua"
-		"Model"							"models/props_gameplay/red_box.vmdl" 
 
 		// Ability
 		//-------------------------------------------------------------------------------------------------------------

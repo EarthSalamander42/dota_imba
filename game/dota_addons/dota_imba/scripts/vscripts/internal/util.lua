@@ -2179,6 +2179,29 @@ function CDOTA_BaseNPC:GetSpellPower()
 	return spell_power
 end
 
+-------------------------------------------------------------------------------
+-- Universal model change functions (properly stores unit's original model)
+-------------------------------------------------------------------------------
+
+function ChangeUnitModel(unit, model)
+	if not unit.original_model then
+		unit.original_model = target:GetModelName()
+	end
+
+	target:SetOriginalModel(model)
+	target:SetModel(model)
+end
+
+function RevertUnitModel(unit)
+	if unit.original_model then
+		target:SetOriginalModel(unit.original_model)
+		target:SetModel(unit.original_model)
+		unit.original_model = nil
+	end
+end
+
+
+
 function CalculateDistance(ent1, ent2)
 	local pos1 = ent1
 	local pos2 = ent2
@@ -2281,8 +2304,6 @@ function TrackingProjectiles:Think(params,projectileID)
             target = projectileID.hTarget
             projectileID.hTarget = nil
         end
-
-
 
         --Get the target location
         local target_location = target:GetAbsOrigin()
