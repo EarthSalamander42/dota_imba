@@ -92,13 +92,14 @@ function modifier_item_imba_orchid_debuff:GetEffectAttachType()
 		return PATTACH_OVERHEAD_FOLLOW
 end
 
--- Reset damage storage tracking
+-- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_orchid_debuff:OnCreated()
 	if IsServer() then
 		local owner = self:GetParent()
 		if not owner.orchid_damage_storage then
 			owner.orchid_damage_storage = 0
 		end
+		self.damage_factor = self:GetAbility():GetSpecialValueFor("silence_damage_percent")
 	end
 end
 
@@ -139,13 +140,12 @@ function modifier_item_imba_orchid_debuff:OnDestroy()
 		local owner = self:GetParent()
 		local ability = self:GetAbility()
 		local caster = ability:GetCaster()
-		local damage_factor = ability:GetSpecialValueFor("silence_damage_percent")
 
 		-- If damage was taken, play the effect and damage the owner
 		if owner.orchid_damage_storage > 0 then
 			
 			-- Calculate and deal damage
-			local damage = owner.orchid_damage_storage * damage_factor * 0.01
+			local damage = owner.orchid_damage_storage * self.damage_factor * 0.01
 			ApplyDamage({attacker = caster, victim = owner, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 
 			-- Fire damage particle
@@ -166,8 +166,8 @@ end
 
 if item_imba_bloodthorn == nil then item_imba_bloodthorn = class({}) end
 LinkLuaModifier( "modifier_item_imba_bloodthorn", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
---LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit chance, unstackable
---LinkLuaModifier( "modifier_item_imba_bloodthorn_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Passive crit buff
+LinkLuaModifier( "modifier_item_imba_bloodthorn_unique", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit chance, unstackable
+LinkLuaModifier( "modifier_item_imba_bloodthorn_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Passive crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_attacker_crit", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )		-- Active attackers' crit buff
 LinkLuaModifier( "modifier_item_imba_bloodthorn_debuff", "items/item_orchid.lua", LUA_MODIFIER_MOTION_NONE )	-- Active debuff
 
@@ -222,11 +222,9 @@ end
 function modifier_item_imba_bloodthorn:OnDestroy(keys)
 	if IsServer() then
 		local parent = self:GetParent()
-		Timers:CreateTimer(0.03, function()
-			if not parent:HasModifier("modifier_item_imba_bloodthorn") then
-				parent:RemoveModifierByName("modifier_item_imba_bloodthorn_unique")
-			end
-		end)
+		if not parent:HasModifier("modifier_item_imba_bloodthorn") then
+			parent:RemoveModifierByName("modifier_item_imba_bloodthorn_unique")
+		end
 	end
 end
 
@@ -258,6 +256,80 @@ function modifier_item_imba_bloodthorn:GetModifierSpellAmplify_Percentage()
 	return self:GetAbility():GetSpecialValueFor("spell_power") end
 
 -----------------------------------------------------------------------------------------------------------
+--	Bloodthorn owner unique bonus (crit chance)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_bloodthorn_unique == nil then modifier_item_imba_bloodthorn_unique = class({}) end
+function modifier_item_imba_bloodthorn_unique:IsHidden() return true end
+function modifier_item_imba_bloodthorn_unique:IsDebuff() return false end
+function modifier_item_imba_bloodthorn_unique:IsPurgable() return false end
+function modifier_item_imba_bloodthorn_unique:IsPermanent() return true end
+
+-- Declare modifier events/properties
+function modifier_item_imba_bloodthorn_unique:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK_START,
+	}
+	return funcs
+end
+
+-- Roll for the crit chance
+function modifier_item_imba_bloodthorn_unique:OnAttackStart(keys)
+	if IsServer() then
+		local owner = self:GetParent()
+
+		-- If this unit is the attacker, roll for a crit
+		if owner == keys.attacker then
+			if RollPercentage(self:GetAbility():GetSpecialValueFor("crit_chance")) then
+				owner:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_crit", {duration = 1.0})
+			end
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Bloodthorn crit buff
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_bloodthorn_crit == nil then modifier_item_imba_bloodthorn_crit = class({}) end
+function modifier_item_imba_bloodthorn_crit:IsHidden() return true end
+function modifier_item_imba_bloodthorn_crit:IsDebuff() return false end
+function modifier_item_imba_bloodthorn_crit:IsPurgable() return false end
+
+-- Track parameters to prevent errors if the item is unequipped
+function modifier_item_imba_bloodthorn_crit:OnCreated()
+	if IsServer() then
+		self.crit_damage = self:GetAbility():GetSpecialValueFor("crit_damage")
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_bloodthorn_crit:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	return funcs
+end
+
+-- Grant the crit damage multiplier
+function modifier_item_imba_bloodthorn_crit:GetModifierPreAttack_CriticalStrike()
+	if IsServer() then
+		return self.crit_damage
+	end
+end
+
+-- Remove the crit modifier when the attack is concluded
+function modifier_item_imba_bloodthorn_crit:OnAttackLanded(keys)
+	if IsServer() then
+		-- If this unit is the attacker, remove its crit modifier
+		if self:GetParent() == keys.attacker then
+			self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_crit")
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
 --	Bloodthorn active debuff
 -----------------------------------------------------------------------------------------------------------
 
@@ -275,13 +347,15 @@ function modifier_item_imba_bloodthorn_debuff:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW
 end
 
--- Reset damage storage tracking
+-- Reset damage storage tracking, track debuff parameters to prevent errors if the item is unequipped
 function modifier_item_imba_bloodthorn_debuff:OnCreated()
 	if IsServer() then
 		local owner = self:GetParent()
 		if not owner.orchid_damage_storage then
 			owner.orchid_damage_storage = 0
 		end
+		self.damage_factor = self:GetAbility():GetSpecialValueFor("silence_damage_percent")
+		self.target_crit_multiplier = self:GetAbility():GetSpecialValueFor("target_crit_multiplier")
 	end
 end
 
@@ -311,7 +385,7 @@ function modifier_item_imba_bloodthorn_debuff:OnAttackStart(keys)
 		-- If this unit is the target, grant the attacker a crit buff
 		if owner == keys.target then
 			local attacker = keys.attacker
-			attacker:AddNewModifier(owner, ability, "modifier_item_imba_bloodthorn_attacker_crit", {duration = 1.0})
+			attacker:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_attacker_crit", {duration = 1.0})
 		end
 	end
 end
@@ -325,7 +399,6 @@ function modifier_item_imba_bloodthorn_debuff:OnTakeDamage(keys)
 		-- If this unit is the one suffering damage, amplify and store it
 		if owner == target then
 			owner.orchid_damage_storage = owner.orchid_damage_storage + keys.damage
-			print("storing "..keys.damage..", total: "..owner.orchid_damage_storage)
 		end
 	end
 end
@@ -368,6 +441,13 @@ function modifier_item_imba_bloodthorn_attacker_crit:IsHidden() return true end
 function modifier_item_imba_bloodthorn_attacker_crit:IsDebuff() return false end
 function modifier_item_imba_bloodthorn_attacker_crit:IsPurgable() return false end
 
+-- Track parameters to prevent errors if the item is unequipped
+function modifier_item_imba_bloodthorn_attacker_crit:OnCreated()
+	if IsServer() then
+		self.target_crit_multiplier = self:GetAbility():GetSpecialValueFor("target_crit_multiplier")
+	end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_bloodthorn_attacker_crit:DeclareFunctions()
 	local funcs = {
@@ -380,7 +460,7 @@ end
 -- Grant the crit damage multiplier
 function modifier_item_imba_bloodthorn_attacker_crit:GetModifierPreAttack_CriticalStrike()
 	if IsServer() then
-		--return self:GetAbility():GetSpecialValueFor("target_crit_multiplier")
+		return self.target_crit_multiplier
 	end
 end
 
@@ -392,30 +472,4 @@ function modifier_item_imba_bloodthorn_attacker_crit:OnAttackLanded(keys)
 			self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_attacker_crit")
 		end
 	end
-end
-
-function BloodthornCritRoll( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_crit = keys.modifier_crit
-
-	-- Parameters
-	local crit_chance = ability:GetLevelSpecialValueFor("crit_chance", ability_level)
-
-	-- Remove crit modifier
-	caster:RemoveModifierByName(modifier_crit)
-
-	-- Roll for a crit
-	if RandomInt(1, 100) <= crit_chance then
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_crit, {})
-	end
-end
-
-function BloodthornCritHit( keys )
-	local caster = keys.caster
-	local modifier_crit = keys.modifier_crit
-
-	-- Remove crit modifier
-	caster:RemoveModifierByName(modifier_crit)
 end

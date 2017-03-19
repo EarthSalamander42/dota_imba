@@ -2179,27 +2179,6 @@ function CDOTA_BaseNPC:GetSpellPower()
 	return spell_power
 end
 
--------------------------------------------------------------------------------
--- Universal model change functions (properly stores unit's original model)
--------------------------------------------------------------------------------
-
-function ChangeUnitModel(unit, model)
-	if not unit.original_model then
-		unit.original_model = unit:GetModelName()
-	end
-
-	unit:SetOriginalModel(model)
-	unit:SetModel(model)
-end
-
-function RevertUnitModel(unit)
-	if unit.original_model then
-		unit:SetOriginalModel(unit.original_model)
-		unit:SetModel(unit.original_model)
-		unit.original_model = nil
-	end
-end
-
 
 
 function CalculateDistance(ent1, ent2)

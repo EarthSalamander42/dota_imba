@@ -45,11 +45,9 @@ end
 function modifier_item_imba_vladmir:OnDestroy(keys)
 	if IsServer() then
 		local parent = self:GetParent()
-		Timers:CreateTimer(0.03, function()
-			if not parent:HasModifier("modifier_item_imba_vladmir") then
-				parent:RemoveModifierByName("modifier_item_imba_vladmir_aura_emitter")
-			end
-		end)
+		if not parent:HasModifier("modifier_item_imba_vladmir") then
+			parent:RemoveModifierByName("modifier_item_imba_vladmir_aura_emitter")
+		end
 	end
 end
 
@@ -136,9 +134,7 @@ end
 function modifier_item_imba_vladmir_aura:OnDestroy()
 	if IsServer() and self:GetParent():IsHero() then
 		local parent = self:GetParent()
-		Timers:CreateTimer(0.03, function()
-			ChangeAttackProjectileImba(parent)
-		end)
+		ChangeAttackProjectileImba(parent)
 	end
 end
 
@@ -268,11 +264,9 @@ end
 function modifier_item_imba_vladmir_blood:OnDestroy(keys)
 	if IsServer() then
 		local parent = self:GetParent()
-		Timers:CreateTimer(0.03, function()
-			if not parent:HasModifier("modifier_item_imba_vladmir_blood") then
-				parent:RemoveModifierByName("modifier_item_imba_vladmir_blood_aura_emitter")
-			end
-		end)
+		if not parent:HasModifier("modifier_item_imba_vladmir_blood") then
+			parent:RemoveModifierByName("modifier_item_imba_vladmir_blood_aura_emitter")
+		end
 	end
 end
 
@@ -352,9 +346,7 @@ end
 function modifier_item_imba_vladmir_blood_aura:OnDestroy()
 	if IsServer() and self:GetParent():IsHero() then
 		local parent = self:GetParent()
-		Timers:CreateTimer(0.03, function()
-			ChangeAttackProjectileImba(parent)
-		end)
+		ChangeAttackProjectileImba(parent)
 	end
 end
 

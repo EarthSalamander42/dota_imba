@@ -65,9 +65,10 @@ function item_imba_sheepstick:OnSpellStart()
 			return nil
 		end
 
-		-- If the target is yourself, apply the buff, else, the debuff
+		-- If the target is yourself, apply the buff and purge, else, the debuff
 		if caster == target then
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_buff", {duration = hex_duration})
+			target:Purge(false, true, false, false, false)
 		else
 			target:AddNewModifier(caster, self, "modifier_item_imba_sheepstick_debuff", {duration = hex_duration})
 		end
@@ -117,29 +118,20 @@ function modifier_item_imba_sheepstick_debuff:IsHidden() return false end
 function modifier_item_imba_sheepstick_debuff:IsDebuff() return true end
 function modifier_item_imba_sheepstick_debuff:IsPurgable() return true end
 
--- Model change
-function modifier_item_imba_sheepstick_debuff:OnCreated(keys)
-	if IsServer() then
-		ChangeUnitModel(self:GetParent(), "models/props_gameplay/pig.vmdl")
-	end
-end
-
-function modifier_item_imba_sheepstick_debuff:OnDestroy()
-	if IsServer() then
-		RevertUnitModel(self:GetParent())
-	end
-end
-
--- Base movement speed override
+-- Declare modifier events/properties
 function modifier_item_imba_sheepstick_debuff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
+		MODIFIER_PROPERTY_MODEL_CHANGE,
 	}
 	return funcs
 end
 
 function modifier_item_imba_sheepstick_debuff:GetModifierMoveSpeedOverride()
 	return self:GetAbility():GetSpecialValueFor("enemy_move_speed") end
+
+function modifier_item_imba_sheepstick_debuff:GetModifierModelChange()
+	return "models/props_gameplay/pig.vmdl" end
 
 -- Hexed state
 function modifier_item_imba_sheepstick_debuff:CheckState()
@@ -161,17 +153,10 @@ function modifier_item_imba_sheepstick_buff:IsHidden() return false end
 function modifier_item_imba_sheepstick_buff:IsDebuff() return false end
 function modifier_item_imba_sheepstick_buff:IsPurgable() return true end
 
--- Model change
-function modifier_item_imba_sheepstick_buff:OnCreated(keys)
-	if IsServer() then
-		ChangeUnitModel(self:GetParent(), "models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl")
-	end
-end
-
+-- Destroy trees at the end of the self-buff's duration
 function modifier_item_imba_sheepstick_buff:OnDestroy()
 	if IsServer() then
 		local owner = self:GetParent()
-		RevertUnitModel(owner)
 		GridNav:DestroyTreesAroundPoint(owner:GetAbsOrigin(), self:GetAbility():GetSpecialValueFor("tree_radius"), false)
 	end
 end
@@ -180,12 +165,16 @@ end
 function modifier_item_imba_sheepstick_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE,
+		MODIFIER_PROPERTY_MODEL_CHANGE,
 	}
 	return funcs
 end
 
 function modifier_item_imba_sheepstick_buff:GetModifierMoveSpeedOverride()
 	return self:GetAbility():GetSpecialValueFor("self_move_speed") end
+
+function modifier_item_imba_sheepstick_buff:GetModifierModelChange()
+	return "models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl" end
 
 -- Hexed state
 function modifier_item_imba_sheepstick_buff:CheckState()

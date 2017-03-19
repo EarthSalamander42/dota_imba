@@ -688,15 +688,6 @@ function GameMode:DamageFilter( keys )
 			return false
 		end
 
-		-- Bloodthorn active crit
-		if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
-
-			-- Multiply damage and flag for a crit
-			local target_crit_multiplier = 135
-			keys.damage = keys.damage * target_crit_multiplier * 0.01
-			display_red_crit_number = true
-		end
-
 		-- Cursed Rapier damage reduction
 		if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
 			keys.damage = keys.damage * 0.25
@@ -811,23 +802,6 @@ function GameMode:DamageFilter( keys )
 
 				-- Reduce damage
 				keys.damage = actual_damage
-			end
-		end
-
-		-- Return damage prevention
-		if victim:HasModifier("modifier_imba_centaur_return") then
-
-			-- Parameters
-			local ability = victim:FindAbilityByName("imba_centaur_return")
-			local damage_ignore = ability:GetLevelSpecialValueFor("dmg_ignore", ability:GetLevel() - 1)
-
-			-- Ignore part of incoming damage
-			if keys.damage > damage_ignore then
-				keys.damage = keys.damage - damage_ignore
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_ignore, nil)
-			else
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
-				keys.damage = 0
 			end
 		end
 
