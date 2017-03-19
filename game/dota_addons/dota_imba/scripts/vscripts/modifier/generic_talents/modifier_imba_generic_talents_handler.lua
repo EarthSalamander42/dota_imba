@@ -13,10 +13,19 @@ function modifier_imba_generic_talents_handler:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 	}
 	return funcs
 end
 
+-- Damage block handler
+function modifier_imba_generic_talents_handler:GetModifierPhysical_ConstantBlock()
+	if IsServer() then
+		return self:GetParent():GetDamageBlock()
+	end
+end
+
+-- Spell lifesteal handler
 function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 	if IsServer() then
 		local parent = self:GetParent()
@@ -60,6 +69,7 @@ function modifier_imba_generic_talents_handler:OnTakeDamage( keys )
 	end
 end
 
+-- Regular lifesteal handler
 function modifier_imba_generic_talents_handler:OnAttackLanded( keys )
 	if IsServer() then
 		local parent = self:GetParent()

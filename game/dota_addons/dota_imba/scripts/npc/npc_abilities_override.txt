@@ -17,7 +17,7 @@
 	//"item_quarterstaff"			"REMOVE"
 	//"item_quelling_blade"			"REMOVE"
 	//"item_ring_of_protection"		"REMOVE"
-	//"item_stout_shield"			"REMOVE"
+	"item_stout_shield"			"REMOVE"
 	//"item_gauntlets"				"REMOVE"
 	//"item_slippers"				"REMOVE"
 	//"item_mantle"					"REMOVE"
@@ -76,8 +76,8 @@
 	//"item_oblivion_staff"			"REMOVE"
 	//"item_recipe_pers"				"REMOVE"
 	//"item_pers"						"REMOVE"
-	//"item_recipe_poor_mans_shield"	"REMOVE"
-	//"item_poor_mans_shield"			"REMOVE"
+	"item_recipe_poor_mans_shield"	"REMOVE"
+	"item_poor_mans_shield"			"REMOVE"
 	//"item_recipe_bracer"			"REMOVE"
 	//"item_bracer"					"REMOVE"
 	//"item_recipe_wraith_band"		"REMOVE"
@@ -125,21 +125,21 @@
 	"item_necronomicon_3"			"REMOVE"
 	//"item_recipe_ultimate_scepter"	"REMOVE"
 	//"item_ultimate_scepter"		"REMOVE"
-	"item_recipe_refresher"			"REMOVE"
-	"item_refresher"				"REMOVE"
+	//"item_recipe_refresher"			"REMOVE"
+	//"item_refresher"				"REMOVE"
 	"item_recipe_assault"			"REMOVE"
 	"item_assault"					"REMOVE"
 	"item_recipe_heart"				"REMOVE"
 	"item_heart"					"REMOVE"
-	"item_recipe_black_king_bar"	"REMOVE"
-	"item_black_king_bar"			"REMOVE"
+	//"item_recipe_black_king_bar"	"REMOVE"
+	//"item_black_king_bar"			"REMOVE"
 	"item_aegis"					"REMOVE"
 	"item_recipe_shivas_guard"		"REMOVE"
 	"item_shivas_guard"				"REMOVE"
 	"item_recipe_bloodstone"		"REMOVE"
 	"item_bloodstone"				"REMOVE"
-	"item_recipe_sphere"			"REMOVE"
-	"item_sphere"					"REMOVE"
+	//"item_recipe_sphere"			"REMOVE"
+	//"item_sphere"					"REMOVE"
 	"item_recipe_vanguard"			"REMOVE"
 	"item_vanguard"					"REMOVE"
 	//"item_recipe_blade_mail"		"REMOVE"
@@ -271,35 +271,6 @@
 	// 								ITEM OVERRIDES
 	//-----------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================
-
-	//=================================================================================================================
-	// Stout Shield
-	//=================================================================================================================
-	"item_stout_shield"
-	{
-		"ItemCost"						"100"
-	}
-
-	//=================================================================================================================
-	// Recipe: Poor Man's Shield
-	//=================================================================================================================
-	"item_recipe_poor_mans_shield"
-	{
-		"ItemRequirements"
-		{
-			"01"						"item_slippers;item_stout_shield"
-		}
-	}
-	
-	//=================================================================================================================
-	// Poor Man's Shield
-	//=================================================================================================================
-	"item_poor_mans_shield"
-	{
-		"ItemCost"						"250"
-		
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-	}
 
 	//=================================================================================================================
 	// Recipe: Bracer
@@ -1339,6 +1310,99 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_delay"			"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Refresher Orb
+	//=================================================================================================================
+	"item_refresher"
+	{
+		"AbilityCooldown"				"140"
+	}
+
+	//=================================================================================================================
+	// Recipe: Black King Bar
+	//=================================================================================================================
+	"item_recipe_black_king_bar"
+	{
+		"ItemCost"						"0"	
+
+		"ItemRequirements"
+		{
+			"01"						"item_ogre_axe;item_mithril_hammer;item_imba_white_queen_cape"
+		}
+	}
+	
+	//=================================================================================================================
+	// Black King Bar
+	//=================================================================================================================
+	"item_black_king_bar"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"24"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10 9 8 7 6 5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_level"				"6"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"model_scale"			"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Linken's Sphere
+	//=================================================================================================================
+	"item_sphere"
+	{
+		"AbilityCooldown"				"10.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"10.0"
 			}
 		}
 	}
@@ -15535,7 +15599,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"explosion"				"600 750 900 1050 1200"
+				"explosion"				"550 675 800 900 1000"
 			}
 		}
 	}
@@ -15550,7 +15614,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"1000"
 			}
 		}
 	}
@@ -15567,7 +15631,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"burn_amount"				"40 60 80 100 120"
+				"burn_amount"				"20 30 40 50 60"
 			}
 			"02"
 			{
@@ -15582,11 +15646,6 @@
 	//=================================================================================================================
 	"necronomicon_archer_mana_burn"
 	{
-		
-		"AbilityCastRange"				"900"
-
-		"AbilityCooldown"				"7.0"
-
 		"MaxLevel"						"5"
 
 		"AbilitySpecial"
@@ -15594,7 +15653,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"200 275 350 425 500"
+				"burn_amount"			"125 175 225 275 325"
 			}
 		}
 	}
@@ -15611,17 +15670,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ms_bonus"				"6 8 10 12 14"
+				"ms_bonus"				"6 7 8 9 10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_bonus"				"6 8 10 12 14"
+				"as_bonus"				"6 7 8 9 10"
 			}
 		}
 	}
@@ -16119,13 +16178,13 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"bonus_hp"			"20"
+				"var_type"			"FIELD_INTEGER"
+				"bonus_hp"			"15"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200"
+				"radius"			"900"
 			}
 		}
 	}
@@ -16333,17 +16392,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_bonus"			"25"
+				"speed_bonus"			"15"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"25"
+				"damage_bonus"			"15"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 		}
 	}
@@ -16358,12 +16417,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"6"
+				"bonus_armor"			"3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 		}
 	}
@@ -16480,17 +16539,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal"				"15"
+				"lifesteal"				"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"15"
+				"hp_regen"				"10"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 		}
 	}
@@ -16565,12 +16624,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_regen"			"4"
+				"mana_regen"			"3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
 		}
 	}

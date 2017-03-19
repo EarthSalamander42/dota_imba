@@ -2865,19 +2865,19 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"6"
-		"MagicalResistance"			"20"
+		"ArmorPhysical"				"4"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"100"
-		"AttackDamageMax"			"100"
+		"AttackDamageMin"			"75"
+		"AttackDamageMax"			"75"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"800"
-		"AttackRange"				"100"
+		"AttackRange"				"150"
 		"ProjectileModel"			""
 		"ProjectileSpeed"			""
 
@@ -2909,12 +2909,12 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
+		"MovementSpeed"				"350"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"900"
+		"StatusHealth"				"700"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -2928,7 +2928,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
+		"VisionDaytimeRange"		"1300"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -2943,7 +2943,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.67"
+		"ModelScale"				"0.65"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -2956,19 +2956,19 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"10"
-		"MagicalResistance"			"25"
+		"ArmorPhysical"				"6"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"135"
-		"AttackDamageMax"			"135"
+		"AttackDamageMin"			"100"
+		"AttackDamageMax"			"100"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"800"
-		"AttackRange"				"100"
+		"AttackRange"				"150"
 		"ProjectileModel"			""
 		"ProjectileSpeed"			""
 
@@ -3000,13 +3000,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"370"
+		"MovementSpeed"				"360"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"
-		"StatusHealthRegen"			"10"
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"7"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3019,7 +3019,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
+		"VisionDaytimeRange"		"1400"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -3034,7 +3034,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"Creep_Good_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.75"
+		"ModelScale"				"0.7"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -3048,19 +3048,19 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"15"
-		"MagicalResistance"			"30"
+		"ArmorPhysical"				"8"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"170"
-		"AttackDamageMax"			"170"
+		"AttackDamageMin"			"125"
+		"AttackDamageMax"			"125"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
 		"AttackAcquisitionRange"	"800"
-		"AttackRange"				"100"
+		"AttackRange"				"150"
 		"ProjectileModel"			""
 		"ProjectileSpeed"			""
 
@@ -3092,13 +3092,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"380"
+		"MovementSpeed"				"370"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1600"
-		"StatusHealthRegen"			"16"
+		"StatusHealth"				"1100"
+		"StatusHealthRegen"			"9"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3111,7 +3111,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
+		"VisionDaytimeRange"		"1500"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -3126,7 +3126,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
 		"SoundSet"					"n_creep_Melee"
 		"Level"						"5"
-		"ModelScale"				"0.82"
+		"ModelScale"				"0.75"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necrowarrior"
@@ -3143,14 +3143,110 @@
 
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"20"
-		"MagicalResistance"			"35"
+		"ArmorPhysical"				"10"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"205"
-		"AttackDamageMax"			"205"
+		"AttackDamageMin"			"150"
+		"AttackDamageMax"			"150"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"0.75"
+		"AttackAnimationPoint"		"0.56"
+		"AttackAcquisitionRange"	"800"
+		"AttackRange"				"150"
+		"ProjectileModel"			""
+		"ProjectileSpeed"			""
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"
+		"AttributeStrengthGain"		"0"
+		"AttributeBaseIntelligence"	"0"
+		"AttributeIntelligenceGain"	"0"
+		"AttributeBaseAgility"		"0"
+		"AttributeAgilityGain"		"0"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"RingRadius"				"90"
+		"HealthBarOffset"			"240"
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"225"
+		"BountyGoldMin"				"225"
+		"BountyGoldMax"				"225"
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"385"
+		"MovementTurnRate"			"0.5"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1350"
+		"StatusHealthRegen"			"12"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1650"
+		"VisionNighttimeRange"		"800"
+	}
+
+	//=================================================================================
+	// Necronomicon Warrior Level 5
+	//=================================================================================
+	"npc_imba_necronomicon_warrior_5"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creep"
+		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
+		"SoundSet"					"n_creep_Melee"
+		"Level"						"5"
+		"ModelScale"				"0.8"
+		"IsSummoned"				"1"
+		"CanBeDominated"			"0"
+		"UnitLabel"					"necrowarrior"
+		"IsAncient"					"1"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"6"
+		"Ability1"					"necronomicon_warrior_mana_burn"
+		"Ability2"					"necronomicon_warrior_last_will"
+		"Ability3"					"necronomicon_warrior_sight"
+		"Ability4"					"black_dragon_dragonhide_aura"
+		"Ability5"					"granite_golem_hp_aura"
+		"Ability6"					"spawnlord_aura"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"12"
+		"MagicalResistance"			"40"
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"175"
+		"AttackDamageMax"			"175"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.56"
@@ -3187,109 +3283,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"390"
-		"MovementTurnRate"			"0.5"
-
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"2000"
-		"StatusHealthRegen"			"24"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
-		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1800"
-		"VisionNighttimeRange"		"800"
-	}
-
-	//=================================================================================
-	// Necronomicon Warrior Level 5
-	//=================================================================================
-	"npc_imba_necronomicon_warrior_5"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creep"
-		"Model"						"models/creeps/item_creeps/i_creep_necro_warrior/necro_warrior.mdl"
-		"SoundSet"					"n_creep_Melee"
-		"Level"						"5"
-		"ModelScale"				"0.9"
-		"IsSummoned"				"1"
-		"CanBeDominated"			"0"
-		"UnitLabel"					"necrowarrior"
-		"IsAncient"					"1"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"AbilityLayout"				"6"
-		"Ability1"					"necronomicon_warrior_mana_burn"
-		"Ability2"					"necronomicon_warrior_last_will"
-		"Ability3"					"necronomicon_warrior_sight"
-		"Ability4"					"black_dragon_dragonhide_aura"
-		"Ability5"					"granite_golem_hp_aura"
-		"Ability6"					"spawnlord_aura"
-
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"25"
-		"MagicalResistance"			"40"
-
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"240"
-		"AttackDamageMax"			"240"
-		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
-		"AttackRate"				"0.75"
-		"AttackAnimationPoint"		"0.56"
-		"AttackAcquisitionRange"	"800"
-		"AttackRange"				"150"
-		"ProjectileModel"			""
-		"ProjectileSpeed"			""
-
-		// Attributes
-		//----------------------------------------------------------------
-		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
-		"AttributeBaseStrength"		"0"
-		"AttributeStrengthGain"		"0"
-		"AttributeBaseIntelligence"	"0"
-		"AttributeIntelligenceGain"	"0"
-		"AttributeBaseAgility"		"0"
-		"AttributeAgilityGain"		"0"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"RingRadius"				"90"
-		"HealthBarOffset"			"240"
-
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyXP"					"300"
-		"BountyGoldMin"				"300"
-		"BountyGoldMax"				"300"
-
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_REGULAR"
-
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"				"400"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"2500"
-		"StatusHealthRegen"			"35"
+		"StatusHealth"				"1600"
+		"StatusHealthRegen"			"15"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3330,18 +3330,18 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"4"
-		"MagicalResistance"			"20"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"75"
-		"AttackDamageMax"			"75"
+		"AttackDamageMin"			"60"
+		"AttackDamageMax"			"60"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
 		"AttackAcquisitionRange"	"900"
-		"AttackRange"				"600"
+		"AttackRange"				"450"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -3373,12 +3373,12 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"360"
+		"MovementSpeed"				"350"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"
+		"StatusHealth"				"700"
 		"StatusHealthRegen"			"5"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -3392,7 +3392,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"1300"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -3407,7 +3407,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.67"
+		"ModelScale"				"0.65"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3420,18 +3420,18 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"5"
-		"MagicalResistance"			"20"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"125"
-		"AttackDamageMax"			"125"
+		"AttackDamageMin"			"90"
+		"AttackDamageMax"			"90"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"950"
-		"AttackRange"				"650"
+		"AttackAcquisitionRange"	"900"
+		"AttackRange"				"500"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -3463,13 +3463,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"370"
+		"MovementSpeed"				"360"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"800"
-		"StatusHealthRegen"			"5"
+		"StatusHealthRegen"			"6"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3482,7 +3482,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"1400"
 		"VisionNighttimeRange"		"800"
 	}
 	
@@ -3497,7 +3497,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.75"
+		"ModelScale"				"0.7"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3511,18 +3511,18 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"6"
-		"MagicalResistance"			"20"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"175"
-		"AttackDamageMax"			"175"
+		"AttackDamageMin"			"120"
+		"AttackDamageMax"			"120"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"1000"
-		"AttackRange"				"700"
+		"AttackAcquisitionRange"	"9000"
+		"AttackRange"				"550"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -3554,13 +3554,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"380"
+		"MovementSpeed"				"370"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1000"
-		"StatusHealthRegen"			"5"
+		"StatusHealth"				"900"
+		"StatusHealthRegen"			"7"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3573,7 +3573,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"1500"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -3588,7 +3588,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.82"
+		"ModelScale"				"0.75"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3604,18 +3604,18 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"7"
-		"MagicalResistance"			"20"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"225"
-		"AttackDamageMax"			"225"
+		"AttackDamageMin"			"150"
+		"AttackDamageMax"			"150"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"1050"
-		"AttackRange"				"750"
+		"AttackAcquisitionRange"	"900"
+		"AttackRange"				"625"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -3636,9 +3636,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"250"
-		"BountyGoldMin"				"250"
-		"BountyGoldMax"				"250"
+		"BountyXP"					"225"
+		"BountyGoldMin"				"225"
+		"BountyGoldMax"				"225"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -3647,13 +3647,13 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"390"
+		"MovementSpeed"				"385"
 		"MovementTurnRate"			"0.5"
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1200"
-		"StatusHealthRegen"			"5"
+		"StatusHealth"				"1050"
+		"StatusHealthRegen"			"8"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3666,7 +3666,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"1650"
 		"VisionNighttimeRange"		"800"
 	}
 
@@ -3681,7 +3681,7 @@
 		"Model"						"models/creeps/item_creeps/i_creep_necro_archer/necro_archer.mdl"
 		"SoundSet"					"n_creep_Ranged"
 		"Level"						"5"
-		"ModelScale"				"0.9"
+		"ModelScale"				"0.8"
 		"IsSummoned"				"1"
 		"CanBeDominated"			"0"
 		"UnitLabel"					"necroarcher"
@@ -3698,18 +3698,18 @@
 		// Armor
 		//----------------------------------------------------------------
 		"ArmorPhysical"				"8"
-		"MagicalResistance"			"20"
+		"MagicalResistance"			"40"
 
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"225"
-		"AttackDamageMax"			"225"
+		"AttackDamageMin"			"180"
+		"AttackDamageMax"			"180"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"0.75"
 		"AttackAnimationPoint"		"0.7"
-		"AttackAcquisitionRange"	"1100"
-		"AttackRange"				"800"
+		"AttackAcquisitionRange"	"900"
+		"AttackRange"				"700"
 		"ProjectileModel"			"particles/items2_fx/necronomicon_archer_projectile.vpcf"
 		"ProjectileSpeed"			"1000"
 
@@ -3730,9 +3730,9 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"300"
-		"BountyGoldMin"				"300"
-		"BountyGoldMax"				"300"
+		"BountyXP"					"250"
+		"BountyGoldMin"				"250"
+		"BountyGoldMax"				"250"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -3746,8 +3746,8 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1400"
-		"StatusHealthRegen"			"5"
+		"StatusHealth"				"1200"
+		"StatusHealthRegen"			"10"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
@@ -3760,7 +3760,7 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1200"
+		"VisionDaytimeRange"		"1800"
 		"VisionNighttimeRange"		"800"
 	}
 

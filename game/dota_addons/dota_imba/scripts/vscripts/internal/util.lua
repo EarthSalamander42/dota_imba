@@ -2179,6 +2179,25 @@ function CDOTA_BaseNPC:GetSpellPower()
 	return spell_power
 end
 
+-- Physical damage block
+function CDOTA_BaseNPC:GetDamageBlock()
+	local damage_block = 0
+	local unique_damage_block = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetCustomDamageBlockUnique then
+			unique_damage_block = math.max(unique_damage_block, parent_modifier:GetCustomDamageBlockUnique())
+		end
+		if parent_modifier.GetCustomDamageBlock then
+			damage_block = damage_block + parent_modifier:GetCustomDamageBlock()
+		end
+	end
+	damage_block = damage_block + unique_damage_block
+	if self:IsRangedAttacker() then
+		return 0.6 * damage_block
+	else
+		return damage_block
+	end
+end
 
 
 function CalculateDistance(ent1, ent2)

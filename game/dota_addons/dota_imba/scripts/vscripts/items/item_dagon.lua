@@ -8,7 +8,7 @@ function Dagon( keys )
 	local ability = keys.ability
 	local sound_cast = keys.sound_cast
 	local sound_hit = keys.sound_hit
-	local particle_hit = keys.particle_hit
+	local particle_hit = "particles/item/dagon/dagon.vpcf"
 
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
@@ -29,6 +29,14 @@ function Dagon( keys )
 		target
 	}
 
+	-- Determine dagon color
+	local dagon_colors = {}
+	dagon_colors["item_imba_dagon_6"] = Vector(0.4, 0.0, 0.0)
+	dagon_colors["item_imba_dagon_7"] = Vector(0.2, 0.0, 0.2)
+	dagon_colors["item_imba_dagon_8"] = Vector(0.0, 0.15, 0.25)
+	dagon_colors["item_imba_dagon_9"] = Vector(0.3, 0.3, 0.0)
+	dagon_colors["item_imba_dagon_10"] = Vector(0.0, 0.4, 0.0)
+
 	-- Play cast sound
 	caster:EmitSound(sound_cast)
 
@@ -36,7 +44,7 @@ function Dagon( keys )
 	target:EmitSound(sound_hit)
 
 	-- Dagonize the main target
-	DagonizeIt(caster, ability, caster, target, damage, particle_hit)
+	DagonizeIt(caster, ability, caster, target, damage, particle_hit, dagon_colors[ability:GetAbilityName()])
 
 	-- While there are potential sources, keep looping
 	while #search_sources > 0 do
@@ -59,7 +67,7 @@ function Dagon( keys )
 
 				-- If not, dagonize it from this source, and mark it as a hit target and potential future source
 				if not already_hit then
-					DagonizeIt(caster, ability, potential_source, potential_target, bounce_damage, particle_hit)
+					DagonizeIt(caster, ability, potential_source, potential_target, bounce_damage, particle_hit, dagon_colors[ability:GetAbilityName()] + Vector(RandomFloat(0, 0.3), RandomFloat(0, 0.3), RandomFloat(0, 0.3)))
 					targets_hit[#targets_hit+1] = potential_target
 					search_sources[#search_sources+1] = potential_target
 				end
@@ -71,13 +79,14 @@ function Dagon( keys )
 	end
 end
 
-function DagonizeIt(caster, ability, source, target, damage, particle)
+function DagonizeIt(caster, ability, source, target, damage, particle, color)
 
 	-- Draw particle
 	local dagon_pfx = ParticleManager:CreateParticle(particle, PATTACH_RENDERORIGIN_FOLLOW, source)
 	ParticleManager:SetParticleControlEnt(dagon_pfx, 0, source, PATTACH_POINT_FOLLOW, "attach_attack1", source:GetAbsOrigin(), false)
 	ParticleManager:SetParticleControlEnt(dagon_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), false)
 	ParticleManager:SetParticleControl(dagon_pfx, 2, Vector(damage, 0, 0))
+	ParticleManager:SetParticleControl(dagon_pfx, 3, color)
 	ParticleManager:ReleaseParticleIndex(dagon_pfx)
 
 	-- Deal damage to the target

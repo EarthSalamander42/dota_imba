@@ -1402,7 +1402,6 @@
 	}
 }
 
-
 "Imba.LycanWolfsbane"
 {
 	"operator_stacks"
@@ -1428,6 +1427,38 @@
 					"pitch"				{   "value"     "1.000000"  }
 					"soundlevel"		{   "value"     "100.00000" }
 					"distance_max"		{   "value"     "1200.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
+"Enigma.GravityWellCast"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/enigma/GravityWell.vsnd"
+						}
+					}
+					"volume"			{   "value"     "2.500000"  }
+					"pitch_rand_min"	{   "value"     "-0.03000"  }
+					"pitch_rand_max"	{   "value"     "0.030000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1500.000"  }
 					"event_type"		{   "value"     "1.000000"  }
 				}
 			}

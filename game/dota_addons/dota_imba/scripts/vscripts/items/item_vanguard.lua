@@ -1,5 +1,108 @@
---[[	Author: Firetoad
-		Date:	11.10.2015	]]
+--	Author: Firetoad
+--	Date: 			11.10.2015
+--	Last Update:	19.03.2017
+
+-----------------------------------------------------------------------------------------------------------
+--	Stout Shield definition
+-----------------------------------------------------------------------------------------------------------
+
+if item_imba_stout_shield == nil then item_imba_stout_shield = class({}) end
+LinkLuaModifier( "modifier_item_imba_stout_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
+
+function item_imba_stout_shield:GetIntrinsicModifierName()
+	return "modifier_item_imba_stout_shield" end
+
+-----------------------------------------------------------------------------------------------------------
+--	Stout Shield owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_stout_shield == nil then modifier_item_imba_stout_shield = class({}) end
+function modifier_item_imba_stout_shield:IsHidden() return true end
+function modifier_item_imba_stout_shield:IsDebuff() return false end
+function modifier_item_imba_stout_shield:IsPurgable() return false end
+function modifier_item_imba_stout_shield:IsPermanent() return true end
+function modifier_item_imba_stout_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Custom unique damage block property
+function modifier_item_imba_stout_shield:GetCustomDamageBlockUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_block") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Poor Man's Shield definition
+-----------------------------------------------------------------------------------------------------------
+
+if item_imba_poor_mans_shield == nil then item_imba_poor_mans_shield = class({}) end
+LinkLuaModifier( "modifier_item_imba_poor_mans_shield", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )	-- Owner's bonus attributes, stackable
+
+function item_imba_poor_mans_shield:GetIntrinsicModifierName()
+	return "modifier_item_imba_poor_mans_shield" end
+
+-----------------------------------------------------------------------------------------------------------
+--	Poor Man's Shield owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_poor_mans_shield == nil then modifier_item_imba_poor_mans_shield = class({}) end
+function modifier_item_imba_poor_mans_shield:IsHidden() return true end
+function modifier_item_imba_poor_mans_shield:IsDebuff() return false end
+function modifier_item_imba_poor_mans_shield:IsPurgable() return false end
+function modifier_item_imba_poor_mans_shield:IsPermanent() return true end
+function modifier_item_imba_poor_mans_shield:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Custom unique damage block property
+function modifier_item_imba_poor_mans_shield:GetCustomDamageBlockUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_block") end
+
+-- Declare modifier events/properties
+function modifier_item_imba_poor_mans_shield:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+	}
+	return funcs
+end
+
+function modifier_item_imba_poor_mans_shield:GetModifierBonusStats_Agility()
+	return self:GetAbility():GetSpecialValueFor("bonus_agi") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Vanguard definition
+-----------------------------------------------------------------------------------------------------------
+
+if item_imba_vanguard == nil then item_imba_vanguard = class({}) end
+LinkLuaModifier( "modifier_item_imba_vanguard", "items/item_vanguard.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+
+function item_imba_vanguard:GetIntrinsicModifierName()
+	return "modifier_item_imba_vanguard" end
+
+-----------------------------------------------------------------------------------------------------------
+--	Vanguard owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_vanguard == nil then modifier_item_imba_vanguard = class({}) end
+function modifier_item_imba_vanguard:IsHidden() return true end
+function modifier_item_imba_vanguard:IsDebuff() return false end
+function modifier_item_imba_vanguard:IsPurgable() return false end
+function modifier_item_imba_vanguard:IsPermanent() return true end
+function modifier_item_imba_vanguard:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Custom unique damage block property
+function modifier_item_imba_vanguard:GetCustomDamageBlockUnique()
+	return self:GetAbility():GetSpecialValueFor("damage_block") end
+
+-- Declare modifier events/properties
+function modifier_item_imba_vanguard:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_HEALTH_BONUS,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+	}
+	return funcs
+end
+
+function modifier_item_imba_vanguard:GetModifierHealthBonus()
+	return self:GetAbility():GetSpecialValueFor("health") end
+
+function modifier_item_imba_vanguard:GetModifierConstantHealthRegen()
+	return self:GetAbility():GetSpecialValueFor("health_regen") end
+
 
 function CrimsonGuard( keys )
 	local caster = keys.caster
