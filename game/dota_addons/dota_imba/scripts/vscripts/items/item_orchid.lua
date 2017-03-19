@@ -385,7 +385,7 @@ function modifier_item_imba_bloodthorn_debuff:OnAttackStart(keys)
 		-- If this unit is the target, grant the attacker a crit buff
 		if owner == keys.target then
 			local attacker = keys.attacker
-			attacker:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_attacker_crit", {duration = 1.0})
+			attacker:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_bloodthorn_attacker_crit", {duration = 1.0, target_crit_multiplier = self.target_crit_multiplier})
 		end
 	end
 end
@@ -442,9 +442,9 @@ function modifier_item_imba_bloodthorn_attacker_crit:IsDebuff() return false end
 function modifier_item_imba_bloodthorn_attacker_crit:IsPurgable() return false end
 
 -- Track parameters to prevent errors if the item is unequipped
-function modifier_item_imba_bloodthorn_attacker_crit:OnCreated()
+function modifier_item_imba_bloodthorn_attacker_crit:OnCreated(keys)
 	if IsServer() then
-		self.target_crit_multiplier = self:GetAbility():GetSpecialValueFor("target_crit_multiplier")
+		self.target_crit_multiplier = keys.target_crit_multiplier
 	end
 end
 
@@ -467,9 +467,14 @@ end
 -- Remove the crit modifier when the attack is concluded
 function modifier_item_imba_bloodthorn_attacker_crit:OnAttackLanded(keys)
 	if IsServer() then
+
 		-- If this unit is the attacker, remove its crit modifier
 		if self:GetParent() == keys.attacker then
 			self:GetParent():RemoveModifierByName("modifier_item_imba_bloodthorn_attacker_crit")
+
+			-- Increase the crit damage count
+			local debuff_modifier = keys.target:FindModifierByName("modifier_item_imba_bloodthorn_debuff")
+			debuff_modifier.target_crit_multiplier = debuff_modifier.target_crit_multiplier + self:GetAbility():GetSpecialValueFor("crit_mult_increase")
 		end
 	end
 end

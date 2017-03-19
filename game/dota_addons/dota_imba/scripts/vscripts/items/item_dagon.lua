@@ -1,94 +1,85 @@
 --[[	Author: d2imba
-		Date:	20.09.2015	]]
+		Date:	20.09.2015
+		Last updated: 18.03.2017	]]
 
 function Dagon( keys )
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
 	local sound_cast = keys.sound_cast
 	local sound_hit = keys.sound_hit
 	local particle_hit = keys.particle_hit
 
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local bounce_damage = ability:GetLevelSpecialValueFor("bounce_damage", ability_level)
-	local bounce_range = ability:GetLevelSpecialValueFor("bounce_range", ability_level)
-	local bounce_decay = (100 - ability:GetLevelSpecialValueFor("bounce_decay", ability_level) ) / 100
-	local current_source = caster
-	local targets_hit = {}
-
-	-- Play cast sound
-	caster:EmitSound(sound_cast)
-
-	-- Create initial particle
-	local dagon_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_RENDERORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(dagon_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack1", caster:GetAbsOrigin(), false)
-	ParticleManager:SetParticleControlEnt(dagon_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), false)
-	ParticleManager:SetParticleControl(dagon_pfx, 2, Vector(damage, 0, 0))
-	
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
 	end
-	
+
+	-- Parameters
+	local damage = ability:GetSpecialValueFor("damage")
+	local bounce_damage = ability:GetSpecialValueFor("bounce_damage")
+	local bounce_range = ability:GetSpecialValueFor("bounce_range")
+	local current_source = caster
+	local targets_hit = {
+		target
+	}
+	local search_sources = {
+		target
+	}
+
+	-- Play cast sound
+	caster:EmitSound(sound_cast)
+
 	-- Play hit sound
 	target:EmitSound(sound_hit)
 
-	-- Deal damage to the initial target
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+	-- Dagonize the main target
+	DagonizeIt(caster, ability, caster, target, damage, particle_hit)
 
-	-- Add initial target to targets_hit table
-	targets_hit[1] = target
+	-- While there are potential sources, keep looping
+	while #search_sources > 0 do
 
-	-- Start bouncing from the initial target
-	current_source = target
+		-- Loop through every potential source this iteration
+		for potential_source_index, potential_source in pairs(search_sources) do
 
-	-- Flag bounce target as found
-	local keep_bouncing = true
+			-- Iterate through potential targets near this source
+			local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), potential_source:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_ANY_ORDER, false)
+			for _, potential_target in pairs(nearby_enemies) do
+				
+				-- Check if this target was already hit
+				local already_hit = false
+				for _, hit_target in pairs(targets_hit) do
+					if potential_target == hit_target then
+						already_hit = true
+						break
+					end
+				end
 
-	-- Start the bounce loop
-	while keep_bouncing do
-
-		-- Reset bounce loop state
-		keep_bouncing = false
-
-		-- Find nearby enemies
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), current_source:GetAbsOrigin(), nil, bounce_range, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
-
-		-- Check for not-yet-hit enemies
-		for _,enemy in pairs(nearby_enemies) do
-			local already_hit = false
-			for _,hit_enemy in pairs(targets_hit) do
-				if hit_enemy == enemy then
-					already_hit = true
-					break
+				-- If not, dagonize it from this source, and mark it as a hit target and potential future source
+				if not already_hit then
+					DagonizeIt(caster, ability, potential_source, potential_target, bounce_damage, particle_hit)
+					targets_hit[#targets_hit+1] = potential_target
+					search_sources[#search_sources+1] = potential_target
 				end
 			end
 
-			-- Found a valid enemy, zap it
-			if not already_hit then
-
-				-- Create particle
-				local bounce_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_RENDERORIGIN_FOLLOW, current_source)
-				ParticleManager:SetParticleControlEnt(bounce_pfx, 0, current_source, PATTACH_POINT_FOLLOW, "attach_hitloc", current_source:GetAbsOrigin(), false)
-				ParticleManager:SetParticleControlEnt(bounce_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), false)
-				ParticleManager:SetParticleControl(bounce_pfx, 2, Vector(bounce_damage, 0, 0))
-
-				-- Deal damage to the target
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = bounce_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-				-- Reduce next bounce's damage
-				bounce_damage = bounce_damage * bounce_decay
-
-				-- Set up the next bounce
-				current_source = enemy
-				targets_hit[#targets_hit + 1] = enemy
-				keep_bouncing = true
-				break
-			end
+			-- Remove this potential source
+			table.remove(search_sources, potential_source_index)
 		end
 	end
+end
+
+function DagonizeIt(caster, ability, source, target, damage, particle)
+
+	-- Draw particle
+	local dagon_pfx = ParticleManager:CreateParticle(particle, PATTACH_RENDERORIGIN_FOLLOW, source)
+	ParticleManager:SetParticleControlEnt(dagon_pfx, 0, source, PATTACH_POINT_FOLLOW, "attach_attack1", source:GetAbsOrigin(), false)
+	ParticleManager:SetParticleControlEnt(dagon_pfx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), false)
+	ParticleManager:SetParticleControl(dagon_pfx, 2, Vector(damage, 0, 0))
+	ParticleManager:ReleaseParticleIndex(dagon_pfx)
+
+	-- Deal damage to the target
+	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 end

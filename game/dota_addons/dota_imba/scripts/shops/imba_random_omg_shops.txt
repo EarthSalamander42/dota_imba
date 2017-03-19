@@ -118,7 +118,7 @@
 		"item"		"item_imba_aether_lens"
 		"item"		"item_imba_veil_of_discord"
 		"item"		"item_imba_necronomicon"
-		"item"		"item_imba_dagon"
+		"item"		"item_dagon"
 		"item"		"item_cyclone"
 		"item"		"item_rod_of_atos"
 		//"item"		"item_imba_lotus_orb"
