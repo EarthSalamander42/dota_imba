@@ -2181,22 +2181,82 @@ end
 
 -- Physical damage block
 function CDOTA_BaseNPC:GetDamageBlock()
+
+	-- Fetch damage block from custom modifiers
 	local damage_block = 0
 	local unique_damage_block = 0
 	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+
+		-- Vanguard-based damage block does not stack
 		if parent_modifier.GetCustomDamageBlockUnique then
 			unique_damage_block = math.max(unique_damage_block, parent_modifier:GetCustomDamageBlockUnique())
 		end
+
+		-- Stack all other sources of damage block
 		if parent_modifier.GetCustomDamageBlock then
 			damage_block = damage_block + parent_modifier:GetCustomDamageBlock()
 		end
 	end
+
+	-- Calculate total damage block
 	damage_block = damage_block + unique_damage_block
+
+	-- Ranged attackers only benefit from part of the damage block
 	if self:IsRangedAttacker() then
 		return 0.6 * damage_block
 	else
 		return damage_block
 	end
+end
+
+-- Universal damage amplification
+function CDOTA_BaseNPC:GetIncomingDamagePct()
+
+	-- Fetch damage amp from modifiers
+	local damage_amp = 1
+	local vanguard_damage_reduction = 1
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+
+		-- Vanguard-based damage reduction does not stack
+		if parent_modifier.GetCustomIncomingDamageReductionUnique then
+			vanguard_damage_reduction = math.min(vanguard_damage_reduction, (100 - parent_modifier:GetCustomIncomingDamageReductionUnique()) * 0.01)
+		end
+
+		-- Stack all other custom sources of damage amp
+		if parent_modifier.GetCustomIncomingDamagePct then
+			damage_amp = damage_amp * (100 + parent_modifier:GetCustomIncomingDamagePct()) * 0.01
+		end
+	end
+
+	-- Calculate total damage amp
+	damage_amp = damage_amp * vanguard_damage_reduction
+
+	return (damage_amp - 1) * 100
+end
+
+-- Tenacity
+function CDOTA_BaseNPC:GetTenacity()
+
+	-- Fetch tenacity from modifiers
+	local tenacity = 1
+	local tenacity_unique = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+
+		-- Tutela Plate's tenacity does not stack with itself
+		if parent_modifier.GetCustomTenacityUnique then
+			tenacity_unique = math.max(tenacity_unique, parent_modifier:GetCustomTenacityUnique())
+		end
+
+		-- Stack all other sources multiplicatively
+		if parent_modifier.GetCustomTenacity then
+			tenacity = tenacity * (100 - parent_modifier:GetCustomTenacity()) * 0.01
+		end
+	end
+
+	-- Calculate total tenacity
+	tenacity = tenacity * (100 - tenacity_unique) * 0.01
+
+	return (1 - tenacity) * 100
 end
 
 

@@ -4173,19 +4173,24 @@
 	// Crimson Guard
 	//=================================================================================================================
 	"item_imba_crimson_guard"
-	{	
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2182"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_crimson_guard"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_vanguard.lua"
+		"AbilityTextureName"			"custom/imba_crimson_guard"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"FightRecapLevel"				"1"
 
-		// Stats		
+		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0"
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"45"
+		"AbilitySharedCooldown"			"vanguard"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4202,140 +4207,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"350"
+				"health"				"250"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"9"
+				"health_regen"			"8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"3"
+				"bonus_stats"			"2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"7"
+				"armor"					"5"
 			}
-			// If changed, these keyvalues have to be manually updated in the damage filter 
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage_block"		"5"
+				"damage_block"			"50"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"3"
+				"active_armor"			"2"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"7"
+				"duration"				"10"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_radius"			"1200"
+				"active_radius"			"900"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"15"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_vanguard.lua"
-				"Function"				"CrimsonGuard"
-
-				"modifier_active"		"modifier_item_crimson_guard_active"
-				"sound_cast"			"Item.CrimsonGuard.Cast"
-				"particle_cast"			"particles/items2_fx/vanguard_active_launch.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_crimson_guard_passive"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-		
-				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%health"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_stats"
-				}
-			}
-
-			"modifier_item_crimson_guard_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_crimson_guard_unique"
-					}
-				}
-			}
-
-			"modifier_item_crimson_guard_active"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"TextureName"					"custom/imba_crimson_guard"
-
-				"Duration"						"%duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"CrimsonGuardParticle"
-
-						"particle_guard"		"particles/items2_fx/vanguard_active.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"CrimsonGuardParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
-				}
+				"damage_reduction"		"10"
 			}
 		}
 	}
@@ -4354,7 +4266,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1600"	
+		"ItemCost"						"1100"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -4371,23 +4283,21 @@
 	// Greatwyrm Plate
 	//=================================================================================================================
 	"item_imba_greatwyrm_plate"
-	{	
+	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2184"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_greatwyrm_plate"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_vanguard.lua"
+		"AbilityTextureName"			"custom/imba_greatwyrm_plate"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60.0"
+		"FightRecapLevel"				"1"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"8000"
+		"ItemCost"						"7500"
 		"ItemShopTags"					"armor;boost_armor;regen_health;block;health_pool"
 		"ItemQuality"					"epic"
 		"ItemAlertable"					"1"
@@ -4401,145 +4311,57 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"400"
+				"health"				"250"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"10"
+				"health_regen"			"8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stats"			"4"
+				"bonus_stats"			"2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"35"
+				"bonus_strength"		"25"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor"					"8"
+				"armor"					"5"
 			}
-			// If changed, these keyvalues have to be manually updated in the damage/modifier filters
-			"05"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage_block"		"10"
+				"damage_block"			"60"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_armor"			"5"
+				"active_armor"			"2"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"7"
+				"duration"				"10"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_radius"			"1200"
+				"active_radius"			"900"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"protection_amount"		"15"
+				"damage_reduction"		"15"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"			"items/item_vanguard.lua"
-				"Function"				"GreatwyrmPlate"
-
-				"modifier_active"		"modifier_item_greatwyrm_plate_active"
-				"sound_cast"			"Item.CrimsonGuard.Cast"
-				"particle_cast"			"particles/items2_fx/vanguard_active_launch.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_greatwyrm_plate_passive"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-		
-				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"				"%health"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%health_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_stats"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_strength"
-				}
-			}
-
-			"modifier_item_greatwyrm_plate_unique"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_item_greatwyrm_plate_unique"
-					}
-				}
-			}
-
-			"modifier_item_greatwyrm_plate_active"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"%duration"
-
-				"TextureName"					"custom/imba_greatwyrm_plate"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmParticle"
-
-						"particle_guard"		"particles/item/greatwyrm_plate/greatwyrm_active.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_vanguard.lua"
-						"Function"				"GreatwyrmParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%active_armor"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"tenacity"				"15"
 			}
 		}
 	}

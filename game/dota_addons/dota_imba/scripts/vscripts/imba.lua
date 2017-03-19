@@ -254,108 +254,101 @@ function GameMode:ModifierFilter( keys )
 	-- duration					-1
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
-
-	local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
-	local modifier_name = keys.name_const
-	local modifier_caster
-	if keys.entindex_caster_const then
-		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-	else
-		return true
-	end
+	if IsServer() then
+		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
+		local modifier_name = keys.name_const
+		local modifier_caster
+		if keys.entindex_caster_const then
+			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+		else
+			return true
+		end
 
 	-------------------------------------------------------------------------------------------------
 	-- Frantic mode duration adjustment
 	-------------------------------------------------------------------------------------------------
 
-	if IMBA_FRANTIC_MODE_ON then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.3
+		if IMBA_FRANTIC_MODE_ON then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+				keys.duration = keys.duration * 0.3
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Roshan special modifier rules
 	-------------------------------------------------------------------------------------------------
 
-	if IsRoshan(modifier_owner) then
-		
-		-- Ignore stuns
-		if modifier_name == "modifier_stunned" then
-			return false
-		end
+		if IsRoshan(modifier_owner) then
+			
+			-- Ignore stuns
+			if modifier_name == "modifier_stunned" then
+				return false
+			end
 
-		-- Halve the duration of everything else
-		if modifier_caster ~= modifier_owner and keys.duration > 0 then
-			keys.duration = keys.duration * 0.5
-		end
+			-- Halve the duration of everything else
+			if modifier_caster ~= modifier_owner and keys.duration > 0 then
+				keys.duration = keys.duration * 0.5
+			end
 
-		-- Fury swipes capping
-		if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-			modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			-- Fury swipes capping
+			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
-	-- Enigma's gravity stun duration increase
+	-- Tenacity debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-	if modifier_owner:HasModifier("modifier_imba_enigma_gravity") then
-		if modifier_name == "modifier_stunned" and keys.duration > 0 then
-			keys.duration = keys.duration * 1.2
+		if modifier_owner.GetTenacity then
+			local tenacity = modifier_owner:GetTenacity()
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then
+				keys.duration = keys.duration * (100 - tenacity) * 0.01
+			end
 		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- Greatwyrm Plate debuff duration reduction
-	-------------------------------------------------------------------------------------------------
-
-	if modifier_owner:HasModifier("modifier_item_greatwyrm_plate_unique") or modifier_owner:HasModifier("modifier_item_greatwyrm_plate_active") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.85
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Cursed Rapier debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-	if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.5
+		if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+				keys.duration = keys.duration * 0.5
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Centaur Thick Hide debuff duration decrease
 	-------------------------------------------------------------------------------------------------	
 
-	if modifier_owner:HasModifier("modifier_imba_thick_hide") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+		if modifier_owner:HasModifier("modifier_imba_thick_hide") then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 
-			-- Check for break
-			if not modifier_owner:PassivesDisabled() then
-				local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
-				local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
- 
-				keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+				-- Check for break
+				if not modifier_owner:PassivesDisabled() then
+					local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
+					local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
+	
+					keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+				end
 			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
 	-------------------------------------------------------------------------------------------------
-	if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
-		if not modifier_owner:PassivesDisabled() then
-			local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-			local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
-				-- if more than 100 reduction, don't even apply the modifier
-				if silence_reduction_pct >= 100 then
-					return false
+
+		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
+			if not modifier_owner:PassivesDisabled() then
+				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
+				local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
+				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
+					-- if more than 100 reduction, don't even apply the modifier
+					if silence_reduction_pct >= 100 then
+						return false
+					end
+					keys.duration = keys.duration * (1 - silence_reduction_pct/100)
 				end
-				keys.duration = keys.duration * (1 - silence_reduction_pct/100)
 			end
 		end
 	end

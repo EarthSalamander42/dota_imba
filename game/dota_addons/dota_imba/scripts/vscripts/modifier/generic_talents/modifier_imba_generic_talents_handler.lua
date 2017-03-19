@@ -14,6 +14,7 @@ function modifier_imba_generic_talents_handler:DeclareFunctions()
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
+		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 	}
 	return funcs
 end
@@ -22,6 +23,13 @@ end
 function modifier_imba_generic_talents_handler:GetModifierPhysical_ConstantBlock()
 	if IsServer() then
 		return self:GetParent():GetDamageBlock()
+	end
+end
+
+-- Damage amp/reduction handler
+function modifier_imba_generic_talents_handler:GetModifierIncomingDamage_Percentage()
+	if IsServer() then
+		return self:GetParent():GetIncomingDamagePct()
 	end
 end
 
