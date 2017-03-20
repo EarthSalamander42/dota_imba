@@ -50,7 +50,7 @@
 		"item"		"item_helm_of_iron_will"
 		"item"		"item_broadsword"
 		"item"		"item_claymore"
-		"item"		"item_javelin"
+		"item"		"item_imba_javelin"
 		"item"		"item_mithril_hammer"
 	}
 			

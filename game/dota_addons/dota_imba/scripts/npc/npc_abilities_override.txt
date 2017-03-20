@@ -11,7 +11,7 @@
 	//"item_chainmail"				"REMOVE"
 	//"item_claymore"				"REMOVE"
 	//"item_helm_of_iron_will"		"REMOVE"
-	//"item_javelin"				"REMOVE"
+	"item_javelin"				"REMOVE"
 	//"item_mithril_hammer"			"REMOVE"
 	//"item_platemail"				"REMOVE"
 	//"item_quarterstaff"			"REMOVE"
@@ -264,7 +264,9 @@
     "item_recipe_echo_sabre"		"REMOVE"
     "item_echo_sabre"				"REMOVE"
     "item_recipe_aether_lens"		"REMOVE"
-	//"item_aether_lens"			"REMOVE"
+	"item_aether_lens"				"REMOVE"
+    //"item_recipe_dragon_lance"		"REMOVE"
+	//"item_dragon_lance"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -761,6 +763,31 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Dragon Lance
+	//=================================================================================================================
+	"item_dragon_lance"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agility"			"12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_strength"		"12"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_attack_range"		"150"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Hurricane Pike
@@ -794,7 +821,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_attack_range"		"140"
+				"base_attack_range"		"150"
 			}
 			"06"
 			{
@@ -826,6 +853,17 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"100"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Basher
+	//=================================================================================================================
+	"item_recipe_basher"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_belt_of_strength;item_imba_javelin"
 		}
 	}
 

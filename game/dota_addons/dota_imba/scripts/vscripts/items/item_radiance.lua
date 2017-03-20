@@ -9,18 +9,12 @@
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_radiance == nil then item_imba_radiance = class({}) end
-LinkLuaModifier( "modifier_imba_radiance_basic", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )		-- Item stat
-LinkLuaModifier( "modifier_imba_radiance_aura", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )		-- Aura
-LinkLuaModifier( "modifier_imba_radiance_burn", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )		-- Damage + blind effect
-LinkLuaModifier( "modifier_imba_radiance_afterburn", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )	-- Sticky effect after leaving the Radiance AoE
+LinkLuaModifier( "modifier_imba_radiance_basic", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Item stats
+LinkLuaModifier( "modifier_imba_radiance_aura", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Aura
+LinkLuaModifier( "modifier_imba_radiance_burn", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )			-- Damage + blind effect
+LinkLuaModifier( "modifier_imba_radiance_afterburn", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )		-- Sticky effect after leaving the Radiance AoE
+LinkLuaModifier( "modifier_imba_radiance_fake_afterburn", "items/item_radiance.lua", LUA_MODIFIER_MOTION_NONE )	-- Fake afterburn, applied by illusions
 
-function item_imba_radiance:GetCastRange()
-	return self:GetSpecialValueFor("aura_radius")
-end
-
-function item_imba_radiance:GetBehavior()
-	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
-	
 function item_imba_radiance:GetIntrinsicModifierName()
 	return "modifier_imba_radiance_basic" end
 
@@ -49,41 +43,25 @@ if modifier_imba_radiance_basic == nil then modifier_imba_radiance_basic = class
 function modifier_imba_radiance_basic:IsHidden() return true end
 function modifier_imba_radiance_basic:IsDebuff() return false end
 function modifier_imba_radiance_basic:IsPurgable() return false end
+function modifier_imba_radiance_basic:IsPermanent() return true end
 function modifier_imba_radiance_basic:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
-function modifier_imba_radiance_basic:OnCreated()
+-- Adds the unique modifier to the owner when created
+function modifier_imba_radiance_basic:OnCreated(keys)
 	if IsServer() then
 		local parent = self:GetParent()
-		
-		if not parent:IsIllusion() then
-			local mods = parent:FindAllModifiersByName("modifier_imba_radiance_basic")
-			if not mods[2] then
-				parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_radiance_aura", {}) 
-			end
-			
-		else
-			local ownerFinder = FindUnitsInRadius(parent:GetTeamNumber(), parent:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH , DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD , FIND_ANY_ORDER , false) 
-			for _,hero in pairs(ownerFinder) do
-				if hero:GetName() == parent:GetName() and hero:IsRealHero() then
-					if hero:FindModifierByName("modifier_imba_radiance_aura") then
-						parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_radiance_aura", {}) 
-					end
-				end
-			end
+		if not parent:HasModifier("modifier_imba_radiance_aura") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_imba_radiance_aura", {})
 		end
 	end
 end
 
-function modifier_imba_radiance_basic:OnDestroy()
+-- Removes the unique modifier from the owner if this is the last Radiance in its inventory
+function modifier_imba_radiance_basic:OnDestroy(keys)
 	if IsServer() then
 		local parent = self:GetParent()
-		
-		if parent:FindModifierByName("modifier_imba_radiance_aura") then
-			Timers:CreateTimer(0.01, function()
-				if not parent:FindModifierByName("modifier_imba_radiance_basic") then
-					parent:RemoveModifierByName("modifier_imba_radiance_aura")
-				end
-			end)
+		if not parent:HasModifier("modifier_imba_radiance_basic") then
+			parent:RemoveModifierByName("modifier_imba_radiance_aura")
 		end
 	end
 end
@@ -118,6 +96,7 @@ function modifier_imba_radiance_aura:GetAuraRadius()
 
 function modifier_imba_radiance_aura:OnCreated()
 	if IsServer() then
+		
 		-- Particle creation
 		self.particle = ParticleManager:CreateParticle("particles/item/radiance/radiance_owner.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
 		

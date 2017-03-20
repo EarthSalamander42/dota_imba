@@ -2260,6 +2260,16 @@ function CDOTA_BaseNPC:GetTenacity()
 end
 
 
+-- Safely checks if this unit is a hero or a creep
+function IsHeroOrCreep(unit)
+	if unit.IsCreep and unit:IsCreep() then
+		return true
+	elseif unit.IsHero and unit:IsHero() then
+		return true
+	end
+	return false
+end
+
 function CalculateDistance(ent1, ent2)
 	local pos1 = ent1
 	local pos2 = ent2

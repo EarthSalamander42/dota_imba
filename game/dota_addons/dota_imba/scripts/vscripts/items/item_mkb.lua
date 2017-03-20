@@ -1,58 +1,252 @@
---[[	Author: d2imba
-		Date:	20.09.2015	]]
+--	Author: Firetoad
+--	Date: 			20.09.2015
+--	Last Update:	19.03.2017
 
-function MonkeyKingBarProc( keys )
-	local caster = keys.caster
-	local target = keys.target
+-----------------------------------------------------------------------------------------------------------
+--	Javelin definition
+-----------------------------------------------------------------------------------------------------------
 
-	-- If the target is a building, or if this is not a real hero, do nothing
-	if target:IsBuilding() or ( not caster:IsRealHero() ) then
-		return nil
+if item_imba_javelin == nil then item_imba_javelin = class({}) end
+LinkLuaModifier( "modifier_item_imba_javelin", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_javelin_unique", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )	-- Pierce and bonus attack range
+
+function item_imba_javelin:GetIntrinsicModifierName()
+	return "modifier_item_imba_javelin" end
+
+-----------------------------------------------------------------------------------------------------------
+--	Javelin owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_javelin == nil then modifier_item_imba_javelin = class({}) end
+function modifier_item_imba_javelin:IsHidden() return true end
+function modifier_item_imba_javelin:IsDebuff() return false end
+function modifier_item_imba_javelin:IsPurgable() return false end
+function modifier_item_imba_javelin:IsPermanent() return true end
+function modifier_item_imba_javelin:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Adds the unique modifier to the caster when created
+function modifier_item_imba_javelin:OnCreated(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_javelin_unique") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_javelin_unique", {})
+		end
 	end
+end
 
-	-- Parameters
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_hit = keys.sound_hit
-	local sound_bash = keys.sound_bash
-	local particle_hit = keys.particle_hit
-	local modifier_charge = keys.modifier_charge
-	local pulverize_count = ability:GetLevelSpecialValueFor("pulverize_count", ability_level)
-	local pulverize_radius = ability:GetLevelSpecialValueFor("pulverize_radius", ability_level)
-	local pulverize_damage = ability:GetLevelSpecialValueFor("pulverize_damage", ability_level)
-	local pulverize_stun = ability:GetLevelSpecialValueFor("pulverize_stun", ability_level)
-
-	-- Add a stack of the charge modifier
-	AddStacks(ability, caster, caster, modifier_charge, 1, true)
-
-	-- If this isn't enough charges to proc the chain lightning, do nothing else
-	local charge_count = caster:GetModifierStackCount(modifier_charge, caster)
-	if charge_count < pulverize_count then
-		return nil
+-- Removes the unique modifier from the caster if this is the last Javelin in its inventory
+function modifier_item_imba_javelin:OnDestroy(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_javelin") then
+			parent:RemoveModifierByName("modifier_item_imba_javelin_unique")
+		end
 	end
+end
 
-	-- Else, remove the charge counter and proc the pulverize
-	caster:RemoveModifierByName(modifier_charge)
+-- Declare modifier events/properties
+function modifier_item_imba_javelin:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function modifier_item_imba_javelin:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Javelin unique passive (Pierce + melee range increase)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_javelin_unique == nil then modifier_item_imba_javelin_unique = class({}) end
+function modifier_item_imba_javelin_unique:IsHidden() return true end
+function modifier_item_imba_javelin_unique:IsDebuff() return false end
+function modifier_item_imba_javelin_unique:IsPurgable() return false end
+function modifier_item_imba_javelin_unique:IsPermanent() return true end
+
+-- Store ability keys for later
+function modifier_item_imba_javelin_unique:OnCreated()
+	self.bonus_range = self:GetAbility():GetSpecialValueFor("bonus_range")
+	self.pierce_count = self:GetAbility():GetSpecialValueFor("pierce_count")
+	self.pierce_damage = self:GetAbility():GetSpecialValueFor("pierce_damage")
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_javelin_unique:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	return funcs
+end
+
+function modifier_item_imba_javelin_unique:GetModifierAttackRangeBonus()
+	if self:GetParent():IsRangedAttacker() then
+		return 0
+	else
+		return self.bonus_range
+	end
+end
+
+function modifier_item_imba_javelin_unique:OnAttackLanded(keys)
+	if IsServer() then
+		local owner = self:GetParent()
+
+		-- If this attack was not performed by the modifier's owner, do nothing
+		if owner ~= keys.attacker then
+			return end
+
+		-- If this is an illusion, do nothing
+		if owner:IsIllusion() then
+			return end
+
+		-- Else, keep going
+		local target = keys.target
 		
-	-- Play bash sound
-	target:EmitSound(sound_bash)
+		-- If the target is a hero or creep, increase this modifier's stack count
+		if IsHeroOrCreep(target) and owner:GetTeam() ~= target:GetTeam() then
+			self:SetStackCount(self:GetStackCount() + 1)
 
-	-- Play pulverize sound
-	target:EmitSound(sound_hit)
+			-- If this is the appropriate amount of stacks, deal bonus damage
+			if self:GetStackCount() >= self.pierce_count then
+				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pierce_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				self:SetStackCount(0)
+			end
+		end
+	end
+end
 
-	-- Find enemies to ministun and damage
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, pulverize_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(enemies) do
+-----------------------------------------------------------------------------------------------------------
+--	Monkey King Bar definition
+-----------------------------------------------------------------------------------------------------------
 
-		-- Deal pulverize damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+if item_imba_monkey_king_bar == nil then item_imba_monkey_king_bar = class({}) end
+LinkLuaModifier( "modifier_item_imba_monkey_king_bar", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_monkey_king_bar_unique", "items/item_mkb.lua", LUA_MODIFIER_MOTION_NONE )	-- Pulverize and bonus attack range
 
-		-- Apply ministun
-		enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = pulverize_stun})
+function item_imba_monkey_king_bar:GetIntrinsicModifierName()
+	return "modifier_item_imba_monkey_king_bar" end
 
-		-- Play particle
-		local pulverize_pfx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN, enemy)
-		ParticleManager:SetParticleControl(pulverize_pfx, 0, enemy:GetAbsOrigin())
-		ParticleManager:SetParticleControl(pulverize_pfx, 1, Vector(100,0,0))
+-----------------------------------------------------------------------------------------------------------
+--	Monkey King Bar owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_monkey_king_bar == nil then modifier_item_imba_monkey_king_bar = class({}) end
+function modifier_item_imba_monkey_king_bar:IsHidden() return true end
+function modifier_item_imba_monkey_king_bar:IsDebuff() return false end
+function modifier_item_imba_monkey_king_bar:IsPurgable() return false end
+function modifier_item_imba_monkey_king_bar:IsPermanent() return true end
+function modifier_item_imba_monkey_king_bar:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Adds the unique modifier to the caster when created
+function modifier_item_imba_monkey_king_bar:OnCreated(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_monkey_king_bar_unique") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_monkey_king_bar_unique", {})
+		end
+	end
+end
+
+-- Removes the unique modifier from the caster if this is the last MKB in its inventory
+function modifier_item_imba_monkey_king_bar:OnDestroy(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_monkey_king_bar") then
+			parent:RemoveModifierByName("modifier_item_imba_monkey_king_bar_unique")
+		end
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_monkey_king_bar:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+	}
+	return funcs
+end
+
+function modifier_item_imba_monkey_king_bar:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Monkey King Bar unique passive (Pulverize + True Strike + melee range increase)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_monkey_king_bar_unique == nil then modifier_item_imba_monkey_king_bar_unique = class({}) end
+function modifier_item_imba_monkey_king_bar_unique:IsHidden() return true end
+function modifier_item_imba_monkey_king_bar_unique:IsDebuff() return false end
+function modifier_item_imba_monkey_king_bar_unique:IsPurgable() return false end
+function modifier_item_imba_monkey_king_bar_unique:IsPermanent() return true end
+
+-- Store ability keys for later
+function modifier_item_imba_monkey_king_bar_unique:OnCreated()
+	self.bonus_range = self:GetAbility():GetSpecialValueFor("bonus_range")
+	self.pulverize_count = self:GetAbility():GetSpecialValueFor("pulverize_count")
+	self.pulverize_damage = self:GetAbility():GetSpecialValueFor("pulverize_damage")
+	self.pulverize_stun = self:GetAbility():GetSpecialValueFor("pulverize_stun")
+end
+
+-- Declare modifier states
+function modifier_item_imba_monkey_king_bar_unique:CheckState()
+	local states = {
+		[MODIFIER_STATE_CANNOT_MISS] = true,
+	}
+	return states
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_monkey_king_bar_unique:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	return funcs
+end
+
+function modifier_item_imba_monkey_king_bar_unique:GetModifierAttackRangeBonus()
+	if self:GetParent():IsRangedAttacker() then
+		return 0
+	else
+		return self.bonus_range
+	end
+end
+
+function modifier_item_imba_monkey_king_bar_unique:OnAttackLanded(keys)
+	if IsServer() then
+		local owner = self:GetParent()
+
+		-- If this attack was not performed by the modifier's owner, do nothing
+		if owner ~= keys.attacker then
+			return end
+
+		-- If this is an illusion, do nothing
+		if owner:IsIllusion() then
+			return end
+
+		-- Else, keep going
+		local target = keys.target
+		
+		-- If the target is a hero or creep, increase this modifier's stack count
+		if IsHeroOrCreep(target) and owner:GetTeam() ~= target:GetTeam() then
+			self:SetStackCount(self:GetStackCount() + 1)
+
+			-- If this is the appropriate amount of stacks, pulverize the target
+			if self:GetStackCount() >= self.pulverize_count then
+
+				-- Play sound
+				target:EmitSound("DOTA_Item.MKB.Minibash")
+
+				-- Mini-bash
+				target:AddNewModifier(owner, self:GetAbility(), "modifier_stunned", {duration = self.pulverize_stun})
+
+				-- Deal damage
+				ApplyDamage({attacker = owner, victim = target, ability = self:GetAbility(), damage = self.pulverize_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+				
+				-- Reset stack amount
+				self:SetStackCount(0)
+			end
+		end
 	end
 end

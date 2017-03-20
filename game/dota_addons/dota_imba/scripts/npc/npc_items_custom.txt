@@ -4295,6 +4295,13 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"FightRecapLevel"				"1"
 
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"45"
+		"AbilitySharedCooldown"			"vanguard"
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"7500"
@@ -4365,6 +4372,53 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Javelin
+	//=================================================================================================================
+	"item_imba_javelin"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2235"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_mkb.lua"
+		"AbilityTextureName" 			"custom/imba_javelin"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1500"
+		"ItemShopTags"					"damage"
+		"ItemQuality"					"component"
+		"ItemAliases"					"javelin"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pierce_count"			"4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pierce_damage"			"85"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Recipe: Monkey King Bar
@@ -4388,7 +4442,7 @@
 		"ItemResult"					"item_imba_monkey_king_bar"
 		"ItemRequirements"
 		{
-			"01"						"item_dragon_lance;item_javelin;item_demon_edge"
+			"01"						"item_imba_javelin;item_imba_javelin;item_demon_edge"
 		}
 	}
 	
@@ -4400,14 +4454,15 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1135"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_mkb.lua"
 		"AbilityTextureName" 			"custom/imba_monkey_king_bar"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5800"
-		"ItemShopTags"					"damage;attack_speed;hard_to_tag"
+		"ItemCost"						"5400"
+		"ItemShopTags"					"damage;attack_speed;str;agi;hard_to_tag"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"mkb;monkey king bar"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -4419,111 +4474,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"75"
+				"bonus_damage"			"66"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_str"				"20"
+				"bonus_range"			"150"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"20"
+				"pulverize_count"		"3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"180"
+				"pulverize_damage"		"160"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pulverize_count"		"3"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pulverize_radius"		"325"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pulverize_damage"		"150"
-			}
-			"08"
-			{
 				"var_type"				"FIELD_FLOAT"
-				"pulverize_stun"		"0.01f"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_duration"			"30"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_mkb"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"			"%bonus_damage"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"			"%bonus_str"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"				"%bonus_agi"
-				}
-			}
-
-			"modifier_item_imba_mkb_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_mkb.lua"
-						"Function"			"MonkeyKingBarProc"
-
-						"sound_hit"			"Hero_Brewmaster.ThunderClap"
-						"sound_bash"		"DOTA_Item.MKB.Minibash"
-						"particle_hit"		"particles/item/jingu_bang/jingu_bang_pulverize.vpcf"
-						"modifier_charge"	"modifier_item_imba_mkb_charge"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_range"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_mkb_charge"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_monkey_king_bar"
-
-				"Duration"				"%proc_duration"
+				"pulverize_stun"		"0.01"
 			}
 		}
 	}
@@ -4565,12 +4536,13 @@
 		"ID"							"2068"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_radiance"
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
 		"ScriptFile"                    "items/item_radiance.lua"
-		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
 		"AbilityCooldown"				"0"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_NONE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4579,7 +4551,7 @@
 		"ItemQuality"					"epic"
 		"ItemAliases"					"radiance"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"AbilityCastRange"				"750"
+		"AbilityCastRange"				"700"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -4588,27 +4560,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"90"
+				"bonus_damage"			"65"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"750"
+				"aura_radius"			"700"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"70"
+				"base_damage"			"60"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"extra_damage"			"3.0"
+				"extra_damage"			"2.5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"20"
+				"miss_chance"			"17"
 			}
 			"06"
 			{
@@ -16052,5 +16024,5 @@
 		}
 	}
 
-	//next free ID: 2235
+	//next free ID: 2236
 }
