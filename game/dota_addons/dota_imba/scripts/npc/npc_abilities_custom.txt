@@ -10435,11 +10435,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"600 600 600 600 650 700 750"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage"					"20 35 50 65 70 75 80"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"05"
 			{
@@ -10460,6 +10462,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range"						"900"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
 	}
@@ -10520,6 +10523,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed"						"600 600 600 600 650 700 750"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
 			"04"
 			{
@@ -10535,11 +10539,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"move_slow"					"-32"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attack_slow"				"-32"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
 			{
@@ -10550,6 +10556,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"range"						"900"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
 		
@@ -10591,6 +10598,7 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_blob.vpcf"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
 		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
@@ -10608,11 +10616,13 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"path_duration"			"1.5 2.0 2.5 3.0 4.0 5.0 6.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.0 1.5 2.0 2.5 2.5 2.5 2.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_5"
 			}
 			"04"
 			{
@@ -10643,6 +10653,7 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_amp"			"5 5 5 5 10 15 20"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_7"
 			}
 		}
 	}
@@ -10730,6 +10741,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"extra_cast_range"			"200"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_4"
 			}
 		}
 	}
@@ -10832,6 +10844,201 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Jakiro Talent 1 (Level 10): Dual Breath Range Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 2 (Level 10): Fire Breath DPS Increase, Ice Breath Slow Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fire_damage_increase"		"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_increase"				"-8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 3 (Level 20): Ice Path Duration Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 4 (Level 20): Liquid Fire Cast Range Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 5 (Level 30): Ice Path Stun Duration Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 6 (Level 30): Dual Breath Speed Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 7 (Level 40): Ice Path Antipode Effect Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 8 (Level 40): Macropyre Cause Progressive Slow
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"init_slow"					"-5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scale_per_tick"			"1.05"
+			}
+		}
+	}
+
 
 	//=================================================================================================================
 	// Juggernaut's Blade Fury
