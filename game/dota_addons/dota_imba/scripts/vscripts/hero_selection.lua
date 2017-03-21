@@ -453,8 +453,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up initial level
 		if HERO_STARTING_LEVEL > 1 then
 			Timers:CreateTimer(1, function()
+				local ability_points_now = hero:GetAbilityPoints()
 				hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-				hero:SetAbilityPoints(hero:GetAbilityPoints() + HERO_STARTING_LEVEL - 1)
+				-- Avoid player getting extra 1 skill point if they learn an ability before the timer runs
+				-- -1 Because players are level 1 before the timer starts
+				hero:SetAbilityPoints(HERO_STARTING_LEVEL - 1 + ability_points_now)
 			end)
 		end
 
