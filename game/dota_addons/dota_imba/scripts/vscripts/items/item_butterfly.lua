@@ -63,3 +63,25 @@ function ButterflyProjectileHit( keys )
 	caster:PerformAttack(target, true, true, true, true, true, false, false)
 	caster:SetAbsOrigin(original_loc)
 end
+
+function FlutterParticle( keys )
+	local caster = keys.caster
+	local particle_flutter = keys.particle_flutter
+	local sound_flutter = keys.sound_flutter
+
+	-- Play sound
+	caster:EmitSound(sound_flutter)
+
+	-- Play the particle
+	caster.flutter_particle = ParticleManager:CreateParticle(particle_flutter, PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(caster.flutter_particle, 0, caster:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(caster.flutter_particle)
+end
+
+function FlutterParticleEnd( keys )
+	local caster = keys.caster
+	local modifier_evasion = keys.modifier_evasion
+
+	-- Add the evasion modifier
+	keys.ability:ApplyDataDrivenModifier(caster, caster, modifier_evasion, {})
+end

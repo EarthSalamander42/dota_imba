@@ -50,7 +50,7 @@ function item_imba_sheepstick:OnSpellStart()
 
 		-- If the target possesses a ready Linken's Sphere, do nothing
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(ability) then
+			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end
@@ -66,7 +66,7 @@ function item_imba_sheepstick:OnSpellStart()
 		-- Kill the target instantly if it is an illusion
 		if target:IsIllusion() then
 			target:ForceKill(true)
-			return nil
+			return
 		end
 
 		-- If the target is yourself, apply the buff and purge, else, the debuff

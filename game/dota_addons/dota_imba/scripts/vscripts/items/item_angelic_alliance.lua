@@ -31,7 +31,14 @@ function item_imba_angelic_alliance:OnSpellStart()
     local caster = self:GetCaster()
     local target = self:GetCursorTarget()
 	local duration = self:GetSpecialValueFor("duration")
-	
+
+	-- If the target possesses a ready Linken's Sphere, do nothing
+	if target:GetTeam() ~= caster:GetTeam() then
+		if target:TriggerSpellAbsorb(self) then
+			return
+		end
+	end
+
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		target:EmitSound("Imba.AngelicAllianceCast")
 		target:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_buff", {duration = duration})

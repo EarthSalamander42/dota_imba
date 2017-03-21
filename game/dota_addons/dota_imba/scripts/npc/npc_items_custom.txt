@@ -221,7 +221,7 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -340,7 +340,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -389,10 +389,10 @@
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BAISC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName" 			"custom/imba_hand_of_midas"
-		"ScriptFile"					"items/item_midas_rework.lua"
+		"ScriptFile"					"items/item_midas.lua"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -602,7 +602,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -777,7 +777,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -1582,7 +1582,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -1693,7 +1693,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -1804,7 +1804,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -1915,7 +1915,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -2023,7 +2023,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -2257,7 +2257,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -2364,7 +2364,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -2471,7 +2471,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -2578,7 +2578,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -2682,7 +2682,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -2798,7 +2798,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -3112,7 +3112,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -3358,7 +3358,7 @@
 				"IsBuff"						"1"
 				"IsPurgable"					"0"
 		
-				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"					"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -3594,7 +3594,7 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -3846,7 +3846,7 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -4635,7 +4635,7 @@
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0"
+		"AbilityCooldown"				"25"
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -4652,12 +4652,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"45"
+				"bonus_agility"			"35"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"45"
+				"bonus_damage"			"30"
 			}
 			"03"
 			{
@@ -4667,17 +4667,17 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"45"
+				"bonus_attack_speed"	"30"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"flutter_duration"		"5"
+				"flutter_duration"		"4"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"flutter_move_speed"	"100"
+				"flutter_move_speed"	"35"
 			}
 			"07"
 			{
@@ -4698,6 +4698,7 @@
 				"ModifierName"			"modifier_item_imba_butterfly"
 				"Target" 				"CASTER"
 			}
+
 			"ApplyModifier"
 			{
 				"ModifierName"			"modifier_item_imba_butterfly_flutter"
@@ -4723,7 +4724,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 
 				"Properties"
 				{
@@ -4740,9 +4741,14 @@
 				"IsHidden"				"0"
 				"IsDebuff"				"0"
 
+				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
 				"TextureName"			"custom/imba_butterfly"
 
 				"Duration"				"%flutter_duration"
+
+				"EffectName"			"particles/items2_fx/butterfly_active.vpcf"
+				"EffectAttachType"		"follow_origin"
 
 				"Properties"
 				{
@@ -4752,12 +4758,26 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
 				}
 
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"items/item_butterfly.lua"
+						"Function"			"FlutterParticle"
+
+						"particle_flutter"	"particles/item/butterfly/butterfly_active.vpcf"
+						"sound_flutter"		"DOTA_Item.Butterfly"
+					}
+				}
+
 				"OnDestroy"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_item_imba_butterfly"
-						"Target" 		"CASTER"
+						"ScriptFile"		"items/item_butterfly.lua"
+						"Function"			"FlutterParticleEnd"
+
+						"modifier_evasion"	"modifier_item_imba_butterfly"
 					}
 				}
 			}
@@ -4836,13 +4856,14 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2147"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_crit.lua"
 		"AbilityTextureName" 			"custom/imba_greater_crit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"5550"
+		"ItemCost"						"5520"
 		"ItemShopTags"					"damage;crit"
 		"ItemQuality"					"epic"
 		"ItemAliases"					"daedalus"
@@ -4855,7 +4876,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"120"
+				"bonus_damage"			"76"
 			}
 			"02"
 			{
@@ -4865,116 +4886,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit"				"200"
+				"base_crit"				"235"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_crit_tooltip"		"225"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"crit_increase"			"25"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_greater_crit"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusStackUp"
-
-						"modifier_crit"		"modifier_item_imba_greater_crit_unique"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusStackDown"
-
-						"modifier_crit"		"modifier_item_imba_greater_crit_unique"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_greater_crit_unique"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusHit"
-
-						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
-						"modifier_item"		"modifier_item_imba_greater_crit_unique"
-						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
-					}
-				}
-			}
-
-			"modifier_item_imba_greater_crit_increase_dummy"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_greater_crit"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT"
-			}
-
-			"modifier_item_imba_greater_crit_crit"
-			{
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_crit.lua"
-						"Function"			"DaedalusCrit"
-
-						"sound_crit"		"DOTA_Item.Daedelus.Crit"
-						"modifier_crit"		"modifier_item_imba_greater_crit_crit"
-						"modifier_item"		"modifier_item_imba_greater_crit_unique"
-						"modifier_dummy"	"modifier_item_imba_greater_crit_increase_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"1"
-				}
+				"crit_increase"			"20"
 			}
 		}
 	}
@@ -5094,7 +5011,7 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"OnCreated"
 				{
@@ -5559,7 +5476,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 		
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -5928,7 +5845,7 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -6432,7 +6349,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -6699,7 +6616,7 @@
 				"IsHidden"					"1"
 				"IsDebuff"					"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -6898,7 +6815,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -7086,7 +7003,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"OnCreated"
 				{
@@ -7284,7 +7201,7 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"OnCreated"
 				{
@@ -7562,7 +7479,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -7823,7 +7740,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -8046,7 +7963,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -8314,7 +8231,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -8495,7 +8412,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -8673,7 +8590,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -8969,7 +8886,7 @@
 			{
 				"Passive"			"1"
 				"IsHidden"			"1"
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -9185,7 +9102,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -9459,7 +9376,7 @@
 				"Passive"				"1"
 				"IsHidden"				"1"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 		
 				"Properties"
 				{
@@ -9652,7 +9569,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -9958,7 +9875,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -10172,7 +10089,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -10472,7 +10389,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -10786,7 +10703,7 @@
 				"IsHidden"				"1"
 				"IsDebuff"				"0"
 				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -11115,7 +11032,7 @@
 				"Passive"			"1"
 				"IsHidden"			"1"
 
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -11544,7 +11461,7 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -11948,7 +11865,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -12110,7 +12027,7 @@
 				"IsBuff"					"1"
 				"IsPurgable"				"0"
 
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{
@@ -12548,7 +12465,7 @@
 				"Passive"						"1"
 				"IsHidden"						"1"
 
-				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 					"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -13116,7 +13033,7 @@
 				"IsPurgable"			"0"
 				"IsBuff"				"1"
 				
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -13370,7 +13287,7 @@
 				"IsPurgable"			"0"
 				"IsBuff"				"1"
 				
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -13575,7 +13492,7 @@
 				"IsPurgable"			"0"
 				"IsBuff"				"1"
 				
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 				
 				"Properties"
 				{
@@ -13741,7 +13658,7 @@
 				"IsBuff"				"1"
 				"IsPurgable"			"0"
 
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 
 				"Properties"
 				{

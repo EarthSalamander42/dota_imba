@@ -1015,15 +1015,17 @@ end
 -- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)
 function IsWardTypeUnit( unit )
 
+	local unit_name = unit:GetUnitName()
 	local ward_type_units = {
 		"npc_imba_pugna_nether_ward_1",
 		"npc_imba_pugna_nether_ward_2",
 		"npc_imba_pugna_nether_ward_3",
-		"npc_imba_pugna_nether_ward_4"
+		"npc_imba_pugna_nether_ward_4",
+		"npc_imba_warlock_upheaval_tower"
 	}
 
 	for _, ward_unit in pairs(ward_type_units) do
-		if unit:GetUnitName() == ward_unit then
+		if unit_name == ward_unit then
 			return true
 		end
 	end

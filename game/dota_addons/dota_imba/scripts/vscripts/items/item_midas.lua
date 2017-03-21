@@ -23,8 +23,8 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		end
 
-		-- If the target is a ward (including Warlock's), deny it
-		if string.find(target:GetUnitName(), "ward") or target:GetUnitName() == "npc_imba_warlock_upheaval_tower" then
+		-- If the target is a ward, deny it
+		if target:IsOther() or IsWardTypeUnit(target) then
 			return UF_FAIL_CUSTOM
 		end
 
@@ -45,19 +45,20 @@ end
 function item_imba_hand_of_midas:GetCustomCastErrorTarget(target)
 	if IsServer() then
 		local caster = self:GetCaster()
+		
 		-- Clone message
 		if caster:IsTempestDouble() then
-			return "Clones cannot use Midas"
+			return "#dota_hud_error_clone_cant_use"
 		end
 
-		-- ward message
-		if string.find(target:GetUnitName(), "ward") or target:GetUnitName() == "npc_imba_warlock_upheaval_tower" then
-			return "Midas cannot be used on wards"
+		-- Ward message
+		if target:IsOther() or IsWardTypeUnit(target) then
+			return "#dota_hud_error_cant_use_on_wards"
 		end
 
 		-- Necronomicon message		
 		if string.find(target:GetUnitName(), "necronomicon") then
-			return "Midas cannot be used on Necrobook summons"						
+			return "#dota_hud_error_cant_use_on_necrobook"
 		end
 	end
 end
@@ -66,27 +67,20 @@ function item_imba_hand_of_midas:GetAbilityTextureName()
 	local caster = self:GetCaster()
 	local caster_name = caster:GetUnitName()
 
-	local animal_heroes = {"npc_dota_hero_brewmaster",
-						   "npc_dota_hero_magnataur",
-						   "npc_dota_hero_lone_druid",
-						   "npc_dota_hero_viper",
-						   "npc_dota_hero_broodmother",
-						   "npc_dota_hero_meepo",
-							"npc_dota_hero_slark",
-							"npc_dota_hero_riki",
-							"npc_dota_hero_centaur",
-							"npc_dota_hero_lycan",
-							"npc_dota_hero_leshrac",
-							"npc_dota_hero_winter_wyvern",
-							"npc_dota_hero_enchantress",
-							"npc_dota_hero_ursa"}
+	local animal_heroes = {
+		"npc_dota_hero_brewmaster",
+		"npc_dota_hero_magnataur",
+		"npc_dota_hero_lone_druid",
+		"npc_dota_hero_broodmother",
+		"npc_dota_hero_lycan",
+		"npc_dota_hero_ursa"
+	}
 
 	for _, hero_name in pairs (animal_heroes) do
 		if caster_name == hero_name then
 			return "custom/item_paw_of_midas"
 		end
 	end
-
 
 	return "custom/imba_hand_of_midas"
 end
@@ -144,5 +138,9 @@ function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
 end
 
 function modifier_item_imba_hand_of_midas:IsHidden()
+	return true
+end
+
+function modifier_item_imba_hand_of_midas:IsPermanent()
 	return true
 end

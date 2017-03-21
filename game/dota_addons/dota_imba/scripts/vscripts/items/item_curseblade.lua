@@ -32,21 +32,20 @@ function item_imba_curseblade:OnSpellStart()
 		-- Ability properties
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local ability = self
 		local sound_cast = "Imba.Curseblade"
 		local particle_curse = "particles/item/curseblade/imba_curseblade_curse.vpcf"
 		local datadrive_baseclass = "modifier_datadriven"
 		local debuff = "modifier_item_imba_curseblade_debuff"
 		
 		-- Ability specials
-		local duration = ability:GetSpecialValueFor("duration")
+		local duration = self:GetSpecialValueFor("duration")
 		
 		-- Play sound cast
 		EmitSoundOn(sound_cast, caster)
 		
 		-- Check for Linken's Sphere
 		if target:GetTeam() ~= caster:GetTeam() then
-			if target:TriggerSpellAbsorb(ability) then
+			if target:TriggerSpellAbsorb(self) then
 				return nil
 			end
 		end	
