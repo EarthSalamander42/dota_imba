@@ -330,7 +330,7 @@ function modifier_imba_fire_breath_debuff:GetModifierMoveSpeedBonus_Percentage()
 modifier_imba_fire_breath_caster = ShallowCopy( base_modifier_dual_breath_caster )
 modifier_imba_fire_breath_caster.modifier_debuff_name = "modifier_imba_fire_breath_debuff"
 modifier_imba_fire_breath_caster.ability_other_breath_name = "imba_jakiro_ice_breath"
-modifier_imba_fire_breath_caster.particle_breath = "particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf"
+modifier_imba_fire_breath_caster.particle_breath = "particles/hero/jakiro/jakiro_fire_breath.vpcf"
 
 -----------------------------
 --		Ice Breath         --
@@ -371,7 +371,7 @@ function modifier_imba_ice_breath_debuff:GetModifierAttackSpeedBonus_Constant() 
 modifier_imba_ice_breath_caster = ShallowCopy(base_modifier_dual_breath_caster)
 modifier_imba_ice_breath_caster.modifier_debuff_name = "modifier_imba_ice_breath_debuff"
 modifier_imba_ice_breath_caster.ability_other_breath_name = "imba_jakiro_fire_breath"
-modifier_imba_ice_breath_caster.particle_breath = "particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf"
+modifier_imba_ice_breath_caster.particle_breath = "particles/hero/jakiro/jakiro_ice_breath.vpcf"
 
 
 -----------------------------
@@ -429,17 +429,20 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 			caster:EmitSound("Hero_Jakiro.IcePath.Cast")
 		end)
 
-		-- Create ice path blob explode
-		particle_name = "particles/units/heroes/hero_jakiro/jakiro_ice_path.vpcf"
-		local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
-		ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
-		ParticleManager:SetParticleControl( pfx_ice_path_explode, 2, start_pos )
+		-- Create ice path blob
+		particle_name = "particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
+		local pfx_ice_path_blob = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( pfx_ice_path_blob, 0, start_pos )
+		ParticleManager:SetParticleControl( pfx_ice_path_blob, 1, end_pos )
+		ParticleManager:SetParticleControl( pfx_ice_path_blob, 2, Vector(path_duration, 0, 0) ) --Shorter duration as it needs to melt
+		self:AddParticle(pfx_ice_path_blob, false, false, -1, false, false)
 
-		-- Destroy particle after delay
+		-- Create ice path flash
 		Timers:CreateTimer(path_delay, function()
-			-- Destroying the particle causes the flash effect
-			ParticleManager:DestroyParticle( pfx_ice_path_explode, false )
+			particle_name = "particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
+			local pfx_ice_path_explode = ParticleManager:CreateParticle( particle_name, PATTACH_ABSORIGIN, caster )
+			ParticleManager:SetParticleControl( pfx_ice_path_explode, 0, start_pos )
+			ParticleManager:SetParticleControl( pfx_ice_path_explode, 1, end_pos )
 			ParticleManager:ReleaseParticleIndex( pfx_ice_path_explode )
 		end)
 
