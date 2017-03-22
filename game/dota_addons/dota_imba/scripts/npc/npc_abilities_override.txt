@@ -194,13 +194,13 @@
 	"item_recipe_diffusal_blade_2"	"REMOVE"
 	"item_diffusal_blade"			"REMOVE"
 	"item_diffusal_blade_2"			"REMOVE"
-	"item_recipe_ethereal_blade"	"REMOVE"
-	"item_ethereal_blade"			"REMOVE"
+	//"item_recipe_ethereal_blade"	"REMOVE"
+	//"item_ethereal_blade"			"REMOVE"
 	//"item_recipe_soul_ring"			"REMOVE"
 	//"item_soul_ring"				"REMOVE"
 	"item_recipe_arcane_boots"		"REMOVE"
 	"item_arcane_boots"				"REMOVE"
-	"item_orb_of_venom"				"REMOVE"
+	//"item_orb_of_venom"				"REMOVE"
 	"item_recipe_ancient_janggo"	"REMOVE"
 	"item_ancient_janggo"			"REMOVE"
 	//"item_recipe_medallion_of_courage"	"REMOVE"
@@ -214,8 +214,8 @@
 	//"item_abyssal_blade"			"REMOVE"
 	"item_recipe_heavens_halberd"	"REMOVE"
 	"item_heavens_halberd"			"REMOVE"
-	"item_recipe_ring_of_aquila"	"REMOVE"
-	"item_ring_of_aquila"			"REMOVE"
+	//"item_recipe_ring_of_aquila"	"REMOVE"
+	//"item_ring_of_aquila"			"REMOVE"
 	//"item_recipe_tranquil_boots"	"REMOVE"
 	//"item_tranquil_boots"			"REMOVE"
 	//"item_shadow_amulet"			"REMOVE"
@@ -1559,6 +1559,14 @@
 				"vision_radius"				"1000"
 			}			
 		}
+	}
+
+	//=================================================================================================================
+	// Orb of Venom
+	//=================================================================================================================
+	"item_orb_of_venom"
+	{
+		"ItemCost"						"150"
 	}
 
 	//=================================================================================================================
