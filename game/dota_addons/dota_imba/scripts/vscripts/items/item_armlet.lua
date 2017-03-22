@@ -19,21 +19,14 @@ function item_imba_armlet:GetIntrinsicModifierName()
 function item_imba_armlet:OnSpellStart()
 	if IsServer() then
 
-		-- Health modification parameters
+		-- Grant or remove the appropriate modifiers
 		local caster = self:GetCaster()
-		local bonus_strength = self:GetSpecialValueFor("unholy_bonus_strength")
-		local initial_hp = caster:GetHealth()
-		local bonus_hp = bonus_strength * 20
-
-		-- Adjust caster's health and grant the bonuses
 		if caster:HasModifier("modifier_imba_armlet_unholy_strength") then
 			caster:EmitSound("DOTA_Item.Armlet.Activate")
 			caster:RemoveModifierByName("modifier_imba_armlet_unholy_strength")
-			caster:SetHealth(math.max(initial_hp - bonus_hp, 1))
 		else
 			caster:EmitSound("DOTA_Item.Armlet.DeActivate")
 			caster:AddNewModifier(caster, self, "modifier_imba_armlet_unholy_strength", {})
-			caster:SetHealth(initial_hp + bonus_hp)
 		end
 	end
 end
@@ -91,12 +84,37 @@ function modifier_imba_armlet_unholy_strength:DeclareFunctions()
 	return {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	
 				MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
-				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,}
+				MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,	}
 end
 
 function modifier_imba_armlet_unholy_strength:OnCreated()
 	if IsServer() then
+
+		-- Store parameters
+		self.bonus_strength = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength")
+		self.health_per_stack = self:GetAbility():GetSpecialValueFor("health_per_stack")
+		self.health_drain = self:GetAbility():GetSpecialValueFor("unholy_health_drain")
+		self.unholy_bonus_damage = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength")
+		self.unholy_bonus_armor = self:GetAbility():GetSpecialValueFor("unholy_bonus_armor")
+		self.stack_armor = self:GetAbility():GetSpecialValueFor("stack_armor")
+		self.stack_as = self:GetAbility():GetSpecialValueFor("stack_as")
+
+		-- Adjust caster's health
+		local caster = self:GetCaster()
+		caster:SetHealth(caster:GetHealth() + self.bonus_strength * 20)
+
+		-- Start thinking
 		self:StartIntervalThink(0.1)
+	end
+end
+
+function modifier_imba_armlet_unholy_strength:OnDestroy()
+	if IsServer() then
+
+		-- Adjust caster's health
+		local caster = self:GetCaster()
+		local bonus_hp = self.bonus_strength * 20
+		caster:SetHealth(math.max(caster:GetHealth() - self.bonus_strength, 1))
 	end
 end
 
