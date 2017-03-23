@@ -6007,7 +6007,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"maim_duration"			"5.0"
+				"stack_duration"		"5.0"
 			}
 			"06"
 			{
@@ -6018,110 +6018,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_strength"		"16"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_sange"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_sange_effects"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_item_imba_sange_effects"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"					"%disarm_chance"
-
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"		"items/item_sange.lua"
-								"Function"			"SangeDisarm"
-								"Target"			"TARGET"
-
-								"modifier_disarm"	"modifier_item_imba_sange_disarm"
-								"sound_disarm"		"DOTA_Item.HeavensHalberd.Activate"
-								"duration"			"%disarm_duration"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_sange.lua"
-						"Function"					"Maim"
-
-						"modifier_maim"				"modifier_item_imba_sange_maim"
-						"sound_maim"				"DOTA_Item.Maim"
-					}
-				}	
-			}
-
-			"modifier_item_imba_sange_disarm"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_sange"
-
-				"EffectName"			"particles/items2_fx/heavens_halberd.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_sange_maim"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_sange"
-
-				"Duration"				"%maim_duration"
-
-				"EffectName"			"particles/items2_fx/sange_maim.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "-1"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "-1" 
-				}
 			}
 		}
 	}
@@ -6341,7 +6237,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"amp_duration"			"5.0"
+				"stack_duration"		"5.0"
 			}
 			"06"
 			{
