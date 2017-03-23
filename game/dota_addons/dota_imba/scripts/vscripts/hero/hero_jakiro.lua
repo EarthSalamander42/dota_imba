@@ -275,8 +275,8 @@ function base_modifier_dot_debuff:OnIntervalThink()
 			if ability_ice_path then
 				local ability_level = ability_ice_path:GetLevel() - 1
 				-- #7 Talent: Ice Path Antipode Effect Increase
-				local damage_amp = ability_ice_path:GetLevelSpecialValueFor("damage_amp", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_7")
-				final_tick_damage = final_tick_damage * ( 1 + damage_amp/100 )
+				local dmg_amp = ability_ice_path:GetLevelSpecialValueFor("dmg_amp", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_7")
+				final_tick_damage = final_tick_damage * ( 1 + dmg_amp/100 )
 			end
 		end
 
@@ -352,7 +352,7 @@ function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 	local ability = self:GetAbility()
 	-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
 	local talent_slow = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
-	self.attack_slow = ability:GetSpecialValueFor("attack_slow") + talent_slow
+	self.attack_slow = ability:GetSpecialValueFor("attack_slow") * (1-talent_slow/100)
 	self.move_slow = ability:GetSpecialValueFor("move_slow") + talent_slow
 end
 
@@ -946,6 +946,19 @@ function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
 	local caster = self.caster
 	-- #8 Talent: Macropyre Cause Progressive Slow
 	if caster:HasTalent("special_bonus_imba_jakiro_8") then
+
+		-- normal macropyre duration = 10s
+		-- scepter macropyre duration = 30s
+		-- tick rate = 0.5s
+		-- total normal ticks = 20
+		-- total scepter ticks = 60
+		-- initial slow = 5
+		-- scale per tick = 1.05
+		-- formula : 5 * (1.05 ^ n) where n is the number of ticks
+		-- max normal slow = 13.2664885257
+		-- max scepter slow = 93.3959294706
+		-- This exludes slow from other abilities
+
 		if not self.move_slow or self.move_slow == 0 then
 			self.move_slow = caster:FindSpecificTalentValue("special_bonus_imba_jakiro_8", "init_slow")
 		else
