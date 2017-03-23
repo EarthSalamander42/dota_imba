@@ -812,7 +812,8 @@ function InitializeInnateAbilities( hero )
 		"imba_skywrath_mage_concussive_shot_ghastly",
 		"imba_silencer_arcane_supremacy",
 		"imba_tiny_rolling_stone",
-		"imba_centaur_thick_hide"
+		"imba_centaur_thick_hide",
+		"imba_kunkka_ebb_and_flow"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -2211,6 +2212,13 @@ function CDOTA_BaseNPC:GetDamageBlock()
 	end
 end
 
+-- "angle" is in radians
+function RotateVector2D(v,angle)
+    local xp = v.x * math.cos(angle) - v.y * math.sin(angle)
+    local yp = v.x * math.sin(angle) + v.y * math.cos(angle)
+    return Vector(xp,yp,v.z):Normalized()
+end
+
 -- Universal damage amplification
 function CDOTA_BaseNPC:GetIncomingDamagePct()
 
@@ -2473,7 +2481,7 @@ function TrackingProjectiles:hookFunctions()
         oldProjectileDodge(projectileManager,unit)
     end
 end
-    
+
 function TrackingProjectiles:init()
     self:hookFunctions()    
 end

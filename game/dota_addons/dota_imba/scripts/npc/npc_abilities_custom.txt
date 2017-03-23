@@ -4892,7 +4892,7 @@
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"6"
 		"AbilityTextureName"			"antimage_mana_void"
-		"AOERadius"						"%mana_void_aoe_radius"
+		"AOERadius"						"%mana_void_aoe_radius%"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11939,13 +11939,54 @@
 	}
 
 	//=================================================================================================================
+	// Kunkka's Ebb and Flow
+	//=================================================================================================================
+	"imba_kunkka_ebb_and_flow"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"custom/kunkka_ebb_and_flow"
+		"ScriptFile"					"hero/hero_kunkka"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5.0"
+		"AbilityCastPoint"				"0.0"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_antimage/antimage_blink_end_glow.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield.vpcf"
+			"particle"					"particles/units/heroes/hero_antimage/antimage_spellshield_reflect.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tsunami_chance"				"20"
+				"LinkedSpecialBonus"			"special_bonus_imba_kunkka_6"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Kunkka's Torrent
 	//=================================================================================================================
 	"imba_kunkka_torrent"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11953,7 +11994,9 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"kunkka_torrent"
-		"AOERadius"						"%radius"
+		"ScriptFile"					"hero/hero_kunkka"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11962,11 +12005,21 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"16 14 12 10 10 10 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 100 110 120"
+		"AbilityManaCost"				"90 100 110 120 125 130 135"
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------	
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"						"particles/hero/kunkka/torrent_bubbles.vpcf"
+			"particle"						"particles/hero/kunkka/torrent_splash.vpcf"
+			"particle"						"particles/econ/items/kunkka/kunkka_weapon_whaleblade/kunkka_spell_torrent_splash_whaleblade.vpcf"
+		}
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11975,17 +12028,18 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
+				"radius"					"225"
+				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_3"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus"			"-35"
+				"main_slow"					"35"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"1.75 2.5 3.25 4.0"
+				"slow_duration"				"1.75 2.5 3.25 4.0 4.0 4.0 4.0"
 			}
 			"04"
 			{
@@ -11994,120 +12048,69 @@
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"delay"						"1.6"
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"75 150 225 300 330 360 390"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tick_count"				"8"
+				"sec_torrent_count"			"1 1 1 1 2 2 3"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"vision_duration"			"3.5"
+				"sec_torrent_stun"			"0.5"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"torrent_height"			"400"
+				"sec_torrent_damage"		"50"
+				"LinkedSpecialBonus"		"special_bonus_imba_kunkka_4"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"120 180 240 300"
+				"sec_torrent_slow"			"35"
 			}
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tsunami_damage"			"120"
+				"var_type"					"FIELD_FLOAT"
+				"sec_torrent_slow_duration" "1.25"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"high_tide_slow"			"-50"
+				"sec_torrent_radius" 		"225"
 			}
-		}
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------	
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
+			"12"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"TorrentBubble"
-				"Target"					"POINT"
-
-				"particle_name"				"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_bubbles.vpcf"
-				"sound_name"				"Ability.pre.Torrent"
+				"var_type"					"FIELD_INTEGER"
+				"tick_count"				"10"
 			}
-
-			"RunScript"
+			"13"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"Torrent"
-				"Target"					"POINT"
-
-				"particle_name"				"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-				"sound_name"				"Ability.Torrent"
-				"modifier_high_tide"		"modifier_imba_tidebringer_high_tide"
-				"modifier_tsunami"			"modifier_imba_tidebringer_tsunami"
-				"modifier_wave_break"		"modifier_imba_tidebringer_wave_break"
-				"modifier_slow"				"modifier_imba_torrent_slow"
-				"modifier_high_tide_slow"	"modifier_imba_torrent_slow_high_tide"
-				"modifier_phase"			"modifier_imba_torrent_phase"
+				"var_type"					"FIELD_INTEGER"
+				"torrent_height"			"400"
 			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_torrent_slow"
+			"14"
 			{
-				"IsPurgable"				"1"
-				"IsDebuff"					"1"
-			
-				"Duration"					"%stun_duration + %slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"tide_low_range"			"300"
 			}
-
-			"modifier_imba_torrent_slow_high_tide"
+			"15"
 			{
-				"IsPurgable"				"1"
-				"IsDebuff"					"1"
-			
-				"Duration"					"%stun_duration + %slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%high_tide_slow"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"tide_red_slow"				"15"
 			}
-
-			"modifier_imba_torrent_phase"
+			"16"
 			{
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-				"IsStunDebuff"				"1"
-
-				"Duration"					"%stun_duration"
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"tide_flood_damage"			"80"
+			}
+			"17"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tide_high_radius"			"125"
 			}
 		}
 	}
@@ -12119,19 +12122,22 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityTextureName"				"kunkka_tidebringer"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"				"kunkka_tidebringer"
+		"ScriptFile"						"hero/hero_kunkka"
+		"MaxLevel"							"7"
+		"LevelsBetweenUpgrades"				"2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"					"0"
-		"AbilityCooldown"					"0"
+		"AbilityCooldown"					"13 10 7 4 4 4 4"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -12140,6 +12146,9 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
 			"particle"						"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
 			"particle"						"particles/econ/items/kunkka/kunkka_tidebringer_base/kunkka_spell_tidebringer.vpcf"
+			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf"
+			"particle"						"particles/hero/kunkka/torrent_bubbles.vpcf"
+			"particle"						"particles/hero/kunkka/torrent_splash.vpcf"
 		}
 
 		// Special
@@ -12149,180 +12158,88 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"600"
+				"bonus_damage"				"25 45 65 85 90 95 100"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"40 60 80 100"
+				"range"						"650 800 950 1100 1150 1200 1250"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tsunami_height"			"125"
+				"radius_start"				"150"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tsunami_duration"			"0.8"
+				"var_type"					"FIELD_INTEGER"
+				"radius_end"				"500 550 600 650 675 700 725"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"proc_chance"				"35"
+				"var_type"					"FIELD_FLOAT"
+				"cdr_per_hit"				"0.1 0.1 0.1 0.1 0.15 0.2 0.25"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown"					"9 7 5 3"
+				"tide_low_range"			"300"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"TidebringerLevelUp"
-
-				"modifier_tidebringer"		"modifier_imba_tidebringer"
-				"sound_cooldown"			"Hero_Kunkaa.Tidebringer"
-				"particle_weapon"			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+				"var_type"					"FIELD_INTEGER"
+				"tide_red_slow"				"25"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"TidebringerToggle"
-
-				"modifier_tidebringer"		"modifier_imba_tidebringer"
-				"sound_cooldown"			"Hero_Kunkaa.Tidebringer"
-				"particle_weapon"			"particles/units/heroes/hero_kunkka/kunkka_weapon_tidebringer.vpcf"
+				"var_type"					"FIELD_INTEGER"
+				"tide_red_slow_duration"	"3"
 			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_tidebringer"
+			"09"
 			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"Tidebringer"
-
-						"sound_attack"			"Hero_Kunkka.Tidebringer.Attack"
-						"sound_hit"				"Hero_Kunkka.TidebringerDamage"
-						"particle_cleave"		"particles/econ/items/kunkka/kunkka_tidebringer_base/kunkka_spell_tidebringer.vpcf"
-						"particle_tsunami"		"particles/units/heroes/hero_kunkka/kunkka_spell_torrent_splash.vpcf"
-						"modifier_high_tide"	"modifier_imba_tidebringer_high_tide"
-						"modifier_wave_break"	"modifier_imba_tidebringer_wave_break"
-						"modifier_tsunami"		"modifier_imba_tidebringer_tsunami"
-						"modifier_particle"		"modifier_imba_tidebringer_particle"
-						"modifier_damage"		"modifier_imba_tidebringer_damage"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"tide_flood_damage"			"100"
 			}
-
-			"modifier_imba_tidebringer_damage"
+			"10"
 			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_kunkka.lua"
-						"Function"				"TidebringerDamage"
-
-						"modifier_high_tide"	"modifier_imba_tidebringer_high_tide"
-						"modifier_damage"		"modifier_imba_tidebringer_damage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_bonus"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"tide_high_radius"			"100"
 			}
-
-			"modifier_imba_tidebringer_high_tide"
+			"11"
 			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"TextureName"				"custom/kunkka_tidebringer_high_tide"
-			}
-
-			"modifier_imba_tidebringer_wave_break"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"TextureName"				"custom/kunkka_tidebringer_wave_break"
-			}
-
-			"modifier_imba_tidebringer_tsunami"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"TextureName"				"custom/kunkka_tidebringer_tsunami"
+				"var_type"					"FIELD_INTEGER"
+				"tsunami_stun"				"1"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Kunkka's X Mark
+	// Kunkka's X Marks the Spot
 	//=================================================================================================================
 	"imba_kunkka_x_marks_the_spot"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_kunkka"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"kunkka_x_marks_the_spot"
+		"ScriptFile"					"hero/hero_kunkka"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900 1000 1100 1200"
-		"AbilityCastPoint"				"0.1"
+		"AbilityCastRange"				"400 600 800 1000 1000 1000 1000"
+		"AbilityCastPoint"				"0.4"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"26 20 14 8 8 8 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -12332,8 +12249,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
-			"particle"						"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
+			"particle"					"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
 		}
 
 		// Special
@@ -12342,151 +12259,23 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"4"
 			}	
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"allied_duration"			"8.0"
+				"var_type"					"FIELD_INTEGER"
+				"allied_duration"			"8"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"900 1000 1100 1200"
+				"sec_duration"				"1 1 1 1 2 3 4"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"fow_range"					"400"
-			}	  
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fow_duration"				"6.0"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"grace_period"				"3"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown"					"20 16 12 8"
-			}
-		}
-		
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"LevelUpReturn"
-
-				"ability_name"				"imba_kunkka_return"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"XmarksCast"
-
-				"ability_return"			"imba_kunkka_return"
-				"modifier_caster"			"modifier_imba_x_marks_the_spot_caster_grace_period"
-				"modifier_duration"			"modifier_imba_x_marks_the_spot_remaining_duration"
-				"modifier_xmarks"			"modifier_imba_x_marks_the_spot"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_x_marks_the_spot"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-			
-				"OnCreated"
-				{
-					"FireSound"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"Ability.XMarksTheSpot.Target"
-					}
-				
-					"AttachEffect"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"particles/units/heroes/hero_kunkka/kunkka_spell_x_spot.vpcf"
-						"EffectAttachType"			"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"TARGET"				"attach_origin"
-						}
-					}
-				
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_kunkka.lua"
-						"Function"					"XmarksMark"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"FireSound"
-					{
-						"Target"					"TARGET"
-						"EffectName"				"Ability.XMarksTheSpot.Return"
-					}
-				
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_kunkka.lua"
-						"Function"					"XmarksReturn"
-					}
-				}
-			}
-
-			"modifier_imba_x_marks_the_spot_caster_grace_period"
-			{
-				"Passive"							"0"
-				"IsBuff"							"1"
-				"IsHidden"							"1"
-				"IsPurgable"						"0"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_kunkka.lua"
-						"Function"					"XmarksGraceEnd"
-					}
-				}	
-			}
-
-			"modifier_imba_x_marks_the_spot_remaining_duration"
-			{
-				"Passive"							"0"
-				"IsBuff"							"1"
-				"IsHidden"							"1"
-				"IsPurgable"						"0"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_kunkka.lua"
-						"Function"					"XmarksDurationEnd"
-
-						"ability_return"			"imba_kunkka_return"
-					}
-				}	
+				"tooltip_range"				"400 600 800 1000 1000 1000 1000"
 			}
 		}
 	}
@@ -12498,15 +12287,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"ScriptFile"					"hero/hero_kunkka"
 		"AbilityTextureName"			"kunkka_return"
 		"MaxLevel"						"1"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastPoint"				"0.4"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time		
@@ -12516,20 +12306,6 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_kunkka.lua"
-				"Function"				"XmarksForcedReturn"
-
-				"modifier_caster"		"modifier_imba_x_marks_the_spot_caster_grace_period"
-				"modifier_x_mark"		"modifier_imba_x_marks_the_spot"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -12539,15 +12315,18 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_kunkka"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
+		"MaxLevel"						"6"
 		"AbilityTextureName"			"kunkka_ghostship"
+		"HasScepterUpgrade"				"1"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -12557,242 +12336,315 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60 50 40"
+		"AbilityCooldown"				"60 50 40 40 40 40"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 175 225"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"tooltip_delay"					"2.4 2.0 1.6"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"spawn_distance"				"1000"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ghostship_width"				"425"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crash_damage"					"300 400 500"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"impact_damage"					"100"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_damage"				"400 500 600"
-			}
-			"07"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"movespeed_bonus"				"10"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"10.0"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stun_duration"					"1.5"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed"				"834 1000 1250"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"rum_reduce_pct"				"-50"
-			}
-			"12"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"damage_interval"				"0.2"
-			}
-			"13"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ghostship_speed_scepter"		"1200 1500 1875"
-			}
-			"14"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"rum_reduce_pct_scepter"		"-75"
-			}
-			"15"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"spawn_distance_scepter"		"2000"
-			}
-			"16"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crash_distance"				"1000"
-			}
-		}
+		"AbilityManaCost"				"125 175 225 240 255 270"
 		
-		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_kunkka.vsndevts"
 			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
 			"particle"						"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
+			"particle"						"particles/hero/kunkka/kunkka_ghost_ship.vpcf"
 			"particle"						"particles/status_fx/status_effect_rum.vpcf"
+			"particle"						"particles/hero/kunkka/torrent_bubbles.vpcf"
 		}
-		
-		"OnSpellStart"
+	
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"Target"					"CASTER"
-				"EffectName"				"Ability.Ghostship.bell"
+				"var_type"						"FIELD_INTEGER"
+				"damage"						"400 500 600 650 700 750"
 			}
-		
-			"FireSound"
+			"02"
 			{
-				"Target"					"CASTER"
-				"EffectName"				"Ability.Ghostship"
+				"var_type"						"FIELD_INTEGER"
+				"ghostship_width"				"425"
 			}
-		
-			"RunScript"
+			"03"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"GhostShip"
-				"Target"					"POINT"
-
-				"particle_name"				"particles/units/heroes/hero_kunkka/kunkka_ghostship_marker.vpcf"
-				"projectile_name"			"particles/units/heroes/hero_kunkka/kunkka_ghost_ship.vpcf"
-				"crash_sound"				"Ability.Ghostship.crash"
+				"var_type"						"FIELD_INTEGER"
+				"ghostship_speed"				"750 950 1150 1350 1550 1750"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"start_distance"				"1000 1200 1400 1600 1800 2000"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.4"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"rum_speed"						"10"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"rum_reduce_pct"				"40 45 50 55 60 65"
+			}
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crash_distance"				"1000"
+			}
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"buff_duration"					"10"
+			}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_duration"				"10"
+			}
+			"11"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"damage_interval"				"1.0"
+			}
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tide_red_slow"					"25"
+			}
+			"13"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tide_red_slow_duration"		"2"
+			}
+			"14"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tide_flood_damage"				"100"
+			}
+			"15"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tide_high_radius"				"125"
+			}
+			"16"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"tide_wave_speed"				"500"
+			}
+			"17"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"tsunami_stun"					"0.6"
+			}
+			"18"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"scepter_crash_delay"			"0.6"
+			}
+			"19"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_tide_low_range"		"300"
+			}
+			"20"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_tide_high_radius"		"125"
+			}
+			"21"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"scepter_tide_wave_delay"		"0.1"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Kunkka Talent 1 (Level 10): Gold gained with each last hit
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		"OnProjectileHitUnit"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"DeleteOnHit"					"0"
-
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"				"hero/hero_kunkka.lua"
-				"Function"					"OnABoat"
-
-				"modifier_rum"				"modifier_imba_ghostship_rum"
-				"modifier_rum_scepter"		"modifier_imba_ghostship_rum_scepter"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"7"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Kunkka Talent 2 (Level 10): Ebb & Flow CDR
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_ghostship_rum"
+			"01"
 			{
-				"IsBuff"					"1"
-				
-				"Duration"					"%buff_duration"
-				
-				"StatusEffectName"			"particles/status_fx/status_effect_rum.vpcf"
-				"StatusEffectPriority"		"10"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_kunkka.lua"
-						"Function"			"GhostShipRegisterDamage"
-
-						"damage_taken"		"%attack_damage"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_kunkka.lua"
-						"Function"			"GhostShipDelayedDamage"
-						"Target"			"TARGET"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_ghostship_rum_damage"
-						"Target" 			"TARGET"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
 			}
+		}
+	}
 
-			"modifier_imba_ghostship_rum_scepter"
+	//=================================================================================================================
+	// Kunkka Talent 3 (Level 20): Torrent AoE increase
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"IsBuff"					"1"
-				
-				"Duration"					"%buff_duration"
-				
-				"StatusEffectName"			"particles/status_fx/status_effect_rum.vpcf"
-				"StatusEffectPriority"		"10"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_kunkka.lua"
-						"Function"			"GhostShipRegisterDamageScepter"
-
-						"damage_taken"		"%attack_damage"
-					}
-				}
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_kunkka.lua"
-						"Function"			"GhostShipDelayedDamage"
-						"Target"			"TARGET"
-					}
-
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_ghostship_rum_damage"
-						"Target" 			"TARGET"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%rum_reduce_pct_scepter"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
 			}
+		}
+	}
 
-			"modifier_imba_ghostship_rum_damage"
+	//=================================================================================================================
+	// Kunkka Talent 4 (Level 20): Secoundary Torrent damage increase
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
+			}
+		}
+	}
 
-				"Duration"					"%buff_duration"
+	//=================================================================================================================
+	// Kunkka Talent 5 (Level 30): X Marks all enemies around a radius
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"275"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Kunkka Talent 6 (Level 30): Increased Tsunami Chance
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Kunkka Talent 7 (Level 40): Tidebringer CDR
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Kunkka Talent 8 (Level 40): Rum absorbs damage instead of delaying
+	//=================================================================================================================
+	"special_bonus_imba_kunkka_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -15044,9 +14896,7 @@
 			}
 		}		
 	}
-	
-	
-	
+
 	//=================================================================================================================
 	// Lycan's Wolfsbane
 	//=================================================================================================================
@@ -15113,9 +14963,6 @@
 			}
 		}
 	}
-	
-	
-	
 	
 	//=================================================================================================================
 	// Lycan's Howl
@@ -15205,8 +15052,7 @@
 			}		
 		}		
 	}
-	
-	
+
 	//=================================================================================================================
 	// Lycan's Feral Impulse
 	//=================================================================================================================
@@ -15274,9 +15120,7 @@
 			}
 		}		
 	}
-	
-	
-	
+
 	//=================================================================================================================
 	// Lycan's Shapeshift
 	//=================================================================================================================
@@ -15424,8 +15268,7 @@
 			}
 		}		
 	}
-	
-	
+
 	//=================================================================================================================
 	// Lycan's Wolves' Hunter Instincts
 	//=================================================================================================================
@@ -15451,8 +15294,7 @@
 			}			
 		}
 	}
-	
-	
+
 	//=================================================================================================================
 	// Lycan's Wolves' Invisibility
 	//=================================================================================================================
@@ -15478,7 +15320,7 @@
 			}			
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Magnus's Shockwave
 	//=================================================================================================================
@@ -34169,7 +34011,7 @@
 			}
 		}
 	}
-
+	
 	//////////////////////////////
 	// CUSTOM TALENTS
 	//////////////////////////////
@@ -35707,8 +35549,7 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
+//=================================================================================================================
 	// Lycan Talents
 	//=================================================================================================================
 	"special_bonus_imba_lycan_1"	// Wolf level increases
