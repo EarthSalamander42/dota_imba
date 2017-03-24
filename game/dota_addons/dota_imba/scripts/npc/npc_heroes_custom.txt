@@ -395,11 +395,6 @@
 	{
 		"override_hero"				"npc_dota_hero_chen"
 
-		"AttackDamageMin"			"32"
-		"AttackDamageMax"			"38"
-
-		"MovementSpeed"				"335"
-
 		//"Ability1"					"imba_chen_penitence"
 		//"Ability2"					"imba_chen_test_of_faith"
 		//"Ability3"					"imba_chen_test_of_faith_teleport"
@@ -409,11 +404,11 @@
 		"Ability10"					"special_bonus_gold_income_25"
 		"Ability11"					"special_bonus_respawn_reduction_50"
 		"Ability12"					"special_bonus_movement_speed_30"
-		"Ability13"					"special_bonus_attack_range_125"
+		"Ability13"					"special_bonus_unique_chen_3"
 		"Ability14"					"special_bonus_hp_200"
 		"Ability15"					"special_bonus_cast_range_125"
-		"Ability16"					"special_bonus_spell_amplify_20"
-		"Ability17"					"special_bonus_unique_chen_1"
+		"Ability16"					"special_bonus_unique_chen_1"
+		"Ability17"					"special_bonus_unique_chen_2"
 
 		"ProjectileModel"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
 	}
@@ -451,10 +446,6 @@
 	{
 		"override_hero"				"npc_dota_hero_rattletrap"
 
-		"ArmorPhysical"				"2"
-
-		"AttributeAgilityGain"		"3.0"
-
 		//"Ability1"					"imba_rattletrap_battery_assault"
 		//"Ability2"					"imba_rattletrap_power_cogs"
 		//"Ability3"					"imba_rattletrap_rocket_flare"
@@ -462,7 +453,7 @@
 
 		"Ability10"					"special_bonus_armor_4"
 		"Ability11"					"special_bonus_mp_175"
-		"Ability12"					"special_bonus_attack_damage_40"
+		"Ability12"					"special_bonus_unique_clockwerk_2"
 		"Ability13"					"special_bonus_movement_speed_20"
 		"Ability14"					"special_bonus_respawn_reduction_35"
 		"Ability15"					"special_bonus_magic_resistance_12"
@@ -505,10 +496,6 @@
 	{
 		"override_hero"				"npc_dota_hero_dark_seer"
 
-		"ArmorPhysical"				"6"
-
-		"AttributeBaseIntelligence"	"28"
-
 		//"Ability1"					"imba_dark_seer_vacuum"
 		//"Ability2"					"imba_dark_seer_ion_shell"
 		//"Ability3"					"imba_dark_seer_surge"
@@ -519,7 +506,7 @@
 		"Ability12"					"special_bonus_attack_damage_65"
 		"Ability13"					"special_bonus_hp_regen_8"
 		"Ability14"					"special_bonus_strength_7"
-		"Ability15"					"special_bonus_intelligence_15"
+		"Ability15"					"special_bonus_unique_dark_seer_2"
 		"Ability16"					"special_bonus_cooldown_reduction_12"
 		"Ability17"					"special_bonus_unique_dark_seer"
 
@@ -638,12 +625,6 @@
 	{
 		"override_hero"				"npc_dota_hero_dragon_knight"
 
-		"ArmorPhysical"				"2"
-
-		"MagicalResistance"			"40"
-
-		"AttributeBaseStrength"		"23"
-
 		//"Ability1"				"imba_dragon_knight_breathe_fire"
 		//"Ability2"				"imba_dragon_knight_dragon_tail"
 		//"Ability3"				"imba_dragon_knight_dragon_blood"
@@ -696,12 +677,7 @@
 	{
 		"override_hero"				"npc_dota_hero_earthshaker"
 
-		"ArmorPhysical"				"2"
-
 		"ModelScale"				".87"
-
-		"AttributeBaseStrength"		"25"
-		"AttributeStrengthGain"		"3.0"
 
 		//"Ability1"				"imba_earthshaker_fissure"
 		//"Ability2"				"imba_earthshaker_enchant_totem"
@@ -713,7 +689,7 @@
 		"Ability12"					"special_bonus_strength_6"
 		"Ability13"					"special_bonus_attack_damage_40"
 		"Ability14"					"special_bonus_spell_amplify_6"
-		"Ability15"					"special_bonus_respawn_reduction_35"
+		"Ability15"					"special_bonus_unique_earthshaker_2"
 		"Ability16"					"special_bonus_hp_350"
 		"Ability17"					"special_bonus_unique_earthshaker"
 

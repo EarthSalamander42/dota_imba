@@ -254,108 +254,101 @@ function GameMode:ModifierFilter( keys )
 	-- duration					-1
 	-- entindex_caster_const	215
 	-- name_const				modifier_imba_roshan_rage_stack
-
-	local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
-	local modifier_name = keys.name_const
-	local modifier_caster
-	if keys.entindex_caster_const then
-		modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
-	else
-		return true
-	end
+	if IsServer() then
+		local modifier_owner = EntIndexToHScript(keys.entindex_parent_const)
+		local modifier_name = keys.name_const
+		local modifier_caster
+		if keys.entindex_caster_const then
+			modifier_caster = EntIndexToHScript(keys.entindex_caster_const)
+		else
+			return true
+		end
 
 	-------------------------------------------------------------------------------------------------
 	-- Frantic mode duration adjustment
 	-------------------------------------------------------------------------------------------------
 
-	if IMBA_FRANTIC_MODE_ON then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.3
+		if IMBA_FRANTIC_MODE_ON then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+				keys.duration = keys.duration * 0.3
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Roshan special modifier rules
 	-------------------------------------------------------------------------------------------------
 
-	if IsRoshan(modifier_owner) then
-		
-		-- Ignore stuns
-		if modifier_name == "modifier_stunned" then
-			return false
-		end
+		if IsRoshan(modifier_owner) then
+			
+			-- Ignore stuns
+			if modifier_name == "modifier_stunned" then
+				return false
+			end
 
-		-- Halve the duration of everything else
-		if modifier_caster ~= modifier_owner and keys.duration > 0 then
-			keys.duration = keys.duration * 0.5
-		end
+			-- Halve the duration of everything else
+			if modifier_caster ~= modifier_owner and keys.duration > 0 then
+				keys.duration = keys.duration * 0.5
+			end
 
-		-- Fury swipes capping
-		if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
-			modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			-- Fury swipes capping
+			if modifier_owner:GetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil) > 5 then
+				modifier_owner:SetModifierStackCount("modifier_ursa_fury_swipes_damage_increase", nil, 5)
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
-	-- Enigma's gravity stun duration increase
+	-- Tenacity debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-	if modifier_owner:HasModifier("modifier_imba_enigma_gravity") then
-		if modifier_name == "modifier_stunned" and keys.duration > 0 then
-			keys.duration = keys.duration * 1.2
+		if modifier_owner.GetTenacity then
+			local tenacity = modifier_owner:GetTenacity()
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and tenacity ~= 0 then
+				keys.duration = keys.duration * (100 - tenacity) * 0.01
+			end
 		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- Greatwyrm Plate debuff duration reduction
-	-------------------------------------------------------------------------------------------------
-
-	if modifier_owner:HasModifier("modifier_item_greatwyrm_plate_unique") or modifier_owner:HasModifier("modifier_item_greatwyrm_plate_active") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.85
-		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Cursed Rapier debuff duration reduction
 	-------------------------------------------------------------------------------------------------
 
-	if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
-			keys.duration = keys.duration * 0.5
+		if modifier_owner:HasModifier("modifier_item_imba_rapier_cursed_unique") then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+				keys.duration = keys.duration * 0.5
+			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Centaur Thick Hide debuff duration decrease
 	-------------------------------------------------------------------------------------------------	
 
-	if modifier_owner:HasModifier("modifier_imba_thick_hide") then
-		if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
+		if modifier_owner:HasModifier("modifier_imba_thick_hide") then
+			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 then
 
-			-- Check for break
-			if not modifier_owner:PassivesDisabled() then
-				local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
-				local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
- 
-				keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+				-- Check for break
+				if not modifier_owner:PassivesDisabled() then
+					local thick_hide_ability = modifier_owner:FindAbilityByName("imba_centaur_thick_hide")
+					local debuff_duration_red_pct = thick_hide_ability:GetSpecialValueFor("debuff_duration_red_pct")
+	
+					keys.duration = keys.duration * (1 - debuff_duration_red_pct * 0.01)
+				end
 			end
 		end
-	end
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
 	-------------------------------------------------------------------------------------------------
-	if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
-		if not modifier_owner:PassivesDisabled() then
-			local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
-			local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
-			if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
-				-- if more than 100 reduction, don't even apply the modifier
-				if silence_reduction_pct >= 100 then
-					return false
+
+		if modifier_owner:HasModifier("modifier_imba_silencer_arcane_supremacy") then
+			if not modifier_owner:PassivesDisabled() then
+				local arcane_supremacy = modifier_owner:FindModifierByName("modifier_imba_silencer_arcane_supremacy")
+				local silence_reduction_pct = arcane_supremacy:GetSilenceReductionPct()
+				if modifier_owner:GetTeam() ~= modifier_caster:GetTeam() and keys.duration > 0 and arcane_supremacy_eligible_debuffs[modifier_name] then
+					-- if more than 100 reduction, don't even apply the modifier
+					if silence_reduction_pct >= 100 then
+						return false
+					end
+					keys.duration = keys.duration * (1 - silence_reduction_pct/100)
 				end
-				keys.duration = keys.duration * (1 - silence_reduction_pct/100)
 			end
 		end
 	end
@@ -664,91 +657,116 @@ end
 
 -- Damage filter function
 function GameMode:DamageFilter( keys )
+	if IsServer() then
+		--damagetype_const
+		--damage
+		--entindex_attacker_const
+		--entindex_victim_const
 
-	--damagetype_const
-	--damage
-	--entindex_attacker_const
-	--entindex_victim_const
+		local attacker
+		local victim
 
-	local attacker
-	local victim
+		if keys.entindex_attacker_const and keys.entindex_victim_const then
+			attacker = EntIndexToHScript(keys.entindex_attacker_const)
+			victim = EntIndexToHScript(keys.entindex_victim_const)
+		else
+			return false
+		end
 
-	if keys.entindex_attacker_const and keys.entindex_victim_const then
-		attacker = EntIndexToHScript(keys.entindex_attacker_const)
-		victim = EntIndexToHScript(keys.entindex_victim_const)
-	else
-		return false
-	end
+		local damage_type = keys.damagetype_const
+		local display_red_crit_number = false
 
-	local damage_type = keys.damagetype_const
-	local display_red_crit_number = false
+		-- Lack of entities handling
+		if not attacker or not victim then
+			return false
+		end
 
-	-- Lack of entities handling
-	if not attacker or not victim then
-		return false
-	end
+		-- Cursed Rapier damage reduction
+		if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
+			keys.damage = keys.damage * 0.25
+		end
 
-	-- Bloodthorn active crit
-	if victim:HasModifier("modifier_item_imba_bloodthorn_debuff") then
+		-- Spiked Carapace damage prevention
+		if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
 
-		-- Multiply damage and flag for a crit
-		local target_crit_multiplier = 135
-		keys.damage = keys.damage * target_crit_multiplier * 0.01
-		display_red_crit_number = true
-	end
+			-- Nullify damage
+			keys.damage = 0
 
-	-- Cursed Rapier damage reduction
-	if victim:HasModifier("modifier_item_imba_rapier_cursed_unique") and keys.damage > 0 and victim:GetTeam() ~= attacker:GetTeam() then
-		keys.damage = keys.damage * 0.25
-	end
+			-- Prevent crit damage notifications
+			display_red_crit_number = false
+		end
 
-	-- Spiked Carapace damage prevention
-	if victim:HasModifier("modifier_imba_spiked_carapace") and keys.damage > 0 then
+		-- Vanguard block
+		if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
 
-		-- Nullify damage
-		keys.damage = 0
-
-		-- Prevent crit damage notifications
-		display_red_crit_number = false
-	end
-
-	-- Vanguard block
-	if victim:HasModifier("modifier_item_vanguard_unique") and keys.damage > 0 then
-
-		-- If a higher tier of Vanguard-based block is present, do nothing
-		if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
-
-			-- Reduce damage
-			if victim:GetTeam() ~= attacker:GetTeam() then
-				keys.damage = keys.damage * 0.90
-			end
-
-			-- Physical damage block
-			if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
-
-				-- Calculate damage block
-				local damage_block = 0 + victim:GetLevel()
-
-				-- Calculate actual damage
-				local actual_damage = math.max(keys.damage - damage_block, 0)
-
-				-- Calculate actually blocked damage
-				local damage_blocked = keys.damage - actual_damage
-
-				-- Play block message
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+			-- If a higher tier of Vanguard-based block is present, do nothing
+			if not ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") or victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 				-- Reduce damage
-				keys.damage = actual_damage
+				if victim:GetTeam() ~= attacker:GetTeam() then
+					keys.damage = keys.damage * 0.90
+				end
+
+				-- Physical damage block
+				if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
+
+					-- Calculate damage block
+					local damage_block = 0 + victim:GetLevel()
+
+					-- Calculate actual damage
+					local actual_damage = math.max(keys.damage - damage_block, 0)
+
+					-- Calculate actually blocked damage
+					local damage_blocked = keys.damage - actual_damage
+
+					-- Play block message
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+					-- Reduce damage
+					keys.damage = actual_damage
+				end
 			end
 		end
-	end
 
-	-- Crimson Guard block
-	if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and keys.damage > 0 then
+		-- Crimson Guard block
+		if ( victim:HasModifier("modifier_item_crimson_guard_unique") or victim:HasModifier("modifier_item_crimson_guard_active") ) and keys.damage > 0 then
 
-		-- If a higher tier of Vanguard-based block is present, do nothing
-		if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
+			-- If a higher tier of Vanguard-based block is present, do nothing
+			if not ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and not victim:HasModifier("modifier_sheepstick_debuff") then
+
+				-- Reduce damage
+				if victim:GetTeam() ~= attacker:GetTeam() then
+					keys.damage = keys.damage * 0.85
+				end
+
+				-- Physical damage block
+				if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
+
+					-- Calculate damage block
+					local damage_block
+					if victim:GetLevel() then
+						damage_block = 5 + victim:GetLevel()
+					else
+						damage_block = 20
+					end
+
+					-- Calculate actual damage
+					local actual_damage = math.max(keys.damage - damage_block, 0)
+
+					-- Calculate actually blocked damage
+					local damage_blocked = keys.damage - actual_damage
+
+					-- Play block message
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
+
+					-- Reduce damage
+					keys.damage = actual_damage
+				end
+			end
+		end
+
+		-- Greatwyrm plate block
+		if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
 
 			-- Reduce damage
 			if victim:GetTeam() ~= attacker:GetTeam() then
@@ -761,9 +779,9 @@ function GameMode:DamageFilter( keys )
 				-- Calculate damage block
 				local damage_block
 				if victim:GetLevel() then
-					damage_block = 5 + victim:GetLevel()
+					damage_block = 10 + victim:GetLevel()
 				else
-					damage_block = 20
+					damage_block = 25
 				end
 
 				-- Calculate actual damage
@@ -779,196 +797,146 @@ function GameMode:DamageFilter( keys )
 				keys.damage = actual_damage
 			end
 		end
-	end
 
-	-- Greatwyrm plate block
-	if ( victim:HasModifier("modifier_item_greatwyrm_plate_unique") or victim:HasModifier("modifier_item_greatwyrm_plate_active") ) and keys.damage > 0 and not victim:HasModifier("modifier_sheepstick_debuff") then
+		-- Magic shield damage prevention
+		if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
 
-		-- Reduce damage
-		if victim:GetTeam() ~= attacker:GetTeam() then
-			keys.damage = keys.damage * 0.85
-		end
+			-- Parameters
+			local shield_stacks = victim:GetModifierStackCount("modifier_item_imba_initiate_robe_stacks", nil)
 
-		-- Physical damage block
-		if damage_type == DAMAGE_TYPE_PHYSICAL and not ( attacker:IsBuilding() or attacker:GetUnitName() == "witch_doctor_death_ward" ) then
-
-			-- Calculate damage block
-			local damage_block
-			if victim:GetLevel() then
-				damage_block = 10 + victim:GetLevel()
+			-- Ignore part of incoming damage
+			if keys.damage > shield_stacks then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, shield_stacks, nil)
+				victim:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
+				keys.damage = keys.damage - shield_stacks
 			else
-				damage_block = 25
-			end
-
-			-- Calculate actual damage
-			local actual_damage = math.max(keys.damage - damage_block, 0)
-
-			-- Calculate actually blocked damage
-			local damage_blocked = keys.damage - actual_damage
-
-			-- Play block message
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_blocked, nil)
-
-			-- Reduce damage
-			keys.damage = actual_damage
-		end
-	end
-
-	-- Return damage prevention
-	if victim:HasModifier("modifier_imba_centaur_return") then
-
-		-- Parameters
-		local ability = victim:FindAbilityByName("imba_centaur_return")
-		local damage_ignore = ability:GetLevelSpecialValueFor("dmg_ignore", ability:GetLevel() - 1)
-
-		-- Ignore part of incoming damage
-		if keys.damage > damage_ignore then
-			keys.damage = keys.damage - damage_ignore
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, damage_ignore, nil)
-		else
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, victim, keys.damage, nil)
-			keys.damage = 0
-		end
-	end
-
-	-- Magic shield damage prevention
-	if victim:HasModifier("modifier_item_imba_initiate_robe_stacks") and victim:GetTeam() ~= attacker:GetTeam() then
-
-		-- Parameters
-		local shield_stacks = victim:GetModifierStackCount("modifier_item_imba_initiate_robe_stacks", nil)
-
-		-- Ignore part of incoming damage
-		if keys.damage > shield_stacks then
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, shield_stacks, nil)
-			victim:RemoveModifierByName("modifier_item_imba_initiate_robe_stacks")
-			keys.damage = keys.damage - shield_stacks
-		else
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, keys.damage, nil)
-			victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
-			keys.damage = 0
-		end
-	end
-
-	-- Decrepify damage counter
-	if victim.decrepify_damage_counter then
-		if damage_type == DAMAGE_TYPE_MAGICAL then
-			victim.decrepify_damage_counter = victim.decrepify_damage_counter + keys.damage
-		end
-	end
-
-	-- Damage overhead display
-	if display_red_crit_number then
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
-	end
-
-	-- Reaper's Scythe kill credit logic
-	if victim:HasModifier("modifier_imba_reapers_scythe") then
-		
-		-- Check if this is the killing blow
-		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health then
-
-			-- Prevent death and trigger Reaper's Scythe's on-kill effects
-			local scythe_modifier = victim:FindModifierByName("modifier_imba_reapers_scythe")
-			local scythe_caster = false
-			if scythe_modifier then
-				scythe_caster = scythe_modifier:GetCaster()
-			end
-			if scythe_caster and attacker ~= scythe_caster then
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_MAGICAL_BLOCK, victim, keys.damage, nil)
+				victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
 				keys.damage = 0
-				TriggerNecrolyteReaperScytheDeath(victim, scythe_caster)
 			end
 		end
-	end
 
-	-- Cheese auto-healing
-	if victim:HasModifier("modifier_imba_cheese_death_prevention") then
-		
-		-- Check if death is imminent
-		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
+		-- Decrepify damage counter
+		if victim.decrepify_damage_counter then
+			if damage_type == DAMAGE_TYPE_MAGICAL then
+				victim.decrepify_damage_counter = victim.decrepify_damage_counter + keys.damage
+			end
+		end
 
-			-- Find the cheese item handle
-			local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
-			local item = cheese_modifier:GetAbility()
+		-- Damage overhead display
+		if display_red_crit_number then
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)		
+		end
 
-			-- Spend a charge of Cheese if the cooldown is ready
-			if item:IsCooldownReady() then
-				
-				-- Reduce damage by your remaining amount of health
-				keys.damage = keys.damage - victim_health
+		-- Reaper's Scythe kill credit logic
+		if victim:HasModifier("modifier_imba_reapers_scythe") then
+			
+			-- Check if this is the killing blow
+			local victim_health = victim:GetHealth()
+			if keys.damage >= victim_health then
 
-				-- Play sound
-				victim:EmitSound("DOTA_Item.Cheese.Activate")
-
-				-- Fully heal yourself
-				victim:Heal(victim:GetMaxHealth(), victim)
-				victim:GiveMana(victim:GetMaxMana())
-
-				-- Spend a charge
-				item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
-
-				-- Trigger cooldown
-				item:StartCooldown( item:GetCooldown(1) * GetCooldownReduction(victim) )
-
-				-- If this was the last charge, remove the item
-				if item:GetCurrentCharges() == 0 then
-					victim:RemoveItem(item)
+				-- Prevent death and trigger Reaper's Scythe's on-kill effects
+				local scythe_modifier = victim:FindModifierByName("modifier_imba_reapers_scythe")
+				local scythe_caster = false
+				if scythe_modifier then
+					scythe_caster = scythe_modifier:GetCaster()
+				end
+				if scythe_caster and attacker ~= scythe_caster then
+					keys.damage = 0
+					TriggerNecrolyteReaperScytheDeath(victim, scythe_caster)
 				end
 			end
 		end
-	end
 
-	-- Reincarnation death prevention
-	if victim:HasModifier("modifier_imba_reincarnation") or victim:HasModifier("modifier_imba_reincarnation_scepter") then
+		-- Cheese auto-healing
+		if victim:HasModifier("modifier_imba_cheese_death_prevention") then
+			
+			-- Check if death is imminent
+			local victim_health = victim:GetHealth()
+			if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
 
-		-- Check if death is imminent
-		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
+				-- Find the cheese item handle
+				local cheese_modifier = victim:FindModifierByName("modifier_imba_cheese_death_prevention")
+				local item = cheese_modifier:GetAbility()
 
-			-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
-			if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
-				local reincarnation_ability = victim:FindAbilityByName("imba_wraith_king_reincarnation")
-				if reincarnation_ability and reincarnation_ability:IsCooldownReady() then
+				-- Spend a charge of Cheese if the cooldown is ready
+				if item:IsCooldownReady() then
+					
+					-- Reduce damage by your remaining amount of health
+					keys.damage = keys.damage - victim_health
 
-					-- Prevent death
+					-- Play sound
+					victim:EmitSound("DOTA_Item.Cheese.Activate")
+
+					-- Fully heal yourself
+					victim:Heal(victim:GetMaxHealth(), victim)
+					victim:GiveMana(victim:GetMaxMana())
+
+					-- Spend a charge
+					item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
+
+					-- Trigger cooldown
+					item:StartCooldown( item:GetCooldown(1) * GetCooldownReduction(victim) )
+
+					-- If this was the last charge, remove the item
+					if item:GetCurrentCharges() == 0 then
+						victim:RemoveItem(item)
+					end
+				end
+			end
+		end
+
+		-- Reincarnation death prevention
+		if victim:HasModifier("modifier_imba_reincarnation") or victim:HasModifier("modifier_imba_reincarnation_scepter") then
+
+			-- Check if death is imminent
+			local victim_health = victim:GetHealth()
+			if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
+
+				-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
+				if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
+					local reincarnation_ability = victim:FindAbilityByName("imba_wraith_king_reincarnation")
+					if reincarnation_ability and reincarnation_ability:IsCooldownReady() then
+
+						-- Prevent death
+						keys.damage = 0
+
+						-- Trigger Reincarnation
+						TriggerWraithKingReincarnation(victim, reincarnation_ability)
+
+						-- Exit
+						return true
+					end
+				end
+				
+				-- Else, trigger Wraith Form
+				if victim:HasModifier("modifier_imba_reincarnation_scepter") then
 					keys.damage = 0
-
-					-- Trigger Reincarnation
-					TriggerWraithKingReincarnation(victim, reincarnation_ability)
-
-					-- Exit
+					TriggerWraithKingWraithForm(victim, attacker)
 					return true
 				end
 			end
-			
-			-- Else, trigger Wraith Form
-			if victim:HasModifier("modifier_imba_reincarnation_scepter") then
+		end
+
+		-- Aegis death prevention
+		if victim:HasModifier("modifier_item_imba_aegis") then
+
+			-- Check if death is imminent
+			local victim_health = victim:GetHealth()
+			if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection")) then
+				
+				-- Prevent death
 				keys.damage = 0
-				TriggerWraithKingWraithForm(victim, attacker)
+
+				-- Trigger the Aegis
+				TriggerAegisReincarnation(victim)
+
+				-- Exit
 				return true
 			end
 		end
+
 	end
-
-	-- Aegis death prevention
-	if victim:HasModifier("modifier_item_imba_aegis") then
-
-		-- Check if death is imminent
-		local victim_health = victim:GetHealth()
-		if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection")) then
-			
-			-- Prevent death
-			keys.damage = 0
-
-			-- Trigger the Aegis
-			TriggerAegisReincarnation(victim)
-
-			-- Exit
-			return true
-		end
-	end
-
 	return true
 end
 

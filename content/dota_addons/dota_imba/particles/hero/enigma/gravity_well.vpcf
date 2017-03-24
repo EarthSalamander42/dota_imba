@@ -5,7 +5,11 @@
 	m_nMaxParticles = 24
 	m_nInitialParticles = 2
 	m_flConstantRadius = 40.0
+<<<<<<< HEAD
 	m_ConstantColor = [ 75, 0, 130, 255 ]
+=======
+	m_ConstantColor = [ 17, 29, 57, 200 ]
+>>>>>>> refs/remotes/fcalife/developer
 	m_bShouldSort = false
 	m_Renderers = 
 	[
@@ -18,7 +22,10 @@
 			m_hTexture = resource:"materials/particle/particle_ring_wave_8.vtex"
 			m_flAnimationRate = 0.25
 			m_nOrientationType = 2
+<<<<<<< HEAD
 			m_flDepthBias = 1.0
+=======
+>>>>>>> refs/remotes/fcalife/developer
 		},
 	]
 	m_Operators = 
@@ -49,7 +56,11 @@
 		},
 		{
 			_class = "C_OP_ColorInterpolate"
+<<<<<<< HEAD
 			m_ColorFade = [ 75, 0, 130, 255 ]
+=======
+			m_ColorFade = [ 107, 203, 255, 255 ]
+>>>>>>> refs/remotes/fcalife/developer
 			m_nOpEndCapState = 1
 			m_flFadeEndTime = 0.25
 		},
@@ -66,14 +77,21 @@
 			m_Rate = 10.0
 			m_nOpEndCapState = 1
 		},
+<<<<<<< HEAD
 		{
 			_class = "C_OP_PositionLock"
 		},
+=======
+>>>>>>> refs/remotes/fcalife/developer
 	]
 	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_CreateWithinSphere"
+<<<<<<< HEAD
+=======
+			m_nControlPointNumber = 5
+>>>>>>> refs/remotes/fcalife/developer
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
@@ -93,15 +111,25 @@
 		},
 		{
 			_class = "C_INIT_RandomColor"
+<<<<<<< HEAD
 			m_ColorMax = [ 128, 0, 128, 255 ]
 			m_ColorMin = [ 75, 0, 130, 255 ]
+=======
+			m_ColorMax = [ 82, 138, 188, 255 ]
+			m_ColorMin = [ 56, 92, 135, 255 ]
+>>>>>>> refs/remotes/fcalife/developer
 			m_TintMin = [ 180, 180, 180, 0 ]
 			m_TintMax = [ 95, 92, 92, 255 ]
 		},
 		{
 			_class = "C_INIT_PositionOffset"
+<<<<<<< HEAD
 			m_OffsetMin = [ 0.0, -0.0, 2.0 ]
 			m_OffsetMax = [ 0.0, -0.0, 5.0 ]
+=======
+			m_OffsetMin = [ 0.0, -0.0, -2.0 ]
+			m_OffsetMax = [ 0.0, -0.0, -10.0 ]
+>>>>>>> refs/remotes/fcalife/developer
 		},
 		{
 			_class = "C_INIT_RandomSequence"
