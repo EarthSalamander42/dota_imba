@@ -1,6 +1,7 @@
 --[[	Broccoli
-		Date: 15.07.2015.			]]
+		Date: 24.03.2017.			]]
 
+-- Copy shallow copy given input
 function ShallowCopy(orig)
     local copy = {}
         for orig_key, orig_value in pairs(orig) do
@@ -9,6 +10,7 @@ function ShallowCopy(orig)
     return copy
 end
 
+-- Base local ability to be used for fire breath and ice breath
 local base_ability_dual_breath = class({})
 
 function base_ability_dual_breath:GetCastRange(Location, Target)
@@ -24,7 +26,7 @@ function base_ability_dual_breath:OnUpgrade()
 
 	if IsServer() then
 		local caster = self:GetCaster()
-
+		-- Do not switch dual breath abilities if it is a stolen spell
 		if IsStolenSpell(caster) then
 			return nil
 		end
@@ -35,7 +37,7 @@ function base_ability_dual_breath:OnUpgrade()
 			return nil
 		end
 
-		-- Prevent death lock updating each other
+		-- Prevent dead lock updating each other
 		local ability_level = self:GetLevel()
 		if not caster.breath_level or caster.breath_level ~= ability_level then
 			caster.breath_level = ability_level
@@ -55,6 +57,7 @@ function base_ability_dual_breath:OnSpellStart()
 	end
 end
 
+-- Base dual breath modifier to be placed on caster. This modifier makes the hero fly forward while applying damage in an AOE
 local base_modifier_dual_breath_caster = class({
 	IsHidden 						= function(self) return true end,
 	IsPurgable 						= function(self) return false end,
@@ -64,7 +67,7 @@ local base_modifier_dual_breath_caster = class({
 	GetOverrideAnimation 			= function(self) return ACT_DOTA_FLAIL end,
 	GetActivityTranslationModifiers = function(self) return "forcestaff_friendly" end,
 	GetOverrideAnimationRate 		= function(self) return 0.5 end,
-	GetModifierDisableTurning 		= function(self) return 1 end
+	GetModifierDisableTurning 		= function(self) return 1 end -- Disable turning during flying animation
 })
 
 function base_modifier_dual_breath_caster:DeclareFunctions()
@@ -94,7 +97,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			-- #1 Talent: Dual Breath Range Increase
 			local range = ability:GetSpecialValueFor("range") + GetCastRangeIncrease(caster) + caster:FindTalentValue("special_bonus_imba_jakiro_1")
 			local particle_breath = self.particle_breath
-			
+
 			self.caster = caster
 			self.ability = ability
 			self.path_radius = ability:GetSpecialValueFor("path_radius")
@@ -102,11 +105,11 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 
 			local caster_pos = caster:GetAbsOrigin()
 			local breath_direction = ( target - caster_pos ):Normalized()
-			if ( target - caster_pos ):Length2D() > range then
+			local breath_distance = ( target - caster_pos ):Length2D()
+			if breath_distance > range then
 				target = caster_pos + breath_direction * range
 			end
-			local breath_distance = ( target - caster_pos ):Length2D()
-			
+
 			-- #6 Talent: Dual Breath Speed Increase
 			local breath_speed = ability:GetLevelSpecialValueFor("speed", ability_level) + caster:FindTalentValue("special_bonus_imba_jakiro_6")
 			
@@ -128,6 +131,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 				end)
 			end
 
+			-- Create breath particle
 			local breath_pfx = ParticleManager:CreateParticle(particle_breath, PATTACH_ABSORIGIN, caster)
 			ParticleManager:SetParticleControl(breath_pfx, 0, caster_pos )
 			ParticleManager:SetParticleControl(breath_pfx, 1, breath_direction * breath_speed)
@@ -144,9 +148,10 @@ function base_modifier_dual_breath_caster:_DualBreathApplyModifier( radius )
 	
 	local caster = self.caster
 	local ability = self.ability
-	local modifier_debuff_name = self.modifier_debuff_name
+	
 	local affected_unit_list = self.affected_unit_list
 	local debuff_duration = self.debuff_duration
+	local modifier_debuff_name = self.modifier_debuff_name
 
 	local caster_pos = caster:GetAbsOrigin()
 
@@ -183,10 +188,11 @@ function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
 		else
 			caster:InterruptMotionControllers( true )
 			if not IsStolenSpell(caster) then
-				-- Switch breath abilities
+				-- Switch breath abilities if spell is not stolen
 				caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
 			end
 
+			-- Apply debuff modifier in spill_radius
 			self:_DualBreathApplyModifier( ability:GetSpecialValueFor("spill_radius") )
 
 			self:Destroy()
@@ -204,6 +210,7 @@ end
 
 function base_modifier_dual_breath_caster:OnHorizontalMotionInterrupted()
 
+	-- Destroy breath particle when motion interrupted
 	if self.existing_breath_particle then
 		local destroy_existing_breath_particle = self.existing_breath_particle
 		self.existing_breath_particle = nil
@@ -217,18 +224,21 @@ function base_modifier_dual_breath_caster:OnHorizontalMotionInterrupted()
 	self:Destroy()
 end
 
+-- Base DOT (Damage Over Time) debuff class
 local base_modifier_dot_debuff = class({
 	IsHidden		= function(self) return false end,
 	IsPurgable	  	= function(self) return true end,
 	IsDebuff	  	= function(self) return true end
 })
 
+-- _UpdateDebuffLevelValues is called in OnCreated and OnRefreshed to handle ability values that changes with level or talents
 function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 	local ability = self.ability
 	local ability_level = ability:GetLevel() - 1
 	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
 	self.tick_damage = damage * self.damage_interval
 
+	-- _UpdateSubClassLevelValues is to be implemented by inherit classes to perform ability value update in OnCreated and OnRefreshed
 	if self._UpdateSubClassLevelValues then
 		self:_UpdateSubClassLevelValues()
 	end
@@ -246,12 +256,16 @@ function base_modifier_dot_debuff:OnCreated()
 		self.ability_dmg_type 	= ability:GetAbilityDamageType()
 		self.damage_interval	= damage_interval
 
+		-- _SubClassOnCreated is to implemented by inherit class to perform attaching ability value in OnCreated
 		if self._SubClassOnCreated then
 			self:_SubClassOnCreated()
 		end
 
 		self:_UpdateDebuffLevelValues()
 
+		-- Apply damage immediately
+		self:OnIntervalThink()
+		-- Run interval applying of damage
 		self:StartIntervalThink(damage_interval)
 	end
 end
@@ -289,7 +303,7 @@ CreateEmptyTalents("jakiro")
 -----------------------------
 --		Fire Breath        --
 -----------------------------
-
+-- Extend base_ability_dual_breath
 imba_jakiro_fire_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_fire_breath.ability_other_breath_name = "imba_jakiro_ice_breath"
 imba_jakiro_fire_breath.modifier_caster_name = "modifier_imba_fire_breath_caster"
@@ -300,9 +314,11 @@ function imba_jakiro_fire_breath:GetTexture()
 	return "custom/jakiro_fire_breath"
 end
 
+-- Fire breath debuff (applied to enemies to deal damage)
+-- Extend base_modifier_dot_debuff
 modifier_imba_fire_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
 
--- Override
+-- Override _UpdateDebuffLevelValues due to talent
 function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
 	local caster = self.caster
 	local ability = self.ability
@@ -314,7 +330,7 @@ function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
 end
 
 function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
-	self.move_slow = self:GetAbility():GetSpecialValueFor("move_slow")
+	self.move_slow = self.ability:GetSpecialValueFor("move_slow")
 end
 
 function modifier_imba_fire_breath_debuff:DeclareFunctions()
@@ -327,6 +343,8 @@ end
 
 function modifier_imba_fire_breath_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
 
+-- Dual breath modifier applied to caster
+-- Extend base_modifier_dual_breath_caster
 modifier_imba_fire_breath_caster = ShallowCopy( base_modifier_dual_breath_caster )
 modifier_imba_fire_breath_caster.modifier_debuff_name = "modifier_imba_fire_breath_debuff"
 modifier_imba_fire_breath_caster.ability_other_breath_name = "imba_jakiro_ice_breath"
@@ -335,7 +353,7 @@ modifier_imba_fire_breath_caster.particle_breath = "particles/hero/jakiro/jakiro
 -----------------------------
 --		Ice Breath         --
 -----------------------------
-
+-- Extend base_ability_dual_breath
 imba_jakiro_ice_breath = ShallowCopy( base_ability_dual_breath )
 imba_jakiro_ice_breath.ability_other_breath_name = "imba_jakiro_fire_breath"
 imba_jakiro_ice_breath.modifier_caster_name = "modifier_imba_ice_breath_caster"
@@ -346,6 +364,8 @@ function imba_jakiro_ice_breath:GetTexture()
 	return "custom/jakiro_ice_breath"
 end
 
+-- Ice breath debuff (applied to enemies to deal damage)
+-- Extend base_modifier_dot_debuff
 modifier_imba_ice_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
@@ -368,6 +388,8 @@ end
 function modifier_imba_ice_breath_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
 function modifier_imba_ice_breath_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
 
+-- Dual breath modifier applied to caster
+-- Extend base_modifier_dual_breath_caster
 modifier_imba_ice_breath_caster = ShallowCopy(base_modifier_dual_breath_caster)
 modifier_imba_ice_breath_caster.modifier_debuff_name = "modifier_imba_ice_breath_debuff"
 modifier_imba_ice_breath_caster.ability_other_breath_name = "imba_jakiro_fire_breath"
@@ -386,6 +408,7 @@ LinkLuaModifier("modifier_imba_ice_path_slow_debuff", "hero/hero_jakiro", LUA_MO
 function imba_jakiro_ice_path:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
+		-- Create thinker to apply modifiers to enemies on path
 		CreateModifierThinker( caster, self, "modifier_imba_ice_path_thinker", kv, caster:GetAbsOrigin(), caster:GetTeamNumber(), false )
 	end
 end
@@ -457,7 +480,11 @@ function modifier_imba_ice_path_thinker:OnCreated( kv )
 
 		local tick_rate = 0.1
 
+		-- Apply affect after delay
 		Timers:CreateTimer(path_delay, function()
+			-- Apply effect immediately after delay
+			self:OnIntervalThink()
+			-- Run applying effects on interval
 			self:StartIntervalThink( tick_rate )
 		end)
 	end
@@ -469,6 +496,7 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 		local ice_path_end_time = self.ice_path_end_time
 
 		if current_game_time >= ice_path_end_time then
+			-- Remove dummy thinker if ice path has ended
 			UTIL_Remove( self:GetParent() )
 		else
 
@@ -480,6 +508,7 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 
 			local time_diff = ice_path_end_time - current_game_time
 
+			-- Stun duration does not last longer than the time left for ice path (follows original ice path)
 			local stun_duration_left
 			if time_diff > stun_duration then
 				stun_duration_left = stun_duration
@@ -487,13 +516,11 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 				stun_duration_left = time_diff
 			end
 
-			-- TODO find out if it is path_radius * 2 or just path_radius
-
 			local enemies = FindUnitsInLine(caster:GetTeamNumber(), self.start_pos, self.end_pos, nil, self.path_radius, self.ability_target_team, self.ability_target_type, self.ability_target_flags)
 
 			for _, enemy in pairs(enemies) do
 				if not frozen_enemy_set[enemy] then
-					-- Freeze enemy
+					-- Freeze enemy if they touch ice path the first time
 					frozen_enemy_set[enemy] = true
 					enemy:AddNewModifier(caster, ability, modifier_freeze, { duration = stun_duration_left })
 				else
@@ -507,6 +534,7 @@ function modifier_imba_ice_path_thinker:OnIntervalThink()
 	end
 end
 
+-- Ice path freeze debuff (applies stun to enemies and used as indicator for base_modifier_dot_debuff to deal more damage)
 modifier_imba_ice_path_freeze_debuff = class({
 	IsHidden				= function(self) return false end,
 	IsPurgable	  			= function(self) return true end,
@@ -539,6 +567,7 @@ function modifier_imba_ice_path_freeze_debuff:CheckState()
 	return state
 end
 
+-- Ice path slow debuff (applies slow to enemies)
 modifier_imba_ice_path_slow_debuff = class({
 	IsHidden				= function(self) return false end,
 	IsPurgable	  			= function(self) return true end,
@@ -576,6 +605,7 @@ LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODI
 function imba_jakiro_liquid_fire:OnCreated()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	--cast_liquid_fire used as indicator to apply liquid fire to next attack
 	self.cast_liquid_fire = false
 end
 
@@ -607,7 +637,6 @@ modifier_imba_liquid_fire_caster = class({
 
 function modifier_imba_liquid_fire_caster:DeclareFunctions()
 	local funcs = {
-		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -622,36 +651,14 @@ function modifier_imba_liquid_fire_caster:OnCreated()
 	self.parent = self:GetParent()
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
-	self.apply_aoe_modifier_debuff_on_hit = false
-	--"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
-	--[[
-		"FireSound"
-			{
-				"EffectName"				"Hero_Jakiro.Attack"
-				"Target"					"CASTER"
-			}
-
-			"TrackingProjectile"
-			{
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"EffectName"				"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
-				"Dodgeable"					"1"
-				"ProvidesVision"			"0"
-				"VisionRadius"				"0"
-				"MoveSpeed"					"%speed"
-				"SourceAttachment"			"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-
-	]]--
+	-- apply_aoe_modifier_debuff_on_hit used as indicator to apply AOE modifier on target hit
+	-- { target(key) : times_to_apply_liquid_fire_on_attack_lands (value)}
+	-- This is done to allow attacking with liquid fire on correct targets if refresher orb is used
+	self.apply_aoe_modifier_debuff_on_hit = {}
 
 end
 
+-- Returns true when liquid fire is not on cooldown and can be casted on target. Ability must be in auto cast or manual cast mode
 function modifier_imba_liquid_fire_caster:_ShouldAttachLiquidFire( target )
 	local ability = self.ability
 
@@ -662,11 +669,6 @@ function modifier_imba_liquid_fire_caster:_ShouldAttachLiquidFire( target )
 	return false
 end
 
-function modifier_imba_liquid_fire_caster:OnAttackStart(keys)
-	
-	--TODO attach projectile
-end
-
 function modifier_imba_liquid_fire_caster:OnAttack(keys)
 	if IsServer() then
 		local caster = self.caster
@@ -675,10 +677,16 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 
 		if caster == attacker and self:_ShouldAttachLiquidFire(target) then
 			local ability = self.ability
-		
+
+			-- Remove manual cast indicator
 			ability.cast_liquid_fire = false
 
-			self.apply_aoe_modifier_debuff_on_hit = true
+			-- Apply modifier on next hit
+			if self.apply_aoe_modifier_debuff_on_hit[target] == nil then
+				self.apply_aoe_modifier_debuff_on_hit[target] = 1;
+			else
+				self.apply_aoe_modifier_debuff_on_hit[target] = self.apply_aoe_modifier_debuff_on_hit[target] + 1;
+			end
 
 			local cooldown = ability:GetCooldown( ability:GetLevel() - 1 ) *  GetCooldownReduction(caster)
 
@@ -695,10 +703,12 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 
 		local caster = self.caster
 		local attacker = keys.attacker
+		local target = keys.target
+		local target_liquid_fire_counter = self.apply_aoe_modifier_debuff_on_hit[target]
 
-		if caster == attacker and self.apply_aoe_modifier_debuff_on_hit == true then
-			self.apply_aoe_modifier_debuff_on_hit = false
-			local target = keys.target
+		if caster == attacker and target_liquid_fire_counter and target_liquid_fire_counter > 0 then
+			self.apply_aoe_modifier_debuff_on_hit[target] = target_liquid_fire_counter - 1;
+
 			local ability = self.ability
 
 			local ability_level = ability:GetLevel() - 1
@@ -716,8 +726,7 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 			local fire_pfx = ParticleManager:CreateParticle( particle_liquid_fire, PATTACH_ABSORIGIN, target )
 			ParticleManager:SetParticleControl( fire_pfx, 0, target:GetAbsOrigin() )
 			ParticleManager:SetParticleControl( fire_pfx, 1, Vector(radius * 2,0,0) )
-
-			--TODO destroy particle?
+			ParticleManager:ReleaseParticleIndex( fire_pfx )
 
 			-- Apply liquid fire modifier to enemies in the area
 			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -745,6 +754,8 @@ function modifier_imba_liquid_fire_caster:OnOrder(keys)
 	end
 end
 
+-- Liquid Fire Debuff (deal damage and slow to enemies)
+-- Extend base_modifier_dot_debuff
 modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
@@ -805,7 +816,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		-- Play cast sound, and ice sound if owner has Aghanim's Scepter
 		caster:EmitSound("Hero_Jakiro.Macropyre.Cast")
 
-		-- If the owner has a scepter, change the cast sound and increase duration
+		-- If the owner has a scepter, add cast sound, increase duration and length
 		if scepter then
 			caster:EmitSound("Hero_Jakiro.IcePath.Cast")
 			path_duration 			= ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
@@ -817,6 +828,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 			particle_name			= "particles/hero/jakiro/jakiro_macropyre.vpcf"
 		end
 
+		-- Add extra path length due to items
 		path_length 				= path_length + GetCastRangeIncrease(caster)
 
 		-- Initialize effect geometry
@@ -840,19 +852,12 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		-- Destroys trees around the target area
 		GridNav:DestroyTreesAroundPoint(start_pos, path_radius, false)
 
-		--[[
-			-- Create the visibility dummy
-			local dummy = CreateUnitByName("npc_dummy_unit", start_pos, false, nil, nil, caster:GetTeamNumber())
-			dummy:MakeVisibleToTeam(DOTA_TEAM_GOODGUYS, duration)
-			dummy:MakeVisibleToTeam(DOTA_TEAM_BADGUYS, duration)
-		]]--
-
 		self:GetParent():EmitSound(sound_fire_loop)
 
 		local common_vector = start_pos + direction * path_length
 
 		-- Calculate thinker position
-		-- TODO multiple pos required to destroy trees (find a way to destroy trees without using this spagethi)
+		-- Multiple pos required to destroy trees (since no API to destroy trees in a line yet)
 		self.thinker_pos_list = {}
 
 		for trail = trail_start, trail_end do
@@ -877,6 +882,9 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 			end
 		end
 
+		-- Apply modifiers when thinker is created
+		self:OnIntervalThink()
+		-- Run applying modifiers on interval
 		self:StartIntervalThink( 0.5 )
 	end
 end
@@ -940,6 +948,8 @@ function modifier_imba_macropyre_thinker:OnIntervalThink()
 	end
 end
 
+-- Macropyre Debuff (deal damage and slow to enemies)
+-- Extend base_modifier_dot_debuff
 modifier_imba_macropyre_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
@@ -981,4 +991,4 @@ function modifier_imba_macropyre_debuff:DeclareFunctions()
 	return funcs
 end
 
-function modifier_imba_fire_breath_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
+function modifier_imba_macropyre_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
