@@ -327,8 +327,7 @@ function NetherWardZap( keys )
 		"furion_wrath_of_nature",
 		"imba_juggernaut_healing_ward",
 		"imba_juggernaut_omni_slash",
-		"imba_kunkka_x_marks_the_spot",
-		"imba_lich_dark_ritual",
+		"imba_kunkka_x_marks_the_spot",		
 		"life_stealer_infest",
 		"life_stealer_assimilate",
 		"life_stealer_assimilate_eject",
@@ -467,6 +466,29 @@ function NetherWardZap( keys )
 	local ward_position = ward:GetAbsOrigin()
 
 	-- Special cases
+
+	-- Dark Ritual: target a random nearby creep
+	if cast_ability_name == "imba_lich_dark_ritual" then
+	 	local creeps = FindUnitsInRadius(	caster:GetTeamNumber(),
+                                               	ward:GetAbsOrigin(),
+                                            	nil,
+                                            	ability_range,
+                                            	DOTA_UNIT_TARGET_TEAM_BOTH,
+                                            	DOTA_UNIT_TARGET_BASIC,
+                                            	DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
+                                            	FIND_CLOSEST,
+                                            	false)
+
+	 	-- If there are no creeps nearby, do nothing (ward also counts as a creep)
+	 	if #creeps == 1 then
+	 		return nil	 	
+	 	end
+
+	 	-- Find the SECOND closest creep and set it as the target (since the ward counts as a creep)
+	 	target = creeps[2]	 	
+	 	target_point = target:GetAbsOrigin()	
+	 	ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target) 	
+	end
 
 	-- Nether Strike: add greater bash
 	if cast_ability_name == "spirit_breaker_nether_strike" then

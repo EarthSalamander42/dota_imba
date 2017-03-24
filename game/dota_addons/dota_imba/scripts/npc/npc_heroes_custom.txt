@@ -1137,21 +1137,23 @@
 	{
 		"override_hero"				"npc_dota_hero_lich"
 
-		"AttributeBaseIntelligence"	"22"
+		"AbilityLayout"				"5"
 		
 		"Ability1"					"imba_lich_frost_nova"
 		"Ability2"					"imba_lich_frost_armor"
 		"Ability3"					"imba_lich_dark_ritual"
-		"Ability4"					"imba_lich_chain_frost"
+		"Ability4"					"imba_lich_cold_front"
+		"Ability5"					"imba_lich_chain_frost"
 
-		"Ability10"					"special_bonus_hp_150"
-		"Ability11"					"special_bonus_movement_speed_15"
-		"Ability12"					"special_bonus_cast_range_100"
-		"Ability13"					"special_bonus_all_stats_6"
-		"Ability14"					"special_bonus_attack_damage_100"
-		"Ability15"					"special_bonus_spell_amplify_8"
-		"Ability16"					"special_bonus_gold_income_50"
-		"Ability17"					"special_bonus_unique_lich_2"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_lich_1"
+		"Ability11"					"special_bonus_imba_lich_2"
+		"Ability12"					"special_bonus_imba_lich_3"
+		"Ability13"					"special_bonus_imba_lich_4"
+		"Ability14"					"special_bonus_imba_lich_5"
+		"Ability15"					"special_bonus_imba_lich_6"
+		"Ability16"					"special_bonus_imba_lich_7"
+		"Ability17"					"special_bonus_imba_lich_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lich/lich_base_attack.vpcf"
 	}

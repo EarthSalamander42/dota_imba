@@ -12798,13 +12798,75 @@
 	}
 
 	//=================================================================================================================
+	// Lich's Cold Front
+	//=================================================================================================================
+	"imba_lich_cold_front"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
+		"AbilityTextureName"					"custom/lich_cold_front"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/hero_lich.lua"	
+
+		"precache"
+		{			
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"						
+			"particle"					"particles/hero/lich/cold_front_freeze.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"max_stacks"					"10"
+			}
+
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ms_slow_pct"					"10"
+			}
+
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"as_slow"						"10"
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration"						"7"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"freeze_duration"				"1"
+				"LinkedSpecialBonus"			"special_bonus_imba_lich_5"
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stacks_per_attack"				"1"
+			}
+		}		
+	}
+
+	//=================================================================================================================
 	// Lich's Frost Nova
 	//=================================================================================================================
 	"imba_lich_frost_nova"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -12812,20 +12874,31 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"lich_frost_nova"
+		"ScriptFile"					"hero/hero_lich.lua"
+		"MaxLevel"						"7"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"	
-		"AoERadius"						"250"	
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4"				
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8.0"
+		"AbilityCooldown"				"8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 140 155 170"	
+		"AbilityManaCost"				"125 150 170 190 195 200 205"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle" 					"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"			
+			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12833,208 +12906,52 @@
 		{			
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"200 200 200 200 250 300 350"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-30"
+				"var_type"					"FIELD_INTEGER"
+				"ms_slow_pct"				"30"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-20"
+				"var_type"					"FIELD_INTEGER"
+				"as_slow"					"30"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aoe_damage"			"150"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"aoe_damage"				"75 100 125 150 175 200 225"
+			}						
+			
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_interval"		"1.0"
+				"var_type"					"FIELD_INTEGER"
+				"target_damage"				"50 100 150 200 200 200 200"
 			}
+
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_per_stack"		"-3"
+				"var_type"					"FIELD_INTEGER"
+				"slow_duration"				"4"
 			}
+
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"5 7 9 11"
+				"var_type"					"FIELD_INTEGER"
+				"main_cold_front_stacks"	"2"
 			}
+
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_aoe"				"700"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"target_damage"			"0 70 140 210"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_stickyness"		"2.0"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_slow"				"-7"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_base_slow"		"-10"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"4.0"
+				"var_type"					"FIELD_INTEGER"
+				"area_cold_front_stacks"	"1"
 			}
 		}	
-
-		"precache"
-		{
-			"particle" 					"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"					"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
-			"soundfile" 				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}
-
-		"OnSpellStart"
-		{	
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"TARGET"
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Ability.FrostNova"
-				"Target"				"TARGET"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lich.lua"
-				"Function"				"CastFrostNova"
-				"Target"				"TARGET"
-
-				"modifier_debuff"		"modifier_imba_frost_nova"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_frost_nova"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"	"10"	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
-				}
-			}
-
-			"modifier_imba_frost_nova_aura"
-			{
-				"IsBuff"				"1"
-				"IsHidden"				"1"
-				"Passive"				"1"
-				"IsPurgable"			"0"
-
-				"Aura"					"modifier_imba_frost_nova_aura_debuff"
-				"Aura_Radius"			"%aura_aoe"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster" 	"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_imba_frost_nova_aura"
-					}
-				}
-			}
-
-			"modifier_imba_frost_nova_aura_debuff"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_lich.lua"
-						"Function"		"FrostNova"
-
-						"modifier"		"modifier_imba_frost_nova_stacks"
-						"modifier_slow"	"modifier_imba_frost_nova"
-						"particle"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-						"sound"			"Ability.FrostNova"
-					}
-				}
-
-				"ThinkInterval"  		"%stack_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_lich.lua"
-						"Function"		"FrostNova"
-
-						"modifier"		"modifier_imba_frost_nova_stacks"
-						"modifier_slow"	"modifier_imba_frost_nova"
-						"particle"		"particles/units/heroes/hero_lich/lich_frost_nova.vpcf"
-						"sound"			"Ability.FrostNova"
-					}
-				}
-
-				"Properties"
-				{	
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%base_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_slow" 
-				}
-			}
-
-			"modifier_imba_frost_nova_stacks"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-
-				"Duration"				"%aura_stickyness"
-
-				"EffectName"			"particles/units/heroes/hero_tusk/tusk_frozen_sigil_status.vpcf"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_per_stack"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_per_stack" 
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -13044,26 +12961,39 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityTextureName"			"lich_frost_armor"
+		"ScriptFile"					"hero/hero_lich.lua"
+		"MaxLevel"						"7"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.3"	
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.4"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"3.0"
-		"AbilityDuration"				"60.0"	
+		"AbilityCooldown"				"5"		
+
+		// Precache		
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost_armor.vpcf"
+			"particle"					"particles/status_fx/status_effect_frost.vpcf"
+			"particle"					"particles/hero/lich/lich_ice_armor_freeze.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+		}	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"		
+		"AbilityManaCost"				"50"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13072,125 +13002,57 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"4 6 8 10"
-			}
+				"armor_bonus"			"3 5 7 9 10 11 12"
+			}			
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"30"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_movement_speed"	"-30"
+				"as_slow"				"30"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_attack_speed"		"-30 -40 -50 -60"
+				"frost_duration" 		"2"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_duration"		"60"
+				"freeze_attacks"		"8 8 8 8 7 6 5"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"disarm_duration"		"1.25"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_duration"		"40"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cold_front_stacks"		"1"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"autocast_radius"		"1100"
 			}
 		}	
-
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost_armor.vpcf"
-			"particle"					"particles/status_fx/status_effect_frost.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_Lich.FrostArmor"
-				"Target"				"TARGET"
-			}	
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_frost_armor"
-				"Target"				"TARGET"
-				"Duration"				"%AbilityDuration"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_frost_armor"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_bonus"
-				}	
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "hero/hero_lich.lua"
-						"Function"      "FrostArmorParticle"	
-
-						"particle"		"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
-					}
-				}	
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"    "hero/hero_lich.lua"
-						"Function"      "EndFrostArmorParticle"	
-					}
-				}	
-
-				"StatusEffectName"		"particles/status_fx/status_effect_frost_armor.vpcf"
-				"StatusEffectPriority"	"10"	
-
-				"OnTakeDamage"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_imba_frost_armor_slow"
-
-						"Target"
-						{
-							"Center"  	"ATTACKER"
-							"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-						}
-						
-						"Duration"		"%slow_duration"
-					}	
-
-					"FireSound"
-					{
-						"EffectName"	"Hero_Lich.FrostArmorDamage"
-						"Target"		"ATTACKER"
-					}
-				}
-			}	
-
-			"modifier_imba_frost_armor_slow"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_frost.vpcf"
-				"StatusEffectPriority"	"10"	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_movement_speed"
-				}
-			}	
-		}
 	}
 
 	//=================================================================================================================
@@ -13200,25 +13062,39 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"AbilityTextureName"			"lich_dark_ritual"
+		"ScriptFile"					"hero/hero_lich.lua"
+		"MaxLevel"						"7"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.3"	
+		"AbilityCastRange"				"400"
+		"AbilityCastPoint"				"0.4"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35 30 25 20"	
+		"AbilityCooldown"				"60 50 40 30 27 24 21"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"	
+		"AbilityManaCost"				"25"	
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
+			"particle"					"particles/hero/lich/lich_dark_ritual_enemy.vpcf"
+			"particle"					"particles/hero/lich/lich_dark_ritual_buff_ally.vpcf"
+			"particle"					"particles/hero/lich/lich_dark_ritual_buff_enemy.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_lich.vsndevts"
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13226,50 +13102,64 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"health_conversion"		"40 60 80 100"
+				"var_type"						"FIELD_INTEGER"
+				"mana_conversion_pct"			"30 50 70 90 100 110 120"
 			}	
+
 			"02"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"xp_bonus_radius"				"1300"
+			}
+
+			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"xp_radius"				"1300"
+				"var_type"						"FIELD_INTEGER"
+				"allied_creeps_radius"			"600"	
+			}
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creeps_bonus_as"				"20"	
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creeps_bonus_hp_pct"			"15 15 15 15 20 25 30"	
+			}
+
+			"06"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"creeps_bonus_dmg_pct"			"1.5 1.5 1.5 1.5 2 2.5 3"	
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"allied_kill_dmg_red_pct"		"10"	
+			}
+
+			"08"
+			{	
+				"var_type"						"FIELD_INTEGER"
+				"enemy_kill_bonus_dmg_pct"		"10"	
+			}
+
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"enemy_kill_bonus_spell_amp"	"10"	
+			}
+
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"sacrifice_duration"			"25"	
 			}
 		}	
-
-		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Ability.DarkRitual"
-				"Target" 				"CASTER"
-			}	
-
-			"FireEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_lich/lich_dark_ritual.vpcf"
-				"EffectAttachType" 		"follow_origin"
-				"Target" 				"TARGET"
-				"ControlPointEntities"
-				{
-					"TARGET"			"attach_hitloc"
-					"CASTER"			"attach_hitloc"
-				}
-			}	
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lich.lua"
-				"Function"				"DarkRitual"
-
-				"Target"				"TARGET"
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -13279,7 +13169,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -13289,19 +13179,23 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"lich_chain_frost"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"ScriptFile"					"hero/hero_lich.lua"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"850"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 90 60"
+		"AbilityCooldown"				"120 90 60 60 60 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 325 450"
+		"AbilityManaCost"				"200 325 450 475 500 525"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13319,164 +13213,88 @@
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"4.0"
+				"ministun_duration"			"0.1"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_movement_speed"		"-30 -40 -50"
+				"ms_slow_pct"				"30"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_attack_speed"			"-30 -40 -50"
+				"as_slow"					"30"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"jump_range"				"600 675 750"
+				"slow_duration"				"4"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"jump_range_scepter"		"900 1150 1400"
+				"bounce_range"				"575 575 575 575 625 675 725"
+				"LinkedSpecialBonus"		"special_bonus_imba_lich_3"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"850"
+				"damage"					"280 370 460 490 520 550"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_per_bounce"			"5"
+				"num_bounces"				"10"
 			}
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed_per_bounce_scepter"	"10"
+				"projectile_base_speed"		"850"
 			}
+
 			"09"
-			{	
+			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"1000"
+				"speed_increase_per_bounce"	"20 20 20 25 30 35"
 			}
+
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"projectile_delay"			"0.2"				
+			}
+
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"280 370 460"
+				"projectile_vision"			"800"
 			}
+
 			"11"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"370 460 550"
+				"scepter_bonus_projectiles"	"2"
 			}
+
 			"12"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"mini_stun"					"0.1"
-			}
+				"var_type"					 		"FIELD_INTEGER"
+				"scepter_projectiles_damage_pct"	"25"
+			}			
+
 			"13"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"bounce_delay"				"0.2"
-			}
-			"14"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed_fountain"			"300"
-			}
-		}		
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_Lich.ChainFrost"
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lich.lua"
-				"Function"				"ChainFrostStart"
-				
-				"Target"				"TARGET"	
-				"stun_duration"			"%mini_stun"
-			}
-
-			"TrackingProjectile"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-
-				"EffectName"			"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-				"Dodgeable"				"0"
-				"ProvidesVision"		"1"
-				"VisionRadius"			"%vision_radius"
-				"MoveSpeed"				"%projectile_speed"
-				"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+				"var_type"					 		"FIELD_INTEGER"
+				"cold_front_stacks"					"2"
 			}
 		}	
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"	
-
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%damage"
-			}	
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_chain_frost"
-				"Target" 				"TARGET"
-			}	
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lich.lua"
-				"Function"				"ChainFrost"
-
-				"particle_name"			"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_chain_frost"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-		
-				"Duration"				"%slow_duration"
-		
-				"StatusEffectName"		"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"	"10"	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_movement_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_attack_speed" 
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -36408,4 +36226,170 @@
             }
         }
     }
+
+    //=================================================================================================================
+    // Lich Talents 
+    //=================================================================================================================
+    "special_bonus_imba_lich_1" //Chain Frost bounce delay decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "75"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_2" //Sacrifice bonuses increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "50"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_3" //Chain Frost bounce range increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "175"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_4" //Frost Nova cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_5" //Cold Front duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_6" //Massive Ice Armor armor increase when cast on buildings
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "36"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_7" //Chain Frost bounce speed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "300"
+            }
+        }
+    }
+
+    "special_bonus_imba_lich_8" //Cold Front gains additional stack from skills
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+
+    
 }
