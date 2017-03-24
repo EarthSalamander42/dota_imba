@@ -803,7 +803,7 @@ function InitializeInnateAbilities( hero )
 		"vengefulspirit_nether_swap",
 		"imba_venomancer_toxicity",
 		"imba_magnus_magnetize",
-		"imba_enigma_gravity",
+		"imba_enigma_gravity_well",
 		"imba_troll_warlord_berserkers_rage",
 		"imba_antimage_magehunter",
 		"imba_necrolyte_death_pulse_aux",
@@ -1870,11 +1870,17 @@ function ApplyAllTalentModifiers()
 end
 
 function CreateEmptyTalents(hero)
-	for i=1,8 do
-		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
-		load(class)()
-	end
+  for i=1,8 do
+  LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)      
+  _G["modifier_special_bonus_imba_"..hero.."_"..i] = class{IsHidden=function(self) return true end,RemoveOnDeath = function(self) return true end}
+  end
+end
+
+function DebugEmptyTalents(hero)
+  for i=1,8 do
+  LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)        
+  _G["modifier_special_bonus_imba_"..hero.."_"..i] = class{IsHidden=function(self) return false end,RemoveOnDeath = function(self) return true end}
+  end
 end
 
 function NetTableM(tablename,keyname,...) 
@@ -2181,6 +2187,11 @@ function CDOTA_BaseNPC:GetSpellPower()
 	return spell_power
 end
 
+ -- Get 'green' damage
+function CDOTA_BaseNPC:GetBonusDamage(tEntity)
+  return tEntity:GetAverageTrueAttackDamage(tEntity) - ( tEntity:GetBaseDamageMin()  + tEntity:GetBaseDamageMax() ) / 2 
+end
+
 -- Physical damage block
 function CDOTA_BaseNPC:GetDamageBlock()
 
@@ -2260,7 +2271,6 @@ function CDOTA_BaseNPC:GetTenacity()
 
 	return (1 - tenacity) * 100
 end
-
 
 -- Safely checks if this unit is a hero or a creep
 function IsHeroOrCreep(unit)

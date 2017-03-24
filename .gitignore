@@ -36,3 +36,4 @@ resource/overviews/*
 
 #Github dump
 *.stackdump
+game/dota_addons/dota_imba/resource/addon_english.txt

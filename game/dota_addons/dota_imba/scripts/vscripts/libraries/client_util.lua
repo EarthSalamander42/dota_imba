@@ -73,11 +73,17 @@ function C_DOTABaseAbility:GetTalentSpecialValueFor(value)
 end
 
 function CreateEmptyTalents(hero)
-	for i=1,8 do
-		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-		local class = "modifier_special_bonus_imba_"..hero.."_".. i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
-		load(class)()
-	end
+  for i=1,8 do
+  LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)      
+  _G["modifier_special_bonus_imba_"..hero.."_"..i] = class{IsHidden=function(self) return true end,RemoveOnDeath = function(self) return true end}
+  end
+end
+
+function DebugEmptyTalents(hero)
+  for i=1,8 do
+  LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)        
+  _G["modifier_special_bonus_imba_"..hero.."_"..i] = class{IsHidden=function(self) return false end,RemoveOnDeath = function(self) return true end}
+  end
 end
 
 function NetTableM(tablename,keyname,...) 

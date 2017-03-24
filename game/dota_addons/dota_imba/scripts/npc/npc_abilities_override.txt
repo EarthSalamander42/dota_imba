@@ -160,10 +160,17 @@
 	"item_greater_crit"				"REMOVE"
 	//"item_recipe_basher"			"REMOVE"
 	//"item_basher"					"REMOVE"
+<<<<<<< HEAD
+	"item_recipe_bfury"				"REMOVE"
+	"item_bfury"					"REMOVE"
+	"item_recipe_manta"				"REMOVE"
+	"item_manta"					"REMOVE"
+=======
 	//"item_recipe_bfury"				"REMOVE"
 	//"item_bfury"					"REMOVE"
 	//"item_recipe_manta"				"REMOVE"
 	//"item_manta"					"REMOVE"
+>>>>>>> refs/remotes/fcalife/developer
 	//"item_recipe_lesser_crit"		"REMOVE"
 	//"item_lesser_crit"			"REMOVE"
 	"item_recipe_armlet"			"REMOVE"
@@ -1404,6 +1411,9 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"model_scale"			"60"
+<<<<<<< HEAD
+			}
+=======
 			}
 		}
 	}
@@ -1442,10 +1452,16 @@
 				"var_type"				"FIELD_FLOAT"
 				"block_cooldown"		"10.0"
 			}
+>>>>>>> refs/remotes/fcalife/developer
 		}
 	}
 
 	//=================================================================================================================
+<<<<<<< HEAD
+	// Linken's Sphere
+	//=================================================================================================================
+	"item_sphere"
+=======
 	// Recipe: Manta
 	//=================================================================================================================
 	"item_recipe_manta"
@@ -1567,6 +1583,342 @@
 	"item_orb_of_venom"
 	{
 		"ItemCost"						"150"
+	}
+
+	//=================================================================================================================
+	//-----------------------------------------------------------------------------------------------------------------
+	// 								HERO OVERRIDES
+	//-----------------------------------------------------------------------------------------------------------------
+	//=================================================================================================================
+
+	//=================================================================================================================
+	// Ancient: Reverse Polarity
+	//=================================================================================================================
+	"magnataur_reverse_polarity"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityManaCost"				"0"
+
+		"AbilityCastRange"				"1600"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pull_radius"			"1600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"polarity_damage"		"600"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_stun_duration"	"2.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"creep_stun_duration"	"3.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pull_duration"			"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Borrowed Time
+	//=================================================================================================================
+	"abaddon_borrowed_time"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityManaCost"				"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_threshold"				"4000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"3.0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect"					"0.5"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"redirect_pct_tooltip_scepter"		"0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"redirect_range_tooltip_scepter"	"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Berserker's Call
+	//=================================================================================================================
+	"axe_berserkers_call"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityManaCost"				"0"	
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"9999"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.5"
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Spiked Carapce
+	//=================================================================================================================
+	"nyx_assassin_spiked_carapace"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityCastPoint"				"0"
+
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"reflect_duration"				"3.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"0.75"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage"					"0"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"0"
+			}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_intellect"				"0"
+			}
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"burrow_aoe"					"0"
+			}
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reflect_pct_tooltip"	"100"
+				"LinkedSpecialBonus"			"special_bonus_unique_nyx"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient: Poison Nova
+	//=================================================================================================================
+	"venomancer_poison_nova"
+	{
+		"MaxLevel"						"1"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"10"
+
+		"AbilityManaCost"				"0"		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"1600"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"start_radius"				"1000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"30"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"125"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"10.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration_scepter"			"30"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_scepter"			"125"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"825"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Apparition: Cold Feet
+	//=================================================================================================================
+	"ancient_apparition_cold_feet"
+	{
+		"AbilityCastRange"				"700 800 900 1000 1050 1100 1150"
+
+		"AbilityCooldown"				"13 11 9 7 7 7 7"
+
+		"AbilityManaCost"				"120"
+
+		"MaxLevel"						"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"40 55 70 85 95 105 115"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"break_distance"		"740 740 740 740 860 980 1100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"2.0 2.5 3.0 3.5 3.5 3.5 3.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cast_range_tooltip"	"700 800 900 1000 1050 1100 1150"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"13 11 9 7 7 7 7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Apparition: bonus Cold Feet charges
+	//=================================================================================================================
+	"special_bonus_unique_ancient_apparition_1"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Apparition: Ice Vortex
+	//=================================================================================================================
+	"ancient_apparition_ice_vortex"
+>>>>>>> refs/remotes/fcalife/developer
+	{
+		"AbilityCooldown"				"10.0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"150"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"block_cooldown"		"10.0"
+			}
+		}
 	}
 
 	//=================================================================================================================
