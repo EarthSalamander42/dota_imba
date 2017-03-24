@@ -543,8 +543,9 @@ function modifier_imba_enigma_malefice_stun:OnDestroy()
 end
 
 function modifier_eidolon_buffs:OnCreated(var)
-  local shard_percentage = getkvValues(self:GetAbility(),"shard_percentage") 
+  local shard_percentage,attacks_to_split = getkvValues(self:GetAbility(),"shard_percentage","attacks_to_split") 
 	self.parent = self:GetParent()
+	self.attacks_to_split = attacks_to_split
   shard_percentage = shard_percentage / 100
   self.attacks = var.attacks
 	self.statsource = EntIndexToHScript(var.statsource)
@@ -558,7 +559,7 @@ end
 function modifier_eidolon_buffs:OnAttack(vars)
   if vars.attacker == self:GetParent() then
 		self.attacks = self.attacks + 1
-		if self.attacks >= 7 then 
+		if self.attacks >= self.attacks_to_split then 
 			self.attacks = 0
 			self:GetParent():Heal(9999,self:GetParent():GetOwner())
 			local duration = getkvValues(self:GetAbility(),"child_duration") + self:GetParent():FindModifierByName("modifier_kill"):GetDuration()
@@ -576,6 +577,7 @@ function modifier_eidolon_buffs:OnAttack(vars)
 		end
 		local duration = self:GetAbility():GetSpecialValueFor('increased_mass_duration')	
 		self:GetParent():GetAggroTarget():AddNewModifier(self:GetCaster(), self, "modifier_eidolon_increased_mass", {duration = duration,index = self.parent:GetEntityIndex()})
+		self:GetParent():GetAggroTarget():AddNewModifier(self:GetCaster(), self, "modifier_eidolon_increased_mass_counter", {})		
   end
 end
 
@@ -586,14 +588,6 @@ end
 
 function modifier_eidolon_increased_mass:OnCreated(vars)
 	self.index = vars.index
-	self.parent = self:GetParent()
-  self:StartIntervalThink(0.1)
-end
-
-function modifier_eidolon_increased_mass:OnIntervalThink()
-	if not self.parent:FindModifierByName('modifier_eidolon_increased_mass_counter') then
-		self.parent:AddNewModifier(self:GetCaster(), self, "modifier_eidolon_increased_mass_counter", {})
-	end
 end
 
 function modifier_eidolon_increased_mass:GetAttributes() 
