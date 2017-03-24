@@ -153,46 +153,14 @@
 	//=================================================================================================================
 	"npc_imba_hero_bane"
 	{
-		"override_hero"			"npc_dota_hero_bane"
+		"override_hero"				"npc_dota_hero_bane"
 
-<<<<<<< HEAD
-		"ModelScale"				"1.1"
-
-		"AttackDamageMin"		"58"
-		"AttackDamageMax"		"64"
-
-		"AttackRate"				"2.0"
-
-		"AttackRange"				"500"
-
-		"ProjectileSpeed"		"500"
-
-		"AbilityLayout"			"5"
-
-=======
->>>>>>> upstream/developer
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"imba_bane_fiends_grip"
 
-<<<<<<< HEAD
-		"Ability9"					"imba_unlimited_level_powerup"
-    "Ability10"         "special_bonus_unique_bane_1"
-    "Ability11"         "special_bonus_unique_bane_2"
-    "Ability12"         "special_bonus_unique_bane_3"
-    "Ability13"         "special_bonus_unique_bane_4"
-    "Ability14"         "special_bonus_unique_bane_5"
-    "Ability15"         "special_bonus_unique_bane_6"
-    "Ability16"         "special_bonus_unique_bane_7"
-    "Ability17"         "special_bonus_unique_bane_8"
-    "precache"
-    {
-    "soundfile"         "soundevents/voscripts/game_sounds_vo_bane.vsndevts"
-		}
-    "ProjectileModel"		"particles/units/heroes/hero_bane/bane_projectile.vpcf"
-=======
 		"Ability10"					"special_bonus_unique_bane_1"
 		"Ability11"					"special_bonus_unique_bane_2"
 		"Ability12"					"special_bonus_unique_bane_3"
@@ -203,7 +171,6 @@
 		"Ability17"					"special_bonus_unique_bane_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
->>>>>>> upstream/developer
 	}
 
 	//=================================================================================================================
@@ -879,17 +846,17 @@
 		"Ability1"					"imba_enigma_malefice"
 		"Ability2"					"imba_enigma_demonic_conversion"
 		"Ability3"					"imba_enigma_midnight_pulse"
-		"Ability4"					"imba_enigma_gravity"
+		"Ability4"					"imba_enigma_gravity_well"
 		"Ability5"					"imba_enigma_black_hole"
 
-		"Ability10"					"special_bonus_movement_speed_20"
-		"Ability11"					"special_bonus_magic_resistance_10"
-		"Ability12"					"special_bonus_cooldown_reduction_12"
-		"Ability13"					"special_bonus_gold_income_40"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_respawn_reduction_35"
-		"Ability16"					"special_bonus_armor_7"
-		"Ability17"					"special_bonus_cast_range_200"
+		"Ability10"					"special_bonus_imba_enigma_1"
+		"Ability11"					"special_bonus_imba_enigma_2"
+		"Ability12"					"special_bonus_imba_enigma_3"
+		"Ability13"					"special_bonus_imba_enigma_4"
+		"Ability14"					"special_bonus_imba_enigma_5"
+		"Ability15"					"special_bonus_imba_enigma_6"
+		"Ability16"					"special_bonus_imba_enigma_7"
+		"Ability17"					"special_bonus_imba_enigma_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_enigma/enigma_base_attack.vpcf"					
 	}

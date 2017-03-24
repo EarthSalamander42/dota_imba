@@ -1,6 +1,3 @@
---require('/vscripts/addon_init.lua')
-local talentnamescheme = "special_bonus_unique_bloodseeker_"
-
 imba_bloodseeker_bloodrage = imba_bloodseeker_bloodrage or class({})
 function imba_bloodseeker_bloodrage:OnSpellStart()
 	local hTarget = self:GetCursorTarget()
@@ -257,7 +254,7 @@ LinkLuaModifier("modifier_imba_bloodseeker_thirst_passive", "hero/hero_bloodseek
 modifier_imba_bloodseeker_thirst_passive = class({})
 
 function modifier_imba_bloodseeker_thirst_passive:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_bloodseeker_thirst_passive:OnCreated()
@@ -275,28 +272,27 @@ function modifier_imba_bloodseeker_thirst_passive:OnRefresh()
 	self.movespeed = self:GetAbility():GetSpecialValueFor("bonus_movement_speed") / (self.minhp - self.maxhp)
 	self.damage = self:GetAbility():GetSpecialValueFor("bonus_damage") / (self.minhp - self.maxhp)
 	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
-	if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
-    if IsServer() then
-    if not self:GetParent():HasModifier("modifier_special_bonus_unique_bloodseeker_7") then
-      self:GetParent():AddNewModifier(self:GetParent(), self,"modifier_special_bonus_unique_bloodseeker_7",{})
-      end
-    end
-  	self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value") / (self.minhp - self.maxhp)
-	  self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
+	self.talent7 = false
+	if IsServer() then
+		if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
+			self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value") / (self.minhp - self.maxhp)
+			self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
+			CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
+		end
 	end
 end
 
 function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 	if IsServer() then
-		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(),
-      self:GetParent():GetAbsOrigin(),
-      nil,
-      FIND_UNITS_EVERYWHERE,
-      DOTA_UNIT_TARGET_TEAM_ENEMY,
-      DOTA_UNIT_TARGET_HERO,
-      DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
-      0,
-      false)
+		if not self.talent7 then
+			if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
+				self.talent7 = true
+				self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
+				self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
+				CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
+			end
+		end
+		local enemies = FindUnitsInRadius(self:GetParent():GetTeamNumber(), self:GetParent():GetAbsOrigin(), nil, FIND_UNITS_EVERYWHERE, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS + DOTA_UNIT_TARGET_FLAG_DEAD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, 0, false)
 		local hpDeficit = 0
 		for _,enemy in pairs(enemies) do
 			if self:GetCaster():PassivesDisabled() then 
@@ -320,15 +316,12 @@ function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 			end
 		end
 		self:SetStackCount(hpDeficit)
-  end
-  if not self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
-    if IsClient() then
-    print('clientdmg '..self.damage)
-    elseif IsServer() then
-    print('serverdmg '..self.damage)
-    end    
-		self.movespeed = self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
-		self.damage = self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
+	else
+		if CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents") and not self.talent7 then
+			self.movespeed = CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents").talent7_ms
+			self.damage = CustomNetTables:GetTableValue( "talents", "hero_bloodseeker_talents").talent7_dmg
+			self.talent7 = true
+		end
 	end
 end
 
@@ -575,7 +568,7 @@ if IsServer() then
             self:SetDuration(self.kv.replenish_time*octarine, true)
             self:StartIntervalThink(self.kv.replenish_time*octarine)
         end
-  
+		
 		if self:GetStackCount() == self.kv.max_count then
 			self:SetDuration(-1, true)
 		elseif self:GetStackCount() > self.kv.max_count then
@@ -717,18 +710,17 @@ function modifier_special_bonus_unique_bloodseeker_6:RemoveOnDeath()
 	return false
 end
 
-
 LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_7", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 modifier_special_bonus_unique_bloodseeker_7 = class({})
 
 function modifier_special_bonus_unique_bloodseeker_7:IsHidden()
+	return true
+end
+
+function modifier_special_bonus_unique_bloodseeker_7:RemoveOnDeath()
 	return false
 end
 
-function modifier_special_bonus_unique_bloodseeker_7:DeclareFunctions()
-	local funcs = {	}
-	return funcs
-end
 LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_8", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
 modifier_special_bonus_unique_bloodseeker_8 = class({})
 
@@ -739,4 +731,3 @@ end
 function modifier_special_bonus_unique_bloodseeker_8:RemoveOnDeath()
 	return false
 end
-
