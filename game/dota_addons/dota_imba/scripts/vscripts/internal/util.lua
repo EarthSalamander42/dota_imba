@@ -1015,15 +1015,17 @@ end
 -- Returns true if this is a ward-type unit (nether ward, scourge ward, etc.)
 function IsWardTypeUnit( unit )
 
+	local unit_name = unit:GetUnitName()
 	local ward_type_units = {
 		"npc_imba_pugna_nether_ward_1",
 		"npc_imba_pugna_nether_ward_2",
 		"npc_imba_pugna_nether_ward_3",
-		"npc_imba_pugna_nether_ward_4"
+		"npc_imba_pugna_nether_ward_4",
+		"npc_imba_warlock_upheaval_tower"
 	}
 
 	for _, ward_unit in pairs(ward_type_units) do
-		if unit:GetUnitName() == ward_unit then
+		if unit_name == ward_unit then
 			return true
 		end
 	end
@@ -2270,6 +2272,15 @@ function CDOTA_BaseNPC:GetTenacity()
 	return (1 - tenacity) * 100
 end
 
+-- Safely checks if this unit is a hero or a creep
+function IsHeroOrCreep(unit)
+	if unit.IsCreep and unit:IsCreep() then
+		return true
+	elseif unit.IsHero and unit:IsHero() then
+		return true
+	end
+	return false
+end
 
 function CalculateDistance(ent1, ent2)
 	local pos1 = ent1

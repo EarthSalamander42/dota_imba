@@ -1,22 +1,6 @@
 --[[	Author: d2imba
 		Date:	15.08.2015	]]
 
-function SilverEdgeSlow( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_maim = keys.modifier_maim
-
-	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsAncient() or target:IsMagicImmune() then
-		return nil
-	end
-
-	-- Apply the maim debuff
-	ability:ApplyDataDrivenModifier(caster, target, modifier_maim, {})
-end
-
 function SilverEdgeFade( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -29,9 +13,6 @@ function SilverEdgeFade( keys )
 	-- Play sound to the caster's team
 	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
 
-	-- Tell other invisibility abilities that Shadow Blade is active
-	caster.shadow_blade_active = true
-
 	-- If there are nearby enemies who can see the caster, play sound for them
 	local nearby_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _, unit in pairs(nearby_units) do
@@ -40,13 +21,6 @@ function SilverEdgeFade( keys )
 			return nil
 		end
 	end
-end
-
-function SilverEdgeInvisCancel( keys )
-	local caster = keys.caster
-
-	-- Tell other invisibility abilities that Shadow Blade is no longer active
-	caster.shadow_blade_active = nil
 end
 
 function SilverEdgeInvis( keys )
@@ -132,27 +106,5 @@ function SilverEdgeBreakParticleEnd( keys )
 	if target.silver_edge_break_particle then
 		ParticleManager:DestroyParticle(target.silver_edge_break_particle, false)
 		target.silver_edge_break_particle = nil
-	end
-end
-
-function SilverEdgeAura( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local particle_target = keys.particle_target
-
-	-- Create particle
-	if not target.silver_edge_aura_particle then
-		target.silver_edge_aura_particle = ParticleManager:CreateParticleForTeam(particle_target, PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeam())
-		ParticleManager:SetParticleControl(target.silver_edge_aura_particle, 0, target:GetAbsOrigin())
-	end
-end
-
-function SilverEdgeAuraEnd( keys )
-	local target = keys.target
-
-	-- Destroy particle
-	if target.silver_edge_aura_particle then
-		ParticleManager:DestroyParticle(target.silver_edge_aura_particle, false)
-		target.silver_edge_aura_particle = nil
 	end
 end

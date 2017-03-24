@@ -13,9 +13,6 @@ function ShadowBladeFade( keys )
 	-- Play sound to the caster's team
 	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
 
-	-- Tell other invisibility abilities that Shadow Blade is active
-	caster.shadow_blade_active = true
-
 	-- If there are nearby enemies who can see the caster, play sound for them
 	local nearby_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for _, unit in pairs(nearby_units) do
@@ -24,13 +21,6 @@ function ShadowBladeFade( keys )
 			return nil
 		end
 	end
-end
-
-function ShadowBladeInvisCancel( keys )
-	local caster = keys.caster
-
-	-- Tell other invisibility abilities that Shadow Blade is no longer active
-	caster.shadow_blade_active = nil
 end
 
 function ShadowBladeInvis( keys )

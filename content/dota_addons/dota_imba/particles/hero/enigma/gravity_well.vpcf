@@ -6,7 +6,11 @@
 	m_nInitialParticles = 2
 	m_flConstantRadius = 40.0
 <<<<<<< HEAD
+<<<<<<< HEAD
 	m_ConstantColor = [ 75, 0, 130, 255 ]
+=======
+	m_ConstantColor = [ 17, 29, 57, 200 ]
+>>>>>>> refs/remotes/fcalife/developer
 =======
 	m_ConstantColor = [ 17, 29, 57, 200 ]
 >>>>>>> refs/remotes/fcalife/developer
@@ -23,7 +27,10 @@
 			m_flAnimationRate = 0.25
 			m_nOrientationType = 2
 <<<<<<< HEAD
+<<<<<<< HEAD
 			m_flDepthBias = 1.0
+=======
+>>>>>>> refs/remotes/fcalife/developer
 =======
 >>>>>>> refs/remotes/fcalife/developer
 		},
@@ -57,7 +64,11 @@
 		{
 			_class = "C_OP_ColorInterpolate"
 <<<<<<< HEAD
+<<<<<<< HEAD
 			m_ColorFade = [ 75, 0, 130, 255 ]
+=======
+			m_ColorFade = [ 107, 203, 255, 255 ]
+>>>>>>> refs/remotes/fcalife/developer
 =======
 			m_ColorFade = [ 107, 203, 255, 255 ]
 >>>>>>> refs/remotes/fcalife/developer
@@ -78,9 +89,12 @@
 			m_nOpEndCapState = 1
 		},
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{
 			_class = "C_OP_PositionLock"
 		},
+=======
+>>>>>>> refs/remotes/fcalife/developer
 =======
 >>>>>>> refs/remotes/fcalife/developer
 	]
@@ -89,6 +103,10 @@
 		{
 			_class = "C_INIT_CreateWithinSphere"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+			m_nControlPointNumber = 5
+>>>>>>> refs/remotes/fcalife/developer
 =======
 			m_nControlPointNumber = 5
 >>>>>>> refs/remotes/fcalife/developer
@@ -112,8 +130,13 @@
 		{
 			_class = "C_INIT_RandomColor"
 <<<<<<< HEAD
+<<<<<<< HEAD
 			m_ColorMax = [ 128, 0, 128, 255 ]
 			m_ColorMin = [ 75, 0, 130, 255 ]
+=======
+			m_ColorMax = [ 82, 138, 188, 255 ]
+			m_ColorMin = [ 56, 92, 135, 255 ]
+>>>>>>> refs/remotes/fcalife/developer
 =======
 			m_ColorMax = [ 82, 138, 188, 255 ]
 			m_ColorMin = [ 56, 92, 135, 255 ]
@@ -124,8 +147,13 @@
 		{
 			_class = "C_INIT_PositionOffset"
 <<<<<<< HEAD
+<<<<<<< HEAD
 			m_OffsetMin = [ 0.0, -0.0, 2.0 ]
 			m_OffsetMax = [ 0.0, -0.0, 5.0 ]
+=======
+			m_OffsetMin = [ 0.0, -0.0, -2.0 ]
+			m_OffsetMax = [ 0.0, -0.0, -10.0 ]
+>>>>>>> refs/remotes/fcalife/developer
 =======
 			m_OffsetMin = [ 0.0, -0.0, -2.0 ]
 			m_OffsetMax = [ 0.0, -0.0, -10.0 ]
