@@ -249,7 +249,7 @@ function ChainFrost( keys )
 		projectile_speed = ability:GetLevelSpecialValueFor("speed_fountain", ability_level)
 	end
 
-	if caster.chain_frost_bounces == 2 then
+	if caster.chain_frost_bounces == jumps_amount then
 		should_bounce = false
 	end
 
