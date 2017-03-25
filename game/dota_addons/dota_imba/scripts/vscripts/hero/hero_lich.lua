@@ -7,7 +7,7 @@ function CastFrostNova( keys )
 	local ability_level = ability:GetLevel() - 1
 	local target = keys.target
 	local modifier_debuff = keys.modifier_debuff
-	
+
 	-- If the target possesses a ready Linken's Sphere, do nothing else
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
@@ -19,14 +19,14 @@ function CastFrostNova( keys )
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
 	local damage = ability:GetLevelSpecialValueFor("target_damage", ability_level)
 	local damage_aoe = ability:GetLevelSpecialValueFor("aoe_damage", ability_level)
-	
+
 	-- Damage the main target
 	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-	
+
 	-- Find enemies around the main target
 	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
-		
+
 		-- Apply frost nova slow
 		ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 
@@ -34,7 +34,7 @@ function CastFrostNova( keys )
 		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage_aoe, damage_type = DAMAGE_TYPE_MAGICAL})
 	end
 end
-		
+
 function FrostNova( keys )
 	local caster = keys.caster
 	local ability = keys.ability
@@ -57,7 +57,7 @@ function FrostNova( keys )
 	if not ability then
 		return nil
 	end
-		
+
 	-- Parameters
 	local proc_chance = ability:GetLevelSpecialValueFor("proc_chance", ability_level)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
@@ -72,7 +72,7 @@ function FrostNova( keys )
 
 	-- Rolls for the chance of casting Frost Nova
 	if RandomInt(1, 100) <= proc_chance then
-		
+
 		-- Casts the spell
 		target:EmitSound(sound)
 		local pfx = ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, target)
@@ -111,11 +111,11 @@ function DarkRitual( keys )
 	local ability = keys.ability
 	local xp_radius = ability:GetLevelSpecialValueFor("xp_radius", ability:GetLevel() - 1 )
 
-	-- Mana to give	
+	-- Mana to give
 	local target_health = target:GetMaxHealth()
 	local rate = ability:GetLevelSpecialValueFor("health_conversion", ability:GetLevel() - 1 ) * 0.01
 	local mana_gain = target_health * rate
-	
+
 	-- Heroes to share XP
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, xp_radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, 0, false )
 
@@ -159,19 +159,19 @@ function ChainFrostStart( keys )
 	local target = keys.target
 	local ability = keys.ability
 	local stun_duration = keys.stun_duration
-	
+
 	-- Resets bounce count if there is no currently ongoing projectile
 	if not caster.chain_frost_bounces then
 		caster.chain_frost_bounces = 0
 	end
-	
+
 	-- If the target possesses a ready Linken's Sphere, do nothing
 	if target:GetTeam() ~= caster:GetTeam() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
 		end
 	end
-	
+
 	-- Ministun the target
 	target:AddNewModifier(caster, ability, "modifier_stunned", {duration = stun_duration})
 end
@@ -187,9 +187,10 @@ function ChainFrost( keys )
 	if not ability then
 		return nil
 	end
-	
+
 	-- Parameters
 	local jump_range = ability:GetLevelSpecialValueFor("jump_range", ability_level)
+	local jumps_amount = ability:GetLevelSpecialValueFor("jumps", ability_level)
 	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
 	local speed_per_bounce = ability:GetLevelSpecialValueFor("speed_per_bounce", ability_level)
 	local bounce_delay = ability:GetLevelSpecialValueFor("bounce_delay", ability_level)
@@ -239,13 +240,17 @@ function ChainFrost( keys )
 			should_bounce = true
 		end
 	end
-	
+
 	-- Calculate new bounce speed
 	projectile_speed = projectile_speed + speed_per_bounce * caster.chain_frost_bounces
 
 	-- Bounce slower inside the enemy fountain
 	if IsNearFriendlyClass(target, 1360, "ent_dota_fountain") then
 		projectile_speed = ability:GetLevelSpecialValueFor("speed_fountain", ability_level)
+	end
+
+	if caster.chain_frost_bounces == jumps_amount then
+		should_bounce = false
 	end
 
 	-- If there's a target to bounce to, find it and jump
