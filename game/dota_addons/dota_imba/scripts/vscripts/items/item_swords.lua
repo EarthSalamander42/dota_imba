@@ -1629,7 +1629,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- Stack the maim up
 	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
 	end
@@ -1648,7 +1648,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
 	end
@@ -1679,7 +1679,7 @@ function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 
 	-- Stack the magic amp up
 	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.AzuraStack")
 	end
@@ -1698,7 +1698,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
 	end
@@ -1726,7 +1726,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 
 	-- Stack the maim up
 	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
 	end
@@ -1744,7 +1744,7 @@ function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_p
 
 	-- Stack the maim/amp up
 	local modifier_debuff = target:AddNewModifier(attacker, ability, modifier_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_debuff and modifier_debuff:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_debuff:SetStackCount(modifier_debuff:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
 		target:EmitSound("Imba.AzuraStack")
@@ -1765,7 +1765,7 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
 	end
@@ -1792,9 +1792,9 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 	end
 
 	-- Stack the magic amp up
-	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
-		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
+	local modifier_amp = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
+	if modifier_amp and modifier_amp:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+		modifier_amp:SetStackCount(modifier_amp:GetStackCount() + 1)
 		target:EmitSound("Imba.AzuraStack")
 	end
 end
@@ -1803,7 +1803,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 
 	-- Stack the attack speed buff up
 	local modifier_as = attacker:AddNewModifier(attacker, ability, modifier_self_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_as and modifier_as:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_as:SetStackCount(modifier_as:GetStackCount() + 1)
 		attacker:EmitSound("Imba.YashaStack")
 	end
@@ -1832,7 +1832,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 
 	-- Stack the maim/amp up
 	local modifier_maim = target:AddNewModifier(attacker, ability, modifier_enemy_stacks, {duration = ability:GetSpecialValueFor("stack_duration")})
-	if modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+	if modifier_maim and modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
 		modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
 		target:EmitSound("Imba.SangeStack")
 		target:EmitSound("Imba.AzuraStack")

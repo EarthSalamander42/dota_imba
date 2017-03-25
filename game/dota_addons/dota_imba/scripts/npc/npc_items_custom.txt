@@ -6582,7 +6582,7 @@
 		// Recipe
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemRecipe"					"1"
-		"ItemResult"					"imba_spell_fencer"
+		"ItemResult"					"item_imba_spell_fencer"
 		"ItemRequirements"
 		{
 			"01"						"item_imba_azura;item_oblivion_staff"
@@ -6704,24 +6704,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"								"1160"
-		"BaseClass"							"item_datadriven"
-		"AbilityTextureName" 				"custom/imba_skadi"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"Effect"							"particles/generic_gameplay/dropped_item.vpcf"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"							"6600"
-		"ItemShopTags"						"agi;str;int;hard_to_tag;unique"
-		"ItemQuality"						"artifact"
-		"ItemAliases"						"eos;eye of skadi"
-		"ItemDeclarations"					"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ID"							"1160"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_skadi.lua"
+		"AbilityTextureName"			"custom/imba_skadi"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"100"
-		"AbilityManaCost"					"125"
+		"AbilityCooldown"				"100"
+		"AbilityManaCost"				"125"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"6600"
+		"ItemShopTags"					"agi;str;int;hard_to_tag;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"eos;eye of skadi"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -6730,7 +6730,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_all_stats"			"35"
+				"bonus_all_stats"			"36"
 			}
 			"02"
 			{
@@ -6750,12 +6750,12 @@
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"min_duration"				"2.0"
+				"min_duration"				"1.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_range_cap"			"1200"
+				"slow_range_cap"			"1000"
 			}
 			"07"
 			{
@@ -6775,132 +6775,37 @@
 			"10"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"radius_per_str"			"2"
+				"radius_per_str"			"1.75"
 			}
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration_per_int"			"0.01"
+				"duration_per_int"			"0.015"
 			}
 			"12"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_agi"			"1.5"
+				"damage_per_agi"			"1.25"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"13"
 			{
-				"ScriptFile"				"items/item_skadi.lua"
-				"Function"					"Skadi"
-
-				"sound_cast"				"Imba.SkadiCast"
-				"sound_target"				"Imba.SkadiHit"
-				"particle_ground"			"particles/item/skadi/skadi_ground.vpcf"
-				"modifier_freeze"			"modifier_item_imba_skadi_freeze"
+				"var_type"					"FIELD_FLOAT"
+				"vision_extra_duration"		"1.0"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_skadi"
+			"14"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsDebuff"					"0"
-				
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"radius_tooltip"			"175"
 			}
-
-			"modifier_item_imba_skadi_unique"
+			"15"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsDebuff"					"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_skadi_unique"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_skadi.lua"
-						"Function"			"SkadiProjectile"
-					}
-				}
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_skadi.lua"
-						"Function"			"SkadiSlow"
-
-						"modifier_slow"		"modifier_item_imba_skadi_slow"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_skadi.lua"
-						"Function"			"SkadiProjectile"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"duration_tooltip"			"1.5"
 			}
-
-			"modifier_item_imba_skadi_slow"
+			"16"
 			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"TextureName"				"custom/imba_skadi"
-
-				"StatusEffectName"			"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"		"10"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_ms"
-				}
-			}
-
-			"modifier_item_imba_skadi_freeze"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"TextureName"				"custom/imba_skadi"
-
-				"EffectName"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-				"StatusEffectName"			"particles/status_fx/status_effect_frost.vpcf"
-				"StatusEffectPriority"		"10"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"damage_tooltip"			"125"
 			}
 		}
 	}
