@@ -53,6 +53,7 @@ function modifier_item_imba_sange:OnAttackLanded( keys )
 
 		-- If a higher-priority sword is present, do nothing either
 		local priority_sword_modifiers = {
+			"modifier_item_imba_heavens_halberd",
 			"modifier_item_imba_sange_yasha",
 			"modifier_item_imba_sange_azura",
 			"modifier_item_imba_triumvirate"
@@ -141,6 +142,153 @@ end
 
 -- Declare modifier states
 function modifier_item_imba_sange_disarm:CheckState()
+	local states = {
+		[MODIFIER_STATE_DISARMED] = true,
+	}
+	return states
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Heaven's Halberd definition
+-----------------------------------------------------------------------------------------------------------
+
+if item_imba_heavens_halberd == nil then item_imba_heavens_halberd = class({}) end
+LinkLuaModifier( "modifier_item_imba_heavens_halberd", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )					-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_heavens_halberd_disarm_cooldown", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Passive disarm cooldown counter
+LinkLuaModifier( "modifier_item_imba_heavens_halberd_active_disarm", "items/item_swords.lua", LUA_MODIFIER_MOTION_NONE )	-- Active disarm debuff
+
+function item_imba_heavens_halberd:GetIntrinsicModifierName()
+	return "modifier_item_imba_heavens_halberd" end
+
+function item_imba_heavens_halberd:OnSpellStart(keys)
+	if IsServer() then
+
+		-- Parameters
+		local caster = self:GetCaster()
+		local target = self:GetCursorTarget()
+
+		-- Define disarm duration
+		local duration = self:GetSpecialValueFor("disarm_melee_duration")
+		if target:IsRangedAttacker() then
+			duration = self:GetSpecialValueFor("disarm_range_duration")
+		end
+
+		-- Disarm the target
+		target:AddNewModifier(caster, self, "modifier_item_imba_heavens_halberd_active_disarm", {duration = duration})
+		target:EmitSound("DOTA_Item.HeavensHalberd.Activate")
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Heaven's Halberd passive modifier (stackable)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_heavens_halberd == nil then modifier_item_imba_heavens_halberd = class({}) end
+function modifier_item_imba_heavens_halberd:IsHidden() return true end
+function modifier_item_imba_heavens_halberd:IsDebuff() return false end
+function modifier_item_imba_heavens_halberd:IsPurgable() return false end
+function modifier_item_imba_heavens_halberd:IsPermanent() return true end
+function modifier_item_imba_heavens_halberd:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Declare modifier events/properties
+function modifier_item_imba_heavens_halberd:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+		MODIFIER_PROPERTY_EVASION_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	return funcs
+end
+
+function modifier_item_imba_heavens_halberd:GetModifierPreAttack_BonusDamage()
+	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
+
+function modifier_item_imba_heavens_halberd:GetModifierBonusStats_Strength()
+	return self:GetAbility():GetSpecialValueFor("bonus_strength") end
+
+function modifier_item_imba_heavens_halberd:GetModifierEvasion_Constant()
+	return self:GetAbility():GetSpecialValueFor("bonus_evasion") end
+
+-- On attack landed, roll for proc and apply stacks
+function modifier_item_imba_heavens_halberd:OnAttackLanded( keys )
+	if IsServer() then
+		local owner = self:GetParent()
+
+		-- If this attack was not performed by the modifier's owner, do nothing
+		if owner ~= keys.attacker then
+			return end
+
+		-- If a higher-priority sword is present, do nothing either
+		local priority_sword_modifiers = {
+			"modifier_item_imba_sange_yasha",
+			"modifier_item_imba_sange_azura",
+			"modifier_item_imba_triumvirate"
+		}
+		for _, sword_modifier in pairs(priority_sword_modifiers) do
+			if owner:HasModifier(sword_modifier) then
+				return nil
+			end
+		end
+
+		-- If this is an illusion, do nothing
+		if owner:IsIllusion() then
+			return end
+
+		-- If the target is not valid, do nothing either
+		local target = keys.target
+		if target:IsMagicImmune() or (not IsHeroOrCreep(target)) or owner:GetTeam() == target:GetTeam() then
+			return end
+
+		-- Stack the maim up
+		local ability = self:GetAbility()
+		local modifier_maim = target:AddNewModifier(owner, ability, "modifier_item_imba_sange_maim", {duration = ability:GetSpecialValueFor("maim_duration")})
+		if modifier_maim:GetStackCount() < ability:GetSpecialValueFor("max_stacks") then
+			modifier_maim:SetStackCount(modifier_maim:GetStackCount() + 1)
+			target:EmitSound("Imba.SangeStack")
+		end
+
+		-- If the target does not have the disarm cooldown modifier, roll for a proc
+		if (not target:HasModifier("modifier_item_imba_heavens_halberd_disarm_cooldown")) and RollPercentage(ability:GetSpecialValueFor("disarm_chance")) then
+
+			-- Proc! Apply the disarm and cooldown modifiers
+			target:AddNewModifier(owner, ability, "modifier_item_imba_sange_disarm", {duration = ability:GetSpecialValueFor("passive_disarm_duration")})
+			target:AddNewModifier(owner, ability, "modifier_item_imba_heavens_halberd_disarm_cooldown", {duration = ability:GetSpecialValueFor("disarm_cooldown")})
+			target:EmitSound("Imba.SangeProc")
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Heaven's Halberd disarm cooldown (enemy-based)
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_heavens_halberd_disarm_cooldown == nil then modifier_item_imba_heavens_halberd_disarm_cooldown = class({}) end
+function modifier_item_imba_heavens_halberd_disarm_cooldown:IsHidden() return true end
+function modifier_item_imba_heavens_halberd_disarm_cooldown:IsDebuff() return false end
+function modifier_item_imba_heavens_halberd_disarm_cooldown:IsPurgable() return false end
+function modifier_item_imba_heavens_halberd_disarm_cooldown:IsPermanent() return true end
+
+-----------------------------------------------------------------------------------------------------------
+--	Heaven's Halberd active disarm
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_heavens_halberd_active_disarm == nil then modifier_item_imba_heavens_halberd_active_disarm = class({}) end
+function modifier_item_imba_heavens_halberd_active_disarm:IsHidden() return true end
+function modifier_item_imba_heavens_halberd_active_disarm:IsDebuff() return true end
+function modifier_item_imba_heavens_halberd_active_disarm:IsPurgable() return false end
+
+-- Modifier particle
+function modifier_item_imba_heavens_halberd_active_disarm:GetEffectName()
+	return "particles/items2_fx/heavens_halberd.vpcf"
+end
+
+function modifier_item_imba_heavens_halberd_active_disarm:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Declare modifier states
+function modifier_item_imba_heavens_halberd_active_disarm:CheckState()
 	local states = {
 		[MODIFIER_STATE_DISARMED] = true,
 	}

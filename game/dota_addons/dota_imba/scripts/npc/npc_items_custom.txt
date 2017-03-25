@@ -389,7 +389,7 @@
 		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BAISC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName" 			"custom/imba_hand_of_midas"
 		"ScriptFile"					"items/item_midas.lua"
@@ -6561,6 +6561,115 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Recipe: Spellfencer
+	//=================================================================================================================
+	"item_recipe_imba_spell_fencer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2236"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"500"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"imba_spell_fencer"
+		"ItemRequirements"
+		{
+			"01"						"item_imba_azura;item_oblivion_staff"
+		}
+	}
+
+	//=================================================================================================================
+	// Spellfencer
+	//=================================================================================================================
+	"item_imba_spell_fencer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2237"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_spell_fencer.lua"
+		"AbilityTextureName"			"custom/imba_spell_fencer"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+		"AbilitySharedCooldown"			"sword"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"3900"
+		"ItemShopTags"					"int;attack_speed;mana_regen;unique"
+		"ItemQuality"					"artifact"
+		"ItemAliases"					"spellfencer;spell fencer;spell;fencer"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_duration"			"1.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"amp_stack"				"-7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_duration"		"5.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_cdr"				"10"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_int"				"26"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"75"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"10"
+			}
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"10"
+			}
+		}
+	}
 	
 	//=================================================================================================================
 	// Recipe: Skadi
@@ -8982,24 +9091,23 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2128"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_swords.lua"
+		"AbilityTextureName"			"custom/imba_heavens_halberd"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName" 			"custom/imba_heavens_halberd"
 
-		// Stats		
+		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"18"
+		"AbilityManaCost"				"100"
 		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"ItemCost"						"3500"
+		"ItemCost"						"3200"
 		"ItemShopTags"					"str;damage;evasion"
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"heaven's halberd"
@@ -9012,193 +9120,58 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"disarm_chance"			"25"
+				"var_type"					"FIELD_INTEGER"
+				"disarm_chance"				"30"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"maim_base"				"10"
+				"var_type"					"FIELD_INTEGER"
+				"disarm_cooldown"			"10"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"maim_stacking"			"5"
+				"var_type"					"FIELD_FLOAT"
+				"passive_disarm_duration"	"1.0"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"maim_duration"			"5.0"
+				"var_type"					"FIELD_INTEGER"
+				"maim_stack"				"-7"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"32"
+				"var_type"					"FIELD_INTEGER"
+				"max_stacks"				"3"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"28"
+				"var_type"					"FIELD_FLOAT"
+				"maim_duration"				"5.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"maim_cap"				"30"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage"				"25"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_evasion"			"30"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_strength"			"20"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_range"			"5.5"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_evasion"				"25"
 			}
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_melee"			"4.5"
+				"var_type"					"FIELD_FLOAT"
+				"disarm_range_duration"		"5.5"
 			}
 			"11"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"disarm_passive"		"1.0"
-			}
-		}
-
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_halberd.lua"
-				"Function"				"HalberdCast"
-
-				"sound_cast"			"DOTA_Item.HeavensHalberd.Activate"
-				"sound_target"			"DOTA_Item.HeavensHalberd.Target"
-				"modifier_disarm"		"modifier_item_imba_halberd_disarm"
-				"disarm_melee"			"%disarm_melee"
-				"disarm_range"			"%disarm_range"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_heavens_halberd"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%bonus_evasion"
-				}
-			}
-
-			"modifier_item_imba_halberd_effects"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_item_imba_halberd_effects"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"					"%disarm_chance"
-
-						"OnSuccess"
-						{
-							"FireSound"
-							{
-								"EffectName"		"DOTA_Item.HeavensHalberd.Activate"
-								"Target"
-								{
-									"Center"		"TARGET"
-									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							}
-
-							"ApplyModifier"
-							{
-								"ModifierName"		"modifier_item_imba_halberd_disarm"
-								"Duration"			"%disarm_passive"
-								"Target"
-								{
-									"Center"		"TARGET"
-									"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"			"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_halberd.lua"
-						"Function"					"Maim"
-
-						"modifier_maim"				"modifier_item_imba_halberd_maim"
-						"sound_maim"				"DOTA_Item.Maim"
-					}
-				}	
-			}
-
-			"modifier_item_imba_halberd_disarm"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_heavens_halberd"
-
-				"EffectName"			"particles/items2_fx/heavens_halberd.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_item_imba_halberd_maim"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_heavens_halberd"
-
-				"Duration"				"%maim_duration"
-
-				"EffectName"			"particles/items2_fx/sange_maim.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-1"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-1" 
-				}
+				"var_type"					"FIELD_FLOAT"
+				"disarm_melee_duration"		"3.0"
 			}
 		}
 	}
@@ -14311,5 +14284,5 @@
 		}
 	}
 
-	//next free ID: 2236
+	//next free ID: 2238
 }
