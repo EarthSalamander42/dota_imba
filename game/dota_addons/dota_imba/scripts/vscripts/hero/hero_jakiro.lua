@@ -708,6 +708,10 @@ function modifier_imba_liquid_fire_caster:_ApplyAOELiquidFire( keys )
 
 		if caster == attacker and target_liquid_fire_counter and target_liquid_fire_counter > 0 then
 			self.apply_aoe_modifier_debuff_on_hit[target] = target_liquid_fire_counter - 1;
+			-- Remove key reference
+			if self.apply_aoe_modifier_debuff_on_hit[target] == 0 then
+				self.apply_aoe_modifier_debuff_on_hit[target] = nil
+			end
 
 			local ability = self.ability
 
