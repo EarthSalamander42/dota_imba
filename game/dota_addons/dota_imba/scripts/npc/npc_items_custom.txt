@@ -5949,9 +5949,9 @@
 		"ItemRequirements"
 		{
 			"01"						"item_imba_sange;item_imba_azura;item_imba_yasha"
-			"02"						"item_imba_sange;item_imba_azura_and_yasha"
-			"03"						"item_imba_sange_and_azura;item_imba_yasha"
-			"04"						"item_imba_sange_and_yasha;item_imba_azura"
+			"02"						"item_imba_sange;item_imba_azura_yasha"
+			"03"						"item_imba_sange_azura;item_imba_yasha"
+			"04"						"item_imba_sange_yasha;item_imba_azura"
 		}
 	}
 
@@ -5992,7 +5992,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"1.0"
+				"proc_duration_enemy"	"1.0"
 			}
 			"03"
 			{
@@ -6059,7 +6059,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"3.0"
+				"proc_duration_self"	"3.0"
 			}
 			"03"
 			{
@@ -6094,93 +6094,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"16"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_yasha"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
-				}
-			}
-
-			"modifier_item_imba_yasha_proc"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_item_imba_yasha_proc"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"					"%proc_chance"
-
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"			"items/item_yasha.lua"
-								"Function"				"YashaProc"
-
-								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
-								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_yasha.lua"
-						"Function"					"Yasha"
-
-						"modifier_stacks"			"modifier_item_imba_yasha_stacks"
-						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
-					}
-				}	
-			}
-
-			"modifier_item_imba_yasha_stacks"
-			{
-				"IsBuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_yasha"
-
-				"Duration"				"%stack_duration"
-
-				"EffectName"			"particles/items2_fx/butterfly_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 		"%stacking_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%stacking_ms"
-				}
+				"bonus_ms"				"8"
 			}
 		}
 	}
@@ -6222,7 +6136,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"1.0"
+				"proc_duration_enemy"	"1.0"
 			}
 			"03"
 			{
@@ -6242,121 +6156,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"8"
+				"bonus_cdr"				"10"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int"				"16"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_azura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_int"
-				}
-			}
-
-			"modifier_item_imba_azura_effects"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_item_imba_azura_effects"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"				"%proc_chance"
-
-						"OnSuccess"
-						{
-							"ActOnTargets"
-							{
-								"Target"
-								{
-									"Center"  	"TARGET"
-									"Teams" 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types" 	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							
-								"Action"    
-								{
-									"FireEffect"
-									{
-										"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
-										"EffectAttachType"	"follow_origin"
-										"Target"			"TARGET"
-									}
-
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.DiffusalBlade.Target"
-										"Target" 			"TARGET"
-									}
-
-									"Damage"
-									{
-										"Target"			"TARGET"
-										"Type"				"DAMAGE_TYPE_MAGICAL"
-										"Damage"			"%proc_damage"
-									}
-								}
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_azura.lua"
-						"Function"				"Azura"
-		
-						"modifier_stacks"		"modifier_item_imba_azura_amp"
-						"stack_sound"			"DOTA_Item.VeilofDiscord.Activate"
-					}
-				}
-
-			}
-
-			"modifier_item_imba_azura_amp"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_azura"
-
-				"Duration"						"%amp_duration"
-
-				"EffectName"					"particles/items2_fx/veil_of_discord_debuff.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"%damage_amp"
-				}
 			}
 		}
 	}
@@ -6458,162 +6263,6 @@
 				"bonus_ms"				"16"
 			}
 		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_yasha.lua"
-				"Function"				"YashaProjectileHit"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_sange.lua"
-				"Function"				"SangeDisarm"
-				"Target"				"TARGET"
-
-				"modifier_disarm"		"modifier_item_imba_sange_and_yasha_proc_effect"
-				"sound_disarm"			"DOTA_Item.HeavensHalberd.Activate"
-				"duration"				"%proc_duration"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_sange_and_yasha"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 				"%bonus_strength"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_sange_and_yasha_proc"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_item_imba_sange_and_yasha_proc"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"				"items/item_sange_and_yasha.lua"
-								"Function"					"YashaProc"
-
-								"particle_projectile"		"particles/item/yasha/yasha_projectile.vpcf"
-								"sound_projectile"			"Hero_PhantomLancer.Doppelganger.Appear"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"						"items/item_sange_and_yasha.lua"
-						"Function"							"Maim"
-		
-						"modifier_stacks"					"modifier_item_imba_sange_and_yasha_maim_stacks"
-						"sound_maim"						"DOTA_Item.Maim"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"						"items/item_sange_and_yasha.lua"
-						"Function"							"Yasha"
-
-						"modifier_stacks"					"modifier_item_imba_sange_and_yasha_stack"
-						"sound_battle_rhythm"				"DOTA_Item.Butterfly"
-					}
-				}
-			}
-
-			"modifier_item_imba_sange_and_yasha_maim_stacks"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_sange"
-
-				"Duration"						"%passive_duration"
-
-				"EffectName"					"particles/items2_fx/sange_maim.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
-				}
-			}
-
-			"modifier_item_imba_sange_and_yasha_stack"
-			{
-				"IsBuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_yasha"
-
-				"Duration"						"%passive_duration"
-
-				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
-				}
-			}
-
-			"modifier_item_imba_sange_and_yasha_proc_effect"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_sange"
-
-				"EffectName"					"particles/items2_fx/heavens_halberd.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -6655,7 +6304,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_duration"			"1.0"
+				"proc_duration_enemy"	"1.0"
 			}
 			"03"
 			{
@@ -6680,157 +6329,22 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"16"
+				"bonus_cdr"				"10"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_strength"		"16"
+				"bonus_damage"			"16"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"8"
+				"bonus_strength"		"16"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_int"				"16"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_sange_and_azura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 		"%bonus_int"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 		"%bonus_strength"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_proc"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_item_imba_sange_and_azura_proc"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						
-						"OnSuccess"
-						{
-							"ActOnTargets"
-							{
-								"Target"
-								{
-									"Center"  				"TARGET"
-									"Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-									"Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-									"Flags"					"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-								}
-							
-								"Action"    
-								{
-									"FireSound"
-									{
-										"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
-										"Target" 			"TARGET"
-									}
-
-									"Damage"
-									{
-										"Target"			"TARGET"
-										"Type"				"DAMAGE_TYPE_MAGICAL"
-										"Damage"			"%proc_damage"
-									}
-								}
-							}
-
-							"RunScript"
-							{
-								"ScriptFile"				"items/item_sange.lua"
-								"Function"					"SangeDisarm"
-								"Target"					"TARGET"
-
-								"modifier_disarm"			"modifier_item_imba_sange_and_azura_proc_effect"
-								"sound_disarm"				"DOTA_Item.HeavensHalberd.Activate"
-								"duration"					"%proc_duration"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_sange_and_azura.lua"
-						"Function"				"Maim"
-		
-						"modifier_stacks"		"modifier_item_imba_sange_and_azura_stack"
-
-						"sound_maim"			"DOTA_Item.Maim"
-						"sound_amp"				"DOTA_Item.DiffusalBlade.Activate"
-					}
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_stack"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_sange_and_azura"
-
-				"Duration"				"%passive_duration"
-
-				"EffectName"			"particles/item/sange_and_azura/sange_maim.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"-1"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_proc_effect"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_sange"
-
-				"EffectName"			"particles/item/sange_and_azura/heavens_halberd.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -6909,7 +6423,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_cdr"				"8"
+				"bonus_cdr"				"10"
 			}
 			"07"
 			{
@@ -6930,166 +6444,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_ms"				"16"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_yasha.lua"
-				"Function"				"YashaProjectileHit"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"	"TARGET"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-			
-				"Action"    
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"DOTA_Item.DiffusalBlade.Target"
-						"Target" 			"TARGET"
-					}
-
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%proc_damage"
-					}
-				}
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_azura_and_yasha"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 				"%bonus_int"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
-				}
-			}
-
-			"modifier_item_imba_azura_and_yasha_proc"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_item_imba_azura_and_yasha_proc"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"			"items/item_azura_and_yasha.lua"
-								"Function"				"YashaProc"
-
-								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
-								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_azura_and_yasha.lua"
-						"Function"					"Yasha"
-
-						"modifier_stacks"			"modifier_item_imba_azura_and_yasha_stack"
-						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_azura_and_yasha.lua"
-						"Function"					"Azura"
-		
-						"modifier_stacks"			"modifier_item_imba_azura_and_yasha_amp_stack"
-						"stack_sound"				"DOTA_Item.VeilofDiscord.Activate"
-					}
-				}
-			}
-
-			"modifier_item_imba_azura_and_yasha_stack"
-			{
-				"IsBuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_yasha"
-
-				"Duration"						"%stack_duration"
-
-				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
-				}
-			}
-
-			"modifier_item_imba_azura_and_yasha_amp_stack"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_azura"
-
-				"Duration"						"%stack_duration"
-
-				"EffectName"					"particles/items2_fx/veil_of_discord_debuff.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS" 	"-1"
-				}
 			}
 		}
 	}
@@ -7178,7 +6532,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_int"				"20"
+				"bonus_damage"			"20"
 			}
 			"12"
 			{
@@ -7188,215 +6542,22 @@
 			"13"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agility"			"20"
+				"bonus_str"				"20"
 			}
 			"14"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"20"
+				"bonus_agi"				"20"
 			}
 			"15"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_str"				"20"
+				"bonus_int"				"20"
 			}
 			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_yasha.lua"
-				"Function"				"YashaProjectileHit"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_sange.lua"
-				"Function"				"SangeDisarm"
-				"Target"				"TARGET"
-
-				"modifier_disarm"		"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
-				"sound_disarm"			"DOTA_Item.HeavensHalberd.Activate"
-				"duration"				"%proc_duration"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-				}
-			
-				"Action"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/generic_gameplay/generic_manaburn.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"DOTA_Item.VeilofDiscord.Activate"
-						"Target" 			"TARGET"
-					}
-
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%proc_damage"
-					}
-				}
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_sange_and_azura_and_yasha"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS" 				"%bonus_str"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"				"%bonus_damage"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS" 				"%bonus_int"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"					"%bonus_agility"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 			"%bonus_attack_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE"	"%movement_speed_percent_bonus"
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_and_yasha_proc"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_item_imba_sange_and_azura_and_yasha_proc"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"			"items/item_sange_and_azura_and_yasha.lua"
-								"Function"				"YashaProc"
-
-								"particle_projectile"	"particles/item/sange_and_azura_and_yasha/triumvirate_projectile.vpcf"
-								"sound_projectile"		"Hero_PhantomLancer.Doppelganger.Appear"
-							}
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_sange_and_azura_and_yasha.lua"
-						"Function"					"Yasha"
-
-						"modifier_stacks"			"modifier_item_imba_sange_and_azura_and_yasha_stack"
-						"sound_battle_rhythm"		"DOTA_Item.Butterfly"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"items/item_sange_and_azura_and_yasha.lua"
-						"Function"					"Maim"
-		
-						"modifier_stacks"			"modifier_item_imba_sange_and_azura_and_yasha_maim_stack"
-						"sound_maim"				"DOTA_Item.Maim"
-						"sound_amp"					"DOTA_Item.DiffusalBlade.Activate"
-					}
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_and_yasha_stack"
-			{
-				"IsBuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_yasha"
-
-				"Duration"						"%stack_duration"
-
-				"EffectName"					"particles/items2_fx/butterfly_buff.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_and_yasha_maim_stack"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_sange_and_azura"
-
-				"Duration"						"%stack_duration"
-
-				"EffectName"					"particles/item/sange_and_azura_and_yasha/triumvirate_maim.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"-1"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-1"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"-1" 
-				}
-			}
-
-			"modifier_item_imba_sange_and_azura_and_yasha_proc_effect"
-			{
-				"IsDebuff"						"1"
-				"IsHidden"						"0"
-				"IsPurgable"					"1"
-
-				"TextureName"					"custom/imba_sange"
-
-				"EffectName"					"particles/item/sange_and_azura_and_yasha/triumvirate.vpcf"
-				"EffectAttachType"				"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"bonus_ms"				"20"
 			}
 		}
 	}

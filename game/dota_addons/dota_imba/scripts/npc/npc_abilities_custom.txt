@@ -160,22 +160,22 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage_per_minute"				"4"
+				"bonus_damage_per_minute"				"2"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_health_per_minute"				"4"
+				"bonus_health_per_minute"				"2"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"mega_armor"							"15"
+				"mega_armor"							"25"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"mega_magic_armor"						"35"
+				"mega_magic_armor"						"50"
 			}
 		}
 
