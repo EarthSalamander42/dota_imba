@@ -1054,23 +1054,24 @@
 
 		"MovementTurnRate"			"5.0"
 
-		"AbilityLayout"				"5"
+		"AbilityLayout"				"6"
 		
 		"Ability1"					"imba_kunkka_torrent"		
 		"Ability2"					"imba_kunkka_tidebringer"	
 		"Ability3"					"imba_kunkka_x_marks_the_spot"
 		"Ability4"					"imba_kunkka_return"
-		"Ability5"					"imba_kunkka_ghostship"
-		"Ability6"					""
+		"Ability5"					"imba_kunkka_ebb_and_flow"
+		"Ability6"					"imba_kunkka_ghostship"
 
-		"Ability10"					"special_bonus_attack_damage_25"
-		"Ability11"					"special_bonus_mp_150"
-		"Ability12"					"special_bonus_hp_regen_8"
-		"Ability13"					"special_bonus_movement_speed_20"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_magic_resistance_20"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_attack_damage_75"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_kunkka_1"
+		"Ability11"					"special_bonus_imba_kunkka_2"
+		"Ability12"					"special_bonus_imba_kunkka_3"
+		"Ability13"					"special_bonus_imba_kunkka_4"
+		"Ability14"					"special_bonus_imba_kunkka_5"
+		"Ability15"					"special_bonus_imba_kunkka_6"
+		"Ability16"					"special_bonus_imba_kunkka_7"
+		"Ability17"					"special_bonus_imba_kunkka_8"
 
 		"ProjectileSpeed"			"900"
 	}
