@@ -1,103 +1,270 @@
---[[	Author: hewdraw
-		Date: 17-3-2015		]]
+--[[	Author: Broccoli
+		Date: 26-3-2017		]]
 
-function DeathCoil( keys )
+CreateEmptyTalents("abaddon")
 
-	-- Variables
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local damage = ability:GetLevelSpecialValueFor( "target_damage" , ability_level  )
-	local self_heal = ability:GetLevelSpecialValueFor( "self_heal" , ability_level  )
-	local heal = ability:GetLevelSpecialValueFor( "heal_amount" , ability_level )
-	local projectile_speed = ability:GetSpecialValueFor( "projectile_speed" )
-	local particle_name = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-	
-	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
-	local max_stacks = 1
-	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
-		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
-	end
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-	local modifier_buff = "modifier_imba_frostmourne_buff"
+-----------------------------
+--		Mist Coil          --
+-----------------------------
 
-	-- If the target possesses a ready Linken's Sphere, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
-		end
-	end
-	
-	-- Play the ability sound
-	caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
-	target:EmitSound("Hero_Abaddon.DeathCoil.Target")
-	
-	-- If the target and caster are on a different team, do Damage. Heal otherwise
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = DAMAGE_TYPE_MAGICAL })
+imba_abaddon_mist_coil = class({})
 
-		if target:HasModifier(modifier_debuff_base) then
-			local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
+function imba_abaddon_mist_coil:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetCursorTarget()
+		local ability_name_curse_of_avernus = "imba_abaddon_curse_of_avernus"
 
-			if stack_count < max_stacks then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-				target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-			else
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-			end
+		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
+
+		if caster:HasAbility(ability_name_curse_of_avernus) then
+			-- Create the projectile
+			local info = {
+				Target = target,
+				Source = caster,
+				Ability = self,
+				EffectName = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf",
+				bDodgeable = false,
+				bProvidesVision = true,
+				bVisibleToEnemies = true,
+				bReplaceExisting = false,
+				iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
+				iVisionRadius = 0,
+				iVisionTeamNumber = caster:GetTeamNumber()
+			}
+			ProjectileManager:CreateTrackingProjectile( info )
 		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-			target:SetModifierStackCount(modifier_debuff, ability, 1)
-		end
-	else
-		target:Heal(heal, caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
-		if target:HasModifier(modifier_buff_base) then
-			local stack_count = target:GetModifierStackCount(modifier_buff, ability)
+			-- Nether ward and rubick applies level 1 curse of avernus
+			-- Hence there is a need to create a dummy unit to cast the spell while possessing both mist coil and curse of avernus abilities
 
-			if stack_count < max_stacks then
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-				target:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
-			else
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-				ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-				target:SetModifierStackCount(modifier_buff, ability, stack_count)
-			end
-		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_buff, {})
-			target:SetModifierStackCount(modifier_buff, ability, 1)
+			local dummy 					= CreateUnitByName('npc_dummy_unit', caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+			local dummy_mist_coil 			= dummy:AddAbility("imba_abaddon_mist_coil")
+			local dummy_curse_of_avernus 	= dummy:AddAbility(ability_name_curse_of_avernus)
+			dummy_mist_coil:SetLevel(self:GetLevel())
+			dummy_curse_of_avernus:SetLevel(1)
+			-- Allow casting of mist coil immediately
+			dummy_mist_coil:SetOverrideCastPoint(0)
+			dummy:CastAbilityOnTarget(target, dummy_mist_coil, caster:GetPlayerID())
+
+			-- Destroy dummy after casting mist coil
+			Timers:CreateTimer(1, function()
+				UTIL_Remove(dummy)
+			end)
 		end
 	end
-
-	-- Self Heal
-	if target ~= caster then
-		caster:Heal(self_heal, caster)
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, self_heal, nil)
-	end
-	
-	-- Create the projectile
-	local info = {
-		Target = target,
-		Source = caster,
-		Ability = ability,
-		EffectName = particle_name,
-		bDodgeable = false,
-			bProvidesVision = true,
-			iMoveSpeed = projectile_speed,
-        iVisionRadius = 0,
-        iVisionTeamNumber = caster:GetTeamNumber(),
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
-	}
-	ProjectileManager:CreateTrackingProjectile( info )
 end
+
+function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = hTarget
+		local ability_level = self:GetLevel() - 1
+
+		target:EmitSound("Hero_Abaddon.DeathCoil.Target")
+
+        if target:GetTeam() ~= caster:GetTeam() then
+			-- If target has Linken Sphere, block effect entirely
+            if target:TriggerSpellAbsorb(self) then
+                return nil
+            end
+
+			local damage = self:GetLevelSpecialValueFor("damage", ability_level)
+			local damage_type = DAMAGE_TYPE_MAGICAL
+
+			ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
+			
+			-- Apply curse of avernus debuff
+			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
+			if curse_of_avernus then
+				-- TODO test if casting mist coil without curse will it have issues here
+				local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
+				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+			else
+				--TODO remove after debug
+				print("Mist coil casted without curse of avernus")
+			end
+
+		else
+			local heal = self:GetLevelSpecialValueFor("heal", ability_level)
+
+			-- heal allies or self
+			target:Heal(heal, caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+        end
+	end
+end
+
+-----------------------------
+--	   Aphotic Shield      --
+-----------------------------
+
+-----------------------------
+--     Curse Of Avernus    --
+-----------------------------
+
+imba_abaddon_curse_of_avernus = class({
+	GetIntrinsicModifierName = function(self) return "modifier_imba_curse_of_avernus_caster" end
+})
+LinkLuaModifier("modifier_imba_curse_of_avernus_caster", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_curse_of_avernus_debuff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_curse_of_avernus_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+
+modifier_imba_curse_of_avernus_caster = class({
+	IsHidden				= function(self) return true end,
+	IsPurgable	  			= function(self) return false end,
+	IsDebuff	  			= function(self) return false end,
+	AllowIllusionDuplicate	= function(self) return false end
+})
+
+function modifier_imba_curse_of_avernus_caster:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK
+	}
+ 
+	return funcs
+end
+
+function modifier_imba_curse_of_avernus_caster:OnAttack(kv)
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = kv.target
+
+		-- Do not apply curse if avernus if "break"
+		if not caster:PassivesDisabled() then
+			-- Apply curse of avernus to enemies
+			if target:GetTeamNumber() ~= caster:GetTeamNumber() then
+				-- Apply debuff if enemy
+				local ability = self:GetAbility()
+				local debuff_duration = ability:GetSpecialValueFor("debuff_duration")
+				target:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+			end
+		end
+	end
+end
+
+modifier_imba_curse_of_avernus_debuff = class({
+	IsHidden				= function(self) return false end,
+	IsPurgable	  			= function(self) return true end,
+	IsDebuff	  			= function(self) return true end,
+	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf" end,
+	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+})
+function modifier_imba_curse_of_avernus_debuff:_UpdateSlowValues()
+	if IsServer() then
+		local ability = self:GetAbility()
+		local ability_level = ability:GetLevel() - 1
+
+		self.move_slow = ability:GetLevelSpecialValueFor("move_slow", ability_level)
+		self.attack_slow = ability:GetLevelSpecialValueFor("attack_slow", ability_level)
+	end
+end
+
+function modifier_imba_curse_of_avernus_debuff:OnCreated()
+	self:_UpdateSlowValues()
+end
+
+function modifier_imba_curse_of_avernus_debuff:OnRefresh()
+	self:_UpdateSlowValues()
+end
+
+function modifier_imba_curse_of_avernus_debuff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_EVENT_ON_ATTACK,
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+ 
+	return funcs
+end
+
+function modifier_imba_curse_of_avernus_debuff:OnAttack(kv)
+	if IsServer() then
+		local caster 	= self:GetCaster()
+		local attacker 	= keys.attacker
+		local target 	= keys.target
+
+		-- Apply buff to allies who hit the enemy with this debuff
+		if target == self:GetParent() and caster:GetTeamNumber() == attacker:GetTeamNumber() then
+			local ability = self:GetAbility()
+			local ability_level = ability:GetLevel()
+			local buff_duration = ability:GetLevelSpecialValueFor("buff_duration", ability_level)
+
+			attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff", { duration = buff_duration })
+		end
+	end
+end
+
+function modifier_imba_curse_of_avernus_debuff:OnTakeDamage()
+	-- TODO caster gain heal equal to damage to taken (heal_convert)
+end
+
+function modifier_imba_curse_of_avernus_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
+function modifier_imba_curse_of_avernus_debuff:GetModifierAttackSpeedBonus_Constant() return self.attack_slow end
+
+modifier_imba_curse_of_avernus_buff = class({
+	IsHidden				= function(self) return false end,
+	IsPurgable	  			= function(self) return true end,
+	IsDebuff	  			= function(self) return false end,
+	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf" end,
+	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+})
+
+function modifier_imba_curse_of_avernus_buff:_UpdateIncreaseValues()
+	if IsServer() then
+		local ability = self:GetAbility()
+		local ability_level = ability:GetLevel() - 1
+
+		self.move_increase = ability:GetLevelSpecialValueFor( "attack_increase" , ability_level)
+	end
+end
+
+function modifier_imba_curse_of_avernus_buff:OnCreated()
+	if IsServer() then
+		self.move_increase = self:GetAbility():GetSpecialValueFor("move_increase")
+		self:_UpdateIncreaseValues()
+	end
+end
+
+function modifier_imba_curse_of_avernus_buff:OnRefresh()
+	self:_UpdateIncreaseValues()
+end
+
+function modifier_imba_curse_of_avernus_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+	}
+ 
+	return funcs
+end
+
+function modifier_imba_curse_of_avernus_buff:GetModifierMoveSpeedBonus_Percentage() return self.move_increase end
+function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constant() return self.attack_increase end
+
+-----------------------------
+--		Over Channel       --
+-----------------------------
+
+-----------------------------
+--       Borrowed Time     --
+-----------------------------
+
+
+--[[ TODO
+		"Ability2"					"imba_abaddon_aphotic_shield"
+		"Ability4"					"imba_abaddon_over_channel"
+		"Ability5"					"imba_abaddon_borrowed_time"
+
+		"Ability10"					"special_bonus_imba_abaddon_1"
+		"Ability11"					"special_bonus_imba_abaddon_2"
+		"Ability12"					"special_bonus_imba_abaddon_3"
+		"Ability13"					"special_bonus_imba_abaddon_4"
+		"Ability14"					"special_bonus_imba_abaddon_5"
+		"Ability15"					"special_bonus_imba_abaddon_6"
+		"Ability16"					"special_bonus_imba_abaddon_7"
+		"Ability17"					"special_bonus_imba_abaddon_8"
+]]--
 
 function AphoticShieldInitialize( keys )
 	local caster = keys.caster
@@ -298,72 +465,6 @@ function EndShieldParticle( keys )
 			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
 			enemy:SetModifierStackCount(modifier_debuff, ability, 1)
 		end
-	end
-end
-
-function FrostMourne( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-	local modifier_buff = "modifier_imba_frostmourne_buff"
-
-
-	if caster:HasModifier(modifier_buff_base) then
-		local stack_count = caster:GetModifierStackCount(modifier_buff, ability)
-
-		if stack_count < max_stacks then
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
-			caster:SetModifierStackCount(modifier_buff, ability, stack_count + 1)
-		else
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-			ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
-		end
-	else
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff_base, {})
-		ability:ApplyDataDrivenModifier(caster, caster, modifier_buff, {})
-		caster:SetModifierStackCount(modifier_buff, ability, 1)
-	end
-	if target:HasModifier(modifier_debuff_base) then
-		local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
-
-		if stack_count < max_stacks then
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-			target:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-		else
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-		end
-	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff_base, {})
-		ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-		target:SetModifierStackCount(modifier_debuff, ability, 1)
-	end
-end
-
-function FrostMourneAttacked( keys )
-	local attacker = keys.attacker
-	
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-	local modifier_buff_base = "modifier_imba_frostmourne_buff_base"
-	local modifier_buff = "modifier_imba_frostmourne_buff"
-
-	local stack_count = target:GetModifierStackCount(modifier_debuff, ability)
-
-	if attacker:HasModifier("modifier_frostmourne") == false then
-		ability:ApplyDataDrivenModifier(caster, attacker, modifier_buff_base, {})
-		ability:ApplyDataDrivenModifier(caster, attacker, modifier_buff, {})
-		attacker:SetModifierStackCount(modifier_buff, ability, stack_count)
 	end
 end
 
