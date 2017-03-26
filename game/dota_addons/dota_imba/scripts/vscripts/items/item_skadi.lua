@@ -188,6 +188,10 @@ function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
 		-- If this damage event is irrelevant, do nothing
 		if attacker ~= keys.attacker then
 			return end
+
+		-- If the attacker is an illusion, do nothing either
+		if attacker:IsIllusion() then
+			return end
 		
 		-- If there's no valid target, do nothing
 		local target = keys.unit

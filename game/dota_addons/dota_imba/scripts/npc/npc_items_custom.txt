@@ -463,33 +463,6 @@
 			"01"						"item_headdress;item_buckler"
 		}
 	}
-
-	//=================================================================================================================
-	// Recipe: Golden Mekansm
-	//=================================================================================================================
-	"item_recipe_imba_mekansm_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2014"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_mekansm_2"
-		"ItemRequirements"
-		{
-			"01"						"item_imba_mekansm;item_ultimate_orb"
-		}
-	}
 	
 	//=================================================================================================================
 	// Mekansm
@@ -519,12 +492,6 @@
 		"ItemAliases"					"mechanism;mekansm"
 		"ItemAlertable"					"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"MaxUpgradeLevel"				"2"
-		"ItemBaseLevel"					"1"
-
-		"UpgradesItems"					"item_imba_mekansm"
-		"UpgradeRecipe"					"item_recipe_imba_mekansm_2"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -663,181 +630,6 @@
 				"IsPurgable"			"1"
 
 				"TextureName"			"custom/imba_mekansm"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS_UNIQUE_ACTIVE"		"%heal_bonus_armor"
-				}
-			}
-		}
-	}
-
-	"item_imba_mekansm_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2016"
-		"BaseClass"						"item_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"FightRecapLevel"				"2"
-		"Effect"						"particles/generic_gameplay/dropped_item.vpcf"
-		"AbilityTextureName"			"custom/imba_mekansm_2"
-		
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50"
-		"AbilitySharedCooldown"			"mekansm"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"250"
-		"ItemCost"						"4925"
-		"ItemShopTags"					"agi;int;str;armor;boost_health"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"mechanism;mekansm"
-		"ItemAlertable"					"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"MaxUpgradeLevel"				"2"
-		"ItemBaseLevel"					"2"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"15"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_health_regen"		"5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"300"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_radius"			"900"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_bonus_armor"		"3"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_armor_duration"	"25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hot_percentage"		"1"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hot_duration"			"15"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_mekansm.lua"
-				"Function"				"Mekansm"
-				
-				"heal_amount"			"%heal_amount"
-				"heal_radius"			"%heal_radius"
-				"modifier_armor"		"modifier_item_imba_mekansm_2_heal_armor"
-				"modifier_hot"			"modifier_item_imba_mekansm_2_hot"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_mekansm_2"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
-				}
-			}
-
-			"modifier_item_imba_mekansm_2_aura_emitter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				
-				"Aura" 					"modifier_item_imba_mekansm_2_aura"
-				"Aura_Radius" 			"%aura_radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster" 	"1"
-			}
-
-			"modifier_item_imba_mekansm_2_aura"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-
-				"TextureName"			"custom/imba_mekansm_2"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%aura_health_regen"
-				}
-			}
-
-			"modifier_item_imba_mekansm_2_hot"
-			{
-				"Duration"				"%hot_duration"
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_mekansm_2"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" 	"%hot_percentage"
-				}
-			}
-
-			"modifier_item_imba_mekansm_2_heal_armor"
-			{
-				"Duration"				"%heal_armor_duration"
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_mekansm_2"
 				
 				"Properties"
 				{
@@ -6845,8 +6637,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2143"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_maelstrom"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_maelstrom.lua"
+		"AbilityTextureName"			"custom/imba_maelstrom"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		// Item Info
@@ -6864,12 +6657,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30"
+				"bonus_damage"			"24"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"30"
+				"bonus_as"				"25"
 			}
 			"03"
 			{
@@ -6879,72 +6672,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_duration"			"30"
+				"bounce_damage"			"120"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"150"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"bounce_radius"			"900"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_maelstrom"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_item_imba_maelstrom"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_maelstrom.lua"
-						"Function"			"Maelstrom"
-
-						"sound_proc"		"Item.Maelstrom.Chain_Lightning"
-						"sound_bounce"		"Item.Maelstrom.Chain_Lightning.Jump"
-						"particle_bounce"	"particles/items_fx/chain_lightning.vpcf"
-						"modifier_charge"	"modifier_item_imba_maelstrom_charge"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-			}
-
-			"modifier_item_imba_maelstrom_charge"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_maelstrom"
-
-				"Duration"				"%proc_duration"
 			}
 		}
 	}
@@ -6984,21 +6717,21 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2145"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_mjollnir"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_maelstrom.lua"
+		"AbilityTextureName"			"custom/imba_mjollnir"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"800"
 		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"50"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"50"
 		"ItemCost"						"5700"
 		"ItemShopTags"					"damage;attack_speed;unique"
 		"ItemQuality"					"artifact"
@@ -7013,12 +6746,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"36"
+				"bonus_damage"			"24"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"100"
+				"bonus_as"				"80"
 			}
 			"03"
 			{
@@ -7028,27 +6761,17 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"proc_duration"			"30"
+				"bounce_damage"			"150"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_damage"			"150"
+				"bounce_radius"			"900"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_radius"			"900"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.1"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"static_duration"		"16"
+				"static_duration"		"15"
 			}
 			"09"
 			{
@@ -7063,7 +6786,7 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"static_radius"			"750"
+				"static_radius"			"900"
 			}
 			"12"
 			{
@@ -7073,145 +6796,7 @@
 			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"static_slow_duration"	"1.0"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_maelstrom.lua"
-				"Function"				"Mjollnir"
-
-				"modifier_shield"		"modifier_item_imba_mjollnir_shield"
-				"sound_cast"			"DOTA_Item.Mjollnir.Activate"
-				"sound_loop"			"DOTA_Item.Mjollnir.Loop"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_mjollnir"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_item_imba_mjollnir"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_maelstrom.lua"
-						"Function"			"Maelstrom"
-
-						"sound_proc"		"Item.Maelstrom.Chain_Lightning"
-						"sound_bounce"		"Item.Maelstrom.Chain_Lightning.Jump"
-						"particle_bounce"	"particles/items_fx/chain_lightning.vpcf"
-						"modifier_charge"	"modifier_item_imba_maelstrom_charge"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-			}
-
-			"modifier_item_imba_mjollnir_shield"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_mjollnir"
-
-				"Duration"				"%static_duration"
-				
-				"EffectName"			"particles/items2_fx/mjollnir_shield.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_maelstrom.lua"
-						"Function"			"MjollnirProc"
-
-						"sound_hit"			"Item.Maelstrom.Chain_Lightning.Jump"
-						"particle_static"	"particles/item/mjollnir/static_lightning_bolt.vpcf"
-						"modifier_slow"		"modifier_item_imba_mjollnir_slow"
-						"modifier_charge"	"modifier_item_imba_mjollnir_charge"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_maelstrom.lua"
-						"Function"			"MjollnirEnd"
-
-						"sound_end"			"DOTA_Item.Mjollnir.DeActivate"
-						"sound_loop"		"DOTA_Item.Mjollnir.Loop"
-					}
-				}
-			}
-
-			"modifier_item_imba_mjollnir_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_mjollnir"
-
-				"Duration"				"%static_slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%static_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%static_slow"
-				}
-			}
-
-			"modifier_item_imba_maelstrom_charge"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"TextureName"			"custom/imba_mjollnir"
-
-				"Duration"				"%proc_duration"
-			}
-
-			"modifier_item_imba_mjollnir_charge"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%proc_duration"
+				"static_slow_duration"	"0.5"
 			}
 		}
 	}
@@ -9553,7 +9138,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"	
+		"ItemCost"						"1700"	
 		"ItemShopTags"					""
 		
 		// Recipe
@@ -9563,7 +9148,7 @@
 
 		"ItemRequirements"
 		{
-			"01"						"item_imba_mekansm_2;item_imba_arcane_boots"
+			"01"						"item_imba_mekansm;item_imba_arcane_boots"
 		}
 	}
 	
@@ -9589,7 +9174,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"ItemCost"						"7225"
+		"ItemCost"						"5275"
 		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
 		"ItemQuality"					"rare"
 		"ItemAliases"					"guardian greaves"

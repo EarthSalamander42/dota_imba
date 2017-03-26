@@ -21,7 +21,6 @@ function Dagon( keys )
 	local damage = ability:GetSpecialValueFor("damage")
 	local bounce_damage = ability:GetSpecialValueFor("bounce_damage")
 	local bounce_range = ability:GetSpecialValueFor("bounce_range")
-	local current_source = caster
 	local targets_hit = {
 		target
 	}
