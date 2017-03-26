@@ -4044,26 +4044,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_aphotic_shield"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"500"
 		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"6.0"
+		"AbilityCooldown"								"12.0 10.0 8.0 6.0 5.5 5.0 4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50"
+		"AbilityManaCost"								"100 105 110 115 120 125 130"
 
 		
 		// Special
@@ -4073,12 +4074,12 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"30.0"
+				"duration"								"15.0"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_absorb"							"125 175 225 275"
+				"shield"								"110 140 170 200 225 250 275"
 			}
 			"03"
 			{
@@ -4088,42 +4089,12 @@
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5"
+				"buff_duration"							"4.5"
 			}
 			"05"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-			}
-			"06"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"max_charges"							"2"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"charge_cooldown"						"6.0"
+				"cast_range"							"500"
 			}
 		}
 
@@ -4133,8 +4104,6 @@
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 		}
 
 		"OnSpellStart"
@@ -4152,37 +4121,6 @@
 
 		"Modifiers"
 		{	
-			"modifier_aphotic_shield_stack_counter"
-			{
-				"Passive"								"1"
-				"IsPurgable"							"0"
-				"IsBuff"								"1"
-				"IsHidden"								"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldInitialize"
-
-						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
-					}
-				}
-
-				"ThinkInterval"							"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldThink"
-					}
-				}
-			}
 
 			"modifier_aphotic_shield"
 			{
@@ -4219,74 +4157,6 @@
 						"ScriptFile"					"hero/hero_abaddon.lua"
 						"Function"						"EndShieldParticle"
 					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
 				}
 			}
 		}
