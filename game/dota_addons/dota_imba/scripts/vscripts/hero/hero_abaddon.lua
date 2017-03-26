@@ -98,6 +98,146 @@ end
 --	   Aphotic Shield      --
 -----------------------------
 
+imba_abaddon_aphotic_shield = class({})
+LinkLuaModifier("modifier_aphotic_shield_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+
+function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
+	local caster = self:GetCaster()
+	return self:GetSpecialValueFor("cast_range")
+end
+
+function imba_abaddon_aphotic_shield:OnCreated()
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
+
+	-- Strong Dispel
+	target:Purge(false, true, false, true, false)
+
+	local modifier_name_aphotic_shield = "modifier_aphotic_shield_buff"
+
+	-- TODO check if it explodes if reapplied
+	-- Remove previous aphotic shield
+	target:RemoveModifierByNameAndCaster(modifier_name_aphotic_shield, caster)
+
+	-- Add new modifier
+	local duration = self:GetSpecialValueFor("duration")
+	target:AddNewModifier(caster, self, modifier_name_aphotic_shield, { duration = duration })
+end
+
+modifier_aphotic_shield_buff = class({
+	IsHidden				= function(self) return false end,
+	IsPurgable	  			= function(self) return true end,
+	IsDebuff	  			= function(self) return false end
+})
+
+function modifier_aphotic_shield_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+ 
+	return funcs
+end
+
+function modifier_aphotic_shield_buff:OnCreated()
+	local target = self:GetParent()
+	local shield_size = target:GetModelRadius() * 0.7
+	local ability = self:GetAbility()
+	local ability_level = ability:GetLevel()
+
+	self.shield_remaining = ability:GetLevelSpecialValueFor( "shield", ability_level )
+
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	local common_vector = Vector(shield_size,0,shield_size)
+	ParticleManager:SetParticleControl(particle, 1, common_vector)
+	ParticleManager:SetParticleControl(particle, 2, common_vector)
+	ParticleManager:SetParticleControl(particle, 4, common_vector)
+	ParticleManager:SetParticleControl(particle, 5, Vector(shield_size,0,0))	
+
+	-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
+	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+
+	--void AddParticle(int i, bool bDestroyImmediately, bool bStatusEffect, int iPriority, bool bHeroEffect, bool bOverheadEffect)
+	self:AddParticle(particle, false, false, -1, false, false)
+end
+
+function modifier_aphotic_shield_buff:OnRemoved()
+	local target 				= self:GetParent()
+	local caster 				= self:GetCaster()
+	local ability 				= self:GetAbility()
+	local ability_level 		= ability:GetLevel()
+	local radius 				= ability:GetSpecialValueFor("radius")
+	local explode_target_team 	= DOTA_UNIT_TARGET_TEAM_ENEMY
+	local explode_target_type 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+
+	target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
+
+	-- TODO
+	--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	-- Deal damage to enemies around
+	local damage = ability:GetLevelSpecialValueFor( "shield", ability_level )
+	local damage_type = DAMAGE_TYPE_MAGICAL
+	for _,enemy in pairs(enemies) do
+		-- TODO check if damage is absorbed damage or just total damage
+		ApplyDamage({ victim = enemy, attacker = caster, damage = damage, damage_type = damage_type })
+	end
+
+	-- Apply debuff to enemies around
+	local ability_name_curse_of_avernus 	= "imba_abaddon_curse_of_avernus"
+	local curse_of_avernus 					= caster:FindAbilityByName(ability_name_curse_of_avernus)
+	local spoof_caster
+	if curse_of_avernus then
+		spoof_caster 		= caster
+	else
+		--Apply debuff using dummy
+		local dummy 		= CreateUnitByName('npc_dummy_unit', target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		curse_of_avernus 	= dummy:AddAbility(ability_name_curse_of_avernus)
+		curse_of_avernus:SetLevel(1)
+		spoof_caster 		= dummy
+
+		-- Destroy dummy after applying debuff
+		Timers:CreateTimer(1, function()
+			UTIL_Remove(dummy)
+		end)
+	end
+
+	local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
+	for _,enemy in pairs(enemies) do
+		enemy:AddNewModifier(spoof_caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+	end
+end
+
+function modifier_aphotic_shield_buff:OnTakeDamage(kv)
+	local target = self:GetParent()
+
+	-- Absorb damage taken by unit which has this buff
+	if target == kv.unit then
+		-- Avoid calculation when borrowed time is active
+		if target:HasModifier("modifier_borrowed_time_buff") == false then
+			local damage = kv.damage
+			local shield_remaining = self.shield_remaining
+
+			-- If the damage is bigger than what the shield can absorb, heal a portion
+			local heal_amount
+			if damage > shield_remaining then
+				heal_amount = shield_remaining
+			else
+				heal_amount = damage
+			end
+			-- Heal can fail due to modifiers preventing heal, set unit's health instead
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, heal_amount, nil)
+			target:SetHealth(target:GetHealth() + heal_amount)
+
+			self.shield_remaining = self.shield_remaining - damage
+			if self.shield_remaining <= 0 then
+				traget:RemoveModifierByName("modifier_aphotic_shield_buff")
+			end
+		end
+	end
+end
+
 -----------------------------
 --     Curse Of Avernus    --
 -----------------------------
@@ -249,10 +389,14 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 -----------------------------
 --       Borrowed Time     --
 -----------------------------
+imba_abaddon_borrowed_time = class({})
+LinkLuaModifier("modifier_borrowed_time_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+
+
+modifier_borrowed_time_buff = class({})
 
 
 --[[ TODO
-		"Ability2"					"imba_abaddon_aphotic_shield"
 		"Ability4"					"imba_abaddon_over_channel"
 		"Ability5"					"imba_abaddon_borrowed_time"
 
@@ -265,208 +409,6 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 		"Ability16"					"special_bonus_imba_abaddon_7"
 		"Ability17"					"special_bonus_imba_abaddon_8"
 ]]--
-
-function AphoticShieldInitialize( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local stacks_modifier = keys.stacks_modifier
-	local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level )
-	
-	-- Initialize stack and reset skill cooldown
-	caster:SetModifierStackCount(stacks_modifier, caster, max_charges)
-	ability:EndCooldown()
-	caster.aphotic_cooldown = 0.0
-end
-
-function AphoticShieldThink( keys )
-	local caster = keys.caster
-
-	-- If this is Rubick and Aphotic Shield is no longer present, do nothing and kill the modifiers
-	if IsStolenSpell(caster) then
-		if not caster:FindAbilityByName("imba_abaddon_aphotic_shield") then
-			caster:RemoveModifierByName("modifier_aphotic_shield_stack_counter")
-			return nil
-		end
-	end
-end
-
-function AphoticShield( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local stacks_modifier = keys.stacks_modifier
-	local charges_on_cast = caster:GetModifierStackCount(stacks_modifier, caster)
-	
-	-- Check if there are enough charges to cast the skill
-	if charges_on_cast > 0 then
-
-		-- Variables
-		local target = keys.target
-		local ability_level = ability:GetLevel() - 1
-		local shield_modifier = keys.shield_modifier
-		local cast_sound = keys.cast_sound
-		local max_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level)
-		local shield_size = target:GetModelRadius() * 0.7
-		local max_charges = ability:GetLevelSpecialValueFor("max_charges", ability_level)
-		local charge_cooldown = ability:GetLevelSpecialValueFor("charge_cooldown", ability_level)
-
-		-- Deplete charge
-		if charges_on_cast == max_charges then
-			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, charge_cooldown)
-		end
-		caster:SetModifierStackCount(stacks_modifier, caster, charges_on_cast - 1 )
-
-		-- Play sound, apply modifier
-		target:EmitSound(cast_sound)
-		target:RemoveModifierByName(shield_modifier)
-		ability:ApplyDataDrivenModifier(caster, target, shield_modifier, {})
-
-		-- Strong Dispel
-		local RemovePositiveBuffs = false
-		local RemoveDebuffs = true
-		local BuffsCreatedThisFrameOnly = false
-		local RemoveStuns = true
-		local RemoveExceptions = false
-		target:Purge(RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)	
-
-		-- Reset the shield
-		target.AphoticShieldRemaining = max_damage_absorb	
-
-		-- Particle. Need to wait one frame for the older particle to be destroyed
-		Timers:CreateTimer(0.01, function() 
-			target.ShieldParticle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(target.ShieldParticle, 1, Vector(shield_size,0,shield_size))
-			ParticleManager:SetParticleControl(target.ShieldParticle, 2, Vector(shield_size,0,shield_size))
-			ParticleManager:SetParticleControl(target.ShieldParticle, 4, Vector(shield_size,0,shield_size))
-			ParticleManager:SetParticleControl(target.ShieldParticle, 5, Vector(shield_size,0,0))	
-
-			-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
-			ParticleManager:SetParticleControlEnt(target.ShieldParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		end)
-
-		-- Check if stack is 0, display ability cooldown
-		if caster:GetModifierStackCount(stacks_modifier, caster) == 0 then
-			
-			-- Start cooldown from caster.aphotic_cooldown
-			ability:EndCooldown()
-			ability:StartCooldown(caster.aphotic_cooldown)
-		else
-			ability:EndCooldown()
-		end
-	else
-		ability:RefundManaCost()
-	end
-end
-
-function AphoticShieldStartCooldown( caster, ability, stacks_modifier, max_charges, charge_cooldown, cooldown )
-	caster.aphotic_cooldown = cooldown
-	if caster.aphotic_cooldown <= 0 then
-		local current_charges = caster:GetModifierStackCount(stacks_modifier, caster)
-		caster:SetModifierStackCount(stacks_modifier, caster, current_charges + 1 )
-		if caster:GetModifierStackCount(stacks_modifier, caster) >= max_charges then
-			caster:SetModifierStackCount(stacks_modifier, caster, max_charges)
-			return
-		else
-			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, charge_cooldown)
-		end
-	else
-		Timers:CreateTimer(0.03, function()
-			AphoticShieldStartCooldown(caster, ability, stacks_modifier, max_charges, charge_cooldown, cooldown - 0.03 )
-		end)
-	end
-end
-
-function AphoticShieldAbsorb( keys )
-	local damage = keys.DamageTaken
-	local attacker = keys.attacker
-	local unit = keys.unit
-	local ability = keys.ability
-
-	-- If the attacker is the unit, do nothing
-	if attacker == unit then
-		return nil
-	end
-	
-	-- Track how much damage was already absorbed by the shield
-	local shield_remaining = unit.AphoticShieldRemaining
-
-	if unit:HasModifier("modifier_borrowed_time") == false then
-		
-		-- If the damage is bigger than what the shield can absorb, heal a portion
-		if damage > shield_remaining then
-			local health_before = unit:GetHealth()
-			unit:Heal(shield_remaining, unit)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, shield_remaining, nil)
-			if unit:GetHealth() == health_before then
-				unit:SetHealth(unit:GetHealth() + shield_remaining)
-			end
-		else
-			local health_before = unit:GetHealth()
-			unit:Heal(damage, unit)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, unit, damage, nil)
-			if unit:GetHealth() == health_before then
-				unit:SetHealth(unit:GetHealth() + damage)
-			end
-		end
-
-		-- Reduce the shield remaining and remove
-		unit.AphoticShieldRemaining = unit.AphoticShieldRemaining - damage
-		if unit.AphoticShieldRemaining <= 0 then
-			unit.AphoticShieldRemaining = nil
-			unit:RemoveModifierByName("modifier_aphotic_shield")
-		end
-	end
-end
-
--- Destroys the particle when the modifier is destroyed. Also plays the sound
-function EndShieldParticle( keys )
-	local target = keys.target
-	local caster = keys.caster
-	local ability = keys.ability
-	local damageType = DAMAGE_TYPE_MAGICAL
-
-	target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
-	ParticleManager:DestroyParticle(target.ShieldParticle,false)
-
-	-- If ability was unlearned, do nothing
-	if not ability then
-		return nil
-	end
-
-	local ability_level = ability:GetLevel() - 1
-	local base_damage_absorb = keys.ability:GetLevelSpecialValueFor("damage_absorb", ability_level )
-	local radius = ability:GetLevelSpecialValueFor( "radius" , ability_level )
-
-	local enemies = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	local ability_frostmourne = caster:FindAbilityByName("imba_abaddon_frostmourne")
-	local max_stacks = 1
-	if ability_frostmourne and ability_frostmourne:GetLevel() ~= 0 then
-		max_stacks = ability_frostmourne:GetLevelSpecialValueFor("max_stacks", ability_frostmourne:GetLevel() - 1)
-	end
-	local modifier_debuff_base = "modifier_imba_frostmourne_debuff_base"
-	local modifier_debuff = "modifier_imba_frostmourne_debuff"
-
-	for _,enemy in pairs(enemies) do
-		ApplyDamage({ victim = enemy, attacker = caster, damage = base_damage_absorb, damage_type = damageType })
-		if enemy:HasModifier(modifier_debuff_base) then
-			local stack_count = enemy:GetModifierStackCount(modifier_debuff, ability)
-
-			if stack_count < max_stacks then
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
-				enemy:SetModifierStackCount(modifier_debuff, ability, stack_count + 1)
-			else
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff_base, {})
-				ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
-			end
-		else
-			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff_base, {})
-			ability:ApplyDataDrivenModifier(caster, enemy, modifier_debuff, {})
-			enemy:SetModifierStackCount(modifier_debuff, ability, 1)
-		end
-	end
-end
 
 function BorrowedTimeActivate( keys )
 
