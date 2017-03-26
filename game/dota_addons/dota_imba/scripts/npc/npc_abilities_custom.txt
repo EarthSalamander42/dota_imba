@@ -10386,35 +10386,35 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_jakiro.lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"					"1"
-		"AbilityTextureName"				"custom/jakiro_fire_breath"	
+		"AbilityTextureName"				"custom/jakiro_fire_breath"
+		"MaxLevel"               			"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"0"
 		"AbilityCastPoint"					"0.15"
-		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"12.0"
+		"AbilityCooldown"					"10.0"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 110 120 130"
+		"AbilityManaCost"					"90 100 110 120 125 130 135"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-			"particle"						"particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf"
+			"particle"						"particles/hero/jakiro/jakiro_fire_breath.vpcf"
 		}
 		
 		// Special	
@@ -10424,22 +10424,24 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"450"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"525"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"575 650 725 800"
+				"speed"						"600 600 600 600 650 700 750"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"30 40 50 60"
+				"damage"					"20 35 50 65 70 75 80"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"05"
 			{
@@ -10449,107 +10451,18 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"-70"
+				"move_slow"					"-10"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-35 -50 -65 -80"
+				"duration"					"5"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"5"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"950 1100 1250 1400"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"DualBreathUpgrade"
-
-				"ability_other"				"imba_jakiro_ice_breath"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Jakiro.DualBreath"
-				"Target"					"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_fire_breath_caster"
-				"Target"					"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"DualBreath"
-				"Target"					"POINT"
-				
-				"ability_just_used"			"imba_jakiro_fire_breath"
-				"ability_to_switch"			"imba_jakiro_ice_breath"
-				"particle_breath"			"particles/units/heroes/hero_jakiro/jakiro_dual_breath_fire.vpcf"
-				"modifier_caster"			"modifier_imba_fire_breath_caster"
-				"modifier_breath"			"modifier_imba_fire_breath"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_fire_breath"
-			{
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"ThinkInterval" 			"%damage_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_jakiro.lua"
-						"Function"				"DualBreathDamage"
-
-						"modifier_breath"		"modifier_imba_fire_breath"
-						"modifier_macropyre"	"modifier_imba_macropyre"
-						"modifier_macropyre_2"	"modifier_imba_macropyre_scepter"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"%turn_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
-				}
-			}
-
-			"modifier_imba_fire_breath_caster"
-			{
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"Passive"					"0"
-				"IsPurgable"				"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"range"						"900"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
 	}
@@ -10561,24 +10474,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_jakiro.lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"					"1"
+		"MaxLevel"               			"7"
 		"AbilityTextureName"				"custom/jakiro_ice_breath"	
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"0"
 		"AbilityCastPoint"					"0.15"
-		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_3"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"12.0"
+		"AbilityCooldown"					"10.0"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10589,7 +10502,7 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
-			"particle"						"particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf"
+			"particle"						"particles/hero/jakiro/jakiro_ice_breath.vpcf"
 		}
 		
 		// Special	
@@ -10599,22 +10512,23 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"450"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"525"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"575 650 725 800"
+				"speed"						"600 600 600 600 650 700 750"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_6"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"20 30 40 50"
+				"damage"					"10 15 20 25 30 35 40"
 			}
 			"05"
 			{
@@ -10624,12 +10538,14 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-25 -30 -35 -40"
+				"move_slow"					"-32"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-15 -20 -25 -30"
+				"attack_slow"				"-32"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
 			{
@@ -10639,92 +10555,105 @@
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"950 1100 1250 1400"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"DualBreathUpgrade"
-
-				"ability_other"				"imba_jakiro_fire_breath"
+				"range"						"900"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_1"
 			}
 		}
 		
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Jakiro.DualBreath"
-				"Target"					"CASTER"
-			}
+	}
 
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_ice_breath_caster"
-				"Target"					"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"DualBreath"
-				"Target"					"POINT"
-				
-				"ability_just_used"			"imba_jakiro_ice_breath"
-				"ability_to_switch"			"imba_jakiro_fire_breath"
-				"particle_breath"			"particles/units/heroes/hero_jakiro/jakiro_dual_breath_ice.vpcf"
-				"modifier_caster"			"modifier_imba_ice_breath_caster"
-				"modifier_breath"			"modifier_imba_ice_breath"
-			}
+	//=================================================================================================================
+	// Jakiro: Ice Path
+	//=================================================================================================================
+	"imba_jakiro_ice_path"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_jakiro.lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"					"1"
+		"MaxLevel"               			"7"
+		"AbilityTextureName"				"jakiro_ice_path"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"0"
+		"AbilityCastPoint"					"0.5"
+		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"12.0 11.0 10.0 9.0 9.0 9.0 9.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"90"
+
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
+			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
+			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
+		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
-		
-		"Modifiers"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_ice_breath"
+			"01"
 			{
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"ThinkInterval" 			"%damage_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_jakiro.lua"
-						"Function"				"DualBreathDamage"
-
-						"modifier_breath"		"modifier_imba_ice_breath"
-						"modifier_macropyre"	"modifier_imba_macropyre"
-						"modifier_macropyre_2"	"modifier_imba_macropyre_scepter"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_slow"
-				}
+				"var_type"				"FIELD_FLOAT"
+				"path_delay"			"0.3"
 			}
-
-			"modifier_imba_ice_breath_caster"
+			"02"
 			{
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"Passive"					"0"
-				"IsPurgable"				"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"				"FIELD_FLOAT"
+				"path_duration"			"1.5 2.0 2.5 3.0 4.0 5.0 6.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.0 1.5 2.0 2.5 2.5 2.5 2.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"path_radius"			"200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1200 1400 1600 1800"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_amp"				"5 5 5 5 10 15 20"
+				"LinkedSpecialBonus"	"special_bonus_imba_jakiro_7"
 			}
 		}
 	}
@@ -10736,20 +10665,20 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_jakiro.lua"
+		"AbilityBehavior"                   "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"jakiro_liquid_fire"
-		"AOERadius"							"%radius"	
+		"AOERadius"							"%radius"
+		"MaxLevel"               			"7"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"16 12 8 4"
-		"AbilityCastRange"					"750"
+		"AbilityCooldown"					"20 15 10 4 4 4 4"
 		"AbilityCastPoint"					"0.25"
 		"AbilityCastAnimation"				"ACT_DOTA_ATTACK2"
 
@@ -10771,7 +10700,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				" -30 -40 -50 -60"
+				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
 			}
 			"02"
 			{
@@ -10781,17 +10710,17 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"16 24 32 40"
+				"damage"					"12 16 20 24 25 26 27"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"5.0"
+				"duration"					"5.0 5.0 5.0 5.0 5.5 6.0 6.5"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_interval"			"0.5"
+				"damage_interval"			"0.25"
 			}
 			"06"
 			{
@@ -10801,84 +10730,13 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"750"
+				"turn_slow"					"-50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
+			"08"
 			{
-				"EffectName"				"Hero_Jakiro.Attack"
-				"Target"					"CASTER"
-			}
-
-			"TrackingProjectile"
-			{
-				"Target"
-				{
-					"Center"				"TARGET"
-					"Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-					"Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-				"EffectName"				"particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
-				"Dodgeable"					"1"
-				"ProvidesVision"			"0"
-				"VisionRadius"				"0"
-				"MoveSpeed"					"%speed"
-				"SourceAttachment"			"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"1"
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"LiquidFire"
-
-				"sound_liquid_fire"			"Hero_Jakiro.LiquidFire"
-				"particle_liquid_fire"		"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_explosion.vpcf"
-				"modifier_liquid_fire"		"modifier_imba_liquid_fire"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_liquid_fire"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"EffectName"				"particles/units/heroes/hero_jakiro/jakiro_liquid_fire_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"	
-
-				"ThinkInterval"				"%damage_interval"	
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_jakiro.lua"
-						"Function"				"LiquidFireDamage"
-
-						"modifier_liquid_fire"	"modifier_imba_liquid_fire"
-						"modifier_macropyre"	"modifier_imba_macropyre"
-						"modifier_macropyre_2"	"modifier_imba_macropyre_scepter"
-					}
-				}	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_slow"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"extra_cast_range"			"200"
+				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_4"
 			}
 		}
 	}
@@ -10890,20 +10748,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_jakiro.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"jakiro_macropyre"	
+		"AbilityTextureName"			"jakiro_macropyre"
+		"MaxLevel"               		"6"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400 1600 1800"
-		"AbilityCastPoint"				"0.5"	
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -10911,7 +10772,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"220 330 440"
+		"AbilityManaCost"				"220 330 440 460 480 500"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10920,7 +10781,6 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
-			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 
 		// Special
@@ -10939,199 +10799,241 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_time_scepter"			"1.0"
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"100 140 180 200 220 240"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 70 90"
+				"range"						"1400"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"65 90 115"
-			}
+				"range_scepter"				"1800"					
+			}		
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1400 1600 1800"					
-			}		
+				"path_radius"				"260"
+			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"280"
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.5"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"burn_interval"				"0.5"
+				"trail_angle"				"10.5"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage"			"100 140 180"
+				"trail_amount"				"2 3 4 5 6 7"
 			}
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_damage_scepter"	"130 180 230"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"trail_angle"				"9.0 8.5 8.0"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"trail_amount"				"7"
-			}
-			"13"
-			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"                  "FIELD_FLOAT"
 				"stickyness"				"1.0"
-			}
-			"14"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_stack_scepter"		"-5"
-			}
-			"15"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"initial_stacks_scepter"	"1"
-			}
-			"16"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_stacks_scepter"		"12"
-			}
-			"17"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"initial_slow_scepter"		"-5"
-			}
-			"18"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_slow_scepter"			"-60"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_jakiro.lua"
-				"Function"					"Macropyre"
-				"Target"					"POINT"
-				
-				"fire_particle"				"particles/hero/jakiro/jakiro_macropyre.vpcf"
-				"ice_particle"				"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
-				"modifier"					"modifier_imba_macropyre"
-				"modifier_scepter"			"modifier_imba_macropyre_scepter"
-				"modifier_dummy"			"modifier_imba_macropyre_dummy"
-				"sound_fire"				"Hero_Jakiro.Macropyre.Cast"
-				"sound_ice"					"Hero_Jakiro.IcePath.Cast"
-				"sound_fire_loop"			"hero_jakiro.macropyre.scepter"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_macropyre"
-			{
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Duration"					"%stickyness"
-
-				"OnCreated"
-				{
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%damage"
-					}
-				}
-
-				"ThinkInterval"  			"%burn_interval"
-				
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%damage"
-					}
-				}
-			}
-
-			"modifier_imba_macropyre_scepter"
-			{
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Duration"					"%stickyness"
-
-				"EffectName"				"particles/generic_gameplay/generic_slowed_cold.vpcf"
-
-				"OnCreated"
-				{
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%damage_scepter"
-					}
-				}
-
-				"ThinkInterval"  			"%burn_interval"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_jakiro.lua"
-						"Function"			"MacropyreScepterThink"
-						
-						"modifier_slow"		"modifier_imba_macropyre_scepter_slow"
-						"modifier_stun"		"modifier_imba_macropyre_scepter_stun"
-					}
-				}
-			}
-
-			"modifier_imba_macropyre_scepter_slow"
-			{
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%stickyness"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack_scepter" 
-				}
-			}
-
-			"modifier_imba_macropyre_scepter_stun"
-			{
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%stun_time_scepter"
-
-				"EffectName"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Jakiro Talent 1 (Level 10): Dual Breath Range Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"350"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 2 (Level 10): Fire Breath DPS Increase, Ice Breath Slow Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fire_damage_increase"		"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_increase"				"-8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 3 (Level 20): Ice Path Duration Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"6.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 4 (Level 20): Liquid Fire Cast Range Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 5 (Level 30): Ice Path Stun Duration Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 6 (Level 30): Dual Breath Speed Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 7 (Level 40): Ice Path Antipode Effect Increase
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jakiro Talent 8 (Level 40): Macropyre Cause Progressive Slow
+	//=================================================================================================================
+	"special_bonus_imba_jakiro_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"init_slow"					"-5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"scale_per_tick"			"1.05"
+			}
+		}
+	}
+
 
 	//=================================================================================================================
 	// Juggernaut's Blade Fury

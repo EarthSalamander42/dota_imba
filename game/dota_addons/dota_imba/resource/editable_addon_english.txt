@@ -1099,20 +1099,23 @@
 		"DOTA_Tooltip_modifier_imba_trueshot_active"										"Marksman's Presence"
 		"DOTA_Tooltip_modifier_imba_trueshot_active_Description"							"Trueshot Aura is affecting creeps, and granting bonus agility to heroes."
 
-		"DOTA_Tooltip_modifier_imba_fire_breath"											"Fire Breath"
-		"DOTA_Tooltip_modifier_imba_fire_breath_Description"								"Turn and attack rate slowed, and taking damage"
+		"DOTA_Tooltip_modifier_imba_fire_breath_debuff"										"Fire Breath"
+		"DOTA_Tooltip_modifier_imba_fire_breath_debuff_Description"							"Move speed reduced, and taking damage"
 
-		"DOTA_Tooltip_modifier_imba_ice_breath"												"Frost Breath"
-		"DOTA_Tooltip_modifier_imba_ice_breath_Description"									"Move and attack speed reduced, and taking damage"
+		"DOTA_Tooltip_modifier_imba_ice_breath_debuff"										"Frost Breath"
+		"DOTA_Tooltip_modifier_imba_ice_breath_debuff_Description"							"Move and attack speed reduced, and taking damage"
 
-		"DOTA_Tooltip_modifier_imba_liquid_fire"											"Liquid Fire"
-		"DOTA_Tooltip_modifier_imba_liquid_fire_Description"								"Attacking slower and taking damage"
+		"DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff"									"Ice Path"
+		"DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff_Description"						"Stunned"
 
-		"DOTA_Tooltip_modifier_imba_macropyre"												"Macropyre"
-		"DOTA_Tooltip_modifier_imba_macropyre_Description"									"You're on fire! Taking damage per second"
+		"DOTA_Tooltip_modifier_imba_ice_path_slow_debuff"									"Ice Path"
+		"DOTA_Tooltip_modifier_imba_ice_path_slow_debuff_Description"						"Move and attack speed reduced"
 
-		"DOTA_Tooltip_modifier_imba_macropyre_scepter"										"Macropyre"
-		"DOTA_Tooltip_modifier_imba_macropyre_scepter_Description"							"You're on fire, and frozen! Jakiro doesn't give a fuck. Taking damage per second and slowed"
+		"DOTA_Tooltip_modifier_imba_liquid_fire_debuff"										"Liquid Fire"
+		"DOTA_Tooltip_modifier_imba_liquid_fire_debuff_Description"							"Turn and attack rate slowed, and taking damage"
+
+		"DOTA_Tooltip_modifier_imba_macropyre_debuff"										"Macropyre"
+		"DOTA_Tooltip_modifier_imba_macropyre_debuff_Description"							"You're on fire! Taking damage per second"
 
 		"DOTA_Tooltip_modifier_imba_blade_dance_stacks"										"Blade Dance"
 		"DOTA_Tooltip_modifier_imba_blade_dance_stacks_Description"							"Increased agility and movement speed"
@@ -2284,12 +2287,11 @@
 		"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_bonus_as"						"BONUS ATTACK SPEED:"
 
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath"										"Fire Breath"
-		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Description"							"Targets hit by Jakiro's fiery breath will take damage over time, while also having their turn rate and attack speed diminished.\n<font color='#FF7800'>Dragon charge:</font> Performs a flying charge to the target point, laying waste to all enemies in its path."
+		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Description"							"Targets hit by Jakiro's fiery breath will take damage over time, while also having their move speed diminished.\n<font color='#FF7800'>Dragon charge:</font> Performs a flying charge to the target point, laying waste to all enemies in its path."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Note0"								"Hits enemies in front of Jakiro at any point of his charge."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Lore"									"Jakiro's burning maw opens, laying waste to all in its path."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_damage"								"DAMAGE PER SECOND:"
-		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_attack_slow"							"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_turn_slow"							"%TURN RATE SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_move_slow"							"%MOVEMENT SLOW:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_duration"								"DURATION:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_range"								"RANGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_speed"								"SPEED:"
@@ -2305,8 +2307,16 @@
 		"DOTA_Tooltip_ability_imba_jakiro_ice_breath_range"									"RANGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_ice_breath_speed"									"SPEED:"
 
-		// Ice Path
-		"DOTA_Tooltip_ability_jakiro_ice_path_Description"									"Creates a path of ice that stuns and damages enemies that touch it. 1200/1400/1600/1800 range."
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path"											"Ice Path"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_Description"								"Creates a path of ice that stuns and damages enemies that touch it. Enemies are slowed while they remain on the ice path.\n<font color='#FF7800'>Antipode:</font> Enemies receive damage amplification from Jakiro's abilities while they are stunned"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_Lore"									"Jakiro glazes the earth with blistering cold."
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_damage"									"DAMAGE:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_path_duration"							"PATH DURATION:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_stun_duration"							"STUN DURATION:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_dmg_amp"									"%ANTIPODE:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_attack_slow"								"ATTACK SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_move_slow"								"%MOVEMENT SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"									"RANGE:"
 
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire"										"Liquid Fire"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Description"							"Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their own attacks.\n<font color='#FF7800'>Dragon reach:</font> Can attack from bonus range.\n\n<font color='#00FF40'>Not a unique attack modifier.</font>"
@@ -2314,21 +2324,20 @@
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Lore"									"Jakiro spits a fireball from afar, roasting flesh and melting stone."
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_damage"								"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_attack_slow"							"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_cast_range_tooltip"					"RANGE:"
+		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_turn_slow"							"%TURN SLOW:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_radius"								"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_duration"								"DURATION:"
 
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre"										"Macropyre"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Description"							"Jakiro exhales a huge cone of lasting flames, which deal damage per second to enemy units caught in the fire.\n<font color='#FF7800'>Reignite:</font> While inside Macropyre, enemies' Fire Breath, Ice Breath, and Liquid Fire durations will be constantly refreshed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases damage, and adds ice to Macropyre, progressively slowing enemies in it, until they become stunned."
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Description"							"Jakiro exhales a huge cone of lasting flames, which deal damage per second to enemy units caught in the fire.\n<font color='#FF7800'>Reignite:</font> While inside Macropyre, enemies' Fire Breath, Ice Breath, and Liquid Fire durations will be elongated.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases range and duration"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note0"									"The effect lasts for 1 second after targets leave the zone of effect."
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note1"									"Jakiro debuffs increases 0.25s per 0.5s while standing on Macropyre"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Lore"									"Ice and fire combine to rip the battlefield to shreds with extreme temperatures."
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_tooltip_damage"							"DAMAGE PER SECOND:"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_tooltip_damage_scepter"					"SCEPTER DAMAGE:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_damage"									"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_range"									"LENGTH:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"							"SCEPTER LENGTH:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"								"DURATION:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"						"SCEPTER DURATION:"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_initial_slow_scepter"					"%INITIAL SCEPTER SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_max_slow_scepter"						"%MAX SCEPTER SLOW:"
 
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury"									"Blade Fury"
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"						"Spin your sword around for %duration% seconds, becoming magic immune and dealing damage to all nearby enemies.\n<font color='#FF7800'>Whirlwind:</font> Slows affected enemies' movement by %ms_slow_tooltip%%%.\n<font color='#FF7800'>Multitasker:</font> Can attack, use items, and abilities while in Blade Fury. Can be used during Omnislash."
@@ -3849,6 +3858,16 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_6"					"+250 Deadeye vision bonuses"
 		"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_7"					"Deadeye passively affects allied heroes as well"
 		"DOTA_Tooltip_ability_special_bonus_imba_drow_ranger_8"					"Marksmanship is no longer disabled"
+
+		// Jakiro
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_1"						"+350 Dual Breath range"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_2"						"+20 Fire Breath DPS, +8% Ice Breath slow"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_3"						"+6 sec Ice Path duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_4"						"+400 Liquid Fire cast range"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_5"						"+1.25 sec Ice Path stun duration"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_6"						"+500 Dual Breath speed"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_7"						"+30% Ice Path Antipode effect"
+		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_8"						"Macropyre slows enemies (5% * 1.05% per tick)"
 
 		// Lycan
 		"DOTA_Tooltip_ability_special_bonus_imba_lycan_1"						"+1 Wolves power level"		
