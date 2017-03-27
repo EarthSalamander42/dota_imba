@@ -180,7 +180,6 @@ function modifier_aphotic_shield_buff:OnRemoved()
 	local damage = ability:GetLevelSpecialValueFor( "shield", ability_level )
 	local damage_type = DAMAGE_TYPE_MAGICAL
 	for _,enemy in pairs(enemies) do
-		-- TODO check if damage is absorbed damage or just total damage
 		ApplyDamage({ victim = enemy, attacker = caster, damage = damage, damage_type = damage_type })
 	end
 
@@ -215,20 +214,21 @@ function modifier_aphotic_shield_buff:OnTakeDamage(kv)
 	-- Absorb damage taken by unit which has this buff
 	if target == kv.unit then
 		-- Avoid calculation when borrowed time is active
-		if target:HasModifier("modifier_borrowed_time_buff") == false then
+		if target:HasModifier("modifier_borrowed_time_caster_buff") == false then
 			local damage = kv.damage
 			local shield_remaining = self.shield_remaining
 
 			-- If the damage is bigger than what the shield can absorb, heal a portion
-			local heal_amount
+			local damage_block_amount
 			if damage > shield_remaining then
-				heal_amount = shield_remaining
+				damage_block_amount = shield_remaining
 			else
-				heal_amount = damage
+				damage_block_amount = damage
 			end
+			-- Show effect of damage blocked
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage_block_amount, nil)
 			-- Heal can fail due to modifiers preventing heal, set unit's health instead
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, heal_amount, nil)
-			target:SetHealth(target:GetHealth() + heal_amount)
+			target:SetHealth(target:GetHealth() + damage_block_amount)
 
 			self.shield_remaining = self.shield_remaining - damage
 			if self.shield_remaining <= 0 then
@@ -296,6 +296,7 @@ function modifier_imba_curse_of_avernus_debuff:_UpdateSlowValues()
 
 		self.move_slow = ability:GetLevelSpecialValueFor("move_slow", ability_level)
 		self.attack_slow = ability:GetLevelSpecialValueFor("attack_slow", ability_level)
+		self.heal_convert = ability:GetLevelSpecialValueFor("heal_convert", ability_level)
 	end
 end
 
@@ -335,8 +336,40 @@ function modifier_imba_curse_of_avernus_debuff:OnAttack(kv)
 	end
 end
 
-function modifier_imba_curse_of_avernus_debuff:OnTakeDamage()
-	-- TODO caster gain heal equal to damage to taken (heal_convert)
+function modifier_imba_curse_of_avernus_debuff:OnTakeDamage(kv)
+	
+	if IsServer() then
+
+		-- Caster gain heal equal to damage to taken (heal_convert)
+		local heal_convert = self.heal_convert
+
+		-- Do not process if there is no heal convert
+		if heal_convert > 0 then
+			local target = self:GetParent()
+
+			-- Unit having this debuff must be the one taking damage
+			if target == kv.unit then
+				local caster = self:GetCaster()
+				local damage = kv.damage
+				local target_health_left = target:GetHealth()
+
+				-- Ensure that we do not heal over the target's health
+				local heal_amount
+				if damage > target_health_left then
+					heal_amount = target_health_left
+				else
+					heal_amount = damage
+				end
+				heal_amount = heal_amount * heal_convert
+				
+				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
+				caster:Heal(heal_amount, caster)
+
+				-- TODO talent heal allies
+				-- caster._borrowed_time_buffed_allies
+			end
+		end
+	end
 end
 
 function modifier_imba_curse_of_avernus_debuff:GetModifierMoveSpeedBonus_Percentage() return self.move_slow end
@@ -389,16 +422,222 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 -----------------------------
 --       Borrowed Time     --
 -----------------------------
-imba_abaddon_borrowed_time = class({})
-LinkLuaModifier("modifier_borrowed_time_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+imba_abaddon_borrowed_time = class({
+	GetIntrinsicModifierName = function(self) return "modifer_borrowed_time_caster_auto_cast" end
+})
+LinkLuaModifier("modifer_borrowed_time_caster_auto_cast", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_borrowed_time_caster_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_borrowed_time_allies_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
+function imba_abaddon_borrowed_time:OnCreated()
+	if IsServer() then
+		local caster = self:GetCaster()
+		caster._borrowed_time_buffed_allies = {}
+	end
+end
 
-modifier_borrowed_time_buff = class({})
+function imba_abaddon_borrowed_time:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		local ability_level = ability:GetLevel()
+		local buff_duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+		caster:AddNewModifier(caster, self, "modifier_borrowed_time_caster_buff", { duration = buff_duration })
+	end
+end
 
+modifer_borrowed_time_caster_auto_cast = class({
+	IsHidden				= function(self) return true end,
+	IsPurgable	  			= function(self) return false end,
+	IsDebuff	  			= function(self) return false end,
+	AllowIllusionDuplicate	= function(self) return false end,
+})
+
+function modifer_borrowed_time_caster_auto_cast:OnCreated()
+	if IsServer() then
+		self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
+	end
+end
+
+function modifer_borrowed_time_caster_auto_cast:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+		MODIFIER_EVENT_ON_STATE_CHANGED
+	}
+ 
+	return funcs
+end
+
+function modifer_borrowed_time_caster_auto_cast:_AutoActivate()
+	local target = self:GetParent()
+	local ability = self:GetAbility()
+	target:CastAbilityImmediately(ability, target:GetPlayerID())
+end
+
+function modifer_borrowed_time_caster_auto_cast:OnTakeDamage(kv)
+	
+	if IsServer() then
+		local target = self:GetParent()
+		local ability = self:GetAbility()
+
+		if target == kv.unit and ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() then
+			-- Auto cast borrowed time if damage will bring target to lower than hp_threshold
+			local damage = kv.damage
+			local hp_threshold = self.hp_threshold
+			local current_hp = target:GetHealth()
+			local hp_left_after_damage = current_hp - damage
+			if hp_left_after_damage < hp_threshold then
+				-- TODO check if it prevents death
+				self:_AutoActivate()
+			end
+		end
+	end
+	
+end
+
+function modifer_borrowed_time_caster_auto_cast:OnStateChanged(kv)
+	-- Trigger borrowed time if health below hp_threshold after silence/hex
+	if IsServer() then
+		print("test", kv)
+		local target = self:GetParent()
+		local ability = self:GetAbility()
+
+		-- Check state
+		if ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() then
+			local hp_threshold = self.hp_threshold
+			local current_hp = target:GetHealth()
+			if current_hp < hp_threshold then
+				self:_AutoActivate()
+			end
+		end
+	end
+end
+
+modifier_borrowed_time_caster_buff = class({
+	IsHidden				= function(self) return false end,
+	IsPurgable	  			= function(self) return false end,
+	IsDebuff	  			= function(self) return false end,
+	IsAura					= function(self) return true end,
+	IsAuraActiveOnDeath		= function(self) return false end,
+	GetModifierAura			= function(self) return "modifier_borrowed_time_allies_buff" end,
+	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO end,
+	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
+	GetAuraRadius			= function(self) return self:GetAbility():GetSpecialValueFor("redirect_range") end,
+	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf",
+	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
+	GetStatusEffectName		= function(self) return "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf",
+	StatusEffectPriority	= function(self) return 15,
+})
+
+function modifier_borrowed_time_caster_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+ 
+	return funcs
+end
+
+function modifier_borrowed_time_caster_buff:GetAuraEntityReject(hEntity)
+	-- Do not apply aura to target
+	return hEntity ~= self:GetParent()
+end
+
+function modifier_borrowed_time_caster_buff:OnCreated()
+	if IsServer() then
+		local target = self:GetParent()
+
+		-- Play Sound
+		target:EmitSound("Hero_Abaddon.BorrowedTime")
+
+		-- Strong Dispel
+		target:Purge(false, true, false, true, false)
+	end	
+end
+
+function modifier_borrowed_time_caster_buff:OnTakeDamage(kv)
+	if IsServer() then
+		-- Ignore damage and convert to healing
+		local target = self:GetParent()
+
+		if target == kv.unit then
+			local damage = kv.damage
+
+			-- TODO Account for rapier damage amplification?
+
+			-- Block incoming damage
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
+			target:SetHealth(target:GetHealth() + damage)
+
+			-- Heal blocked damage
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
+			target:Heal(damage, target)
+		end
+	end
+end
+
+modifier_borrowed_time_allies_buff = class({
+	IsHidden				= function(self) return false end,
+	IsPurgable	  			= function(self) return false end,
+	IsDebuff	  			= function(self) return false end,
+})
+
+function modifier_borrowed_time_allies_buff:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE
+	}
+ 
+	return funcs
+end
+
+function modifier_borrowed_time_allies_buff:OnCreated()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local buff_list = caster._borrowed_time_buffed_allies
+		if buff_list then
+			_borrowed_time_buffed_allies[self:GetParent()] = true
+		end
+	end
+end
+
+function modifier_borrowed_time_allies_buff:OnRemoved()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local buff_list = caster._borrowed_time_buffed_allies
+		if buff_list then
+			_borrowed_time_buffed_allies[self:GetParent()] = nil
+		end
+	end
+end
+
+function modifier_borrowed_time_allies_buff:OnTakeDamage(kv)
+	if IsServer() then
+		local target = self:GetParent()
+
+		-- Works for illusions as well
+		if target == kv.unit then
+			local caster = self:GetCaster()
+			local ability = self:GetAbility()
+			local ability_level = ability:GetLevel()
+			local redirect = ability:GetLevelSpecialValueFor("redirect", ability_level)
+			local damage = kv.damage
+			local attacker = kv.attacker
+
+			-- TODO Account for rapier damage amplification?
+
+			-- Redirect damage to caster (which should heal when caster takes damage)
+			local redirect_damage = damage * redirect
+			-- TODO create link effect
+			target:SetHealth(target:GetHealth() + redirect_damage)
+			-- Redirect as pure damage else it will be reduced again by armour/magic resistance
+			ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
+		end
+		
+	end
+	
+end
 
 --[[ TODO
 		"Ability4"					"imba_abaddon_over_channel"
-		"Ability5"					"imba_abaddon_borrowed_time"
 
 		"Ability10"					"special_bonus_imba_abaddon_1"
 		"Ability11"					"special_bonus_imba_abaddon_2"
@@ -409,114 +648,3 @@ modifier_borrowed_time_buff = class({})
 		"Ability16"					"special_bonus_imba_abaddon_7"
 		"Ability17"					"special_bonus_imba_abaddon_8"
 ]]--
-
-function BorrowedTimeActivate( keys )
-
-	-- Variables
-	local caster = keys.caster
-	local ability = keys.ability
-	local threshold = ability:GetLevelSpecialValueFor( "hp_threshold" , ability:GetLevel() - 1  )
-	local cooldown = ability:GetCooldown( ability:GetLevel() - 1 )
-	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
-	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
-	local scepter = HasScepter(caster)
-
-	-- Apply the modifier
-	if ability:GetCooldownTimeRemaining() == 0 then
-		if caster:GetHealth() < 400 and not caster.break_duration_left then
-
-			-- Prevents illusions from gaining the borrowed time buff
-			if not caster:IsIllusion() and caster:IsAlive() then
-				BorrowedTimePurge( keys )
-				caster:EmitSound("Hero_Abaddon.BorrowedTime")
-				ability:StartCooldown(cooldown * GetCooldownReduction(caster))
-			end
-		end
-	end
-end
-
-function BorrowedTimeHeal( keys )
-
-	-- Variables
-	local damage = keys.DamageTaken
-	local caster = keys.caster
-	local attacker = keys.attacker
-	local ability = keys.ability
-	local scepter = HasScepter(caster)
-	local radius = keys.ability:GetLevelSpecialValueFor("redirect_range", ability:GetLevel() - 1 )
-
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	
-	-- Account for rapier damage amplification
-	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") and not caster:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") then
-			
-		-- Calculate damage amplification
-		local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
-		local damage_amp = 40 + 40 * amp_stacks
-
-		-- Amplify damage
-		damage = damage * (100 + damage_amp) / 100
-	end
-
-	if scepter == true then
-		caster:Heal(damage, caster)
-		for _,unit in pairs(allies) do
-			unit:Heal(damage / #allies, caster)
-		end
-	else
-		caster:Heal(damage * 2, caster)
-	end
-end
-
-function BorrowedTimePurge( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local duration = ability:GetLevelSpecialValueFor( "duration" , ability:GetLevel() - 1  )
-	local duration_scepter = ability:GetLevelSpecialValueFor( "duration_scepter" , ability:GetLevel() - 1  )
-	local scepter = HasScepter(caster)
-
-	-- Strong Dispel
-	local RemovePositiveBuffs = false
-	local RemoveDebuffs = true
-	local BuffsCreatedThisFrameOnly = false
-	local RemoveStuns = true
-	local RemoveExceptions = false
-	caster:Purge( RemovePositiveBuffs, RemoveDebuffs, BuffsCreatedThisFrameOnly, RemoveStuns, RemoveExceptions)
-	if scepter == true then
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = duration_scepter })
-	else
-		ability:ApplyDataDrivenModifier( caster, caster, "modifier_borrowed_time", { duration = duration })
-	end
-
-	-- Toggle the ability off
-	ability:ToggleAbility()
-end
-
-function BorrowedTimeAllies( keys )
-	local caster = keys.caster
-	local unit = keys.unit
-	local ability = keys.ability
-	local damage_taken = keys.DamageTaken
-	local attacker = keys.attacker
-	local redirect = ability:GetLevelSpecialValueFor("redirect", ability:GetLevel() - 1 )
-
-	-- If this unit is an illusion or currently has Borrowed Time active, do nothing
-	if unit:IsIllusion() or unit:HasModifier("modifier_borrowed_time") then
-		return nil
-	end
-	
-	-- Account for rapier damage amplification
-	if attacker:HasModifier("modifier_item_imba_rapier_stacks_magic") and not unit:HasModifier("modifier_item_imba_rapier_prevent_attack_amp") then
-			
-		-- Calculate damage amplification
-		local amp_stacks = attacker:GetModifierStackCount("modifier_item_imba_rapier_stacks_magic", attacker)
-		local damage_amp = 40 + 40 * amp_stacks
-
-		-- Amplify damage
-		damage_taken = damage_taken * (100 + damage_taken) / 100
-	end
-
-	local redirect_damage = damage_taken * ( redirect / ( 1 - redirect ) )
-	
-	ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
-end

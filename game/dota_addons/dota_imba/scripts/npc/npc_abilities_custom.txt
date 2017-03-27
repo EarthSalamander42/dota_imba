@@ -4212,8 +4212,8 @@
 			}
 			"07"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"heal_convert"							"0 0 0 0 10 20 30"
+				"var_type"								"FIELD_FLOAT"
+				"heal_convert"							"0.0 0.0 0.0 0.0 0.1 0.2 0.3"
 			}
 		}
 
@@ -4231,11 +4231,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
+		"MaxLevel"										"6"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -4243,7 +4245,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"55.0 45.0 35.0"
+		"AbilityCooldown"								"60.0 50.0 40.0 40.0 40.0 40.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4261,27 +4263,17 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"5.0 6.0 7.0"
+				"duration"								"4.0 5.0 6.0 6.5 7.0 7.5"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration_scepter"						"6.0 7.5 9.0"
+				"redirect"								"0.10 0.15 0.20 0.30 0.40 0.50"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.50"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"redirect_range"						"1200"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"redirect_property"						"-50"
+				"redirect_range"						"900"
 			}
 		}
 
@@ -4290,90 +4282,6 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-		}
-
-		"OnToggleOn"
-		{
-			"FireSound"
-			{
-				"Target"								"CASTER"
-				"EffectName"							"Hero_Abaddon.BorrowedTime"	
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"BorrowedTimePurge"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_borrowed_time_passive"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeActivate"
-					}
-				}
-			}
-
-			"modifier_borrowed_time"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
-				"EffectAttachType"						"follow_origin"
-
-				"StatusEffectName"						"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-				"StatusEffectPriority"  				"15"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeHeal"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"Aura"          						"modifier_borrowed_time_allies"
-				"Aura_Radius"   						"%redirect_range"
-				"Aura_Teams"    						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"					"0"
-			}
-
-			"modifier_borrowed_time_allies"
-			{
-				"Passive"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeAllies"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%redirect_property" 
-				}
-			}
 		}
 	}
 	
