@@ -3,6 +3,9 @@
 
 CreateEmptyTalents("abaddon")
 
+-- Reference of the first curse of avernus ability to pull values at level 1 (required for nether ward and rubick)
+local _curse_of_avernus_reference = nil
+
 -----------------------------
 --		Mist Coil          --
 -----------------------------
@@ -13,44 +16,24 @@ function imba_abaddon_mist_coil:OnSpellStart()
 	if IsServer() then
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
-		local ability_name_curse_of_avernus = "imba_abaddon_curse_of_avernus"
 
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 
-		if caster:HasAbility(ability_name_curse_of_avernus) then
-			-- Create the projectile
-			local info = {
-				Target = target,
-				Source = caster,
-				Ability = self,
-				EffectName = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf",
-				bDodgeable = false,
-				bProvidesVision = true,
-				bVisibleToEnemies = true,
-				bReplaceExisting = false,
-				iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
-				iVisionRadius = 0,
-				iVisionTeamNumber = caster:GetTeamNumber()
-			}
-			ProjectileManager:CreateTrackingProjectile( info )
-		else
-			-- Nether ward and rubick applies level 1 curse of avernus
-			-- Hence there is a need to create a dummy unit to cast the spell while possessing both mist coil and curse of avernus abilities
-
-			local dummy 					= CreateUnitByName('npc_dummy_unit', caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-			local dummy_mist_coil 			= dummy:AddAbility("imba_abaddon_mist_coil")
-			local dummy_curse_of_avernus 	= dummy:AddAbility(ability_name_curse_of_avernus)
-			dummy_mist_coil:SetLevel(self:GetLevel())
-			dummy_curse_of_avernus:SetLevel(1)
-			-- Allow casting of mist coil immediately
-			dummy_mist_coil:SetOverrideCastPoint(0)
-			dummy:CastAbilityOnTarget(target, dummy_mist_coil, caster:GetPlayerID())
-
-			-- Destroy dummy after casting mist coil
-			Timers:CreateTimer(1, function()
-				UTIL_Remove(dummy)
-			end)
-		end
+		-- Create the projectile
+		local info = {
+			Target = target,
+			Source = caster,
+			Ability = self,
+			EffectName = "particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf",
+			bDodgeable = false,
+			bProvidesVision = true,
+			bVisibleToEnemies = true,
+			bReplaceExisting = false,
+			iMoveSpeed = self:GetSpecialValueFor("projectile_speed"),
+			iVisionRadius = 0,
+			iVisionTeamNumber = caster:GetTeamNumber()
+		}
+		ProjectileManager:CreateTrackingProjectile( info )
 	end
 end
 
@@ -80,14 +63,18 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			
 			-- Apply curse of avernus debuff
 			local curse_of_avernus = caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
+			local debuff_duration
 			if curse_of_avernus then
-				-- TODO test if casting mist coil without curse will it have issues here
-				local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
-				target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+				-- Retrieve debuff duration from caster ability
+				debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
+			elseif _curse_of_avernus_reference then
+				-- Retrieve debuff duration from refence ability
+				debuff_duration = _curse_of_avernus_reference:GetSpecialValueFor("debuff_duration")
 			else
-				--TODO remove after debug
-				print("Mist coil casted without curse of avernus")
+				return nil
 			end
+			-- curse_of_avernus can be nil here
+			target:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
 
 		else
 			local heal = self:GetLevelSpecialValueFor("heal", ability_level)
@@ -194,27 +181,21 @@ function modifier_aphotic_shield_buff:OnRemoved()
 	end
 
 	-- Apply debuff to enemies around
-	local ability_name_curse_of_avernus 	= "imba_abaddon_curse_of_avernus"
-	local curse_of_avernus 					= caster:FindAbilityByName(ability_name_curse_of_avernus)
-	local spoof_caster
+	local curse_of_avernus 	= caster:FindAbilityByName("imba_abaddon_curse_of_avernus")
+	local debuff_duration
 	if curse_of_avernus then
-		spoof_caster 		= caster
+		-- Retrieve debuff duration from caster ability
+		debuff_duration 	= curse_of_avernus:GetSpecialValueFor("debuff_duration")
+	elseif _curse_of_avernus_reference then
+		-- Retrieve debuff duration from refence ability
+		debuff_duration 	= _curse_of_avernus_reference:GetSpecialValueFor("debuff_duration")
 	else
-		--Apply debuff using dummy
-		local dummy 		= CreateUnitByName('npc_dummy_unit', target:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-		curse_of_avernus 	= dummy:AddAbility(ability_name_curse_of_avernus)
-		curse_of_avernus:SetLevel(1)
-		spoof_caster 		= dummy
-
-		-- Destroy dummy after applying debuff
-		Timers:CreateTimer(1, function()
-			UTIL_Remove(dummy)
-		end)
+		return nil
 	end
 
-	local debuff_duration = curse_of_avernus:GetSpecialValueFor("debuff_duration")
+	-- curse_of_avernus can be nil here
 	for _,enemy in pairs(enemies) do
-		enemy:AddNewModifier(spoof_caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+		enemy:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
 	end
 end
 
@@ -259,6 +240,13 @@ LinkLuaModifier("modifier_imba_curse_of_avernus_caster", "hero/hero_abaddon", LU
 LinkLuaModifier("modifier_imba_curse_of_avernus_debuff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_curse_of_avernus_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
+function imba_abaddon_curse_of_avernus:OnCreated()
+	-- Populate curse of avernus reference
+	if _curse_of_avernus_reference == nil then
+		_curse_of_avernus_reference = self
+	end
+end
+
 modifier_imba_curse_of_avernus_caster = class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
@@ -299,10 +287,19 @@ modifier_imba_curse_of_avernus_debuff = class({
 	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf" end,
 	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
 })
+
 function modifier_imba_curse_of_avernus_debuff:_UpdateSlowValues()
 	if IsServer() then
 		local ability = self:GetAbility()
-		local ability_level = ability:GetLevel() - 1
+		local ability_level 
+		if ability then
+			ability_level = ability:GetLevel() - 1
+		elseif _curse_of_avernus_reference then
+			ability = _curse_of_avernus_reference
+			ability_level = 0
+		else
+			return nil
+		end
 
 		self.move_slow = ability:GetLevelSpecialValueFor("move_slow", ability_level)
 		self.attack_slow = ability:GetLevelSpecialValueFor("attack_slow", ability_level)
@@ -338,10 +335,19 @@ function modifier_imba_curse_of_avernus_debuff:OnAttack(kv)
 		-- Apply buff to allies who hit the enemy with this debuff
 		if target == self:GetParent() and caster:GetTeamNumber() == attacker:GetTeamNumber() then
 			local ability = self:GetAbility()
-			local ability_level = ability:GetLevel()
-			local buff_duration = ability:GetLevelSpecialValueFor("buff_duration", ability_level)
+			local buff_duration_name = "buff_duration"
+			local buff_duration_value
 
-			attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff", { duration = buff_duration })
+			if ability then
+				buff_duration_value = ability:GetLevelSpecialValueFor( buff_duration_name, ability:GetLevel() - 1 )
+			elseif _curse_of_avernus_reference then
+				buff_duration_value = _curse_of_avernus_reference:GetLevelSpecialValueFor( buff_duration_name, 0 )
+			else
+				return nil
+			end
+
+			-- ability can be nil here
+			attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff", { duration = buff_duration_value })
 		end
 	end
 end
@@ -396,8 +402,17 @@ modifier_imba_curse_of_avernus_buff = class({
 function modifier_imba_curse_of_avernus_buff:_UpdateIncreaseValues()
 	if IsServer() then
 		local ability = self:GetAbility()
-		local ability_level = ability:GetLevel() - 1
 		local caster = self:GetCaster()
+		local ability_level
+
+		if ability then
+			ability_level = ability:GetLevel() - 1
+		elseif _curse_of_avernus_reference then
+			ability_level = 0
+			ability = _curse_of_avernus_reference
+		else
+			return nil
+		end
 
 		-- #4 Talent: +5% move speed/+30 attack speed on Curse of Avernus
 		local talent_name = "special_bonus_imba_abaddon_4"
