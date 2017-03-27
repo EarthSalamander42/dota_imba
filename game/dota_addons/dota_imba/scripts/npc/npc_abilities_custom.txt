@@ -4000,10 +4000,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"800 800 800 800 875 950 1025"
 		"AbilityCastPoint"								"0.25"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"4.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4027,6 +4023,11 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"heal"									"100 150 200 250 275 300 325"
+			}
+			"04"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"cooldown"								"4.5"
 			}
 		}
 
@@ -4104,61 +4105,6 @@
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"AphoticShield"
-
-				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
-				"shield_modifier"						"modifier_aphotic_shield"
-				"cast_sound"							"Hero_Abaddon.AphoticShield.Cast"
-			}
-		}
-
-		"Modifiers"
-		{	
-
-			"modifier_aphotic_shield"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-				"Duration"								"%duration"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldAbsorb"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"AttachEffect"
-					{
-						"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-						"EffectAttachType"				"follow_origin"
-						"Target"						"TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"					"attach_origin"
-							"TARGET"					"attach_origin"
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"EndShieldParticle"
-					}
-				}
-			}
 		}
 	}
 
@@ -4282,6 +4228,195 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 1 (Level 10): +150 Aphotic Shield cast range
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"150"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 2 (Level 10): +45sec duration on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"45.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 3 (Level 20): -1.5sec cooldown on Mist Coil
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 4 (Level 20): +5% move speed/+30 attack speed on Curse of Avernus
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attack_increase"			"30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_increase"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 5 (Level 30): +200 shielding on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 6 (Level 30): +50% Overchannel power
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 7 (Level 40): +1sec duration on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 8 (Level 40): +300 aura range on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"300"
+			}
 		}
 	}
 	
