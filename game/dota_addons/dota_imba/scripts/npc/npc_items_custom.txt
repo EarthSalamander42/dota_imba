@@ -434,7 +434,94 @@
 				"var_type"				"FIELD_INTEGER"
 				"passive_gold_bonus"	"10"
 			}
-		}				
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Arcane Boots
+	//=================================================================================================================
+	"item_recipe_imba_arcane_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2094"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_arcane_boots"
+		"ItemRequirements"
+		{
+			"01"						"item_energy_booster;item_boots"
+		}
+	}
+
+	//=================================================================================================================
+	// Arcane Boots
+	//=================================================================================================================
+	"item_imba_arcane_boots"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2095"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_mekansm.lua"
+		"AbilityTextureName"			"custom/imba_arcane_boots"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCooldown"				"55"
+		"AbilityManaCost"				"0"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1300"
+		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"mana;mb;arcane boots"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
+		"ItemAlertable"					"1"
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_radius"		"900"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_replenish_mana"	"135"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"replenish_mana_pct"	"7"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -545,7 +632,147 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Recipe: Guardian Greaves
+	//=================================================================================================================
+	"item_recipe_imba_guardian_greaves"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2122"
+		"BaseClass"						"item_datadriven"
+		"AbilityTextureName" 			"custom/imba_recipe"
+		"Model"							"models/props_gameplay/recipe.mdl"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"1700"	
+		"ItemShopTags"					""
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_imba_guardian_greaves"
+
+		"ItemRequirements"
+		{
+			"01"						"item_imba_mekansm;item_imba_arcane_boots"
+		}
+	}
 	
+	//=================================================================================================================
+	// Guardian Greaves
+	//=================================================================================================================
+	"item_imba_guardian_greaves"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2123"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_mekansm.lua"
+		"AbilityTextureName"			"custom/imba_guardian_greaves"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"FightRecapLevel"				"2"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"0"
+		"AbilitySharedCooldown"			"mekansm"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"5375"
+		"ItemShopTags"					"agi;int;str;armor;regen_health;boost_health;move_speed;boost_mana;mana_pool"
+		"ItemQuality"					"rare"
+		"ItemAliases"					"guardian greaves"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+		"ItemAlertable"					"1"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{				
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms"				"55"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"250"
+			}		
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_all_stats"		"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"5"
+			}	
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_regen"			"4"
+			}			
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_armor"			"2"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_max_regen_bonus"	"20"
+			}			
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_max_armor_bonus"	"20"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aura_radius"			"900"
+			}	
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mend_base_health"		"250"
+			}
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mend_base_mana"		"160"
+			}
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mend_mana_pct"			"7"
+			}
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mend_regen"			"0.75"
+			}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mend_duration"			"20"
+			}
+			"15"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"min_health_threshold"	"20"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Recipe: Vladmir's Offering
 	//=================================================================================================================
@@ -7840,142 +8067,6 @@
 	}
 
 	//=================================================================================================================
-	// Recipe: Arcane Boots
-	//=================================================================================================================
-	"item_recipe_imba_arcane_boots"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2094"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_arcane_boots"
-		"ItemRequirements"
-		{
-			"01"						"item_energy_booster;item_boots"
-		}
-	}
-	
-	//=================================================================================================================
-	// Arcane Boots
-	//=================================================================================================================
-	"item_imba_arcane_boots"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2095"
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_mekansm.lua"
-		"AbilityTextureName"			"custom/imba_arcane_boots"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"55"
-		"AbilityManaCost"				"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1300"
-		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"mana;mb;arcane boots"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_ALWAYS"
-		"ItemAlertable"					"1"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_ms"				"50"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"250"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"900"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_replenish_mana"	"135"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_mana_pct"	"7"
-			}
-		}
-
-		"OnSpellStart"
-		{
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_item_imba_arcane_boots_replenish"
-				"Duration"				"%replenish_duration"
-
-				"Target"
-				{
-					"Center"  			"CASTER"
-					"Radius" 			"%replenish_radius"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}	
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_arcane_boots"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"Attributes" 		"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
-					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
-				}
-			}
-
-			"modifier_item_imba_arcane_boots_replenish"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"1"
-
-				"TextureName"		"custom/imba_arcane_boots"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%replenish_percent"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Recipe: Ancient Janggo of Endurance
 	//=================================================================================================================
 	"item_recipe_imba_ancient_janggo"
@@ -9015,308 +9106,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"blast_damage"			"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Recipe: Guardian Greaves
-	//=================================================================================================================
-	"item_recipe_imba_guardian_greaves"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2122"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_recipe"
-		"Model"							"models/props_gameplay/recipe.mdl"
-		
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1700"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_imba_guardian_greaves"
-
-		"ItemRequirements"
-		{
-			"01"						"item_imba_mekansm;item_imba_arcane_boots"
-		}
-	}
-	
-	//=================================================================================================================
-	// Guardian Greaves
-	//=================================================================================================================
-	"item_imba_guardian_greaves"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2123"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_guardian_greaves"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"FightRecapLevel"				"2"
-
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-		"ItemCost"						"5275"
-		"ItemShopTags"					"int;armor;regen_health;hard_to_tag"
-		"ItemQuality"					"rare"
-		"ItemAliases"					"guardian greaves"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemAlertable"					"1"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{				
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"80"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"350"
-			}		
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_all_stats"		"20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"6"
-			}	
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_regen"			"8"
-			}			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_armor"			"4"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"regen_per_pct"			"0.50"
-			}			
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"armor_per_pct"			"0.3"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius"			"1200"
-			}	
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_health"		"400"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_mana"		"200"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"1200"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_pct"			"3"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_duration"	"7"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_threshold"		"400"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_per_pct_tooltip"	"50"
-			}			
-			"17"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_per_pct_tooltip"	"25"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_guardian_greaves.lua"
-				"Function"				"GuardianGreaves"
-
-				"modifier_hot"			"modifier_item_imba_guardian_greaves_hot"
-				"sound_cast"			"Item.GuardianGreaves.Activate"
-				"sound_target"			"Item.GuardianGreaves.Target"
-				"particle_cast"			"particles/items3_fx/warmage.vpcf"
-				"particle_hero"			"particles/items3_fx/warmage_recipient.vpcf"
-				"particle_creep"		"particles/items3_fx/warmage_recipient_nonhero.vpcf"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_item_imba_guardian_greaves"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"Attributes" 			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_all_stats"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%bonus_all_stats"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_UNIQUE"		"%bonus_movement"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
-					"MODIFIER_PROPERTY_MANA_BONUS"					"%bonus_mana"
-				}
-			}
-
-			"modifier_item_imba_guardian_greaves_creep_aura_emitter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				
-				"Aura" 					"modifier_item_imba_guardian_greaves_creep_aura"
-				"Aura_Radius" 			"%aura_radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster" 	"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_guardian_greaves.lua"
-						"Function"				"GuardianGreavesAuto"
-
-						"modifier_hot"			"modifier_item_imba_guardian_greaves_hot"
-						"sound_cast"			"Item.GuardianGreaves.Activate"
-						"sound_target"			"Item.GuardianGreaves.Target"
-						"particle_cast"			"particles/items3_fx/warmage.vpcf"
-						"particle_hero"			"particles/items3_fx/warmage_recipient.vpcf"
-						"particle_creep"		"particles/items3_fx/warmage_recipient_nonhero.vpcf"
-					}
-				}
-			}
-
-			"modifier_item_imba_guardian_greaves_creep_aura"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-
-				"TextureName"			"custom/imba_guardian_greaves"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%base_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%base_armor"
-				}
-			}
-
-			"modifier_item_imba_guardian_greaves_hero_aura_emitter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				
-				"Aura" 					"modifier_item_imba_guardian_greaves_hero_aura"
-				"Aura_Radius" 			"%aura_radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster" 	"1"
-			}
-
-			"modifier_item_imba_guardian_greaves_hero_aura"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-
-				"TextureName"			"custom/imba_guardian_greaves"
-
-				"ThinkInterval"			"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"items/item_guardian_greaves.lua"
-						"Function"				"GuardianGreavesAura"
-
-						"modifier_stacks"		"modifier_item_imba_guardian_greaves_stacks"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%base_regen"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%base_armor"
-				}
-			}
-
-			"modifier_item_imba_guardian_greaves_stacks"
-			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Duration"				"0.2"
-
-				"ThinkInterval"			"0.2"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%regen_per_pct"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_pct"
-				}
-			}
-
-			"modifier_item_imba_guardian_greaves_hot"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"TextureName"			"custom/imba_guardian_greaves"
-
-				"Duration"				"%replenish_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE" 	"%replenish_pct"
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%replenish_pct"
-				}
 			}
 		}
 	}

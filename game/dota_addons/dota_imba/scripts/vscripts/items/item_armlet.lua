@@ -90,19 +90,13 @@ end
 function modifier_imba_armlet_unholy_strength:OnCreated()
 	if IsServer() then
 
-		-- Store parameters
-		self.bonus_strength = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength")
-		self.health_per_stack = self:GetAbility():GetSpecialValueFor("health_per_stack")
-		self.health_drain = self:GetAbility():GetSpecialValueFor("unholy_health_drain")
-		self.unholy_bonus_damage = self:GetAbility():GetSpecialValueFor("unholy_bonus_damage")
-		self.stack_damage = self:GetAbility():GetSpecialValueFor("stack_damage")
-		self.unholy_bonus_armor = self:GetAbility():GetSpecialValueFor("unholy_bonus_armor")
-		self.stack_armor = self:GetAbility():GetSpecialValueFor("stack_armor")
-		self.stack_as = self:GetAbility():GetSpecialValueFor("stack_as")
-
 		-- Adjust caster's health
 		local caster = self:GetCaster()
-		caster:SetHealth(caster:GetHealth() + self.bonus_strength * 20)
+		local bonus_health = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength") * 20
+		local health_before_activation = caster:GetHealth()
+		Timers:CreateTimer(0.01, function()
+			caster:SetHealth(health_before_activation + bonus_health)
+		end)
 
 		-- Start thinking
 		self:StartIntervalThink(0.1)
@@ -114,8 +108,9 @@ function modifier_imba_armlet_unholy_strength:OnDestroy()
 
 		-- Adjust caster's health
 		local caster = self:GetCaster()
-		local bonus_hp = self.bonus_strength * 20
-		caster:SetHealth(math.max(caster:GetHealth() - self.bonus_strength, 1))
+		local bonus_health = self:GetAbility():GetSpecialValueFor("unholy_bonus_strength") * 20
+		local health_before_deactivation = caster:GetHealthPercent() * (caster:GetMaxHealth() + bonus_health) * 0.01
+		caster:SetHealth(math.max(health_before_deactivation - bonus_health, 1))
 	end
 end
 
@@ -133,29 +128,28 @@ function modifier_imba_armlet_unholy_strength:OnIntervalThink()
 		if not parent:IsRealHero() then return end
 		
 		-- Remove health from the owner
-		parent:SetHealth(math.max( parent:GetHealth() - self.health_drain * 0.1, 1))
+		parent:SetHealth(math.max( parent:GetHealth() - self:GetAbility():GetSpecialValueFor("unholy_health_drain") * 0.1, 1))
 		
 		-- Calculate stacks to apply
-		local unholy_stacks = math.floor((parent:GetMaxHealth() - parent:GetHealth()) / self.health_per_stack)
+		local unholy_stacks = math.floor((parent:GetMaxHealth() - parent:GetHealth()) / self:GetAbility():GetSpecialValueFor("health_per_stack"))
 		
 		-- Update stacks
 		self:SetStackCount(unholy_stacks)
-		print(parent:GetAttackSpeed())
 	end
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierBonusStats_Strength()			-- Static only
-	return self.bonus_strength
+	return self:GetAbility():GetSpecialValueFor("unholy_bonus_strength")
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierPreAttack_BonusDamage()		-- Static + stacks
-	return self.unholy_bonus_damage + self:GetStackCount() * self.stack_damage
+	return self:GetAbility():GetSpecialValueFor("unholy_bonus_damage") + self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_damage")
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierPhysicalArmorBonus()			-- Static + stacks
-	return self.unholy_bonus_armor + self:GetStackCount() * self.stack_armor
+	return self:GetAbility():GetSpecialValueFor("unholy_bonus_armor") + self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_armor")
 end
 
 function modifier_imba_armlet_unholy_strength:GetModifierAttackSpeedBonus_Constant()	-- Stacks only
-	return self:GetStackCount() * self.stack_as
+	return self:GetStackCount() * self:GetAbility():GetSpecialValueFor("stack_as")
 end
