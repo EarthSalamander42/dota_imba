@@ -54,6 +54,11 @@ function imba_abaddon_mist_coil:OnSpellStart()
 	end
 end
 
+function imba_abaddon_mist_coil:GetCooldown()
+	-- #3 Talent: -1.5sec cooldown on Mist Coil
+	return self:GetSpecialValueFor("cooldown") + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_3")
+end
+
 function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 	if IsServer() then
 		local caster = self:GetCaster()
@@ -102,13 +107,16 @@ imba_abaddon_aphotic_shield = class({})
 LinkLuaModifier("modifier_aphotic_shield_buff", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
 function imba_abaddon_aphotic_shield:GetCastRange(Location, Target)
-	local caster = self:GetCaster()
-	return self:GetSpecialValueFor("cast_range")
+	-- #1 Talent: +150 Aphotic Shield cast range
+	return self:GetSpecialValueFor("cast_range") + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_1")
 end
 
-function imba_abaddon_aphotic_shield:OnCreated()
+function imba_abaddon_aphotic_shield:OnSpellStart()
 	local caster = self:GetCaster()
 	local target = self:GetCursorTarget()
+
+	-- Play Sound
+	caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
 
 	-- Strong Dispel
 	target:Purge(false, true, false, true, false)
@@ -119,8 +127,9 @@ function imba_abaddon_aphotic_shield:OnCreated()
 	-- Remove previous aphotic shield
 	target:RemoveModifierByNameAndCaster(modifier_name_aphotic_shield, caster)
 
+	-- #2 Talent: +45sec duration on Aphotic Shield
+	local duration = self:GetSpecialValueFor("duration") + caster:FindTalentValue("special_bonus_imba_abaddon_2")
 	-- Add new modifier
-	local duration = self:GetSpecialValueFor("duration")
 	target:AddNewModifier(caster, self, modifier_name_aphotic_shield, { duration = duration })
 end
 
@@ -144,7 +153,8 @@ function modifier_aphotic_shield_buff:OnCreated()
 	local ability = self:GetAbility()
 	local ability_level = ability:GetLevel()
 
-	self.shield_remaining = ability:GetLevelSpecialValueFor( "shield", ability_level )
+	-- #5 Talent: +200 shielding on Aphotic Shield
+	self.shield_remaining = ability:GetLevelSpecialValueFor( "shield", ability_level ) + caster:FindTalentValue("special_bonus_imba_abaddon_5")
 
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	local common_vector = Vector(shield_size,0,shield_size)
@@ -387,14 +397,19 @@ function modifier_imba_curse_of_avernus_buff:_UpdateIncreaseValues()
 	if IsServer() then
 		local ability = self:GetAbility()
 		local ability_level = ability:GetLevel() - 1
+		local caster = self:GetCaster()
 
-		self.move_increase = ability:GetLevelSpecialValueFor( "attack_increase" , ability_level)
+		-- #4 Talent: +5% move speed/+30 attack speed on Curse of Avernus
+		local talent_name = "special_bonus_imba_abaddon_4"
+		local move_increase_name = "move_increase"
+		local attack_increase_name = "attack_increase"
+		self.move_increase = ability:GetSpecialValueFor( move_increase_name ) + caster:FindSpecificTalentValue( talent_name, move_increase_name )
+		self.attack_increase = ability:GetLevelSpecialValueFor( attack_increase_name , ability_level) + caster:FindSpecificTalentValue( talent_name, attack_increase_name )
 	end
 end
 
 function modifier_imba_curse_of_avernus_buff:OnCreated()
 	if IsServer() then
-		self.move_increase = self:GetAbility():GetSpecialValueFor("move_increase")
 		self:_UpdateIncreaseValues()
 	end
 end
@@ -441,7 +456,8 @@ function imba_abaddon_borrowed_time:OnSpellStart()
 		local caster = self:GetCaster()
 		local ability = self:GetAbility()
 		local ability_level = ability:GetLevel()
-		local buff_duration = ability:GetLevelSpecialValueFor("duration", ability_level)
+		-- #7 Talent: +1sec duration on Borrowed Time
+		local buff_duration = ability:GetLevelSpecialValueFor("duration", ability_level) + caster:FindTalentValue("special_bonus_imba_abaddon_7")
 		caster:AddNewModifier(caster, self, "modifier_borrowed_time_caster_buff", { duration = buff_duration })
 	end
 end
@@ -522,7 +538,6 @@ modifier_borrowed_time_caster_buff = class({
 	GetModifierAura			= function(self) return "modifier_borrowed_time_allies_buff" end,
 	GetAuraSearchType		= function(self) return DOTA_UNIT_TARGET_HERO end,
 	GetAuraSearchTeam		= function(self) return DOTA_UNIT_TARGET_TEAM_FRIENDLY end,
-	GetAuraRadius			= function(self) return self:GetAbility():GetSpecialValueFor("redirect_range") end,
 	GetEffectName			= function(self) return "particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf",
 	GetEffectAttachType		= function(self) return PATTACH_ABSORIGIN_FOLLOW end,
 	GetStatusEffectName		= function(self) return "particles/status_fx/status_effect_abaddon_borrowed_time.vpcf",
@@ -535,6 +550,11 @@ function modifier_borrowed_time_caster_buff:DeclareFunctions()
 	}
  
 	return funcs
+end
+
+function modifier_borrowed_time_caster_buff:GetAuraRadius()
+	-- #8 Talent: +300 aura range on Borrowed Time
+	return self:GetAbility():GetSpecialValueFor("redirect_range") + self:GetCaster():FindTalentValue("special_bonus_imba_abaddon_8")
 end
 
 function modifier_borrowed_time_caster_buff:GetAuraEntityReject(hEntity)
@@ -638,13 +658,5 @@ end
 
 --[[ TODO
 		"Ability4"					"imba_abaddon_over_channel"
-
-		"Ability10"					"special_bonus_imba_abaddon_1"
-		"Ability11"					"special_bonus_imba_abaddon_2"
-		"Ability12"					"special_bonus_imba_abaddon_3"
-		"Ability13"					"special_bonus_imba_abaddon_4"
-		"Ability14"					"special_bonus_imba_abaddon_5"
-		"Ability15"					"special_bonus_imba_abaddon_6"
-		"Ability16"					"special_bonus_imba_abaddon_7"
 		"Ability17"					"special_bonus_imba_abaddon_8"
 ]]--
