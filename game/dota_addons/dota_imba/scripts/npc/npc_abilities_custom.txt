@@ -4171,6 +4171,31 @@
 	}
 
 	//=================================================================================================================
+	// Abaddon's Over Channel
+	//=================================================================================================================
+	"imba_abaddon_over_channel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"							"abaddon_frostmourne"
+		"MaxLevel"										"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"extra_dmg"								"90 125 160 195 230 265 300 "
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Abaddon's Borrowed Time
 	//=================================================================================================================
 	"imba_abaddon_borrowed_time"
