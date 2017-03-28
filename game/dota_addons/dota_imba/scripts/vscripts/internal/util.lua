@@ -2212,8 +2212,9 @@ function CDOTA_BaseNPC:GetDamageBlock()
 	end
 end
 
--- "angle" is in radians
-function RotateVector2D(v,angle)
+-- if isDegree = true, entered angle is degree, else radians
+function RotateVector2D(v,angle,isDegree)
+	if isDegree then angle = math.rad(angle) end
     local xp = v.x * math.cos(angle) - v.y * math.sin(angle)
     local yp = v.x * math.sin(angle) + v.y * math.cos(angle)
     return Vector(xp,yp,v.z):Normalized()
