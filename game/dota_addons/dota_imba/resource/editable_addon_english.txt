@@ -946,9 +946,6 @@
 		"DOTA_Tooltip_modifier_imba_antimage_spell_shield_active"							"Spell Shield"
 		"DOTA_Tooltip_modifier_imba_antimage_spell_shield_active_Description"				"Counter and reflect every spell for a short duration"
 
-
-
-
 		"DOTA_Tooltip_modifier_imba_mana_void_ministun"										"Mana Void"
 		"DOTA_Tooltip_modifier_imba_mana_void_ministun_Description"							"Stunned by Anti-mage's mana void"
 
@@ -1108,23 +1105,20 @@
 		"DOTA_Tooltip_modifier_imba_trueshot_active"										"Marksman's Presence"
 		"DOTA_Tooltip_modifier_imba_trueshot_active_Description"							"Trueshot Aura is affecting creeps, and granting bonus agility to heroes."
 
-		"DOTA_Tooltip_modifier_imba_fire_breath_debuff"										"Fire Breath"
-		"DOTA_Tooltip_modifier_imba_fire_breath_debuff_Description"							"Move speed reduced, and taking damage"
+		"DOTA_Tooltip_modifier_imba_fire_breath"											"Fire Breath"
+		"DOTA_Tooltip_modifier_imba_fire_breath_Description"								"Turn and attack rate slowed, and taking damage"
 
-		"DOTA_Tooltip_modifier_imba_ice_breath_debuff"										"Frost Breath"
-		"DOTA_Tooltip_modifier_imba_ice_breath_debuff_Description"							"Move and attack speed reduced, and taking damage"
+		"DOTA_Tooltip_modifier_imba_ice_breath"												"Frost Breath"
+		"DOTA_Tooltip_modifier_imba_ice_breath_Description"									"Move and attack speed reduced, and taking damage"
 
-		"DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff"									"Ice Path"
-		"DOTA_Tooltip_modifier_imba_ice_path_freeze_debuff_Description"						"Stunned"
+		"DOTA_Tooltip_modifier_imba_liquid_fire"											"Liquid Fire"
+		"DOTA_Tooltip_modifier_imba_liquid_fire_Description"								"Attacking slower and taking damage"
 
-		"DOTA_Tooltip_modifier_imba_ice_path_slow_debuff"									"Ice Path"
-		"DOTA_Tooltip_modifier_imba_ice_path_slow_debuff_Description"						"Move and attack speed reduced"
+		"DOTA_Tooltip_modifier_imba_macropyre"												"Macropyre"
+		"DOTA_Tooltip_modifier_imba_macropyre_Description"									"You're on fire! Taking damage per second"
 
-		"DOTA_Tooltip_modifier_imba_liquid_fire_debuff"										"Liquid Fire"
-		"DOTA_Tooltip_modifier_imba_liquid_fire_debuff_Description"							"Turn and attack rate slowed, and taking damage"
-
-		"DOTA_Tooltip_modifier_imba_macropyre_debuff"										"Macropyre"
-		"DOTA_Tooltip_modifier_imba_macropyre_debuff_Description"							"You're on fire! Taking damage per second"
+		"DOTA_Tooltip_modifier_imba_macropyre_scepter"										"Macropyre"
+		"DOTA_Tooltip_modifier_imba_macropyre_scepter_Description"							"You're on fire, and frozen! Jakiro doesn't give a fuck. Taking damage per second and slowed"
 
 		"DOTA_Tooltip_modifier_imba_blade_dance_stacks"										"Blade Dance"
 		"DOTA_Tooltip_modifier_imba_blade_dance_stacks_Description"							"Increased agility and movement speed"
@@ -1165,26 +1159,8 @@
 		"DOTA_Tooltip_modifier_imba_x_marks_the_spot"										"X Marks The Spot"
 		"DOTA_Tooltip_modifier_imba_x_marks_the_spot_Description"							"Will be returned to the X soon"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		"DOTA_Tooltip_modifier_imba_ghostship_rum"											"The Admiral's Rum"
 		"DOTA_Tooltip_modifier_imba_ghostship_rum_Description"								"Inebriated by Kunkka's rum. Part of the damage you take will only be felt later"
-
-
-
 
 		"DOTA_Tooltip_modifier_imba_ghostship_rum_damage"									"The Admiral's Rum"
 		"DOTA_Tooltip_modifier_imba_ghostship_rum_damage_Description"						"Feeling Kunkka's rum's hangover. Feeling the damage that was dealt earlier"
@@ -1192,41 +1168,26 @@
 		"DOTA_Tooltip_modifier_imba_ghostship_tide_slow"									"Ghost Ship"
 		"DOTA_Tooltip_modifier_imba_ghostship_tide_slow_Description"						"Slowed by Kunkka's Ghost Ship"
 
-		"DOTA_Tooltip_modifier_imba_cold_front_debuff"										"Cold Front"
-		"DOTA_Tooltip_modifier_imba_cold_front_debuff_Description"							"Slowed. Becoming frozen when accumulating too many stacks."
+		"DOTA_Tooltip_modifier_imba_frost_nova"												"Frost Nova"
+		"DOTA_Tooltip_modifier_imba_frost_nova_Description"									"Attack and movement slowed"
 
-		"DOTA_Tooltip_modifier_imba_cold_front_freeze"										"Cold Front Freeze"
-		"DOTA_Tooltip_modifier_imba_cold_front_freeze_Description"							"Rooted and Disarmed."
+		"DOTA_Tooltip_modifier_imba_frost_nova_stacks"										"Frost Aura"
+		"DOTA_Tooltip_modifier_imba_frost_nova_stacks_Description"							"Slowed, taking damage, and risking being blasted with Frost Nova"
 
-		"DOTA_Tooltip_modifier_imba_frost_nova_debuff"										"Frost Nova"
-		"DOTA_Tooltip_modifier_imba_frost_nova_debuff_Description"							"Move and attack speed slowed."
+		"DOTA_Tooltip_modifier_imba_frost_armor"											"Ice Armor"
+		"DOTA_Tooltip_modifier_imba_frost_armor_Description"								"Gaining bonus armor and slowing attackers"
 
-		"DOTA_Tooltip_modifier_imba_frost_armor_buff"										"Ice Armor"
-		"DOTA_Tooltip_modifier_imba_frost_armor_buff_Description"							"Increased armor."
+		"DOTA_Tooltip_modifier_imba_frost_armor_slow"										"Ice Armor"
+		"DOTA_Tooltip_modifier_imba_frost_armor_slow_Description"							"Slowed due to attacking a target protected by Ice Armor"
 
-		"DOTA_Tooltip_modifier_imba_frost_armor_debuff"										"Ice Armor"
-		"DOTA_Tooltip_modifier_imba_frost_armor_debuff_Description"							"Move and attack speed slowed. Becoming frozen when stacks reach 0."
+		"DOTA_Tooltip_modifier_imba_chain_frost"											"Chain Frost"
+		"DOTA_Tooltip_modifier_imba_chain_frost_Description"								"Slowed by Chain Frost"
 
-		"DOTA_Tooltip_modifier_imba_frost_armor_freeze"										"Ice Armor Freeze"
-		"DOTA_Tooltip_modifier_imba_frost_armor_freeze_Description"							"Disarmed."
+		"DOTA_Tooltip_modifier_imba_fiery_soul_counter"										"Fiery Soul"
+		"DOTA_Tooltip_modifier_imba_fiery_soul_counter_Description"							"Gaining cooldown reduction and bonus movement, attack and animation speed"
 		
-		"DOTA_Tooltip_modifier_imba_dark_ritual_creeps"										"Dark Ritual"
-		"DOTA_Tooltip_modifier_imba_dark_ritual_creeps_Description"							"Gains bonus health, damage and attack speed."
-
-		"DOTA_Tooltip_modifier_imba_dark_ritual_allied_sacrifice"							"Friendly Sacrifice"
-		"DOTA_Tooltip_modifier_imba_dark_ritual_allied_sacrifice_Description"				"Gains damage reduction."
-
-		"DOTA_Tooltip_modifier_imba_dark_ritual_enemy_sacrifice"							"Hostile Sacrifice"
-		"DOTA_Tooltip_modifier_imba_dark_ritual_enemy_sacrifice_Description"				"Gains attack damage and spell power."
-		
-		"DOTA_Tooltip_modifier_imba_chain_frost_slow"										"Chain Frost"
-		"DOTA_Tooltip_modifier_imba_chain_frost_slow_Description"							"Move and attack speed slowed."
-
-		"DOTA_Tooltip_modifier_imba_fiery_soul_stacks"										"Fiery Soul"
-		"DOTA_Tooltip_modifier_imba_fiery_soul_stacks_Description"							"Gaining bonus movement and attack speed"
-
-		"DOTA_Tooltip_modifier_imba_fiery_soul_active"										"Blazing Soul"
-		"DOTA_Tooltip_modifier_imba_fiery_soul_active_Description"							"Spells cool down faster, but cost more mana"
+		"DOTA_Tooltip_modifier_imba_blazing_strike"											"Blazing Strike"
+		"DOTA_Tooltip_modifier_imba_blazing_strike_Description"								"Taking a percantage of Lina's intelligence as damage per secound"
 
 		"DOTA_Tooltip_modifier_imba_leap"													"Leap"
 		"DOTA_Tooltip_modifier_imba_leap_Description"										"Increased move and attack speed"
@@ -1624,6 +1585,8 @@
 		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent"								"Pack tactics cooldown"
 		"DOTA_Tooltip_modifier_imba_wolfsbane_lycan_prevent_Description"					"The pack has recently hunted! Cannot benefit from Pack tactics for the duration."
 
+		"DOTA_Tooltip_modifier_imba_summoned_wolf_wicked_crunch_debuff"						"Wicked Crunch"
+		"DOTA_Tooltip_modifier_imba_summoned_wolf_wicked_crunch_debuff_Description"			"Next Lycan attack will lifesteal and deal bonus damage."
 		"DOTA_Tooltip_modifier_imba_arcane_int_stack"										"Arcane Magic"
 		"DOTA_Tooltip_modifier_imba_arcane_int_stack_Description"							"Intelligence and spell intelligence multiplier increased for each cast."
 
@@ -1813,14 +1776,6 @@
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_Lore"								"Anti-Mage's burning hatred for magic makes him impervious against most of its vile effects."
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_magic_resistance"					"%MAGIC RESISTANCE:"
 		"DOTA_Tooltip_ability_imba_antimage_spell_shield_active_duration"					"PURITY OF WILL DURATION:"
-
-
-
-
-
-
-
-
 
 		"DOTA_Tooltip_ability_imba_antimage_mana_void"										"Mana Void"
 		"DOTA_Tooltip_ability_imba_antimage_mana_void_Description"							"For each point of mana missing by the target unit, damage is dealt to it and surrounding enemies. The main target is also mini-stunned.\n<font color='#FF7800'>The magic ends here:</font> burns part of the target's mana pool before calculating damage."
@@ -2122,7 +2077,7 @@
 		"DOTA_Tooltip_ability_imba_crystal_maiden_freezing_field_scepter_frostbite_duration"		"FROSTBITE DURATION:"
 
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch"										"Poison Touch"
-		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Description"							"Coats your enemy in a poisonous substance that takes %set_in_time% seconds to set in. While the poison sets in, the target is gradually slowed by up to %%%maximum_slow%%, then stunned for one second.\n<font color='#FF7800'>Unstable poison:</font> each attack landed on a poisoned enemy during the set-in period will increase the poison's potency, making it deal an extra %poison_stack_damage% damage per second, and further reduce armor by %stack_armor_reduction%."
+		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Description"							"Coats your enemy in a poisonous substance that takes %set_in_time% seconds to set in. While the poison sets in, the target is gradually slowed by up to %%maximum_slow%%%, then stunned for one second.\n<font color='#FF7800'>Unstable poison:</font> each attack landed on a poisoned enemy during the set-in period will increase the poison's potency, making it deal an extra %poison_stack_damage% damage per second, and further reduce armor by %stack_armor_reduction%."
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Note0"								"A single target can be affected by multiple instances of Poison Touch."
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_Lore"								"One of the few Dezun rites used for offensive purposes, the paralytic enchantment often proves useful."
 		"DOTA_Tooltip_ability_imba_dazzle_poison_touch_poison_duration"						"POISON DURATION:"
@@ -2140,7 +2095,7 @@
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave"										"Shadow Wave"
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Description"							"Sends out a bolt of power that arcs between allies, healing them while damaging nearby enemies.\n<font color='#FF7800'>Thick shadows:</font> healed allies are granted bonus armor. If they're injured while they were hit by the wave, this bonus is increased.\n<font color='#FF7800'>Critical healing:</font> heals an additional %bonus_heal%%% of allies' missing health.\n\n<font color='#00FF40'>There's no maximum number of bounces.</font>"
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note0"								"Armor bonus does not stack."
-		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note2"								"Dazzle is always healed by Shadow Wave."
+		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Note1"								"Dazzle is always healed by Shadow Wave."
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_Lore"									"While it is a simplistic and routine rite among Shadow Priests, the Shadow Wave is also the most critical for success."
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_damage"								"DAMAGE/HEAL:"		
 		"DOTA_Tooltip_ability_imba_dazzle_shadow_wave_bounce_radius"						"BOUNCE DISTANCE:"
@@ -2345,11 +2300,12 @@
 		"DOTA_Tooltip_ability_imba_faceless_void_chronosphere_bonus_as"						"BONUS ATTACK SPEED:"
 
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath"										"Fire Breath"
-		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Description"							"Targets hit by Jakiro's fiery breath will take damage over time, while also having their move speed diminished.\n<font color='#FF7800'>Dragon charge:</font> Performs a flying charge to the target point, laying waste to all enemies in its path."
+		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Description"							"Targets hit by Jakiro's fiery breath will take damage over time, while also having their turn rate and attack speed diminished.\n<font color='#FF7800'>Dragon charge:</font> Performs a flying charge to the target point, laying waste to all enemies in its path."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Note0"								"Hits enemies in front of Jakiro at any point of his charge."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_Lore"									"Jakiro's burning maw opens, laying waste to all in its path."
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_damage"								"DAMAGE PER SECOND:"
-		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_move_slow"							"%MOVEMENT SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_attack_slow"							"ATTACK SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_turn_slow"							"%TURN RATE SLOW:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_duration"								"DURATION:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_range"								"RANGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_fire_breath_speed"								"SPEED:"
@@ -2365,16 +2321,8 @@
 		"DOTA_Tooltip_ability_imba_jakiro_ice_breath_range"									"RANGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_ice_breath_speed"									"SPEED:"
 
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path"											"Ice Path"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_Description"								"Creates a path of ice that stuns and damages enemies that touch it. Enemies are slowed while they remain on the ice path.\n<font color='#FF7800'>Antipode:</font> Enemies receive damage amplification from Jakiro's abilities while they are stunned"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_Lore"									"Jakiro glazes the earth with blistering cold."
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_damage"									"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_path_duration"							"PATH DURATION:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_stun_duration"							"STUN DURATION:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_dmg_amp"									"%ANTIPODE:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_attack_slow"								"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_move_slow"								"%MOVEMENT SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_ice_path_range"									"RANGE:"
+		// Ice Path
+		"DOTA_Tooltip_ability_jakiro_ice_path_Description"									"Creates a path of ice that stuns and damages enemies that touch it. 1200/1400/1600/1800 range."
 
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire"										"Liquid Fire"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Description"							"Jakiro burns his enemies in an area of effect with fire added to his attack, while slowing their own attacks.\n<font color='#FF7800'>Dragon reach:</font> Can attack from bonus range.\n\n<font color='#00FF40'>Not a unique attack modifier.</font>"
@@ -2382,20 +2330,21 @@
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_Lore"									"Jakiro spits a fireball from afar, roasting flesh and melting stone."
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_damage"								"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_attack_slow"							"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_turn_slow"							"%TURN SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_cast_range_tooltip"					"RANGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_radius"								"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_jakiro_liquid_fire_duration"								"DURATION:"
 
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre"										"Macropyre"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Description"							"Jakiro exhales a huge cone of lasting flames, which deal damage per second to enemy units caught in the fire.\n<font color='#FF7800'>Reignite:</font> While inside Macropyre, enemies' Fire Breath, Ice Breath, and Liquid Fire durations will be elongated.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases range and duration"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Description"							"Jakiro exhales a huge cone of lasting flames, which deal damage per second to enemy units caught in the fire.\n<font color='#FF7800'>Reignite:</font> While inside Macropyre, enemies' Fire Breath, Ice Breath, and Liquid Fire durations will be constantly refreshed.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases damage, and adds ice to Macropyre, progressively slowing enemies in it, until they become stunned."
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note0"									"The effect lasts for 1 second after targets leave the zone of effect."
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note1"									"Jakiro debuffs increases 0.25s per 0.5s while standing on Macropyre"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Lore"									"Ice and fire combine to rip the battlefield to shreds with extreme temperatures."
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_damage"									"DAMAGE PER SECOND:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_tooltip_damage"							"DAMAGE PER SECOND:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_tooltip_damage_scepter"					"SCEPTER DAMAGE:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_range"									"LENGTH:"
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_range_scepter"							"SCEPTER LENGTH:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration"								"DURATION:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_duration_scepter"						"SCEPTER DURATION:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_initial_slow_scepter"					"%INITIAL SCEPTER SLOW:"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_max_slow_scepter"						"%MAX SCEPTER SLOW:"
 
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury"									"Blade Fury"
 		"DOTA_Tooltip_ability_imba_juggernaut_blade_fury_Description"						"Spin your sword around for %duration% seconds, becoming magic immune and dealing damage to all nearby enemies.\n<font color='#FF7800'>Whirlwind:</font> Slows affected enemies' movement by %ms_slow_tooltip%%%.\n<font color='#FF7800'>Multitasker:</font> Can attack, use items, and abilities while in Blade Fury. Can be used during Omnislash."
@@ -2459,10 +2408,8 @@
 		"DOTA_Tooltip_ability_imba_kunkka_torrent_stun_duration"							"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_kunkka_torrent_sec_torrent_stun"							"SECONDARY STUN DURATION:"
 
-
 		"DOTA_Tooltip_ability_imba_kunkka_tidebringer"										"Tidebringer"
 		"DOTA_Tooltip_ability_imba_kunkka_tidebringer_Description"							"Kunkka's legendary sword grants increased damage and cleaves a large area of effect in front of him for a single strike.\n<font color='#FF7800'>Tidal resonance:</font> Reduces the cooldown of Tidebringer by %cdr_per_hit% seconds for every hit enemy.\n\n<font color='#00ccff'>Low Tide:</font> Increases cleave length by %tide_low_range%.\n<font color='#ff0000'>Red Tide:</font> Tidebringer slows enemies hit by %tide_red_slow%%% for %tide_red_slow_duration% seconds.\n<font color='#333399'>Flood Tide:</font> Increases damage by %tide_flood_damage%.\n<font color='#ff00ff'>High Tide:</font> Increases initial and end radius by %tide_high_radius%.\n<font color='#00ff00'>Wave Break:</font> Torrent 's cooldown isn't triggered.\n<font color='#FF7800'>TSUNAMI:</font> Tidebringer bashes enemies caught in it for %tsunami_stun% second."
-
 		"DOTA_Tooltip_ability_imba_kunkka_tidebringer_Note0"								"Cleave damage is reduced by armor type but not by armor value."
 		"DOTA_Tooltip_ability_imba_kunkka_tidebringer_Lore"									"A lost Claddish soul inhabits Kunkka's trusty Tidebringer, empowering it to destroy demons of the Cataract."
 		"DOTA_Tooltip_ability_imba_kunkka_tidebringer_radius_start"							"STARTING RADIUS:"
@@ -2491,137 +2438,100 @@
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_Note0"									"Enemies hit by the ship are dragged to its impact point."
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_Lore"									"The final ship of the Claddish Navy is nothing but a phantom, but it is all too real to the enemies of the Admiral."
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_aghanim_description"					"The ship is now dropping from the sky after 1 second delay on the targeted area instead. Enemies caught in the crashing-point are additionally rooted. The ship will travel forward in the direction where the caster is looking at, or to the nearest X-Mark. Additional Tide-effects:\n<font color='#00ccff'>Low Tide:</font> Increases cast range by 300.\n<font color='#ff00ff'>High Tide:</font> Increases radius by 125.\n<font color='#00ff00'>Wave Break:</font> Ship crushes down almost instantly."
-
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_damage"									"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_ghostship_width"						"SHIP RADIUS:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_ghostship_speed"						"SHIP SPEED:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_stun_duration"							"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_rum_reduce_pct"							"%RUM DAMAGE REDUCTION:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_rum_speed"								"%RUM SPEED BONUS:"
-
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_buff_duration"							"RUM DURATION:"
 		"DOTA_Tooltip_ability_imba_kunkka_ghostship_start_distance"							"SHIP SPAWN DISTANCE:"
 
-
-		"DOTA_Tooltip_ability_imba_lich_cold_front"											"Cold Front"
-		"DOTA_Tooltip_ability_imba_lich_cold_front_Description"								"Lich's attacks and spells gradually instill a deep cold in their targets, eventually freezing them completely. Whenever an enemy is affected by Lich's attack or spell, it gains a stack of Cold Front. The debuff slows the target's move and attack speed. Upon reaching %max_stacks% stacks, the target suffers from a Frost Nova centered on it, and becomes rooted and disarmed for a short duration. Every stack refreshes the debuff's duration."
-		"DOTA_Tooltip_ability_imba_lich_cold_front_Lore"									"The extreme cold inflicted by the arsenal of frost spells cuts right to the bone."
-		"DOTA_Tooltip_ability_imba_lich_cold_front_Note0"									"When the stack count goes above the threshold, the debuff consumes the threshold and not all stacks."
-		"DOTA_Tooltip_ability_imba_lich_cold_front_ms_slow_pct"								"% MOVE SPEED SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_cold_front_as_slow"									"ATTACK SPEED SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_cold_front_duration"								"DEBUFF DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_cold_front_freeze_duration"							"FREEZE DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_cold_front_stacks_per_attack"						"STACKS PER AUTO ATTACK:"
-
 		"DOTA_Tooltip_ability_imba_lich_frost_nova"											"Frost Nova"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_Description"								"Blasts the target with frost, dealing area damage and slowing movement and attack.\n<font color='#9ADBDA'>Cold Front:</font> Adds Cold Front stacks to the main target, then adds additional stack to all enemies in the area of effect."		
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_Description"								"Blasts the target with frost, dealing area damage and slowing movement and attack.\n<font color='#FF7800'>Frost aura:</font> Slows nearby enemies, with a chance of blasting them with Frost Nova every second. Frost Aura's slow grows stronger as enemies stay in its area of effect."
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_Note0"									"Frost Aura and its effects are unpurgable."
 		"DOTA_Tooltip_ability_imba_lich_frost_nova_Lore"									"The frostmage Ethreain's undead body is tainted by extreme cold. Enemies who come too close quickly regret it, as their minds and bodies are eroded, summer and warmth merely distant memories."
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_radius"									"RADIUS:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_ms_slow_pct"								"%MOVE SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_as_slow"									"ATTACK SLOW:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_target_damage"							"TARGET DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lich_frost_nova_aoe_damage"								"AREA DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_target_damage"							"MAIN TARGET DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_slow_duration"							"SLOW DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_main_cold_front_stacks"					"TARGET COLD FRONT STACKS:"
-		"DOTA_Tooltip_ability_imba_lich_frost_nova_area_cold_front_stacks"					"AREA COLD FRONT STACKS:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_radius"									"BLAST RADIUS:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_slow_movement_speed"						"%MOVEMENT SLOW:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_aura_aoe"								"FROST AURA RADIUS:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_stack_interval"							"STACKS PER SECOND:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_tooltip_base_slow"						"%BASE SLOW:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_slow_per_stack"							"%SLOW PER STACK:"
+		"DOTA_Tooltip_ability_imba_lich_frost_nova_proc_chance"								"%BLAST CHANCE PER SECOND:"
 
 		"DOTA_Tooltip_ability_imba_lich_frost_armor"										"Ice Armor"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_Description"							"Creates a shield around the target friendly unit or building, which adds armor and slows attacking units.\n<font color='#FF7800'>Cold Fractions:</font> Enemies that attack units covered in Ice Armor repeatedly become briefly rooted and disarmed. \n<font color='#FF7800'>Frostshield:</font> Lich is always affected by Ice Armor. \n<font color='#9ADBDA'>Cold Front:</font> Adds Cold Front stacks to enemies attacking Ice Armored units."
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_Note0"									"The debuff's stacks show how many attacks are left until the attacker becomes frozen again."
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_Note1"									"Can be set to auto cast."
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_Description"							"Creates a shield around the target friendly unit or building, which adds armor and slows attacking units.\n<font color='#FF7800'>Far-reaching ice:</font> The slow is triggered by any damage source."
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_Note0"									"Can be cast on buildings and towers."
 		"DOTA_Tooltip_ability_imba_lich_frost_armor_Lore"									"Originally crafted during his ambush for self-defense, the Lich is capable of enchanting others with a formidable defense of frost magic."
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_armor_bonus"							"ARMOR:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_ms_slow_pct"							"%MOVE SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_as_slow"								"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_frost_duration"							"SLOW DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_freeze_attacks"							"ATTACKS TO FREEZE:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_disarm_duration"						"FREEZE DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_armor_duration"							"ARMOR DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_frost_armor_cold_front_stacks"						"COLD FRONT STACKS:"		
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_armor_bonus"							"BONUS ARMOR:"
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_tooltip_duration"						"DURATION:"
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_slow_movement_speed"					"%MOVEMENT SLOW:"
+		"DOTA_Tooltip_ability_imba_lich_frost_armor_slow_attack_speed"						"ATTACK SLOW:"
 
 		"DOTA_Tooltip_ability_imba_lich_dark_ritual"										"Sacrifice"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_Description"							"Sacrifices a creep and converts its maximum hit points into mana for Lich. Grants XP to allies only.\n<font color='#FF7800'>Dark Ritual:</font> Can be used on allied, neutral and enemy creeps.\n<font color='#FF7800'>Sacrificial Spirit:</font> Nearby creeps in %allied_creeps_radius% radius from the target get a permanent damage, health and attack speed boost based on the amount of the sacrificed unit's health. \n<font color='#FF7800'>Spiritual Offering:</font> All nearby allied heroes are granted a buff. If the sacrificed unit was friendly, heroes take reduced damage from all sources. If it was a hostile creep, heroes get bonus damage and spell amplification. Spiritual Offering lasts %sacrifice_duration% seconds."
+		"DOTA_Tooltip_ability_imba_lich_dark_ritual_Description"							"Sacrifices a creep and converts its maximum hit points into mana for Lich. Grants XP to allies only.\n<font color='#FF7800'>Dark ritual:</font> Can be used on allied, neutral and enemy creeps.\n<font color='#FF7800'>No soul is wasted:</font> Excess mana will be converted to healing."
 		"DOTA_Tooltip_ability_imba_lich_dark_ritual_Note0"									"Can target allied, neutral or enemy creeps and summoned units."
 		"DOTA_Tooltip_ability_imba_lich_dark_ritual_Lore"									"It was not unheard of Ethreain to make examples out of those who contested his rule during his human life."
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_mana_conversion_pct"					"HEALTH TO MANA:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_xp_bonus_radius"						"HEROES BUFF RADIUS:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_creeps_bonus_as"						"CREEPS ATTACK SPEED BONUS:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_creeps_bonus_hp_pct"					"%CREEPS BONUS HEALTH:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_creeps_bonus_dmg_pct"					"%CREEPS BONUS DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_allied_kill_dmg_red_pct"				"%ALLY SACRIFICE DAMAGE REDUCTION:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_enemy_kill_bonus_dmg_pct"				"%ENEMY SACRIFICE DAMAGE BOUNS:"
-		"DOTA_Tooltip_ability_imba_lich_dark_ritual_enemy_kill_bonus_spell_amp"				"ENEMY SACRIFICE SPELL AMP:"		
+		"DOTA_Tooltip_ability_imba_lich_dark_ritual_health_conversion"						"HEALTH CONVERTED:"
 
 		"DOTA_Tooltip_ability_imba_lich_chain_frost"										"Chain Frost"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_Description"							"Releases an orb of frost that bounces between enemies, slowing and damaging them. The first target is mini-stunned.\n<font color='#FF7800'>Reverse entropy:</font> Chain Frost moves faster every time it hits an enemy.\n<font color='#9ADBDA'>Cold Front:</font> Each bounce apply stacks of Cold Front on impact. \n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Each bounce now spawns %scepter_bonus_projectiles% mini Chain Frosts on random enemies, which do not bounce and deal %scepter_projectiles_damage_pct%% damage. Mini Chain Frosts slow and apply Cold Front on the target normally."				
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_Description"							"Releases an orb of frost that bounces between enemies, slowing and damaging them. The first target is mini-stunned.\n<font color='#FF7800'>Permafrost:</font> Prioritizes heroes, and has no bounce limit.\n<font color='#FF7800'>Reverse entropy:</font> Chain Frost bounces and travels faster every time it hits an enemy.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Dramatically increases bounce range, and causes the Chain Frost to accelerate twice as fast."
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_Note0"									"Bounces to the closest visible enemy hero. If no heroes are nearby, bounces to a random enemy unit."
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_Note1"									"The projectile will be greatly slowed if it enters the enemy fountain."
 		"DOTA_Tooltip_ability_imba_lich_chain_frost_Lore"									"Almost universally considered the ultimate in frost magic, Ethreain's orb of frozen death strikes fear into those who dare stand against him."
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_ms_slow_pct"							"%MOVE SPEED SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_as_slow"								"ATTACK SPEED SLOW:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_slow_duration"							"SLOW DURATION:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_bounce_range"							"BOUNCE RANGE:"
 		"DOTA_Tooltip_ability_imba_lich_chain_frost_damage"									"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_num_bounces"							"BOUNCES:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_speed_increase_per_bounce"				"SPEED INCREASE PER BOUNCE:"
-		"DOTA_Tooltip_ability_imba_lich_chain_frost_cold_front_stacks"						"COLD FRONT STACKS:"		
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_damage_scepter"							"SCEPTER DAMAGE:"
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_slow_movement_speed"					"%MOVEMENT SLOW:"
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_slow_duration"							"SLOW DURATION:"
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_jump_range"								"BOUNCE RANGE:"
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_jump_range_scepter"						"SCEPTER BOUNCE RANGE:"
+		"DOTA_Tooltip_ability_imba_lich_chain_frost_speed_per_bounce"						"SPEED GAINED PER BOUNCE:"
 
 		"DOTA_Tooltip_ability_imba_lina_dragon_slave"										"Dragon Slave"
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_Description"							"Lina channels the breath of a dragon, sending out a wave of fire that scorches every enemy in its path.\n<font color='#FF7800'>Three-headed dragon:</font> Spawns two additional Dragon Slaves, which do less damage than the original."
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_Description"							"Lina channels the breath of a dragon, sending out a wave of fire that scorches every enemy in its path.\n<font color='#FF7800'>Dragon brethren:</font> Spawns %secondary_amount% additional Dragon Slaves on the targeted area after a delay, which do less damage than the original.\n<font color='#FF7800'>Absorbing flames:</font> Each unit hit by a Dragon slave decreases the cooldown of Laguna Blade by %cdr_hero% seconds (%cdr_units% on creeps & illusions)."
 		"DOTA_Tooltip_ability_imba_lina_dragon_slave_Note0"									"The secondary Dragon Slaves spawn at the targeted point after a short delay. Enemies can be hit by all of them separately, with good enough aim."
 		"DOTA_Tooltip_ability_imba_lina_dragon_slave_Lore"									"In the scorched barren of Misrule, Lina learned to manipulate the fiery breath of the Desert Wyrm as a form of entertainment."
 		"DOTA_Tooltip_ability_imba_lina_dragon_slave_primary_damage"						"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lina_dragon_slave_secondary_damage"						"SECONDARY DAMAGE:"
-
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery"									"Dragon Blitz"
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery_Description"						"Lina channels the breath of a dragon, sending out a wave of fire that scorches every enemy in its path.\n<font color='#FF7800'>Five-headed dragon:</font> Spawns four additional Dragon Slaves, which do less damage than the original."
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery_Note0"							"The secondary Dragon Slaves spawn at the target point and travel in a cone-like pattern."
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery_Lore"							"In the scorched barren of Misrule, Lina learned to manipulate the fiery breath of the Desert Wyrm as a form of entertainment."
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery_primary_damage"					"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lina_dragon_slave_fiery_secondary_damage"				"SECONDARY DAMAGE:"
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_secondary_amount"						"SECONDARY AMOUNT:"
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_secondary_distance"					"SECONDARY RANGE:"
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_split_delay"							"SPLIT DELAY:"
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_cdr_hero"								"LAGUNA CDR (HERO):"
+		"DOTA_Tooltip_ability_imba_lina_dragon_slave_cdr_units"								"LAGUNA CDR (UNITS):"
 
 		"DOTA_Tooltip_ability_imba_lina_light_strike_array"									"Light Strike Array"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_Description"						"After a small delay, summons a pillar of flame that damages and stuns enemies.\n<font color='#FF7800'>Spontaneous destruction:</font> Every pillar feeds the fire, spawning another Light Strike Array after %secondary_delay% seconds."
+		"DOTA_Tooltip_ability_imba_lina_light_strike_array_Description"						"Summons a column of flames that damages and stuns enemies.\n<font color='#FF7800'>Spontaneous destruction:</font> Summons %array_count% pillars. Each additional array after the main-cast will appear after %secondary_delay% seconds delay."
 		"DOTA_Tooltip_ability_imba_lina_light_strike_array_Lore"							"Lina's essence allows her to focus the sun's energies, causing air to combust at will."
 		"DOTA_Tooltip_ability_imba_lina_light_strike_array_aoe_radius"						"RADIUS:"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_cast_delay"						"FORMATION DELAY:"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_stun_duration"					"STUN DURATION"
+		"DOTA_Tooltip_ability_imba_lina_light_strike_array_cast_delay"						"CAST DELAY:"
+		"DOTA_Tooltip_ability_imba_lina_light_strike_array_secondary_delay"					"SECONDARY DELAY:"
+		"DOTA_Tooltip_ability_imba_lina_light_strike_array_stun_duration"					"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_lina_light_strike_array_damage"							"DAMAGE:"
 		"DOTA_Tooltip_ability_imba_lina_light_strike_array_cast_range"						"RANGE:"
-
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery"							"Sunstrike Blast Matrix"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_Description"				"After a small delay, summons a pillar of flame that damages and stuns enemies.\n<font color='#FF7800'>Thermonuclear Airburst:</font> Every pillar feeds the fire, spawning another Light Strike Array immediately."
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_Lore"						"Lina's essence allows her to focus the sun's energies, causing air to combust at will."
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_aoe_radius"				"RADIUS:"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_cast_delay"				"FORMATION DELAY:"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_stun_duration"				"STUN DURATION"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_damage"					"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lina_light_strike_array_fiery_cast_range"				"RANGE:"
+		"DOTA_Tooltip_ability_imba_lina_light_strike_array_array_count"						"ARRAY COUNT:"
 
 		"DOTA_Tooltip_ability_imba_lina_fiery_soul"											"Fiery Soul"
-		"DOTA_Tooltip_ability_imba_lina_fiery_soul_Description"								"Grants bonus attack and movement speed each time Lina casts a spell. Stacks with itself.\n<font color='#FF7800'>Fire, fire, baby:</font> Stacks infinitely.\n<font color='#FF7800'>Blazing soul:</font> Activate, spending %active_stacks% stacks of Fiery Soul, to gain access to stronger versions of your spells for %duration% seconds. Blazing Soul spells cool down incredibly fast, but do not grant stacks of Fiery Soul, and cost 100%% more mana."
-		"DOTA_Tooltip_ability_imba_lina_fiery_soul_Note0"									"Activating Fiery Soul without at least %active_stacks% stacks has no effect. Blazing Soul cannot be purged or reverted before the duration ends."
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_Description"								"Grants bonus attack and movement speed each time Lina casts a spell. Stacks with itself up to %max_stacks% times. Lasts %duration% seconds.\n<font color='#FF7800'>Fire, fire, baby:</font> Also gives cooldown reduction and animation speed per stack."
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_Note0"									"Cooldown reduction affects items, too."
 		"DOTA_Tooltip_ability_imba_lina_fiery_soul_Lore"									"Dancing flames embody Lina's playful nature, bringing out her true blazing self."
 		"DOTA_Tooltip_ability_imba_lina_fiery_soul_bonus_as"								"BONUS ATTACK SPEED:"
-		"DOTA_Tooltip_ability_imba_lina_fiery_soul_bonus_ms"								"%BONUS MOVE SPEED"
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_bonus_ms_pct"							"%BONUS MOVE SPEED:"
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_max_stacks"								"MAX STACKS:"
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_cdr_pct"									"COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_imba_lina_fiery_soul_animation_pct"							"CASTANIMATION REDUCTION:"
 		"DOTA_Tooltip_ability_imba_lina_fiery_soul_duration"								"DURATION:"
 
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul"										"Blazing Soul"
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul_Description"							"Grants bonus attack and movement speed each time Lina casts a spell. Stacks with itself.\n<font color='#FF7800'>Fire, fire, baby:</font> Stacks infinitely."
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul_Lore"									"Dancing flames embody Lina's playful nature, bringing out her true blazing self."
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul_bonus_as"								"BONUS ATTACK SPEED:"
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul_bonus_ms"								"%BONUS MOVE SPEED"
-		"DOTA_Tooltip_ability_imba_lina_blazing_soul_duration"								"DURATION:"
-
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade"										"Laguna Blade"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"							"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces Spell Immunity, and adds your intelligence to the damage."
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"							"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>Forked lightning:</font> Hits up to %bounce_amount% additional random enemies in a radius of %bounce_range% around the main-target.\n\nCan be upgradeded with Aghanim's Scepter."
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Note0"									"Bounces on enemies are chosen at random, including illusions and creeps."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"									"The air around Lina becomes so intensely torrid that it scorches foes with white-hot lightning."
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_aghanim_description"					"Changes the damage type to pure and pierces Spell Immunity."
 		"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"								"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_int_damage_scepter"					"SCEPTER INT MULTIPLIER:"
-
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_fiery"									"LAGOONA BLAZE IT"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Description"							"Fires off a bolt of scorching lightning at an enemy, dealing massive damage.\n<font color='#FF7800'>SLAYER:</font> Hits all enemies in a %total_length% length line in front of you.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Changes the damage type to pure, pierces Spell Immunity, and adds your intelligence to the damage."
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_Lore"									"420 BLAZE IT"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_damage"								"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_lina_laguna_blade_int_damage_scepter"					"SCEPTER INT MULTIPLIER:"
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_effect_delay"							"DELAY:"
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_bounce_amount"							"BOUNCES:"
+		"DOTA_Tooltip_ability_imba_lina_laguna_blade_bounce_range"							"BOUNCE RANGE:"
 
 		"DOTA_Tooltip_ability_imba_lion_earth_spike"										"Earth Spike"
 		"DOTA_Tooltip_ability_imba_lion_earth_spike_Description"							"Rock spikes burst from the earth along a straight path. Enemies hit are hurled into the air, then stunned, and finally damaged when they fall.\n<font color='#FF7800'>Hell spike:</font> Each enemy affected hit by Earth Spike creates a new Earth Spike that attacks the closest enemy to it. Each enemy can still be hit only once per cast. This effect triggers as long as there are valid targets."
@@ -3427,7 +3337,7 @@
 		"DOTA_Tooltip_ability_imba_slardar_bash_of_the_deep_damage_smack"					"SARDINE SLAP DAMAGE:"		
 		
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze"									"Corrosive Haze"
-		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"						"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Tip the scales:</font> enemies are affected by Slipstream, gaining a chance to slip on every attack, completely negating that attack's damage and slowing their movement by %slip_up_ms_loss_pct%%% for %slip_up_duratio% seconds. Enemies already affected by Slipstream cannot proc it again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> while inside your Rain Cloud, enemies affected by Corrosive Haze take %rain_cloud_stunned_amp_pct%%% increased damage from any source while they are stunned." 		
+		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Description"						"Reduces enemy armor to amplify physical damage and provides True Sight of the targeted unit, revealing invisibility.\n<font color='#FF7800'>Tip the scales:</font> enemies are affected by Slipstream, gaining a chance to slip on every attack, completely negating that attack's damage and slowing their movement by %slip_up_ms_loss_pct%%% for %slip_up_duration% seconds. Enemies already affected by Slipstream cannot proc it again.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> while inside your Rain Cloud, enemies affected by Corrosive Haze take %rain_cloud_stunned_amp_pct%%% increased damage from any source while they are stunned." 		
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_Lore"								"Even the strongest armor counts for little when left to the brine of the sea."
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_duration"							"DURATION:"
 		"DOTA_Tooltip_ability_imba_slardar_corrosive_haze_armor_reduction"					"ARMOR REDUCTION:"
@@ -3877,6 +3787,10 @@
 
 		"DOTA_Tooltip_ability_zuus_lightning_bolt_Description"								"Calls down a bolt of lightning to strike an enemy unit, causing damage and a mini-stun. When cast, Lightning Bolt briefly provides unobstructed vision and True Sight around the target in a <font color='#FF7800'>1200</font> radius. Can be cast on the ground, affecting the closest enemy hero in %spread_aoe% range.\n<font color='#FF7800'>Cast range increases by 100 with each level in this ability.</font>"
 
+		"DOTA_Tooltip_ability_item_tango_Lore"												"Treant Protector glares sternly at your lack of respect for the forest."
+		"DOTA_Tooltip_ability_item_tango_single_Lore"										"Treant Protector glares sternly at your lack of respect for the forest."
+
+		
 		//=================================================================================================================
 		// Custom talents
 		//=================================================================================================================
@@ -3971,16 +3885,16 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_kunkka_7"						"-2 Tidebringer cooldown"
 		"DOTA_Tooltip_ability_special_bonus_imba_kunkka_8"						"Rum absorbs damage instead of delaying it"
 
-		// Jakiro
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_1"						"+350 Dual Breath range"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_2"						"+20 Fire Breath DPS, +8% Ice Breath slow"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_3"						"+6 sec Ice Path duration"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_4"						"+400 Liquid Fire cast range"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_5"						"+1.25 sec Ice Path stun duration"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_6"						"+500 Dual Breath speed"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_7"						"+30% Ice Path Antipode effect"
-		"DOTA_Tooltip_ability_special_bonus_imba_jakiro_8"						"Macropyre slows enemies (5% * 1.05% per tick)"
-
+		// Lina
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_1"						"+2 secondary Dragon Slaves"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_2"						"+80 Light Strike Array damage"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_3"						"-4 Dragon Slave cooldown"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_4"						"+6 Light Strike Arrays spawn to the sides of the main one"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_5"						"+4% move / 40 attack speed per Fiery Soul stack"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_6"						"Laguna Blade stuns targets for 0.75 seconds"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_7"						"+1 max Fiery Soul stacks"
+		"DOTA_Tooltip_ability_special_bonus_imba_lina_8"						"Consuming flames (details in Fiery Soul)"
+		
 		// Lycan
 		"DOTA_Tooltip_ability_special_bonus_imba_lycan_1"						"+1 Wolves power level"		
 		"DOTA_Tooltip_ability_special_bonus_imba_lycan_2"						"+2%/2 Feral Impulse damage/regen per ally"
@@ -4010,16 +3924,6 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_6"						"+100 Enraged Earthshock/Overpower radius"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_7"						"-120 seconds Territorial Hunter cooldown"
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_8"						"+100% skill cooldown rate while enraged"
-
-		// LICH
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_1"						"-75% Chain Frost bounce delay"			
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_2"						"+50% Sacrifice bonuses"
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_3"						"+175 Chain Frost bounce range"
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_4"						"-4 Frost Nova cooldown"
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_5"						"+1 Cold Front freeze duration"			
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_6"						"+36 Ice Armor on buildings"
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_7"						"+300 Chain Frost Bounce speed"
-		"DOTA_Tooltip_ability_special_bonus_imba_lich_8"						"+1 Cold Front stack from spells"
 
 		//=================================================================================================================
 		// Vanilla talent overrides
@@ -4247,7 +4151,6 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_witch_doctor_1"			"+200 Death Ward Attack Range"
 		"DOTA_Tooltip_Ability_special_bonus_unique_witch_doctor_2"			"+40 Voodoo Restoration Heal"
 		"DOTA_Tooltip_Ability_special_bonus_unique_necrophos"				"-1s Death Pulse Cooldown"
-
 		"DOTA_Tooltip_Ability_special_bonus_unique_mirana_1"				"+100 Leap Attack Speed"
 		"DOTA_Tooltip_Ability_special_bonus_unique_mirana_2"				"+2 Multishot Sacred Arrows"
 		"DOTA_Tooltip_Ability_special_bonus_unique_bounty_hunter"			"-2.5s Jinada Cooldown"
@@ -4303,7 +4206,6 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_batrider_2"				"+250 Flamebreak AoE/Knockback"
 		"DOTA_Tooltip_Ability_special_bonus_unique_wraith_king_1"			"No Reincarnation Manacost"
 		"DOTA_Tooltip_Ability_special_bonus_unique_wraith_king_2"			"+20% Vampiric Aura Lifesteal"
-
 		"DOTA_Tooltip_Ability_special_bonus_unique_dragon_knight"			"2x Dragon Blood HP Regen/Armor"
 		"DOTA_Tooltip_Ability_special_bonus_unique_invoker_1"				"+2 Forged Spirit Summoned"
 		"DOTA_Tooltip_Ability_special_bonus_unique_invoker_2"				"AoE Deafening Blast"
@@ -4372,8 +4274,6 @@
 		"DOTA_Tooltip_Ability_special_bonus_unique_drow_ranger_2"			"+350 Gust Distance/Knockback"
 		"DOTA_Tooltip_Ability_special_bonus_unique_drow_ranger_3"			"+25 Marksmanship Agility"
 		"DOTA_Tooltip_Ability_special_bonus_unique_slardar"					"+10% Bash chance"
-		"DOTA_Tooltip_Ability_special_bonus_unique_lina_1"					"-4s Dragon Slave Cooldown"
-		"DOTA_Tooltip_Ability_special_bonus_unique_lina_2"					"+1 Fiery Soul Max Stacks"
 		"DOTA_Tooltip_Ability_special_bonus_unique_ancient_apparition_1"	"Cold Feet gains 3 charges"
 		"DOTA_Tooltip_Ability_special_bonus_unique_ancient_apparition_2"	"+100 Chilling Touch damage"
 		"DOTA_Tooltip_Ability_special_bonus_unique_disruptor"				"+8 Thunder Strike hits"
@@ -4442,7 +4342,6 @@
 		"DOTA_Tooltip_Ability_item_imba_magic_wand"					"Magic Wand"
 		"DOTA_Tooltip_Ability_item_imba_mask_of_madness"			"Mask of Madness"
 		"DOTA_Tooltip_Ability_item_imba_mekansm"					"Mekansm"
-		"DOTA_Tooltip_Ability_item_imba_mekansm_2"					"Golden Mekansm"
 		"DOTA_Tooltip_Ability_item_imba_mjollnir"					"Mjollnir"
 		"DOTA_Tooltip_Ability_item_imba_javelin"					"Javelin"
 		"DOTA_Tooltip_Ability_item_imba_monkey_king_bar"			"Monkey King Bar"
@@ -4465,8 +4364,6 @@
 		"DOTA_Tooltip_Ability_item_imba_rapier_magic_2_dummy"		"Archmage Rapier"
 		"DOTA_Tooltip_Ability_item_imba_aegis"						"Aegis of the Immortal"
 		"DOTA_Tooltip_Ability_item_imba_cheese"						"Cheese"
-		"DOTA_Tooltip_Ability_item_imba_sange"						"Sange"
-		"DOTA_Tooltip_Ability_item_imba_sange_and_yasha"			"Sange and Yasha"
 		"DOTA_Tooltip_Ability_item_imba_satanic"					"Satanic"
 		"DOTA_Tooltip_Ability_item_imba_sheepstick"					"Scythe of Vyse"
 		"DOTA_Tooltip_Ability_item_imba_shivas_guard"				"Shiva's Guard"
@@ -4477,19 +4374,23 @@
 		"DOTA_Tooltip_Ability_item_imba_morbid_mask"				"Morbid Mask"
 		"DOTA_Tooltip_Ability_item_imba_vladmir"					"Vladmir's Offering"
 		"DOTA_Tooltip_Ability_item_imba_vladmir_2"					"Vladmir's Blood"
-		"DOTA_Tooltip_Ability_item_imba_yasha"						"Yasha"
 		"DOTA_Tooltip_Ability_item_imba_arcane_boots"				"Arcane Boots"
 		"DOTA_Tooltip_Ability_item_imba_orb_of_venom"				"Orb of Venom"
 		"DOTA_Tooltip_Ability_item_imba_ancient_janggo"				"Drum of Endurance"
 		"DOTA_Tooltip_Ability_item_imba_veil_of_discord"			"Veil of Discord"
-		"DOTA_Tooltip_Ability_item_imba_azura"						"Azura"
 		"DOTA_Tooltip_Ability_item_imba_moon_shard"					"Moon Shard"
 		"DOTA_Tooltip_Ability_item_imba_silver_edge"				"Silver Edge"
 		"DOTA_Tooltip_Ability_item_imba_octarine_core"				"Octarine Core"
 		"DOTA_Tooltip_Ability_item_imba_guardian_greaves"			"Guardian Greaves"
-		"DOTA_Tooltip_Ability_item_imba_sange_and_azura"			"Sange and Azura"
-		"DOTA_Tooltip_Ability_item_imba_azura_and_yasha"			"Azura and Yasha"
-		"DOTA_Tooltip_Ability_item_imba_sange_and_azura_and_yasha"	"The Triumvirate"
+		"DOTA_Tooltip_Ability_item_imba_sange"						"Sange"
+		"DOTA_Tooltip_Ability_item_imba_yasha"						"Yasha"
+		"DOTA_Tooltip_Ability_item_imba_azura"						"Azura"
+		"DOTA_Tooltip_Ability_item_imba_sange_yasha"				"Sange and Yasha"
+		"DOTA_Tooltip_Ability_item_imba_sange_azura"				"Sange and Azura"
+		"DOTA_Tooltip_Ability_item_imba_azura_yasha"				"Azura and Yasha"
+		"DOTA_Tooltip_Ability_item_imba_triumvirate"				"The Triumvirate"
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd"			"Heaven's Halberd"
+		"DOTA_Tooltip_ability_item_imba_spell_fencer"				"Spellfencer"
 		"DOTA_Tooltip_Ability_item_imba_shotgun"					"Rusty Old Shotgun"
 		"DOTA_Tooltip_Ability_item_imba_starfury"					"Starfury"
 		"DOTA_Tooltip_Ability_item_imba_soul_of_truth"				"Soul of Truth"
@@ -4591,50 +4492,35 @@
 		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength"									"Unholy Strength"
 		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_Description"						"Losing 45 health per second, but gaining %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength, %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage, %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor, and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_disarm"										"Disarm"
-		"DOTA_Tooltip_modifier_item_imba_sange_disarm_Description"							"Disarmed and unable to attack."
-
 		"DOTA_Tooltip_modifier_item_imba_sange_maim"										"Maim"
-		"DOTA_Tooltip_modifier_item_imba_sange_maim_Description"							"Attack and movement speed reduced by this amount."
-
-		"DOTA_Tooltip_modifier_item_imba_halberd_disarm"									"Disarm"
-		"DOTA_Tooltip_modifier_item_imba_halberd_disarm_Description"						"Disarmed and unable to attack."
-
-		"DOTA_Tooltip_modifier_item_imba_halberd_maim"										"Maim"
-		"DOTA_Tooltip_modifier_item_imba_halberd_maim_Description"							"Attack and movement speed reduced by this amount."
+		"DOTA_Tooltip_modifier_item_imba_sange_maim_Description"							"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 		"DOTA_Tooltip_modifier_item_imba_yasha_stacks"										"Battle Rhythm"
-		"DOTA_Tooltip_modifier_item_imba_yasha_stacks_Description"							"Increased move and attack speed."
+		"DOTA_Tooltip_modifier_item_imba_yasha_stacks_Description"							"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_stack"								"Battle Rhythm"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_stack_Description"					"Increased move and attack speed."
+		"DOTA_Tooltip_modifier_item_imba_azura_amp"											"Soul Rend"
+		"DOTA_Tooltip_modifier_item_imba_azura_amp_Description"								"Taking %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% extra magic damage."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_maim_stacks"						"Greater Maim"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_maim_stacks_Description"			"Amount of move and attack speed lost."
+		"DOTA_Tooltip_modifier_item_imba_sange_yasha_maim"									"Maim"
+		"DOTA_Tooltip_modifier_item_imba_sange_yasha_maim_Description"						"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_proc_effect"						"Disarm"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_yasha_proc_effect_Description"			"Disarmed and unable to attack."
+		"DOTA_Tooltip_modifier_item_imba_sange_yasha_stacks"								"Battle Rhythm"
+		"DOTA_Tooltip_modifier_item_imba_sange_yasha_stacks_Description"					"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_stack"								"Soulrending Maim"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_stack_Description"					"Amount of magic resistance, move and attack speed lost."
+		"DOTA_Tooltip_modifier_item_imba_sange_azura_stacks"								"Soul Maim"
+		"DOTA_Tooltip_modifier_item_imba_sange_azura_stacks_Description"					"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed, and taking %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% extra magic damage."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_proc_effect"						"Disarm"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_proc_effect_Description"			"Disarmed and unable to attack."
+		"DOTA_Tooltip_modifier_item_imba_azura_yasha_amp"									"Soul Rend"
+		"DOTA_Tooltip_modifier_item_imba_azura_yasha_amp_Description"						"Taking %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% extra magic damage."
 
-		"DOTA_Tooltip_modifier_item_imba_azura_and_yasha_stack"								"Battle Rhythm"
-		"DOTA_Tooltip_modifier_item_imba_azura_and_yasha_stack_Description"					"Increased move and attack speed."
+		"DOTA_Tooltip_modifier_item_imba_azura_yasha_stacks"								"Battle Rhythm"
+		"DOTA_Tooltip_modifier_item_imba_azura_yasha_stacks_Description"					"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
 
-		"DOTA_Tooltip_modifier_item_imba_azura_and_yasha_amp_stack"							"Soul Rend"
-		"DOTA_Tooltip_modifier_item_imba_azura_and_yasha_amp_stack_Description"				"Increased vulnerability to magic damage."
+		"DOTA_Tooltip_modifier_item_imba_triumvirate_stacks_debuff"							"Soul Maim"
+		"DOTA_Tooltip_modifier_item_imba_triumvirate_stacks_debuff_Description"				"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed, and taking %dMODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS%%% extra magic damage."
 
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_stack"					"Battle Rhythm"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_stack_Description"		"Increased move and attack speed."
-
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_maim_stack"				"Soulrending Maim"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_maim_stack_Description"	"Amount of magic resistance, move and attack speed lost."
-
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_proc_effect"				"Disarm"
-		"DOTA_Tooltip_modifier_item_imba_sange_and_azura_and_yasha_proc_effect_Description"	"Disarmed and unable to attack."
+		"DOTA_Tooltip_modifier_item_imba_triumvirate_stacks_buff"							"Battle Rhythm"
+		"DOTA_Tooltip_modifier_item_imba_triumvirate_stacks_buff_Description"				"Gaining %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% bonus attack speed."
 
 		"DOTA_Tooltip_modifier_item_imba_guardian_greaves_creep_aura"						"Guardian Aura"
 		"DOTA_Tooltip_modifier_item_imba_guardian_greaves_creep_aura_Description"			"Increased health regeneration and armor."
@@ -4676,10 +4562,10 @@
 		"DOTA_Tooltip_modifier_item_heart_aura_effect_Description"							"Increased Strength"
 
 		"DOTA_Tooltip_modifier_item_imba_skadi_slow"										"Wintergrasp"
-		"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"							"Movement and attack speed slowed"
+		"DOTA_Tooltip_modifier_item_imba_skadi_slow_Description"							"Movement slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%%, attack speed slowed by %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT%."
 
 		"DOTA_Tooltip_modifier_item_imba_skadi_freeze"										"Dead Winter"
-		"DOTA_Tooltip_modifier_item_imba_skadi_freeze_Description"							"Rooted, unable to move"
+		"DOTA_Tooltip_modifier_item_imba_skadi_freeze_Description"							"Rooted and unable to move."
 
 		"DOTA_Tooltip_modifier_item_imba_desolator_armor_debuff"							"Corruption"
 		"DOTA_Tooltip_modifier_item_imba_desolator_armor_debuff_Description"				"Armor and vision range reduced"
@@ -4687,8 +4573,8 @@
 		"DOTA_Tooltip_modifier_item_imba_phase_boots_2_move_speed"							"Haste Boots"
 		"DOTA_Tooltip_modifier_item_imba_phase_boots_2_move_speed_Description"				"Current and maximum movement speed increased"
 
-		"DOTA_Tooltip_modifier_item_imba_mjollnir_shield"									"Static Charge"
-		"DOTA_Tooltip_modifier_item_imba_mjollnir_shield_Description"						"Countering incoming damage with lightning bolts"
+		"DOTA_Tooltip_modifier_item_imba_mjollnir_static"									"Static Charge"
+		"DOTA_Tooltip_modifier_item_imba_mjollnir_static_Description"						"Countering incoming damage with lightning bolts"
 
 		"DOTA_Tooltip_modifier_item_imba_mjollnir_slow"										"Static Charge"
 		"DOTA_Tooltip_modifier_item_imba_mjollnir_slow_Description"							"Movement and attack slowed"
@@ -5058,9 +4944,8 @@
 
 		"DOTA_Tooltip_ability_item_imba_lotus_orb_Description"						"Active: Echo Shell - Applies a shield to the target unit which re-casts most targeted spells back to their caster. The shielded unit will still take damage from the spell. Dispels negative buffs when applied."
 		
-		"DOTA_Tooltip_ability_item_imba_maelstrom_Description"						"<font color='#FF7800'>Chain Lightning (passive):</font> Every %proc_count% attacks, releases a Chain Lightning, which bounces between enemies in up to %bounce_radius% range, dealing damage. Bounces until running out of targets.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
+		"DOTA_Tooltip_ability_item_imba_maelstrom_Description"						"<font color='#FF7800'>Chain Lightning (passive):</font> Every %proc_count% attacks, releases a Chain Lightning, which bounces between enemies in up to %bounce_radius% range, dealing damage. Bounces until running out of targets.\n<font color='#00FF40'>Not an unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_maelstrom_Lore"								"A hammer forged for the gods themselves, Maelstrom allows its user to harness the power of lightning."
-		"DOTA_Tooltip_ability_item_imba_maelstrom_proc_count"						"ATTACKS TO CHAIN:"
 		"DOTA_Tooltip_ability_item_imba_maelstrom_bounce_damage"					"CHAIN DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_maelstrom_bonus_damage"						"+$damage"
 		"DOTA_Tooltip_ability_item_imba_maelstrom_bonus_as"							"+$attack"
@@ -5079,20 +4964,13 @@
 		"DOTA_Tooltip_ability_item_imba_magic_wand_restore_per_charge"				"RESTORE PER CHARGE:"
 
 		"DOTA_Tooltip_ability_item_imba_mekansm_Description"						"Active: Restore - Heals %heal_amount% HP and gives +%heal_bonus_armor% armor in an area. <font color='#FF7800'>Heals %hot_percentage%%% of the target's maximum HP per second for %hot_duration% seconds after the heal.</font>\nPassive: Mekansm Aura - Bonus HP Regen in an area.\n\nMultiple instances of Mekansm Aura do not stack."
-		"DOTA_Tooltip_ability_item_imba_mekansm_Lore"							    "A glowing jewel formed out of assorted parts that somehow fit together perfectly."
+		"DOTA_Tooltip_ability_item_imba_mekansm_Lore"								"A glowing jewel formed out of assorted parts that somehow fit together perfectly."
 		"DOTA_Tooltip_ability_item_imba_mekansm_aura_health_regen"					"BONUS HP REGEN:"
 		"DOTA_Tooltip_ability_item_imba_mekansm_bonus_all_stats"					"+$all"
 		"DOTA_Tooltip_ability_item_imba_mekansm_bonus_armor"						"+$armor"
 
-		"DOTA_Tooltip_ability_item_imba_mekansm_2_Description"						"Active: Restore - Heals %heal_amount% HP and gives +%heal_bonus_armor% armor in an area. <font color='#FF7800'>Heals %hot_percentage%%% of the target's maximum HP per second for %hot_duration% seconds after the heal.</font>\nPassive: Mekansm Aura - Bonus HP Regen in an area.\n\nMultiple instances of Mekansm Aura do not stack."
-		"DOTA_Tooltip_ability_item_imba_mekansm_2_Lore"							    "A particularly beautiful variant of Mekansm, with incredible restorative properties."
-		"DOTA_Tooltip_ability_item_imba_mekansm_2_aura_health_regen"				"BONUS HP REGEN:"
-		"DOTA_Tooltip_ability_item_imba_mekansm_2_bonus_all_stats"					"+$all"
-		"DOTA_Tooltip_ability_item_imba_mekansm_2_bonus_armor"						"+$armor"
-
-		"DOTA_Tooltip_ability_item_imba_mjollnir_Description"						"<font color='#FF7800'>Static Charge (active):</font> Places a shield on the target ally which activates with every %static_proc_count% instances of damage taken. Launches a shocking bolt to all enemies in %static_radius% range, damaging and briefly slowing them.\n<font color='#FF7800'>Chain Lightning (passive):</font> Every %proc_count% attacks, releases a Chain Lightning, which bounces between enemies in up to %bounce_radius% radius, dealing damage. Bounces until running out of targets.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
+		"DOTA_Tooltip_ability_item_imba_mjollnir_Description"						"<font color='#FF7800'>Static Charge (active):</font> Places a shield on the target ally which activates with every %static_proc_count% instances of damage taken. Launches a shocking bolt to all enemies in %static_radius% range, damaging and briefly slowing them.\n<font color='#FF7800'>Chain Lightning (passive):</font> Every %proc_count% attacks, releases a Chain Lightning, which bounces between enemies in up to %bounce_radius% radius, dealing damage. Bounces until running out of targets.\n<font color='#00FF40'>Not an unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_mjollnir_Lore"								"Thor's magical hammer, made for him by the dwarves Brok and Eitri."
-		"DOTA_Tooltip_ability_item_imba_mjollnir_proc_count"						"ATTACKS TO CHAIN:"
 		"DOTA_Tooltip_ability_item_imba_mjollnir_bounce_damage"						"CHAIN DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_mjollnir_static_duration"					"STATIC CHARGE DURATION:"
 		"DOTA_Tooltip_ability_item_imba_mjollnir_static_damage"						"STATIC CHARGE DAMAGE:"
@@ -5226,67 +5104,108 @@
 		"DOTA_Tooltip_ability_item_imba_rapier_cursed_damage_reduction"				"DAMAGE REDUCTION:"
 		"DOTA_Tooltip_ability_item_imba_rapier_cursed_disable_reduction"			"DISABLE DURATION REDUCTION:"
 
-		"DOTA_Tooltip_ability_item_imba_sange_Description"							"Passive: Maim - <font color='#FF7800'>With every attack,</font> slows the target's attack and movement for %maim_duration% seconds.\nPassive: <font color='#FF7800'>Disarming Strike - has a chance to briefly disarm the target on every attack.</font>"
+		"DOTA_Tooltip_ability_item_imba_sange_Description"							"<font color='#FF7800'>Maim (passive):</font> attacking enemies slows their movement and attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Disarm Strike (passive):</font> %proc_chance%%% chance to disarm your target for %proc_duration_enemy% seconds with each attack."
 		"DOTA_Tooltip_ability_item_imba_sange_Lore"									"Sange is an unusually accurate weapon, seeking weak points automatically."
-		"DOTA_Tooltip_ability_item_imba_sange_maim_base"							"%MAIM BASE SLOW:"
-		"DOTA_Tooltip_ability_item_imba_sange_maim_stacking"						"%MAIM STACKING SLOW:"
-		"DOTA_Tooltip_ability_item_imba_sange_maim_cap"								"%MAXIMUM SLOW:"
-		"DOTA_Tooltip_ability_item_imba_sange_disarm_chance"						"%DISARM CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_sange_disarm_duration"						"DISARM DURATION:"
+		"DOTA_Tooltip_ability_item_imba_sange_Note0"								"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_sange_Note1"								"Maim from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_sange_maim_stack"							"%MAIM SLOW:"
+		"DOTA_Tooltip_ability_item_imba_sange_stack_duration"						"MAIM DURATION:"
 		"DOTA_Tooltip_ability_item_imba_sange_bonus_damage"							"+$damage"
 		"DOTA_Tooltip_ability_item_imba_sange_bonus_strength"						"+$str"
+
+		"DOTA_Tooltip_ability_item_imba_yasha_Description"							"<font color='#FF7800'>Battle Rhythm (passive):</font> each attack grants you %as_stack% attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Swift Strike (passive):</font> %proc_chance%%% chance to gain %proc_ms%%% movement speed for %proc_duration_self% seconds with each attack."
+		"DOTA_Tooltip_ability_item_imba_yasha_Lore"									"Yasha is regarded as the swiftest weapon ever created."
+		"DOTA_Tooltip_ability_item_imba_yasha_Note0"								"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_yasha_Note1"								"Battle Rhythm from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_yasha_Note2"								"Movement speed bonus does not stack with itself or other Yasha upgrades."
+		"DOTA_Tooltip_ability_item_imba_yasha_stack_duration"						"BATTLE RHYTHM DURATION:"
+		"DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"					"+$attack"
+		"DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"						"+$agi"
+		"DOTA_Tooltip_ability_item_imba_yasha_bonus_ms"								"%+$move_speed"
+
+		"DOTA_Tooltip_ability_item_imba_azura_Description"							"<font color='#FF7800'>Soul Rend (passive):</font> attacking enemies makes them more vulnerable to magic damage. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Spirit Strike (passive):</font> %proc_chance%%% chance to silence your target for %proc_duration_enemy% seconds with each attack."
+		"DOTA_Tooltip_ability_item_imba_azura_Lore"									"Azura is a sword attuned to the spirit world, able to cut flesh and soul in a single strike."
+		"DOTA_Tooltip_ability_item_imba_azura_Note0"								"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_azura_Note1"								"Soul Rend from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_azura_Note2"								"Cooldown reduction does not stack with itself or other Azura upgrades."
+		"DOTA_Tooltip_ability_item_imba_azura_amp_stack"							"%SOUL REND MAGIC AMP:"
+		"DOTA_Tooltip_ability_item_imba_azura_stack_duration"						"SOUL REND DURATION:"
+		"DOTA_Tooltip_ability_item_imba_azura_bonus_cdr"							"%COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_item_imba_azura_bonus_int"							"+$int"
+
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_Description"					"<font color='#FF7800'>Maiming Rhythm (passive):</font> attacking enemies slows their movement and attack speed, and grants you %as_stack% bonus attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Swift Disarm Strike (passive):</font> %proc_chance%%% chance to disarm your target for %proc_duration_enemy% seconds, while granting you %proc_ms%%% movement speed for %proc_duration_self% seconds, with each attack."
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_Lore"							"Sange and Yasha, attuned by high noon and used together, become a powerful combination."
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_Note0"							"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_Note1"							"Maim or Battle Rhythm from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_Note2"							"Movement speed bonus does not stack with itself or other Yasha upgrades."
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_stack_duration"					"MAIMING RHYTHM DURATION:"
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_damage"					"+$damage"
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_strength"					"+$str"
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_attack_speed"				"+$attack"
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_agility"					"+$agi"
+		"DOTA_Tooltip_ability_item_imba_sange_yasha_bonus_ms"						"%+$move_speed"
+
+		"DOTA_Tooltip_ability_item_imba_sange_azura_Description"					"<font color='#FF7800'>Soul Maim (passive):</font> attacking enemies slows their movement and attack speed and makes them more vulnerable to magic damage. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Spirit Disarm Strike (passive):</font> %proc_chance%%% chance to disarm and silence your target for %proc_duration_enemy% seconds with each attack."
+		"DOTA_Tooltip_ability_item_imba_sange_azura_Lore"							"Sange and Azura, attuned by dusk and used together, become a powerful combination."
+		"DOTA_Tooltip_ability_item_imba_sange_azura_Note0"							"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_sange_azura_Note1"							"Maim or Soul Rend from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_sange_azura_Note2"							"Cooldown reduction does not stack with itself or other Azura upgrades."
+		"DOTA_Tooltip_ability_item_imba_sange_azura_maim_stack"						"%SOUL MAIM SLOW:"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_amp_stack"						"%SOUL MAIM MAGIC AMP:"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_stack_duration"					"SOUL MAIM DURATION:"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_bonus_cdr"						"%COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_bonus_damage"					"+$damage"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_bonus_strength"					"+$str"
+		"DOTA_Tooltip_ability_item_imba_sange_azura_bonus_int"						"+$int"
+
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Description"					"<font color='#FF7800'>Soul Rhythm (passive):</font> attacking enemies makes them more vulnerable to magic damage, and grants you %as_stack% bonus attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Swift Spirit Strike (passive):</font> %proc_chance%%% chance to silence your target for %proc_duration_enemy% seconds, while granting you %proc_ms%%% movement speed for %proc_duration_self% seconds, with each attack."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Lore"							"Azura and Yasha, attuned by dawn and used together, become a powerful combination."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Note0"							"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Note1"							"Soul Rend or Battle Rhythm from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Note2"							"Movement speed bonus does not stack with itself or other Yasha upgrades."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_Note3"							"Cooldown reduction does not stack with itself or other Azura upgrades."
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_amp_stack"						"%SOUL RHYTHM MAGIC AMP:"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_stack_duration"					"SOUL RHYTHM DURATION"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_bonus_cdr"						"%COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_bonus_int"						"+$int"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_bonus_attack_speed"				"+$attack"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_bonus_agility"					"+$agi"
+		"DOTA_Tooltip_ability_item_imba_azura_yasha_bonus_ms"						"%+$move_speed"
+
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Description"					"<font color='#FF7800'>Triumph (passive):</font> attacking enemies slows their movement and attack speed, makes them more vulnerable to magic damage, and grants you %as_stack% bonus attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Triumphant Strike (passive):</font> %proc_chance%%% chance to disarm and silence your target for %proc_duration_enemy% seconds, while granting you %proc_ms%%% movement speed for %proc_duration_self% seconds, with each attack."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Lore"							"Sange, Azura and Yasha, attuned for a full day and fused together, become the ultimate weapon."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Note0"							"Procs from Sange, Yasha, Azura and their upgrades all share the same cooldown."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Note1"							"Maim, Soul Rend or Battle Rhythm from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Note2"							"Movement speed bonus does not stack with itself or other Yasha upgrades."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_Note3"							"Cooldown reduction does not stack with itself or other Azura upgrades."
+		"DOTA_Tooltip_ability_item_imba_triumvirate_amp_stack"						"%TRIUMPH MAGIC AMP:"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_maim_stack"						"%TRIUMPH SLOW:"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_stack_duration"					"TRIUMPH DURATION:"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_cdr"						"%COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_damage"					"+$damage"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_attack_speed"				"+$attack"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_str"						"+$str"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_agi"						"+$agi"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_int"						"+$int"
+		"DOTA_Tooltip_ability_item_imba_triumvirate_bonus_ms"						"%+$move_speed"
 		
-		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"				"Active: Disarms the target for %disarm_range% seconds. Lasts %disarm_melee% on Melee targets.\nPassive: Maim - <font color='#FF7800'>With every attack,</font> slows the target's attack and movement for %maim_duration% seconds.\nPassive: <font color='#FF7800'>Disarming Strike - has a chance to briefly disarm the target on every attack."
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Description"				"<font color='#FF7800'>Disarm (active):</font> prevents a target from attacking for %disarm_melee_duration% seconds. Duration increases to %disarm_range_duration% seconds if the target is ranged.\n<font color='#FF7800'>Maim (passive):</font> attacking enemies slows their movement and attack speed. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Disarm Strike (passive):</font> %disarm_chance%%% chance to disarm your target for %passive_disarm_duration% seconds with each attack. This effect can trigger on each enemy only once every %disarm_cooldown% seconds."
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Lore"						"This halberd moves with the speed of a smaller weapon, allowing the bearer to win duels that a heavy edge would not."
 		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Note0"						"Disarm cannot be purged."
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_Note1"						"Maim from different sources does not stack."
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_stack"					"%MAIM SLOW:"
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_maim_duration"				"MAIM DURATION:"
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_damage"				"+$damage"
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_strength"				"+$str"
+		"DOTA_Tooltip_ability_item_imba_heavens_halberd_bonus_evasion"				"%+$evasion"
 
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_Description"					"Passive: Greater Maim - <font color='#FF7800'>Maim no longer has a maximum slow.</font>\nPassive: <font color='#FF7800'>Greater Battle Rhythm - Battle Rhythm now stacks up to 6 times.</font>\nPassive: <font color='#FF7800'>Disarming afterimage - has a chance to repeat a previous attack, briefly disarming the target.</font>\nYasha-based movement speed bonuses from multiple items do not stack."
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_Lore"							"Sange and Yasha, attuned at dawn and used together, turn their owner into a veritable war machine."
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_maim_base"						"%MAIM BASE SLOW:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_maim_stacking"					"%MAIM STACKING SLOW:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_proc_chance"					"%DISARMING AFTERIMAGE CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_proc_duration"					"DISARM DURATION:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_buff_stacks"					"MAX BATTLE RHYTHM STACKS:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_bonus_damage"					"+$damage"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_bonus_strength"					"+$str"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_bonus_agility"					"+$agi"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_bonus_attack_speed"				"+$attack"
-		"DOTA_Tooltip_ability_item_imba_sange_and_yasha_movement_speed_percent_bonus"	"%+$move_speed"
-
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_Description"					"Passive: Greater Maim - Maim no longer has a maximum slow.\nPassive: Greater Soul Rend - Soul Rend no longer has a maximum magic resistance reduction.\nPassive: Soul Disarm - has a chance to briefly disarm the target while dealing bonus magical damage."
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_Lore"							"Sange and Azura, attuned at noon and used together, can easily find even the enemy's best hidden weaknesses."
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_maim_base"						"%BASE SLOW/AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_maim_stacking"					"%STACKING SLOW/AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_proc_chance"					"%SOUL DISARM CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_proc_duration"					"DISARM DURATION:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_bonus_damage"					"+$damage"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_bonus_strength"					"+$str"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_bonus_int"						"+$int"
-
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_Description"					"Passive: Greater Battle Rhythm - Battle Rhythm now stacks up to 6 times.\nPassive: Greater Soul Rend - Soul Rend no longer has a maximum magic resistance reduction.\nPassive: Soul afterimage - has a chance to repeat a previous attack, dealing bonus damage.\nYasha-based movement speed bonuses from multiple items do not stack."
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_Lore"							"Azura and Yasha, attuned at dusk and used together, gain an unrivaled finesse that only the best fencers can fully exploit."
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_base_amp"						"%BASE MAGIC AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_stacking_amp"					"%STACKING MAGIC AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_proc_chance"					"%SOUL AFTERIMAGE CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_proc_damage"					"SOUL AFTERIMAGE DAMAGE:"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_buff_stacks"					"MAX BATTLE RHYTHM STACKS:"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_bonus_int"						"+$int"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_bonus_agility"					"+$agi"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_bonus_attack_speed"				"+$attack"
-		"DOTA_Tooltip_ability_item_imba_azura_and_yasha_movement_speed_percent_bonus"	"%+$move_speed"
-
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_Description"					"Passives: Greater Soul Rend, Greater Battle Rhythm and Greater Maim.\nPassive: Triumph - has a chance to repeat a previous attack, dealing bonus magical damage and disarming the target.\nYasha-based movement speed bonuses from multiple items do not stack."
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_Lore"							"After a full day of attunement, the three swords transcend their single forms, becoming the incredibly powerful Triumvirate."
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_base_maim"					"%BASE SLOW/AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_stacking_maim"				"%STACKING SLOW/AMPLIFY:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_proc_chance"					"%TRIUMPH CHANCE:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_proc_duration"				"TRIUMPH DISARM DURATION:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_buff_stacks"					"MAX BATTLE RHYTHM STACKS:"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_damage"					"+$damage"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_str"					"+$str"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_int"					"+$int"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_agility"				"+$agi"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_bonus_attack_speed"			"+$attack"
-		"DOTA_Tooltip_ability_item_imba_sange_and_azura_and_yasha_movement_speed_percent_bonus"	"%+$move_speed"
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_Description"					"<font color='#FF7800'>Spellsword (passive):</font> your attacks deal magical damage instead of physical.\n<font color='#FF7800'>Soul Rend (passive):</font> attacking enemies makes them more vulnerable to magic damage. Stacks up to %max_stacks% times.\n<font color='#FF7800'>Spirit Strike (passive):</font> %proc_chance%%% chance to silence your target for %proc_duration_enemy% seconds with each attack."
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_Lore"							"More magical conduit than sword, this garish blade was made in the secret laboratories of the Aeol Drias, and allows arcane practicioners to channel and wield their knowledge as a sharp ethereal blade of pure energy."
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_Note0"							"Cooldown reduction does not stack with itself or other Azura upgrades."
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_amp_stack"						"%SOUL REND MAGIC AMP:"
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_stack_duration"				"SOUL REND DURATION:"
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_bonus_cdr"						"%COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_ability_item_imba_spell_fencer_bonus_int"						"+$int"
 		
 		"DOTA_Tooltip_ability_item_imba_sheepstick_Description"						"<font color='#FF7800'>Hex (active):</font> Transforms the target unit into a harmless critter for %hex_duration% seconds. Destroys illusions.\n<font color='#FF7800'>Expeditious Retreat:</font> Can be used on yourself; applies a basic dispel, transforms you into a harmless critter, and grants fast flying movement. Lasts for %hex_duration% seconds.\n\n<font color='#00FF40'>While hexed by yourself, you are immune to being hexed by enemies.</font>"
 		"DOTA_Tooltip_ability_item_imba_sheepstick_Note0"							"Instantly destroys illusions."
@@ -5308,22 +5227,17 @@
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_initial_slow_tooltip"			"%BLAST MOVEMENT SLOW:"
 		"DOTA_Tooltip_ability_item_imba_shivas_guard_slow_duration_tooltip"			"BLAST SLOW DURATION:"
 		
-		"DOTA_Tooltip_ability_item_imba_skadi_Description"							"<font color='#FF7800'>Wintergrasp:</font> Damaging an enemy through any means will slow them. The slow lasts longer on enemies closer to you.\n<font color='#FF7800'>Dead Winter Reigns (active):</font> Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Range is based on strength, damage is based on agility, and root duration is based on intelligence.\n<font color='#00FF40'>Not a unique attack modifier.</font>"
+		"DOTA_Tooltip_ability_item_imba_skadi_Description"							"<font color='#FF7800'>Wintergrasp (passive):</font> Damaging enemies will slow them. The slow lasts longer on enemies closer to you.\n<font color='#FF7800'>Dead Winter Reigns (active):</font> Creates a zone of utter cold around you, damaging, ministunning, and rooting nearby enemies. Effect radius, damage and root duration are based on your attributes:\nEvery 100 <font color='#FF0000'>strength</font> adds %radius_tooltip% range.\nEvery 100 <font color='#00FF00'>agility</font> adds %damage_tooltip% damage.\nEvery 100 <font color='#4060FF'>intelligence</font> adds %duration_tooltip% seconds duration.\n\n<font color='#00FF40'>Not an unique attack modifier.</font>"
 		"DOTA_Tooltip_ability_item_imba_skadi_Lore"									"Noldor, blood is on your hands...\nTears unnumbered, you will shet and dwell in pain...\nDead winter reigns!"
-		"DOTA_Tooltip_ability_item_imba_skadi_Note0"								"Slow lasts at most 5, at least 0.75 seconds."
-		"DOTA_Tooltip_ability_item_imba_skadi_Note1"								"Minimum slow duration happens beyond 1200 range."
-		"DOTA_Tooltip_ability_item_imba_skadi_Note2"								"100 strength gives 200 extra range, 100 agility grants 150 extra damage, and 100 intelligence grants 1 extra second of root duration."
-		"DOTA_Tooltip_ability_item_imba_skadi_Note3"								"Activation grants flying vision in the same radius as the effect for 3 seconds."
-		"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"								"%MOVE SLOW:"
+		"DOTA_Tooltip_ability_item_imba_skadi_Note0"								"Slow lasts at most 5, at least 1 second."
+		"DOTA_Tooltip_ability_item_imba_skadi_Note1"								"Minimum slow duration happens beyond 1000 range."
+		"DOTA_Tooltip_ability_item_imba_skadi_Note2"								"Activation grants flying vision in the same radius as the effect."
+		"DOTA_Tooltip_ability_item_imba_skadi_slow_ms"								"%MOVEMENT SLOW:"
 		"DOTA_Tooltip_ability_item_imba_skadi_slow_as"								"ATTACK SLOW:"
-		"DOTA_Tooltip_ability_item_imba_skadi_base_radius"							"BASE ACTIVE RADIUS:"
-		"DOTA_Tooltip_ability_item_imba_skadi_base_duration"						"BASE ACTIVE DURATION:"
-		"DOTA_Tooltip_ability_item_imba_skadi_base_damage"							"BASE ACTIVE DAMAGE:"
+		"DOTA_Tooltip_ability_item_imba_skadi_base_radius"							"BASE RADIUS:"
+		"DOTA_Tooltip_ability_item_imba_skadi_base_duration"						"BASE DURATION:"
+		"DOTA_Tooltip_ability_item_imba_skadi_base_damage"							"BASE DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_skadi_bonus_all_stats"						"+$all"
-
-		"DOTA_Tooltip_ability_item_tango_Lore"										"Treant Protector glares sternly at your lack of respect for the forest."
-
-		"DOTA_Tooltip_ability_item_tango_single_Lore"								"Treant Protector glares sternly at your lack of respect for the forest."
 
 		"DOTA_Tooltip_ability_item_imba_tranquil_boots_2_Description"				"<font color='#FF7800'>Tranquility (passive):</font> passively accumulates up to %max_stacks% stacks of tranquility while off cooldown, at a rate of one per second. Each stack increases your movement speed by %move_speed_per_sec%, while granting %health_regen_per_sec% health regen and %armor_per_sec% armor to all allies in %radius% radius.\nAttacking or being attacked puts Ironleaf boots on cooldown, and removes all stacks of Tranquility from you and your allies."
 		"DOTA_Tooltip_ability_item_imba_tranquil_boots_2_Lore"						"While bearing a powerful regenerative enchantment, which can bolster an entire army's frontline, this pair of boots is still susceptible to direct attacks."
@@ -5414,17 +5328,6 @@
 		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_damage_per_stack"	"SOUL SLAUGHTER DAMAGE PER STACK:"
 		"DOTA_Tooltip_Ability_item_imba_satanic_soul_slaughter_hp_per_stack"		"SOUL SLAUGHTER HP PER STACK:"
 
-		"DOTA_Tooltip_ability_item_imba_yasha_Lore"									"Yasha is regarded as the swiftest weapon ever created."	
-		"DOTA_Tooltip_ability_item_imba_yasha_Description"							"Passive: <font color='#FF7800'>Battle Rhythm - gains movement and attack speed with every attack.</font>\nPassive: <font color='#FF7800'>Afterimage - has a chance to repeat a previous attack.</font> Yasha-based movement speed bonuses from multiple items do not stack."	
-		"DOTA_Tooltip_ability_item_imba_yasha_Note0"								"Afterimage only factors your base damage, plus any additional damage from your primary attribute."
-		"DOTA_Tooltip_ability_item_imba_yasha_bonus_agility"						"+$agi"
-		"DOTA_Tooltip_ability_item_imba_yasha_bonus_attack_speed"					"+$attack"
-		"DOTA_Tooltip_ability_item_imba_yasha_movement_speed_percent_bonus"			"%+$move_speed"
-		"DOTA_Tooltip_ability_item_imba_yasha_stacking_as"							"BATTLE RHYTHM ATTACK SPEED:"
-		"DOTA_Tooltip_ability_item_imba_yasha_stacking_ms"							"%BATTLE RHYTHM MOVE SPEED:"
-		"DOTA_Tooltip_ability_item_imba_yasha_max_stacks"							"BATTLE RHYTHM MAX STACKS:"
-		"DOTA_Tooltip_ability_item_imba_yasha_proc_chance"							"%AFTERIMAGE CHANCE:"
-
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Description"					"Active: Replenish Mana - <font color='#FF7800'>Instantly restores a flat amount of mana to all nearby units, then slowly replenishes a %% of their maximum mana over the next few seconds.</font>\n\nFlat movement speed bonuses from multiple pairs of boots do not stack."
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Lore"							"Magi equipped with these boots are valued in battle."
 		"DOTA_Tooltip_ability_item_imba_arcane_boots_Note0"							"Does not work on Meepo clones."
@@ -5487,13 +5390,6 @@
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_aura_resist"				"%BONUS MAGIC DAMAGE:"
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_debuff_duration"			"SOULREND DURATION:"
 		"DOTA_Tooltip_ability_item_imba_veil_of_discord_target_damage"				"SOULREND DAMAGE:"
-
-		"DOTA_Tooltip_ability_item_imba_azura_Lore"									"Azura is a sword attuned to the spirit world, able to cut both flesh and soul with each strike."	
-		"DOTA_Tooltip_ability_item_imba_azura_Description"							"Passive: Soul Rend - each attack applies a stack of Soul Rend, making the target more vulnerable to magical damage.\nPassive: Soulstrike - each attack has a chance to cut directly to the target's spirit, dealing %proc_damage% bonus damage."	
-		"DOTA_Tooltip_ability_item_imba_azura_bonus_int"							"+$int"
-		"DOTA_Tooltip_ability_item_imba_azura_damage_amp_tooltip"					"%MAGIC AMP PER STACK:"
-		"DOTA_Tooltip_ability_item_imba_azura_amp_stacks"							"MAXIMUM STACKS:"
-		"DOTA_Tooltip_ability_item_imba_azura_proc_chance"							"%SOULSTRIKE CHANCE:"
 
 		"DOTA_Tooltip_ability_item_imba_moon_shard_Description"						"Grants attack speed and bonus night vision range.\n<font color='#FF7800'>Full moon (active):</font> Consume the Moon Shard to grant some attack speed and bonus night vision to an allied hero. Stacks diminishingly.\n\n<font color='#00FF40'>1st shard: +%consume_as_1% AS, +%consume_vision_1% vision\n2nd shard: +%consume_as_2% AS, +%consume_vision_2% vision\n3rd shard and beyond: +%consume_as_3% AS</font>"
 		"DOTA_Tooltip_ability_item_imba_moon_shard_Lore"							"Said to be a tear from the lunar goddess Selemene."
