@@ -606,8 +606,8 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_juggernaut_healing_ward_upgrade"
-		"Ability2"					"imba_juggernaut_healing_ward_passive"
+		"Ability1"					""
+		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
 
@@ -681,7 +681,7 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"imba_juggernaut_healing_totem_passive"
+		"Ability1"					""
 		"Ability2"					""
 		"Ability3"					""
 		"Ability4"					""
