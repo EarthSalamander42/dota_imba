@@ -1,29 +1,105 @@
---[[	Author: d2imba
-		Date:	24.03.2015	]]
+--[[	Author: D2Imba, rework by Shush
+		Date:	05.03.2017	]]
 
-function Midas( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local sound_cast = keys.sound_cast
+item_imba_hand_of_midas = class({})
+LinkLuaModifier("modifier_item_imba_hand_of_midas", "items/item_midas", LUA_MODIFIER_MOTION_NONE)
 
-	-- If this unit is not a real hero, do nothing
-	if not caster:IsRealHero() then
-		ability:RefundManaCost()
-		ability:EndCooldown()
-		return nil
+function item_imba_hand_of_midas:CastFilterResultTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+
+		-- If the target is in the caster's team, deny it
+		if target:GetTeamNumber() == caster:GetTeamNumber() then
+			return UF_FAIL_FRIENDLY
+		end
+
+		-- If the target is a hero, deny it
+		if target:IsHero() then
+			return UF_FAIL_HERO
+		end
+
+		-- If this unit is a clone, deny it
+		if caster:IsTempestDouble() then
+			return UF_FAIL_CUSTOM
+		end
+
+		-- If the target is a ward, deny it
+		if target:IsOther() or IsWardTypeUnit(target) then
+			return UF_FAIL_CUSTOM
+		end
+
+		-- If the target is a necronbook summon, deny it
+		if string.find(target:GetUnitName(), "necronomicon") then
+			return UF_FAIL_CUSTOM
+		end
+
+		-- If the target is a building, deny it
+		if target:IsBuilding() then
+			return UF_FAIL_BUILDING
+		end
+
+		return UF_SUCCESS
 	end
+end
+
+function item_imba_hand_of_midas:GetCustomCastErrorTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+		
+		-- Clone message
+		if caster:IsTempestDouble() then
+			return "#dota_hud_error_clone_cant_use"
+		end
+
+		-- Ward message
+		if target:IsOther() or IsWardTypeUnit(target) then
+			return "#dota_hud_error_cant_use_on_wards"
+		end
+
+		-- Necronomicon message		
+		if string.find(target:GetUnitName(), "necronomicon") then
+			return "#dota_hud_error_cant_use_on_necrobook"
+		end
+	end
+end
+
+function item_imba_hand_of_midas:GetAbilityTextureName()
+	local caster = self:GetCaster()
+	local caster_name = caster:GetUnitName()
+
+	local animal_heroes = {
+		"npc_dota_hero_brewmaster",
+		"npc_dota_hero_magnataur",
+		"npc_dota_hero_lone_druid",
+		"npc_dota_hero_broodmother",
+		"npc_dota_hero_lycan",
+		"npc_dota_hero_ursa"
+	}
+
+	for _, hero_name in pairs (animal_heroes) do
+		if caster_name == hero_name then
+			return "custom/item_paw_of_midas"
+		end
+	end
+
+	return "custom/imba_hand_of_midas"
+end
+
+function item_imba_hand_of_midas:OnSpellStart()
+	local caster = self:GetCaster()
+	local target = self:GetCursorTarget()
+	local ability = self
+	local sound_cast = "DOTA_Item.Hand_Of_Midas"
 
 	-- Parameters and calculations
 	local bonus_gold = ability:GetSpecialValueFor("bonus_gold")
 	local xp_multiplier = ability:GetSpecialValueFor("xp_multiplier")
 	local passive_gold_bonus = ability:GetSpecialValueFor("passive_gold_bonus")
-	local bonus_xp = target:GetDeathXP()
-	local game_time = math.max(GameRules:GetDOTATime(false, false), 0)
+	local bonus_xp = target:GetDeathXP()	
 
 	-- Adjust for the lobby settings and for midas' own bonuses
-	bonus_xp = bonus_xp * xp_multiplier * (1 + CUSTOM_XP_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01)
-	bonus_gold = bonus_gold * (1 + CUSTOM_GOLD_BONUS * 0.01) * (1 + game_time * BOUNTY_RAMP_PER_SECOND * 0.01) * (1 + passive_gold_bonus * 0.01)
+	bonus_xp = bonus_xp * xp_multiplier * (1 + CUSTOM_XP_BONUS * 0.01)
+	bonus_gold = bonus_gold * (1 + CUSTOM_GOLD_BONUS * 0.01)
 
 	-- Play sound and show gold gain message to the owner
 	target:EmitSound(sound_cast)
@@ -40,4 +116,31 @@ function Midas( keys )
 	target:Kill(ability, caster)
 	caster:AddExperience(bonus_xp, false, false)
 	caster:ModifyGold(bonus_gold, true, 0)
+end
+
+function item_imba_hand_of_midas:GetIntrinsicModifierName()
+	return "modifier_item_imba_hand_of_midas"
+end
+
+modifier_item_imba_hand_of_midas = class({})
+
+function modifier_item_imba_hand_of_midas:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+
+	return decFuncs
+end
+
+function modifier_item_imba_hand_of_midas:GetModifierAttackSpeedBonus_Constant()
+	local ability = self:GetAbility()	
+	local bonus_attack_speed = ability:GetSpecialValueFor("bonus_attack_speed")
+
+	return bonus_attack_speed
+end
+
+function modifier_item_imba_hand_of_midas:IsHidden()
+	return true
+end
+
+function modifier_item_imba_hand_of_midas:IsPermanent()
+	return true
 end

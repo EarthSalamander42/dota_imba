@@ -116,8 +116,7 @@ function GameMode:OnGameRulesStateChange(keys)
 
 	if new_state == DOTA_GAMERULES_STATE_PRE_GAME then
 		Timers:CreateTimer(1.5, function()
-			IMBA_WISP_PICKERS_TABLE = HeroList:GetAllHeroes()
-			for _, hero in pairs(IMBA_WISP_PICKERS_TABLE) do
+			for _, hero in pairs(HeroList:GetAllHeroes()) do
 				hero:AddNewModifier(hero, nil, "modifier_imba_prevent_actions_game_start", {})
 			end
 		end)
@@ -617,6 +616,30 @@ function GameMode:OnTeamKillCredit(keys)
 	UpdateComebackBonus(1, killer_team)
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Arena mode scoreboard updater
+	-------------------------------------------------------------------------------------------------
+	
+	if GetMapName() == "imba_arena" then
+		if killer_team == DOTA_TEAM_GOODGUYS then
+			local radiant_score = CustomNetTables:GetTableValue("arena_capture", "radiant_score")
+			CustomNetTables:SetTableValue("arena_capture", "radiant_score", {radiant_score["1"] + 1})
+			CustomGameEventManager:Send_ServerToAllClients("radiant_score_update", {})
+			if (radiant_score["1"] + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
+				GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+				GAME_WINNER_TEAM = "Radiant"
+			end
+		elseif killer_team == DOTA_TEAM_BADGUYS then
+			local dire_score = CustomNetTables:GetTableValue("arena_capture", "dire_score")
+			CustomNetTables:SetTableValue("arena_capture", "dire_score", {dire_score["1"] + 1})
+			CustomGameEventManager:Send_ServerToAllClients("dire_score_update", {})
+			if (dire_score["1"] + 1) >= KILLS_TO_END_GAME_FOR_TEAM then
+				GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+				GAME_WINNER_TEAM = "Dire"
+			end
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Deathstreak logic
 	-------------------------------------------------------------------------------------------------
 
@@ -732,23 +755,6 @@ function GameMode:OnEntityKilled( keys )
 		GAME_WINNER_TEAM = "Radiant"
 	elseif killed_unit:GetUnitName() == "npc_dota_goodguys_fort" then
 		GAME_WINNER_TEAM = "Dire"
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Arena mode logic
-	-------------------------------------------------------------------------------------------------
-
-	if END_GAME_ON_KILLS then
-		local radiant_kills = PlayerResource:GetTeamKills(DOTA_TEAM_GOODGUYS)
-		local dire_kills = PlayerResource:GetTeamKills(DOTA_TEAM_BADGUYS)
-
-		if radiant_kills >= KILLS_TO_END_GAME_FOR_TEAM then
-			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-			GAME_WINNER_TEAM = "Radiant"
-		elseif dire_kills >= KILLS_TO_END_GAME_FOR_TEAM then
-			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-			GAME_WINNER_TEAM = "Dire"
-		end
 	end
 
 	-------------------------------------------------------------------------------------------------
@@ -935,12 +941,10 @@ end
 
 -- This function is called whenever a tower is killed
 function GameMode:OnTowerKill(keys)
-	DebugPrint('[BAREBONES] OnTowerKill')
-	DebugPrintTable(keys)
-
 	local gold = keys.gold
 	local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
 	local tower_team = keys.teamnumber
+	PrintTable(keys)
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Attack of the Ancients tower upgrade logic
@@ -972,12 +976,8 @@ function GameMode:OnTowerKill(keys)
 	-- IMBA: Update comeback gold logic
 	-------------------------------------------------------------------------------------------------
 
-	local points = 1
-	if tower.tower_tier then
-		points = tower.tower_tier
-	end
 	local team = PlayerResource:GetTeam(keys.killer_userid)
-	UpdateComebackBonus(points, team)
+	UpdateComebackBonus(2, team)
 end
 
 -- This function is called whenever a player changes there custom team selection during Game Setup 

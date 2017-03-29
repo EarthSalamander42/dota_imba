@@ -1,104 +1,278 @@
---[[	Author: Firetoad
-		Date:	16.12.2015	]]
+--	Author: Firetoad
+--	Date: 			16.12.2015
+--	Last Update:	25.03.2017
+--	Eye of Skadi
 
-function Skadi( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local sound_target = keys.sound_target
-	local particle_ground = keys.particle_ground
-	local modifier_freeze = keys.modifier_freeze
+-----------------------------------------------------------------------------------------------------------
+--	Skadi definition
+-----------------------------------------------------------------------------------------------------------
 
-	-- Parameters
-	local base_radius = ability:GetLevelSpecialValueFor("base_radius", ability_level)
-	local base_duration = ability:GetLevelSpecialValueFor("base_duration", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local radius_per_str = ability:GetLevelSpecialValueFor("radius_per_str", ability_level)
-	local duration_per_int = ability:GetLevelSpecialValueFor("duration_per_int", ability_level)
-	local damage_per_agi = ability:GetLevelSpecialValueFor("damage_per_agi", ability_level)
+if item_imba_skadi == nil then item_imba_skadi = class({}) end
+LinkLuaModifier( "modifier_item_imba_skadi", "items/item_skadi.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_skadi_unique", "items/item_skadi.lua", LUA_MODIFIER_MOTION_NONE )	-- On-damage slow applier
+LinkLuaModifier( "modifier_item_imba_skadi_slow", "items/item_skadi.lua", LUA_MODIFIER_MOTION_NONE )	-- Slow debuff
+LinkLuaModifier( "modifier_item_imba_skadi_freeze", "items/item_skadi.lua", LUA_MODIFIER_MOTION_NONE )	-- Root debuff
 
-	-- Calculate parameters
-	local caster_str = 0
-	local caster_int = 0
-	local caster_agi = 0
-	if caster:IsRealHero() then
-		caster_str = caster:GetStrength()
-		caster_int = caster:GetIntellect()
-		caster_agi = caster:GetAgility()
-	end
-	local caster_loc = caster:GetAbsOrigin()
-	local radius = base_radius + caster_str * radius_per_str
-	local duration = base_duration + caster_int * duration_per_int
-	local damage = base_damage + caster_agi * damage_per_agi
+-- Passive modifier
+function item_imba_skadi:GetIntrinsicModifierName()
+	return "modifier_item_imba_skadi" end
 
-	-- Play sound
-	if RandomInt(1, 100) <= 5 then
-		caster:EmitSound("Imba.SkadiDeadWinter")
-	else
-		caster:EmitSound(sound_cast)
-	end
+-- Dynamic cast range
+function item_imba_skadi:GetCastRange()
+	return self:GetCaster():GetModifierStackCount("modifier_item_imba_skadi", nil) end
 
-	-- Play particle
-	local blast_pfx = ParticleManager:CreateParticle(particle_ground, PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleAlwaysSimulate(blast_pfx)
-	ParticleManager:SetParticleControl(blast_pfx, 0, caster_loc)
-	ParticleManager:SetParticleControl(blast_pfx, 2, Vector(radius * 1.15, 1, 1))
+-- Root active
+function item_imba_skadi:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
 
-	-- Grant flying vision in the target area
-	ability:CreateVisibilityNode(caster_loc, radius, 3)
+		-- Parameters
+		local caster_loc = caster:GetAbsOrigin()
+		local radius = self:GetSpecialValueFor("base_radius")
+		local duration = self:GetSpecialValueFor("base_duration")
+		local damage = self:GetSpecialValueFor("base_damage")
 
-	-- Find targets in range
-	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		-- Calculate cast parameters
+		if caster:IsRealHero() then
+			radius = radius + caster:GetStrength() * self:GetSpecialValueFor("radius_per_str")
+			duration = duration + caster:GetIntellect() * self:GetSpecialValueFor("duration_per_int")
+			damage = damage + caster:GetAgility() * self:GetSpecialValueFor("damage_per_agi")
+		end
 
-	-- Play sound
-	if #nearby_enemies > 0 then
-		caster:EmitSound(sound_target)
-	end
+		-- Play sound
+		if USE_MEME_SOUNDS and RollPercentage(5) then
+			caster:EmitSound("Imba.SkadiDeadWinter")
+		else
+			caster:EmitSound("Imba.SkadiCast")
+		end
 
-	for _,enemy in pairs(nearby_enemies) do
+		-- Play particle
+		local blast_pfx = ParticleManager:CreateParticle("particles/item/skadi/skadi_ground.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleAlwaysSimulate(blast_pfx)
+		ParticleManager:SetParticleControl(blast_pfx, 0, caster_loc)
+		ParticleManager:SetParticleControl(blast_pfx, 2, Vector(radius * 1.15, 1, 1))
+		ParticleManager:ReleaseParticleIndex(blast_pfx)
 
-		-- Apply damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		-- Grant flying vision in the target area
+		self:CreateVisibilityNode(caster_loc, radius, duration + self:GetSpecialValueFor("vision_extra_duration"))
 
-		-- Apply freeze modifier (do not refresh)
-		ability:ApplyDataDrivenModifier(caster, enemy, modifier_freeze, {duration = duration})
+		-- Find targets in range
+		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
-		-- Apply ministun
-		enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = 0.01})
+		-- Play target sound if at least one enemy was hit
+		if #nearby_enemies > 0 then caster:EmitSound("Imba.SkadiHit") end
+
+		-- Damage and freeze enemies
+		for _,enemy in pairs(nearby_enemies) do
+
+			-- Apply damage
+			ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+
+			-- Apply freeze modifier
+			enemy:AddNewModifier(caster, self, "modifier_item_imba_skadi_freeze", {duration = duration})
+
+			-- Apply ministun
+			enemy:AddNewModifier(caster, self, "modifier_stunned", {duration = 0.01})
+		end
 	end
 end
 
-function SkadiProjectile( keys )
-	local caster = keys.caster
+-----------------------------------------------------------------------------------------------------------
+--	Skadi owner bonus attributes (stackable)
+-----------------------------------------------------------------------------------------------------------
 
-	ChangeAttackProjectileImba(caster)
+if modifier_item_imba_skadi == nil then modifier_item_imba_skadi = class({}) end
+function modifier_item_imba_skadi:IsHidden() return true end
+function modifier_item_imba_skadi:IsDebuff() return false end
+function modifier_item_imba_skadi:IsPurgable() return false end
+function modifier_item_imba_skadi:IsPermanent() return true end
+function modifier_item_imba_skadi:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
+
+-- Adds the unique modifier to the caster when created
+function modifier_item_imba_skadi:OnCreated(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_skadi_unique") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_skadi_unique", {})
+		end
+
+		-- Cast range update thinker
+		self:StartIntervalThink(0.5)
+	end
 end
 
-function SkadiSlow( keys )
-	local caster = keys.caster
-	local target = keys.unit
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local damage = keys.damage
-	local modifier_slow = keys.modifier_slow
-
-	-- If there's no valid target, do nothing
-	if target:IsBuilding() or target:IsTower() or target:GetTeam() == caster:GetTeam() then
-		return nil
+-- Removes the unique modifier from the caster if this is the last skadi in its inventory
+function modifier_item_imba_skadi:OnDestroy()
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_skadi") then
+			parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
+		end
 	end
+end
 
-	-- Parameters
-	local max_duration = ability:GetLevelSpecialValueFor("max_duration", ability_level)
-	local min_duration = ability:GetLevelSpecialValueFor("min_duration", ability_level)
-	local slow_range_cap = ability:GetLevelSpecialValueFor("slow_range_cap", ability_level)
+-- Cast range update thinker
+function modifier_item_imba_skadi:OnIntervalThink()
+	if IsServer() then
+		local owner = self:GetParent()
+		local radius = self:GetAbility():GetSpecialValueFor("base_radius")
+		if owner:IsRealHero() then
+			radius = radius + owner:GetStrength() * self:GetAbility():GetSpecialValueFor("radius_per_str")
+		end
+		self:SetStackCount(radius)
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_skadi:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
+		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
+	}
+	return funcs
+end
+
+function modifier_item_imba_skadi:GetModifierBonusStats_Strength()
+	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+
+function modifier_item_imba_skadi:GetModifierBonusStats_Agility()
+	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+
+function modifier_item_imba_skadi:GetModifierBonusStats_Intellect()
+	return self:GetAbility():GetSpecialValueFor("bonus_all_stats") end
+
+-----------------------------------------------------------------------------------------------------------
+--	Skadi slow applier
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_skadi_unique == nil then modifier_item_imba_skadi_unique = class({}) end
+function modifier_item_imba_skadi_unique:IsHidden() return true end
+function modifier_item_imba_skadi_unique:IsDebuff() return false end
+function modifier_item_imba_skadi_unique:IsPurgable() return false end
+function modifier_item_imba_skadi_unique:IsPermanent() return true end
+
+-- Changes the caster's attack projectile, if applicable
+function modifier_item_imba_skadi_unique:OnCreated(keys)
+	if IsServer() then
+		ChangeAttackProjectileImba(self:GetParent())
+
+		-- Store ability KVs for later usage
+		local ability = self:GetAbility()
+		self.max_duration = ability:GetSpecialValueFor("max_duration")
+		self.min_duration = ability:GetSpecialValueFor("min_duration")
+		self.slow_range_cap = ability:GetSpecialValueFor("slow_range_cap")
+	end
+end
+
+-- Changes the caster's attack projectile, if applicable
+function modifier_item_imba_skadi_unique:OnDestroy()
+	if IsServer() then
+		ChangeAttackProjectileImba(self:GetParent())
+	end
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_skadi_unique:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_TAKEDAMAGE,
+	}
+	return funcs
+end
+
+-- On-damage slow effect
+function modifier_item_imba_skadi_unique:OnTakeDamage( keys )
+	if IsServer() then
+		local attacker = self:GetParent()
+
+		-- If this damage event is irrelevant, do nothing
+		if attacker ~= keys.attacker then
+			return end
+
+		-- If the attacker is an illusion, do nothing either
+		if attacker:IsIllusion() then
+			return end
 		
-	-- Calculate slow duration
-	local caster_pos = caster:GetAbsOrigin()
-	local target_pos = target:GetAbsOrigin()
-	local distance = (target_pos - caster_pos):Length2D()
-	local slow_duration = min_duration + ( max_duration - min_duration ) * math.max( slow_range_cap - distance, 0) / slow_range_cap
+		-- If there's no valid target, do nothing
+		local target = keys.unit
+		if (not IsHeroOrCreep(target)) or attacker:GetTeam() == target:GetTeam() then
+			return end
 
-	-- Apply slow
-	ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {duration = slow_duration})
+		-- Calculate actual slow duration
+		local target_distance = (target:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D()
+		local slow_duration = self.min_duration + (self.max_duration - self.min_duration) * math.max( self.slow_range_cap - target_distance, 0) / self.slow_range_cap
+
+		-- Apply the slow
+		target:AddNewModifier(attacker, self:GetAbility(), "modifier_item_imba_skadi_slow", {duration = slow_duration})
+	end
+end
+
+-----------------------------------------------------------------------------------------------------------
+--	Skadi slow
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_skadi_slow == nil then modifier_item_imba_skadi_slow = class({}) end
+function modifier_item_imba_skadi_slow:IsHidden() return false end
+function modifier_item_imba_skadi_slow:IsDebuff() return true end
+function modifier_item_imba_skadi_slow:IsPurgable() return false end
+
+-- Modifier status effect
+function modifier_item_imba_skadi_slow:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost_lich.vpcf" end
+
+function modifier_item_imba_skadi_slow:StatusEffectPriority()
+	return 10 end
+
+-- Ability KV storage
+function modifier_item_imba_skadi_slow:OnCreated(keys)
+	self.slow_as = self:GetAbility():GetSpecialValueFor("slow_as")
+	self.slow_ms = self:GetAbility():GetSpecialValueFor("slow_ms")
+end
+
+-- Declare modifier events/properties
+function modifier_item_imba_skadi_slow:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+	return funcs
+end
+
+function modifier_item_imba_skadi_slow:GetModifierAttackSpeedBonus_Constant()
+	return self.slow_as end
+
+function modifier_item_imba_skadi_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow_ms end
+
+-----------------------------------------------------------------------------------------------------------
+--	Skadi freeze
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_skadi_freeze == nil then modifier_item_imba_skadi_freeze = class({}) end
+function modifier_item_imba_skadi_freeze:IsHidden() return true end
+function modifier_item_imba_skadi_freeze:IsDebuff() return true end
+function modifier_item_imba_skadi_freeze:IsPurgable() return false end
+
+-- Modifier particle
+function modifier_item_imba_skadi_freeze:GetEffectName()
+	return "particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+end
+
+function modifier_item_imba_skadi_freeze:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+-- Modifier status effect
+function modifier_item_imba_skadi_freeze:GetStatusEffectName()
+	return "particles/status_fx/status_effect_frost.vpcf" end
+
+function modifier_item_imba_skadi_freeze:StatusEffectPriority()
+	return 11 end
+
+-- Declare modifier states
+function modifier_item_imba_skadi_freeze:CheckState()
+	local states = {
+		[MODIFIER_STATE_ROOTED] = true,
+	}
+	return states
 end

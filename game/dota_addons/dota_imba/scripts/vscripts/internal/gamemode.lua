@@ -203,6 +203,13 @@ function OnSetGameMode( eventSourceIndex, args )
 		print("Tower upgrades activated!")
 	end
 
+	-- Frantic mode setup
+	if tonumber(mode_info.frantic_mode) == 1 then
+		IMBA_FRANTIC_MODE_ON = true
+		CustomNetTables:SetTableValue("game_options", "frantic_mode", {true})
+		print("Frantic mode activated!")
+	end
+
 	-- Arena mode setup
 	if mode_info.kills_to_end and tonumber(mode_info.kills_to_end) > 0 and map_name == "imba_arena" then
 		END_GAME_ON_KILLS = true

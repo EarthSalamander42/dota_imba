@@ -272,7 +272,7 @@ function ConcussiveShotImpact ( keys )
 		ApplyDamage(damageTable)	
 
 		-- Add a stack of Concussive's slow	to every enemy unit or hero in the AoE
-		AddStacks(ability, caster, enemy, modifier_slow, 1, true)
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 	end
 	
 	Timers:CreateTimer(function()
@@ -404,7 +404,7 @@ function ConcussiveShotGhastlyPulseImpact ( keys )
 		end
 	
 		-- Add a stack of Concussive's slow	to every enemy unit or hero in the AoE
-		AddStacks(ability, caster, enemy, modifier_slow, 1, true)
+		ability:ApplyDataDrivenModifier(caster, enemy, modifier_slow, {})
 	end
 end
 

@@ -21,7 +21,9 @@ end
 function modifier_imba_speed_limit_break:GetModifierMoveSpeed_Max()
 	return 10000
 end
-
+function modifier_imba_speed_limit_break:GetPriority()
+    return MODIFIER_PRIORITY_HIGH end
+   
 function modifier_imba_speed_limit_break:IsHidden()
 	return true
 end

@@ -327,8 +327,7 @@ function NetherWardZap( keys )
 		"furion_wrath_of_nature",
 		"imba_juggernaut_healing_ward",
 		"imba_juggernaut_omni_slash",
-		"imba_kunkka_x_marks_the_spot",
-		"imba_lich_dark_ritual",
+		"imba_kunkka_x_marks_the_spot",		
 		"life_stealer_infest",
 		"life_stealer_assimilate",
 		"life_stealer_assimilate_eject",
@@ -347,14 +346,13 @@ function NetherWardZap( keys )
 		"imba_queenofpain_blink",
 		"imba_jakiro_fire_breath",
 		"imba_jakiro_ice_breath",
+		"imba_jakiro_liquid_fire",
 		"alchemist_unstable_concoction",
 		"alchemist_chemical_rage",
 		"ursa_overpower",
 		"imba_bounty_hunter_wind_walk",
 		"invoker_ghost_walk",
-		"imba_clinkz_strafe",
-		"imba_clinkz_skeleton_walk",
-		"imba_clinkz_death_pact",
+		"imba_clinkz_strafe",		
 		"imba_obsidian_destroyer_arcane_orb",
 		"imba_obsidian_destroyer_sanity_eclipse",
 		"shadow_demon_shadow_poison",
@@ -464,11 +462,34 @@ function NetherWardZap( keys )
 	-- Refresh the ability
 	ability:EndCooldown()
 
-	local ability_range = ability:GetCastRange()
+	local ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target)
 	local target_point = target:GetAbsOrigin()
 	local ward_position = ward:GetAbsOrigin()
 
 	-- Special cases
+
+	-- Dark Ritual: target a random nearby creep
+	if cast_ability_name == "imba_lich_dark_ritual" then
+	 	local creeps = FindUnitsInRadius(	caster:GetTeamNumber(),
+                                               	ward:GetAbsOrigin(),
+                                            	nil,
+                                            	ability_range,
+                                            	DOTA_UNIT_TARGET_TEAM_BOTH,
+                                            	DOTA_UNIT_TARGET_BASIC,
+                                            	DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO + DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS + DOTA_UNIT_TARGET_FLAG_NOT_SUMMONED,
+                                            	FIND_CLOSEST,
+                                            	false)
+
+	 	-- If there are no creeps nearby, do nothing (ward also counts as a creep)
+	 	if #creeps == 1 then
+	 		return nil	 	
+	 	end
+
+	 	-- Find the SECOND closest creep and set it as the target (since the ward counts as a creep)
+	 	target = creeps[2]	 	
+	 	target_point = target:GetAbsOrigin()	
+	 	ability_range = ability:GetCastRange(ward:GetAbsOrigin(), target) 	
+	end
 
 	-- Nether Strike: add greater bash
 	if cast_ability_name == "spirit_breaker_nether_strike" then
@@ -542,16 +563,19 @@ function NetherWardZap( keys )
 	-- Memorize if an ability was actually cast
 	local ability_was_used = false
 	
+	if ability_behavior == DOTA_ABILITY_BEHAVIOR_NONE then
+		--Do nothing, not suppose to happen
+
 	-- Toggle ability
-	if ( ability_behavior - math.floor( ability_behavior / 512 ) * 512 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_TOGGLE == 0 then
 		ability:ToggleAbility()
 		ability_was_used = true
 
 	-- Point target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 16 ) * 16 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_POINT == 0 then
 
 		-- If the ability targets allies, use it on the ward's vicinity
-		if ability_target_team == 1 then
+		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
 			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = ward:GetAbsOrigin(), AbilityIndex = ability:GetEntityIndex(), Queue = queue})
 			ability_was_used = true
 
@@ -559,7 +583,7 @@ function NetherWardZap( keys )
 		else
 
 			-- If target is not in range of the ability, use it on its general direction
-			if (target_point - ward_position):Length2D() > ability_range then
+			if ability_range > 0 and (target_point - ward_position):Length2D() > ability_range then
 				target_point = ward_position + (target_point - ward_position):Normalized() * (ability_range - 50)
 			end
 			ExecuteOrderFromTable({ UnitIndex = ward:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = target_point, AbilityIndex = ability:GetEntityIndex(), Queue = queue})
@@ -567,10 +591,10 @@ function NetherWardZap( keys )
 		end
 
 	-- Unit target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 8 ) * 8 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_UNIT_TARGET == 0 then
 
 		-- If the ability targets allies, use it on a random nearby ally
-		if ability_target_team == 1 then
+		if ability_target_team == DOTA_UNIT_TARGET_TEAM_FRIENDLY then
 			
 			-- Find nearby allies
 			local allies = FindUnitsInRadius(caster:GetTeamNumber(), ward_position, nil, ability_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
@@ -600,7 +624,7 @@ function NetherWardZap( keys )
 		end
 
 	-- No-target ability
-	elseif ( ability_behavior - math.floor( ability_behavior / 4 ) * 4 ) == 0 then
+	elseif ability_behavior % DOTA_ABILITY_BEHAVIOR_NO_TARGET == 0 then
 		ability:CastAbility()
 		ability_was_used = true
 	end

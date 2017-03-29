@@ -1,0 +1,279 @@
+
+.FlyoutScoreboardRoot
+{
+    horizontal-align: left;
+    vertical-align: top;
+    margin-top: 70px;
+    flow-children: down;
+
+    transform: translatex( -600px );
+    transition-property: transform;
+    transition-duration: 0.1s;
+}
+
+.FlyoutScoreboardRoot.flyout_scoreboard_visible
+{
+    transform: translatey( 0px );
+}
+
+.Legend
+{
+    flow-children: right;
+    background-color : #444b57cc;
+    width: 100%;
+}
+
+.LegendPanel
+{
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.Legend Label
+{
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: bold;
+    color: #afd2e3;
+    padding-top: 8px;
+    height: 32px;
+}
+
+.ScoreCol_DisplayPic,
+.ScoreCol_HeroPic,
+.ScoreCol_TeamScore,
+#PlayerColorBar
+{
+    margin-right: 6px;
+}
+
+.ScoreCol_TeamScore
+{
+    width: 48px;
+}
+
+.ScoreCol_DisplayPic
+{
+    flow-children: right;
+    width: 43px;
+}
+
+.ScoreCol_TeamName
+{
+    width: 210px;
+}
+
+.ScoreCol_HeroPic
+{
+    width: 54px;
+}
+
+.ScoreCol_PlayerDetails
+{
+    width: 140px;
+}
+
+.ScoreCol_HeroLevel
+{
+    width: 60px;
+    text-align: center;
+}
+
+.ScoreCol_Gold
+{
+    width: 90px;
+    text-align: center;
+}
+
+.ScoreCol_Kills,
+.ScoreCol_Deaths,
+.ScoreCol_Assists
+{
+    width: 30px;
+    text-align: center;
+}
+
+.ScoreCol_Ultimate
+{
+    width: 40px;
+    text-align: center;
+}
+
+#TeamsContainer
+{
+    flow-children: down;
+    horizontal-align: left;
+}
+
+
+.FlyoutTeamData
+{
+    margin-top: -30px;
+    flow-children: right;
+    height: 50px;
+}
+
+.FlyoutPlayer
+{ 
+    flow-children: right;
+}
+
+#PlayersContainer
+{
+    flow-children: down;
+    padding-bottom: 30px;
+    background-color: #262c36bb;
+}
+
+#TeamScore,
+#TeamName
+{
+    color: #ffffff;
+    font-size: 28px;
+    text-shadow: 0px 0px 8px #587648;
+    font-weight: bold;
+}
+
+#TeamScore,
+{
+    horizontal-align: center;
+}
+
+.PlayerRow
+{
+    height: 32px;
+    margin-bottom: 2px;
+    background-color: #21272fbb;
+}
+
+.is_local_player #PlayerRowContainer
+{
+    background-color: #111111bb;
+}
+
+#PlayerRowContainer
+{
+    flow-children: right;
+    height: 100%;
+}
+
+#PlayerColorBar
+{
+    width: 5px;
+    height: 100%;
+}
+
+#HeroIcon
+{
+    vertical-align: middle;
+    border: 1px solid #ffffff22;
+}
+
+#LevelContainer,
+#KillsContainer,
+#DeathsContainer,
+#AssistsContainer
+{
+    height: 100%;
+}
+
+.ScoreboardPanel
+{
+    margin-top: 1px;
+    margin-left: 1px;
+}
+
+.ScoreboardPanel Label
+{
+    font-size: 30px;
+}
+
+.UltimateIndicatorShared
+{
+    margin-top: 4px;
+    height: 30px;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+#Level
+{
+    vertical-align: center;
+    horizontal-align: center;
+    color: #898b8c;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+#Kills,
+#Deaths,
+#Assists
+{
+    vertical-align: center;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 3px;
+    width: 100%;
+    color: #acacac;
+}
+
+#PlayerAndHeroName
+{
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+#PlayerName
+{
+    color: white;
+    font-size: 14px;
+    margin-top: 0px;
+    white-space: nowrap;
+}
+
+#HeroNameAndDescription
+{
+    color: #898b8c;
+    font-size: 13px;
+}
+
+#TeammateGoldAmount
+{
+    margin-bottom: -2px;
+    vertical-align: bottom;
+    horizontal-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffcc33;
+    visibility: collapse;
+    text-decoration: underline;
+}
+
+.local_player_team #TeammateGoldAmount
+{
+    visibility: visible;
+}
+
+#PlayerDetailsContainer
+{
+    height: 100%;
+}
+
+#PlayerAndHeroName
+{
+    flow-children: down;
+    padding-left: 8px;
+}
+
+.is_local_player #Kills,
+.is_local_player #Deaths,
+.is_local_player #Assists,
+.is_local_player #Level,
+.is_local_player #HeroName
+{
+    color: white;
+}
+
+
+

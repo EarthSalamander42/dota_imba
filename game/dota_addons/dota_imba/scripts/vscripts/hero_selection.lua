@@ -129,6 +129,10 @@ end
 -- Randoms a valid hero for the player who requested it
 function HeroSelection:RandomHero(event)
 
+	if HeroSelection.playerPickState[event.PlayerID].pick_state ~= "selecting_hero" then
+		return nil
+	end
+
 	-- Flag the player as having randomed
 	PlayerResource:SetHasRandomed(event.PlayerID)
 
@@ -382,24 +386,19 @@ function HeroSelection:EndPicking()
 	--Stop listening to events (except picks)
 	CustomGameEventManager:UnregisterListener( self.listener_repick )
 
+	-- Let all clients know the picking phase has ended
+	CustomGameEventManager:Send_ServerToAllClients("picking_done", {} )
+
 	-- Assign the picked heroes to all players that have picked
-	local players_remaining = true
-	local player_id = 0
-	Timers:CreateTimer(0, function()
+	for player_id = 0, HeroSelection.numPickers do
 		if HeroSelection.playerPicks[player_id] and HeroSelection.playerPickState[player_id].pick_state ~= "in_game" then
 			HeroSelection:AssignHero(player_id, HeroSelection.playerPicks[player_id])
 			HeroSelection.playerPickState[player_id].pick_state = "in_game"
 		end
-		player_id = player_id + 1
-		if player_id < HeroSelection.numPickers then
-			return 1
-		else
-			CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
-		end
-	end)
+	end
 
-	-- Let all clients know the picking phase has ended
-	CustomGameEventManager:Send_ServerToAllClients("picking_done", {} )
+	-- Let all clients know hero loading has ended
+	CustomGameEventManager:Send_ServerToAllClients("hero_loading_done", {} )
 
 	-- Stop picking phase music
 	StopSoundOn("Imba.PickPhaseDrums", HeroSelection.pick_sound_dummy)
@@ -416,8 +415,16 @@ end
 function HeroSelection:AssignHero(player_id, hero_name)
 	PrecacheUnitByNameAsync(hero_name, function()
 
+		-- Fetch wisp entity
+		local wisp = PlayerResource:GetSelectedHeroEntity(player_id)
+		wisp:SetRespawnsDisabled(true)
+
+		-- Switch for the new hero
 		PlayerResource:ReplaceHeroWith(player_id, hero_name, 0, 0 )
 		PlayerResource:SetCameraTarget(player_id, nil)
+
+		-- Nuke the wisp from orbit
+		UTIL_Remove(wisp)
 
 		-------------------------------------------------------------------------------------------------
 		-- IMBA: First hero spawn initialization
@@ -446,8 +453,11 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set up initial level
 		if HERO_STARTING_LEVEL > 1 then
 			Timers:CreateTimer(1, function()
+				local ability_points_now = hero:GetAbilityPoints()
 				hero:AddExperience(XP_PER_LEVEL_TABLE[HERO_STARTING_LEVEL], DOTA_ModifyXP_CreepKill, false, true)
-				hero:SetAbilityPoints(HERO_STARTING_LEVEL)
+				-- Avoid player getting extra 1 skill point if they learn an ability before the timer runs
+				-- -1 Because players are level 1 before the timer starts
+				hero:SetAbilityPoints(HERO_STARTING_LEVEL - 1 + ability_points_now)
 			end)
 		end
 
@@ -467,6 +477,14 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		if IMBA_ABILITY_MODE_RANDOM_OMG then
 			ApplyAllRandomOmgAbilities(hero)
 		end
+
+		-- Apply frantic modifier, if appropriate
+		if IMBA_FRANTIC_MODE_ON then
+			hero:AddNewModifier(hero, nil, "modifier_imba_frantic", {})
+		end
+
+		-- Apply generic talents handler
+		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})
 
 		-- Initialize innate hero abilities
 		InitializeInnateAbilities(hero)

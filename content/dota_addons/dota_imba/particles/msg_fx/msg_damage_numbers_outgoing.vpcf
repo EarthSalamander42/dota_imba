@@ -3,7 +3,7 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 16
-	m_flConstantRadius = 10.0
+	m_flConstantRadius = 14.0
 	m_ConstantColor = [ 255, 200, 33, 255 ]
 	m_Renderers = 
 	[
@@ -14,7 +14,6 @@
 			m_flAddSelfAmount = 1.0
 			m_bSaturateColorPreAlphaBlend = false
 			m_hTexture = resource:"materials/particle/msg/msg_radiance_noring.vtex"
-			m_bDisableOperator = true
 		},
 	]
 	m_Operators = 
@@ -29,7 +28,7 @@
 		},
 		{
 			_class = "C_OP_BasicMovement"
-			m_Gravity = [ 0.0, 0.0, -500.0 ]
+			m_Gravity = [ 0.0, 0.0, 500.0 ]
 			m_fDrag = 0.15
 		},
 		{
@@ -45,12 +44,14 @@
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
-			m_fSpeedMax = 250.0
-			m_fSpeedMin = 250.0
+			m_fSpeedMax = -25.0
+			m_fSpeedMin = -25.0
 			m_vecDistanceBiasAbs = [ 0.0, 0.0, 1.0 ]
 			m_LocalCoordinateSystemSpeedMax = [ 0.0, 0.0, 150.0 ]
 			m_LocalCoordinateSystemSpeedMin = [ 0.0, 0.0, 50.0 ]
 			m_vecDistanceBias = [ 0.0, 0.0, -10.0 ]
+			m_fRadiusMin = 50.0
+			m_fRadiusMax = 50.0
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
@@ -79,6 +80,42 @@
 			m_nScaleControlPointField = 1
 			m_nScaleControlPoint = 2
 			m_nParticlesToEmit = 1
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 10.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 2
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 1.0, 1.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 255.0, 255.0, 255.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }

@@ -340,7 +340,8 @@
 	flow-children: right;
 }
 
-#PlayerItemsContainer Image
+#PlayerItemsContainer Image,
+#PlayerItemsContainer DOTAItemImage
 {
 	margin: 1px;
 	width: 41px;
@@ -348,7 +349,11 @@
 	background-color: BACKGROUND_COLOR;
 }
 
-
+/* Image in the DOTAItemImage does not fit the width, scaling doesn't work well hence this hack is in place */
+#PlayerItemsContainer .RawImageBugFix
+{
+	padding-right: -16px;
+}
 
 .is_local_player Label
 {
