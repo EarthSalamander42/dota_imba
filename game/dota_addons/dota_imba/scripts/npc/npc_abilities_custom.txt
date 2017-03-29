@@ -4104,7 +4104,7 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
-			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+			//"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		}
 	}
 
@@ -4193,6 +4193,13 @@
 				"extra_dmg"								"90 125 160 195 230 265 300 "
 			}
 		}
+
+		"precache"
+		{
+			"particle"									"particles/econ/events/ti4/radiant_fountain_regen_mist_ti4.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
+			"particle"									"particles/econ/courier/courier_oculopus/courier_oculopus_ambient_warp.vpcf"
+		}
 	}
 
 	//=================================================================================================================
@@ -4253,6 +4260,7 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
 		}
 	}
 

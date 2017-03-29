@@ -44,6 +44,12 @@ function imba_abaddon_mist_coil:OnSpellStart()
 
 		caster:EmitSound("Hero_Abaddon.DeathCoil.Cast")
 
+		local health_cost = getOverChannelIncrease(caster)
+
+		if health_cost > 0 then
+			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
+		end
+
 		-- Create the projectile
 		local info = {
 			Target = target,
@@ -75,13 +81,15 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 
 		target:EmitSound("Hero_Abaddon.DeathCoil.Target")
 
+		local over_channel_increase = getOverChannelIncrease(caster)
+
         if target:GetTeam() ~= caster:GetTeam() then
 			-- If target has Linken Sphere, block effect entirely
             if target:TriggerSpellAbsorb(self) then
                 return nil
             end
 
-			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + getOverChannelIncrease(caster)
+			local damage = self:GetLevelSpecialValueFor("damage", ability_level) + over_channel_increase
 			local damage_type = DAMAGE_TYPE_MAGICAL
 
 			ApplyDamage({ victim = target, attacker = caster, damage = damage,	damage_type = damage_type })
@@ -101,7 +109,7 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			end
 
 		else
-			local heal = self:GetLevelSpecialValueFor("heal", ability_level) + getOverChannelIncrease(caster)
+			local heal = self:GetLevelSpecialValueFor("heal", ability_level) + over_channel_increase
 
 			-- heal allies or self
 			target:Heal(heal, caster)
@@ -129,6 +137,12 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 
 		-- Play Sound
 		caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
+
+		local health_cost = getOverChannelIncrease(caster)
+
+		if health_cost > 0 then
+			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
+		end
 
 		-- Strong Dispel
 		target:Purge(false, true, false, true, false)
@@ -182,6 +196,20 @@ function modifier_aphotic_shield_buff:OnCreated()
 
 		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
 		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		
+		-- Extra effect if shield was casted with over channel
+		if caster:HasModifier("modifer_over_channel_caster") then
+			-- TODO
+			--particles/econ/courier/courier_onibi/courier_onibi_blue_ambient_b.vpcf
+
+			--shield
+			--particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_ghosts.vpcf
+			--particles/econ/courier/courier_trail_international_2014/courier_international_2014_wisp.vpcf
+			--particles/econ/courier/courier_trail_orbit/courier_trail_orbit_b.vpcf
+
+			--allies borrowed time
+			--particles/econ/courier/courier_trail_international_2013/courier_international_2013_c.vpcf
+		end
 
 		--void AddParticle(int i, bool bDestroyImmediately, bool bStatusEffect, int iPriority, bool bHeroEffect, bool bOverheadEffect)
 		self:AddParticle(particle, false, false, -1, false, false)
@@ -505,24 +533,40 @@ imba_abaddon_over_channel = class({
 LinkLuaModifier("modifer_over_channel_caster", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
 function imba_abaddon_over_channel:OnToggle()
-	local caster 		= self:GetCaster()
-	local modifier_name = "modifer_over_channel_caster"
-	if self:GetToggleState() then
-		--TODO
-		caster:AddNewModifier(caster, self, modifier_name, {})
-	else
-		--TODO
-		caster:RemoveModifierByName( modifier_name )
+	if IsServer() then
+		local caster 		= self:GetCaster()
+		local modifier_name = "modifer_over_channel_caster"
+		if self:GetToggleState() then
+			caster:AddNewModifier(caster, self, modifier_name, {})
+		else
+			caster:RemoveModifierByName( modifier_name )
+		end
 	end
 end
 
--- TODO attach effect
 modifer_over_channel_caster = class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
 	RemoveOnDeath			= function(self) return false end
 })
+
+function modifer_over_channel_caster:OnCreated()
+	local target = self:GetParent()
+
+	-- Body purple steam particle
+	local particle = ParticleManager:CreateParticle("particles/econ/events/ti4/radiant_fountain_regen_mist_ti4.vpcf", PATTACH_POINT_FOLLOW, target)
+	self:AddParticle(particle, false, false, -1, false, false)
+
+	-- Weapon particle
+	particle = ParticleManager:CreateParticle("particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf", PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target:GetAbsOrigin(), true)
+	self:AddParticle(particle, false, false, -1, false, false)
+
+	-- Body warp particle
+	particle = ParticleManager:CreateParticle("particles/econ/courier/courier_oculopus/courier_oculopus_ambient_warp.vpcf", PATTACH_POINT_FOLLOW, target)
+	self:AddParticle(particle, false, false, -1, false, false)
+end
 
 -----------------------------
 --       Borrowed Time     --
@@ -576,7 +620,7 @@ end
 
 function modifer_borrowed_time_caster_auto_cast:OnCreated()
 	if IsServer() then
-		self.hp_threshold = ability:GetSpecialValueFor("hp_threshold")
+		self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
 
 		-- Check if we need to auto cast immediately
 		self:_CheckHealth(0)
@@ -597,7 +641,7 @@ function modifer_borrowed_time_caster_auto_cast:OnTakeDamage(kv)
 	if IsServer() then
 		local target = self:GetParent()
 
-		if target == kv.unit and _IsValidAutoCastState() then
+		if target == kv.unit then
 			-- Auto cast borrowed time if damage will bring target to lower than hp_threshold
 			self:_CheckHealth(kv.damage)
 		end
@@ -683,6 +727,12 @@ function modifier_borrowed_time_caster_buff:OnTakeDamage(kv)
 			-- Block incoming damage
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
 			target:SetHealth(self.target_current_health)
+
+			local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			local target_vector = target:GetAbsOrigin()
+			ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
+			ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
+			ParticleManager:ReleaseParticleIndex(heal_particle)
 
 			-- Heal blocked damage
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
