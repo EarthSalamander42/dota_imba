@@ -186,3 +186,19 @@ function C_DOTA_BaseNPC:HealDisabled()
 	return true
 	else return false end
 end
+
+function IsDaytime()
+    if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
+        if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
+            local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+
+            if is_day == 1 then
+                return true
+            else
+                return false
+            end
+        end
+    end
+
+    return true   
+end
