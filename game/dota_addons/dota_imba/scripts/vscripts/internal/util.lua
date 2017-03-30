@@ -2291,6 +2291,41 @@ function CalculateDistance(ent1, ent2)
 end
 
 -------------------------------------------------------------------------------------------------------
+-- Client side daytime tracking system
+-------------------------------------------------------------------------------------------------------
+
+function StoreCurrentDayCycle()	
+	Timers:CreateTimer(function()		
+
+		-- Get current daytime cycle
+		local is_day = GameRules:IsDaytime()		
+
+		-- Set in the table
+		CustomNetTables:SetTableValue("gamerules", "isdaytime", {is_day = is_day} )		
+
+	-- Repeat
+	return 0.5
+	end)	
+end
+
+function IsDaytime()
+    if CustomNetTables:GetTableValue("gamerules", "isdaytime") then
+        if CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day then  
+            local is_day = CustomNetTables:GetTableValue("gamerules", "isdaytime").is_day  
+
+            if is_day == 1 then
+                return true
+            else
+                return false
+            end
+        end
+    end
+
+    return true   
+end
+
+
+-------------------------------------------------------------------------------------------------------
 -- lua based Tracking Projectiles manager, allowing for some custom and dynamic tracking projectiles.
 -------------------------------------------------------------------------------------------------------
 
