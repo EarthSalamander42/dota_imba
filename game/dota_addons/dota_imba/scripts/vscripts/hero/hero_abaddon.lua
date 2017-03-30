@@ -115,6 +115,15 @@ function imba_abaddon_mist_coil:OnProjectileHit( hTarget, vLocation )
 			target:Heal(heal, caster)
 			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
         end
+
+		-- Extra effect if coil was casted with over channel
+		if caster:HasModifier("modifer_over_channel_caster") then
+			local over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_detail.vpcf", PATTACH_POINT, target)
+			ParticleManager:ReleaseParticleIndex(over_channel_particle)
+
+			over_channel_particle = ParticleManager:CreateParticle("particles/dev/library/base_dust_hit_smoke.vpcf", PATTACH_POINT, target)
+			ParticleManager:ReleaseParticleIndex(over_channel_particle)
+		end
 	end
 end
 
@@ -181,6 +190,8 @@ function modifier_aphotic_shield_buff:OnCreated()
 		local shield_size = target:GetModelRadius() * 0.7
 		local ability = self:GetAbility()
 		local ability_level = ability:GetLevel()
+		local target_origin = target:GetAbsOrigin()
+		local attach_hitloc = "attach_hitloc"
 
 		-- #5 Talent: +200 shielding on Aphotic Shield
 		self.shield_init_value = ability:GetLevelSpecialValueFor( "shield", ability_level ) + caster:FindTalentValue("special_bonus_imba_abaddon_5") + getOverChannelIncrease(caster)
@@ -192,27 +203,22 @@ function modifier_aphotic_shield_buff:OnCreated()
 		ParticleManager:SetParticleControl(particle, 1, common_vector)
 		ParticleManager:SetParticleControl(particle, 2, common_vector)
 		ParticleManager:SetParticleControl(particle, 4, common_vector)
-		ParticleManager:SetParticleControl(particle, 5, Vector(shield_size,0,0))	
+		ParticleManager:SetParticleControl(particle, 5, Vector(shield_size,0,0))
 
 		-- Proper Particle attachment courtesy of BMD. Only PATTACH_POINT_FOLLOW will give the proper shield position
-		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-		
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+		self:AddParticle(particle, false, false, -1, false, false)
+
 		-- Extra effect if shield was casted with over channel
 		if caster:HasModifier("modifer_over_channel_caster") then
-			-- TODO
-			--particles/econ/courier/courier_onibi/courier_onibi_blue_ambient_b.vpcf
+			local over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 
-			--shield
-			--particles/econ/courier/courier_trail_hw_2012/courier_trail_hw_2012_ghosts.vpcf
-			--particles/econ/courier/courier_trail_international_2014/courier_international_2014_wisp.vpcf
-			--particles/econ/courier/courier_trail_orbit/courier_trail_orbit_b.vpcf
-
-			--allies borrowed time
-			--particles/econ/courier/courier_trail_international_2013/courier_international_2013_c.vpcf
+			over_channel_particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControlEnt(over_channel_particle, 0, target, PATTACH_POINT_FOLLOW, attach_hitloc, target_origin, true)
+			self:AddParticle(over_channel_particle, false, false, -1, false, false)
 		end
-
-		--void AddParticle(int i, bool bDestroyImmediately, bool bStatusEffect, int iPriority, bool bHeroEffect, bool bOverheadEffect)
-		self:AddParticle(particle, false, false, -1, false, false)
 
 		self:StartIntervalThink( 0.03 )
 	end
@@ -227,13 +233,15 @@ function modifier_aphotic_shield_buff:OnRemoved()
 		local radius 				= ability:GetSpecialValueFor("radius")
 		local explode_target_team 	= DOTA_UNIT_TARGET_TEAM_ENEMY
 		local explode_target_type 	= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
-
+		local target_vector			= target:GetAbsOrigin()
 		target:EmitSound("Hero_Abaddon.AphoticShield.Destroy")
 
-		-- TODO
-		--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		-- Explosion particle is shown by default when the particle is to be removed, however that does not work for illusions. Hence this added explosion is to make the particle show when illusions die
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf", PATTACH_ABSORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, target_vector) 
+		ParticleManager:ReleaseParticleIndex(particle)
 
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, radius, explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_vector, nil, radius, explode_target_team, explode_target_type, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
 
 		-- Deal damage to enemies around
 		local damage = self.shield_init_value
@@ -255,6 +263,13 @@ function modifier_aphotic_shield_buff:OnRemoved()
 		if debuff_duration > 0 then
 			for _,enemy in pairs(enemies) do
 				enemy:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
+
+				-- show particle when hit
+				particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, enemy)
+				ParticleManager:SetParticleControlEnt(particle, 0, enemy, PATTACH_POINT, "attach_hitloc", enemy:GetAbsOrigin(), true)
+				local hit_size = enemy:GetModelRadius() * 0.3
+				ParticleManager:SetParticleControl(particle, 1, Vector(hit_size, hit_size, hit_size))
+				ParticleManager:ReleaseParticleIndex(particle)
 			end
 		end
 	end
@@ -268,30 +283,32 @@ function modifier_aphotic_shield_buff:OnTakeDamage(kv)
 		if target == kv.unit then
 			-- Avoid calculation when borrowed time is active
 			if target:HasModifier("modifier_borrowed_time_caster_buff") == false then
-				local caster = self:GetCaster()
 				local damage = kv.damage
-				local shield_remaining = self.shield_remaining
-				local set_to_health
+				-- Avoid if damage is 0 (can happen when you cast shield on manta illusion and cast manta again. If you do not check this the manta illusion will not die)
+				if damage > 0 then
+					local shield_remaining = self.shield_remaining
+					local set_to_health
 
-				-- If the damage is bigger than what the shield can absorb, heal a portion
-				-- Heal can fail due to modifiers preventing heal, set unit's health instead
-				local damage_block_amount
-				if damage > shield_remaining then
-					damage_block_amount = shield_remaining
-					set_to_health = self.target_current_health - damage + shield_remaining
-				else
-					damage_block_amount = damage
-					set_to_health = self.target_current_health
-				end
-				-- Show effect of damage blocked
-				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage_block_amount, nil)
-				
-				-- Note that we did not use GetHealth() here because it will ignore the health regen, which will sometimes cause health to decrease by 1
-				target:SetHealth(set_to_health)
+					-- If the damage is bigger than what the shield can absorb, heal a portion
+					-- Heal can fail due to modifiers preventing heal, set unit's health instead
+					local damage_block_amount
+					if damage > shield_remaining then
+						damage_block_amount = shield_remaining
+						set_to_health = self.target_current_health - damage + shield_remaining
+					else
+						damage_block_amount = damage
+						set_to_health = self.target_current_health
+					end
+					-- Show effect of damage blocked
+					SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage_block_amount, nil)
+					
+					-- Note that we did not use GetHealth() here because it will ignore the health regen, which will sometimes cause health to decrease by 1
+					target:SetHealth(set_to_health)
 
-				self.shield_remaining = shield_remaining - damage
-				if self.shield_remaining <= 0 then
-					target:RemoveModifierByName("modifier_aphotic_shield_buff")
+					self.shield_remaining = shield_remaining - damage
+					if self.shield_remaining <= 0 then
+						target:RemoveModifierByName("modifier_aphotic_shield_buff")
+					end
 				end
 			end
 		end
@@ -319,6 +336,15 @@ modifier_imba_curse_of_avernus_caster = class({
 	IsDebuff	  			= function(self) return false end,
 	AllowIllusionDuplicate	= function(self) return false end
 })
+
+function modifier_imba_curse_of_avernus_caster:OnCreated()
+	if IsServer() then
+		local target = self:GetParent()
+		if target:IsIllusion() then
+			self:Destroy()
+		end
+	end
+end
 
 function modifier_imba_curse_of_avernus_caster:DeclareFunctions()
 	local funcs = {
@@ -454,7 +480,11 @@ function modifier_imba_curse_of_avernus_debuff:OnTakeDamage(kv)
 				end
 				heal_amount = heal_amount * heal_convert
 
-				-- TODO show heal animation on caster
+				local life_steal_particle_name = "particles/generic_gameplay/generic_lifesteal.vpcf"
+				-- Show heal animation on caster
+				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, caster)
+				ParticleManager:ReleaseParticleIndex(healFX)
+				-- Show value healed
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal_amount, nil)
 				-- Heal caster equal to a percentage of damage taken by unit affected by this debuff
 				caster:Heal(heal_amount, caster)
@@ -464,7 +494,11 @@ function modifier_imba_curse_of_avernus_debuff:OnTakeDamage(kv)
 					-- Aghanim heal allies
 					if buffed_allies and HasScepter(caster) then
 						for k,_ in pairs(buffed_allies) do
-							--TODO show heal animation on allies
+							-- Show heal animation on allies
+							healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, k)
+							ParticleManager:ReleaseParticleIndex(healFX)
+							-- Show value healed on allies
+							SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, k, heal_amount, nil)
 							k:Heal(heal_amount, caster)
 						end
 					end
@@ -548,23 +582,23 @@ modifer_over_channel_caster = class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
-	RemoveOnDeath			= function(self) return false end
+	RemoveOnDeath			= function(self) return false end,
+	AllowIllusionDuplicate	= function(self) return true end
 })
 
 function modifer_over_channel_caster:OnCreated()
 	local target = self:GetParent()
+	local target_origin = target:GetAbsOrigin()
+	local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
 
 	-- Body purple steam particle
-	local particle = ParticleManager:CreateParticle("particles/econ/events/ti4/radiant_fountain_regen_mist_ti4.vpcf", PATTACH_POINT_FOLLOW, target)
+	local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin, true)
 	self:AddParticle(particle, false, false, -1, false, false)
 
 	-- Weapon particle
-	particle = ParticleManager:CreateParticle("particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf", PATTACH_ABSORIGIN, target)
-	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target:GetAbsOrigin(), true)
-	self:AddParticle(particle, false, false, -1, false, false)
-
-	-- Body warp particle
-	particle = ParticleManager:CreateParticle("particles/econ/courier/courier_oculopus/courier_oculopus_ambient_warp.vpcf", PATTACH_POINT_FOLLOW, target)
+	particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin, true)
 	self:AddParticle(particle, false, false, -1, false, false)
 end
 
@@ -603,27 +637,38 @@ modifer_borrowed_time_caster_auto_cast = class({
 })
 
 function modifer_borrowed_time_caster_auto_cast:_CheckHealth(damage)
-	-- TODO check if this triggers
 	local target = self:GetParent()
 	local ability = self:GetAbility()
 
 	-- Check state
-	if ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() then
+	if ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() then
 		local hp_threshold = self.hp_threshold
 		local current_hp = target:GetHealth() - damage
 		if current_hp < hp_threshold then
-			-- TODO check if this prevents death, else we will need to set the health here
-			target:CastAbilityImmediately(ability, target:GetPlayerID())
+			-- Prevent death. Casting ability immediately does not prevent death
+			if current_hp <= 0 then
+				-- 'hp_threshold' is the minimum that it can go
+				-- plus 'damage' to current health is to prevent death
+				-- 'current_hp' will be negative or 0 here, hence we minus to make it a positive addition. This represents the health gained from triggering borrowed time
+				target:SetHealth(hp_threshold + damage - current_hp)
+			end
+
+			target:CastAbilityImmediately(ability, target:GetPlayerID())			
 		end
 	end
 end
 
 function modifer_borrowed_time_caster_auto_cast:OnCreated()
 	if IsServer() then
-		self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
+		local target = self:GetParent()
+		if target:IsIllusion() then
+			self:Destroy()
+		else
+			self.hp_threshold = self:GetAbility():GetSpecialValueFor("hp_threshold")
 
-		-- Check if we need to auto cast immediately
-		self:_CheckHealth(0)
+			-- Check if we need to auto cast immediately
+			self:_CheckHealth(0)
+		end
 	end
 end
 
@@ -652,9 +697,10 @@ end
 function modifer_borrowed_time_caster_auto_cast:OnStateChanged(kv)
 	-- Trigger borrowed time if health below hp_threshold after silence/hex
 	if IsServer() then
-		-- TODO check if this triggers
-		-- TODO ensure only check if state is for the parent
-		self:_CheckHealth(0)
+		local target = self:GetParent()
+		if target == kv.unit then
+			self:_CheckHealth(0)
+		end
 	end
 end
 
@@ -722,21 +768,21 @@ function modifier_borrowed_time_caster_buff:OnTakeDamage(kv)
 		if target == kv.unit then
 			local damage = kv.damage
 
-			-- TODO Account for rapier damage amplification?
+			if damage > 0 then
+				-- Block incoming damage
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
+				target:SetHealth(self.target_current_health)
 
-			-- Block incoming damage
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
-			target:SetHealth(self.target_current_health)
+				local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+				local target_vector = target:GetAbsOrigin()
+				ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
+				ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
+				ParticleManager:ReleaseParticleIndex(heal_particle)
 
-			local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			local target_vector = target:GetAbsOrigin()
-			ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
-			ParticleManager:SetParticleControl(heal_particle, 1, target_vector)
-			ParticleManager:ReleaseParticleIndex(heal_particle)
-
-			-- Heal blocked damage
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
-			target:Heal(damage, target)
+				-- Heal blocked damage
+				SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, damage, nil)
+				target:Heal(damage, target)
+			end
 		end
 	end
 end
@@ -758,10 +804,24 @@ end
 function modifier_borrowed_time_allies_buff:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
+		local target = self:GetParent()
 		local buff_list = caster._borrowed_time_buffed_allies
 		if buff_list then
-			buff_list[self:GetParent()] = true
+			buff_list[target] = true
 		end
+
+		local target_origin = target:GetAbsOrigin()
+		local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
+
+		-- Body purple steam particle
+		local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin, true)
+		self:AddParticle(particle, false, false, -1, false, false)
+
+		-- Weapon particle
+		particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
+		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_attack1", target_origin, true)
+		self:AddParticle(particle, false, false, -1, false, false)
 	end
 end
 
@@ -781,21 +841,23 @@ function modifier_borrowed_time_allies_buff:OnTakeDamage(kv)
 
 		-- Works for illusions as well
 		if target == kv.unit then
-			local caster = self:GetCaster()
-			local ability = self:GetAbility()
-			local ability_level = ability:GetLevel()
-			local redirect = ability:GetLevelSpecialValueFor("redirect", ability_level)
 			local damage = kv.damage
-			local attacker = kv.attacker
 
-			-- TODO Account for rapier damage amplification?
+			if damage > 0 then
+				local caster = self:GetCaster()
+				local ability = self:GetAbility()
+				local ability_level = ability:GetLevel()
+				local redirect = ability:GetLevelSpecialValueFor("redirect", ability_level)
+				
+				local attacker = kv.attacker
 
-			-- Redirect damage to caster (which should heal when caster takes damage)
-			local redirect_damage = damage * redirect
-			-- TODO create link effect
-			target:SetHealth(target:GetHealth() + redirect_damage)
-			-- Redirect as pure damage else it will be reduced again by armour/magic resistance
-			ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
+				-- Redirect damage to caster (which should heal when caster takes damage)
+				local redirect_damage = damage * redirect
+
+				target:SetHealth(target:GetHealth() + redirect_damage)
+				-- Redirect as pure damage else it will be reduced again by armour/magic resistance
+				ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
+			end
 		end
 		
 	end
