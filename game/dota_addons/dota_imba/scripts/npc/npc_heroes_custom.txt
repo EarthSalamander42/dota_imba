@@ -1193,8 +1193,6 @@
 	"npc_imba_hero_lina"
 	{
 		"override_hero"				"npc_dota_hero_lina"
-
-		"AttackDamageMin"			"21"
 		
 		"Ability1"					"imba_lina_dragon_slave"
 		"Ability2"					"imba_lina_light_strike_array"
