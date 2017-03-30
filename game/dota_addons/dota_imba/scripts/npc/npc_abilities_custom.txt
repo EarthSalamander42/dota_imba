@@ -4028,6 +4028,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"cooldown"								"4.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_3"
 			}
 		}
 
@@ -4035,6 +4036,8 @@
 		{
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
 		}
 	}
 
@@ -4081,6 +4084,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"shield"								"110 140 170 200 225 250 275"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_5"
 			}
 			"03"
 			{
@@ -4091,11 +4095,13 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"buff_duration"							"4.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cast_range"							"500"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_1"
 			}
 		}
 
@@ -4104,7 +4110,9 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
-			//"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
 		}
 	}
 
@@ -4150,11 +4158,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"attack_increase"						"10 20 30 40 40 40 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"07"
 			{
@@ -4167,6 +4177,7 @@
 		{
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+			"particle"									"particles/generic_gameplay/generic_lifesteal.vpcf"
 		}
 	}
 
@@ -4196,9 +4207,7 @@
 
 		"precache"
 		{
-			"particle"									"particles/econ/events/ti4/radiant_fountain_regen_mist_ti4.vpcf"
 			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
-			"particle"									"particles/econ/courier/courier_oculopus/courier_oculopus_ambient_warp.vpcf"
 		}
 	}
 
@@ -4242,6 +4251,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"4.0 5.0 6.0 6.5 7.0 7.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_7"
 			}
 			"03"
 			{
@@ -4252,6 +4262,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"redirect_range"						"900"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_8"
 			}
 		}
 
@@ -4261,6 +4272,7 @@
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
 		}
 	}
 
