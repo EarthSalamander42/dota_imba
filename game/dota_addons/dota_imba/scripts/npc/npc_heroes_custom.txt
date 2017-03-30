@@ -1000,14 +1000,14 @@
 		"Ability3"					"imba_juggernaut_blade_dance"
 		"Ability4"					"imba_juggernaut_omni_slash"
 
-		"Ability10"					"special_bonus_hp_150"
-		"Ability11"					"special_bonus_attack_damage_20"
-		"Ability12"					"special_bonus_armor_4"
-		"Ability13"					"special_bonus_attack_speed_20"
-		"Ability14"					"special_bonus_movement_speed_20"
-		"Ability15"					"special_bonus_all_stats_7"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_agility_16"
+		"Ability10"					"special_bonus_imba_juggernaut_1"
+		"Ability11"					"special_bonus_imba_juggernaut_2"
+		"Ability12"					"special_bonus_imba_juggernaut_3"
+		"Ability13"					"special_bonus_imba_juggernaut_4"
+		"Ability14"					"special_bonus_imba_juggernaut_5"
+		"Ability15"					"special_bonus_imba_juggernaut_6"
+		"Ability16"					"special_bonus_imba_juggernaut_7"
+		"Ability17"					"special_bonus_imba_juggernaut_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -1372,36 +1372,24 @@
 	//=================================================================================================================
 	// HERO: Mirana
 	//=================================================================================================================
-	"npc_imba_hero_mirana"
+    "npc_imba_hero_mirana"
 	{
-		"override_hero"				"npc_dota_hero_mirana"
-
-		"AbilityLayout"				"5"
-
-		"AttackDamageMin"			"26"
-		"AttackDamageMax"			"30"
-		"AttackRate"				"1.6"
-
-		"AttributeBaseAgility"		"20"
-
-		"MovementTurnRate"			"0.8"	
-
-		"VisionNighttimeRange"		"1800"
+		"override_hero"				"npc_dota_hero_mirana"		
 
 		"Ability1"					"imba_mirana_starfall"
 		"Ability2"					"imba_mirana_arrow"
-		"Ability3"					"imba_mirana_leap"
-		"Ability4"					"imba_mirana_cosmic_dust"
-		"Ability5"					"mirana_invis"
+		"Ability3"					"imba_mirana_leap"		
+		"Ability4"					"imba_mirana_moonlight_shadow"
 
-		"Ability10"					"special_bonus_agility_13"
-		"Ability11"					"special_bonus_hp_150"
-		"Ability12"					"special_bonus_spell_amplify_6"
-		"Ability13"					"special_bonus_attack_speed_20"
-		"Ability14"					"special_bonus_attack_damage_40"
-		"Ability15"					"special_bonus_armor_5"
-		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_cooldown_reduction_15"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_mirana_1"
+		"Ability11"					"special_bonus_imba_mirana_2"
+		"Ability12"					"special_bonus_imba_mirana_3"
+		"Ability13"					"special_bonus_imba_mirana_4"
+		"Ability14"					"special_bonus_imba_mirana_5"
+		"Ability15"					"special_bonus_imba_mirana_6"
+		"Ability16"					"special_bonus_imba_mirana_7"
+		"Ability17"					"special_bonus_imba_mirana_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_mirana/mirana_base_attack.vpcf"
 	}

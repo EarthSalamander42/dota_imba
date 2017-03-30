@@ -37,6 +37,7 @@ require('events')
 require('addon_init')
 
 ApplyAllTalentModifiers()
+StoreCurrentDayCycle()
 
 -- storage API
 --require('libraries/json')
