@@ -11042,11 +11042,11 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_juggernaut.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"juggernaut_blade_fury"
+		"MaxLevel"						"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11055,11 +11055,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"36 30 24 18"
+		"AbilityCooldown"				"42 34 26 18 17 16 15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 110 100 90"
+		"AbilityManaCost"				"120 110 100 90 80 70 60"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11077,12 +11077,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"effect_radius"			"350"
+				"effect_radius"			"250 250 250 250 275 300 325"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_sec"		"80 105 130 155"
+				"damage_per_sec"		"80 105 130 155 160 165 170"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_4"
 			}
 			"03"
 			{
@@ -11092,100 +11093,13 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"evasion"				"10 10 10 10 20 30 40"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"duration"				"5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_slow"				"-15"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_slow_tooltip"		"15"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_juggernaut.lua"
-				"Function"				"Bladefury"
-
-				"modifier_caster"		"modifier_imba_blade_fury_caster"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_blade_fury_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%duration"
-
-				"ThinkInterval"			"%damage_tick"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"BladefuryTick"
-
-						"particle_hit"		"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury_tgt.vpcf"
-						"sound_hit"			"Hero_Juggernaut.BladeFury.Impact"
-						"modifier_debuff"	"modifier_imba_blade_fury_debuff"
-					}
-				}
-		
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"BladefuryParticleStart"
-
-						"particle_spin"		"particles/units/heroes/hero_juggernaut/juggernaut_blade_fury.vpcf"
-						"sound_spin"		"Hero_Juggernaut.BladeFuryStart"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"BladefuryParticleEnd"
-
-						"sound_spin"		"Hero_Juggernaut.BladeFuryStart"
-						"sound_stop"		"Hero_Juggernaut.BladeFuryStop"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_blade_fury_debuff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%damage_tick"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%ms_slow" 
-				}
 			}
 		}
 	}
@@ -11197,12 +11111,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_juggernaut.lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"juggernaut_healing_ward"
 		"AOERadius"						"%heal_radius"
+		"MaxLevel"						"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11227,6 +11141,7 @@
 			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
 			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf"
 			"particle"					"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
+			"model"						"models/items/juggernaut/ward/dc_wardupate/dc_wardupate.vmdl"
 		}
 		
 		// Special
@@ -11241,12 +11156,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_per_sec"			"2 3 4 5"
+				"heal_per_sec"			"2 3 4 5 5 5 5"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"3 3 6 9"
+				"health"				"3 3 3 3 6 6 9"
 			}
 			"04"
 			{
@@ -11256,7 +11172,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_bonus_totem"	"250"
+				"radius_bonus_totem"	"100 100 100 100 150 200 250"
 			}
 			"06"
 			{
@@ -11266,22 +11182,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_bonus_totem"	"9"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_juggernaut.lua"
-				"Function"				"HealingWard"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_Juggernaut.HealingWard.Cast"
-				"sound_loop"			"Hero_Juggernaut.HealingWard.Loop"
-				"particle_ward"			"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward.vpcf"
-				"particle_eruption"		"particles/units/heroes/hero_juggernaut/juggernaut_healing_ward_eruption.vpcf"
+				"health_bonus_totem"	"6 6 6 6 6 9 9"
 			}
 		}
 	}
@@ -11293,11 +11194,11 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_juggernaut.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"juggernaut_healing_ward"
+		"MaxLevel"						"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11322,271 +11223,33 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_per_sec"			"2 3 4 5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health"				"3 3 6 9"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_healing_ward"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_healing_ward_buff"
-				"Aura_Radius"				"%heal_radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"		"0"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"HealingWardDamage"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"HealingWardEnd"
-
-						"sound_loop"		"Hero_Juggernaut.HealingWard.Loop"
-						"sound_end"			"Hero_Juggernaut.HealingWard.Stop"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_healing_ward_buff"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"EffectName"				"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
-				"EffectAttachType"			"attach_hitloc"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_per_sec"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut's Healing Ward upgrade
-	//=================================================================================================================
-	"imba_juggernaut_healing_ward_upgrade"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityTextureName"			"custom/imba_healing_ward_upgrade"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"health"				"12 12 15 18"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_radius"			"750"
+				"heal_per_sec"			"2 3 4 5 5 5 5"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_bonus_totem"	"250"
+				"health"				"3 3 3 3 6 6 9"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_bonus_totem"		"2"
+				"heal_radius_totem"		"600 600 600 600 650 700 750"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_bonus_totem"	"9"
+				"heal_per_sec_totem"	"4 5 6 7 7 7 7"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_2"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_juggernaut.lua"
-				"Function"				"HealingWardUpgrade"
-
-				"sound_cast"			"Hero_Juggernaut.HealingWard.Cast"
-				"sound_loop"			"Hero_Juggernaut.HealingWard.Loop"
-				"particle_ward"			"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_dc.vpcf"
-				"particle_eruption"		"particles/econ/items/juggernaut/bladekeeper_healing_ward/juggernaut_healing_ward_eruption_dc.vpcf"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Juggernaut's Healing Totem passive
-	//=================================================================================================================
-	"imba_juggernaut_healing_totem_passive"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"			"imba_healing_ward_upgrade"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_radius"			"750"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"heal_per_sec"			"4 5 6 7"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"health"				"12 12 15 18"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_healing_totem"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_healing_totem_buff"
-				"Aura_Radius"				"%heal_radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"		"0"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"HealingWardDamage"
-					}
-				}
-
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"HealingWardEnd"
-
-						"sound_loop"		"Hero_Juggernaut.HealingWard.Loop"
-						"sound_end"			"Hero_Juggernaut.HealingWard.Stop"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_healing_totem_buff"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"EffectName"				"particles/units/heroes/hero_juggernaut/juggernaut_ward_heal.vpcf"
-				"EffectAttachType"			"attach_hitloc"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_per_sec"
-				}
+				"health_totem"			"9 9 9 9 12 15 18"
 			}
 		}
 	}
-
 	//=================================================================================================================
 	// Juggernaut's Blade Dance
 	//=================================================================================================================
@@ -11594,10 +11257,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_juggernaut.lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName"			"juggernaut_blade_dance"
+		"MaxLevel"						"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11617,6 +11284,8 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+			"particle"					"particles/econ/items/juggernaut/bladekeeper_omnislash/dc_juggernaut_omni_slash_rope.vpcf"
 			"particle"					"particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf"
 		}
 		
@@ -11627,7 +11296,8 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_chance"			"20 25 30 35"
+				"crit_chance"			"20 25 30 35 35 35 35"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_1"
 			}
 			"02"
 			{
@@ -11637,7 +11307,8 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"2 3 4 5"
+				"bonus_agi"				"0 0 0 0 1 2 3"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_5"
 			}
 			"04"
 			{
@@ -11649,70 +11320,26 @@
 				"var_type"				"FIELD_FLOAT"
 				"bonus_duration"		"2.25"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_blade_dance"
+			"06"
 			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-		
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"BladedanceHit"
-
-						"modifier_crit"		"modifier_imba_blade_dance_crit"
-						"modifier_stacks"	"modifier_imba_blade_dance_stacks"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"active_distance"		"700"
 			}
-
-			"modifier_imba_blade_dance_crit"
+			"07"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_juggernaut.lua"
-						"Function"			"BladedanceCrit"
-
-						"particle_crit"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur.vpcf"
-						"sound_hit"			"Hero_Juggernaut.BladeDance"
-						"modifier_crit"		"modifier_imba_blade_dance_crit"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_damage"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"active_speed"			"1200"
 			}
-
-			"modifier_imba_blade_dance_stacks"
+			"08"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%bonus_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%bonus_agi"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms" 
-				}
+				"var_type"				"FIELD_INTEGER"
+				"active_min_stacks"		"3"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_cooldown"		"3"
+				"LinkedSpecialBonus"	"special_bonus_imba_juggernaut_8"
 			}
 		}
 	}
@@ -11724,13 +11351,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_juggernaut.lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName"			"juggernaut_omni_slash"
+		"HasScepterUpgrade"				"1"
+		"MaxLevel"						"6"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -11739,11 +11369,11 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 110 100"
+		"AbilityCooldown"				"130 120 110 100 90 80"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 225 300"
+		"AbilityManaCost"				"200 275 35 350 350 350"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -11767,79 +11397,218 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_amount"			"3 6 9"
+				"jump_amount"			"3 6 9 10 11 12"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"600"
+				"bounce_range"			"550"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bounce_delay"			"0.40 0.35 0.30"
+				"bounce_delay"			"0.40"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"agi_per_jump"			"20"
+				"var_type"				"FIELD_FLOAT"
+				"cdr_per_attack"		"0.25 0.25 0.25 0.5 0.75 1.0"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"1000"
+				"bounce_range_scepter"	"900"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"70"
+				"jump_amount_scepter"	"6 9 12 13 14 15"
 			}
 		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_juggernaut.lua"
-				"Function"				"Omnislash"
-
-				"modifier_caster"		"modifier_imba_omni_slash_caster"
-				"modifier_scepter"		"modifier_imba_omni_slash_caster_scepter"
-				"sound_cast"			"Hero_Juggernaut.OmniSlash"
-				"sound_hit"				"Hero_Juggernaut.OmniSlash.Damage"
-				"particle_trail"		"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_trail.vpcf"
-				"particle_hit"			"particles/units/heroes/hero_juggernaut/juggernaut_omni_slash_tgt.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_omni_slash_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_omnislash.vpcf"
-				"StatusEffectPriority"	"10"
+	}
+	//=================================================================================================================
+	// Juggernaut Talent 1 (Level 10): +5% Blade Dance crit chance
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-100"
-				}
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
 			}
 		}
 	}
 
+	//=================================================================================================================
+	// Juggernaut Talent 2 (Level 10): +1% Healing Ward heal per second
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 3 (Level 20): +40% Blade Fury evasion
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"40"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 4 (Level 20): +170 Blade Fury DPS
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"170"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 5 (Level 30): +4 Blade Dance Agi On Crit
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"4"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 6 (Level 30): Blade Fury now benefits from Blade Dance
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 7 (Level 40): -6sec Blade Fury cooldown
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Juggernaut Talent 8 (Level 40): -2sec Blade Dance cooldown
+	//=================================================================================================================
+	"special_bonus_imba_juggernaut_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-2"
+			}
+		}
+	}
 	//=================================================================================================================
 	// Kunkka's Ebb and Flow
 	//=================================================================================================================
