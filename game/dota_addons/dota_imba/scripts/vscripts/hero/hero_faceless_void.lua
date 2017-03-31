@@ -587,7 +587,7 @@ function modifier_imba_faceless_void_time_dilation_buff:GetModifierConstantManaR
 -------------------------------------------
 if modifier_imba_faceless_void_time_dilation_talent_buff == nil then modifier_imba_faceless_void_time_dilation_talent_buff = class({}) end
 function modifier_imba_faceless_void_time_dilation_talent_buff:IsPurgable() return true end
-function modifier_imba_faceless_void_time_dilation_talent_buff:IsHidden() return false end
+function modifier_imba_faceless_void_time_dilation_talent_buff:IsHidden() return true end
 function modifier_imba_faceless_void_time_dilation_talent_buff:IsDebuff() return false end
 
 function modifier_imba_faceless_void_time_dilation_talent_buff:DeclareFunctions()
@@ -701,7 +701,7 @@ end
 if modifier_imba_faceless_void_time_lock_stun == nil then modifier_imba_faceless_void_time_lock_stun = class({}) end
 function modifier_imba_faceless_void_time_lock_stun:IsPurgable()		return false end
 function modifier_imba_faceless_void_time_lock_stun:IsDebuff()			return true end
-function modifier_imba_faceless_void_time_lock_stun:IsHidden()			return false end
+function modifier_imba_faceless_void_time_lock_stun:IsHidden()			return true end
 function modifier_imba_faceless_void_time_lock_stun:IsStunDebuff()		return true end
 function modifier_imba_faceless_void_time_lock_stun:IsPurgeException()	return true end
 
