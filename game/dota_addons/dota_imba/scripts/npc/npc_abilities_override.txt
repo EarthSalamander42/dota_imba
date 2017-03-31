@@ -19006,57 +19006,6 @@
 	}
 
 	//=================================================================================================================
-	// Magnus: Skewer
-	//=================================================================================================================
-	"magnataur_skewer"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"24 20 16 12"
-
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_speed"			"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"1300 1400 1500 1600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_radius"			"160"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.5 2.75 3.0 3.25"
-			}			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_damage"			"100 175 250 325"
-			}			
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tree_radius"			"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Gyrocopter: Rocket Barrage
 	//=================================================================================================================
 	"gyrocopter_rocket_barrage"
