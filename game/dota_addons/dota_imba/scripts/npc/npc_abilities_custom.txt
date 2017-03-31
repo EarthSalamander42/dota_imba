@@ -13378,7 +13378,7 @@
 	{
 		//General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -13387,6 +13387,8 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"lion_impale"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_lion.lua"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13395,6 +13397,7 @@
 			"particle"					"particles/units/heroes/hero_lion/lion_spell_impale.vpcf" 				
 			"particle"					"particles/units/heroes/hero_lion/lion_spell_impale_hit_spikes.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_lion.vsndevts"
 		}	
 
 		// Casting
@@ -13405,7 +13408,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -13420,77 +13423,62 @@
 				"var_type"				"FIELD_INTEGER"
 				"spike_speed"			"1600"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"knock_up_height"		"350"
 			}
+
 			"03"
 			{
 				"var_type" 				"FIELD_FLOAT"
 				"knock_up_time"			"0.5"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"travel_distance"		"825"
 			}
+
 			"05"			
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spikes_radius"			"125"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 140 200 260"
+				"damage"				"80 140 200 260 290 320 350"
+				"LinkedSpecialBonus"	"special_bonus_imba_lion_2"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.1 1.6 2.1 2.6"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"extra_spike_AOE"		"800"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"wait_interval"			"0.35"
+				"wait_interval"			"0.5"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"10"
 			{
-				"ScriptFile" 			"hero/hero_lion.lua"
-				"Function"				"EarthSpikes"
-				
-				"sound_cast"			"Hero_Lion.Impale"
-				"particle_projectile"	"particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
-				"target"				"POINT"
+				"var_type"				"FIELD_INTEGER"
+				"max_bounces_per_cast"	"1 1 1 1 2 3 4"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lion.lua"
-				"Function"				"EarthSpikesHit"
-				
-				"sound_impact"			"Hero_Lion.ImpaleHitTarget"
-				"particle_hit"			"particles/units/heroes/hero_lion/lion_spell_impale_hit_spikes.vpcf"
-				"modifier_hit"			"imba_lion_earth_spike_hit"
-				"sound_cast"			"Hero_Lion.Impale"
-				"particle_projectile"	"particles/units/heroes/hero_lion/lion_spell_impale.vpcf"
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -13500,7 +13488,7 @@
 	{
 		//General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
+		"BaseClass"              	"ability_lua"
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -13508,29 +13496,31 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lion_voodoo"
+		"MaxLevel"					"7"
+		"ScriptFile"				"hero/hero_lion.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{			
 			"particle"				"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"				"particles/hero/lion/firetoad.vpcf"			
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"			
+			"soundfile"				"soundevents/voscripts/game_sounds_vo_lion.vsndevts"
 			"model"					"models/props_gameplay/frog.vmdl"
 		}	
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"			"500"
-		"AbilityCastPoint"			"0"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_2"
+		"AbilityCastRange"			"500"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"30 24 18 12"
+		"AbilityCooldown"			"30 24 18 12 12 12 12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"			"125 150 175 200"
+		"AbilityManaCost"			"125 150 175 200 205 210 215"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13539,106 +13529,36 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5 3.0 3.5 4.0"
+				"duration"				"2.5 3 3.5 4 4 4 4"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bounce_duration"		"2.5"
-			}
+				"bounce_interval"		"2.25"
+			}			
+
 			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"b_duration_scepter"	"1.25"
-			}
-			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"move_speed"			"140"
 			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hex_bounce_radius"		"325 325 325 325 375 425 475"
+				"LinkedSpecialBonus"	"special_bonus_imba_lion_3"
+			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hex_bounce_radius"		"500"
+				"maximum_hex_enemies"	"1"
+				"LinkedSpecialBonus"	"special_bonus_imba_lion_6"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile" 			"hero/hero_lion.lua"
-				"Function"				"Hex"
-
-				"sound_cast"			"Hero_Lion.Voodoo"		
-				"modifier_hex"			"modifier_imba_lion_hex"
-				"modifier_bounce"		"modifier_imba_lion_hex_bounce"
-				"hex_particle"			"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_lion_hex"
-			{
-				"Duration"					"%duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 		"hero/hero_lion.lua"
-						"Function"			"HexModelChange"
-
-						"model_frog"		"models/props_gameplay/frog.vmdl"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 		"hero/hero_lion.lua"
-						"Function"			"HexModelRevert"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_MUTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_HEXED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_EVADE_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_BLOCK_DISABLED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_PASSIVES_DISABLED" 	"MODIFIER_STATE_VALUE_ENABLED"
-				}				
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"	"%move_speed"
-				}
-			}
-
-			"modifier_imba_lion_hex_bounce"
-			{
-				"IsHidden"					"1"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile" 		"hero/hero_lion.lua"
-						"Function"			"HexBounce"
-					
-						"sound_cast"		"Hero_Lion.Voodoo"		
-						"modifier_hex"		"modifier_imba_lion_hex"
-						"modifier_bounce"	"modifier_imba_lion_hex_bounce"
-						"hex_particle"		"particles/units/heroes/hero_lion/lion_spell_voodoo.vpcf"
-					}
-				}
-			}
-		}
+			
+		}		
 	}
 
 	//=================================================================================================================
@@ -13648,14 +13568,17 @@
 	{
 		//General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
+		"BaseClass"              	"ability_lua"
 		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"		
+		"AbilityUnitTargetFlags" 	"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MANA_ONLY"		
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"1"
 		"AbilityTextureName"     	"lion_mana_drain"
+		"MaxLevel"					"7"
+		"ScriptFile"				"hero/hero_lion.lua"
+
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13663,17 +13586,17 @@
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 			"particle"				"particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
+			"particle"				"particles/hero/lion/aura_manadrain.vpcf"
 		}		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"			"850"
-		"AbilityCastPoint" 			"0.3"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastPoint" 			"0.3"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"16 12 8 4"
+		"AbilityCooldown"			"16 12 8 4 4 4 4"
 		"AbilityChannelTime" 		"5"
 
 		// Cost
@@ -13684,124 +13607,41 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{	
+
 			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"max_channel_time"	"5"
-			}
-			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"break_distance"	"1200"
 			}
-			"03"
+
+			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"interval"			"0.1"
 			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_drain_sec" 	"20 40 60 120 130 140 150"
+			}	
+
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"mana_drain_sec" 	"50 100 150 200"
-			}	
+				"aura_radius"		"900"
+			}
+
 			"05"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"aura_radius"		"1200"
+				"var_type"				"FIELD_FLOAT"
+				"aura_mana_drain_pct"	"0.8 0.8 0.8 0.8 1.2 1.6 2"
 			}
+
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_max_mana_drain"	"0.5 1.0 1.5 2.0"
-			}
-			"07"
-			{
 				"var_type"				"FIELD_INTEGER"	
-				"mana_pct_as_damage"	"80"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_lion.lua"
-				"Function"			"ManaDrain"
-
-				"sound_cast"		"Hero_Lion.ManaDrain"
-				"particle_drain"	"particles/econ/items/lion/lion_demon_drain/lion_spell_mana_drain_demon.vpcf"
-				"modifier_drain"	"modifier_imba_mana_drain_debuff"
-			}
-		}
-		
-		"OnChannelInterrupted"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_lion.lua"
-				"Function"			"ManaDrainRemoveDebuff"
-
-				"modifier_drain"	"modifier_imba_mana_drain_debuff"
-			}
-		}
-
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_lion.lua"
-				"Function"			"ManaDrainRemoveDebuff"
-
-				"modifier_drain"	"modifier_imba_mana_drain_debuff"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_mana_drain_debuff"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"1"
-			}
-
-			"modifier_imba_mana_drain_aura"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"Aura"									"modifier_imba_mana_drain_aura_effect"
-				"Aura_Radius"							"%aura_radius"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS | DOTA_UNIT_TARGET_FLAG_MANA_ONLY"
-				"Aura_ApplyToCaster"					"0"
-				
-				"ThinkInterval"  						"0.1"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_lion.lua"
-						"Function"						"ManaDrainAura"
-						
-						"modifier_drain_aura"			"modifier_imba_mana_drain_aura_effect"
-					}
-				}
-			}
-
-			"modifier_imba_mana_drain_aura_effect"
-			{
-				"Passive"								"0"
-				"IsHidden"								"0"				
-				"IsDebuff"								"1"				
-			}
-
-			"modifier_imba_mana_drain_hero_effect"
-			{
-				"Passive"								"1"
-				"IsHidden"								"0"				
-				"IsBuff"								"1"				
+				"mana_pct_as_damage"	"100"
 			}
 		}
 	}
@@ -13813,8 +13653,8 @@
 	{
 		//General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"              	"ability_datadriven"
-		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"              	"ability_lua"
+		"AbilityBehavior"        	"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityType"				"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetTeam"	 	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"  	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -13823,6 +13663,9 @@
 		"SpellImmunityType" 	 	"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"			"2"
 		"AbilityTextureName"     	"lion_finger_of_death"
+		"MaxLevel"					"6"
+		"LevelsBetweenUpgrades"		"6"
+		"ScriptFile"				"hero/hero_lion"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -13834,17 +13677,12 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"			"900"
-		"AbilityCastPoint"			"0.3"
-		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"			"120 80 40"
+		"AbilityCastRange"			"900"		
+		"AbilityCastPoint"			"0.3"						
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"			"200 400 600"
+		"AbilityManaCost"			"200 425 650 700 750 800"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13853,108 +13691,74 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"600 725 850"
+				"damage"					"600 725 850 925 1000 1075"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"725 875 1025"
-			}			
+				"scepter_damage"			"725 875 1025 1100 1175 1250"
+			}		
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius_scepter"			"1200"	
+				"scepter_radius"			"900"	
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_delay"				"0.1"
+				"damage_delay"				"0.25"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"60 40 20"
+				"cooldown_scepter"			"100 60 20 20 20 20"
 			}
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_add_duration"			"7"
+				"triggerfinger_duration"	"7"
 			}
+
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"mana_price_increase"		"0.5"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_lion.lua"
-				"Function"				"FingerOfDeath"
-				
-				"sound_cast"			"Hero_Lion.FingerOfDeath"
-				"particle_finger"		"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
-				"modifier_kill"			"modifier_imba_finger_of_death_kill"
-				"modifier_delay"		"modifier_imba_finger_of_death_delay"
-			}			
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_finger_of_death_kill"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE"
-				
-				"Duration"				"%mana_add_duration"
+				"var_type"						"FIELD_INTEGER"
+				"triggerfinger_mana_inc_pct"	"50"
 			}
 
-			"modifier_imba_finger_of_death_delay"
+			"08"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%damage_delay"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_lion.lua"
-						"Function"			"FingerOfDeathImpact"
-						
-						"sound_impact"		"Hero_Lion.FingerOfDeathImpact"
-						"particle_finger"	"particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
-						"modifier_kill"		"modifier_imba_finger_of_death_kill"
-						"modifier_hex"		"modifier_imba_lion_hex"
-					}
-				}
+				"var_type"						"FIELD_INTEGER"
+				"enemies_frog_radius"			"325"
+				"LinkedSpecialBonus"			"special_bonus_imba_lion_7"
 			}
 
-			"modifier_imba_finger_of_death_mark"
+			"09"
 			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
+				"var_type"						"FIELD_FLOAT"
+				"enemies_frog_duration"			"0.4 0.4 0.4 0.6 0.8 1"
+			}
 
-				"OnHeroKilled"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_lion.lua"
-						"Function"		"FingerOfDeathCheckKill"
-						
-						"modifier_kill"	"modifier_imba_finger_of_death_kill"
-					}
-				}
+			"10"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown"						"160 100 40 40 40 40"
+			}
+
+			"11"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_cooldown"				"100 60 20 20 20 20"
+			}
+
+			"12"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"hex_move_speed"				"140"
 			}
 		}
 	}
@@ -35625,6 +35429,169 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"	                    "40"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Lion's Talents 
+    //=================================================================================================================
+    "special_bonus_imba_lion_1" // Earth Spike now branches from creeps as well
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "40"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_2" // Earth Spike damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "70"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_3" // Hex bounce radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "150"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_4" // Mana drain slows the target according to missing mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_5" // Trigger Finger duration decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "3.5"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_6" // Hex bounces to a second enemy
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_7" // Finger of Death Hex radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "300"
+            }
+        }
+    }
+
+    "special_bonus_imba_lion_8" // Mana Drain now targets all units in aura radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
             }
         }
     }
