@@ -47,7 +47,6 @@ function imba_mirana_starfall:OnSpellStart()
     -- Ability specials
     local radius = ability:GetSpecialValueFor("radius")    
     local damage = ability:GetSpecialValueFor("damage")
-    local secondary_radius = ability:GetSpecialValueFor("secondary_radius")    
     local secondary_damage_pct = ability:GetSpecialValueFor("secondary_damage_pct")
     local additional_waves_count = ability:GetSpecialValueFor("additional_waves_count")
     local additional_waves_dmg_pct = ability:GetSpecialValueFor("additional_waves_dmg_pct")
@@ -107,7 +106,7 @@ function imba_mirana_starfall:OnSpellStart()
 
     -- Secondary Starfall
     local secondary_wave_damage = damage * (secondary_damage_pct * 0.01)
-    SecondaryStarfall(caster, ability, caster_position, secondary_radius, secondary_wave_damage)
+    SecondaryStarfall(caster, ability, caster_position, radius, secondary_wave_damage)
 
     -- Additional waves    
     local current_wave = 1     
@@ -117,7 +116,7 @@ function imba_mirana_starfall:OnSpellStart()
     Timers:CreateTimer(additional_waves_interval, function()
         -- Commence Starfalls
         StarfallWave(caster, ability, caster_position, radius, additional_wave_damage)
-        SecondaryStarfall(caster, ability, caster_position, secondary_radius, additional_secondary_damage)
+        SecondaryStarfall(caster, ability, caster_position, radius, additional_secondary_damage)
 
         current_wave = current_wave + 1
 
