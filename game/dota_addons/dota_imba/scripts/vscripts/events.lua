@@ -407,8 +407,8 @@ function GameMode:OnAbilityUsed(keys)
 	DebugPrint('[BAREBONES] AbilityUsed')
 	DebugPrintTable(keys)
 
-    local player = keys.PlayerID
-    local abilityname = keys.abilityname
+	local player = keys.PlayerID
+	local abilityname = keys.abilityname
 	if not abilityname then return end
 	
 	local hero = PlayerResource:GetSelectedHeroEntity(player)
