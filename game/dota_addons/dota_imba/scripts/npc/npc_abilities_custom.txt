@@ -9666,7 +9666,7 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Faceless Void's Time Walk
 	//=================================================================================================================
@@ -9674,13 +9674,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"faceless_void_time_walk"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9688,25 +9684,24 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
-			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.2"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18 14 10 6"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"24 18 12 6 6 6 6"
+		"AbilityManaCost"				"40"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9722,153 +9717,32 @@
 				"var_type"				"FIELD_INTEGER"
 				"slow_radius"			"325"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chrono_radius"			"250"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
+				"duration"				"0.4 0.4 0.4 0.4 0.7 1.0 1.3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"675 750 825 900"
+				"range"					"675"
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-20 -30 -40 -50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_bonus"			"10"
+				"ms_steal_pcnt"			"100"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"10 15 20 25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"chrono_linger"			"0.3"
+				"as_steal"				"100"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_time"			"2"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimeWalk"
-
-				"Target"				"POINT"
-				"sound_cast"			"Hero_FacelessVoid.TimeWalk"
-				"particle_cast"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
-				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				"modifier_caster"		"modifier_imba_time_walk_caster"
-				"modifier_slow"			"modifier_imba_time_walk_slow"
-				"modifier_buff"			"modifier_imba_time_walk_buff"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_walk_damage_counter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_faceless_void.lua"
-						"Function"		"TimeWalkDamage"
-
-						"damage_taken"	"%attack_damage"
-					}
-				}
-			}
-
-			"modifier_imba_time_walk_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_time_walk_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
-						"EffectAttachType"	"attach_origin"
-						"Target"			"TARGET"
-
-						"ControlPoints"
-						{
-							"01"	"%radius 0 0"
-						}
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow"
-				}
-			}
-
-			"modifier_imba_time_walk_buff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_bonus"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_bonus"
-				}
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_6"
 			}
 		}
 	}
@@ -9880,22 +9754,22 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"faceless_void_time_dilation"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"725"
 		"AbilityCastPoint"				"0.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 26 22 18"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"40 34 28 22 20 18 16"
+		"AbilityManaCost"				"75"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9915,111 +9789,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_increase"		"6 8 10 12"
+				"area_of_effect"		"725"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_start"		"1"
+				"charge_gain"			"1 1 1 1 2 2 3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"725"
+				"duration"				"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-10"
+				"cd_increase"			"6 8 10 12 12 12 12"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-20"
+				"as_debuff"				"10"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_bonus"			"5"
+				"ms_debuff"				"10"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_bonus"			"5 10 15 20"
+				"cd_decrease"			"2 3 4 5 6 6 6"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimeDilation"
-
-				"sound_cast"			"Hero_FacelessVoid.TimeDilation.Cast"
-				"sound_hit"				"Hero_FacelessVoid.TimeDilation.Target"
-				"particle_cast"			"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
-				"particle_hit"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
-				"modifier_slow"			"modifier_imba_time_dilation_slow"
-				"modifier_buff"			"modifier_imba_time_dilation_buff"
+				"var_type"				"FIELD_INTEGER"
+				"as_buff"				"5"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_dilation_slow"
+			"09"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%cooldown_increase"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_faceless_void.lua"
-						"Function"				"TimeDilationParticle"
-
-						"particle_debuff"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_faceless_void.lua"
-						"Function"				"TimeDilationParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow" 
-				}
-			}
-
-			"modifier_imba_time_dilation_buff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%cooldown_increase"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_bonus" 
-				}
+				"var_type"				"FIELD_INTEGER"
+				"ms_buff"				"5"
 			}
 		}
 	}
@@ -10031,18 +9841,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"BaseClass"							"ability_lua"
 		"AbilityTextureName"				"faceless_void_time_lock"
+		"ScriptFile"						"hero/hero_faceless_void.lua"
+		"MaxLevel"							"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"						"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"						"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 
@@ -10053,12 +9868,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_chance"				"10 15 20 25"
+				"bash_chance"				"100 15 20 25 25 25 25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_damage"				"50 75 100 125"
+				"bash_damage"				"0 75 100 125 130 135 140"
 			}
 			"03"
 			{
@@ -10067,42 +9882,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bash_radius"				"235"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_lock"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimeLock"
-
-						"sound_bash"		"Hero_FacelessVoid.TimeLockImpact"
-						"particle_chrono"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_time_lock"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"cd_increase"				"0.3 0.3 0.3 0.3 0.7 1.1 1.5"
 			}
 		}
 	}
@@ -10114,11 +9895,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"MaxLevel"							"4"
+		"BaseClass"							"ability_lua"
 		"AbilityTextureName"				"custom/faceless_void_timelord"
+		"ScriptFile"						"hero/hero_faceless_void.lua"
+		"MaxLevel"							"1"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10127,68 +9909,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_as"				"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_increase"			"0.2 0.3 0.4 0.5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"original_BAT"				"1.7"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_timelord"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"Timelord"
-					}
-				}
-				
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimelordStrike"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_timelord"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimelordEnd"
-					}
-				}
+				"as_pcnt_increase"			"15"
 			}
 		}
 	}
@@ -10200,12 +9921,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"faceless_void_chronosphere"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10222,14 +9943,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"110.0 100.0 90.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityCooldown"				"140 125 110 100 95 90"
+		"AbilityManaCost"				"150 225 300 300 300 300"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10237,152 +9957,57 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"425"
+				"var_type"							"FIELD_FLOAT"
+				"duration"							"4.0 4.5 5.0 5.0 5.0 5.0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"base_duration"			"4.0 4.5 5.0"
+				"var_type"							"FIELD_INTEGER"
+				"base_radius"						"425"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_radius"			"25"
+				"var_type"							"FIELD_INTEGER"
+				"chronocharge_radius"				"5"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"0.03"
+				"var_type"							"FIELD_INTEGER"
+				"chronocharge_attackspeed"			"2 3 4 6 8 10"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"20 30 40"
+				"var_type"							"FIELD_FLOAT"
+				"movement_speed"					"1000"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_scepter"			"-70"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_cooldown"					"60"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_as_slow"				"150"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"chrono_ms"				"1000"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_ms_slow_pcnt"			"50"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimelordUpgrade"
-
-				"ability_timelord"		"imba_faceless_void_timelord"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_projectile_slow"		"50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"09"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"Chronosphere"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_FacelessVoid.Chronosphere"
-				"sound_za_warudo"		"Imba.FacelessZaWarudo"
-				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				"modifier_caster"		"modifier_imba_chronosphere_caster"
-				"modifier_enemy"		"modifier_imba_chronosphere_enemy"
-				"modifier_ally"			"modifier_imba_chronosphere_ally_scepter"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_chronosphere_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%linger_duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_faceless_void.lua"
-						"Function"		"ChronoBuffEnd"
-					}
-					"DestroyTrees"
-					{
-						"Target"		"TARGET"
-						"Radius"		"200"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"%chrono_ms"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_chronosphere_enemy"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FROZEN"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-
-			"modifier_imba_chronosphere_ally_scepter"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%linger_duration"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"			"%slow_scepter"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_scepter"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-200"
-				}
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_casttime_pcnt_debuff"	"50"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Jakiro's Fire Breath
 	//=================================================================================================================
