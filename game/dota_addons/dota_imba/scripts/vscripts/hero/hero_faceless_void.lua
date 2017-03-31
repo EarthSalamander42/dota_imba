@@ -119,12 +119,6 @@ function imba_faceless_void_time_walk:OnSpellStart()
 		caster:SetHealth(caster:GetHealth() + caster.time_walk_damage_taken)
 	end
 	
-	-- This particle doesn't work for whatever reason
-	-- local afterimage_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf", PATTACH_WORLDORIGIN, caster)
-	-- ParticleManager:SetParticleControl(afterimage_pfx, 1, self:GetCursorPosition())
-	-- ParticleManager:SetParticleControl(afterimage_pfx, 2, caster:GetForwardVector())
-	-- ParticleManager:ReleaseParticleIndex(afterimage_pfx)
-	
 	local aoe_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(aoe_pfx, 1, Vector(slow_radius,0,0))
 	ParticleManager:ReleaseParticleIndex(aoe_pfx)
@@ -219,7 +213,7 @@ function modifier_imba_faceless_void_time_walk_cast:GetAttributes() return MODIF
 function modifier_imba_faceless_void_time_walk_cast:IsPurgable() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsDebuff() return	false end
 function modifier_imba_faceless_void_time_walk_cast:IsHidden() return	true end
-	
+
 function modifier_imba_faceless_void_time_walk_cast:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf" end
 
@@ -717,6 +711,18 @@ function modifier_imba_faceless_void_time_lock_stun:GetEffectName()
 function modifier_imba_faceless_void_time_lock_stun:GetEffectAttachType()
 	return PATTACH_OVERHEAD_FOLLOW end
 
+function modifier_imba_faceless_void_time_lock_stun:OnCreated()
+	if IsServer() then
+		self:GetParent():SetRenderColor(128,128,255)
+		
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf", PATTACH_ABSORIGIN, self:GetParent())
+		ParticleManager:ReleaseParticleIndex(particle)
+	end
+end
+	
+function modifier_imba_faceless_void_time_lock_stun:OnDestroy()
+	if IsServer() then self:GetParent():SetRenderColor(255,255,255) end end
+		
 function modifier_imba_faceless_void_time_lock_stun:CheckState()
 	if IsServer() then
 		local state = {	[MODIFIER_STATE_STUNNED] = true,
@@ -1011,6 +1017,12 @@ function modifier_imba_faceless_void_chronosphere_caster_buff:IsHidden() return 
 function modifier_imba_faceless_void_chronosphere_caster_buff:IsDebuff() return false end
 function modifier_imba_faceless_void_chronosphere_caster_buff:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+function modifier_imba_faceless_void_chronosphere_caster_buff:GetEffectName()
+	return "particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf" end
+	
+function modifier_imba_faceless_void_chronosphere_caster_buff:GetEffectAttachType()
+	return PATTACH_ABSORIGIN  end
+	
 function modifier_imba_faceless_void_chronosphere_caster_buff:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, }
 	return funcs
