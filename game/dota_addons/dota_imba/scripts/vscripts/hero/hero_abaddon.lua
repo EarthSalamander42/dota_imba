@@ -1,5 +1,5 @@
 --[[	Author: Broccoli
-		Date: 26-3-2017		]]
+		Date: 2-4-2017		]]
 
 CreateEmptyTalents("abaddon")
 
@@ -147,8 +147,8 @@ function imba_abaddon_aphotic_shield:OnSpellStart()
 		-- Play Sound
 		caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
 
+		-- Check health cost required due to over channel
 		local health_cost = getOverChannelIncrease(caster)
-
 		if health_cost > 0 then
 			ApplyDamage({ victim = caster, attacker = caster, ability = self, damage = health_cost, damage_type = DAMAGE_TYPE_PURE })
 		end
@@ -264,7 +264,7 @@ function modifier_aphotic_shield_buff:OnRemoved()
 			for _,enemy in pairs(enemies) do
 				enemy:AddNewModifier(caster, curse_of_avernus, "modifier_imba_curse_of_avernus_debuff", { duration = debuff_duration })
 
-				-- show particle when hit
+				-- Show particle when hit
 				particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf", PATTACH_POINT, enemy)
 				ParticleManager:SetParticleControlEnt(particle, 0, enemy, PATTACH_POINT, "attach_hitloc", enemy:GetAbsOrigin(), true)
 				local hit_size = enemy:GetModelRadius() * 0.3
@@ -316,6 +316,7 @@ function modifier_aphotic_shield_buff:OnTakeDamage(kv)
 end
 
 function modifier_aphotic_shield_buff:OnIntervalThink()
+	-- Get current health per frame
 	self.target_current_health = self:GetParent():GetHealth()
 end
 
@@ -392,9 +393,10 @@ function modifier_imba_curse_of_avernus_debuff:_UpdateSlowValues()
 		local ability = self:GetAbility()
 		local ability_level = ability:GetLevel() - 1
 
-		self.move_slow = ability:GetLevelSpecialValueFor("move_slow", ability_level)
-		self.attack_slow = ability:GetLevelSpecialValueFor("attack_slow", ability_level)
-		self.heal_convert = ability:GetLevelSpecialValueFor("heal_convert", ability_level)
+		self.move_slow = -(ability:GetLevelSpecialValueFor("move_slow", ability_level))
+		self.attack_slow = -(ability:GetLevelSpecialValueFor("attack_slow", ability_level))
+		-- Convert heal_convert to decimal point (optimization)
+		self.heal_convert = (ability:GetLevelSpecialValueFor("heal_convert", ability_level) / 100)
 	end
 end
 
@@ -404,7 +406,7 @@ function modifier_imba_curse_of_avernus_debuff:OnCreated()
 	if IsServer() then
 		local caster = self:GetCaster()
 
-		-- Give caster the buff immediately, else caster has to hit target again to gain the buff
+		-- Give caster the buff immediately, else caster has to hit the target again to gain the buff
 		local buff_name = "modifier_imba_curse_of_avernus_buff"
 		local current_buff = caster:FindModifierByName(buff_name)
 		if not current_buff then
@@ -435,7 +437,7 @@ end
 function modifier_imba_curse_of_avernus_debuff:OnAttack(kv)
 	if IsServer() then
 
-		local target 	= kv.target
+		local target = kv.target
 
 		-- Apply buff to allies who hit the enemy with this debuff
 		if target == self:GetParent() then
@@ -444,11 +446,9 @@ function modifier_imba_curse_of_avernus_debuff:OnAttack(kv)
 
 			if caster:GetTeamNumber() == attacker:GetTeamNumber() then
 				local ability = self:GetAbility()
-				local buff_duration = ability:GetSpecialValueFor( "buff_duration" )
-
-				if buff_duration > 0 then
-					attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff", { duration = buff_duration })
-				end
+				local buff_duration = ability:GetSpecialValueFor( "buff_duration" ) -- Not possible for this to be 0 here
+				-- Apply buff on allies who attack this enemy
+				attacker:AddNewModifier(caster, ability, "modifier_imba_curse_of_avernus_buff", { duration = buff_duration })
 			end
 		end
 	end
@@ -583,15 +583,15 @@ modifer_over_channel_caster = class({
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
 	RemoveOnDeath			= function(self) return false end,
-	AllowIllusionDuplicate	= function(self) return true end
+	AllowIllusionDuplicate	= function(self) return true end -- Allow illusions to carry this particle modifier
 })
 
 function modifer_over_channel_caster:OnCreated()
 	local target = self:GetParent()
 	local target_origin = target:GetAbsOrigin()
-	local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
+	local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
 
-	-- Body purple steam particle
+	-- Body steam particle
 	local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin, true)
 	self:AddParticle(particle, false, false, -1, false, false)
@@ -641,7 +641,7 @@ function modifer_borrowed_time_caster_auto_cast:_CheckHealth(damage)
 	local ability = self:GetAbility()
 
 	-- Check state
-	if ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() then
+	if not ability:IsHidden() and ability:IsCooldownReady() and not target:IsSilenced() and not target:IsHexed() and not target:PassivesDisabled() then
 		local hp_threshold = self.hp_threshold
 		local current_hp = target:GetHealth() - damage
 		if current_hp < hp_threshold then
@@ -757,6 +757,7 @@ function modifier_borrowed_time_caster_buff:OnCreated()
 end
 
 function modifier_borrowed_time_caster_buff:OnIntervalThink()
+	-- Get current health per frame
 	self.target_current_health = self:GetParent():GetHealth()
 end
 
@@ -771,8 +772,10 @@ function modifier_borrowed_time_caster_buff:OnTakeDamage(kv)
 			if damage > 0 then
 				-- Block incoming damage
 				SendOverheadEventMessage(nil, OVERHEAD_ALERT_BLOCK, target, damage, nil)
+				-- If you use GetHealth() here, it will ignore the regen rate of abaddon
 				target:SetHealth(self.target_current_health)
 
+				-- Show borrowed time heal particle
 				local heal_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 				local target_vector = target:GetAbsOrigin()
 				ParticleManager:SetParticleControl(heal_particle, 0, target_vector)
@@ -813,7 +816,7 @@ function modifier_borrowed_time_allies_buff:OnCreated()
 		local target_origin = target:GetAbsOrigin()
 		local particle_name = "particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
 
-		-- Body purple steam particle
+		-- Body steam particle
 		local particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN, target)
 		ParticleManager:SetParticleControlEnt(particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_origin, true)
 		self:AddParticle(particle, false, false, -1, false, false)
@@ -847,13 +850,15 @@ function modifier_borrowed_time_allies_buff:OnTakeDamage(kv)
 				local caster = self:GetCaster()
 				local ability = self:GetAbility()
 				local ability_level = ability:GetLevel()
-				local redirect = ability:GetLevelSpecialValueFor("redirect", ability_level)
+				local redirect = (ability:GetLevelSpecialValueFor("redirect", ability_level) / 100)
 				
 				local attacker = kv.attacker
 
 				-- Redirect damage to caster (which should heal when caster takes damage)
 				local redirect_damage = damage * redirect
 
+				-- Setting health instead of healing target as healing will be blocked by heal prevention debuffs
+				-- NOTE: this ignores regen rate of target, however if we have to create a 0.03 for every ally, it will cause unwanted lag.
 				target:SetHealth(target:GetHealth() + redirect_damage)
 				-- Redirect as pure damage else it will be reduced again by armour/magic resistance
 				ApplyDamage({ victim = caster, attacker = attacker, damage = redirect_damage, damage_type = DAMAGE_TYPE_PURE })
