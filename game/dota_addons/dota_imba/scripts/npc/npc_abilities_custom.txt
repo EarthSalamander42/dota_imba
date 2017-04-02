@@ -4079,6 +4079,7 @@
 			{
 				"var_type"								"FIELD_FLOAT"
 				"duration"								"15.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"02"
 			{
@@ -4092,12 +4093,6 @@
 				"radius"								"675"
 			}
 			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
-			}
-			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cast_range"							"500"
@@ -4142,12 +4137,12 @@
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"move_slow"								"-8 -12 -16 -20 -20 -20 -20"
+				"move_slow"								"8 12 16 20 20 20 20"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"-8 -12 -16 -20 -20 -20 -20"
+				"attack_slow"							"8 12 16 20 20 20 20"
 			}
 			"04"
 			{
@@ -4168,8 +4163,8 @@
 			}
 			"07"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"heal_convert"							"0.0 0.0 0.0 0.0 0.1 0.2 0.3"
+				"var_type"								"FIELD_INTEGER"
+				"heal_convert"							"0 0 0 0 10 20 30"
 			}
 		}
 
@@ -4191,7 +4186,7 @@
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"							"abaddon_frostmourne"
+		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
 		// Special
@@ -4207,7 +4202,7 @@
 
 		"precache"
 		{
-			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
 		}
 	}
 
@@ -4255,8 +4250,8 @@
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.10 0.15 0.20 0.30 0.40 0.50"
+				"var_type"								"FIELD_INTEGER"
+				"redirect"								"10 15 20 30 40 50"
 			}
 			"04"
 			{
