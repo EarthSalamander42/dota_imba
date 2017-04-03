@@ -1249,14 +1249,26 @@
 		"DOTA_Tooltip_modifier_imba_darkness_enemy_vision"									"Darksight"
 		"DOTA_Tooltip_modifier_imba_darkness_enemy_vision_Description"						"Night Stalker can see you!"
 
-		"DOTA_Tooltip_modifier_imba_spiked_carapaced_stun"									"Spiked Carapace"
-		"DOTA_Tooltip_modifier_imba_spiked_carapaced_stun_Description"						"Stunned by Nyx's spiked carapace"
+		"DOTA_Tooltip_modifier_imba_imaple_stun"											"Impaled"
+		"DOTA_Tooltip_modifier_imba_imaple_stun_Description"								"Stunned."
 
-		"DOTA_Tooltip_modifier_imba_vendetta"												"Vendetta"
-		"DOTA_Tooltip_modifier_imba_vendetta_Description"									"Invisible. Your next attack will deal bonus damage"
+		"DOTA_Tooltip_modifier_imba_mana_burn_parasite"										"Scarab Parasite"
+		"DOTA_Tooltip_modifier_imba_mana_burn_parasite_Description"							"A parasite has been injected into your body, and is leeching mana. If it eats enough mana it will become charged."
 
-		"DOTA_Tooltip_modifier_imba_vendetta_damage_stacks"									"Stored Damage"
-		"DOTA_Tooltip_modifier_imba_vendetta_damage_stacks_Description"						"Each stack adds 10 damage to the next Vendetta strike"
+		"DOTA_Tooltip_modifier_imba_mana_burn_parasite_charged"								"Charged Scarab Parasite"
+		"DOTA_Tooltip_modifier_imba_mana_burn_parasite_charged_Description"					"The parasite has been charged, and will explode shortly, dealing damage to the mana it ate."
+
+		"DOTA_Tooltip_modifier_imba_spiked_carapace"										"Spiked Carapace"		
+		"DOTA_Tooltip_modifier_imba_spiked_carapace_Description"							"Reflecting all damage back to the source and gains stacks of Stored Sensation."
+
+		"DOTA_Tooltip_modifier_imba_spiked_carapace_stun"									"Spiked Carapace Stun"
+		"DOTA_Tooltip_modifier_imba_spiked_carapace_stun_Description"						"Stunned by Spiked Carapace."
+
+		"DOTA_Tooltip_modifier_imba_vendetta"												"Vendetta"		
+		"DOTA_Tooltip_modifier_imba_vendetta_Description"									"Gains bonus movespeed and moving through units. Your next attack will deal massive bonus damage."
+
+		"DOTA_Tooltip_modifier_imba_vendetta_charge"										"Stored Sensation"
+		"DOTA_Tooltip_modifier_imba_vendetta_charge_Description"							"Stacks of Stored Sensation that were gained through Spiked Carapace's reflection. Each stack adds damage to your next Vendetta strike."
 
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter"					"Ill Omens"
 		"DOTA_Tooltip_modifier_imba_obsidian_destroyer_int_gain_counter_Description"		"Total bonus intelligence"
@@ -2797,29 +2809,44 @@
 		"DOTA_Tooltip_ability_imba_night_stalker_darkness_enemy_vision_duration"			"DARKSIGHT DURATION:"
 
 		"DOTA_Tooltip_ability_imba_nyx_assassin_impale"										"Impale"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_Description"							"Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, taking damage and being stunned.\n<font color='#FF7800'>Relive suffering:</font> Nyx makes each target relive its recent memories of pain, repeating part of the damage it has taken in the last 3 seconds."
-		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_Note0"								"All damage taken in the last 3 seconds is repeated. Repeated damage is pure."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_Description"							"Rock spikes burst from the earth along a straight path. Enemy units are hurled into the air, taking damage and becoming stunned. When burrowed, Impale's cast range increases by %burrow_length_increase%, and its cooldown decreases by %burrow_cd_reduction% seconds.\n<font color='#FF7800'>Relive Suffering:</font> Nyx makes each target relive its recent memories of pain, repeating part of the damage it has taken in the last seconds."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_Note0"								"All damage types dealt in the Relive Suffering duration seconds is repeated. Repeated damage is magical."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_Lore"								"All zealot scarabs possess intimate knowledge of underground pathways, using them to their advantage."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_duration"							"STUN DURATION:"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_length"								"CAST RANGE:"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_width"								"SPIKE RADIUS:"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_damage_repeat"						"%REPEATED DAMAGE:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_length"								"LENGTH:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_damage"								"DAMAGE:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_damage_repeat_pct"					"%RELIVE SUFFERING DAMAGE:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_impale_damage_duration"						"RELIVE SUFFERING DURATION:"
+
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn"									"Mana Burn"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Description"						"Destroys the target hero's mana equal to a multiplier of its Intelligence, and deals damage equal to the mana burned. When burrowed, Mana Burn cast range increases by %burrowed_cast_range_increase%.\n<font color='#FF7800'>Scarab Parasite:</font> Nyx plants a parasite inside the target using the wounds that the Mana Burn created. The parasite leeches mana and feeds from the target's mana, becoming charged with each mana point lost by the target. The parasite becomes charged when it eats mana equal to a portion of the mana that the target had when applying the parasite. After becoming charged, the parasite overloads for a duration, and explodes, dealing damage equal to %parasite_mana_as_damage_pct%% of all mana that it has been fed over the charging duration. At the moment of explosion, if the target has more mana than the starting amount, it does nothing. If the parasite doesn't become charged in the initial duration, it dies, doing nothing as well."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Note0"							"The parasite checks for mana lost every 0.5 seconds."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Note1"							"All sources of lost mana feed the parasite, including the Mana Burn that planted it."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_Lore"								"The tome in Ultimyr describes one scarab with the ability to eat away at the minds of lesser beings."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_intelligence_mult"				"INTELLIGENCE MULTIPLIER:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_mana_leech"				"PARASITE MANA LEECH PER SECOND:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_leech_interval"					"PARASITE LEECH INTERVAL:
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_duration"				"PARASITE DURATION:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_parasite_charge_threshold_pct"	"%PARASITE MANA TO CHARGE:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_mana_burn_explosion_delay"					"PARASITE EXPLOSION DELAY:"				
 
 		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace"							"Spiked Carapace"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_Description"				"When activated, Spiked Carapace reflects and negates damage dealt to Nyx Assassin, as well as stunning the source of the damage.\n<font color='#FF7800'>Chosen's blessing:</font> All damage is reflected (not only one instance per source)."
-		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_Note0"						"Damage reflected by spiked carapace is still stored for Vendetta."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_Description"				"When activated, Spiked Carapace reflects and negates damage dealt to Nyx Assassin, as well as stunning the source of the damage. When burrowed, all nearby enemies in %burrow_stun_range% range become stunned, taking no damage, but each enemy grants %burrowed_vendetta_stacks% stacks of Stored Sensation.\n<font color='#FF7800'>Chosen's Blessing:</font> All damage is reflected (not only one instance per source).\n<font color='#FF7800'>Stored Sensation:</font> Nyx stores the sensation for later use, granting him stacks that can be used when attacking with Vendetta. Does not apply if Vendetta was not learned yet. Stored amount is capped for the current level of Vendetta."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_Note0"						"All Damage reflected by spiked carapace is stored for Vendetta, before reductions."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_Lore"						"While their carapaces are relatively thin, they're guarded by a retractable field of razor-sharp spikes."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_reflect_duration"			"CARAPACE DURATION:"
 		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_stun_duration"				"STUN DURATION:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_damage_to_vendetta_pct"		"%DAMAGE TO STORED SENSATION:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_spiked_carapace_damage_reflection_pct"		"%DAMAGE REFLECTION:"
 
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta"									"Vendetta"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Description"						"Nyx becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack.\n<font color='#FF7800'>Eye for an eye:</font> Whenever Nyx Assassin takes hero-based damage, he stores the sensation for later use. When Nyx strikes from Vendetta, he injects the target's mind with his own painful memories, dealing extra damage equal to the damage stored.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Removes Vendetta's stored damage limitation, and adds a burrow ability which empowers all of Nyx's other abilities."
-		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Note0"								"Stored damage is lost after being used. Damage reflected by Spiked Carapace is still stored. Can be used on towers and/or structures."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Description"						"Nyx becomes invisible and gains a speed bonus. If Nyx Assassin attacks to break the invisibility, massive bonus damage is dealt with the attack.\n<font color='#FF7800'>Return The Favor:</font> When Nyx strikes from Vendetta, he injects the target's mind with his stored sensations, dealing extra damage equal to the damage stored through Spiked Carapace's reflections.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Adds a burrow ability which empowers all of Nyx's other abilities."
+		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Note0"								"Stored damage is lost after being used. Damage is stored through Spiked Carapace's reflections."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_Lore"								"The scarab kills for the glory of his queen."
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_duration"							"DURATION:"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_movement_speed"					"MOVEMENT SPEED BONUS:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_movement_speed_pct"				"%MOVEMENT SPEED BONUS:"
 		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_bonus_damage"						"BASE BONUS DAMAGE:"
-		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_damage_storage"					"STORED DAMAGE LIMIT:"
+		"DOTA_Tooltip_ability_imba_nyx_assassin_vendetta_maximum_vendetta_stacks"			"MAXIMUM STORED DAMAGE:"
 		
 		"DOTA_Tooltip_ability_nyx_assassin_burrow"											"Burrow"
 		"DOTA_Tooltip_ability_nyx_assassin_burrow_Description"								"Nyx Assasssin buries himself beneath the battlefield over %burrow_delay% seconds, becoming stationary, unable to attack, and invisible, but gaining increased health and mana regeneration, %damage_reduction%%% damage reduction, and bonuses to all his abilities:\n<font color='#00FF40'>Spiked Carapace</font> instantly stuns nearby enemies when cast.\n<font color='#00FF40'>Mana Burn</font> and <font color='#00FF40'>Impale</font>'s ranges are increased by %impale_burn_range_increase_pct_tooltip%%%.\n<font color='#00FF40'>Vendetta</font> can be activated to unburrow instantly, while staying invisible."
@@ -3971,6 +3998,16 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_mirana_6"					"Leaping launches a free Sacred Arrow forward"
 		"DOTA_Tooltip_ability_special_bonus_imba_mirana_7"					"-1.25 Starstorm wave delay"
 		"DOTA_Tooltip_ability_special_bonus_imba_mirana_8"					"-40 Moonlight Shadow cooldown"
+
+		// NYX ASSASSIN
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_1"			"+50 Impale damage"			
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_2"			"-3 Scarab Parasite explosion delay"
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_3"			"+100% Spiked Carapace damage reflection"	
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_4"			"+1 Relive Suffering damage duration"		
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_5"			"+1 Mana Burn intelligence multiplier"
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_6"			"+20% Vendetta movement speed"
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_7"			"+1 Spiked Carapace duration"			
+		"DOTA_Tooltip_ability_special_bonus_imba_nyx_assassin_8"			"+475 Maximum Vendetta stored damage"
 
 		//=================================================================================================================
 		// Vanilla talent overrides
