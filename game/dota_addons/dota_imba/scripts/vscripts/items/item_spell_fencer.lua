@@ -67,12 +67,12 @@ function modifier_item_imba_spell_fencer:OnAttackLanded( keys )
 			return end
 
 		-- If the target is not valid, do nothing either
+		local target = keys.target
 		if (not IsHeroOrCreep(target)) then
 			return end
 
 		-- Apply the damage conversion modifier and deal magical damage
 		local ability = self:GetAbility()
-		local target = keys.target
 		owner:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_buff", {duration = 0.01})
 		target:AddNewModifier(owner, ability, "modifier_item_imba_spell_fencer_buff", {duration = 0.01})
 		ApplyDamage({attacker = owner, victim = target, ability = ability, damage = keys.original_damage, damage_type = DAMAGE_TYPE_MAGICAL})

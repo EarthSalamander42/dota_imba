@@ -1078,49 +1078,92 @@ end
 
 function ChangeAttackProjectileImba( unit )
 
-	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
-	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
-	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
-	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
-	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
-	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
-	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
-	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-
-	-- If the unit has a Desolator and a Skadi, use the special projectile
-	if unit:HasModifier("modifier_item_imba_desolator_unique") or unit:HasModifier("modifier_item_imba_desolator_2_unique") then
-		if unit:HasModifier("modifier_item_imba_skadi_unique") then
-			unit:SetRangedProjectileName(particle_deso_skadi)
-
-		-- If only a Desolator, use its attack projectile instead
-		else
-			unit:SetRangedProjectileName(particle_deso)
+	-- Check for lifesteal modifiers
+	local has_lifesteal = false
+	local lifesteal_modifiers = {
+		"modifier_item_imba_vladmir_aura",
+		"modifier_item_imba_vladmir_blood_aura",
+		"modifier_imba_morbid_mask",
+		"modifier_imba_mask_of_madness",
+		"modifier_imba_satanic",
+		"modifier_imba_vampiric_aura_effect_hero"
+	}
+	for _, modifier in pairs(lifesteal_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_lifesteal = true
+			break
 		end
+	end
 
-	-- If only a Skadi, use its attack projectile instead
-	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
-		unit:SetRangedProjectileName(particle_skadi)
+	-- Check for desolator modifiers
+	local has_deso = false
+	local deso_modifiers = {
+		"modifier_item_imba_blight_stone",
+		"modifier_item_imba_desolator",
+		"modifier_item_imba_desolator_2"
+	}
+	for _, modifier in pairs(deso_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_deso = true
+			break
+		end
+	end
 
-	-- If the unit has any form of lifesteal, use the lifesteal projectile
-	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
-		unit:SetRangedProjectileName(particle_lifesteal)
+	-- Check for skadi modifier
+	local has_skadi = false
+	local skadi_modifiers = {
+		"modifier_item_imba_skadi_unique"
+	}
+	for _, modifier in pairs(skadi_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_skadi = true
+			break
+		end
+	end
+
+	-- Desolator + Skadi + Lifesteal particle
+	if has_deso and has_skadi and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Desolator + Skadi particle
+	elseif has_deso and has_skadi then
+		unit:SetRangedProjectileName("particles/item/desolator/desolator_skadi_projectile_2.vpcf")
+
+	-- Desolator + Lifesteal particle
+	elseif has_deso and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Skadi + Lifesteal particle
+	elseif has_skadi and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Desolator particle
+	elseif has_deso then
+		unit:SetRangedProjectileName("particles/items_fx/desolator_projectile.vpcf")
+
+	-- Skadi particle
+	elseif has_skadi then
+		unit:SetRangedProjectileName("particles/items2_fx/skadi_projectile.vpcf")
+
+	-- Lifesteal projectile
+	elseif has_lifesteal then
+		unit:SetRangedProjectileName("particles/item/lifesteal_mask/lifesteal_particle.vpcf")
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
-	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
-		unit:SetRangedProjectileName(particle_clinkz_arrows)
+	elseif unit:HasModifier("modifier_imba_searing_arrows_passive") then
+		unit:SetRangedProjectileName("particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf")
 
 	-- If it's one of Dragon Knight's forms, use its attack projectile instead
 	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then
-		unit:SetRangedProjectileName(particle_dragon_form_green)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf")
 	elseif unit:HasModifier("modifier_dragon_knight_splash_attack") then
-		unit:SetRangedProjectileName(particle_dragon_form_red)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf")
 	elseif unit:HasModifier("modifier_dragon_knight_frost_breath") then
-		unit:SetRangedProjectileName(particle_dragon_form_blue)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf")
 
 	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
 	elseif unit:HasModifier("modifier_terrorblade_metamorphosis") then
-		unit:SetRangedProjectileName(particle_terrorblade_transform)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf")
 
 	-- Else, default to the base ranged projectile
 	else
