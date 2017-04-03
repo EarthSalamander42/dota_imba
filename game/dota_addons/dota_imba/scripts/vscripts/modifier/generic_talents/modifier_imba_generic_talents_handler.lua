@@ -9,14 +9,34 @@ function modifier_imba_generic_talents_handler:IsPurgable() return false end
 function modifier_imba_generic_talents_handler:IsHidden() return true end
 function modifier_imba_generic_talents_handler:IsPermanent() return true end
 
+function modifier_imba_generic_talents_handler:OnCreated()
+	if IsServer() then
+		self.health_regen_amp = 0
+		self:StartIntervalThink(0.25)
+	end
+end
+
 function modifier_imba_generic_talents_handler:DeclareFunctions()
 	local funcs = {
 		MODIFIER_EVENT_ON_TAKEDAMAGE,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
 	}
 	return funcs
+end
+
+function modifier_imba_generic_talents_handler:OnIntervalThink()
+	if IsServer() then
+
+		-- Calculate current regen before this modifier
+		local parent = self:GetParent()
+		local base_health_regen = parent:GetHealthRegen() - self.health_regen_amp
+
+		-- Update health regen amp bonus
+		self.health_regen_amp = base_health_regen * parent:GetHealthRegenAmp() * 0.01
+	end
 end
 
 -- Damage block handler
@@ -30,6 +50,13 @@ end
 function modifier_imba_generic_talents_handler:GetModifierIncomingDamage_Percentage()
 	if IsServer() then
 		return self:GetParent():GetIncomingDamagePct()
+	end
+end
+
+-- Health regeneration amplification handler
+function modifier_imba_generic_talents_handler:GetModifierConstantHealthRegen()
+	if IsServer() then
+		return self.health_regen_amp
 	end
 end
 

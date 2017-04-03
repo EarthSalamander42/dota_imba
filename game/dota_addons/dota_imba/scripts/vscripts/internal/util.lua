@@ -2313,6 +2313,16 @@ function CDOTA_BaseNPC:GetTenacity()
 	return (1 - tenacity) * 100
 end
 
+-- Health regeneration % amplification
+function CDOTA_BaseNPC:GetHealthRegenAmp()
+	local regen_increase = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierHealthRegenAmp then
+			regen_increase = regen_increase + parent_modifier:GetModifierHealthRegenAmp()
+		end
+	end
+	return regen_increase
+end
 
 -- Safely checks if this unit is a hero or a creep
 function IsHeroOrCreep(unit)
