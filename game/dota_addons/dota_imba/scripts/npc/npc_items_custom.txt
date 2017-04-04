@@ -6936,6 +6936,48 @@
 	}
 
 	//=================================================================================================================
+	// Blight Stone
+	//=================================================================================================================
+	"item_imba_blight_stone"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"2238"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_desolator.lua"
+		"AbilityTextureName"			"custom/imba_blight_stone"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"300"
+		"ItemShopTags"					"hard_to_tag"
+		"ItemQuality"					"component"
+		"ItemAliases"					"blight stone"
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_reduction"		"150"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"8"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Recipe: Desolator
 	//=================================================================================================================
 	"item_recipe_imba_desolator"
@@ -6958,7 +7000,7 @@
 		"ItemResult"					"item_imba_desolator"
 		"ItemRequirements"
 		{
-			"01"						"item_mithril_hammer;item_mithril_hammer;item_blight_stone"
+			"01"						"item_mithril_hammer;item_mithril_hammer;item_imba_blight_stone"
 		}
 	}
 
@@ -6970,20 +7012,21 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2197"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_desolator"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_desolator.lua"
+		"AbilityTextureName"			"custom/imba_desolator"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		
-		// Stats		
+
+		// Stats
 		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
 		"AbilityCooldown"				"70"
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.0"
+		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"desolator"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"3500"
@@ -6999,199 +7042,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"60"
+				"damage"				"50"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_stacks"			"7"
+				"armor_reduction"		"7"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_armor"			"-1"
+				"vision_reduction"		"300"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_vision"			"-35"
+				"duration"				"15"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"12"
+				"projectile_radius"		"225"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
+				"projectile_length"		"1200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_range"			"1000"
+				"projectile_speed"		"600"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_count"		"5"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"100"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_distance"	"55"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1800"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"90"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_desolator.lua"
-				"Function"				"DesolatorCast"
-				"Target"				"POINT"
-
-				"sound_cast"			"Imba.DesolatorCast"
-				"particle_projectile"	"particles/item/desolator/desolator_active_projectile.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-			
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_desolator.lua"
-				"Function"				"DesolatorActiveHit"
-
-				"sound_hit"				"Item_Desolator.Target"
-				"modifier_armor"		"modifier_item_imba_desolator_armor_debuff"
-				"modifier_vision"		"modifier_item_imba_desolator_vision_debuff"
-				"modifier_hit_dummy"	"modifier_item_imba_desolator_hit_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_desolator"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage"
-				}
-			}
-
-			"modifier_item_imba_desolator_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_desolator_unique"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"DesolatorProjectile"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"DesolatorProjectile"
-					}
-				}
-		
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"DesolatorHit"
-
-						"sound_hit"			"Item_Desolator.Target"
-						"modifier_armor"	"modifier_item_imba_desolator_armor_debuff"
-						"modifier_vision"	"modifier_item_imba_desolator_vision_debuff"
-					}
-				}
-			}
-
-			"modifier_item_imba_desolator_armor_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"TextureName"				"custom/imba_desolator"
-
-				"Duration"					"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%stack_armor"
-				}
-			}
-
-			"modifier_item_imba_desolator_vision_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%stack_vision"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%stack_vision"
-				}
-			}
-
-			"modifier_item_imba_desolator_hit_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.2"
+				"active_damage"			"40"
 			}
 		}
 	}
@@ -7231,18 +7117,19 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2199"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName" 			"custom/imba_desolator_2"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_desolator.lua"
+		"AbilityTextureName"			"custom/imba_desolator_2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		
-		// Stats		
+
+		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70"
 		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"70"
+		"AbilityManaCost"				"0"
 		"AbilitySharedCooldown"			"desolator"
 		
 		// Item Info
@@ -7260,199 +7147,52 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"120"
+				"damage"				"100"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_stacks"			"10"
+				"armor_reduction"		"11"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_armor"			"-1"
+				"vision_reduction"		"350"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_vision"			"-35"
+				"duration"				"15"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_stacks"			"12"
+				"projectile_radius"		"225"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
+				"projectile_length"		"1200"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_range"			"1200"
+				"projectile_speed"		"600"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_count"		"7"
+				"projectile_cone"		"70"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_radius"		"100"
+				"projectile_amount"		"5"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_distance"	"55"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"1800"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"active_damage"			"150"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_desolator.lua"
-				"Function"				"DesolatorCast"
-				"Target"				"POINT"
-
-				"sound_cast"			"Imba.DesolatorCast"
-				"particle_projectile"	"particles/item/desolator/desolator_active_projectile.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-			
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_desolator.lua"
-				"Function"				"Desolator2ActiveHit"
-
-				"sound_hit"				"Item_Desolator.Target"
-				"modifier_armor"		"modifier_item_imba_desolator_armor_debuff"
-				"modifier_vision"		"modifier_item_imba_desolator_vision_debuff"
-				"modifier_hit_dummy"	"modifier_item_imba_desolator_hit_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_desolator_2"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage"
-				}
-			}
-
-			"modifier_item_imba_desolator_2_unique"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_desolator_2_unique"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"DesolatorProjectile"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"DesolatorProjectile"
-					}
-				}
-		
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_desolator.lua"
-						"Function"			"Desolator2Hit"
-
-						"sound_hit"			"Item_Desolator.Target"
-						"modifier_armor"	"modifier_item_imba_desolator_armor_debuff"
-						"modifier_vision"	"modifier_item_imba_desolator_vision_debuff"
-					}
-				}
-			}
-
-			"modifier_item_imba_desolator_armor_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"TextureName"				"custom/imba_desolator_2"
-
-				"Duration"					"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%stack_armor"
-				}
-			}
-
-			"modifier_item_imba_desolator_vision_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%stack_vision"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%stack_vision"
-				}
-			}
-
-			"modifier_item_imba_desolator_hit_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.2"
+				"active_damage"			"40"
 			}
 		}
 	}
@@ -13458,5 +13198,5 @@
 		}
 	}
 
-	//next free ID: 2238
+	//next free ID: 2239
 }
