@@ -15,6 +15,7 @@ function modifier_imba_generic_talents_handler:DeclareFunctions()
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
 	}
 	return funcs
 end
@@ -112,4 +113,30 @@ function modifier_imba_generic_talents_handler:OnAttackLanded( keys )
 		ParticleManager:SetParticleControl(lifesteal_pfx, 0, attacker:GetAbsOrigin())
 		ParticleManager:ReleaseParticleIndex(lifesteal_pfx)
 	end
+end
+
+function modifier_imba_generic_talents_handler:OnCreated()
+    if IsServer() then
+        self.health_regen_amp = 0
+        self:StartIntervalThink(0.25)
+    end
+end
+
+function modifier_imba_generic_talents_handler:OnIntervalThink()
+    if IsServer() then
+
+        -- Calculate current regen before this modifier
+        local parent = self:GetParent()
+        local base_health_regen = parent:GetHealthRegen() - self.health_regen_amp
+
+        -- Update health regen amp bonus
+        self.health_regen_amp = base_health_regen * parent:GetHealthRegenAmp() * 0.01
+    end
+end
+
+-- Health regeneration amplification handler
+function modifier_imba_generic_talents_handler:GetModifierConstantHealthRegen()
+    if IsServer() then
+        return self.health_regen_amp
+    end
 end

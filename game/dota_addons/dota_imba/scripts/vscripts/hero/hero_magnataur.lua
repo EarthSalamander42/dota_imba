@@ -314,19 +314,30 @@ modifier_imba_empower_aura = class({})
 
 function modifier_imba_empower_aura:GetAuraEntityReject(target)
     if IsServer() then
-		local caster = self:GetCaster()
-		-- Always on caster
-    	if target == caster then
-    		return false
-    	end    
+		local parent = self:GetParent()
 
     	-- Active only on Scepter
-        if caster:HasScepter() then
-            if target:IsRealHero() then
+        if parent:HasScepter() then
+			if not self.particle then
+				self.particle = ParticleManager:CreateParticle("particles/auras/aura_empower.vpcf", PATTACH_POINT_FOLLOW, parent)
+				self:AddParticle(self.particle,false,false,-1,false,false)
+			end
+			if target:IsRealHero() then
                 return false
-            end            
+            end
+		else
+			if self.particle then
+				ParticleManager:DestroyParticle(self.particle, false)
+				ParticleManager:ReleaseParticleIndex(self.particle)
+				self.particle = nil
+			end
         end        
-
+		
+		-- Always on caster
+    	if target == parent then
+    		return false
+    	end
+		
         return true
     end
 end
@@ -355,10 +366,7 @@ function modifier_imba_empower_aura:GetModifierAura()
 end
 
 function modifier_imba_empower_aura:IsAura()
-	if self:GetParent():IsRealHero() then
-		return true
-	end
-	return false
+	return true
 end
 
 function modifier_imba_empower_aura:GetAttributes()

@@ -14591,6 +14591,7 @@
 			"particle" 					"particles/hero/magnataur/magnataur_empower_red_splash.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_empower_splash.vpcf"
 			"particle" 					"particles/hero/magnataur/magnataur_supercharge.vpcf"
+			"particle" 					"particles/auras/aura_empower.vpcf"
 		}
 		
 		// Casting
@@ -15563,44 +15564,89 @@
 	}
 
 	//=================================================================================================================
+	// Necrolyte's Sadist
+	//=================================================================================================================
+	"imba_necrolyte_sadist"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_necrolyte"
+		"MaxLevel"							"1"		
+		"FightRecapLevel"					"1"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"				"custom/necrolyte_sadist"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"7"
+				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"7"
+				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hero_multiplier"		"10"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_duration"		"7"
+			}
+		}
+	}
+	
+	//=================================================================================================================
 	// Necrolyte's Death Pulse
 	//=================================================================================================================
 	"imba_necrolyte_death_pulse"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"necrolyte_death_pulse"
+		"ScriptFile"					"hero/hero_necrolyte"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
-			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"475"
 		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"8 7 6 5 5 5 5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125 145 165 185"
-
+		"AbilityManaCost"				"125 145 165 185 190 195 200"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -15608,177 +15654,77 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"500"
+				"radius"				"475"
+				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"100 150 200 250"
+				"damage"				"80 120 160 200 220 240 260"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage_pct"		"2 3 4 5"
+				"base_heal"				"60 80 100 120 130 140 150"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_heal"				"70 90 110 130"
+				"var_type"				"FIELD_FLOAT"
+				"sec_heal_pct"			"0.5 0.75 1.0 1.25 1.25 1.25 1.25"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_heal_pct"			"2 3 4 5"
+				"enemy_speed"			"700"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"self_heal_hero_pct"	"1"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"self_heal_creep_pct"	"0.25"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toggle_damage"			"30 40 50 60"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toggle_damage_pct"		"1"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toggle_heal"			"15 20 25 30"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toggle_heal_pct"		"1"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"4"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"400"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"toggle_cooldown"		"1.0"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toggle_mana_cost"		"25 30 35 40"
-			}
-			"16"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown"				"5.0"
-			}
-		}
-
-		"OnToggleOn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulseStart"
-
-				"ability_aux"			"imba_necrolyte_death_pulse_aux"
-				"sound_cast"			"Hero_Necrolyte.DeathPulse"
-				"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
-				"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
-				"modifier_caster"		"modifier_imba_death_pulse_caster"
-				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
-			}
-		}
-
-		"OnToggleOff"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulseEnd"
-
-				"modifier_caster"		"modifier_imba_death_pulse_caster"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulseHeroHit"
-
-				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_death_pulse_caster"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"ThinkInterval"		"%toggle_cooldown"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_necrolyte.lua"
-						"Function"				"DeathPulseThink"
-
-						"ability_aux"			"imba_necrolyte_death_pulse_aux"
-						"sound_cast"			"Imba.NecroDeathPulseRepeat"
-						"particle_ally"			"particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf"
-						"particle_enemy"		"particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf"
-						"modifier_caster"		"modifier_imba_death_pulse_caster"
-						"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
-					}
-				}
+				"ally_speed"			"550"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Necrolyte's Death Pulse Creep Projectile (aux ability)
+	// Necrolyte's Ghost Shroud
 	//=================================================================================================================
-	"imba_necrolyte_death_pulse_aux"
+	"imba_necrolyte_ghost_shroud"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"necrolyte_death_pulse"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"necrolyte_sadist"
+		"ScriptFile"					"hero/hero_necrolyte"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
+			"particle"					"particles/status_fx/status_effect_necrolyte_spirit.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_spirit_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_spirit.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
+		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.0"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"28 24 20 16 16 16 16"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"50"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15786,24 +15732,29 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"self_heal_creep_pct"	"0.25"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_5"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_power"			"4"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 3.5 4.0 4.5 4.75 5.0 5.25"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
+			"03"
 			{
-				"ScriptFile"			"hero/hero_necrolyte.lua"
-				"Function"				"DeathPulseCreepHit"
-
-				"modifier_heal_bonus"	"modifier_imba_heartstopper_heal_bonus"
+				"var_type"				"FIELD_INTEGER"
+				"magic_amp_pct"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"healing_amp_pct"		"50 50 50 50 60 70 80"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_pct"				"12 20 28 36 38 40 42"
 			}
 		}
 	}
@@ -15815,17 +15766,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_HP_REMOVAL"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityTextureName"				"necrolyte_heartstopper_aura"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"necrolyte_heartstopper_aura"
+		"ScriptFile"					"hero/hero_necrolyte"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/auras/aura_heartstopper.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900"
+		"AbilityCastRange"				"900"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15834,334 +15795,19 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aura_radius"				"900"
+				"radius"					"900"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"aura_damage"				"0.6 1.0 1.4 1.8" 
+				"damage_pct"				"0.6 1.0 1.4 1.8 1.8 1.8 1.8"
+				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_8"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"heal_bonus_per_stack"		"4"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_amp_per_stack"		"-4"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_stacks"				"10"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stacks_tooltip"			"4"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_stacks_tooltip"		"40"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_heartstopper_aura_emitter_enemy"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Aura" 						"modifier_imba_heartstopper_aura_enemy"
-				"Aura_Radius" 				"%aura_radius"
-				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_heartstopper_aura_emitter_enemy"
-					}
-				}
-			}
-
-			"modifier_imba_heartstopper_aura_emitter_ally"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Aura" 						"modifier_imba_heartstopper_aura_ally"
-				"Aura_Radius" 				"%aura_radius"
-				"Aura_Teams" 				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types" 				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				"Aura_ApplyToCaster"		"1"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_heartstopper_aura_emitter_ally"
-					}
-				}
-			}
-
-			"modifier_imba_heartstopper_aura_enemy"
-			{
-				"Passive"			"0"
-				"IsDebuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"1"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperEnemy"
-
-						"modifier_debuff"	"modifier_imba_heartstopper_debuff"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperEnemy"
-
-						"modifier_debuff"	"modifier_imba_heartstopper_debuff"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperEnd"
-
-						"modifier_stacks"	"modifier_imba_heartstopper_debuff"
-					}
-				}
-			}
-
-			"modifier_imba_heartstopper_aura_ally"
-			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsHidden"			"1"
-				"IsPurgable"		"1"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperAlly"
-
-						"modifier_buff"		"modifier_imba_heartstopper_heal_bonus"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperAlly"
-
-						"modifier_buff"		"modifier_imba_heartstopper_heal_bonus"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"HeartstopperEnd"
-
-						"modifier_stacks"	"modifier_imba_heartstopper_heal_bonus"
-					}
-				}
-			}
-
-			"modifier_imba_heartstopper_debuff"
-			{
-				"Passive"			"0"
-				"IsDebuff"			"1"
-				"IsHidden"			"0"
-				"IsPurgable"		"1"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%damage_amp_per_stack"
-				}
-			}
-
-			"modifier_imba_heartstopper_heal_bonus"
-			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsHidden"			"0"
-				"IsPurgable"		"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necrolyte's Sadist
-	//=================================================================================================================
-	"imba_necrolyte_sadist"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"necrolyte_sadist"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"mana_regen"		"2 4 6 12"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"health_regen"		"1 2 3 6"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"hero_multiplier"	"10"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"regen_duration"	"10"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_sadist"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_sadist"
-					}
-				}
-
-				"OnKill"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"SadistKill"
-
-						"regen_modifier"	"modifier_imba_sadist_regen"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"SadistHit"
-
-						"regen_modifier"	"modifier_imba_sadist_regen"
-					}
-				}
-			}
-
-			"modifier_imba_sadist_stack"
-			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Duration"			"%regen_duration"
-			}
-
-			"modifier_imba_sadist_regen"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-
-				"Duration"			"%regen_duration"
-
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"ApplySadist"
-
-						"stack_modifier"	"modifier_imba_sadist_stack"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"RemoveSadist"
-
-						"stack_modifier"	"modifier_imba_sadist_stack"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%health_regen"
-				}
+				"heal_reduce_pct"			"16 16 16 16 24 32 40"
+				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_4"
 			}
 		}
 	}
@@ -16173,16 +15819,19 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_necrolyte"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
+		"MaxLevel"						"6"
 		"AbilityTextureName"			"necrolyte_reapers_scythe"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16190,22 +15839,24 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_necrolyte.vsndevts"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
-			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
+			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe_start.vpcf"
 			"particle"					"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
 			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"100 85 70"
+		"AbilityCooldown"				"100 85 70 66 63 60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"170 340 500"		
+		"AbilityManaCost"				"175 325 475 525 575 625"		
 		
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
@@ -16217,8 +15868,8 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"12 16 20"
+				"var_type"					"FIELD_FLOAT"
+				"damage"					"0.6 0.75 0.9 1.0 1.1 1.2"
 			}
 			"02"
 			{
@@ -16227,96 +15878,214 @@
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"animation_delay"			"0.8"		//stun duration -0.7 seconds
+				"var_type"					"FIELD_INTEGER"
+				"respawn_increase"			"10 14 18 22 26 30"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_base"				"10 15 20"
+				"debuff_duration"			"30"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"respawn_stack"				"3"
+				"damage_reduction_pct"		"20 20 20 30 40 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_7"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stacks_scepter"			"10"
+				"spellpower_reduction"		"20 20 20 30 40 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_necrolyte_7"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"sadist_aoe_scepter"		"900"
+				"scepter_cooldown"			"55 40 25 25 25 25"
 			}
 		}
-
-		"OnSpellStart"
+	}
+	
+	//=================================================================================================================
+	// Necrophos Talent 1 (Level 10): Death Pulse radius
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"EffectName"				"Hero_Necrolyte.ReapersScythe.Cast"
-				"Target"					"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_Necrolyte.ReapersScythe.Target"
-				"Target"					"TARGET"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_necrolyte.lua"
-				"Function"					"ReapersScythe"
-				"Target"					"TARGET"
-
-				"reap_particle"				"particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf"
-				"scythe_particle"			"particles/units/heroes/hero_necrolyte/necrolyte_scythe_model.vpcf"
-				"modifier_debuff"			"modifier_imba_reapers_scythe"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"125"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Necrophos Talent 2 (Level 10): Attacking enemy heroes now grants Sadist
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_reapers_scythe"
+			"01"
 			{
-				"Passive"			"0"
-				"IsHidden"			"0"
-				"IsDebuff"			"1"
-				"IsPurgable"		"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
 
-				"Duration"					"%stun_duration"
+	//=================================================================================================================
+	// Necrophos Talent 3 (Level 20): Reduced Death Pulse cooldown
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
 
-				"OverrideAnimation"			"ACT_DOTA_DISABLED"
+	//=================================================================================================================
+	// Necrophos Talent 4 (Level 20): Heartstopper Aura %-healing reduction
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
 
-				"EffectName"				"particles/generic_gameplay/generic_stunned.vpcf"
-				"EffectAttachType"			"follow_overhead"
+	//=================================================================================================================
+	// Necrophos Talent 5 (Level 30): Ghost Shroud effect radius
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"300"
+			}
+		}
+	}
 
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"TARGET"
-					}
-				}
+	//=================================================================================================================
+	// Necrophos Talent 6 (Level 30): Additional Sadist health/mana regen
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
 
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_necrolyte.lua"
-						"Function"			"ReapersScytheKill"
-					}
-				}
+	//=================================================================================================================
+	// Necrophos Talent 7 (Level 40): Increased Scythe damage/spell power reduction
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+		}
+	}
 
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+	//=================================================================================================================
+	// Necrophos Talent 8 (Level 40): Increased Heartstopper Aura damage per second
+	//=================================================================================================================
+	"special_bonus_imba_necrolyte_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
