@@ -32,14 +32,6 @@
 			_class = "C_OP_SpinUpdate"
 		},
 		{
-			_class = "C_OP_OscillateScalar"
-			m_RateMin = 0.6
-			m_RateMax = 0.6
-			m_flEndTime_min = 999999.0
-			m_flEndTime_max = 999999.0
-			m_bDisableOperator = true
-		},
-		{
 			_class = "C_OP_InterpolateRadius"
 			m_flStartScale = 1.25
 			m_flEndScale = 1.25
@@ -63,6 +55,7 @@
 			_class = "C_INIT_RandomRotation"
 			m_flDegreesMin = 120.0
 			m_flDegreesMax = 120.0
+			m_bRandomlyFlipDirection = false
 		},
 		{
 			_class = "C_INIT_RandomColor"
