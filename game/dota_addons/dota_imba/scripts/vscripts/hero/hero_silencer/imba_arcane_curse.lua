@@ -1,5 +1,7 @@
 imba_silencer_arcane_curse = class({})
 
+CreateEmptyTalents("silencer")
+
 function imba_silencer_arcane_curse:OnSpellStart()
 	local point = self:GetCursorPosition()
 	local caster = self:GetCaster()
@@ -11,6 +13,7 @@ function imba_silencer_arcane_curse:OnSpellStart()
 		ParticleManager:SetParticleControl( aoe, 1, Vector(radius, radius, radius) )
 
 	EmitSoundOn("Hero_Silencer.Curse.Cast", caster)
+
 	for _, enemy in pairs(enemies) do
 		enemy:AddNewModifier(caster, self, "modifier_imba_arcane_curse_debuff", {duration = base_duration})
 		EmitSoundOn("Hero_Silencer.Curse.Impact", enemy)
@@ -28,25 +31,19 @@ LinkLuaModifier("modifier_imba_arcane_curse_debuff", "hero/hero_silencer/imba_ar
 modifier_imba_arcane_curse_debuff = class({})
 
 function modifier_imba_arcane_curse_debuff:OnCreated( kv )
+	self.parent = self:GetParent()
+	self.caster = self:GetAbility():GetCaster()
 	self.tick_rate = self:GetAbility():GetSpecialValueFor("tick_rate")
 	self.curse_slow = self:GetAbility():GetSpecialValueFor("curse_slow")
 	self.curse_damage = self:GetAbility():GetSpecialValueFor("damage_per_second")
 	self.penalty_duration = self:GetAbility():GetSpecialValueFor("penalty_duration")
 	self.mana_burn = self:GetAbility():GetSpecialValueFor("burn_per_second")
-	self.parent = self:GetParent()
-	self.caster = self:GetAbility():GetCaster()
+	self.talent_learned = self.caster:HasTalent("special_bonus_imba_silencer_1")
 
 	if IsServer() then
-		--[[ SILENCER TALENT CHECK for penalty duration increase
-		if self.caster:HasModifier("") then
-			self.penalty_duration = self.penalty_duration + 2
-		end
-		]]
-		--[[ SILENCER TALENT CHECK for curse slow increase
-		if self.caster:HasModifier("") then
-			self.curse_slow = self.curse_slow + 20
-		end
-		]]
+		self.penalty_duration = self.penalty_duration + self.caster:FindTalentValue("special_bonus_imba_silencer_2")
+		self.curse_slow = self.curse_slow + self.caster:FindTalentValue("special_bonus_imba_silencer_7")
+
 		if self.caster:HasScepter() then
 			self.aghs_upgraded = true
 		else
@@ -89,31 +86,42 @@ function modifier_imba_arcane_curse_debuff:OnIntervalThink()
 		end
 
 		if ( not target:IsSilenced() ) or self.aghs_upgraded then
-			local damage_per_tick = self.curse_damage * self.tick_rate
-			local mana_per_tick = self.mana_burn * self.tick_rate
+			local damage_dealt = self.curse_damage * self.tick_rate
+			local mana_drained = self.mana_burn * self.tick_rate
 			local stack_count = self:GetStackCount()
 
 			if stack_count then
-				damage_per_tick = damage_per_tick * (stack_count + 1)
-				mana_per_tick = mana_per_tick * (stack_count + 1)
+				damage_dealt = damage_dealt * (stack_count + 1)
+				mana_drained = mana_drained * (stack_count + 1)
 			end
 
 			local damage_table = {
 					victim = target,
 					attacker = self.caster,
-					damage = damage_per_tick,
+					damage = damage_dealt,
 					damage_type = self:GetAbility():GetAbilityDamageType(),
 					ability = self:GetAbility()
 				}
 
 			ApplyDamage( damage_table )
-			target:ReduceMana(mana_per_tick)
 
-			--[[ SILENCER TALENT CHECK for healing from mana burn
-			if self.caster:HasModifier("") then
-				self.caster:Heal(mana_per_tick, nil)
+			-- Unfortunately, if we have the mana-drain-as-lifesteal talent, we'll need to make sure we don't heal more than the mana we drain
+			if self.talent_learned then
+				local enemy_mana = target:GetMana()
+				if enemy_mana > 0 then
+					if ( enemy_mana - mana_drained ) < 0 then
+						mana_drained = enemy_mana
+					end
+				else
+					mana_drained = 0
+				end
 			end
-			]]
+
+			target:ReduceMana(mana_drained)
+
+			if self.talent_learned then
+				self.caster:Heal(mana_drained, nil)
+			end
 		end
 	end
 end
@@ -148,5 +156,5 @@ function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 end
 
 function modifier_imba_arcane_curse_debuff:GetModifierMoveSpeedBonus_Percentage( params )
-	return self.curse_slow
+	return -self.curse_slow
 end

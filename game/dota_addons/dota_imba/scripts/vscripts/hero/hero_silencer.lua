@@ -1,3 +1,5 @@
+-- File left empty for CreateEmptyTalents function to use this
+
 LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_silencer_glaives_int_damage", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
 
