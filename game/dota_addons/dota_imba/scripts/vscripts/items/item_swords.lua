@@ -1640,7 +1640,7 @@ function SangeAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the disarm modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 end
 
@@ -1663,7 +1663,7 @@ function YashaAttack(attacker, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the move speed modifier and put the ability on cooldown
 		attacker:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_self")})
 		attacker:EmitSound("Imba.YashaProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 end
 
@@ -1690,7 +1690,7 @@ function AzuraAttack(attacker, target, ability, modifier_stacks, modifier_proc)
 		-- Proc! Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.AzuraProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 end
 
@@ -1721,7 +1721,7 @@ function SangeYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		-- Apply the disarm modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim up
@@ -1757,7 +1757,7 @@ function SangeAzuraAttack(attacker, target, ability, modifier_stacks, modifier_p
 		target:AddNewModifier(attacker, ability, modifier_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.AzuraProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 end
 
@@ -1788,7 +1788,7 @@ function AzuraYashaAttack(attacker, target, ability, modifier_enemy_stacks, modi
 		-- Apply the silence modifier and put the ability on cooldown
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.AzuraProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the magic amp up
@@ -1827,7 +1827,7 @@ function TriumAttack(attacker, target, ability, modifier_enemy_stacks, modifier_
 		target:AddNewModifier(attacker, ability, modifier_enemy_proc, {duration = ability:GetSpecialValueFor("proc_duration_enemy")})
 		target:EmitSound("Imba.SangeProc")
 		target:EmitSound("Imba.AzuraProc")
-		ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(attacker))
+		ability:UseResources(false, false, true)
 	end
 
 	-- Stack the maim/amp up

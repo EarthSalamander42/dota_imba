@@ -708,6 +708,14 @@ function modifier_imba_feral_impulse_aura:GetAttributes()
 	return MODIFIER_ATTRIBUTE_MULTIPLE + MODIFIER_ATTRIBUTE_PERMANENT
 end
 
+function modifier_imba_feral_impulse_aura:GetEffectName()
+	return "particles/auras/aura_feral_impulse.vpcf"
+end
+
+function modifier_imba_feral_impulse_aura:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
 function modifier_imba_feral_impulse_aura:GetAuraRadius()
 	local ability = self:GetAbility()
 	local aura_radius = ability:GetSpecialValueFor("aura_radius")
@@ -1346,12 +1354,15 @@ function modifier_imba_wolfsbane_wolves:OnIntervalThink()
 		local wolf = self:GetParent()
 		local aura = "modifier_imba_wolfsbane_aura"		
 		local aura_handler = caster:FindModifierByName(aura)
-		local aura_stacks = aura_handler:GetStackCount()
-		local wolf_stacks = self:GetStackCount()		
-		
-		if wolf_stacks ~= aura_stacks then -- aura stacks are higher, set stacks
-			self:SetStackCount(aura_stacks)
-		end	
+
+		if aura_handler then
+			local aura_stacks = aura_handler:GetStackCount()
+			local wolf_stacks = self:GetStackCount()		
+			
+			if wolf_stacks ~= aura_stacks then -- aura stacks are higher, set stacks
+				self:SetStackCount(aura_stacks)
+			end	
+		end
 	end
 end
 

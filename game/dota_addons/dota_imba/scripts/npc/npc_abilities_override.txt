@@ -267,6 +267,7 @@
 	"item_aether_lens"				"REMOVE"
     //"item_recipe_dragon_lance"		"REMOVE"
 	//"item_dragon_lance"				"REMOVE"
+	"item_blight_stone"				"REMOVE"
 
 	//=================================================================================================================
 	//-----------------------------------------------------------------------------------------------------------------
@@ -1442,6 +1443,17 @@
 				"var_type"				"FIELD_FLOAT"
 				"block_cooldown"		"10.0"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Recipe: Medallion of Courage
+	//=================================================================================================================
+	"item_recipe_medallion_of_courage"
+	{
+		"ItemRequirements"
+		{
+			"01"						"item_chainmail;item_sobi_mask;item_imba_blight_stone"
 		}
 	}
 
@@ -6120,34 +6132,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"1"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Mirana: Moonlight Shadow
-	//=================================================================================================================
-	"mirana_invis"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-
-		"AbilityCastRange"				"0"
-
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"110 90 70"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"2.0 1.6 1.2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"16"
 			}
 		}
 	}
@@ -19001,57 +18985,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"crit_multiplier"			"150 175 200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Magnus: Skewer
-	//=================================================================================================================
-	"magnataur_skewer"
-	{
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"24 20 16 12"
-
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_speed"			"1200"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range"					"1300 1400 1500 1600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_pct"				"40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_radius"			"160"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"2.5 2.75 3.0 3.25"
-			}			
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"skewer_damage"			"100 175 250 325"
-			}			
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tree_radius"			"200"
 			}
 		}
 	}

@@ -266,6 +266,42 @@
 	}
 }
 
+"Imba.StolenZaWarudo"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/faceless_void/zawarudostolen.vsnd"
+						}
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+					"volume"			{   "value"     "3.50000"  }
+					"pitch_rand_min"	{   "value"     "-0.02000"  }
+					"pitch_rand_max"	{   "value"     "0.02000"  }
+					"pitch"				{   "value"     "1.000000"  }
+					"soundlevel"		{   "value"     "100.00000" }
+					"distance_max"		{   "value"     "1600.000"  }
+					"event_type"		{   "value"     "1.000000"  }
+				}
+			}
+		}
+	}
+}
+
 "Hero_WraithKing.EruptionCast"
 {
 	"operator_stacks"
