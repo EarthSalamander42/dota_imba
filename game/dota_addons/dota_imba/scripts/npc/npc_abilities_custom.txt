@@ -14784,12 +14784,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"pardon_extra_dmg"		"30 40 50 60 60 60 60"
 			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pardon_stack_dmg"		"30"
-			}
-			"12"
+			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"skewer_radius"			"125"
@@ -14894,7 +14889,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"polarize_slow_pct"		"60"
 			}
-			
 		}
 	}
 	

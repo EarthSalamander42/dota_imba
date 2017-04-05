@@ -722,7 +722,6 @@ function modifier_imba_skewer_motion_controller:OnCreated( params )
 		self.pardon_min_range = ability:GetSpecialValueFor("pardon_min_range")
 		self.damage = ability:GetSpecialValueFor("damage")
 		self.pardon_extra_dmg = ability:GetSpecialValueFor("pardon_extra_dmg")
-		self.pardon_stack_dmg = ability:GetSpecialValueFor("pardon_stack_dmg")
 		self.entangle_dur = ability:GetSpecialValueFor("entangle_dur")
 		self.distance = params.distance
 		self.cast_sound = params.cast_sound
@@ -848,9 +847,6 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 						end)
 					else
-						if enemy:HasModifier("modifier_imba_polarize_debuff") then
-							damage = damage + enemy:FindModifierByName("modifier_imba_polarize_debuff"):GetStackCount() * self.pardon_stack_dmg
-						end
 						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 					end
 					if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
