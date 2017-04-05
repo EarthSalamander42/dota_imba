@@ -1650,6 +1650,9 @@
 		"DOTA_Tooltip_modifier_imba_silencer_last_word_repeat_thinker"						"Last Word"
 		"DOTA_Tooltip_modifier_imba_silencer_last_word_repeat_thinker_Description"			"You immediately regret your decision. Last Word will be recast on you after this ends."
 
+		"DOTA_Tooltip_imba_silencer_last_word_silence_aura"									"Last Word"
+		"DOTA_Tooltip_imba_silencer_last_word_silence_aura_Description"						"Don't cast if you can read this, unless magic immune."
+
 		"DOTA_Tooltip_modifier_imba_silencer_arcane_supremacy"								"Intelligence Steal"
 		"DOTA_Tooltip_modifier_imba_silencer_arcane_supremacy_Description"					"Total intelligence stolen."
 
@@ -2981,7 +2984,7 @@
 		"DOTA_Tooltip_ability_imba_silencer_arcane_curse_curse_slow"						"%MOVEMENT SLOW:"
 
 		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom"								"Glaives of Wisdom"
-		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"					"Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target.\n<font color='#FF7800'>Debate me:</font> Glaive hits increase the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%% (minimum 1 point). Stacks and refreshes the duration each hit.\n<font color='#FF7800'>Brain drain:</font> Glaives burn %int_reduction_pct%% of targets current intelligence-based mana."
+		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Description"					"Silencer enchants his glaives with his wisdom, dealing additional damage based on his Intelligence.\n<font color='#FF7800'>Tranquility of Aeol Drias:</font> Every %hits_to_silence% hits, silences the target.\n<font color='#FF7800'>Debate me:</font> Glaive hits increase the strength of Nortrom's argument by decreasing the intelligence of the opponent by %int_reduction_pct%% (minimum 1 point). Stacks and refreshes the duration each hit.\n<font color='#FF7800'>Brain drain:</font> Glaives burn %int_reduction_pct%% of targets current intelligence-based mana.\n\n<font color='#00FF40'>Glaives of Wisdom is not a unique attack modifier and stacks with any other attack modifier.</font>"
 		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Note0"						"Target must be hit within 10 seconds from the last hit for the hit to count towards the silence requirement."
 		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_Lore"							"Although lacking in traditional incantations, Nortrom's pedigree of the Aeol Drias gives him uncanny wisdom, which he applies to debates with his opponents."
 		"DOTA_Tooltip_ability_imba_silencer_glaives_of_wisdom_intellect_damage_pct"			"%INT TO DAMAGE:"
@@ -3973,7 +3976,7 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_silencer_5"					"+0.25 Glaives of Wisdom silence"
 		"DOTA_Tooltip_ability_special_bonus_imba_silencer_6"					"+25% Glaives of Wisdom intelligence to damage"
 		"DOTA_Tooltip_ability_special_bonus_imba_silencer_7"					"+20% Arcane Curse slow"
-		"DOTA_Tooltip_ability_special_bonus_imba_silencer_8"					"Last Word is now 1200 aura that silences enemies casting spells for 2 seconds"
+		"DOTA_Tooltip_ability_special_bonus_imba_silencer_8"					"Last Word now gains an innate silencing aura (check the skill)"
 
 		// Ursa
 		"DOTA_Tooltip_ability_special_bonus_imba_ursa_1"						"+50% Earthshock distance-based damage"
