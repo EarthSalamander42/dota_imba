@@ -19,10 +19,10 @@ function imba_silencer_glaives_of_wisdom:OnSpellStart()
 		self.force_glaive = true
 
 		-- Force attack the target		
-		self:GetCaster()::MoveToTargetToAttack(self:GetCursorTarget())
+		self:GetCaster():MoveToTargetToAttack(self:GetCursorTarget())
 
 		-- Replenish mana cost (since it's spent on the OnAttack function)
-		self:GetAbility():RefundManaCost()				
+		self:RefundManaCost()
 	end
 end
 
@@ -167,16 +167,14 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 
 				local hit_counter = target:FindModifierByName(self.modifier_hit_counter)
 				if not hit_counter then
-					target:AddNewModifier(self.caster, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
-					hit_counter = target:FindModifierByName(self.modifier_hit_counter)
+					hit_counter = target:AddNewModifier(self.caster, self.ability, self.modifier_hit_counter, {req_hits = self.hits_to_silence, silence_dur = self.silence_duration})
 				end
 				hit_counter:IncrementStackCount()
 				hit_counter:SetDuration(self.hit_count_duration, true)
 
 				local int_damage = target:FindModifierByName(self.modifier_int_damage)
 				if not int_damage then
-					target:AddNewModifier(self.caster, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
-					int_damage = target:FindModifierByName(self.modifier_int_damage)
+					int_damage = target:AddNewModifier(self.caster, self.ability, self.modifier_int_damage, {int_reduction = self.int_reduction_pct})
 				end
 				int_damage:IncrementStackCount()
 				int_damage:SetDuration(self.int_reduction_duration, true)
@@ -213,10 +211,10 @@ function SetGlaiveAttackProjectile(caster, is_glaive_attack)
 	local skadi_modifier = "modifier_item_imba_skadi_unique"
 	local deso_modifier = "modifier_item_imba_desolator_unique"	
 	local morbid_modifier = "modifier_item_mask_of_death"
-	local mom_modifier = "modifier_item_mask_of_madness"
+	local mom_modifier = "modifier_imba_mask_of_madness"
 	local satanic_modifier = "modifier_item_satanic"
 	local vladimir_modifier = "modifier_item_imba_vladmir"
-	local vladimir_2_modifier = "modifier_item_imba_vladmir_2"
+	local vladimir_2_modifier = "modifier_item_imba_vladmir_blood"
 
 	-- normal projectiles
 	local skadi_projectile = "particles/items2_fx/skadi_projectile.vpcf"
@@ -325,7 +323,7 @@ end
 ---------------------------------
 -- Glaives of Wisdom hit counter dummy modifier
 ---------------------------------
-LinkLuaModifier("imba_silencer_glaives_hit_counter", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_silencer_glaives_hit_counter", "hero/hero_silencer/imba_glaives_of_wisdom", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_glaives_hit_counter = class({})
 
 function modifier_imba_silencer_glaives_hit_counter:OnCreated( kv )

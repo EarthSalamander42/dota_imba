@@ -94,6 +94,9 @@ end
 function imba_silencer_last_word_silence_aura:OnAbilityExecuted( params )
 	if IsServer() then
 		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) and ( not self:GetParent():IsMagicImmune() ) then
+			if CheckExceptions(params.ability) then
+				return
+			end
 			if params.ability:IsToggle() and params.ability:GetToggleState() then
 				return
 			end
@@ -159,6 +162,9 @@ end
 function modifier_imba_silencer_last_word_debuff:OnAbilityExecuted( params )
 	if IsServer() then
 		if ( not params.ability:IsItem() ) and ( params.unit == self:GetParent() ) then
+			if CheckExceptions(params.ability) then
+				return
+			end
 			if params.ability:IsToggle() and params.ability:GetToggleState() then
 				return
 			end
@@ -183,15 +189,40 @@ function modifier_imba_silencer_last_word_debuff:GetEffectAttachType()
 	return PATTACH_ABSORIGIN_FOLLOW
 end
 
+function CheckExceptions(ability)
+	local exceptions = {
+		["imba_silencer_glaives_of_wisdom"] = true,
+		["imba_drow_ranger_frost_arrows"] = true,
+		["imba_clinkz_searing_arrows"] = true,
+	}
+
+	if exceptions[ability:GetName()] then
+		return true
+	end
+
+	if ability:GetManaCost(-1) == 0 then
+		return true
+	end
+
+	return false
+end
+
 ----------------------------------------------------
 -- Last Word repeat thinker : casts Last Word on parent when the modifier expires
 ----------------------------------------------------
 LinkLuaModifier("modifier_imba_silencer_last_word_repeat_thinker", "hero/hero_silencer/imba_last_word", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_last_word_repeat_thinker = class({})
 
+function modifier_imba_silencer_last_word_repeat_thinker:OnCreated( kv )
+	self.duration = self:GetAbility():GetSpecialValueFor("duration")
+	self.modifier = "modifier_imba_silencer_last_word_debuff"
+end
+
 function modifier_imba_silencer_last_word_repeat_thinker:OnDestroy( kv )
-	if not self:GetParent():IsMagicImmune() then
-		self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_silencer_last_word_debuff", {duration = self:GetAbility():GetDuration()})
+	if IsServer() then
+		if not self:GetParent():IsMagicImmune() then
+			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), self.modifier, {duration = self.duration})
+		end
 	end
 end
 

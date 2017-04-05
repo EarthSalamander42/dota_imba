@@ -23016,7 +23016,16 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"particle"						"particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+			"particle"						"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 			"particle"						"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_glaives/silencer_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_skadi_glaives/silencer_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_glaives/silencer_lifesteal_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_skadi_glaives/silencer_lifesteal_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_glaives/silencer_lifesteal_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_skadi_glaives/silencer_lifesteal_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/skadi_glaives/silencer_skadi_glaives_of_wisdom.vpcf"
 		}
 
 		// Special
@@ -23055,6 +23064,7 @@
 				"var_type"					"FIELD_FLOAT"
 				"int_reduction_duration"	"3.5"
 			}
+		}
 	}
 
 	//=================================================================================================================
