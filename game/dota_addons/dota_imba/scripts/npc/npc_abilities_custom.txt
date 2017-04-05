@@ -14221,6 +14221,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"			
+			"particle"					"particles/auras/aura_feral_impulse.vpcf"	
 		}			
 	
 		// Special
