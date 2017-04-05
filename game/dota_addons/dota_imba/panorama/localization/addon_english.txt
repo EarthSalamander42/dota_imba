@@ -18,5 +18,11 @@
 	
 	"addonname"										"Dota IMBA"
 
-	
+	"scoreboard_tool_tip_mute_player"				"Mute Player"
+	"scoreboard_tool_tip_active_mute_player"		"(MUTED)"
+	"scoreboard_tool_tip_share_unit"				"Share Unit"
+	"scoreboard_tool_tip_share_hero"				"Share Hero"
+	"scoreboard_tool_tip_active_share_unit_hero"	"(SHARED)"
+	"scoreboard_tool_tip_disable_help"				"Disable Help"
+	"scoreboard_tool_tip_active_disable_help"		"(DISABLED)"
 }

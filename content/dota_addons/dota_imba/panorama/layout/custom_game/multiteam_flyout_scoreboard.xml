@@ -20,6 +20,7 @@
 			<Label class="LegendPanel ScoreCol_Deaths" text="#custom_end_screen_legend_deaths" />
 			<Label class="LegendPanel ScoreCol_Assists" text="#custom_end_screen_legend_assists" />
 			<Label class="LegendPanel ScoreCol_Ultimate" text="ULT" />
+			<Label class="LegendPanel ScoreCol_Buttons" />
 		</Panel>
 		<Panel id="TeamsContainer" />
   </Panel>

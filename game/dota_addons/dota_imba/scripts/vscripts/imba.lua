@@ -27,6 +27,8 @@ require('libraries/attachments')
 -- These internal libraries set up barebones's events and processes.  Feel free to inspect them/change them if you need to.
 require('internal/gamemode')
 require('internal/events')
+-- This library used to handle scoreboard events
+require('internal/scoreboard_events')
 
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
@@ -1455,6 +1457,8 @@ function GameMode:InitGameMode()
 
 	GameRules.HeroKV = LoadKeyValues("scripts/npc/npc_heroes_custom.txt")
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
+
+	initScoreBoardEvents()
 end
 
 -- This is an example console command
