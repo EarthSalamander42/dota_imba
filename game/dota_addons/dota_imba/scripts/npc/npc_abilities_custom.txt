@@ -15104,37 +15104,41 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"mirana_starfall"	
+		"AbilityTextureName"			"mirana_starfall"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
 			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-			"particle"					"particles/hero/mirana/mirana_cosmic_dust.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"			
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"650"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"	
+		"AbilityManaCost"				"100 120 140 160 175 190 205"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15143,7 +15147,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"		
+				"radius"					"650"
+				"LinkedSpecialBonus"		"special_bonus_imba_mirana_1"		
 			}
 			"02"
 			{
@@ -15153,80 +15158,39 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
+				"damage"					"90 160 230 300 325 350 375"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_radius"			"250"
-			}
+				"secondary_delay"			"1"
+			}			
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_duration"		"2"
+				"secondary_damage_pct"		"75"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_duration"			"3"
+				"additional_waves_count"	"1 1 1 1 2 3 4"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDustUpgrade"
-
-				"ability_cosmic_dust"		"imba_mirana_cosmic_dust"
+				"var_type"					"FIELD_INTEGER"
+				"additional_waves_dmg_pct"	"50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"Starfall"
-
-				"ambient_sound"				"Ability.Starfall"
-				"hit_sound"					"Ability.StarfallImpact"
-				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-				"modifier_debuff"			"modifier_imba_starfall_debuff"
+				"var_type"					"FIELD_FLOAT"
+				"additional_waves_interval"	"2.0"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_starfall_debuff"
+			"09"
 			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%secondary_duration"
-
-				"EffectName"				"particles/hero/mirana/mirana_cosmic_dust.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_mirana.lua"
-						"Function"			"StarfallSecondary"
-
-						"hit_sound"			"Ability.StarfallImpact"
-						"hit_particle"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"scepter_starfall_cd"		"10"
 			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -15236,7 +15200,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -15244,27 +15208,32 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"mirana_arrow"	
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"
+
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
-			"particle"					"particles/hero/mirana/mirana_sacred_arrow.vpcf"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_boost.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
-		"AbilityCastPoint"				"0.4"	
+		"AbilityCastRange"				"3000"
+		"AbilityCastPoint"				"0.5"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0"
+		"AbilityCooldown"				"17"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"	
+		"AbilityManaCost"				"100"			
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15272,87 +15241,87 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_speed"			"900.0"
+				"var_type"							"FIELD_INTEGER"
+				"base_damage"						"50 140 230 320 320 320 320"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"115"
+				"var_type"							"FIELD_INTEGER"
+				"spawn_distance"					"51"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_max_stunrange"	"1500"
+				"var_type"							"FIELD_INTEGER"
+				"distance_tick"						"30"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_min_stun"		"0.01"
+				"var_type"							"FIELD_FLOAT"
+				"stun_increase_per_tick"			"0.1"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_max_stun"		"5.0"
+				"var_type"							"FIELD_FLOAT"
+				"damage_increase_per_tick"			"2.8"	
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_bonus_damage"	"3 4 5 6"
+				"var_type"							"FIELD_INTEGER"
+				"max_damage"						"140"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_max_damage"		"50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_vision"			"650"
+				"var_type"							"FIELD_FLOAT"
+				"max_stun_duration"					"5.0"
+				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"var_type"							"FIELD_INTEGER"
+				"on_prowl_movespeed"				"600"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"180 270 360 450"
+				"var_type"							"FIELD_INTEGER"
+				"on_prow_crit_damage_pct"			"130 130 130 130 140 150 160"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_arrow"
+			"10"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-		
-				"EffectName"			"particles/hero/mirana/mirana_sacred_arrow.vpcf"
-				"EffectAttachType"		"follow_origin"
+				"var_type"							"FIELD_INTEGER"
+				"arrow_radius"						"96"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"			"hero/hero_mirana.lua"
-				"Function"				"LaunchArrow"
-				"Target"				"POINT"
-
-				"modifier_arrow"		"modifier_imba_arrow"
-				"sound_arrow"			"Hero_Mirana.ArrowImpact"
-			}	
-
-			"FireSound"
+				"var_type"							"FIELD_INTEGER"
+				"arrow_speed"						"857"
+			}			
+			"12"
 			{
-				"EffectName"			"Hero_Mirana.ArrowCast"
-				"Target"				"CASTER"
+				"var_type"							"FIELD_INTEGER"
+				"vision_radius"						"500"
 			}
-		}	
+			"13"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"vision_linger_duration"			"3"
+			}
+			"14"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"arrow_distance"					"3000"
+			}
+			"15"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"base_stun"							"0.01"
+				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
+			}
+			"16"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"distance_bonus_cap_tooltip"		"1500"
+			}
+		}			
 	}
 	
 	//=================================================================================================================
@@ -15362,11 +15331,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"			"mirana_leap"	
+		"AbilityTextureName"			"mirana_leap"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"	
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -15374,18 +15345,14 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 23 16 9"	
+		"AbilityCooldown"				"30 26 22 18 17 16 15"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"	
+		"AbilityManaCost"				"40 35 30 25 20 15 10"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15394,140 +15361,92 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_distance"			"1000"
+				"jump_speed"			"1600"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"min_speed"				"3000"
+				"var_type"					"FIELD_INTEGER"
+				"night_leap_range_bonus"	"400 400 400 400 600 800 1000"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_radius"			"1200"
+				"aura_aoe"				"900"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_speedbonus"		"14 16 18 20"
+				"move_speed_pct"		"4 8 12 16 18 20 22"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_speedbonus_as"	"20 30 40 50"
+				"attack_speed"			"8 16 24 32 36 40 44"
+				"LinkedSpecialBonus"	"special_bonus_imba_mirana_5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"10"
+				"aura_duration"			"10"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"max_time"				"3.0"
-			}
-			"08"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_increase"		"5"
+				"aura_linger_duration"	"3"
+				"LinkedSpecialBonus"	"special_bonus_imba_mirana_2"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_height"			"200"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"height_step"			"50"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_height"			"700"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Ability.Leap"
-				"Target"				"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_mirana.lua"
-				"Function"				"Leap"
-
-				"Target"				"POINT"
-				"root_modifier"			"modifier_imba_leap_self_root"
-				"buff_modifier"			"modifier_imba_leap"
-				"sound_cast"			"Ability.Leap"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_leap"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-				"IsBuff"				"1"
-
-				"Duration"				"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%leap_speedbonus_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%leap_speedbonus"
-				}
-			}
-
-			"modifier_imba_leap_self_root"
-			{
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsDebuff"				"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"leap_range"			"600 700 800 900 950 1000 1050"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Mirana's Cosmic Dust
+	// Mirana's Moonlight Shadow
 	//=================================================================================================================
-	"imba_mirana_cosmic_dust"
+	"imba_mirana_moonlight_shadow"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"				"custom/mirana_princess_of_the_night"
-
+		"BaseClass"						"ability_lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"mirana_invis"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"ScriptFile"					"hero/hero_mirana.lua"
+		
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"					"0.0"
-		"AbilityCastRange"					"900"
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0"
+		"AbilityCooldown"				"140 120 100 95 90 85"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"	
-		
+		"AbilityManaCost"				"75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -15535,33 +15454,21 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"		
-			}
+				"truesight_immunity_radius"	"1200 1200 1200 1050 900 750"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hit_delay"					"0.57"
+				"fade_delay"				"2.5 2 1.5 1.5 1.5 1.5"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDust"
-
-				"ambient_sound"				"Ability.Starfall"
-				"hit_sound"					"Ability.StarfallImpact"
-				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-			}
-		}
+				"duration"					"15 15 15 17 19 21"
+			}	
+		}	
 	}
 
 	//=================================================================================================================
@@ -15756,6 +15663,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_pct"				"12 20 28 36 38 40 42"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"healing_amp_tooltip"	"25 25 25 25 30 35 40"
 			}
 		}
 	}
