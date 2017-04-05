@@ -37,7 +37,6 @@ require('events')
 require('addon_init')
 
 ApplyAllTalentModifiers()
-StoreCurrentDayCycle()
 
 -- storage API
 --require('libraries/json')
@@ -653,9 +652,19 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 	
-	-- Kunkka Torrent & Tidebringer cast-handling
+	
+	
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
 		local ability = EntIndexToHScript(keys.entindex_ability)
+		
+		-- Magnataur Skewer handler
+		if unit:HasModifier("modifier_imba_skewer_motion_controller") then
+			if ability:GetAbilityName() == "imba_magnataur_skewer" then
+				unit:FindModifierByName("modifier_imba_skewer_motion_controller").begged_for_pardon = true
+			end
+		end
+		
+		-- Kunkka Torrent cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_torrent" then
 			local range = ability.BaseClass.GetCastRange(ability,ability:GetCursorPosition(),unit) + GetCastRangeIncrease(unit)
 			if unit:HasModifier("modifier_imba_ebb_and_flow_tide_low") or unit:HasModifier("modifier_imba_ebb_and_flow_tsunami") then
@@ -667,17 +676,20 @@ function GameMode:OrderFilter( keys )
 				unit:AddNewModifier(unit, ability, "modifier_imba_torrent_cast", {duration = 0.41} )
 			end
 		end
+		
+		-- Kunkka Tidebringer cast-handling
 		if ability:GetAbilityName() == "imba_kunkka_tidebringer" then
 			ability.manual_cast = true
 		end
-	elseif unit:HasModifier("modifier_imba_torrent_cast") and keys.order_type ==  DOTA_UNIT_ORDER_HOLD_POSITION then
+		
+	elseif unit:HasModifier("modifier_imba_torrent_cast") and keys.order_type == DOTA_UNIT_ORDER_HOLD_POSITION then
 		unit:RemoveModifierByName("modifier_imba_torrent_cast")
 	end
 	-- Tidebringer manual cast
 	if unit:HasModifier("modifier_imba_tidebringer_manual") then
 		unit:RemoveModifierByName("modifier_imba_tidebringer_manual")
 	end
-
+	
 	return true
 end
 

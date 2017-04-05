@@ -1,431 +1,858 @@
---[[ 	Author: D2imba
-		Date: 27.04.2015	]]
+--[[
+		By: AtroCty
+		Prev. Authors: Firetoad
+		Date: 27.04.2015
+		Updated:  02.04.2017
+--]]
 
-function DeathPulseStart( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_aux = caster:FindAbilityByName(keys.ability_aux)
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local particle_ally = keys.particle_ally
-	local particle_enemy = keys.particle_enemy
-	local modifier_caster = keys.modifier_caster
-	local modifier_heal_bonus = keys.modifier_heal_bonus
+CreateEmptyTalents("necrolyte")
 
-	-- Parameters
-	local area_of_effect = ability:GetLevelSpecialValueFor("area_of_effect", ability_level)
-	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("base_damage", ability_level)
-	local base_damage_pct = ability:GetLevelSpecialValueFor("base_damage_pct", ability_level) * 0.01
-	local base_heal = ability:GetLevelSpecialValueFor("base_heal", ability_level)
-	local base_heal_pct = ability:GetLevelSpecialValueFor("base_heal_pct", ability_level) * 0.01
-	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level) * 0.01
+-------------------------------------------
+--				SADIST
+-------------------------------------------
 
-	-- Initialize projectile parameters
-	local projectile = {
-		Target = caster,
-		Source = target,
-		Ability = ability,
-		EffectName = "",
-		bDodgeable = false,
-		bProvidesVision = false,
-		iMoveSpeed = projectile_speed,
-	--	iVisionRadius = vision_radius,
-	--	iVisionTeamNumber = caster:GetTeamNumber(),
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+LinkLuaModifier("modifier_imba_sadist", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_sadist_stack", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+imba_necrolyte_sadist = class({})
+function imba_necrolyte_sadist:GetIntrinsicModifierName()
+    if self:GetCaster():IsRealHero() then return "modifier_imba_sadist" end
+	return false
+end
+
+modifier_imba_sadist = class({})
+function modifier_imba_sadist:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_ATTACK_LANDED
 	}
+	return decFuncs
+end
 
-	-- Play sound
-	caster:EmitSound(sound_cast)
+function modifier_imba_sadist:IsHidden()
+    if self:GetStackCount() > 0 then return false end
+	return true
+end
 
-	-- Apply caster modifier
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_caster, {})
-
-	-- Create projectile for nearby units
-	local nearby_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, area_of_effect, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,target in pairs(nearby_units) do
-		if target:GetTeam() == caster:GetTeam() then
-
-			-- Allied projectile
-			projectile.EffectName = particle_ally
-
-			-- Calculate and perform healing
-			local heal_bonus_stacks = target:GetModifierStackCount(modifier_heal_bonus, caster)
-			local total_healing = (base_heal + target:GetMaxHealth() * base_heal_pct) * (1 + stack_power * heal_bonus_stacks)
-			target:Heal(total_healing, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, total_healing, nil)
-		else
-
-			-- Enemy projectile
-			projectile.EffectName = particle_enemy
-			
-			-- Calculate and apply damage
-			local total_damage = base_damage + target:GetMaxHealth() * base_damage_pct
-			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+function modifier_imba_sadist:OnAttackLanded( params )
+	if IsServer() then
+		local parent = self:GetParent()
+		
+		-- If this is an illusion, do nothing
+		if not params.attacker:IsRealHero() then
+			return nil
 		end
 
-		-- Hero and creep projectiles are different
-		if target:IsRealHero() then
-			projectile.Ability = ability
-		elseif ability_aux then
-			projectile.Ability = ability_aux
+		-- If target has break, do nothing
+		if params.attacker:PassivesDisabled() then
+			return nil
 		end
-
-		-- Create the projectile
-		projectile.Source = target
-		ProjectileManager:CreateTrackingProjectile(projectile)
+		
+		if parent:HasTalent("special_bonus_imba_necrolyte_2") then
+			if params.attacker == parent and params.target:IsHero() then
+				local ability = self:GetAbility()
+				params.attacker:AddNewModifier(params.attacker, ability, "modifier_imba_sadist_stack", {duration = ability:GetSpecialValueFor("regen_duration"), wasHero = false})
+			end
+		end
+		return nil
 	end
 end
 
-function DeathPulseThink( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_aux = caster:FindAbilityByName(keys.ability_aux)
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local particle_ally = keys.particle_ally
-	local particle_enemy = keys.particle_enemy
-	local modifier_caster = keys.modifier_caster
-	local modifier_heal_bonus = keys.modifier_heal_bonus
+function modifier_imba_sadist:OnDeath(params)
+	if IsServer() then
+		if params.attacker == self:GetParent() then
+			-- If this is an illusion, do nothing
+			if not params.attacker:IsRealHero() then
+				return nil
+			end
 
-	-- Parameters
-	local area_of_effect = ability:GetLevelSpecialValueFor("area_of_effect", ability_level)
-	local projectile_speed = ability:GetLevelSpecialValueFor("projectile_speed", ability_level)
-	local base_damage = ability:GetLevelSpecialValueFor("toggle_damage", ability_level)
-	local base_damage_pct = ability:GetLevelSpecialValueFor("toggle_damage_pct", ability_level) * 0.01
-	local base_heal = ability:GetLevelSpecialValueFor("toggle_heal", ability_level)
-	local base_heal_pct = ability:GetLevelSpecialValueFor("toggle_heal_pct", ability_level) * 0.01
-	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level) * 0.01
-	local toggle_mana_cost = ability:GetLevelSpecialValueFor("toggle_mana_cost", ability_level)
-	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
-
-	-- If the caster is out of mana, toggle the ability off
-	if caster:GetMana() < toggle_mana_cost then
-		ability:ToggleAbility()
-		ability:StartCooldown(cooldown * GetCooldownReduction(caster))
-		return nil
-
-	-- Else, spend mana and move on
-	else
-		caster:SpendMana(toggle_mana_cost, ability)
+			-- If target has break, do nothing
+			if params.attacker:PassivesDisabled() then
+				return nil
+			end
+			local ability = self:GetAbility()
+			params.attacker:AddNewModifier(params.attacker, ability, "modifier_imba_sadist_stack", {duration = ability:GetSpecialValueFor("regen_duration"), wasHero = params.unit:IsRealHero()})
+		end
 	end
+end
 
-	-- Initialize projectile parameters
-	local projectile = {
-		Target = caster,
-		Source = "",
-		Ability = ability,
-		EffectName = "",
-		bDodgeable = false,
-		bProvidesVision = false,
-		iMoveSpeed = projectile_speed,
-	--	iVisionRadius = vision_radius,
-	--	iVisionTeamNumber = caster:GetTeamNumber(),
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION
+modifier_imba_sadist_stack = class({})
+function modifier_imba_sadist_stack:OnCreated( params )
+	if IsServer() then
+		local ability = self:GetAbility()
+		local multiplier = 1
+		local modifier = self:GetParent():FindModifierByName("modifier_imba_sadist")
+		self.wasHero = params.wasHero
+		if params.wasHero ~= 0 then
+			print(params.wasHero)
+			multiplier = ability:GetTalentSpecialValueFor("hero_multiplier")
+			local stacks = modifier:GetStackCount() + 10
+			print(stacks)
+			modifier:SetStackCount(stacks)
+		else
+			modifier:IncrementStackCount()
+		end
+		self.mana_regen = ability:GetTalentSpecialValueFor("mana_regen") * multiplier
+		self.health_regen = ability:GetTalentSpecialValueFor("regen_duration") * multiplier
+    end
+end
+
+function modifier_imba_sadist_stack:OnDestroy()
+	if IsServer() then
+		local modifier = self:GetParent():FindModifierByName("modifier_imba_sadist")
+		if self.wasHero ~= 0 then
+			modifier:SetStackCount(modifier:GetStackCount() - 10)
+		else
+			modifier:DecrementStackCount()
+		end
+    end
+end
+
+function modifier_imba_sadist_stack:GetModifierConstantManaRegen()
+	return self.mana_regen
+end
+
+function modifier_imba_sadist_stack:GetModifierConstantHealthRegen()
+	return self.health_regen
+end
+
+function modifier_imba_sadist_stack:IsHidden()
+	return true
+end
+
+function modifier_imba_sadist_stack:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+function modifier_imba_sadist_stack:DeclareFunctions()
+	local decFuncs =
+	{
+		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
 	}
+	return decFuncs
+end
 
-	-- Play sound
-	caster:EmitSound(sound_cast)
+-------------------------------------------
+--			DEATH PULSE
+-------------------------------------------
+imba_necrolyte_death_pulse = class({})
+function imba_necrolyte_death_pulse:GetCastRange( location , target)
+	return self:GetTalentSpecialValueFor("radius")
+end
 
-	-- Create projectile for nearby units
-	local nearby_units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, area_of_effect, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	for _,target in pairs(nearby_units) do
-		if target:GetTeam() == caster:GetTeam() then
-
-			-- Allied projectile
-			projectile.EffectName = particle_ally
-
-			-- Calculate and perform healing
-			local heal_bonus_stacks = target:GetModifierStackCount(modifier_heal_bonus, caster)
-			local total_healing = (base_heal + target:GetMaxHealth() * base_heal_pct) * (1 + stack_power * heal_bonus_stacks)
-			target:Heal(total_healing, caster)
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, total_healing, nil)
-		else
-
+function imba_necrolyte_death_pulse:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local caster_loc = caster:GetAbsOrigin()
+		
+		-- Parameters
+		local radius = self:GetTalentSpecialValueFor("radius")
+		local damage = self:GetSpecialValueFor("damage")
+		local heal_amp = 1 + (caster:GetSpellPower() * 0.01)
+		local base_heal = self:GetSpecialValueFor("base_heal")
+		local sec_heal_pct = self:GetSpecialValueFor("sec_heal_pct")
+		local enemy_speed = self:GetSpecialValueFor("enemy_speed")
+		local ally_speed = self:GetSpecialValueFor("ally_speed")
+		
+		-- Cast sound
+		caster:EmitSound("Hero_Necrolyte.DeathPulse")
+		if (math.random(1,100) <= 50) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+			caster:EmitSound("necrolyte_necr_ability_tox_0"..math.random(1,3))
+		end
+		
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in pairs(enemies) do
+			ApplyDamage({attacker = caster, victim = enemy, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
 			-- Enemy projectile
-			projectile.EffectName = particle_enemy
-			
-			-- Calculate and apply damage
-			local total_damage = base_damage + target:GetMaxHealth() * base_damage_pct
-			ApplyDamage({attacker = caster, victim = target, ability = ability, damage = total_damage, damage_type = DAMAGE_TYPE_MAGICAL})
+			local enemy_projectile = 
+			{
+				Target = caster,
+				Source = enemy,
+				Ability = self,
+				EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_enemy.vpcf",
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = enemy_speed,
+				flExpireTime = GameRules:GetGameTime() + 60,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+				ExtraData = {sec_heal_pct = sec_heal_pct, heal_amp = heal_amp, radius = radius, ally_speed = ally_speed}
+			}
+
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(enemy_projectile)
 		end
-
-		-- Hero and creep projectiles are different
-		if target:IsRealHero() then
-			projectile.Ability = ability
-		elseif ability_aux then
-			projectile.Ability = ability_aux
+		
+		local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,ally in pairs(allies) do
+			-- Ally projectile
+			local ally_projectile = 
+			{
+				Target = ally,
+				Source = caster,
+				Ability = self,
+				EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
+				bDodgeable = false,
+				bProvidesVision = false,
+				iMoveSpeed = ally_speed,
+				flExpireTime = GameRules:GetGameTime() + 60,
+			--	iVisionRadius = vision_radius,
+			--	iVisionTeamNumber = caster:GetTeamNumber(),
+				iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+				ExtraData = {base_heal = base_heal, heal_amp = heal_amp}
+			}
+			-- Create the projectile
+			ProjectileManager:CreateTrackingProjectile(ally_projectile)
 		end
-
-		-- Create the projectile
-		projectile.Source = target
-		ProjectileManager:CreateTrackingProjectile(projectile)
 	end
 end
 
-function DeathPulseEnd( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_caster = keys.modifier_caster
-
-	-- Parameters
-	local cooldown = ability:GetLevelSpecialValueFor("cooldown", ability_level)
-
-	-- Remove caster modifier
-	caster:RemoveModifierByName(modifier_caster)
-
-	-- Put the skill on cooldown
-	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
-end
-	
-function DeathPulseHeroHit( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_heal_bonus = keys.modifier_heal_bonus
-
-	-- If the ability is gone (Random OMG), do nothing
-	if not ability then
-		return nil
-	end
-
-	-- Ability parameters
-	local ability_level = ability:GetLevel() - 1
-	local self_heal_hero_pct = ability:GetLevelSpecialValueFor("self_heal_hero_pct", ability_level) * 0.01
-	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level) * 0.01
-
-	-- Calculate and perform healing
-	local heal_bonus_stacks = caster:GetModifierStackCount(modifier_heal_bonus, caster)
-	local total_healing = (self_heal_hero_pct * caster:GetMaxHealth()) * (1 + stack_power * heal_bonus_stacks)
-	caster:Heal(total_healing, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, total_healing, nil)
-end
-
-function DeathPulseCreepHit( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_heal_bonus = keys.modifier_heal_bonus
-
-	-- If the ability is gone (Random OMG), do nothing
-	if not ability then
-		return nil
-	end
-
-	-- Ability parameters
-	local ability_level = ability:GetLevel() - 1
-	local self_heal_creep_pct = ability:GetLevelSpecialValueFor("self_heal_creep_pct", ability_level) * 0.01
-	local stack_power = ability:GetLevelSpecialValueFor("stack_power", ability_level) * 0.01
-
-	-- Calculate and perform healing
-	local heal_bonus_stacks = caster:GetModifierStackCount(modifier_heal_bonus, caster)
-	local total_healing = (self_heal_creep_pct * caster:GetMaxHealth()) * (1 + stack_power * heal_bonus_stacks)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, total_healing, nil)
-end
-
-function HeartstopperEnemy( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_debuff = keys.modifier_debuff
-
-	-- Ability parameters
-	local aura_damage = ability:GetLevelSpecialValueFor("aura_damage", ability_level) * 0.01
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-
-	-- Adds a stack of the debuff
-	local debuff_stacks = target:GetModifierStackCount(modifier_debuff, nil)
-	if debuff_stacks < max_stacks then
-		AddStacks(ability, caster, target, modifier_debuff, 1, true)
-	end
-
-	-- Calculates damage
-	local damage = target:GetMaxHealth() * aura_damage
-	
-	-- If the target is at low enough HP, kill it
-	if target:GetHealth() <= (damage + 5) then
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
-
-	-- Else, remove some HP from it
-	else
-		target:SetHealth(target:GetHealth() - damage)
-	end
-end
-
-function HeartstopperAlly( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_buff = keys.modifier_buff
-
-	-- Ability parameters
-	local max_stacks = ability:GetLevelSpecialValueFor("max_stacks", ability_level)
-
-	-- Adds a stack of the buff
-	local buff_stacks = target:GetModifierStackCount(modifier_buff, nil)
-	if buff_stacks < max_stacks then
-		AddStacks(ability, caster, target, modifier_buff, 1, true)
-	end
-end
-
-function HeartstopperEnd( keys )
-	local target = keys.target
-	local modifier_stacks = keys.modifier_stacks
-
-	target:RemoveModifierByName(modifier_stacks)
-end
-
-function SadistKill( keys )
-	local caster = keys.caster
-	local target = keys.unit
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local regen_modifier = keys.regen_modifier
-
-	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
-		return nil
-	end
-
-	-- Parameters
-	local hero_multiplier = ability:GetLevelSpecialValueFor("hero_multiplier", ability_level)
-
-	-- Apply stacks of the regen buff
-	if target:IsRealHero() then
-		for i = 1, hero_multiplier do
-			ability:ApplyDataDrivenModifier(caster, caster, regen_modifier, {})
+function imba_necrolyte_death_pulse:OnProjectileHit_ExtraData(target, vLocation, extraData)
+	if IsServer() then
+		local caster = self:GetCaster()
+		
+		-- Base Heal
+		if extraData.base_heal then
+			target:Heal((extraData.base_heal * extraData.heal_amp), caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, extraData.base_heal * extraData.heal_amp, nil)
+			return nil
 		end
-	else
-		ability:ApplyDataDrivenModifier(caster, caster, regen_modifier, {})
-	end
-end
+		
+		local caster_loc = caster:GetAbsOrigin()
+		
+		if not extraData.radius then
+			local heal = target:GetMaxHealth() * (extraData.sec_heal_pct / 100) * extraData.heal_amp
+			target:Heal(heal, caster)
+			SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+		end
+		--Essence dilation
+		if extraData.radius then
+			local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, extraData.radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,ally in pairs(allies) do
+				-- Ally projectile
+				local ally_projectile = 
+				{
+					Target = ally,
+					Source = caster,
+					Ability = self,
+					EffectName = "particles/units/heroes/hero_necrolyte/necrolyte_pulse_friend.vpcf",
+					bDodgeable = false,
+					bProvidesVision = false,
+					iMoveSpeed = extraData.ally_speed,
+					flExpireTime = GameRules:GetGameTime() + 60,
+				--	iVisionRadius = vision_radius,
+				--	iVisionTeamNumber = caster:GetTeamNumber(),
+					iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_HITLOCATION,
+					ExtraData = {sec_heal_pct = extraData.sec_heal_pct, heal_amp = extraData.heal_amp, ally_speed = extraData.ally_speed}
+				}
 
-function SadistHit( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local regen_modifier = keys.regen_modifier
-
-	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
-		return nil
-	end
-
-	-- Apply a stack of the regen buff
-	if target:IsHero() and caster:GetTeam() ~= target:GetTeam() then
-		ability:ApplyDataDrivenModifier(caster, caster, regen_modifier, {})
-	end
-end
-
-function ApplySadist( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local stack_modifier = keys.stack_modifier
-
-	AddStacks(ability, caster, target, stack_modifier, 1, true)
-end
-
-function RemoveSadist( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local stack_modifier = keys.stack_modifier
-
-	-- If this is the last stack, remove modifier
-	local current_stacks = target:GetModifierStackCount(stack_modifier, nil)
-	if current_stacks <= 1 then
-		target:RemoveModifierByName(stack_modifier)
-
-	-- Else, reduce stack count by 1
-	else
-		target:SetModifierStackCount(stack_modifier, nil, current_stacks - 1)
-	end
-end
-
-function ReapersScythe( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
-	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
-	local damage_delay = ability:GetLevelSpecialValueFor("stun_duration", ability_level) - 0.05
-	local particle_delay = ability:GetLevelSpecialValueFor("animation_delay", ability_level)
-	local reap_particle = keys.reap_particle
-	local scythe_particle = keys.scythe_particle
-	local scepter = HasScepter(caster)
-	local modifier_debuff = keys.modifier_debuff
-	
-	-- If the target possesses a ready Linken's Sphere, do nothing else
-	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
-		if target:TriggerSpellAbsorb(ability) then
+				-- Create the projectile
+				ProjectileManager:CreateTrackingProjectile(ally_projectile)
+			end
 			return nil
 		end
 	end
-	
-	-- Apply the Reaper's Scythe debuff
-	ability:ApplyDataDrivenModifier(caster, target, modifier_debuff, {})
-
-	-- Scythe model particle
-	local caster_loc = caster:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
-	Timers:CreateTimer(particle_delay, function()
-		local scythe_fx = ParticleManager:CreateParticle(scythe_particle, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster_loc, true)
-		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target_loc, true)
-		ParticleManager:ReleaseParticleIndex(scythe_fx)
-	end)
-
-	-- Waits for damage_delay to apply damage
-	Timers:CreateTimer(damage_delay, function()
-
-		-- Reaping particle
-		local reap_fx = ParticleManager:CreateParticle(reap_particle, PATTACH_CUSTOMORIGIN, target)
-		ParticleManager:SetParticleControlEnt(reap_fx, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target_loc, true)
-		ParticleManager:SetParticleControlEnt(reap_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target_loc, true)
-		ParticleManager:ReleaseParticleIndex(reap_fx)
-
-		-- Calculates damage
-		local damage_bonus = ( 1 - target:GetHealth() / target:GetMaxHealth() ) * 3
-		damage = damage * target:GetMaxHealth() * (1 + damage_bonus) * 0.01
-
-		-- Deals damage
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, damage, nil)
-	end)
 end
 
-function ReapersScytheKill( keys )
-	local caster = keys.caster
-	local target = keys.unit
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
+function imba_necrolyte_death_pulse:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_necrolyte_3")
+end
 
-	-- Parameters
-	local respawn_base = ability:GetLevelSpecialValueFor("respawn_base", ability_level)
-	local respawn_stack = ability:GetLevelSpecialValueFor("respawn_stack", ability_level)
-	local scepter = HasScepter(caster)
+-------------------------------------------
+--			GHOST SHROUD
+-------------------------------------------
 
-	-- Flag this as a scythe death, increasing respawn timer by respawn_base
-	target:RemoveModifierByName("modifier_imba_reapers_scythe")
+imba_necrolyte_ghost_shroud = class({})
+LinkLuaModifier("modifier_imba_ghost_shroud_aura", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_aura_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_aura_purge", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_buff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_ghost_shroud_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
 
-	-- Scepter on-kill effects
-	if scepter then
+function imba_necrolyte_ghost_shroud:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
 
-		-- Apply sadist stacks to nearby allies, if appropriate
-		local ability_sadist = caster:FindAbilityByName("imba_necrolyte_sadist")
-		if ability_sadist and ability_sadist:GetLevel() > 0 then
-			local stacks_scepter = ability:GetLevelSpecialValueFor("stacks_scepter", ability_level)
-			local sadist_aoe_scepter = ability:GetLevelSpecialValueFor("sadist_aoe_scepter", ability_level)
-			local nearby_allies = FindUnitsInRadius(caster:GetTeamNumber(), target:GetAbsOrigin(), nil, sadist_aoe_scepter, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-			for _,ally in pairs(nearby_allies) do
-				for i = 1, stacks_scepter do
-					ability_sadist:ApplyDataDrivenModifier(caster, ally, "modifier_imba_sadist_regen", {})
+		-- Params
+		local duration = self:GetSpecialValueFor("duration")
+		local radius = self:GetTalentSpecialValueFor("radius")
+		local healing_amp_pct = self:GetSpecialValueFor("healing_amp_pct")
+		local slow_pct = self:GetSpecialValueFor("slow_pct")
+		
+		caster:EmitSound("Hero_Necrolyte.SpiritForm.Cast")
+		
+		caster:StartGesture(ACT_DOTA_NECRO_GHOST_SHROUD)
+		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
+		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura_debuff", { duration = duration, radius = radius, healing_amp_pct = healing_amp_pct, slow_pct = slow_pct})
+		caster:AddNewModifier(caster, self, "modifier_imba_ghost_shroud_aura_purge", { duration = duration - FrameTime()})
+	end
+end
+
+function imba_necrolyte_ghost_shroud:GetCastRange( location , target)
+	return self:GetTalentSpecialValueFor("radius")
+end
+
+function imba_necrolyte_ghost_shroud:IsHiddenWhenStolen()
+	return false
+end
+
+modifier_imba_ghost_shroud_aura_purge = class({})
+function modifier_imba_ghost_shroud_aura_purge:IsPurgable()
+    return true
+end
+
+-- Make the aura purgable
+function modifier_imba_ghost_shroud_aura_purge:OnRemoved()
+	if IsServer() then
+		local parent = self:GetParent()
+		if parent:HasModifier("modifier_imba_ghost_shroud_aura") then
+			parent:RemoveModifierByName("modifier_imba_ghost_shroud_aura")
+			parent:RemoveModifierByName("modifier_imba_ghost_shroud_aura_debuff")
+		end
+	end
+end
+
+function modifier_imba_ghost_shroud_aura_purge:IsDebuff()
+	return false
+end
+
+function modifier_imba_ghost_shroud_aura_purge:IsHidden()
+	return true
+end
+
+modifier_imba_ghost_shroud_aura = class({})
+function modifier_imba_ghost_shroud_aura:OnCreated( params )
+	if IsServer() then
+		self.radius = params.radius
+		self.healing_amp_pct = params.healing_amp_pct
+		self.slow_pct = params.slow_pct
+	end
+end
+
+function modifier_imba_ghost_shroud_aura:GetEffectName()
+	return "particles/units/heroes/hero_necrolyte/necrolyte_spirit.vpcf"
+end
+
+function modifier_imba_ghost_shroud_aura:StatusEffectPriority()
+    return 10
+end
+
+function modifier_imba_ghost_shroud_aura:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+function modifier_imba_ghost_shroud_aura:GetAuraEntityReject(target)
+    if IsServer() then
+        return false
+    end
+end
+
+function modifier_imba_ghost_shroud_aura:GetAuraRadius()
+	return self.radius
+end
+
+function modifier_imba_ghost_shroud_aura:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_NONE
+end
+
+function modifier_imba_ghost_shroud_aura:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_FRIENDLY
+end
+
+function modifier_imba_ghost_shroud_aura:GetAuraSearchType()
+	return self:GetAbility():GetAbilityTargetType()
+end
+
+function modifier_imba_ghost_shroud_aura:GetModifierAura()
+	return "modifier_imba_ghost_shroud_buff"
+end
+
+function modifier_imba_ghost_shroud_aura:IsAura()
+	return true
+end
+
+function modifier_imba_ghost_shroud_aura:IsHidden()
+	if self:GetParent() == self:GetCaster() then return true end
+	return false
+end
+
+modifier_imba_ghost_shroud_aura_debuff = class({})
+function modifier_imba_ghost_shroud_aura_debuff:OnCreated( params )
+	if IsServer() then
+		self.radius = params.radius
+		self.healing_amp_pct = params.healing_amp_pct
+	end
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetEffectName()
+	return "particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetAuraEntityReject(target)
+    if IsServer() then
+        return false
+    end
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetAuraRadius()
+	return self.radius
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_NONE
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetAuraSearchType()
+	return self:GetAbility():GetAbilityTargetType()
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetModifierAura()
+	return "modifier_imba_ghost_shroud_debuff"
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:IsAura()
+	return true
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:DeclareFunctions()
+	return { MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE, }
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:CheckState() 
+    return 
+	{
+		[MODIFIER_STATE_DISARMED] = true,
+		[MODIFIER_STATE_ATTACK_IMMUNE] = true,
+	}
+end
+
+function modifier_imba_ghost_shroud_aura_debuff:GetModifierMagicalResistanceDecrepifyUnique( params )
+	return self:GetAbility():GetSpecialValueFor("magic_amp_pct") * (-1)
+end
+
+modifier_imba_ghost_shroud_buff = class({})
+function modifier_imba_ghost_shroud_buff:DeclareFunctions()
+	local decFuncs =
+	{
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+	}
+	return decFuncs
+end
+
+function modifier_imba_ghost_shroud_buff:GetModifierHealAmplify_Percentage()
+	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
+	if self:GetCaster() ~= self:GetParent() then 
+		healing_amp_pct = healing_amp_pct / 2
+	end
+	return healing_amp_pct
+end
+
+function modifier_imba_ghost_shroud_buff:GetHealthRegenAmp()
+	local healing_amp_pct = self:GetAbility():GetSpecialValueFor("healing_amp_pct")
+	if self:GetCaster() ~= self:GetParent() then 
+		healing_amp_pct = healing_amp_pct / 2
+	end
+	return healing_amp_pct
+end
+
+function modifier_imba_ghost_shroud_buff:IsDebuff()
+	return false
+end
+
+function modifier_imba_ghost_shroud_buff:IsHidden()
+	if self:GetParent() == self:GetCaster() then return true end
+	return false
+end
+
+function modifier_imba_ghost_shroud_buff:IsPurgable()
+	return true
+end
+
+modifier_imba_ghost_shroud_debuff = class({})
+function modifier_imba_ghost_shroud_debuff:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+function modifier_imba_ghost_shroud_debuff:DeclareFunctions()
+	local decFuncs =
+	{
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+	}
+	return decFuncs
+end
+
+function modifier_imba_ghost_shroud_debuff:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("slow_pct") * (-1)
+end
+
+function modifier_imba_ghost_shroud_debuff:IsDebuff()
+	return true
+end
+
+function modifier_imba_ghost_shroud_debuff:GetEffectName()
+	return "particles/units/heroes/hero_necrolyte/necrolyte_spirit_debuff.vpcf"
+end
+
+function modifier_imba_ghost_shroud_debuff:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+function modifier_imba_ghost_shroud_debuff:IsPurgable()
+	return true
+end
+
+-------------------------------------------
+--		  HEARTSTOPPER AURA
+-------------------------------------------
+
+LinkLuaModifier("modifier_imba_heartstopper_aura", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_heartstopper_aura_damage", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+imba_necrolyte_heartstopper_aura = class({})
+function imba_necrolyte_heartstopper_aura:GetIntrinsicModifierName()
+    return "modifier_imba_heartstopper_aura"
+end
+
+function imba_necrolyte_heartstopper_aura:GetCastRange( location , target)
+	return self:GetSpecialValueFor("radius")
+end
+
+modifier_imba_heartstopper_aura = class({})
+function modifier_imba_heartstopper_aura:OnCreated()
+	if IsServer() then
+		self.radius = self:GetAbility():GetSpecialValueFor("radius")
+		self.damage_pct = self:GetAbility():GetTalentSpecialValueFor("damage_pct")
+		if not self.timer then
+			self:StartIntervalThink(1)
+			self.timer = true
+		end
+	end
+end
+
+function modifier_imba_heartstopper_aura:OnRefresh()
+	if IsServer() then
+		self:OnCreated()
+	end
+end
+
+function modifier_imba_heartstopper_aura:OnIntervalThink()
+	if IsServer() then
+		local caster = self:GetCaster()
+		if not caster:PassivesDisabled() then
+			local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+			for _,enemy in ipairs(enemies) do
+				local modifier = enemy:FindModifierByNameAndCaster("modifier_imba_heartstopper_aura_damage",caster)
+				if modifier then
+					-- Calculates damage
+					local damage = enemy:GetMaxHealth() * self.damage_pct / 100
+					-- If the enemy is at low enough HP, kill it
+					if enemy:GetHealth() <= (damage + 5) then
+						ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
+						if (math.random(1,100) <= 10) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+							caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
+						end
+					-- Else, remove some HP from it
+					else
+						enemy:SetHealth(enemy:GetHealth() - damage)
+					end
 				end
 			end
 		end
 	end
+end
+
+function modifier_imba_heartstopper_aura:GetAuraEntityReject(target)
+	return false
+end
+
+function modifier_imba_heartstopper_aura:GetAuraRadius()
+	return self.radius
+end
+
+function modifier_imba_heartstopper_aura:GetAuraSearchFlags()
+	return DOTA_UNIT_TARGET_FLAG_NONE
+end
+
+function modifier_imba_heartstopper_aura:GetAuraSearchTeam()
+	return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_imba_heartstopper_aura:GetAuraSearchType()
+	return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_heartstopper_aura:GetModifierAura()
+	return "modifier_imba_heartstopper_aura_damage"
+end
+
+function modifier_imba_heartstopper_aura:IsAura()
+	if self:GetCaster():PassivesDisabled() then
+		return false
+	end
+	return true
+end
+
+function modifier_imba_heartstopper_aura:GetAttributes()
+	return MODIFIER_ATTRIBUTE_PERMANENT
+end
+
+function modifier_imba_heartstopper_aura:IsHidden()
+	return true
+end
+
+function modifier_imba_heartstopper_aura:GetEffectName()
+	return "particles/auras/aura_heartstopper.vpcf"
+end
+
+function modifier_imba_heartstopper_aura:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
+end
+
+modifier_imba_heartstopper_aura_damage = class({})
+function modifier_imba_heartstopper_aura_damage:IsHidden()
+	return false
+end
+
+function modifier_imba_heartstopper_aura_damage:IsDebuff()
+	return true
+end
+
+function modifier_imba_heartstopper_aura_damage:IsPurgable()
+	return false
+end
+
+function modifier_imba_heartstopper_aura_damage:OnIntervalThink()
+	return false
+end
+
+function modifier_imba_heartstopper_aura_damage:DeclareFunctions()
+	local decFuncs =
+	{
+		MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+	}
+	return decFuncs
+end
+
+function modifier_imba_heartstopper_aura_damage:GetModifierHealAmplify_Percentage()
+	return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
+end
+
+function modifier_imba_heartstopper_aura_damage:GetHealthRegenAmp()
+	return ( self:GetAbility():GetTalentSpecialValueFor("heal_reduce_pct") * (-1) )
+end
+
+-------------------------------------------
+--			REAPER'S SCYTHE
+-------------------------------------------
+imba_necrolyte_reapers_scythe = class({})
+LinkLuaModifier("modifier_imba_reapers_scythe", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reapers_scythe_debuff", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_reapers_scythe_respawn", "hero/hero_necrolyte", LUA_MODIFIER_MOTION_NONE)
+
+function imba_necrolyte_reapers_scythe:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetCursorTarget()
+		
+		if target:TriggerSpellAbsorb(self) then
+			return nil
+		end
+		
+		-- Cast sound
+		caster:EmitSound("Hero_Necrolyte.ReapersScythe.Cast")
+		target:EmitSound("Hero_Necrolyte.ReapersScythe.Target")
+		if (math.random(1,100) <= 30) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+			caster:EmitSound("necrolyte_necr_ability_reap_0"..math.random(1,3))
+		end
+		
+		-- Parameters
+		local damage = self:GetSpecialValueFor("damage")
+		local stun_duration = self:GetSpecialValueFor("stun_duration")
+		local respawn_increase = self:GetSpecialValueFor("respawn_increase")
+		local debuff_duration = self:GetSpecialValueFor("debuff_duration")
+		
+		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe", {duration = stun_duration, damage = damage})
+		target:AddNewModifier(caster, self, "modifier_imba_reapers_scythe_respawn", {stun_duration = stun_duration, respawn_increase = respawn_increase, debuff_duration = debuff_duration})
+	end
+end
+
+function imba_necrolyte_reapers_scythe:GetCooldown( nLevel )
+	if self:GetCaster():HasScepter() then return self:GetSpecialValueFor("scepter_cooldown") end
+	return self.BaseClass.GetCooldown( self, nLevel )
+end
+
+modifier_imba_reapers_scythe = class({})
+
+function imba_necrolyte_reapers_scythe:IsHiddenWhenStolen()
+	return false
+end
+
+function modifier_imba_reapers_scythe:OnCreated( params )
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target = self:GetParent()
+		self.damage = params.damage
+		
+		local stun_fx = ParticleManager:CreateParticle("particles/generic_gameplay/generic_stunned.vpcf", PATTACH_OVERHEAD_FOLLOW, target)
+		self:AddParticle(stun_fx,false,false,-1,false,false)
+		local orig_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_orig.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		self:AddParticle(orig_fx,false,false,-1,false,false)
+		
+		local scythe_fx = ParticleManager:CreateParticle("particles/units/heroes/hero_necrolyte/necrolyte_scythe_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(scythe_fx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		ParticleManager:ReleaseParticleIndex(scythe_fx)
+	end
+end
+
+function modifier_imba_reapers_scythe:GetEffectName()
+	return "particles/units/heroes/hero_necrolyte/necrolyte_scythe.vpcf"
+end
+
+function modifier_imba_reapers_scythe:StatusEffectPriority()
+    return 10
+end
+
+function modifier_imba_reapers_scythe:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_reapers_scythe:CheckState()
+	local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = true
+	}
+	return state
+end
+
+function modifier_imba_reapers_scythe:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+function modifier_imba_reapers_scythe:IsPurgable()
+	return false
+end
+
+function modifier_imba_reapers_scythe:OnRemoved()
+	if IsServer() then
+		-- Calculates damage
+		local target = self:GetParent()
+		self.damage = self.damage * (target:GetMaxHealth() - target:GetHealth())
+
+		-- Deals damage
+		ApplyDamage({attacker = self:GetCaster(), victim = target, ability = self:GetAbility(), damage = self.damage, damage_type = DAMAGE_TYPE_MAGICAL})
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, target, self.damage, nil)
+	end
+end
+
+function modifier_imba_reapers_scythe:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+		MODIFIER_EVENT_ON_DEATH	
+	}
+	return decFuncs
+end
+
+function modifier_imba_reapers_scythe:GetOverrideAnimation()
+	return ACT_DOTA_DISABLED
+end
+
+modifier_imba_reapers_scythe_respawn = class({})
+function modifier_imba_reapers_scythe_respawn:OnCreated( params )
+	if IsServer() then
+		Timers:CreateTimer(params.stun_duration + 0.1, function()
+			if not self.killed then
+				self:Destroy()
+			end
+		end)
+		self.killed = false
+		self.respawn_increase = params.respawn_increase
+		self.debuff_duration = params.debuff_duration
+	end
+end
+
+function modifier_imba_reapers_scythe_respawn:IsHidden()
+	return true
+end
+
+function modifier_imba_reapers_scythe_respawn:GetAttributes()
+	return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+function modifier_imba_reapers_scythe_respawn:IsDebuff()
+	return true
+end
+
+function modifier_imba_reapers_scythe_respawn:RemoveOnDeath()
+	return false
+end
+
+function modifier_imba_reapers_scythe_respawn:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_EVENT_ON_DEATH,
+		MODIFIER_EVENT_ON_RESPAWN
+	}
+	return decFuncs	
+end
+
+function modifier_imba_reapers_scythe_respawn:OnDeath( params )
+	if IsServer() then
+		if (self:GetParent() == params.unit) and (self:GetCaster() == params.attacker) then
+			self.killed = true
+			params.unit:SetTimeUntilRespawn(params.unit:GetRespawnTime() + self.respawn_increase)
+		end
+	end
+end
+
+function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
+	if IsServer() then
+		if (self:GetParent() == params.unit) then
+			params.unit:AddNewModifier(params.unit, self:GetAbility(), "modifier_imba_reapers_scythe_debuff", {duration = self.debuff_duration})
+		end
+	end
+end
+
+modifier_imba_reapers_scythe_debuff = class({})
+function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
+	local decFuncs = 
+	{
+		MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE
+	}
+	return decFuncs	
+end
+
+function modifier_imba_reapers_scythe_debuff:OnCreated( params )
+	local ability = self:GetAbility()
+	self.damage_reduction_pct = ability:GetTalentSpecialValueFor("damage_reduction_pct") * (-1)
+	self.spellpower_reduction = ability:GetTalentSpecialValueFor("spellpower_reduction") * (-1)
+end
+
+function modifier_imba_reapers_scythe_debuff:IsDebuff()
+	return true
+end
+
+function modifier_imba_reapers_scythe_debuff:IsPurgable()
+	return false
+end
+
+function modifier_imba_reapers_scythe_debuff:GetModifierSpellAmplify_Percentage()
+	return self.spellpower_reduction
+end
+
+function modifier_imba_reapers_scythe_debuff:GetModifierBaseDamageOutgoing_Percentage()
+	return self.damage_reduction_pct
 end

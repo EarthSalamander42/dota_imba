@@ -380,7 +380,6 @@ function NetherWardZap( keys )
 		"imba_tinker_march_of_the_machines",
 		"riki_blink_strike",
 		"riki_tricks_of_the_trade",
-		"imba_necrolyte_death_pulse",
 		"beastmaster_call_of_the_wild",
 		"beastmaster_call_of_the_wild_boar",
 		"dark_seer_ion_shell",
