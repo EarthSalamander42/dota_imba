@@ -33,19 +33,21 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN; // values > 0 mean on cooldown for that many seconds
 	var goldValue = -1;
 	var isTeammate = false;
+	var isSpectator = false;
 
 	var playerInfo = Game.GetPlayerInfo( playerId );
 	if ( playerInfo )
 	{
 		isTeammate = ( playerInfo.player_team_id == localPlayerTeamId );
-		if ( isTeammate )
+		isSpectator = Players.IsSpectator( Game.GetLocalPlayerID() );
+		if ( isTeammate || isSpectator )
 		{
 			ultStateOrTime = Game.GetPlayerUltimateStateOrTime( playerId );
 		}
 		goldValue = playerInfo.player_gold;
 		
 		playerPanel.SetHasClass( "player_dead", ( playerInfo.player_respawn_seconds >= 0 ) );
-		playerPanel.SetHasClass( "local_player_teammate", isTeammate && ( playerId != Game.GetLocalPlayerID() ) );
+		playerPanel.SetHasClass( "local_player_teammate", (isTeammate || isSpectator) && ( playerId != Game.GetLocalPlayerID() ) );
 
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "RespawnTimer", ( playerInfo.player_respawn_seconds + 1 ) ); // value is rounded down so just add one for rounded-up
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerName", playerInfo.player_name );
@@ -191,7 +193,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		}
 	}
 
-	if ( isTeammate )
+	if ( isTeammate || isSpectator )
 	{
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateGoldAmount", goldValue );
 	}

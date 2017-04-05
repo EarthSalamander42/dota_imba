@@ -250,7 +250,8 @@
     text-decoration: underline;
 }
 
-.local_player_team #TeammateGoldAmount
+.local_player_team #TeammateGoldAmount,
+.local_player_teammate #TeammateGoldAmount
 {
     visibility: visible;
 }
