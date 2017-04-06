@@ -3979,13 +3979,14 @@
 	}
 	
 	//=================================================================================================================
-	// Abaddon's Death Coil
+	// Abaddon's Mist Coil
 	//=================================================================================================================
-	"imba_abaddon_death_coil"
+	"imba_abaddon_mist_coil"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -3993,19 +3994,16 @@
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_death_coil"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"800"
+		"AbilityCastRange"								"800 800 800 800 875 950 1025"
 		"AbilityCastPoint"								"0.25"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"4.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50 60 70 80"
+		"AbilityManaCost"								"50 60 70 80 85 90 95"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4014,149 +4012,32 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1250"
+				"projectile_speed"						"2000"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"self_heal"								"75 100 125 150"
+				"var_type"								"FIELD_INTEGER"
+				"damage"								"100 150 200 250 275 300 325"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"target_damage"							"100 150 200 250"
+				"var_type"								"FIELD_INTEGER"
+				"heal"									"100 150 200 250 275 300 325"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"heal_amount"							"100 150 200 250"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"2000"
+				"cooldown"								"4.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_3"
 			}
 		}
 
 		"precache"
 		{
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"DeathCoil"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsDebuff"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-
-				"Duration"								"%buff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
+			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
 		}
 	}
 
@@ -4167,26 +4048,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_aphotic_shield"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"500"
 		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"6.0"
+		"AbilityCooldown"								"12.0 10.0 8.0 6.0 5.5 5.0 4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50"
+		"AbilityManaCost"								"100 105 110 115 120 125 130"
 
 		
 		// Special
@@ -4196,12 +4078,14 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"30.0"
+				"duration"								"15.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_absorb"							"125 175 225 275"
+				"shield"								"110 140 170 200 225 250 275"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_5"
 			}
 			"03"
 			{
@@ -4210,43 +4094,9 @@
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-			}
-			"06"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"max_charges"							"2"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"charge_cooldown"						"6.0"
+				"cast_range"							"500"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_1"
 			}
 		}
 
@@ -4255,177 +4105,25 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"AphoticShield"
-
-				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
-				"shield_modifier"						"modifier_aphotic_shield"
-				"cast_sound"							"Hero_Abaddon.AphoticShield.Cast"
-			}
-		}
-
-		"Modifiers"
-		{	
-			"modifier_aphotic_shield_stack_counter"
-			{
-				"Passive"								"1"
-				"IsPurgable"							"0"
-				"IsBuff"								"1"
-				"IsHidden"								"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldInitialize"
-
-						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
-					}
-				}
-
-				"ThinkInterval"							"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldThink"
-					}
-				}
-			}
-
-			"modifier_aphotic_shield"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-				"Duration"								"%duration"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldAbsorb"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"AttachEffect"
-					{
-						"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-						"EffectAttachType"				"follow_origin"
-						"Target"						"TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"					"attach_origin"
-							"TARGET"					"attach_origin"
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"EndShieldParticle"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
 		}
 	}
 
 	//=================================================================================================================
 	// Abaddon's Curse of Avernus
 	//=================================================================================================================
-	"imba_abaddon_frostmourne"
+	"imba_abaddon_curse_of_avernus"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"							"abaddon_frostmourne"
+		"MaxLevel"										"7"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4438,38 +4136,35 @@
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
+				"var_type"								"FIELD_INTEGER"
+				"move_slow"								"8 12 16 20 20 20 20"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
+				"attack_slow"							"8 12 16 20 20 20 20"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
+				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
+				"attack_increase"						"10 20 30 40 40 40 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"max_stacks"							"2 3 4 5"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_attack_speed"						"20"
+				"heal_convert"							"0 0 0 0 10 20 30"
 			}
 		}
 
@@ -4477,89 +4172,37 @@
 		{
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+			"particle"									"particles/generic_gameplay/generic_lifesteal.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Over Channel
+	//=================================================================================================================
+	"imba_abaddon_over_channel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"							"custom/abaddon_over_channel"
+		"MaxLevel"										"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"extra_dmg"								"90 125 160 195 230 265 300 "
+			}
 		}
 
-		"Modifiers"
+		"precache"
 		{
-			"modifier_frostmourne"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"OnAttack"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourne"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
 		}
 	}
 
@@ -4570,11 +4213,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
+		"MaxLevel"										"6"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -4582,7 +4227,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"55.0 45.0 35.0"
+		"AbilityCooldown"								"60.0 50.0 40.0 40.0 40.0 40.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4600,27 +4245,19 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"5.0 6.0 7.0"
+				"duration"								"4.0 5.0 6.0 6.5 7.0 7.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_7"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"duration_scepter"						"6.0 7.5 9.0"
+				"var_type"								"FIELD_INTEGER"
+				"redirect"								"10 15 20 30 40 50"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.50"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"redirect_range"						"1200"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"redirect_property"						"-50"
+				"redirect_range"						"900"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_8"
 			}
 		}
 
@@ -4629,89 +4266,196 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
 		}
+	}
 
-		"OnToggleOn"
+	//=================================================================================================================
+	// Abaddon Talent 1 (Level 10): +150 Aphotic Shield cast range
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"Target"								"CASTER"
-				"EffectName"							"Hero_Abaddon.BorrowedTime"	
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"BorrowedTimePurge"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"150"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Abaddon Talent 2 (Level 10): +45sec duration on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_borrowed_time_passive"
+			"01"
 			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeActivate"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"value"						"45.0"
 			}
+		}
+	}
 
-			"modifier_borrowed_time"
+	//=================================================================================================================
+	// Abaddon Talent 3 (Level 20): -1.5sec cooldown on Mist Coil
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
-				"EffectAttachType"						"follow_origin"
-
-				"StatusEffectName"						"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-				"StatusEffectPriority"  				"15"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeHeal"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"Aura"          						"modifier_borrowed_time_allies"
-				"Aura_Radius"   						"%redirect_range"
-				"Aura_Teams"    						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"					"0"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-1.5"
 			}
+		}
+	}
 
-			"modifier_borrowed_time_allies"
+	//=================================================================================================================
+	// Abaddon Talent 4 (Level 20): +5% move speed/+30 attack speed on Curse of Avernus
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
+				"var_type"					"FIELD_INTEGER"
+				"attack_increase"			"30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_increase"				"5"
+			}
+		}
+	}
 
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeAllies"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
+	//=================================================================================================================
+	// Abaddon Talent 5 (Level 30): +200 shielding on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%redirect_property" 
-				}
+	//=================================================================================================================
+	// Abaddon Talent 6 (Level 30): +50% Overchannel power
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 7 (Level 40): +1sec duration on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 8 (Level 40): +300 aura range on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"300"
 			}
 		}
 	}

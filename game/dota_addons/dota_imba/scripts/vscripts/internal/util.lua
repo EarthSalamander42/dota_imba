@@ -815,6 +815,7 @@ function InitializeInnateAbilities( hero )
 		"imba_centaur_thick_hide",
 		"imba_kunkka_ebb_and_flow",
 		"imba_necrolyte_sadist",
+		"imba_abaddon_over_channel",
 		"imba_night_stalker_stalker_in_the_night"
 	}
 
