@@ -428,7 +428,7 @@
 							<Panel id="npc_dota_hero_shadow_demon" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_shadow_demon')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_shadow_demon.png');" />
-							<Panel id="npc_dota_hero_silencer" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_silencer" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_silencer')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_silencer.png');" />
 							<Panel id="npc_dota_hero_skywrath_mage" class="ClassImbaOption" 
