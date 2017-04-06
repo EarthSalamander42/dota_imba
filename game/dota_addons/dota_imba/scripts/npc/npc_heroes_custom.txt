@@ -2098,20 +2098,23 @@
 
 		"AttributeIntelligenceGain"	"3.0"
 
-		//"Ability1"					"imba_silencer_arcane_curse"
-		//"Ability2"					"imba_silencer_glaives_of_wisdom"
-		//"Ability3"					"imba_silencer_last_word"
-		//"Ability4"					"imba_silencer_arcane_supremacy"
-		//"Ability5"					"imba_silencer_global_silence"
+		"AbilityLayout"				"5"
 
-		"Ability10"					"special_bonus_armor_3"
-		"Ability11"					"special_bonus_gold_income_10"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_intelligence_12"
-		"Ability14"					"special_bonus_attack_speed_30"
-		"Ability15"					"special_bonus_magic_resistance_15"
-		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_cooldown_reduction_15"
+		"Ability1"					"imba_silencer_arcane_curse"
+		"Ability2"					"imba_silencer_glaives_of_wisdom"
+		"Ability3"					"imba_silencer_last_word"
+		"Ability4"					"imba_silencer_arcane_supremacy"
+		"Ability5"					"imba_silencer_global_silence"
+
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_silencer_1"
+		"Ability11"					"special_bonus_imba_silencer_2"
+		"Ability12"					"special_bonus_imba_silencer_3"
+		"Ability13"					"special_bonus_imba_silencer_4"
+		"Ability14"					"special_bonus_imba_silencer_5"
+		"Ability15"					"special_bonus_imba_silencer_6"
+		"Ability16"					"special_bonus_imba_silencer_7"
+		"Ability17"					"special_bonus_imba_silencer_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 	}

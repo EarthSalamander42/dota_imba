@@ -2038,6 +2038,10 @@ function UpdateComebackBonus(points, team)
 	end
 
 	-- Update teams' score
+	if COMEBACK_BOUNTY_SCORE[team] == nil then
+		COMEBACK_BOUNTY_SCORE[team] = 0
+	end
+	
 	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
 
 	-- If one of the teams is eligible, apply the bonus

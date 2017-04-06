@@ -17,12 +17,8 @@ function modifier_imba_silencer_arcane_supremacy:OnCreated( kv )
 end
 
 function modifier_imba_silencer_arcane_supremacy:GetSilenceReductionPct()
-	local reduction = self.silence_reduction_pct
-	--[[ SILENCER TALENT CHECK remove hardcode
-	if(self.caster:HasModifier("")) then
-		reduction = reduction + 50
-	end
-	]]
+	local reduction = self.silence_reduction_pct + self.caster:FindTalentValue("special_bonus_imba_silencer_4")
+
 	return reduction
 end
 
@@ -62,19 +58,16 @@ function modifier_imba_silencer_arcane_supremacy:OnDeath( params )
 		if params.unit:IsRealHero() and ( params.unit ~= self.caster ) and ( params.unit:GetTeam() ~= self.caster:GetTeam() ) then
 			local distance = ( self.caster:GetAbsOrigin() - params.unit:GetAbsOrigin() ):Length2D()
 			if ( distance <= self.steal_range ) or ( params.attacker == self.caster ) or ( params.unit:HasModifier("modifier_imba_silencer_global_silence") ) then
+				local enemy_min_int = 1
 				local enemy_intelligence = params.unit:GetBaseIntellect()
 				local enemy_intelligence_taken = 0
-				local steal_amount = self.steal_amount
-				--[[ SILENCER TALENT CHECK for steal amount
-				if self:GetCaster():HasModifier("") then
-					steal_amount = steal_amount + 2
-				end
-				]]
-				if enemy_intelligence > 1 then
-					if ( (enemy_intelligence - self.steal_amount) >= 1 ) then
-						enemy_intelligence_taken = self.steal_amount
+				local steal_amount = self.steal_amount + self.caster:FindTalentValue("special_bonus_imba_silencer_3")
+
+				if enemy_intelligence > enemy_min_int then
+					if ( (enemy_intelligence - steal_amount) >= enemy_min_int ) then
+						enemy_intelligence_taken = steal_amount
 					else
-						enemy_intelligence_taken = -(1 - enemy_intelligence)
+						enemy_intelligence_taken = -(enemy_min_int - enemy_intelligence)
 					end
 					params.unit:SetBaseIntellect( enemy_intelligence - enemy_intelligence_taken )
 					params.unit:CalculateStatBonus()
