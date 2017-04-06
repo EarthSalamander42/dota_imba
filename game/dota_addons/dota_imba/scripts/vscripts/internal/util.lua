@@ -814,7 +814,8 @@ function InitializeInnateAbilities( hero )
 		"imba_tiny_rolling_stone",
 		"imba_centaur_thick_hide",
 		"imba_kunkka_ebb_and_flow",
-		"imba_necrolyte_sadist"
+		"imba_necrolyte_sadist",
+		"imba_night_stalker_stalker_in_the_night"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
