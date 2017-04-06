@@ -1223,14 +1223,15 @@
 		"Ability3"					"imba_lion_mana_drain"			
 		"Ability4"					"imba_lion_finger_of_death"
 
-		"Ability10"					"special_bonus_respawn_reduction_25"
-		"Ability11"					"special_bonus_gold_income_20"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_attack_damage_40"
-		"Ability14"					"special_bonus_magic_resistance_15"
-		"Ability15"					"special_bonus_spell_amplify_8"
-		"Ability16"					"special_bonus_all_stats_12"
-		"Ability17"					"special_bonus_cast_range_125"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_lion_1"
+		"Ability11"					"special_bonus_imba_lion_2"
+		"Ability12"					"special_bonus_imba_lion_3"
+		"Ability13"					"special_bonus_imba_lion_4"
+		"Ability14"					"special_bonus_imba_lion_5"
+		"Ability15"					"special_bonus_imba_lion_6"
+		"Ability16"					"special_bonus_imba_lion_7"
+		"Ability17"					"special_bonus_imba_lion_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_lion/lion_base_attack.vpcf"
 	}
