@@ -412,7 +412,6 @@ function imba_kunkka_torrent:OnSpellStart()
 					end
 				end
 
-
 				-- Creates the post-ability sound effect
 				local dummy = CreateUnitByName("npc_dummy_unit", target, false, caster, caster, caster:GetTeamNumber() )
 				dummy:EmitSound("Ability.Torrent")
@@ -742,28 +741,30 @@ function modifier_imba_tidebringer:OnAttackStart( params )
 	if IsServer() then
 		local parent = self:GetParent()
 		local target = params.target
-		if parent == params.attacker and target:GetTeamNumber() ~= parent:GetTeamNumber() and (target.IsCreep or target.IsHero) then
-			local ability = self:GetAbility()
-			self.sound_triggered = false
-			-- Check buffs by Ebb and Flow, and set on Cooldown after cast to give a new buff
-			self.tide_index = 0
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tsunami") 	then self.tide_index = 1 end
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tide_low") 	then self.tide_index = 2 end
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tide_red") 	then self.tide_index = 3 end
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tide_flood")	then self.tide_index = 4 end
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tide_high") 	then self.tide_index = 5 end
-			if parent:HasModifier("modifier_imba_ebb_and_flow_tide_wave") 	then self.tide_index = 6 end
+		if (parent == params.attacker) and (target:GetTeamNumber() ~= parent:GetTeamNumber()) and (target.IsCreep or target.IsHero) then
+			if not target:IsTower() then
+				local ability = self:GetAbility()
+				self.sound_triggered = false
+				-- Check buffs by Ebb and Flow, and set on Cooldown after cast to give a new buff
+				self.tide_index = 0
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tsunami") 	then self.tide_index = 1 end
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tide_low") 	then self.tide_index = 2 end
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tide_red") 	then self.tide_index = 3 end
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tide_flood")	then self.tide_index = 4 end
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tide_high") 	then self.tide_index = 5 end
+				if parent:HasModifier("modifier_imba_ebb_and_flow_tide_wave") 	then self.tide_index = 6 end
 
-			if ability:IsCooldownReady() and not (parent:PassivesDisabled()) then
-				if ability:GetAutoCastState() or parent:HasModifier("modifier_imba_tidebringer_manual") then
-					self.pass_attack = true
-					self.bonus_damage = ability:GetSpecialValueFor("bonus_damage")
-					if (self.tide_index == 4) or (self.tide_index == 1) then
-						self.bonus_damage = self.bonus_damage + ability:GetSpecialValueFor("tide_flood_damage")
+				if ability:IsCooldownReady() and not (parent:PassivesDisabled()) then
+					if ability:GetAutoCastState() or parent:HasModifier("modifier_imba_tidebringer_manual") then
+						self.pass_attack = true
+						self.bonus_damage = ability:GetSpecialValueFor("bonus_damage")
+						if (self.tide_index == 4) or (self.tide_index == 1) then
+							self.bonus_damage = self.bonus_damage + ability:GetSpecialValueFor("tide_flood_damage")
+						end
+					else
+						self.pass_attack = false
+						self.bonus_damage = 0
 					end
-				else
-					self.pass_attack = false
-					self.bonus_damage = 0
 				end
 			end
 		end
@@ -815,19 +816,14 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 				DoCleaveAttack( params.attacker, params.target, ability, params.damage, radius_start, radius_end, range, "particles/units/heroes/hero_kunkka/kunkka_spell_tidebringer.vpcf" )
 				if not ((self.tide_index == 6) or (self.tide_index == 1)) then
 					local cooldown = ability:GetCooldown(ability:GetLevel()-1)
-					cooldown = cooldown - ( self.hitCounter * ability:GetSpecialValueFor("cdr_per_hit") )
-					if cooldown > 0 then
-						ability:StartCooldown( cooldown )
-						Timers:CreateTimer( cooldown, function()
-							if not parent:HasModifier("modifier_imba_tidebringer_sword_particle") then
-								parent:AddNewModifier(parent, ability, "modifier_imba_tidebringer_sword_particle", {})
-							end
-						return nil
-						end)
-					end
-
+					ability:StartCooldown( cooldown )
+					Timers:CreateTimer( cooldown, function()
+						if not parent:HasModifier("modifier_imba_tidebringer_sword_particle") then
+							parent:AddNewModifier(parent, ability, "modifier_imba_tidebringer_sword_particle", {})
+						end
+					--return nil
+					end)
 				end
-				self.hitCounter = nil
 				if parent:HasModifier("modifier_imba_tidebringer_manual") then
 					parent:RemoveModifierByName("modifier_imba_tidebringer_manual")
 				end
@@ -836,6 +832,10 @@ function modifier_imba_tidebringer:OnAttackLanded( params )
 					if self.tide_index >= 1 then
 						ability_tide:CastAbility()
 					end
+					cooldown = ability_tide:GetCooldownTimeRemaining() - (self.hitCounter * ability:GetSpecialValueFor("cdr_per_hit"))
+					ability_tide:EndCooldown()
+					ability_tide:StartCooldown(cooldown)
+					self.hitCounter = nil
 				end
 			end
 		end
@@ -920,8 +920,6 @@ end
 function modifier_imba_tidebringer_slow:GetModifierMoveSpeedBonus_Percentage( )
 	return ( self:GetAbility():GetSpecialValueFor("tide_red_slow") * (-1) )
 end
-
-
 
 function modifier_imba_tidebringer_slow:IsDebuff()
 	return true
