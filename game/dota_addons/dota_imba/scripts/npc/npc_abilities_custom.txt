@@ -17637,15 +17637,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"omniknight_purification"
-		"AOEradius"						"%radius"
+		"AbilityTextureName"			"omniknight_purification"		
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_omniknight.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -17654,20 +17655,22 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"11 10 9 8 8 8 8"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 110 120 130"
+		"AbilityManaCost"				"85 100 115 130 135 140 145"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_omniknight.vsndevts"
 			"particle"					"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
 			"particle"					"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
 			"particle"					"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+			"particle"					"particles/hero/omniknight/purification_buff.vpcf"
 		}
 
 		// Special
@@ -17677,110 +17680,33 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_base"				"90 180 270 360"
+				"heal_amount"			"90 160 230 300 340 380 420"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_8"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_pct"				"10"
+				"radius"				"260"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_factor"			"75"
+				"var_type"					"FIELD_INTEGER"
+				"purifiception_duration"	"12"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"300"
+				"var_type"					 "FIELD_INTEGER"
+				"purifiception_heal_amp_pct" "25"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"passive_cooldown"		"25"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"passive_threshold"		"20"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_omniknight.lua"
-				"Function"				"Purification"
-
-				"cast_sound"			"Hero_Omniknight.Purification"
-				"aoe_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-				"cast_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
-				"hit_particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_purification_passive"
-			{
-				"Passive"					"1"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-		
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_purification_passive"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_omniknight.lua"
-						"Function"			"PurificationDeath"
-
-						"cast_sound"		"Hero_Omniknight.Purification"
-						"aoe_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
-						"cast_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
-						"hit_particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
-						"passive_modifier"	"modifier_imba_purification_passive"
-						"cooldown_modifier"	"modifier_imba_purification_passive_cooldown"
-					}
-				}
-			}
-
-			"modifier_imba_purification_passive_cooldown"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"TextureName"				"custom/omnikinight_purification_cooldown"
-		
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"Duration"					"%passive_cooldown"
-		
-				"OnDestroy"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_imba_purification_passive"
-						"Target" 			"CASTER"
-					}
-				}
-			}
+				"var_type"					 "FIELD_INTEGER"
+				"purifiception_max_stacks"	 "1 1 1 1 2 3 4"
+			}			
 		}
 	}
 
@@ -17791,22 +17717,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"omniknight_repel"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_omniknight.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"575"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.35"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 18 16 14"
+		"AbilityCooldown"				"30 26 22 18 17 16 15"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -17817,7 +17745,11 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_omniknight.vsndevts"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
 			"particle"					"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+			"particle"					"particles/auras/aura_degen.vpcf"
 		}
 		
 		// Special
@@ -17826,83 +17758,67 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"5 6 7 8"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4 5 6 7 7.3 7.6 8"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"self_duration"			"3"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_Omniknight.Repel"
-				"Target"				"TARGET"
+				"aura_radius"			"350"
 			}
 
-			"FireEffect"
+			"03"
 			{
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct"			"10 18 26 34 36 38 40"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_3"
 			}
 
-			"ApplyModifier"
+			"04"
 			{
-				"Target" 				"TARGET"
-				"ModifierName"			"modifier_omniknight_repel"
-				"Duration"				"%duration"
+				"var_type"				"FIELD_INTEGER"
+				"as_slow"				"10 18 26 34 36 38 40"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_3"
 			}
 
-			"FireEffect"
+			"05"
 			{
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Target"				"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"Target" 				"CASTER"
-				"ModifierName"			"modifier_omniknight_repel"
-				"Duration"				"%self_duration"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_omniknight.lua"
-				"Function"				"Repel"
-				"Target"				"TARGET"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"linger_duration"		"1 1 1 1 1.5 2 2.5"
+			}			
 		}
 	}
 
+
 	//=================================================================================================================
-	// Omniknight's Degen Aura
+	// Omniknight's Hammer of Virtue
 	//=================================================================================================================
-	"imba_omniknight_degen_aura"
+	"imba_omniknight_hammer_of_virtue"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityTextureName"			"omniknight_degen_aura"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/omniknight_hammer_of_virtue"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_omniknight.lua"		
 		
-		// Casting
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"475"
+		"AbilityCooldown"				"12 10 8 6 6 6 6"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"particle"					"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"			
+			"particle"					"particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
+			"particle"					"particles/hero/omniknight/hammer_of_virtue_heal.vpcf"
 		}
 		
 		// Special
@@ -17911,114 +17827,19 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_reduction"			"-12 -20 -28 -36"
+				"var_type"				"FIELD_FLOAT"
+				"radius"				"600"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"as_reduction"			"-12 -20 -28 -36"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"475"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_rate"			"1.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"sticky_time"			"2.0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_reduction_pct"	"-5"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"reduction_tooltip"		"5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_degen_aura"
-			{
-				"Passive" 				"1"
-				"IsHidden" 				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Aura" 					"modifier_imba_degen_aura_effect"
-				"Aura_Radius" 			"%radius"
-				"Aura_Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"   			"DOTA_UNIT_TARGET_FLAG_NONE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_degen_aura"
-					}
-				}
-			}
-
-			"modifier_imba_degen_aura_effect"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-				"IsHidden"				"1"
-
-				"EffectName"			"particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Duration"				"%sticky_time"
-
-				"ThinkInterval"  		"%stack_rate"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_omniknight.lua"
-						"Function"			"DegenAura"
-
-						"modifier_stacks"	"modifier_imba_degen_aura_stacks"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_reduction"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%as_reduction"
-				}
-			}
-
-			"modifier_imba_degen_aura_stacks"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-
-				"Duration"				"%sticky_time"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%stack_reduction_pct"
-				}
-			}
+				"damage_as_heal_pct"	"100 100 100 100 150 200 250"
+				"LinkedSpecialBonus"	"special_bonus_imba_omniknight_1"
+			}			
 		}
 	}
+	
 
 	//=================================================================================================================
 	// Omniknight's Guardian Angel
@@ -18027,34 +17848,37 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"omniknight_guardian_angel"
+		"MaxLevel"							"6"
+		"ScriptFile"						"hero/hero_omniknight.lua"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"150.0"
-		"AbilityCastPoint"					"0.4"
+		"AbilityCooldown"					"160 160 160 140 120 100"
+		"AbilityCastPoint"					"0.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 175 225"
-		"AbilityCastRange"					"1000"
+		"AbilityManaCost"					"125 175 225 250 275 300"		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_omniknight.vsndevts"
 			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
 			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
 			"particle"						"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
 			"particle"						"particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"						"particles/hero/omniknight/guardian_angel_shield.vpcf"
 		}
 		
 		// Special
@@ -18064,78 +17888,34 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"6 7 8"
+				"duration"					"6 7 8 8 8 8"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration_scepter"			"8 9 10"
+				"scepter_duration"			"8 9 10 10 10 10"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"repel_duration"			"3"
+				"shield_duration"			"3 3 3 4 5 6"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1000"
+				"radius"					"600"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"05"
 			{
-				"ScriptFile"				"hero/hero_omniknight.lua"
-				"Function"					"GuardianAngel"
-
-				"sound_cast"				"Hero_Omniknight.GuardianAngel.Cast"
-				"modifier_buff"				"modifier_imba_guardian_angel"
-				"modifier_repel"			"modifier_omniknight_repel"
+				"var_type"					"FIELD_INTEGER"
+				"max_hp_shield_health_pct"	"12 12 12 18 24 30"
+				"LinkedSpecialBonus"		"special_bonus_imba_omniknight_5"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_guardian_angel"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"StatusEffectName"    		"particles/status_fx/status_effect_guardian_angel.vpcf"
-				"StatusEffectPriority" 		"10"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_omniknight.lua"
-						"Function"			"GuardianAngelParticle"
-
-						"particle_wings"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
-						"particle_halo"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
-						"particle_ally"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_omniknight.lua"
-						"Function"			"GuardianAngelParticleDestroy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -33847,336 +33627,513 @@
 
 
 	//=================================================================================================================
-		// Clinkz Talents 
-		//=================================================================================================================
-		"special_bonus_imba_clinkz_1" //Strafe Bonus attack range when mounted
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "150"
-						}
-				}
-		}
+    // Clinkz Talents 
+    //=================================================================================================================
+    "special_bonus_imba_clinkz_1" //Strafe Bonus attack range when mounted
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "150"
+            }
+        }
+    }
 
-		"special_bonus_imba_clinkz_2" //Spook search radius increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "200"
-						}
-				}
-		}  
-		
-		"special_bonus_imba_clinkz_3" //Searing arrows damage increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "35"
-						}
-				}
-		}
-		
-		"special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "400"
-						}
-				}
-		}
-		
-		"special_bonus_imba_clinkz_5" //Strafe bonus attack speed
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "80"
-						}
-				}
-		}
-		
-		"special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "5"
-						}
-				}
-		}
-		
-		"special_bonus_imba_clinkz_7" //Death Pact bonuses increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "50"
-						}
-				}
-		}
-		
-		"special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"mark_duration"	            "5"
-						}
+    "special_bonus_imba_clinkz_2" //Spook search radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "200"
+            }
+        }
+    }  
+    
+    "special_bonus_imba_clinkz_3" //Searing arrows damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "35"
+            }
+        }
+    }
+    
+    "special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "400"
+            }
+        }
+    }
+    
+    "special_bonus_imba_clinkz_5" //Strafe bonus attack speed
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "80"
+            }
+        }
+    }
+    
+    "special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "5"
+            }
+        }
+    }
+    
+    "special_bonus_imba_clinkz_7" //Death Pact bonuses increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "50"
+            }
+        }
+    }
+    
+    "special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "mark_duration"	            "5"
+            }
 
-						"02"
-						{
-							"var_type"					"FIELD_INTEGER"
-							"stacks_pct"				"10"
-						}
-				}
-		}
+            "02"
+            {
+            	"var_type"					"FIELD_INTEGER"
+            	"stacks_pct"				"10"
+            }
+        }
+    }
 
-		//=================================================================================================================
-		// Lich Talents 
-		//=================================================================================================================
-		"special_bonus_imba_lich_1" //Chain Frost bounce delay decrease
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "75"
-						}
-				}
-		}
+    //=================================================================================================================
+    // Lich Talents 
+    //=================================================================================================================
+    "special_bonus_imba_lich_1" //Chain Frost bounce delay decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "75"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_2" //Sacrifice bonuses increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "50"
-						}
-				}
-		}
+    "special_bonus_imba_lich_2" //Sacrifice bonuses increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "50"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_3" //Chain Frost bounce range increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "175"
-						}
-				}
-		}
+    "special_bonus_imba_lich_3" //Chain Frost bounce range increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "175"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_4" //Frost Nova cooldown decrease
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "4"
-						}
-				}
-		}
+    "special_bonus_imba_lich_4" //Frost Nova cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_5" //Cold Front duration increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "1"
-						}
-				}
-		}
+    "special_bonus_imba_lich_5" //Cold Front duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_6" //Massive Ice Armor armor increase when cast on buildings
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "36"
-						}
-				}
-		}
+    "special_bonus_imba_lich_6" //Massive Ice Armor armor increase when cast on buildings
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "36"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_7" //Chain Frost bounce speed increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "300"
-						}
-				}
-		}
+    "special_bonus_imba_lich_7" //Chain Frost bounce speed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "300"
+            }
+        }
+    }
 
-		"special_bonus_imba_lich_8" //Cold Front gains additional stack from skills
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "1"
-						}
-				}
-		}
+    "special_bonus_imba_lich_8" //Cold Front gains additional stack from skills
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Omniknight's Talents 
+    //=================================================================================================================
+    "special_bonus_imba_omniknight_1" // Hammer of Virtue heal increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "75"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_2" // Purification auto casts 
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "cooldown"                  "30"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "trigger_hp_pct"            "20"
+            }
+
+
+        }
+    }
+
+    "special_bonus_imba_omniknight_3" // Increases Degen Aura's move and attack speed slows 
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                  	"10"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_4" // Purification is also applied on a second random target
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                  	"600"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_5" // Guardian Angel Shield health increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                  	"15"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_6" // Repel affects nearby allies briefly
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "radius"                  	"600"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"	                "3"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_7" // Guardian Angel cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"40"
+            }
+        }
+    }
+
+    "special_bonus_imba_omniknight_8" // Purification heal/damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"230"
+            }
+        }
+    }
 	
 	//=================================================================================================================
 		// Night Stalker's Talents 

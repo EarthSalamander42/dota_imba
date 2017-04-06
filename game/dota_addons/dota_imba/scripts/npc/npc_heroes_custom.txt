@@ -1692,17 +1692,17 @@
 
 		"Ability1"					"imba_omniknight_purification"
 		"Ability2"					"imba_omniknight_repel"
-		"Ability3"					"imba_omniknight_degen_aura"
+		"Ability3"					"imba_omniknight_hammer_of_virtue"
 		"Ability4"					"imba_omniknight_guardian_angel"
 
-		"Ability10"					"special_bonus_gold_income_10"
-		"Ability11"					"special_bonus_exp_boost_15"
-		"Ability12"					"special_bonus_cast_range_75"
-		"Ability13"					"special_bonus_strength_8"
-		"Ability14"					"special_bonus_attack_damage_100"
-		"Ability15"					"special_bonus_mp_regen_6"
-		"Ability16"					"special_bonus_unique_omniknight_1"
-		"Ability17"					"special_bonus_unique_omniknight_2"
+		"Ability10"					"special_bonus_imba_omniknight_1"
+		"Ability11"					"special_bonus_imba_omniknight_2"
+		"Ability12"					"special_bonus_imba_omniknight_3"
+		"Ability13"					"special_bonus_imba_omniknight_4"
+		"Ability14"					"special_bonus_imba_omniknight_5"
+		"Ability15"					"special_bonus_imba_omniknight_8"
+		"Ability16"					"special_bonus_imba_omniknight_7"
+		"Ability17"					"special_bonus_imba_omniknight_6"
 
 		"ProjectileSpeed"			"900"
 	}
