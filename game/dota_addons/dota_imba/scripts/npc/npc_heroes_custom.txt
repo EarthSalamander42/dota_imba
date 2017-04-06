@@ -2099,6 +2099,8 @@
 
 		"AttributeIntelligenceGain"	"3.0"
 
+		"AbilityLayout"				"5"
+
 		"Ability1"					"imba_silencer_arcane_curse"
 		"Ability2"					"imba_silencer_glaives_of_wisdom"
 		"Ability3"					"imba_silencer_last_word"
