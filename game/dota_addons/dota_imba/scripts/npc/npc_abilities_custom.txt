@@ -22166,9 +22166,9 @@
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"AbilityTextureName"					"silencer_curse_of_the_silent"
+		"HasScepterUpgrade"						"1"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -22221,11 +22221,13 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"penalty_duration"	"4"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_2"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"curse_slow"		"-9 -12 -15 -18 -21 -23 -25"
+				"curse_slow"		"9 12 15 18 21 23 25"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_7"
 			}
 			"06"
 			{
@@ -22242,8 +22244,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
+
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
@@ -22251,7 +22255,6 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Cost and cast stuff
 		//-------------------------------------------------------------------------------------------------------------		
@@ -22265,7 +22268,16 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"particle"						"particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+			"particle"						"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 			"particle"						"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_glaives/silencer_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_skadi_glaives/silencer_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_glaives/silencer_lifesteal_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_skadi_glaives/silencer_lifesteal_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_glaives/silencer_lifesteal_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_skadi_glaives/silencer_lifesteal_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/skadi_glaives/silencer_skadi_glaives_of_wisdom.vpcf"
 		}
 
 		// Special
@@ -22276,6 +22288,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"intellect_damage_pct"		"35 50 65 80 85 90 95"
+				"LinkedSpecialBonus"		"special_bonus_imba_silencer_6"
 			}
 			"02"
 			{
@@ -22291,6 +22304,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"silence_duration"			"0.05 0.1 0.15 0.2 0.25 0.3 0.35"
+				"LinkedSpecialBonus"		"special_bonus_imba_silencer_5"
 			}
 			"05"
 			{
@@ -22301,50 +22315,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"int_reduction_duration"	"3.5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_glaives_of_wisdom"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_Silencer.GlaivesOfWisdom"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_Silencer.GlaivesOfWisdom.Damage"
-						"Target"				"TARGET"
-					}
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_silencer.lua"
-						"Function"				"GlaiveHit"
-						"Target"				"TARGET"
-					}
-				}
 			}
 		}
 	}
@@ -22368,7 +22338,6 @@
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -22450,11 +22419,13 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"int_steal_amount"	"2"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"silence_reduction_pct"	"50"
+				"LinkedSpecialBonus"	"special_bonus_imba_silencer_4"
 			}
 		}
 	}
@@ -22478,7 +22449,6 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
 		"MaxLevel"								"6"
-		"LevelsBetweenUpgrades"					"6"
 
 		// Casting
 		//---------------------------------------------
@@ -34888,5 +34858,307 @@
     }
 	
 
+    //=================================================================================================================
+    // Mirana's Talents 
+    //=================================================================================================================
+    "special_bonus_imba_mirana_1" // Starfall search radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "100"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_2" // Leap Aura linger duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_5" // Leap Aura attack speed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "100"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_7" // Starfall wave interval decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "-1.25"
+            }
+        }
+    }
+
+    "special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "40"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Silencer Talents 
+    //=================================================================================================================
+    "special_bonus_imba_silencer_1" //Mana burned by Arcane Curse is now absorbed by Silencer as health
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
+
+    "special_bonus_imba_silencer_2" //Arcane Curse cast penalty duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "2"
+            }
+        }
+    }  
     
+    "special_bonus_imba_silencer_3" //Arcane Supremacy Intelligence steal increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "2"
+            }
+        }
+    }
+    
+    "special_bonus_imba_silencer_4" //Arcane Supremacy silence reduction increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "50"
+            }
+        }
+    }
+    
+    "special_bonus_imba_silencer_5" //Glaives of Wisdom silence duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "0.25"
+            }
+        }
+    }
+    
+    "special_bonus_imba_silencer_6" //Glaives of Wisdom intelligence-based damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "25"
+            }
+        }
+    }
+    
+    "special_bonus_imba_silencer_7" //Arcane Curse slow increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "20"
+            }
+        }
+    }
+    
+    "special_bonus_imba_silencer_8" //Last Word Aura talent
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    }
 }
