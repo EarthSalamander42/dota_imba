@@ -33625,7 +33625,6 @@
 		}
 	}
 
-
 	//=================================================================================================================
     // Clinkz Talents 
     //=================================================================================================================
@@ -34136,476 +34135,476 @@
     }
 	
 	//=================================================================================================================
-		// Night Stalker's Talents 
-		//=================================================================================================================
-		"special_bonus_imba_night_stalker_1" // Void vision reduction increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"200"
-						}
-				}
-		}
+	// Night Stalker's Talents 
+	//=================================================================================================================
+	"special_bonus_imba_night_stalker_1" // Void vision reduction increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"200"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"25"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"25"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"ms_bonus_pct"				"10"
-						}
+	"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"ms_bonus_pct"				"10"
+					}
 
-						"02"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"as_bonus"					"20"
-						}
-				}
-		}
+					"02"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"as_bonus"					"20"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"1"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"1"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"400"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"400"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"1"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"1"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"150"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"150"
+					}
+			}
+	}
 
-		"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-							"value"						"8"
-						}
-				}
-		}
+	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"8"
+					}
+			}
+	}
+
+
+	//=================================================================================================================
+	// Mirana's Talents 
+	//=================================================================================================================
+	"special_bonus_imba_mirana_1" // Starfall search radius increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "100"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "4"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "1"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "2"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "100"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "1"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_7" // Starfall wave interval decrease
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_FLOAT"
+							"value"	                    "-1.25"
+					}
+			}
+	}
+
+	"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "40"
+					}
+			}
+	}
+
+	//=================================================================================================================
+	// Silencer Talents 
+	//=================================================================================================================
+	"special_bonus_imba_silencer_1" //Mana burned by Arcane Curse is now absorbed by Silencer as health
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	"special_bonus_imba_silencer_2" //Arcane Curse cast penalty duration increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "2"
+					}
+			}
+	}  
 	
-
-		//=================================================================================================================
-		// Mirana's Talents 
-		//=================================================================================================================
-		"special_bonus_imba_mirana_1" // Starfall search radius increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "100"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "4"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "1"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "2"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "100"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "1"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_7" // Starfall wave interval decrease
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_FLOAT"
-								"value"	                    "-1.25"
-						}
-				}
-		}
-
-		"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "40"
-						}
-				}
-		}
-
-		//=================================================================================================================
-		// Silencer Talents 
-		//=================================================================================================================
-		"special_bonus_imba_silencer_1" //Mana burned by Arcane Curse is now absorbed by Silencer as health
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		}
-
-		"special_bonus_imba_silencer_2" //Arcane Curse cast penalty duration increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "2"
-						}
-				}
-		}  
-		
-		"special_bonus_imba_silencer_3" //Arcane Supremacy Intelligence steal increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "2"
-						}
-				}
-		}
-		
-		"special_bonus_imba_silencer_4" //Arcane Supremacy silence reduction increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "50"
-						}
-				}
-		}
-		
-		"special_bonus_imba_silencer_5" //Glaives of Wisdom silence duration increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_FLOAT"
-								"value"	                    "0.25"
-						}
-				}
-		}
-		
-		"special_bonus_imba_silencer_6" //Glaives of Wisdom intelligence-based damage increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "25"
-						}
-				}
-		}
-		
-		"special_bonus_imba_silencer_7" //Arcane Curse slow increase
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-				
-				// Special
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilitySpecial"
-				{
-						"01"
-						{
-								"var_type"                  "FIELD_INTEGER"
-								"value"	                    "20"
-						}
-				}
-		}
-		
-		"special_bonus_imba_silencer_8" //Last Word Aura talent
-		{
-				// General
-				//-------------------------------------------------------------------------------------------------------------
-				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		}
+	"special_bonus_imba_silencer_3" //Arcane Supremacy Intelligence steal increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "2"
+					}
+			}
+	}
+	
+	"special_bonus_imba_silencer_4" //Arcane Supremacy silence reduction increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "50"
+					}
+			}
+	}
+	
+	"special_bonus_imba_silencer_5" //Glaives of Wisdom silence duration increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_FLOAT"
+							"value"	                    "0.25"
+					}
+			}
+	}
+	
+	"special_bonus_imba_silencer_6" //Glaives of Wisdom intelligence-based damage increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "25"
+					}
+			}
+	}
+	
+	"special_bonus_imba_silencer_7" //Arcane Curse slow increase
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+							"value"	                    "20"
+					}
+			}
+	}
+	
+	"special_bonus_imba_silencer_8" //Last Word Aura talent
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
 }
