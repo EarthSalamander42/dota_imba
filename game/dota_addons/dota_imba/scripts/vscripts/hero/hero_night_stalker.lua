@@ -772,6 +772,36 @@ function imba_night_stalker_darkness:IsHiddenWhenStolen()
     return false
 end
 
+function imba_night_stalker_darkness:OnUpgrade()   
+
+    -- Rubick scepter interaction
+    if self:IsStolen() then
+        Timers:CreateTimer(FrameTime(), function()
+            local caster = self:GetCaster()
+            local has_darkness = caster:HasAbility("imba_night_stalker_darkness")
+            local scepter = caster:HasScepter()
+            local is_day = GameRules:IsDaytime()        
+
+            -- If the caster doesn't have darkness anymore, do nothing
+            if not has_darkness then
+                return nil
+            end
+
+            -- If the caster has scepter and it is night, apply a AddFoWViewer
+            if scepter and not is_day then
+                -- Get the caster's night vision
+                local night_vision = caster:GetNightTimeVisionRange()
+
+                -- Apply a FOW Viewer
+                AddFOWViewer(caster:GetTeamNumber(), caster:GetAbsOrigin(), night_vision, FrameTime(), false)            
+            end
+
+            -- Repeat
+            return FrameTime()
+        end)
+    end
+end
+
 function imba_night_stalker_darkness:OnSpellStart()
     -- Ability properties
     local caster = self:GetCaster()
