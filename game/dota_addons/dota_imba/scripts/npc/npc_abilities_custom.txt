@@ -33998,10 +33998,110 @@
 							"var_type"                  "FIELD_INTEGER"
 						"ms_bonus_pct"				"10"
 					}
-          "02"
+					"02"
 					{
 							"var_type"                  "FIELD_INTEGER"
 						"as_bonus"					"20"
+					}
+			}
+	}
+
+	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"1"
+					}
+			}
+	}
+
+	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"400"
+					}
+			}
+	}
+
+	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"1"
+					}
+			}
+	}
+
+	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"150"
+					}
+			}
+	}
+
+	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
+	{
+			// General
+			//-------------------------------------------------------------------------------------------------------------
+			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+			
+			// Special
+			//-------------------------------------------------------------------------------------------------------------
+			"AbilitySpecial"
+			{
+					"01"
+					{
+							"var_type"                  "FIELD_INTEGER"
+						"value"						"8"
 					}
 			}
 	}
@@ -34168,107 +34268,6 @@
             }
         }
     }
-
-	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"1"
-					}
-			}
-	}
-
-	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"400"
-					}
-			}
-	}
-
-	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"1"
-					}
-			}
-	}
-
-	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"150"
-					}
-			}
-	}
-
-	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-			
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
-			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"8"
-					}
-			}
-	}
-
 
 	//=================================================================================================================
 	// Mirana's Talents 
