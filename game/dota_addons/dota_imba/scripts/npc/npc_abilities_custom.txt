@@ -4,11 +4,11 @@
 "DOTAAbilities"
 {
 	"Version"		"1"
-  
+	
 //-------------------
 // Dummy stuff
 //-------------------
-  
+	
 	"dummy_unit_state"
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_HIDDEN"
@@ -3979,13 +3979,14 @@
 	}
 	
 	//=================================================================================================================
-	// Abaddon's Death Coil
+	// Abaddon's Mist Coil
 	//=================================================================================================================
-	"imba_abaddon_death_coil"
+	"imba_abaddon_mist_coil"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -3993,19 +3994,16 @@
 		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_death_coil"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"800"
+		"AbilityCastRange"								"800 800 800 800 875 950 1025"
 		"AbilityCastPoint"								"0.25"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"4.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50 60 70 80"
+		"AbilityManaCost"								"50 60 70 80 85 90 95"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4014,149 +4012,32 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"1250"
+				"projectile_speed"						"2000"
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"self_heal"								"75 100 125 150"
+				"var_type"								"FIELD_INTEGER"
+				"damage"								"100 150 200 250 275 300 325"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"target_damage"							"100 150 200 250"
+				"var_type"								"FIELD_INTEGER"
+				"heal"									"100 150 200 250 275 300 325"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"heal_amount"							"100 150 200 250"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"projectile_speed"						"2000"
+				"cooldown"								"4.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_3"
 			}
 		}
 
 		"precache"
 		{
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_death_coil.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"DeathCoil"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsDebuff"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-
-				"Duration"								"%buff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
+			"particle"									"particles/dev/library/base_dust_hit_detail.vpcf"
+			"particle"									"particles/dev/library/base_dust_hit_smoke.vpcf"
 		}
 	}
 
@@ -4167,26 +4048,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"abaddon_aphotic_shield"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"500"
 		"AbilityCastPoint"								"0.3"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"6.0"
+		"AbilityCooldown"								"12.0 10.0 8.0 6.0 5.5 5.0 4.5"
 		
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"50"
+		"AbilityManaCost"								"100 105 110 115 120 125 130"
 
 		
 		// Special
@@ -4196,12 +4078,14 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"30.0"
+				"duration"								"15.0"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_2"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_absorb"							"125 175 225 275"
+				"shield"								"110 140 170 200 225 250 275"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_5"
 			}
 			"03"
 			{
@@ -4210,43 +4094,9 @@
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"debuff_duration"						"2.5"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
-			}
-			"06"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"max_charges"							"2"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"charge_cooldown"						"6.0"
+				"cast_range"							"500"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_1"
 			}
 		}
 
@@ -4255,177 +4105,25 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"  								"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_vapor.vpcf"
+			"particle"									"particles/econ/courier/courier_baekho/courier_baekho_ambient_swirl.vpcf"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_hit.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"AphoticShield"
-
-				"stacks_modifier"						"modifier_aphotic_shield_stack_counter"
-				"shield_modifier"						"modifier_aphotic_shield"
-				"cast_sound"							"Hero_Abaddon.AphoticShield.Cast"
-			}
-		}
-
-		"Modifiers"
-		{	
-			"modifier_aphotic_shield_stack_counter"
-			{
-				"Passive"								"1"
-				"IsPurgable"							"0"
-				"IsBuff"								"1"
-				"IsHidden"								"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldInitialize"
-
-						"stacks_modifier"				"modifier_aphotic_shield_stack_counter"
-					}
-				}
-
-				"ThinkInterval"							"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldThink"
-					}
-				}
-			}
-
-			"modifier_aphotic_shield"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-				"Duration"								"%duration"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"AphoticShieldAbsorb"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"AttachEffect"
-					{
-						"EffectName"					"particles/units/heroes/hero_abaddon/abaddon_aphotic_shield_explosion.vpcf"
-						"EffectAttachType"				"follow_origin"
-						"Target"						"TARGET"
-						"ControlPointEntities"
-						{
-							"TARGET"					"attach_origin"
-							"TARGET"					"attach_origin"
-						}
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"EndShieldParticle"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-
-				"TextureName"							"abaddon_frostmourne"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
 		}
 	}
 
 	//=================================================================================================================
 	// Abaddon's Curse of Avernus
 	//=================================================================================================================
-	"imba_abaddon_frostmourne"
+	"imba_abaddon_curse_of_avernus"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"							"abaddon_frostmourne"
+		"MaxLevel"										"7"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4438,38 +4136,35 @@
 			}
 			"02"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"buff_duration"							"4.5"
+				"var_type"								"FIELD_INTEGER"
+				"move_slow"								"8 12 16 20 20 20 20"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"slow_base"								"-10"
+				"attack_slow"							"8 12 16 20 20 20 20"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"slow_stack"							"-10"
+				"var_type"								"FIELD_FLOAT"
+				"buff_duration"							"4.5"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"move_speed_pct"						"15"
+				"move_increase"							"15"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"attack_speed"							"20"
+				"attack_increase"						"10 20 30 40 40 40 40"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_4"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"max_stacks"							"2 3 4 5"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"base_attack_speed"						"20"
+				"heal_convert"							"0 0 0 0 10 20 30"
 			}
 		}
 
@@ -4477,89 +4172,37 @@
 		{
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
 			"particle" 									"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
+			"particle"									"particles/generic_gameplay/generic_lifesteal.vpcf"
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon's Over Channel
+	//=================================================================================================================
+	"imba_abaddon_over_channel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"							"custom/abaddon_over_channel"
+		"MaxLevel"										"7"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"extra_dmg"								"90 125 160 195 230 265 300 "
+			}
 		}
 
-		"Modifiers"
+		"precache"
 		{
-			"modifier_frostmourne"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"OnAttack"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourne"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff_base"
-			{
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_slow.vpcf"
-				"EffectAttachType"						"follow_origin"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_base"
-				}
-				
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_abaddon.lua"
-						"Function"		"FrostMourneAttacked"
-					}
-				}
-			}
-
-			"modifier_imba_frostmourne_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%debuff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_stack"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff_base"
-			{
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_frost_buff.vpcf"
-				"EffectAttachType"						"follow_origin"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_speed_pct"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
-
-			"modifier_imba_frostmourne_buff"
-			{
-				"IsBuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_speed"
-				}
-			}
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam_blue.vpcf"
 		}
 	}
 
@@ -4570,11 +4213,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_abaddon.lua"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"abaddon_borrowed_time"
+		"MaxLevel"										"6"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -4582,7 +4227,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"55.0 45.0 35.0"
+		"AbilityCooldown"								"60.0 50.0 40.0 40.0 40.0 40.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4600,27 +4245,19 @@
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"5.0 6.0 7.0"
+				"duration"								"4.0 5.0 6.0 6.5 7.0 7.5"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_7"
 			}
 			"03"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"duration_scepter"						"6.0 7.5 9.0"
+				"var_type"								"FIELD_INTEGER"
+				"redirect"								"10 15 20 30 40 50"
 			}
 			"04"
 			{
-				"var_type"								"FIELD_FLOAT"
-				"redirect"								"0.50"
-			}
-			"05"
-			{
 				"var_type"								"FIELD_INTEGER"
-				"redirect_range"						"1200"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"redirect_property"						"-50"
+				"redirect_range"						"900"
+				"LinkedSpecialBonus"					"special_bonus_imba_abaddon_8"
 			}
 		}
 
@@ -4629,89 +4266,196 @@
 			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"									"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
+			"particle"									"particles/units/heroes/hero_abaddon/abaddon_borrowed_time_heal.vpcf"
+			"particle"									"particles/econ/courier/courier_hyeonmu_ambient/courier_hyeonmu_ambient_trail_steam.vpcf"
 		}
+	}
 
-		"OnToggleOn"
+	//=================================================================================================================
+	// Abaddon Talent 1 (Level 10): +150 Aphotic Shield cast range
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"Target"								"CASTER"
-				"EffectName"							"Hero_Abaddon.BorrowedTime"	
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_abaddon.lua"
-				"Function"								"BorrowedTimePurge"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"150"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Abaddon Talent 2 (Level 10): +45sec duration on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_borrowed_time_passive"
+			"01"
 			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeActivate"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"value"						"45.0"
 			}
+		}
+	}
 
-			"modifier_borrowed_time"
+	//=================================================================================================================
+	// Abaddon Talent 3 (Level 20): -1.5sec cooldown on Mist Coil
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-
-				"EffectName"							"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
-				"EffectAttachType"						"follow_origin"
-
-				"StatusEffectName"						"particles/status_fx/status_effect_abaddon_borrowed_time.vpcf"
-				"StatusEffectPriority"  				"15"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeHeal"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
-
-				"Aura"          						"modifier_borrowed_time_allies"
-				"Aura_Radius"   						"%redirect_range"
-				"Aura_Teams"    						"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"    						"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"					"0"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-1.5"
 			}
+		}
+	}
 
-			"modifier_borrowed_time_allies"
+	//=================================================================================================================
+	// Abaddon Talent 4 (Level 20): +5% move speed/+30 attack speed on Curse of Avernus
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"								"0"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
+				"var_type"					"FIELD_INTEGER"
+				"attack_increase"			"30"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"move_increase"				"5"
+			}
+		}
+	}
 
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_abaddon.lua"
-						"Function"						"BorrowedTimeAllies"
-						"DamageTaken"					"%attack_damage"
-					}
-				}
+	//=================================================================================================================
+	// Abaddon Talent 5 (Level 30): +200 shielding on Aphotic Shield
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
+	}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE" 	"%redirect_property" 
-				}
+	//=================================================================================================================
+	// Abaddon Talent 6 (Level 30): +50% Overchannel power
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 7 (Level 40): +1sec duration on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Abaddon Talent 8 (Level 40): +300 aura range on Borrowed Time
+	//=================================================================================================================
+	"special_bonus_imba_abaddon_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"300"
 			}
 		}
 	}
@@ -5136,29 +4880,31 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_axe"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_MOVEMENT"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"axe_berserkers_call"		
+		"MaxLevel"						"7"
+		"AbilityTextureName"			"axe_berserkers_call"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"300 325 350 375"
+		"AbilityCastRange"				"300 300 300 300 320 340 360"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"10"
 
-		// Damage.
+		// Damage
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityDamage"					"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"80"	
-		
+		"AbilityManaCost"				"80"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -5170,99 +4916,32 @@
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_axe_berserkers_call"
-				"Duration"				"%duration"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Radius"			"%radius"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_axe_berserkers_call_as"
-				"Duration"				"%duration"
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Radius"			"%radius"
-					"Teams" 			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-					"Flags"     		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_axe_berserkers_call_armor"
-				"Duration"				"%duration"
-				"Target"				"CASTER"
-			}
-
-			"FireEffect"
-			{
-				"EffectName"			"particles/econ/items/axe/axe_helm_shoutmask/axe_beserkers_call_owner_shoutmask.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"ControlPoints"
-				{
-					"01"	"0 0 0"
-					"02"	"%radius 0 0"
-					"03"	"0 0 0"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Axe.Berserkers_Call"
-				"Target"				"CASTER"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_axe_berserkers_call_as"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%bonus_as"
-				}
-			}
-		}
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"300 325 350 375"
+				"radius"				"300 300 300 300 320 340 360"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"200"
+				"bonus_armor"			"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0 2.4 2.8 3.2"
+				"duration"				"2.0 2.4 2.8 3.2 3.2 3.2 3.2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"30 60 90 120"
+				"bonus_as"				"40 40 40 40 80 120 160"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"				"40 40 40 40 80 120 160"
 			}
 		}
 	}
@@ -5274,15 +4953,17 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_axe"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"7"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"axe_battle_hunger"	
+		"AbilityTextureName"			"axe_battle_hunger"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -5291,24 +4972,24 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
 			"particle"					"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
 			"particle"					"particles/status_fx/status_effect_battle_hunger.vpcf"
-		}	
+		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2"	
+		"AbilityCastPoint"				"0.2"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0 12.0 8.0 4.0"	
+		"AbilityCooldown"				"20.0 15.0 10.0 5.0 5.0 5.0 5.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"		
-		
+		"AbilityManaCost"				"75"
+
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"750"	
-		
+		"AbilityCastRange"				"750"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5326,120 +5007,14 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_damage"				"10"
+				"damage"				"16 24 32 40 48 56 64"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"extra_damage"				"1.0 1.5 2.0 2.5"
+				"var_type"					"FIELD_INTEGER"
+				"units"				"1 1 2 2 3 3 4"
 			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Hero_Axe.Battle_Hunger"
-				"Target" 					"TARGET"
-			}	
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_axe.lua"
-				"Function"					"CastBattleHunger"
-				"Target"					"TARGET"
-				
-				"modifier_debuff"			"modifier_imba_axe_battle_hunger_enemy"
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_axe_battle_hunger_caster"
-			{
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-			}	
-
-			"modifier_imba_axe_battle_hunger_caster_speed"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"	
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
-				}
-			}	
-
-			"modifier_imba_axe_battle_hunger_enemy"
-			{
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"StatusEffectName"			"particles/status_fx/status_effect_battle_hunger.vpcf" 	   
-				"StatusEffectPriority"		"9"	
-
-				"ThinkInterval"				"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_axe.lua"
-						"Function"			"BattleHungerTick"
-						"Target"			"TARGET"
-
-						"modifier_stacks"	"modifier_imba_axe_battle_hunger_stacks"
-						"modifier_enemy"	"modifier_imba_axe_battle_hunger_enemy"
-					}
-				}
-
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_axe/axe_battle_hunger.vpcf"
-						"EffectAttachType"	"follow_overhead"
-						"Target"			"TARGET"
-					}	
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_axe.lua"
-						"Function"			"BattleHungerStart"
-
-						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
-						"speed_modifier"	"modifier_imba_axe_battle_hunger_caster_speed"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_axe.lua"
-						"Function"			"BattleHungerEnd"
-
-						"caster_modifier"	"modifier_imba_axe_battle_hunger_caster"
-						"speed_modifier"	"modifier_imba_axe_battle_hunger_caster_speed"
-					}
-				}
-
-				"OnKill"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_axe.lua"
-						"Function"			"BattleHungerKill"
-
-						"modifier"			"modifier_imba_axe_battle_hunger_enemy"
-					}
-				}
-			}
-		}	
+		}
 	}
 
 	//=================================================================================================================
@@ -5449,12 +5024,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"							"axe_counter_helix"
-
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_axe"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
+		"AbilityTextureName"            "axe_counter_helix"
+				"MaxLevel"						"7"
 		// Cast
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"350"
@@ -5474,7 +5050,7 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"radius"								"350"
+				"radius"								"275 285 295 305 315 325 335"
 			}
 			"02"
 			{
@@ -5484,36 +5060,7 @@
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"35 50 65 80"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"str_as_damage"							"25"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_counter_helix"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsBuff"								"1"
-				"IsPurgable"							"0"
-		
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_axe.lua"
-						"Function"						"CounterHelix"
-
-						"particle_spin_1"				"particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
-						"particle_spin_2"				"particles/units/heroes/hero_axe/axe_counterhelix.vpcf"
-						"sound_spin"					"Hero_Axe.CounterHelix"
-					}
-				}
+				"base_damage"							"30 45 60 75 90 105 120"
 			}
 		}
 	}
@@ -5525,17 +5072,18 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_axe"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"axe_culling_blade"	
-
+		"AbilityTextureName"			"axe_culling_blade"
+				"MaxLevel"						"6"
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -5545,24 +5093,24 @@
 			"particle"					"particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
 			"particle"					"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"					"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
-		}	
+		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"	
+		"AbilityCastPoint"				"0.3"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"6.0"	
+		"AbilityCooldown"				"75 65 55 45 35 25"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 80 100"		
-		
+		"AbilityManaCost"				"60 90 120 140 160 180"
+
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"150"
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -5570,12 +5118,12 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"kill_threshold"				"250 325 400"
+				"kill_threshold"				"250 325 400 475 550 625"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage"						"150 225 300"
+				"damage"						"150 200 250 300 350 400"
 			}
 			"03"
 			{
@@ -5585,7 +5133,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"as_bonus"						"50"
+				"as_bonus"						"30"
 			}
 			"05"
 			{
@@ -5595,80 +5143,22 @@
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"speed_aoe"						"1000"
+				"speed_aoe"						"900"
 			}
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"kill_threshold_scepter"		"300 425 550"
+				"kill_threshold_scepter"		"425 500 575 650 725 800"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"speed_duration_scepter"		"10"
 			}
-			"09"
+			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"caster_health_percent"			"10"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"caster_health_percent_scepter"	"16 18 20"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade.vpcf"
-				"EffectAttachType"  "follow_origin"
-				"Target"            "TARGET"
-			}	
-
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_axe.lua"
-				"Function"			"CullingBlade"
-				"sound_fail"		"Hero_Axe.Culling_Blade_Fail"
-				"sound_success"		"Hero_Axe.Culling_Blade_Success"
-				"particle_kill"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
-				"modifier_sprint"	"modifier_imba_axe_culling_blade_sprint"	
-			}
-		}	
-
-		"Modifiers"
-		{
-			"modifier_imba_axe_culling_blade_sprint"
-			{
-				"IsBuff"		"1"
-				"IsPurgable"	"1"
-		
-				"EffectName"		"particles/units/heroes/hero_axe/axe_cullingblade_sprint.vpcf"
-				"EffectAttachType"	"follow_origin"	
-
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"        "particles/units/heroes/hero_axe/axe_culling_blade_boost.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"	"follow_origin"
-							"TARGET"	"follow_origin"
-						}
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" "%as_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%speed_bonus" 
-				}
+				"cooldown_scepter"		        "7"
 			}
 		}
 	}
@@ -9666,7 +9156,7 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Faceless Void's Time Walk
 	//=================================================================================================================
@@ -9674,13 +9164,9 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"faceless_void_time_walk"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9688,25 +9174,24 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
-			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
+			"particle"					"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"0"
 		"AbilityCastPoint"				"0.2"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18 14 10 6"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"24 18 12 6 6 6 6"
+		"AbilityManaCost"				"40"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9722,153 +9207,32 @@
 				"var_type"				"FIELD_INTEGER"
 				"slow_radius"			"325"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"chrono_radius"			"250"
-			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
+				"duration"				"0.4 0.4 0.4 0.4 0.7 1.0 1.3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"675 750 825 900"
+				"range"					"675"
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-20 -30 -40 -50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_bonus"			"10"
+				"ms_steal_pcnt"			"100"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed_bonus"	"10 15 20 25"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"chrono_linger"			"0.3"
+				"as_steal"				"100"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_time"			"2"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimeWalk"
-
-				"Target"				"POINT"
-				"sound_cast"			"Hero_FacelessVoid.TimeWalk"
-				"particle_cast"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_preimage.vpcf"
-				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				"modifier_caster"		"modifier_imba_time_walk_caster"
-				"modifier_slow"			"modifier_imba_time_walk_slow"
-				"modifier_buff"			"modifier_imba_time_walk_buff"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_walk_damage_counter"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_faceless_void.lua"
-						"Function"		"TimeWalkDamage"
-
-						"damage_taken"	"%attack_damage"
-					}
-				}
-			}
-
-			"modifier_imba_time_walk_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_time_walk_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_faceless_void/faceless_void_time_walk_slow.vpcf"
-						"EffectAttachType"	"attach_origin"
-						"Target"			"TARGET"
-
-						"ControlPoints"
-						{
-							"01"	"%radius 0 0"
-						}
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow"
-				}
-			}
-
-			"modifier_imba_time_walk_buff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_time_walk.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_bonus"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attack_speed_bonus"
-				}
+				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_6"
 			}
 		}
 	}
@@ -9880,22 +9244,22 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"faceless_void_time_dilation"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"725"
 		"AbilityCastPoint"				"0.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 26 22 18"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"40 34 28 22 20 18 16"
+		"AbilityManaCost"				"75"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9915,111 +9279,47 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_increase"		"6 8 10 12"
+				"area_of_effect"		"725"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_start"		"1"
+				"charge_gain"			"1 1 1 1 2 2 3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"725"
+				"duration"				"5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-10"
+				"cd_increase"			"6 8 10 12 12 12 12"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-20"
+				"as_debuff"				"10"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_bonus"			"5"
+				"ms_debuff"				"10"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_bonus"			"5 10 15 20"
+				"cd_decrease"			"2 3 4 5 6 6 6"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimeDilation"
-
-				"sound_cast"			"Hero_FacelessVoid.TimeDilation.Cast"
-				"sound_hit"				"Hero_FacelessVoid.TimeDilation.Target"
-				"particle_cast"			"particles/units/heroes/hero_faceless_void/faceless_void_timedialate.vpcf"
-				"particle_hit"			"particles/units/heroes/hero_faceless_void/faceless_void_backtrack.vpcf"
-				"modifier_slow"			"modifier_imba_time_dilation_slow"
-				"modifier_buff"			"modifier_imba_time_dilation_buff"
+				"var_type"				"FIELD_INTEGER"
+				"as_buff"				"5"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_dilation_slow"
+			"09"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%cooldown_increase"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_faceless_void.lua"
-						"Function"				"TimeDilationParticle"
-
-						"particle_debuff"		"particles/units/heroes/hero_faceless_void/faceless_void_dialatedebuf.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_faceless_void.lua"
-						"Function"				"TimeDilationParticleEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow" 
-				}
-			}
-
-			"modifier_imba_time_dilation_buff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%cooldown_increase"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_bonus" 
-				}
+				"var_type"				"FIELD_INTEGER"
+				"ms_buff"				"5"
 			}
 		}
 	}
@@ -10031,18 +9331,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"BaseClass"							"ability_lua"
 		"AbilityTextureName"				"faceless_void_time_lock"
+		"ScriptFile"						"hero/hero_faceless_void.lua"
+		"MaxLevel"							"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
-			"particle"						"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
+			"particle"						"particles/units/heroes/hero_faceless_void/faceless_void_backtrack02.vpcf"
 			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
 		}
 
@@ -10053,12 +9358,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_chance"				"10 15 20 25"
+				"bash_chance"				"100 15 20 25 25 25 25"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_damage"				"50 75 100 125"
+				"bash_damage"				"0 75 100 125 130 135 140"
 			}
 			"03"
 			{
@@ -10067,42 +9372,8 @@
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bash_radius"				"235"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_time_lock"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimeLock"
-
-						"sound_bash"		"Hero_FacelessVoid.TimeLockImpact"
-						"particle_chrono"	"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_time_lock"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"cd_increase"				"0.3 0.3 0.3 0.3 0.7 1.1 1.5"
 			}
 		}
 	}
@@ -10114,11 +9385,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"MaxLevel"							"4"
+		"BaseClass"							"ability_lua"
 		"AbilityTextureName"				"custom/faceless_void_timelord"
+		"ScriptFile"						"hero/hero_faceless_void.lua"
+		"MaxLevel"							"1"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10127,68 +9399,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"maximum_as"				"1000"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_increase"			"0.2 0.3 0.4 0.5"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"original_BAT"				"1.7"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_timelord"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"Timelord"
-					}
-				}
-				
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimelordStrike"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_timelord"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_faceless_void.lua"
-						"Function"			"TimelordEnd"
-					}
-				}
+				"as_pcnt_increase"			"15"
 			}
 		}
 	}
@@ -10200,12 +9411,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"faceless_void_chronosphere"
+		"ScriptFile"					"hero/hero_faceless_void.lua"
+		"FightRecapLevel"				"2"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -10222,14 +9433,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"110.0 100.0 90.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityCooldown"				"140 125 110 100 95 90"
+		"AbilityManaCost"				"150 225 300 300 300 300"
+		"MaxLevel"						"7"
+		
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10237,152 +9447,57 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"425"
+				"var_type"							"FIELD_FLOAT"
+				"duration"							"4.0 4.5 5.0 5.0 5.0 5.0"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"base_duration"			"4.0 4.5 5.0"
+				"var_type"							"FIELD_INTEGER"
+				"base_radius"						"425"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"extra_radius"			"25"
+				"var_type"							"FIELD_INTEGER"
+				"chronocharge_radius"				"5"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"0.03"
+				"var_type"							"FIELD_INTEGER"
+				"chronocharge_attackspeed"			"2 3 4 6 8 10"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"20 30 40"
+				"var_type"							"FIELD_FLOAT"
+				"movement_speed"					"1000"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_scepter"			"-70"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_cooldown"					"60"
+			}
+			"06"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_as_slow"				"150"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"chrono_ms"				"1000"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_ms_slow_pcnt"			"50"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"TimelordUpgrade"
-
-				"ability_timelord"		"imba_faceless_void_timelord"
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_projectile_slow"		"50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"09"
 			{
-				"ScriptFile"			"hero/hero_faceless_void.lua"
-				"Function"				"Chronosphere"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_FacelessVoid.Chronosphere"
-				"sound_za_warudo"		"Imba.FacelessZaWarudo"
-				"particle_chrono"		"particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf"
-				"modifier_caster"		"modifier_imba_chronosphere_caster"
-				"modifier_enemy"		"modifier_imba_chronosphere_enemy"
-				"modifier_ally"			"modifier_imba_chronosphere_ally_scepter"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_chronosphere_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%linger_duration"
-
-				"EffectName"			"particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_faceless_void.lua"
-						"Function"		"ChronoBuffEnd"
-					}
-					"DestroyTrees"
-					{
-						"Target"		"TARGET"
-						"Radius"		"200"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_ABSOLUTE"			"%chrono_ms"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_chronosphere_enemy"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FROZEN"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-				}
-			}
-
-			"modifier_imba_chronosphere_ally_scepter"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%linger_duration"
-
-				"StatusEffectName"		"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"	"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"			"%slow_scepter"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_scepter"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"-200"
-				}
+				"var_type"							"FIELD_INTEGER"
+				"scepter_ally_casttime_pcnt_debuff"	"50"
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
 	// Jakiro's Fire Breath
 	//=================================================================================================================
@@ -14221,6 +13336,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lycan.vsndevts"			
+			"particle"					"particles/auras/aura_feral_impulse.vpcf"	
 		}			
 	
 		// Special
@@ -14783,12 +13899,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"pardon_extra_dmg"		"30 40 50 60 60 60 60"
 			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"pardon_stack_dmg"		"30"
-			}
-			"12"
+			"13"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"skewer_radius"			"125"
@@ -14893,7 +14004,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"polarize_slow_pct"		"60"
 			}
-			
 		}
 	}
 	
@@ -15103,37 +14213,41 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"mirana_starfall"	
+		"AbilityTextureName"			"mirana_starfall"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
 			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-			"particle"					"particles/hero/mirana/mirana_cosmic_dust.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"			
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"650"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"				"12"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"	
+		"AbilityManaCost"				"100 120 140 160 175 190 205"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15142,7 +14256,8 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"		
+				"radius"					"650"
+				"LinkedSpecialBonus"		"special_bonus_imba_mirana_1"		
 			}
 			"02"
 			{
@@ -15152,80 +14267,39 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
+				"damage"					"90 160 230 300 325 350 375"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_radius"			"250"
-			}
+				"secondary_delay"			"1"
+			}			
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_duration"		"2"
+				"secondary_damage_pct"		"75"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"vision_duration"			"3"
+				"additional_waves_count"	"1 1 1 1 2 3 4"
 			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDustUpgrade"
-
-				"ability_cosmic_dust"		"imba_mirana_cosmic_dust"
+				"var_type"					"FIELD_INTEGER"
+				"additional_waves_dmg_pct"	"50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"Starfall"
-
-				"ambient_sound"				"Ability.Starfall"
-				"hit_sound"					"Ability.StarfallImpact"
-				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-				"modifier_debuff"			"modifier_imba_starfall_debuff"
+				"var_type"					"FIELD_FLOAT"
+				"additional_waves_interval"	"2.0"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_starfall_debuff"
+			"09"
 			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%secondary_duration"
-
-				"EffectName"				"particles/hero/mirana/mirana_cosmic_dust.vpcf"
-				"EffectAttachType"			"follow_overhead"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_mirana.lua"
-						"Function"			"StarfallSecondary"
-
-						"hit_sound"			"Ability.StarfallImpact"
-						"hit_particle"		"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"scepter_starfall_cd"		"10"
 			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -15235,7 +14309,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -15243,27 +14317,32 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"mirana_arrow"	
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"
+
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
-			"particle"					"particles/hero/mirana/mirana_sacred_arrow.vpcf"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_spell_arrow.vpcf"
+			"particle"					"particles/hero/mirana/mirana_sacred_boost.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
-		"AbilityCastPoint"				"0.4"	
+		"AbilityCastRange"				"3000"
+		"AbilityCastPoint"				"0.5"	
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0"
+		"AbilityCooldown"				"17"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"	
+		"AbilityManaCost"				"100"			
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15271,87 +14350,87 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_speed"			"900.0"
+				"var_type"							"FIELD_INTEGER"
+				"base_damage"						"50 140 230 320 320 320 320"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_width"			"115"
+				"var_type"							"FIELD_INTEGER"
+				"spawn_distance"					"51"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_max_stunrange"	"1500"
+				"var_type"							"FIELD_INTEGER"
+				"distance_tick"						"30"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_min_stun"		"0.01"
+				"var_type"							"FIELD_FLOAT"
+				"stun_increase_per_tick"			"0.1"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"arrow_max_stun"		"5.0"
+				"var_type"							"FIELD_FLOAT"
+				"damage_increase_per_tick"			"2.8"	
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_bonus_damage"	"3 4 5 6"
+				"var_type"							"FIELD_INTEGER"
+				"max_damage"						"140"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_max_damage"		"50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"arrow_vision"			"650"
+				"var_type"							"FIELD_FLOAT"
+				"max_stun_duration"					"5.0"
+				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"3.0"
+				"var_type"							"FIELD_INTEGER"
+				"on_prowl_movespeed"				"600"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"180 270 360 450"
+				"var_type"							"FIELD_INTEGER"
+				"on_prow_crit_damage_pct"			"130 130 130 130 140 150 160"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_arrow"
+			"10"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-		
-				"EffectName"			"particles/hero/mirana/mirana_sacred_arrow.vpcf"
-				"EffectAttachType"		"follow_origin"
+				"var_type"							"FIELD_INTEGER"
+				"arrow_radius"						"96"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"			"hero/hero_mirana.lua"
-				"Function"				"LaunchArrow"
-				"Target"				"POINT"
-
-				"modifier_arrow"		"modifier_imba_arrow"
-				"sound_arrow"			"Hero_Mirana.ArrowImpact"
-			}	
-
-			"FireSound"
+				"var_type"							"FIELD_INTEGER"
+				"arrow_speed"						"857"
+			}			
+			"12"
 			{
-				"EffectName"			"Hero_Mirana.ArrowCast"
-				"Target"				"CASTER"
+				"var_type"							"FIELD_INTEGER"
+				"vision_radius"						"500"
 			}
-		}	
+			"13"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"vision_linger_duration"			"3"
+			}
+			"14"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"arrow_distance"					"3000"
+			}
+			"15"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"base_stun"							"0.01"
+				"LinkedSpecialBonus"				"special_bonus_imba_mirana_3"
+			}
+			"16"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"distance_bonus_cap_tooltip"		"1500"
+			}
+		}			
 	}
 	
 	//=================================================================================================================
@@ -15361,11 +14440,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityTextureName"			"mirana_leap"	
+		"AbilityTextureName"			"mirana_leap"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_mirana.lua"	
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -15373,18 +14454,14 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30 23 16 9"	
+		"AbilityCooldown"				"30 26 22 18 17 16 15"	
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"	
+		"AbilityManaCost"				"40 35 30 25 20 15 10"	
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -15393,140 +14470,92 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_distance"			"1000"
+				"jump_speed"			"1600"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"min_speed"				"3000"
+				"var_type"					"FIELD_INTEGER"
+				"night_leap_range_bonus"	"400 400 400 400 600 800 1000"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_radius"			"1200"
+				"aura_aoe"				"900"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_speedbonus"		"14 16 18 20"
+				"move_speed_pct"		"4 8 12 16 18 20 22"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"leap_speedbonus_as"	"20 30 40 50"
+				"attack_speed"			"8 16 24 32 36 40 44"
+				"LinkedSpecialBonus"	"special_bonus_imba_mirana_5"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"10"
+				"aura_duration"			"10"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"max_time"				"3.0"
-			}
-			"08"
-			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_increase"		"5"
+				"aura_linger_duration"	"3"
+				"LinkedSpecialBonus"	"special_bonus_imba_mirana_2"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_height"			"200"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"height_step"			"50"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_height"			"700"
-			}
-		}	
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Ability.Leap"
-				"Target"				"CASTER"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_mirana.lua"
-				"Function"				"Leap"
-
-				"Target"				"POINT"
-				"root_modifier"			"modifier_imba_leap_self_root"
-				"buff_modifier"			"modifier_imba_leap"
-				"sound_cast"			"Ability.Leap"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_leap"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsPurgable"			"1"
-				"IsBuff"				"1"
-
-				"Duration"				"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%leap_speedbonus_as"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%leap_speedbonus"
-				}
-			}
-
-			"modifier_imba_leap_self_root"
-			{
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-				"IsDebuff"				"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"leap_range"			"600 700 800 900 950 1000 1050"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Mirana's Cosmic Dust
+	// Mirana's Moonlight Shadow
 	//=================================================================================================================
-	"imba_mirana_cosmic_dust"
+	"imba_mirana_moonlight_shadow"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"				"custom/mirana_princess_of_the_night"
-
+		"BaseClass"						"ability_lua"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"mirana_invis"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"ScriptFile"					"hero/hero_mirana.lua"
+		
 		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"					"0.0"
-		"AbilityCastRange"					"900"
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0"
+		"AbilityCooldown"				"140 120 100 95 90 85"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"	
-		
+		"AbilityManaCost"				"75"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_mirana.vsndevts"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_cast.vpcf"
+			"particle"					"particles/units/heroes/hero_mirana/mirana_moonlight_owner.vpcf"
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -15534,33 +14563,21 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"900"		
-			}
+				"truesight_immunity_radius"	"1200 1200 1200 1050 900 750"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"hit_delay"					"0.57"
+				"fade_delay"				"2.5 2 1.5 1.5 1.5 1.5"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"90 160 230 300"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_mirana.lua"
-				"Function"					"CosmicDust"
-
-				"ambient_sound"				"Ability.Starfall"
-				"hit_sound"					"Ability.StarfallImpact"
-				"ambient_particle"			"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
-				"hit_particle"				"particles/units/heroes/hero_mirana/mirana_starfall_attack.vpcf"
-			}
-		}
+				"duration"					"15 15 15 17 19 21"
+			}	
+		}	
 	}
 
 	//=================================================================================================================
@@ -15755,6 +14772,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_pct"				"12 20 28 36 38 40 42"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"healing_amp_tooltip"	"25 25 25 25 30 35 40"
 			}
 		}
 	}
@@ -17198,13 +16220,46 @@
 	}
 
 	//=================================================================================================================
+	// Night Stalker's Stalker in the Night
+	//=================================================================================================================
+	"imba_night_stalker_stalker_in_the_night"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"				
+		"AbilityTextureName"			"night_stalker_void"		
+		"MaxLevel"						"1"				
+		"ScriptFile"					"hero/hero_night_stalker.lua"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_day_loss"		"600"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_night_gain"		"1000"
+			}					
+		}
+	}
+
+
+
+	//=================================================================================================================
 	// Night Stalker's Void
 	//=================================================================================================================
 	"imba_night_stalker_void"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		
 		// Unit Targeting
@@ -17215,22 +16270,23 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"night_stalker_void"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_night_stalker.lua"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"525"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8"
-		"AbilityManaCost"				"80 90 100 110"
-		"AbilityDamage"					"120 200 280 360"
+		"AbilityManaCost"				"80 90 100 110 115 120 125"		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
-			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
+			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"			
 		}
 
 		// Special
@@ -17239,94 +16295,59 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_day"			"2.0"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"110 185 260 335 370 405 440"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration_night"		"2.5 3.0 3.5 4.0"
+				"ministun_duration"		"0.1"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-60"
+				"ms_slow_pct"			"50"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-60"
+				"as_slow"				"50"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mini_stun"				"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"day_duration"			"2"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_loss"			"-400"
+				"night_pull"			"2 2 2 2 3 4 5"
 			}
+
 			"07"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"night_duration"		"2.5 3 3.5 4 4 4 4"
+			}
+
+			"08"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_loss_tooltip"	"400"
+				"night_extend"			"2 2 2 2 3 4 5"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"FireSound"
+			"09"
 			{
-				"EffectName"			"Hero_Nightstalker.Void"
-				"Target"				"TARGET"
+				"var_type"				"FIELD_INTEGER"
+				"vision_reduction"		"100 100 100 100 200 300 400"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_1"
 			}
-
-			"Stun"
-			{
-				"Target"				"TARGET"
-				"Duration"				"%mini_stun"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_night_stalker.lua"
-				"Function"				"Void"
-				"modifier"				"modifier_imba_void"
-			}
-
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%AbilityDamage"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_void"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attackspeed_slow"
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"				"%vision_loss"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"				"%vision_loss"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -17336,21 +16357,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"night_stalker_crippling_fear"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_night_stalker.lua"
 		
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"12"
 		"AbilityManaCost"				"50"
 
@@ -17359,6 +16382,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
 			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
 		}
 			
@@ -17369,106 +16393,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_day"			"3"
-			}
+				"day_miss_chance_pct"	"10"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_2"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_night"		"5 6 7 8"
+				"day_duration"			"3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_mute"			"2 3 4 5"
+				"night_miss_chance_pct"	"50"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_2"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_rate_day"			"20"
+				"night_duration"		"5 6 7 8 8 8 8"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_rate_night"		"60"
+				"radius_fear"			"900"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"FireSound"
+			"06"
 			{
-				"EffectName"			"Hero_Nightstalker.Trickling_Fear"
-				"Target"				"TARGET"
+				"var_type"				"FIELD_FLOAT"
+				"fear_duartion"			"1 1 1 1 1.5 2 2.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_night_stalker_4"
 			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_night_stalker.lua"
-				"Function"				"CripplingFear"
-
-				"modifier_day"			"modifier_imba_crippling_fear_day"
-				"modifier_night"		"modifier_imba_crippling_fear_night"
-				"modifier_mute"			"modifier_imba_crippling_fear_night_mute"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_crippling_fear_day"
-			{
-				"Duration"				"%duration_day"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
-				"EffectAttachType"		"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_day"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_crippling_fear_night"
-			{
-				"Duration"				"%duration_night"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/units/heroes/hero_night_stalker/nightstalker_crippling_fear.vpcf"
-				"EffectAttachType"		"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%miss_rate_night"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"				"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_crippling_fear_night_mute"
-			{
-				"Duration"				"%duration_mute"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_MUTED"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -17478,14 +16438,17 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"night_stalker_hunter_in_the_night"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_night_stalker.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_night_stalker.vsndevts"
 			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
 			"particle"					"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
 			"model"						"models/heroes/nightstalker/nightstalker_night.vmdl"
@@ -17498,110 +16461,33 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_ms"			"20 25 30 35"
+				"base_bonus_ms_pct"	"20 25 30 35 35 35 35"
 			}
+
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_as"			"45 60 75 90"
-			}
+				"base_bonus_as"		"45 60 75 90 100 110 120"
+			}	
+
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"stacking_ms"		"2"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"night_vision_bonus"	"100 100 100 100 200 300 400"
+			}	
+
 			"04"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"stacking_as"		"20"
+				"var_type"				"FIELD_INTEGER"
+				"ms_increase_per_stack"	"3"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_hunter_in_the_night"
+			"05"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"AllowIllusionDuplicate"	"1"
-
-				"ThinkInterval"				"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"HunterInTheNight"
-
-						"modifier"			"modifier_imba_hunter_in_the_night_buff"
-						"modifier_stack"	"modifier_imba_hunter_in_the_night_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_hunter_in_the_night_buff"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"EffectName"				"particles/units/heroes/hero_night_stalker/nightstalker_night_buff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"HunterInTheNightModelChange"
-
-						"night_model"		"models/heroes/nightstalker/nightstalker_night.vmdl"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_night_stalker/nightstalker_change.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"HunterInTheNightModelRevert"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-			}
-
-			"modifier_imba_hunter_in_the_night_stacks"
-			{
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stacking_ms"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stacking_as"
-				}
-			}
-		}
+				"var_type"				"FIELD_INTEGER"
+				"as_increase_per_stack"	"10"
+			}		
+		}		
 	}
 
 	//=================================================================================================================
@@ -17611,10 +16497,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"			"night_stalker_darkness"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"		
+		"ScriptFile"					"hero/hero_night_stalker.lua"
 
 		// Unit Targeting
 		//-------------------------------------------------------------------------------------------------------------
@@ -17624,9 +16513,9 @@
 		
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"160 120 80"
-		"AbilityManaCost"				"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"160 120 80 80 80 80"		
+		"AbilityCastAnimation"			"ACT_DOTA_NIGHTSTALKER_TRANSITION"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17642,133 +16531,22 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"50.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"50"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"vision_radius"				"675"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_vision_duration"		"5 6 7"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_vision"				"200 400 600"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf"
-				"EffectAttachType"			"follow_origin"
-				"Target"					"CASTER"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_darkness_owner_vision"
-				"Target" 					"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_night_stalker.lua"
-				"Function"					"Darkness"
-
-				"sound_cast"				"Hero_Nightstalker.Darkness"
-				"modifier_enemy"			"modifier_imba_darkness_enemy"
-				"modifier_enemy_vision"		"modifier_imba_darkness_enemy_vision"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_darkness_enemy"
-			{
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"ReduceVision"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"RevertVision"
-					}
-				}
-			}
-
-			"modifier_imba_darkness_owner_vision"
-			{
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"Duration"					"%duration"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"ThinkInterval"				"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"DarknessLimitBreak"
-
-						"modifier_enemy"	"modifier_imba_darkness_enemy"
-						"modifier_caster"	"modifier_imba_darkness_owner_vision"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_night_stalker.lua"
-						"Function"			"DarknessLimitBreakEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION" 		"%bonus_vision"
-				}
-			}
-
-			"modifier_imba_darkness_enemy_vision"
-			{
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Duration"					"%enemy_vision_duration"
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
+				"enemy_vision_duration"		"3 3 3 5 7 9"
+			}			
+		}		
 	}
 
 	//=================================================================================================================
@@ -22658,9 +21436,9 @@
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"AbilityTextureName"					"silencer_curse_of_the_silent"
+		"HasScepterUpgrade"						"1"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -22713,11 +21491,13 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"penalty_duration"	"4"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_2"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"curse_slow"		"-9 -12 -15 -18 -21 -23 -25"
+				"curse_slow"		"9 12 15 18 21 23 25"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_7"
 			}
 			"06"
 			{
@@ -22734,8 +21514,10 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
+
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
@@ -22743,7 +21525,6 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Cost and cast stuff
 		//-------------------------------------------------------------------------------------------------------------		
@@ -22757,7 +21538,16 @@
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"particle"						"particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+			"particle"						"particles/units/heroes/hero_silencer/silencer_base_attack.vpcf"
 			"particle"						"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_glaives/silencer_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/deso_skadi_glaives/silencer_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_glaives/silencer_lifesteal_deso_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_deso_skadi_glaives/silencer_lifesteal_deso_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_glaives/silencer_lifesteal_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/lifesteal_skadi_glaives/silencer_lifesteal_skadi_glaives_of_wisdom.vpcf"
+			"particle"						"particles/hero/silencer/skadi_glaives/silencer_skadi_glaives_of_wisdom.vpcf"
 		}
 
 		// Special
@@ -22768,6 +21558,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"intellect_damage_pct"		"35 50 65 80 85 90 95"
+				"LinkedSpecialBonus"		"special_bonus_imba_silencer_6"
 			}
 			"02"
 			{
@@ -22783,6 +21574,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"silence_duration"			"0.05 0.1 0.15 0.2 0.25 0.3 0.35"
+				"LinkedSpecialBonus"		"special_bonus_imba_silencer_5"
 			}
 			"05"
 			{
@@ -22793,50 +21585,6 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"int_reduction_duration"	"3.5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_glaives_of_wisdom"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				
-				"Orb"
-				{
-					"Priority"					"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
-					"CastAttack"				"1"
-				}
-
-				"OnOrbFire"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_Silencer.GlaivesOfWisdom"
-						"Target"				"CASTER"
-					}
-					"SpendMana"
-					{
-						"Mana"					"%AbilityManaCost"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"FireSound"
-					{
-						"EffectName"			"Hero_Silencer.GlaivesOfWisdom.Damage"
-						"Target"				"TARGET"
-					}
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_silencer.lua"
-						"Function"				"GlaiveHit"
-						"Target"				"TARGET"
-					}
-				}
 			}
 		}
 	}
@@ -22860,7 +21608,6 @@
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 
 		"MaxLevel"								"7"
-		"LevelsBetweenUpgrades"					"2"
 
 		// Precache
 		//---------------------------------------------
@@ -22942,11 +21689,13 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"int_steal_amount"	"2"
+				"LinkedSpecialBonus" "special_bonus_imba_silencer_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"silence_reduction_pct"	"50"
+				"LinkedSpecialBonus"	"special_bonus_imba_silencer_4"
 			}
 		}
 	}
@@ -22970,7 +21719,6 @@
 		"SpellImmunityType"			"SPELL_IMMUNITY_ENEMIES_YES"
 
 		"MaxLevel"								"6"
-		"LevelsBetweenUpgrades"					"6"
 
 		// Casting
 		//---------------------------------------------
@@ -35386,4 +34134,478 @@
             }
         }
     }
+	
+	//=================================================================================================================
+		// Night Stalker's Talents 
+		//=================================================================================================================
+		"special_bonus_imba_night_stalker_1" // Void vision reduction increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"200"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"25"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"ms_bonus_pct"				"10"
+						}
+
+						"02"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"as_bonus"					"20"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"1"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"400"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"1"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"150"
+						}
+				}
+		}
+
+		"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+							"value"						"8"
+						}
+				}
+		}
+	
+
+		//=================================================================================================================
+		// Mirana's Talents 
+		//=================================================================================================================
+		"special_bonus_imba_mirana_1" // Starfall search radius increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "100"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "4"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "1"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "2"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "100"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "1"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_7" // Starfall wave interval decrease
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_FLOAT"
+								"value"	                    "-1.25"
+						}
+				}
+		}
+
+		"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "40"
+						}
+				}
+		}
+
+		//=================================================================================================================
+		// Silencer Talents 
+		//=================================================================================================================
+		"special_bonus_imba_silencer_1" //Mana burned by Arcane Curse is now absorbed by Silencer as health
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		}
+
+		"special_bonus_imba_silencer_2" //Arcane Curse cast penalty duration increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "2"
+						}
+				}
+		}  
+		
+		"special_bonus_imba_silencer_3" //Arcane Supremacy Intelligence steal increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "2"
+						}
+				}
+		}
+		
+		"special_bonus_imba_silencer_4" //Arcane Supremacy silence reduction increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "50"
+						}
+				}
+		}
+		
+		"special_bonus_imba_silencer_5" //Glaives of Wisdom silence duration increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_FLOAT"
+								"value"	                    "0.25"
+						}
+				}
+		}
+		
+		"special_bonus_imba_silencer_6" //Glaives of Wisdom intelligence-based damage increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "25"
+						}
+				}
+		}
+		
+		"special_bonus_imba_silencer_7" //Arcane Curse slow increase
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+				
+				// Special
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilitySpecial"
+				{
+						"01"
+						{
+								"var_type"                  "FIELD_INTEGER"
+								"value"	                    "20"
+						}
+				}
+		}
+		
+		"special_bonus_imba_silencer_8" //Last Word Aura talent
+		{
+				// General
+				//-------------------------------------------------------------------------------------------------------------
+				"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+				"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+				"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		}
 }

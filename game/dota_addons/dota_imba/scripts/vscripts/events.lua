@@ -407,8 +407,20 @@ function GameMode:OnAbilityUsed(keys)
 	DebugPrint('[BAREBONES] AbilityUsed')
 	DebugPrintTable(keys)
 
-	local player = PlayerResource:GetPlayer(keys.PlayerID)
+	local player = keys.PlayerID
 	local abilityname = keys.abilityname
+	if not abilityname then return end
+	
+	local hero = PlayerResource:GetSelectedHeroEntity(player)
+	if not hero then return end
+	
+	local abilityUsed = hero:FindAbilityByName(abilityname)
+	if not abilityUsed then return end
+	
+	if abilityname == "rubick_spell_steal" then
+		local target = abilityUsed:GetCursorTarget()
+		hero.spellStealTarget = target
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Remote Mines adjustment

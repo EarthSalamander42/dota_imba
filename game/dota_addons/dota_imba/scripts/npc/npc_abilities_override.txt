@@ -6137,34 +6137,6 @@
 	}
 
 	//=================================================================================================================
-	// Mirana: Moonlight Shadow
-	//=================================================================================================================
-	"mirana_invis"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-
-		"AbilityCastRange"				"0"
-
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"110 90 70"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"2.0 1.6 1.2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"16"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	//	Monkey King: Boundless Strike
 	//=================================================================================================================
 	"monkey_king_boundless_strike"

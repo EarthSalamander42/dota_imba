@@ -8,8 +8,9 @@
 -----------------------------------------------------------------------------------------------------------
 
 if item_imba_spell_fencer == nil then item_imba_spell_fencer = class({}) end
-LinkLuaModifier( "modifier_item_imba_spell_fencer", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
-LinkLuaModifier( "modifier_item_imba_spell_fencer_buff", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )	-- Damage conversion modifier
+LinkLuaModifier( "modifier_item_imba_spell_fencer", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )			-- Owner's bonus attributes, stackable
+LinkLuaModifier( "modifier_item_imba_spell_fencer_unique", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )	-- Unique passive modifier
+LinkLuaModifier( "modifier_item_imba_spell_fencer_buff", "items/item_spell_fencer.lua", LUA_MODIFIER_MOTION_NONE )		-- Physical damage prevention modifier
 
 function item_imba_spell_fencer:GetIntrinsicModifierName()
 	return "modifier_item_imba_spell_fencer" end
@@ -25,6 +26,26 @@ function modifier_item_imba_spell_fencer:IsPurgable() return false end
 function modifier_item_imba_spell_fencer:IsPermanent() return true end
 function modifier_item_imba_spell_fencer:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
+-- Adds the unique modifier to the bearer when created
+function modifier_item_imba_spell_fencer:OnCreated(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_spell_fencer_unique") then
+			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_spell_fencer_unique", {})
+		end
+	end
+end
+
+-- Removes the unique modifier from the bearer if this is the last spellfencer in its inventory
+function modifier_item_imba_spell_fencer:OnDestroy(keys)
+	if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasModifier("modifier_item_imba_spell_fencer") then
+			parent:RemoveModifierByName("modifier_item_imba_spell_fencer_unique")
+		end
+	end
+end
+
 -- Declare modifier events/properties
 function modifier_item_imba_spell_fencer:DeclareFunctions()
 	local funcs = {
@@ -33,7 +54,6 @@ function modifier_item_imba_spell_fencer:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
 	return funcs
 end
@@ -53,8 +73,26 @@ function modifier_item_imba_spell_fencer:GetModifierBonusStats_Intellect()
 function modifier_item_imba_spell_fencer:GetModifierPercentageManaRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_mana_regen") end
 
+-----------------------------------------------------------------------------------------------------------
+--	Spellfencer unique modifier
+-----------------------------------------------------------------------------------------------------------
+
+if modifier_item_imba_spell_fencer_unique == nil then modifier_item_imba_spell_fencer_unique = class({}) end
+function modifier_item_imba_spell_fencer_unique:IsHidden() return true end
+function modifier_item_imba_spell_fencer_unique:IsDebuff() return false end
+function modifier_item_imba_spell_fencer_unique:IsPurgable() return false end
+function modifier_item_imba_spell_fencer_unique:IsPermanent() return true end
+
+-- Declare modifier events/properties
+function modifier_item_imba_spell_fencer_unique:DeclareFunctions()
+	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+	}
+	return funcs
+end
+
 -- On attack landed, roll for proc and apply stacks
-function modifier_item_imba_spell_fencer:OnAttackLanded( keys )
+function modifier_item_imba_spell_fencer_unique:OnAttackLanded( keys )
 	if IsServer() then
 		local owner = self:GetParent()
 
@@ -106,7 +144,7 @@ function modifier_item_imba_spell_fencer:OnAttackLanded( keys )
 			-- Proc! Apply the silence modifier and put the ability on cooldown
 			target:AddNewModifier(owner, ability, "modifier_item_imba_azura_silence", {duration = ability:GetSpecialValueFor("proc_duration")})
 			target:EmitSound("Imba.AzuraProc")
-			ability:StartCooldown(ability:GetCooldown(1) * GetCooldownReduction(owner))
+			ability:UseResources(false, false, true)
 		end
 	end
 end

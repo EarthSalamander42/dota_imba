@@ -33,19 +33,21 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 	var ultStateOrTime = PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN; // values > 0 mean on cooldown for that many seconds
 	var goldValue = -1;
 	var isTeammate = false;
+	var isSpectator = false;
 
 	var playerInfo = Game.GetPlayerInfo( playerId );
 	if ( playerInfo )
 	{
 		isTeammate = ( playerInfo.player_team_id == localPlayerTeamId );
-		if ( isTeammate )
+		isSpectator = Players.IsSpectator( Game.GetLocalPlayerID() );
+		if ( isTeammate || isSpectator )
 		{
 			ultStateOrTime = Game.GetPlayerUltimateStateOrTime( playerId );
 		}
 		goldValue = playerInfo.player_gold;
 		
 		playerPanel.SetHasClass( "player_dead", ( playerInfo.player_respawn_seconds >= 0 ) );
-		playerPanel.SetHasClass( "local_player_teammate", isTeammate && ( playerId != Game.GetLocalPlayerID() ) );
+		playerPanel.SetHasClass( "local_player_teammate", (isTeammate || isSpectator) && ( playerId != Game.GetLocalPlayerID() ) );
 
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "RespawnTimer", ( playerInfo.player_respawn_seconds + 1 ) ); // value is rounded down so just add one for rounded-up
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerName", playerInfo.player_name );
@@ -146,28 +148,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 						{
 							//Some imba items have same base image
 							switch(item_image_name){
-								case "imba_dagon":
-								case "imba_dagon_2":
-								case "imba_dagon_3":
-								case "imba_dagon_4":
-								case "imba_dagon_5":
-								case "imba_force_staff":
-								case "imba_cyclone":
-								case "imba_ring_of_basilius":
-								case "imba_null_talisman":
-								case "imba_wraith_band":
-								case "imba_bracer":
-								case "imba_poor_mans_shield":
-								case "imba_pers":
-								case "imba_refresher":
-								case "imba_black_king_bar":
-								case "imba_blade_mail":
-								case "imba_hood_of_defiance":
-								case "imba_basher":
-								case "imba_manta":
-								case "imba_ethereal_blade":
-								case "imba_orb_of_venom":
-								case "imba_ring_of_aquila":
+								case "item_imba_satanic":
+								case "item_imba_mask_of_madness":
 									//Reference to base image
 									item_image_name = item_image_name.replace("imba_", "");
 									itemImagePath = "file://{images}/items/" + item_image_name + ".png";
@@ -179,6 +161,14 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 								case "item_imba_shadow_blade":
 									//Reference to image that does not match with its name
 									itemImagePath = "raw://resource/flash3/images/items/custom/imba_invis_sword.png";
+								break;
+								case "item_imba_triumvirate":
+									//Reference to image that does not match with its name
+									itemImagePath = "raw://resource/flash3/images/items/custom/imba_sange_and_azura_and_yasha.png";
+								break;
+								case "item_imba_morbid_mask":
+									//Reference to image that does not match with its name
+									itemImagePath = "raw://resource/flash3/images/items/custom/item_lifesteal.png";
 								break;
 								default:
 									//Reference to custom image
@@ -203,7 +193,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		}
 	}
 
-	if ( isTeammate )
+	if ( isTeammate || isSpectator )
 	{
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "TeammateGoldAmount", goldValue );
 	}
