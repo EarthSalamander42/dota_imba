@@ -815,7 +815,8 @@ function InitializeInnateAbilities( hero )
 		"imba_centaur_thick_hide",
 		"imba_kunkka_ebb_and_flow",
 		"imba_necrolyte_sadist",
-		"imba_abaddon_over_channel"
+		"imba_abaddon_over_channel",
+		"imba_night_stalker_stalker_in_the_night"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -2038,6 +2039,10 @@ function UpdateComebackBonus(points, team)
 	end
 
 	-- Update teams' score
+	if COMEBACK_BOUNTY_SCORE[team] == nil then
+		COMEBACK_BOUNTY_SCORE[team] = 0
+	end
+	
 	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
 
 	-- If one of the teams is eligible, apply the bonus
