@@ -1,231 +1,959 @@
---[[	Author: D2imba
-		Date: 23.05.2015	]]
+-- Author: Shush
+-- Date: 04/04/2017
 
-function Purification( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local target = keys.target
 
-	-- Effects
-	local cast_sound = keys.cast_sound
-	local aoe_particle = keys.aoe_particle
-	local cast_particle = keys.cast_particle
-	local hit_particle = keys.hit_particle
+CreateEmptyTalents("omniknight")
 
-	-- Parameters
-	local heal_base = ability:GetLevelSpecialValueFor("heal_base", ability_level)
-	local heal_pct = ability:GetLevelSpecialValueFor("heal_pct", ability_level) * 0.01
-	local damage_factor = ability:GetLevelSpecialValueFor("damage_factor", ability_level) * 0.01
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local target_pos = target:GetAbsOrigin()
 
-	-- Increase healing if the target has enough health
-	local heal = heal_base + target:GetMaxHealth() * heal_pct
+-----------------------------------
+--          PURIFICATION         --
+-----------------------------------
 
-	-- Heal the target
-	target:Heal(heal, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+imba_omniknight_purification = class({})
+LinkLuaModifier("modifier_imba_purification_buff", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_purification_omniguard_ready", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_purification_omniguard_recharging", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
 
-	-- Play cast sound and particles
-	target:EmitSound(cast_sound)
-	local aoe_pfx = ParticleManager:CreateParticle(aoe_particle, PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(aoe_pfx, 0, target_pos)
-	ParticleManager:SetParticleControl(aoe_pfx, 1, Vector(radius, 1, 1))
-	ParticleManager:ReleaseParticleIndex(aoe_pfx)
-	local caster_pfx = ParticleManager:CreateParticle(cast_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(caster_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(caster_pfx, 1, target_pos)
-	ParticleManager:ReleaseParticleIndex(caster_pfx)
 
-	-- Calculate damage
-	local damage = heal * damage_factor
-
-	-- Damage nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-	for _,enemy in pairs(enemies) do
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-
-		-- Play particle
-		local hit_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
-		ParticleManager:SetParticleControlEnt(hit_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_pos, true)
-		ParticleManager:SetParticleControlEnt(hit_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(hit_pfx, 3, Vector(radius, 0, 0))
-		ParticleManager:ReleaseParticleIndex(hit_pfx)
-	end
+function imba_omniknight_purification:IsHiddenWhenStolen()
+    return false
 end
 
-function PurificationDeath( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local passive_threshold = ability:GetLevelSpecialValueFor("passive_threshold", ability_level) * 0.01
-
-	-- If this is Rubick and Purification is no longer present, do nothing and kill the modifiers
-	if IsStolenSpell(caster) then
-		if not caster:FindAbilityByName("imba_omniknight_purification") then
-			caster:RemoveModifierByName("modifier_imba_purification_passive_cooldown")
-			caster:RemoveModifierByName("modifier_imba_purification_passive")
-			return nil
-		end
-	end
-
-	-- If fatal damage was not dealt, do nothing
-	if caster:GetHealth() > (caster:GetMaxHealth() * passive_threshold) then
-		return nil
-	end
-
-	-- Effects
-	local cast_sound = keys.cast_sound
-	local aoe_particle = keys.aoe_particle
-	local cast_particle = keys.cast_particle
-	local hit_particle = keys.hit_particle
-
-	-- Parameters
-	local heal_base = ability:GetLevelSpecialValueFor("heal_base", ability_level)
-	local heal_pct = ability:GetLevelSpecialValueFor("heal_pct", ability_level) * 0.01
-	local damage_factor = ability:GetLevelSpecialValueFor("damage_factor", ability_level) * 0.01
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local passive_modifier = keys.passive_modifier
-	local cooldown_modifier = keys.cooldown_modifier
-	local caster_pos = caster:GetAbsOrigin()
-
-	-- Increase healing based on the caster's health
-	local heal = heal_base + caster:GetMaxHealth() * heal_pct
-
-	-- Heal the caster
-	caster:Heal(heal, caster)
-	SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, caster, heal, nil)
-
-	-- Play cast sound and particles
-	caster:EmitSound(cast_sound)
-	local aoe_pfx = ParticleManager:CreateParticle(aoe_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(aoe_pfx, 0, caster_pos)
-	ParticleManager:SetParticleControl(aoe_pfx, 1, Vector(radius, 1, 1))
-	ParticleManager:ReleaseParticleIndex(aoe_pfx)
-	local caster_pfx = ParticleManager:CreateParticle(cast_particle, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(caster_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
-	ParticleManager:SetParticleControl(caster_pfx, 1, caster_pos)
-	ParticleManager:ReleaseParticleIndex(caster_pfx)
-
-	-- Calculate damage
-	local damage = heal * damage_factor
-
-	-- Damage nearby enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-	for _,enemy in pairs(enemies) do
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_PURE})
-
-		-- Play particle
-		local hit_pfx = ParticleManager:CreateParticle(hit_particle, PATTACH_ABSORIGIN_FOLLOW, enemy)
-		ParticleManager:SetParticleControlEnt(hit_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster_pos, true)
-		ParticleManager:SetParticleControlEnt(hit_pfx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
-		ParticleManager:SetParticleControl(hit_pfx, 3, Vector(radius, 0, 0))
-		ParticleManager:ReleaseParticleIndex(hit_pfx)
-	end
-
-	-- Remove the passive modifier and apply the cooldown one
-	caster:RemoveModifierByName(passive_modifier)
-	ability:ApplyDataDrivenModifier(caster, caster, cooldown_modifier, {})
+function imba_omniknight_purification:GetIntrinsicModifierName()
+    return "modifier_imba_purification_omniguard_ready"
 end
 
-function Repel( keys )
-	local target = keys.target
-	local caster = keys.caster
+function imba_omniknight_purification:GetAOERadius()
+    local ability = self
+    local radius = ability:GetSpecialValueFor("radius")
 
-	target:Purge(false, true, false, true, false)
-	caster:Purge(false, true, false, true, false)
+    return radius
 end
 
-function DegenAura( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
+function imba_omniknight_purification:OnSpellStart()
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self
+    local target = self:GetCursorTarget()
+    local rare_cast_response = "omniknight_omni_ability_purif_03"
+    local target_cast_response = {"omniknight_omni_ability_purif_01", "omniknight_omni_ability_purif_02", "omniknight_omni_ability_purif_04", "omniknight_omni_ability_purif_05", "omniknight_omni_ability_purif_06", "omniknight_omni_ability_purif_07", "omniknight_omni_ability_purif_08"}
+    local self_cast_response = {"omniknight_omni_ability_purif_01", "omniknight_omni_ability_purif_05", "omniknight_omni_ability_purif_06", "omniknight_omni_ability_purif_07", "omniknight_omni_ability_purif_08"}
+    local sound_cast = "Hero_Omniknight.Purification"    
 
-	-- If the ability is disabled by Break, do nothing
-	if caster.break_duration_left then
-		return nil
-	end
-	
-	-- Refreshes the debuff and adds stacks
-	AddStacks(ability, caster, target, modifier_stacks, 1, true)
+    -- Play cast responses    
+    if caster == target then
+        if RollPercentage(50) then
+            EmitSoundOn(self_cast_response[math.random(1, #self_cast_response)], caster)
+        end
+    else
+        -- Roll for rare response
+        if RollPercentage(5) then
+            EmitSoundOn(rare_cast_response, caster)
+
+        -- Roll for normal reponse
+        elseif RollPercentage(50) then
+            EmitSoundOn(target_cast_response[math.random(1,#target_cast_response)], caster)
+        end
+    end
+
+    -- Play cast sound
+    EmitSoundOn(sound_cast, caster)
+    
+    -- Purification!
+    Purification(caster, ability, target)
+
+    -- #4 Talent: Purification is also applied on a second random target
+    if caster:HasTalent("special_bonus_imba_omniknight_4") then
+        local bounce_radius = caster:FindTalentValue("special_bonus_imba_omniknight_4")
+
+        -- Find a target to jump to
+        local allies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                                 target:GetAbsOrigin(),
+                                                 nil,
+                                                 bounce_radius,
+                                                 DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                                 DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                                 DOTA_UNIT_TARGET_FLAG_NONE,
+                                                 FIND_ANY_ORDER,
+                                                 false)
+
+        -- Find a bounce target
+        for _,ally in pairs(allies) do
+
+            if ally ~= target then
+                -- Purify it
+                Purification(caster, ability, ally)
+
+                -- Stop at the first valid bounce target
+                break
+            end
+        end
+    end
 end
 
-function GuardianAngel( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local modifier_buff = keys.modifier_buff
-	local modifier_repel = keys.modifier_repel
-	local scepter = HasScepter(caster)
+function Purification(caster, ability, target)
+    -- Ability properties
+    local particle_cast = "particles/units/heroes/hero_omniknight/omniknight_purification_cast.vpcf"
+    local particle_aoe = "particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+    local particle_hit = "particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
+    local modifier_purifiception = "modifier_imba_purification_buff"    
 
-	-- Parameters
-	local duration = ability:GetLevelSpecialValueFor("duration", ability_level)
-	local repel_duration = ability:GetLevelSpecialValueFor("repel_duration", ability_level)
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
+    -- Ability specials
+    local heal_amount = ability:GetSpecialValueFor("heal_amount")
+    local radius = ability:GetSpecialValueFor("radius")
+    local purifiception_duration = ability:GetSpecialValueFor("purifiception_duration")    
 
-	-- Scepter changes
-	if scepter then
-		radius = 25000
-		duration = ability:GetLevelSpecialValueFor("duration_scepter", ability_level)
-	end
+    -- #8 Talent: Purification heal/damage increase
+    heal_amount = heal_amount + caster:FindTalentValue("special_bonus_imba_omniknight_8")
 
-	-- Play sound
-	caster:EmitSound(sound_cast)
+    -- Add cast particle
+    local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN_FOLLOW, caster)
+    ParticleManager:SetParticleControlEnt(particle_cast_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+    ParticleManager:SetParticleControl(particle_cast_fx, 1, target:GetAbsOrigin())
+    ParticleManager:ReleaseParticleIndex(particle_cast_fx)
 
-	-- Iterate through allies in range
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	for _,ally in pairs(allies) do
-		
-		-- Apply guardian angel modifier
-		ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {duration = duration})
+    -- Add AoE particle
+    local particle_aoe_fx = ParticleManager:CreateParticle(particle_aoe, PATTACH_ABSORIGIN_FOLLOW, target)
+    ParticleManager:SetParticleControl(particle_aoe_fx, 0, target:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particle_aoe_fx, 1, Vector(radius, 1, 1))
+    ParticleManager:ReleaseParticleIndex(particle_aoe_fx)    
 
-		-- Apply repel modifier
-		ability:ApplyDataDrivenModifier(caster, ally, modifier_repel, {duration = repel_duration})
-	end
+    -- Get spell power
+    local spell_power = caster:GetSpellPower()
+
+    -- Calculate final heal/damage values
+    local heal = heal_amount * (1+ (spell_power * 0.01))
+    local damage = heal
+
+    -- Heal target
+    target:Heal(heal, caster)    
+    SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, target, heal, nil)
+
+    -- Find enemies around it
+    local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                      target:GetAbsOrigin(),
+                                      nil,
+                                      radius,
+                                      DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                      DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                      DOTA_UNIT_TARGET_FLAG_NONE,
+                                      FIND_ANY_ORDER,
+                                      false)
+
+    
+    for _,enemy in pairs(enemies) do
+        -- If they're not magic immune, damage them
+        if not enemy:IsMagicImmune() then
+            local damageTable = {victim = enemy,
+                                 attacker = caster, 
+                                 damage = damage,
+                                 damage_type = DAMAGE_TYPE_PURE,
+                                 ability = ability
+                                }
+        
+            ApplyDamage(damageTable)  
+
+            -- Add hit particle
+            local particle_hit_fx = ParticleManager:CreateParticle(particle_hit, PATTACH_ABSORIGIN_FOLLOW, enemy)
+            ParticleManager:SetParticleControlEnt(particle_hit_fx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+            ParticleManager:SetParticleControlEnt(particle_hit_fx, 1, enemy, PATTACH_POINT_FOLLOW, "attach_hitloc", enemy:GetAbsOrigin(), true)
+            ParticleManager:SetParticleControl(particle_hit_fx, 3, Vector(radius, 0, 0))
+            ParticleManager:ReleaseParticleIndex(particle_hit_fx)
+        end
+    end        
+
+    -- Add Purifiception buff to target if it doesn't have it yet
+    if not target:HasModifier(modifier_purifiception) then
+        target:AddNewModifier(caster, ability, modifier_purifiception, {duration = purifiception_duration})
+
+        -- Give it a stack and refresh it
+        local modifier_purifiception_handler = target:FindModifierByName(modifier_purifiception)
+
+        if modifier_purifiception_handler then
+            modifier_purifiception_handler:IncrementStackCount()
+            modifier_purifiception_handler:ForceRefresh()
+        end
+    else
+        -- Just refresh it (stack will be given through OnHealRecieved)
+        local modifier_purifiception_handler = target:FindModifierByName(modifier_purifiception)
+
+        if modifier_purifiception_handler then
+           modifier_purifiception_handler:ForceRefresh() 
+        end
+    end
 end
 
-function GuardianAngelParticle( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local particle_wings = keys.particle_wings
-	local particle_halo = keys.particle_halo
-	local particle_ally = keys.particle_ally
-	local target_loc = target:GetAbsOrigin()
 
-	-- If this unit is the caster, play special particles
-	if target == caster then
+-- Purifiception modifier
+modifier_imba_purification_buff = class({})
 
-		-- Special buff particle with wings
-		target.guardian_angel_buff_pfx = ParticleManager:CreateParticle(particle_wings, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(target.guardian_angel_buff_pfx, 0, target_loc)
-		ParticleManager:SetParticleControlEnt(target.guardian_angel_buff_pfx, 5, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
+function modifier_imba_purification_buff:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.parent = self:GetParent()    
 
-		-- Halo particle
-		target.guardian_angel_halo_pfx = ParticleManager:CreateParticle(particle_halo, PATTACH_OVERHEAD_FOLLOW, target)
-		ParticleManager:SetParticleControlEnt(target.guardian_angel_halo_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target_loc, true)
-
-	-- Else, play regular particle
-	else
-		target.guardian_angel_buff_pfx = ParticleManager:CreateParticle(particle_ally, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(target.guardian_angel_buff_pfx, 0, target_loc)
-	end
+    -- Ability specials 
+    self.purifiception_heal_amp_pct = self.ability:GetSpecialValueFor("purifiception_heal_amp_pct")
+    self.purifiception_max_stacks = self.ability:GetSpecialValueFor("purifiception_max_stacks")
 end
 
-function GuardianAngelParticleDestroy( keys )
-	local target = keys.target
+function modifier_imba_purification_buff:IsHidden() return false end
+function modifier_imba_purification_buff:IsPurgable() return true end
+function modifier_imba_purification_buff:IsDebuff() return false end
 
-	-- Destroy all particles (AND HUMANS!)
-	ParticleManager:DestroyParticle(target.guardian_angel_buff_pfx, false)
-	ParticleManager:ReleaseParticleIndex(target.guardian_angel_buff_pfx)
-	target.guardian_angel_buff_pfx = nil
-
-	-- I said ALL of them!
-	if target.guardian_angel_halo_pfx then
-		ParticleManager:DestroyParticle(target.guardian_angel_halo_pfx, true)
-		ParticleManager:ReleaseParticleIndex(target.guardian_angel_halo_pfx)
-		target.guardian_angel_halo_pfx = nil
-	end
+function modifier_imba_purification_buff:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
+                      MODIFIER_EVENT_ON_HEAL_RECEIVED}
+                
+    return decFuncs
 end
+
+function modifier_imba_purification_buff:GetEffectName()
+    return "particles/hero/omniknight/purification_buff.vpcf"    
+end
+
+function modifier_imba_purification_buff:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_purification_buff:GetModifierHealAmplify_Percentage(keys)            
+    local stacks = self:GetStackCount()
+
+    return self.purifiception_heal_amp_pct * stacks
+end
+
+function modifier_imba_purification_buff:OnHealReceived(keys)
+    if IsServer() then
+
+        -- Only apply on the caster getting heals
+        if keys.unit == self.caster then
+
+            -- Only apply if it's a real heal (not health regen)
+            if not keys.process_procs then
+                self:IncrementStackCount()
+            end
+        end
+    end
+end
+
+function modifier_imba_purification_buff:OnStackCountChanged()
+    if IsServer() then
+        local stacks = self:GetStackCount()
+
+        if stacks > self.purifiception_max_stacks then
+            self:SetStackCount(self.purifiception_max_stacks)
+        end
+    end
+end
+
+
+
+-- Purification Omniguard - ready mode
+modifier_imba_purification_omniguard_ready = class({})
+
+function modifier_imba_purification_omniguard_ready:OnCreated()            
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.modifier_recharge = "modifier_imba_purification_omniguard_recharging"                
+
+        -- If the caster has modifier recharge, commit soduku
+        if self.caster:HasModifier(self.modifier_recharge) then
+            self:Destroy()
+        end
+end
+
+function modifier_imba_purification_omniguard_ready:IsHidden()
+    if self.caster:HasTalent("special_bonus_imba_omniknight_2") then
+        return false
+    end
+
+    return true
+end
+
+function modifier_imba_purification_omniguard_ready:IsPurgable() return false end
+function modifier_imba_purification_omniguard_ready:IsDebuff() return false end
+
+
+
+function modifier_imba_purification_omniguard_ready:DeclareFunctions()
+    local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
+
+    return decFuncs
+end
+
+function modifier_imba_purification_omniguard_ready:OnTakeDamage(keys)
+    if IsServer() then
+        local unit = keys.unit        
+
+        -- Only apply on the caster getting damaged
+        if self.caster == unit then
+
+            -- If the caster doesn't have the talent, do nothing
+            if not self.caster:HasTalent("special_bonus_imba_omniknight_2") then
+                return nil
+            end
+
+            -- If the caster is broken, do nothing
+            if self.caster:PassivesDisabled() then
+                return nil
+            end
+
+            -- #2 Talent: Purification auto cast on critical health
+            self.cooldown = self.caster:FindSpecificTalentValue("special_bonus_imba_omniknight_2", "cooldown")
+            self.trigger_hp_pct = self.caster:FindSpecificTalentValue("special_bonus_imba_omniknight_2", "trigger_hp_pct")
+
+            -- Get caster's HP
+            local current_health_pct = self.caster:GetHealthPercent()
+
+            -- If the caster's health is below the threshold, activate!
+            if current_health_pct <= self.trigger_hp_pct then
+                Purification(self.caster, self.ability, self.caster)
+
+                -- Apply recharge modifier and remove ready
+                self.caster:AddNewModifier(self.caster, self.ability, self.modifier_recharge, {duration = self.cooldown})
+                self:Destroy()
+            end
+        end
+    end
+end
+
+-- Purification Omniguard - recharging
+modifier_imba_purification_omniguard_recharging = class({})
+
+function modifier_imba_purification_omniguard_recharging:OnCreated()
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.modifier_omniguard = "modifier_imba_purification_omniguard_ready"
+end
+
+function modifier_imba_purification_omniguard_recharging:IsHidden() return false end
+function modifier_imba_purification_omniguard_recharging:IsPurgable() return false end
+function modifier_imba_purification_omniguard_recharging:IsDebuff() return false end
+
+function modifier_imba_purification_omniguard_recharging:GetTexture()
+    return "custom/omnikinight_purification_cooldown"
+end
+
+function modifier_imba_purification_omniguard_recharging:OnDestroy()
+    if IsServer() then
+        self.caster:AddNewModifier(self.caster, self.ability, self.modifier_omniguard, {})
+    end
+end
+
+
+-----------------------------------
+--            REPEL              --
+-----------------------------------
+
+imba_omniknight_repel = class({})
+LinkLuaModifier("modifier_imba_repel", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_degen_aura", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_degen_debuff", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_omniknight_repel:IsHiddenWhenStolen()
+    return false
+end
+
+function imba_omniknight_repel:GetIntrinsicModifierName()
+    return "modifier_imba_degen_aura"
+end
+
+function imba_omniknight_repel:OnUnStolen()
+    local caster = self:GetCaster()
+    local modifier_degen = "modifier_imba_degen_aura"
+
+    -- Remvoe Degen Aura from Rubick
+    if caster:HasModifier(modifier_degen) then
+        caster:RemoveModifierByName(modifier_degen)
+    end
+end
+
+function imba_omniknight_repel:OnSpellStart()
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self
+    local target = self:GetCursorTarget() 
+    local target_cast_response = "omniknight_omni_ability_repel_0"..math.random(1,6)
+    local self_cast_response = {"omniknight_omni_ability_repel_01", "omniknight_omni_ability_repel_05", "omniknight_omni_ability_repel_06"}
+    local sound_cast = "Hero_Omniknight.Repel"    
+
+    -- Ability specials
+    local duration = ability:GetSpecialValueFor("duration")    
+
+    -- Target cast responses
+    if target ~= caster then
+        EmitSoundOn(target_cast_response, caster)
+    else
+        -- Self cast responses
+        EmitSoundOn(self_cast_response[math.random(1, #self_cast_response)], caster)
+    end
+
+    -- Play cast sound
+    EmitSoundOn(sound_cast, caster)    
+
+    -- Repel the target
+    Repel(caster, ability, target, duration)
+
+    -- #6 Talent: Repel affects nearby allies briefly
+    if caster:HasTalent("special_bonus_imba_omniknight_6") then
+        -- Talent values
+        local radius = caster:FindSpecificTalentValue("special_bonus_imba_omniknight_6", "radius")
+        local talent_duration = caster:FindSpecificTalentValue("special_bonus_imba_omniknight_6", "duration")
+
+        -- Find all nearby allies
+        local allies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                         target:GetAbsOrigin(),
+                                         nil,
+                                         radius,
+                                         DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                         DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                         DOTA_UNIT_TARGET_FLAG_NONE,
+                                         FIND_ANY_ORDER,
+                                         false)
+
+        -- Repel all allies except the target
+        for _, ally in pairs(allies) do
+            if ally ~= target then
+                Repel(caster, ability, ally, talent_duration)
+            end
+        end
+    end
+end
+
+function Repel(caster, ability, target, duration)
+    -- Ability properties
+    local particle_cast = "particles/units/heroes/hero_omniknight/omniknight_repel_cast.vpcf"
+    local modifier_repel = "modifier_imba_repel"
+    local modifier_degen_aura = "modifier_imba_degen_aura"    
+
+    -- Add particle effect
+    local particle_cast_fx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN_FOLLOW, caster)
+    ParticleManager:SetParticleControl(particle_cast_fx, 0, target:GetAbsOrigin())
+
+    -- Apply a strong dispel on target
+    target:Purge(false, true, false, true, true)
+
+    -- Give target Repel buff and Degen Aura buffs
+    target:AddNewModifier(caster, ability, modifier_repel, {duration = duration})
+
+    -- Give auras to targets other than the caster
+    if target ~= caster then
+        target:AddNewModifier(caster, ability, modifier_degen_aura, {duration = duration})
+    end
+end
+
+
+-- Repel modifier
+modifier_imba_repel = class({})
+
+function modifier_imba_repel:IsHidden() return false end
+function modifier_imba_repel:IsPurgable() return false end
+function modifier_imba_repel:IsDebuff() return false end
+
+function modifier_imba_repel:CheckState()
+    local state = {[MODIFIER_STATE_MAGIC_IMMUNE] = true}
+    return state
+end
+
+function modifier_imba_repel:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS}
+
+    return decFuncs
+end
+
+function modifier_imba_repel:GetModifierMagicalResistanceBonus()
+    return 100
+end
+
+function modifier_imba_repel:GetEffectName()
+    return "particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+end
+
+function modifier_imba_repel:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+
+-- Degen Aura
+modifier_imba_degen_aura = class({})
+
+function modifier_imba_degen_aura:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.parent = self:GetParent()
+
+    -- Ability specials
+    self.aura_radius = self.ability:GetSpecialValueFor("aura_radius")
+    self.linger_duration = self.ability:GetSpecialValueFor("linger_duration")
+end
+
+function modifier_imba_degen_aura:GetEffectName()
+    return "particles/auras/aura_degen.vpcf"
+end
+
+function modifier_imba_degen_aura:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_degen_aura:GetAuraDuration()
+    return self.linger_duration
+end
+
+function modifier_imba_degen_aura:GetAuraRadius()
+    return self.aura_radius
+end
+
+function modifier_imba_degen_aura:GetAuraSearchFlags()
+    return DOTA_UNIT_TARGET_FLAG_NONE
+end
+
+function modifier_imba_degen_aura:GetAuraSearchTeam()
+    return DOTA_UNIT_TARGET_TEAM_ENEMY
+end
+
+function modifier_imba_degen_aura:GetAuraSearchType()
+    return DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC
+end
+
+function modifier_imba_degen_aura:GetModifierAura()
+    return "modifier_imba_degen_debuff"
+end
+
+function modifier_imba_degen_aura:IsAura()
+    if self.caster:PassivesDisabled() then
+        return false
+    end
+
+    return true
+end
+
+function modifier_imba_degen_aura:IsHidden() return true end
+function modifier_imba_degen_aura:IsPurgable() return false end
+function modifier_imba_degen_aura:IsDebuff() return false end
+
+function modifier_imba_degen_aura:OnRefresh()
+    self:OnCreated()
+end
+
+-- Degen slow debuff 
+modifier_imba_degen_debuff = class({})
+
+function modifier_imba_degen_debuff:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.parent = self:GetParent()
+
+    -- Ability specials
+    self.ms_slow_pct = self.ability:GetSpecialValueFor("ms_slow_pct")
+    self.as_slow = self.ability:GetSpecialValueFor("as_slow")
+
+    -- #3 Talent: Increases Degen Aura's move and attack speed slows 
+    self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_omniknight_3")
+    self.as_slow = self.as_slow + self.caster:FindTalentValue("special_bonus_imba_omniknight_3")
+end
+
+function modifier_imba_degen_debuff:GetEffectName()
+    return "particles/units/heroes/hero_omniknight/omniknight_degen_aura_debuff.vpcf"    
+end
+
+function modifier_imba_degen_debuff:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW 
+end
+
+function modifier_imba_degen_debuff:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+                      MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT}
+
+    return decFuncs
+end
+
+function modifier_imba_degen_debuff:GetModifierMoveSpeedBonus_Percentage()
+    return self.ms_slow_pct * (-1)
+end
+
+function modifier_imba_degen_debuff:GetModifierAttackSpeedBonus_Constant()
+    return self.as_slow * (-1)
+end
+
+function modifier_imba_degen_debuff:GetTexture()
+    return "omniknight_degen_aura"
+end
+
+
+
+
+
+-----------------------------------
+--       HAMMER OF VIRTUE        --
+-----------------------------------
+
+imba_omniknight_hammer_of_virtue = class({})
+LinkLuaModifier("modifier_imba_hammer_of_virtue", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_hammer_of_virtue_nodamage", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_omniknight_hammer_of_virtue:GetIntrinsicModifierName()
+    return "modifier_imba_hammer_of_virtue"
+end
+
+-- Hammer of virtue passive modifier
+modifier_imba_hammer_of_virtue = class({})
+
+function modifier_imba_hammer_of_virtue:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()    
+        self.particle_heal = "particles/hero/omniknight/hammer_of_virtue_heal.vpcf"
+        self.particle_hit = "particles/units/heroes/hero_omniknight/omniknight_purification_hit.vpcf"
+        self.modifier_nodmg = "modifier_imba_hammer_of_virtue_nodamage"
+
+        -- Ability specials
+        self.radius = self.ability:GetSpecialValueFor("radius")
+        self.damage_as_heal_pct = self.ability:GetSpecialValueFor("damage_as_heal_pct")
+    end 
+end
+
+function modifier_imba_hammer_of_virtue:IsHidden() return true end
+function modifier_imba_hammer_of_virtue:IsPurgable() return false end
+function modifier_imba_hammer_of_virtue:IsDebuff() return false end
+
+function modifier_imba_hammer_of_virtue:OnRefresh()
+    self:OnCreated()
+end
+
+function modifier_imba_hammer_of_virtue:DeclareFunctions()
+    local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+
+    return decFuncs
+end
+
+function modifier_imba_hammer_of_virtue:OnAttackLanded(keys)
+    if IsServer() then
+        local attacker = keys.attacker
+        local target = keys.target
+        local damage = keys.original_damage
+
+        -- #1 Talent: Hammer of Virtue heal increase
+        if self.caster:HasTalent("special_bonus_imba_omniknight_1") and not self.talent_1_leveled then
+            self.damage_as_heal_pct = self.damage_as_heal_pct + self.caster:FindTalentValue("special_bonus_imba_omniknight_1")        
+            self.talent_1_leveled = true            
+        end
+        
+        -- Only apply on caster attacking
+        if self.caster == attacker then
+
+            -- If the ability is in cooldown, do nothing
+            if not self.ability:IsCooldownReady() then
+                return nil
+            end
+
+            -- If the attack was on a teammate, do nothing
+            if self.caster:GetTeamNumber() == target:GetTeamNumber() then
+                return nil
+            end
+
+            -- If the attacker is broken, do nothing
+            if self.caster:PassivesDisabled() then
+                return nil
+            end
+
+            -- if the target is a ward or a building, do nothing
+            if not target:IsHero() and not target:IsCreep() then
+                return nil
+            end
+
+            -- Add hit particle effect
+            self.particle_hit_fx = ParticleManager:CreateParticle(self.particle_hit, PATTACH_ABSORIGIN_FOLLOW, target)
+            ParticleManager:SetParticleControlEnt(self.particle_hit_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_hitloc", self.caster:GetAbsOrigin(), true)
+            ParticleManager:SetParticleControlEnt(self.particle_hit_fx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+            --ParticleManager:SetParticleControl(self.particle_hit_fx, 3, Vector(0, 0, 0))
+            ParticleManager:ReleaseParticleIndex(self.particle_hit_fx)
+
+            -- Apply no damage buff
+            self.caster:AddNewModifier(self.caster, self.ability, self.modifier_nodmg, {duration = 0.1})
+            target:AddNewModifier(self.caster, self.ability, self.modifier_nodmg, {duration = 0.1})
+
+            -- Damage the target with pure light powa
+            local damageTable = {victim = target,
+                                 attacker = self.caster, 
+                                 damage = damage,
+                                 damage_type = DAMAGE_TYPE_PURE,
+                                 ability = ability
+                                }
+            
+            ApplyDamage(damageTable)  
+            
+            -- Find all nearby allies
+            local allies = FindUnitsInRadius(self.caster:GetTeamNumber(),
+                                             self.caster:GetAbsOrigin(),
+                                             nil,
+                                             self.radius,
+                                             DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                             DOTA_UNIT_TARGET_HERO,
+                                             DOTA_UNIT_TARGET_FLAG_INVULNERABLE,
+                                             FIND_ANY_ORDER,
+                                             false)
+
+            -- Heal them (and the caster)
+            local heal = damage * self.damage_as_heal_pct * 0.01
+            for _,ally in pairs(allies) do
+                ally:Heal(heal, self.caster)
+
+                -- Apply heal effect
+                self.particle_heal_fx = ParticleManager:CreateParticle(self.particle_heal, PATTACH_ABSORIGIN_FOLLOW, ally)
+                ParticleManager:SetParticleControl(self.particle_heal_fx, 0, ally:GetAbsOrigin())
+            end
+
+            -- Start the cooldown of the ability
+            self.ability:UseResources(false, false, true)
+        end
+    end
+end
+
+
+-- Hammer of Virtue no damage buff
+
+modifier_imba_hammer_of_virtue_nodamage =class({})
+
+function modifier_imba_hammer_of_virtue_nodamage:IsHidden() return true end
+function modifier_imba_hammer_of_virtue_nodamage:IsDebuff() return false end
+function modifier_imba_hammer_of_virtue_nodamage:IsPurgable() return false end
+
+-- Declare modifier events/properties
+function modifier_imba_hammer_of_virtue_nodamage:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL}
+
+    return decFuncs
+end
+
+function modifier_imba_hammer_of_virtue_nodamage:GetAbsoluteNoDamagePhysical()
+    return 1 
+end
+
+
+-----------------------------------
+--        GUARDIAN ANGEL         --
+-----------------------------------
+
+imba_omniknight_guardian_angel = class({})
+LinkLuaModifier("modifier_imba_guardian_angel", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_guardian_angel_shield", "hero/hero_omniknight.lua", LUA_MODIFIER_MOTION_NONE)
+
+function imba_omniknight_guardian_angel:IsHiddenWhenStolen()
+    return false
+end
+
+function imba_omniknight_guardian_angel:GetCooldown(level)
+    local caster = self:GetCaster()
+    local cooldown = self.BaseClass.GetCooldown(self, level)
+
+    -- #7 Talent: Guardian Angel cooldown decrease
+    cooldown = cooldown - caster:FindTalentValue("special_bonus_imba_omniknight_7")
+
+    return cooldown    
+end
+
+function imba_omniknight_guardian_angel:OnSpellStart()
+    -- Ability properties
+    local caster = self:GetCaster()
+    local ability = self
+    local cast_response = {"omniknight_omni_ability_guard_04", "omniknight_omni_ability_guard_05", "omniknight_omni_ability_guard_06", "omniknight_omni_ability_guard_10"}
+    local sound_cast = "Hero_Omniknight.GuardianAngel.Cast"
+    local modifier_angel = "modifier_imba_guardian_angel"
+    local scepter = caster:HasScepter()
+
+    -- Ability specials
+    local duration = ability:GetSpecialValueFor("duration")
+    local scepter_duration = ability:GetSpecialValueFor("scepter_duration")
+    local radius = ability:GetSpecialValueFor("radius")    
+
+    -- Roll a cast response
+    EmitSoundOn(cast_response[math.random(1, #cast_response)], caster)
+
+    -- Play cast sound
+    EmitSoundOn(sound_cast, caster)
+
+    -- If caster has scepter, assign values
+    if scepter then
+        duration = scepter_duration
+        radius = 25000 -- global
+    end
+
+    -- Find all nearby allied unit
+    local allies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                     caster:GetAbsOrigin(),
+                                     nil,
+                                     radius,
+                                     DOTA_UNIT_TARGET_TEAM_FRIENDLY,
+                                     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING,
+                                     DOTA_UNIT_TARGET_FLAG_NONE,
+                                     FIND_ANY_ORDER,
+                                     false)
+
+    -- Grant them the guardian angel buff
+    for _,ally in pairs(allies) do
+        ally:AddNewModifier(caster, ability, modifier_angel, {duration = duration})
+    end
+end
+
+
+-- Physical immunity modifier
+modifier_imba_guardian_angel = class({})
+
+function modifier_imba_guardian_angel:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()
+    self.parent = self:GetParent()
+    self.particle_wings = "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
+    self.particle_ally = "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"    
+    self.particle_halo = "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+    self.modifier_shield = "modifier_imba_guardian_angel_shield"
+
+    -- Ability specials
+    self.shield_duration = self.ability:GetSpecialValueFor("shield_duration")    
+
+    -- If this is the caster, give him an halo and wings! He deserve them!
+    if self.parent == self.caster then
+        self.particle_wings_fx = ParticleManager:CreateParticle(self.particle_wings, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+        ParticleManager:SetParticleControl(self.particle_wings_fx, 0, self.parent:GetAbsOrigin())
+        ParticleManager:SetParticleControlEnt(self.particle_wings_fx, 5, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)
+        self:AddParticle(self.particle_wings_fx, false, false, -1, false, false)    
+
+        -- Halo particle
+        self.particle_halo_fx = ParticleManager:CreateParticle(self.particle_halo, PATTACH_OVERHEAD_FOLLOW, self.parent)
+        ParticleManager:SetParticleControlEnt(self.particle_halo_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)    
+        self:AddParticle(self.particle_halo_fx, false, false, -1, false, false)    
+
+    -- Else, play regular particle
+    else
+        self.particle_ally_fx = ParticleManager:CreateParticle(self.particle_ally, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+        ParticleManager:SetParticleControl(self.particle_ally_fx, 0, self.parent:GetAbsOrigin())
+        self:AddParticle(self.particle_ally_fx, false, false, -1, false, false)    
+    end    
+end
+
+function modifier_imba_guardian_angel:GetStatusEffectName()
+    return "particles/status_fx/status_effect_guardian_angel.vpcf"
+end
+
+function modifier_imba_guardian_angel:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL}
+
+    return decFuncs
+end
+
+function modifier_imba_guardian_angel:GetAbsoluteNoDamagePhysical()
+    return 1
+end
+
+function modifier_imba_guardian_angel:IsHidden() return false end
+function modifier_imba_guardian_angel:IsPurgable() return true end
+function modifier_imba_guardian_angel:IsDebuff() return false end
+
+function modifier_imba_guardian_angel:OnDestroy()
+    if IsServer() then
+        self.parent:AddNewModifier(self.caster, self.ability, self.modifier_shield, {duration = self.shield_duration})
+    end
+end
+
+-- Guardian Shield modifier
+modifier_imba_guardian_angel_shield = class({})
+
+function modifier_imba_guardian_angel_shield:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()
+
+        -- Ability specials
+        self.max_hp_shield_health_pct = self.ability:GetSpecialValueFor("max_hp_shield_health_pct")
+
+        -- #5 Talent: Guardian Angel Shield health increase
+        self.max_hp_shield_health_pct = self.max_hp_shield_health_pct + self.caster:FindTalentValue("special_bonus_imba_omniknight_5")        
+
+        -- Assign the maximum capability of the shield depending on parent's max HP
+        self.shield_health = self.parent:GetMaxHealth() * self.max_hp_shield_health_pct * 0.01        
+    end
+end
+
+function modifier_imba_guardian_angel_shield:GetEffectName()
+    return "particles/hero/omniknight/guardian_angel_shield.vpcf"
+end
+
+function modifier_imba_guardian_angel_shield:GetEffectAttachType()
+    return PATTACH_ABSORIGIN_FOLLOW
+end
+
+function modifier_imba_guardian_angel_shield:DeclareFunctions()
+    local decFuncs = {MODIFIER_PROPERTY_AVOID_DAMAGE,
+                      MODIFIER_EVENT_ON_TAKEDAMAGE}
+
+    return decFuncs
+end
+
+function modifier_imba_guardian_angel_shield:GetModifierAvoidDamage()
+    return 1
+end
+
+function modifier_imba_guardian_angel_shield:OnTakeDamage(keys)
+    if IsServer() then
+        local original_damage = keys.original_damage        
+        local damage_type = keys.damage_type
+        local unit = keys.unit
+        local attacker = keys.attacker
+        local damage
+
+        -- Only apply on the parent being attacked
+        if self.parent == unit then                        
+            -- If the damage was pure, deal original damage with no changes
+            if damage_type == DAMAGE_TYPE_PURE then
+                damage = original_damage
+
+            -- If the damage was magical, reduce damage according to magical resistance
+            elseif damage_type == DAMAGE_TYPE_MAGICAL then
+                local magic_res = self.parent:GetMagicalArmorValue()
+                damage = original_damage * (1 - magic_res)
+
+            -- Physical damage
+            else
+                local armornpc = self.parent:GetPhysicalArmorValue()
+                local physical_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
+                physical_reduction = 100 - (physical_reduction * 100)                
+                damage = original_damage * (1 - physical_reduction * 0.01)
+            end            
+
+            -- Check if the shield is broken from excess damage
+            if self.shield_health <= damage then                          
+
+                -- Remove the shield
+                self:Destroy()
+
+                -- Deal excess damage to the target
+                local excess_damage = damage - self.shield_health
+
+                local damageTable = {victim = self.parent,
+                                     attacker = attacker, 
+                                     damage = damage,
+                                     damage_type = DAMAGE_TYPE_PURE,
+                                     ability = ability
+                                    }
+        
+                ApplyDamage(damageTable)                  
+
+            else
+                -- Shield is not broken. Reduce the shield health
+                self.shield_health = self.shield_health - damage                
+            end
+        end
+    end
+end
+
+function modifier_imba_guardian_angel_shield:IsHidden() return false end
+function modifier_imba_guardian_angel_shield:IsPurgable() return false end
+function modifier_imba_guardian_angel_shield:IsDebuff() return false end

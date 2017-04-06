@@ -890,6 +890,11 @@ function modifier_imba_scepter_enrage_damage:OnTakeDamage( keys )
 	local scepter_damage_threshold = ability:GetSpecialValueFor("scepter_damage_threshold")
 	local scepter_damage_reset = ability:GetSpecialValueFor("scepter_damage_reset")
 	local scepter_enrage_cooldown = ability:GetSpecialValueFor("scepter_enrage_cooldown")
+
+    -- If Ursa is broken, do nothing: don't count damage, don't trigger, etc)
+    if caster:PassivesDisabled() then
+        return nil
+    end
 	
 	if scepter and caster == target then			
 		-- Initialize if not exists		

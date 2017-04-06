@@ -36,7 +36,7 @@ function modifier_item_imba_greater_crit:OnCreated(keys)
 end
 
 -- Removes the damage increase counter if this is the last Daedalus in the inventory
-function modifier_item_imba_greater_crit:OnDestroy(keys)
+function modifier_item_imba_greater_crit:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_greater_crit") then

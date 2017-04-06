@@ -813,7 +813,10 @@ function InitializeInnateAbilities( hero )
 		"imba_silencer_arcane_supremacy",
 		"imba_tiny_rolling_stone",
 		"imba_centaur_thick_hide",
-		"imba_kunkka_ebb_and_flow"
+		"imba_kunkka_ebb_and_flow",
+		"imba_necrolyte_sadist",
+		"imba_abaddon_over_channel",
+		"imba_night_stalker_stalker_in_the_night"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
@@ -1078,49 +1081,92 @@ end
 
 function ChangeAttackProjectileImba( unit )
 
-	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
-	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
-	local particle_lifesteal = "particles/item/lifesteal_mask/lifesteal_particle.vpcf"
-	local particle_deso_skadi = "particles/item/desolator/desolator_skadi_projectile_2.vpcf"
-	local particle_clinkz_arrows = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-	local particle_dragon_form_green = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf"
-	local particle_dragon_form_red = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf"
-	local particle_dragon_form_blue = "particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf"
-	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
-
-	-- If the unit has a Desolator and a Skadi, use the special projectile
-	if unit:HasModifier("modifier_item_imba_desolator_unique") or unit:HasModifier("modifier_item_imba_desolator_2_unique") then
-		if unit:HasModifier("modifier_item_imba_skadi_unique") then
-			unit:SetRangedProjectileName(particle_deso_skadi)
-
-		-- If only a Desolator, use its attack projectile instead
-		else
-			unit:SetRangedProjectileName(particle_deso)
+	-- Check for lifesteal modifiers
+	local has_lifesteal = false
+	local lifesteal_modifiers = {
+		"modifier_item_imba_vladmir_aura",
+		"modifier_item_imba_vladmir_blood_aura",
+		"modifier_imba_morbid_mask",
+		"modifier_imba_mask_of_madness",
+		"modifier_imba_satanic",
+		"modifier_imba_vampiric_aura_effect_hero"
+	}
+	for _, modifier in pairs(lifesteal_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_lifesteal = true
+			break
 		end
+	end
 
-	-- If only a Skadi, use its attack projectile instead
-	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
-		unit:SetRangedProjectileName(particle_skadi)
+	-- Check for desolator modifiers
+	local has_deso = false
+	local deso_modifiers = {
+		"modifier_item_imba_blight_stone",
+		"modifier_item_imba_desolator",
+		"modifier_item_imba_desolator_2"
+	}
+	for _, modifier in pairs(deso_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_deso = true
+			break
+		end
+	end
 
-	-- If the unit has any form of lifesteal, use the lifesteal projectile
-	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
-		unit:SetRangedProjectileName(particle_lifesteal)
+	-- Check for skadi modifier
+	local has_skadi = false
+	local skadi_modifiers = {
+		"modifier_item_imba_skadi_unique"
+	}
+	for _, modifier in pairs(skadi_modifiers) do
+		if unit:HasModifier(modifier) then
+			has_skadi = true
+			break
+		end
+	end
+
+	-- Desolator + Skadi + Lifesteal particle
+	if has_deso and has_skadi and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Desolator + Skadi particle
+	elseif has_deso and has_skadi then
+		unit:SetRangedProjectileName("particles/item/desolator/desolator_skadi_projectile_2.vpcf")
+
+	-- Desolator + Lifesteal particle
+	elseif has_deso and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Skadi + Lifesteal particle
+	elseif has_skadi and has_lifesteal then
+		--unit:SetRangedProjectileName()
+
+	-- Desolator particle
+	elseif has_deso then
+		unit:SetRangedProjectileName("particles/items_fx/desolator_projectile.vpcf")
+
+	-- Skadi particle
+	elseif has_skadi then
+		unit:SetRangedProjectileName("particles/items2_fx/skadi_projectile.vpcf")
+
+	-- Lifesteal projectile
+	elseif has_lifesteal then
+		unit:SetRangedProjectileName("particles/item/lifesteal_mask/lifesteal_particle.vpcf")
 
 	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
-	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
-		unit:SetRangedProjectileName(particle_clinkz_arrows)
+	elseif unit:HasModifier("modifier_imba_searing_arrows_passive") then
+		unit:SetRangedProjectileName("particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf")
 
 	-- If it's one of Dragon Knight's forms, use its attack projectile instead
 	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then
-		unit:SetRangedProjectileName(particle_dragon_form_green)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_corrosive.vpcf")
 	elseif unit:HasModifier("modifier_dragon_knight_splash_attack") then
-		unit:SetRangedProjectileName(particle_dragon_form_red)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_fire.vpcf")
 	elseif unit:HasModifier("modifier_dragon_knight_frost_breath") then
-		unit:SetRangedProjectileName(particle_dragon_form_blue)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_dragon_knight/dragon_knight_elder_dragon_frost.vpcf")
 
 	-- If it's a metamorphosed Terrorblade, use its attack projectile instead
 	elseif unit:HasModifier("modifier_terrorblade_metamorphosis") then
-		unit:SetRangedProjectileName(particle_terrorblade_transform)
+		unit:SetRangedProjectileName("particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf")
 
 	-- Else, default to the base ranged projectile
 	else
@@ -1993,6 +2039,10 @@ function UpdateComebackBonus(points, team)
 	end
 
 	-- Update teams' score
+	if COMEBACK_BOUNTY_SCORE[team] == nil then
+		COMEBACK_BOUNTY_SCORE[team] = 0
+	end
+	
 	COMEBACK_BOUNTY_SCORE[team] = COMEBACK_BOUNTY_SCORE[team] + points
 
 	-- If one of the teams is eligible, apply the bonus
@@ -2155,6 +2205,17 @@ function CDOTA_BaseNPC:GetLifesteal()
 	return lifesteal
 end
 
+-- Health regeneration % amplification
+function CDOTA_BaseNPC:GetHealthRegenAmp()
+    local regen_increase = 0
+    for _, parent_modifier in pairs(self:FindAllModifiers()) do
+        if parent_modifier.GetModifierHealthRegenAmp then
+            regen_increase = regen_increase + parent_modifier:GetModifierHealthRegenAmp()
+        end
+    end
+    return regen_increase
+end
+
 -- Spell power
 function CDOTA_BaseNPC:GetSpellPower()
 
@@ -2270,6 +2331,16 @@ function CDOTA_BaseNPC:GetTenacity()
 	return (1 - tenacity) * 100
 end
 
+-- Health regeneration % amplification
+function CDOTA_BaseNPC:GetHealthRegenAmp()
+	local regen_increase = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+		if parent_modifier.GetModifierHealthRegenAmp then
+			regen_increase = regen_increase + parent_modifier:GetModifierHealthRegenAmp()
+		end
+	end
+	return regen_increase
+end
 
 -- Safely checks if this unit is a hero or a creep
 function IsHeroOrCreep(unit)
@@ -2323,203 +2394,3 @@ function IsDaytime()
 
     return true   
 end
-
-
--------------------------------------------------------------------------------------------------------
--- lua based Tracking Projectiles manager, allowing for some custom and dynamic tracking projectiles.
--------------------------------------------------------------------------------------------------------
-
-TrackingProjectiles = TrackingProjectiles or class({})
-
-function TrackingProjectiles:Projectile( params )
-    --PrintTable(params)
-    local target = params.hTarget
-    local caster = params.hCaster
-    local speed = params.iMoveSpeed
-
-    -- Reset target dodge state
-    target.dodged = false
-
-    --Set creation time in the parameters
-    params.creation_time = GameRules:GetGameTime()
-    
-    --Fetch initial projectile location
-    local projectile
-    if params.vSpawnOrigin then
-        projectile = params.vSpawnOrigin
-    elseif params.iSourceAttachment then
-        projectile = caster:GetAttachmentOrigin( params.iSourceAttachment )
-    else
-        projectile = caster:GetAbsOrigin()
-    end
-    --Make the particle
-    local particle = ParticleManager:CreateParticle( params.EffectName, PATTACH_CUSTOMORIGIN, caster)
-    --Source CP
-    ParticleManager:SetParticleControl( particle, 0, projectile )
-    --TargetCP
-    ParticleManager:SetParticleControlEnt( particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true )
-    --Speed CP
-    ParticleManager:SetParticleControl( particle, 2, Vector( speed, 0, 0 ) )
-
-    -- Creating a projectileID so it can be referred to later
-    params.bProjectileDodged = false
-    local projectileID = {projectile=projectile,particle=particle}
-    TrackingProjectiles:Think(params,projectileID)
-    return projectileID
-end
-
-function TrackingProjectiles:Think(params,projectileID)
-    local target = params.hTarget
-    local caster = params.hCaster
-    local speed = params.iMoveSpeed
-    local projectile = projectileID.projectile
-    local particle = projectileID.particle
-    local visionRadius = params.flVisionRadius or 0
-    local acceleration = params.flAcceleration or 1
-    acceleration = math.pow(acceleration,1/32) -- Converting it to 1/32th second
-    
-
-    Timers:CreateTimer(function()
-        -- Check if the destroy function has been called
-        if projectileID.destroy then
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            return nil
-        end
-        -- Check if this projectile has been dodged and if it should be destroyed because of that
-        if params.bDestroyOnDodge and params.bDodgeable and target.dodged then
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            return nil
-        end
-        -- Check if the particle has been dodged to prevent it from firing on hit effects
-        if params.bDodgeable and target.dodged then
-            params.bProjectileDodged = true
-        end
-        -- Check if the timer for the projectile has ran out
-        if params.flExpireTime and GameRules:GetGameTime() - params.creation_time > params.flExpireTime then
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            pcall(params.OnProjectileDestroy, params, projectileID)
-            return nil
-        end
-        -- If there is a new speed, store that
-        if projectileID.newSpeed then
-            speed = projectileID.flSpeed
-            projectileID.flSpeed = nil
-        end
-        -- If there is a new acceleration, store that
-        if projectileID.Acceleration then
-            acceleration = projectileID.flAcceleration
-            projectileID.flAcceleration = nil
-        end
-        -- If there is a new target, store that
-        if projectileID.hTarget then
-            target = projectileID.hTarget
-            projectileID.hTarget = nil
-        end
-
-        --Get the target location
-        local target_location = target:GetAbsOrigin()
-
-        -- Multiply speed by acceleration
-        speed = speed * acceleration
-
-        --Move the projectile towards the target and update the position
-        projectile = projectile + ( target_location - projectile ):Normalized() * speed * 1/32
-        projectileID.position = projectile
-        -- Add vision
-        if visionRadius then
-            AddFOWViewer(caster:GetTeam(),projectile,visionRadius,2/32,true)
-        end
-
-        -- Check if projectile has hit a platform
-        if params.bDestroyOnGroundHit and GetGroundPosition(projectile,nil).z - 50 > projectile.z then
-            -- Platform hit
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            pcall(params.OnProjectileDestroy, params, projectileID)
-            return nil
-        end
-
-        -- Check if projectile has hit a wall
-        if params.bDestroyOnWallHit and Gridnav:IsWall(projectiles) then
-            -- Platform hit
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            pcall(params.OnProjectileDestroy, params, projectileID)
-            return nil
-        end
-
-        --Check the distance to the target
-        if ( target_location - projectile ):Length()- params.flRadius < speed * 1/32 then -- Length2D() / Length()!
-            --Target has reached destination!
-            TrackingProjectiles:OnProjectileHitUnit( params,projectileID )
-            ParticleManager:DestroyParticle( particle, false )
-            ParticleManager:ReleaseParticleIndex(particle)
-            return nil
-        -- Check if the target is too far
-        elseif params.flMaxDistance and (target_location - projectile):Length() > params.flMaxDistance then
-                ParticleManager:DestroyParticle( particle, false )
-                ParticleManager:ReleaseParticleIndex(particle)
-                pcall(params.OnProjectileDestroy, params, projectileID)
-                return nil
-        else
-            return 1/32
-        end
-    end)
-end
-
-
-function TrackingProjectiles:GetProjectilePosition(projectileID)
-    return projectileID.position
-end
-
--- Use this to destroy the particle at any time you want it to
-function TrackingProjectiles:DestroyProjectile(projectileID)
-    projectileID.destroy = true
-end
-
--- Function to redirect to a new target
-function TrackingProjectiles:ChangeTarget(projectileID,hTarget)
-    projectileID.hTarget = hTarget
-end
--- Function to update the speed
-function TrackingProjectiles:ChangeSpeed(projectileID,flSpeed)
-    projectileID.flSpeed = flSpeed
-end
--- Function to update the acceleration
-function TrackingProjectiles:ChangeAcceleration(projectileID,flAcceleration)
-    projectileID.flAcceleration = flAcceleration
-end
---Called when the projectile hits the target, params contains the params of the projectile plus a creation_time field.
-function TrackingProjectiles:OnProjectileHitUnit( params,projectileID )
-    --[[print( params.hCaster:GetUnitName() .. '\'s particle hit ' .. params.hTarget:GetUnitName() .. ' after ' ..
-        ( GameRules:GetGameTime() - params.creation_time ) .. ' seconds.' )]]
-    if not params.bProjectileDodged then
-        pcall(params.OnProjectileHitUnit, params, projectileID)
-    end
-end
-
--- Based on the hooking done in statcollection.
--- This makes sure that when a projectile is dodgeable and the ProjectileManager.ProjectileDodge function gets called you dodge the projectile.
--- Not sure if this makes these projectiles dodgeable with the default spells
-function TrackingProjectiles:hookFunctions()
-    local this = self
-    
-    local oldProjectileDodge = ProjectileManager.ProjectileDodge
-    ProjectileManager.ProjectileDodge = function(projectileManager,unit)
-        -- Set the unit do be dodging
-        if unit then
-            unit.dodged = true
-        end
-        -- Run the real function for other projectiles
-        oldProjectileDodge(projectileManager,unit)
-    end
-end
-
-function TrackingProjectiles:init()
-    self:hookFunctions()    
-end
-
-TrackingProjectiles:init()
