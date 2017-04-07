@@ -13,7 +13,7 @@ function imba_silencer_global_silence:OnSpellStart()
 			if curse_ability and curse_ability:IsTrained() then
 				enemy:AddNewModifier(caster, curse_ability, "modifier_imba_arcane_curse_debuff", {duration = self:GetDuration()})
 			end
-			EmitSoundOn("Hero_Silencer.GlobalSilence.Effect", enemy)
+			EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", enemy:GetPlayerOwner())
 		end
 	end
 end
