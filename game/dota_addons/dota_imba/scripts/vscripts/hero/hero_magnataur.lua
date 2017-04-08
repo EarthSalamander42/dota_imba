@@ -861,10 +861,25 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 						end)
 					else
-						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-					end
-					if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
-						enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+						local knockup_duration = 0.5
+						local knockback =
+						{
+							should_stun = 1,
+							knockback_duration = knockup_duration,
+							duration = knockup_duration,
+							knockback_distance = self.pardon_min_range + knockup_duration * 100,
+							knockback_height = 125 + (knockup_duration * 50),
+							center_x = caster_loc.x,
+							center_y = caster_loc.y,
+							center_z = caster_loc.z
+						}
+						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+						Timers:CreateTimer(knockup_duration, function()
+							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+							if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
+								enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+							end
+						end)
 					end
 					enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
 				end
