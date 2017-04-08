@@ -561,8 +561,7 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 -----------------------------
 
 imba_abaddon_over_channel = class({
-	IsStealable 			= function(self) return false end,
-	ResetToggleOnRespawn 	= function(self) return false end,
+	IsStealable 			= function(self) return false end
 })
 LinkLuaModifier("modifer_over_channel_caster", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
@@ -578,10 +577,24 @@ function imba_abaddon_over_channel:OnToggle()
 	end
 end
 
+function imba_abaddon_over_channel:OnOwnerSpawned()
+	-- self.death_toggle_mode can be nil but still works here
+	if self.death_toggle_mode ~= self:GetToggleState() then
+		self:ToggleAbility()
+	end
+end
+
+function imba_abaddon_over_channel:OnOwnerDied()
+	-- If this is not overriden, toggle will set back to off when hero dies
+	self.death_toggle_mode = self:GetToggleState()
+	-- Note that I have tried ResetToggleOnRespawn but it doesn't seem to work
+end
+
 modifer_over_channel_caster = class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
+	IsPermanent				= function(self) return true end,
 	RemoveOnDeath			= function(self) return false end,
 	AllowIllusionDuplicate	= function(self) return true end -- Allow illusions to carry this particle modifier
 })
