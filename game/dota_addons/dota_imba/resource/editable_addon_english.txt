@@ -1777,8 +1777,8 @@
 		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Description"							"Abaddon releases a coil of deathly mist that can damage an enemy unit or heal a friendly unit.\n<font color='#FF7800'>Cursed Coil:</font> Applies Curse of Avernus on enemy target."
 		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Note0"									"Self-castable."
 		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_Lore"									"A mysterious vapor from the Curse of Avernus now infuses the breath of Abaddon, who releases it at will."
-		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_target_heal"							"TARGET HEAL:"
-		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_target_damage"							"TARGET DAMAGE:"
+		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_heal"									"TARGET HEAL:"
+		"DOTA_Tooltip_ability_imba_abaddon_mist_coil_damage"								"TARGET DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield"									"Aphotic Shield"
 		"DOTA_Tooltip_ability_imba_abaddon_aphotic_shield_Description"						"Creates a shield around an allied unit that absorbs a set amount of damage before expiring. When destroyed, the shield will burst, dealing damage equal to the amount it could absorb to an area around it. Removes most debuffs and disables on cast.\n<font color='#FF7800'>Cursed Shield:</font> Applies Curse of Avernus on enemies hit by the explosion."
