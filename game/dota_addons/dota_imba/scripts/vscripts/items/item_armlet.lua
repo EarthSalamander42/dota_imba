@@ -7,8 +7,9 @@
 --	Item Definition
 -----------------------------------------------------------------------------------------------------------
 if item_imba_armlet == nil then item_imba_armlet = class({}) end
-LinkLuaModifier( "modifier_imba_armlet_basic", 			 "items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stat
-LinkLuaModifier( "modifier_imba_armlet_unholy_strength", "items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength
+LinkLuaModifier( "modifier_imba_armlet_basic", 			 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Item stat
+LinkLuaModifier( "modifier_imba_armlet_unholy_strength_visual_effect", 	"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength Visual Effect
+LinkLuaModifier( "modifier_imba_armlet_unholy_strength", 				"items/item_armlet.lua", LUA_MODIFIER_MOTION_NONE )	-- Unholy Strength
 
 function item_imba_armlet:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_IMMEDIATE + DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL + DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE + DOTA_ABILITY_BEHAVIOR_ITEM end
@@ -23,16 +24,18 @@ function item_imba_armlet:OnSpellStart()
 		local caster = self:GetCaster()
 		if caster:HasModifier("modifier_imba_armlet_unholy_strength") then
 			caster:EmitSound("DOTA_Item.Armlet.Activate")
+			caster:RemoveModifierByName("modifier_imba_armlet_unholy_strength_visual_effect")
 			caster:RemoveModifierByName("modifier_imba_armlet_unholy_strength")
 		else
 			caster:EmitSound("DOTA_Item.Armlet.DeActivate")
+			caster:AddNewModifier(caster, self, "modifier_imba_armlet_unholy_strength_visual_effect", {})
 			caster:AddNewModifier(caster, self, "modifier_imba_armlet_unholy_strength", {})
 		end
 	end
 end
 
 function item_imba_armlet:GetAbilityTextureName()
-	if self:GetCaster():HasModifier("modifier_imba_armlet_unholy_strength") then
+	if self:GetCaster():HasModifier("modifier_imba_armlet_unholy_strength_visual_effect") then
 		return "custom/imba_armlet_active" end
 	
 	return "custom/imba_armlet"
@@ -67,19 +70,28 @@ function modifier_imba_armlet_basic:GetModifierConstantHealthRegen()
 	return self:GetAbility():GetSpecialValueFor("bonus_health_regen") end
 
 -----------------------------------------------------------------------------------------------------------
+--	Unholy Strength modifier dummy effect definition
+-----------------------------------------------------------------------------------------------------------
+if modifier_imba_armlet_unholy_strength_visual_effect == nil then modifier_imba_armlet_unholy_strength_visual_effect = class({}) end
+function modifier_imba_armlet_unholy_strength_visual_effect:IsHidden() return false end
+function modifier_imba_armlet_unholy_strength_visual_effect:IsDebuff() return false end
+function modifier_imba_armlet_unholy_strength_visual_effect:IsPurgable() return false end
+function modifier_imba_armlet_unholy_strength_visual_effect:AllowIllusionDuplicate() return true end -- Allow illusions to carry this particle modifier
+
+function modifier_imba_armlet_unholy_strength_visual_effect:GetEffectName()
+	return "particles/items_fx/armlet.vpcf" end
+
+function modifier_imba_armlet_unholy_strength_visual_effect:GetEffectAttachType()
+	return PATTACH_ABSORIGIN_FOLLOW end
+
+-----------------------------------------------------------------------------------------------------------
 --	Unholy Strength modifier definition
 -----------------------------------------------------------------------------------------------------------
 if modifier_imba_armlet_unholy_strength == nil then modifier_imba_armlet_unholy_strength = class({}) end
-function modifier_imba_armlet_unholy_strength:IsHidden() return false end
+function modifier_imba_armlet_unholy_strength:IsHidden() return true end
 function modifier_imba_armlet_unholy_strength:IsDebuff() return false end
 function modifier_imba_armlet_unholy_strength:IsPurgable() return false end
 
-function modifier_imba_armlet_unholy_strength:GetEffectName()
-	return "particles/items_fx/armlet.vpcf" end
-
-function modifier_imba_armlet_unholy_strength:GetEffectAttachType()
-	return PATTACH_ABSORIGIN_FOLLOW end
-	
 function modifier_imba_armlet_unholy_strength:DeclareFunctions()
 	return {	MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 				MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,	
