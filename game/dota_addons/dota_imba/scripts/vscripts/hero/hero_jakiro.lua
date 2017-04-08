@@ -107,7 +107,7 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			local breath_direction = ( target - caster_pos ):Normalized()
 			local breath_distance = ( target - caster_pos ):Length2D()
 			if breath_distance > range then
-				target = caster_pos + breath_direction * range
+				breath_distance = range
 			end
 
 			-- #6 Talent: Dual Breath Speed Increase
