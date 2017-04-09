@@ -359,6 +359,9 @@ end
 
 function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
 	self.move_slow = -(self.ability:GetSpecialValueFor("move_slow"))
+
+	local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
+	self:AddParticle(particle, false, false, -1, false, false)
 end
 
 function modifier_imba_fire_breath_debuff:DeclareFunctions()
@@ -395,6 +398,11 @@ end
 -- Ice breath debuff (applied to enemies to deal damage)
 -- Extend base_modifier_dot_debuff
 modifier_imba_ice_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
+
+function modifier_imba_ice_breath_debuff:_SubClassOnCreated()
+	local particle = ParticleManager:CreateParticle( "particles/generic_gameplay/generic_slowed_cold.vpcf", PATTACH_POINT_FOLLOW, self:GetParent() )
+	self:AddParticle(particle, false, false, -1, false, false)
+end
 
 function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 	local ability = self:GetAbility()

@@ -9534,6 +9534,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_fire_breath.vpcf"
+			"particle"						"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf"
 		}
 		
 		// Special	
@@ -9622,6 +9623,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_ice_breath.vpcf"
+			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 		
 		// Special	
