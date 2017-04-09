@@ -9718,7 +9718,8 @@
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
 
 		// Special

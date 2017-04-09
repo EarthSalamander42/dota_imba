@@ -569,15 +569,22 @@ modifier_imba_ice_path_freeze_debuff = class({
 	IsHidden				= function(self) return false end,
 	IsPurgable	  			= function(self) return true end,
 	IsDebuff	  			= function(self) return true end,
-	GetEffectName			= function(self) return "particles/generic_gameplay/generic_stunned.vpcf" end,
-	GetEffectAttachType     = function(self) return PATTACH_OVERHEAD_FOLLOW end,
-	GetOverrideAnimation 	= function(self) return ACT_DOTA_DISABLED end
 })
 
 function modifier_imba_ice_path_freeze_debuff:OnCreated()
 	if IsServer() then
 		local ability = self:GetAbility()
-		ApplyDamage({attacker = self:GetCaster(), victim = self:GetParent(), ability = ability, damage = ability:GetSpecialValueFor("damage"), damage_type = ability:GetAbilityDamageType()})
+		local parent = self:GetParent()
+
+		ApplyDamage({attacker = self:GetCaster(), victim = parent, ability = ability, damage = ability:GetSpecialValueFor("damage"), damage_type = ability:GetAbilityDamageType()})
+
+		local parent_origin = parent:GetAbsOrigin()
+
+		local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent )
+		ParticleManager:SetParticleControl( particle, 0, parent_origin)
+		ParticleManager:SetParticleControl( particle, 1, parent_origin)
+		ParticleManager:SetParticleControl( particle, 2, Vector(self:GetDuration(), 0, 0))
+		self:AddParticle(particle, false, false, -1, false, false)
 	end
 end
 
@@ -592,6 +599,7 @@ end
 function modifier_imba_ice_path_freeze_debuff:CheckState()
 	local state = {
 		[MODIFIER_STATE_STUNNED] = true,
+		[MODIFIER_STATE_FROZEN] = true,
 	}
  
 	return state
@@ -608,6 +616,9 @@ function modifier_imba_ice_path_slow_debuff:OnCreated()
 	local ability = self:GetAbility()
 	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
 	self.move_slow = -(ability:GetSpecialValueFor("move_slow"))
+
+	local particle = ParticleManager:CreateParticle( "particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	self:AddParticle(particle, false, false, -1, false, false)
 end
 
 function modifier_imba_ice_path_slow_debuff:DeclareFunctions()
