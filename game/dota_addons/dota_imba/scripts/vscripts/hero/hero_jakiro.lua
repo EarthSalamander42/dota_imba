@@ -1004,6 +1004,11 @@ end
 -- Extend base_modifier_dot_debuff
 modifier_imba_macropyre_debuff = ShallowCopy( base_modifier_dot_debuff )
 
+function modifier_imba_macropyre_debuff:_SubClassOnCreated()
+	local particle = ParticleManager:CreateParticle( "particles/world_environmental_fx/fire_camp_01_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent() )
+	self:AddParticle(particle, false, false, -1, false, false)
+end
+
 function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
 	local caster = self.caster
 	-- #8 Talent: Macropyre Cause Progressive Slow

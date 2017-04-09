@@ -9903,6 +9903,7 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
+			"particle"						"particles/world_environmental_fx/fire_camp_01_smoke.vpcf"
 		}
 
 		// Special
