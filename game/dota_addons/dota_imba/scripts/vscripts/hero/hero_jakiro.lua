@@ -649,6 +649,7 @@ imba_jakiro_liquid_fire = class({
 	GetIntrinsicModifierName = function(self) return "modifier_imba_liquid_fire_caster" end
 })
 LinkLuaModifier("modifier_imba_liquid_fire_caster", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_liquid_fire_animate", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_liquid_fire_debuff", "hero/hero_jakiro", LUA_MODIFIER_MOTION_NONE)
 
 function imba_jakiro_liquid_fire:OnCreated()
@@ -664,12 +665,32 @@ function imba_jakiro_liquid_fire:GetCastRange(Location, Target)
 	return caster:GetAttackRange() + self:GetSpecialValueFor("extra_cast_range") + caster:FindTalentValue("special_bonus_imba_jakiro_4")
 end
 
+function imba_jakiro_liquid_fire:OnAbilityPhaseStart()
+	local caster = self:GetCaster()
+	caster:StartGesture(ACT_DOTA_ATTACK)
+
+	-- Special animation for jakiro
+	if caster:GetUnitName() == "npc_dota_hero_jakiro" then
+		caster:AddNewModifier(caster, self.ability, "modifier_imba_liquid_fire_animate", {})
+	end
+
+	-- Needs to return true for successful cast
+	return true
+end
+
+function imba_jakiro_liquid_fire:OnAbilityPhaseInterrupted()
+	local caster = self:GetCaster()
+	caster:RemoveModifierByNameAndCaster("modifier_imba_liquid_fire_animate", caster)
+end
+
 function imba_jakiro_liquid_fire:OnSpellStart()
 	if IsServer() then
 		local target = self:GetCursorTarget()
 		local caster = self:GetCaster()
 
 		self.cast_liquid_fire = true
+
+		caster:SetRangedProjectileName("particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf")
 
 		-- Attack the main target
 		caster:PerformAttack(target, true, true, true, true, true, false, false)
@@ -686,6 +707,7 @@ modifier_imba_liquid_fire_caster = class({
 
 function modifier_imba_liquid_fire_caster:DeclareFunctions()
 	local funcs = {
+		MODIFIER_EVENT_ON_ATTACK_START,
 		MODIFIER_EVENT_ON_ATTACK,
 		MODIFIER_EVENT_ON_ATTACK_FAIL,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -704,18 +726,36 @@ function modifier_imba_liquid_fire_caster:OnCreated()
 	-- { target(key) : times_to_apply_liquid_fire_on_attack_lands (value)}
 	-- This is done to allow attacking with liquid fire on correct targets if refresher orb is used
 	self.apply_aoe_modifier_debuff_on_hit = {}
-
 end
 
--- Returns true when liquid fire is not on cooldown and can be casted on target. Ability must be in auto cast or manual cast mode
-function modifier_imba_liquid_fire_caster:_ShouldAttachLiquidFire( target )
-	local ability = self.ability
+function modifier_imba_liquid_fire_caster:_IsLiquidFireProjectile()
+	local caster = self.caster
+	return caster:GetRangedProjectileName() == "particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf"
+end
 
-	if not ability:IsHidden() and not target:IsMagicImmune() then
-		return ability.cast_liquid_fire == true or (ability:GetAutoCastState() and ability:IsCooldownReady())
+function modifier_imba_liquid_fire_caster:OnAttackStart(keys)
+	if IsServer() then
+		local caster = self.caster
+		local ability = self.ability
+		local target = keys.target
+		local attacker = keys.attacker
+
+		if caster == attacker then
+			if not ability:IsHidden() and not target:IsMagicImmune() and ability:GetAutoCastState() and ability:IsCooldownReady() then
+
+				-- Special animation for jakiro
+				if caster:GetUnitName() == "npc_dota_hero_jakiro" then
+					caster:AddNewModifier(caster, self.ability, "modifier_imba_liquid_fire_animate", {})
+				end
+
+				-- Change projectile
+				caster:SetRangedProjectileName("particles/units/heroes/hero_jakiro/jakiro_base_attack_fire.vpcf")
+			elseif self:_IsLiquidFireProjectile() then
+				-- Revert projectile
+				ChangeAttackProjectileImba(caster)
+			end
+		end
 	end
-
-	return false
 end
 
 function modifier_imba_liquid_fire_caster:OnAttack(keys)
@@ -723,9 +763,9 @@ function modifier_imba_liquid_fire_caster:OnAttack(keys)
 		local caster = self.caster
 		local target = keys.target
 		local attacker = keys.attacker
+		local ability = self.ability
 
-		if caster == attacker and self:_ShouldAttachLiquidFire(target) then
-			local ability = self.ability
+		if caster == attacker and (self:_IsLiquidFireProjectile() or ability.cast_liquid_fire) then
 
 			-- Remove manual cast indicator
 			ability.cast_liquid_fire = false
@@ -804,6 +844,34 @@ function modifier_imba_liquid_fire_caster:OnOrder(keys)
 	-- On any order apart from attacking target, clear the cast_liquid_fire variable.
 	if order_type ~= DOTA_UNIT_ORDER_ATTACK_TARGET then
 		self.ability.cast_liquid_fire = false
+	end
+end
+
+-- Modifier to play animation for jakiro's other head
+modifier_imba_liquid_fire_animate = class({
+	IsHidden					    = function(self) return true end,
+	IsPurgable						= function(self) return false end,
+	IsDebuff						= function(self) return false end,
+	RemoveOnDeath					= function(self) return true end,
+	GetActivityTranslationModifiers	= function(self) return "liquid_fire" end
+})
+
+function modifier_imba_liquid_fire_animate:DeclareFunctions()
+	local funcs = {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_EVENT_ON_ATTACK
+	}
+ 
+	return funcs
+end
+
+function modifier_imba_liquid_fire_animate:OnAttack(keys)
+	if IsServer() then
+		local attacker = keys.attacker
+
+		if attacker == self:GetCaster() then
+			self:Destroy()
+		end
 	end
 end
 
