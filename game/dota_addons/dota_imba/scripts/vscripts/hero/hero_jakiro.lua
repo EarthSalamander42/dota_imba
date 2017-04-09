@@ -233,10 +233,11 @@ local base_modifier_dot_debuff = class({
 
 -- _UpdateDebuffLevelValues is called in OnCreated and OnRefreshed to handle ability values that changes with level or talents
 function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
-	local ability = self.ability
-	local ability_level = ability:GetLevel() - 1
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	self.tick_damage = damage * self.damage_interval
+	if IsServer() then
+		local ability = self.ability
+		local damage = ability:GetSpecialValueFor("damage")
+		self.tick_damage = damage * self.damage_interval
+	end
 
 	-- _UpdateSubClassLevelValues is to be implemented by inherit classes to perform ability value update in OnCreated and OnRefreshed
 	if self._UpdateSubClassLevelValues then
@@ -245,35 +246,39 @@ function base_modifier_dot_debuff:_UpdateDebuffLevelValues()
 end
 
 function base_modifier_dot_debuff:OnCreated()
-	if IsServer() then
-		self.caster 			= self:GetCaster()
-		self.parent 			= self:GetParent()
+	
+	self.caster 			= self:GetCaster()
+	self.parent 			= self:GetParent()
 
-		local ability 			= self:GetAbility()
+	local ability 			= self:GetAbility()
+	
+
+	self.ability 			= ability
+
+	-- _SubClassOnCreated is to implemented by inherit class to perform attaching ability value in OnCreated
+	if self._SubClassOnCreated then
+		self:_SubClassOnCreated()
+	end
+
+	if IsServer() then
 		local damage_interval 	= ability:GetSpecialValueFor("damage_interval")
 
-		self.ability 			= ability
 		self.ability_dmg_type 	= ability:GetAbilityDamageType()
 		self.damage_interval	= damage_interval
+	end
 
-		-- _SubClassOnCreated is to implemented by inherit class to perform attaching ability value in OnCreated
-		if self._SubClassOnCreated then
-			self:_SubClassOnCreated()
-		end
+	self:_UpdateDebuffLevelValues()
 
-		self:_UpdateDebuffLevelValues()
-
+	if IsServer() then
 		-- Apply damage immediately
 		self:OnIntervalThink()
 		-- Run interval applying of damage
-		self:StartIntervalThink(damage_interval)
+		self:StartIntervalThink(self.damage_interval)
 	end
 end
 
 function base_modifier_dot_debuff:OnRefresh()
-	if IsServer() then
-		self:_UpdateDebuffLevelValues()
-	end
+	self:_UpdateDebuffLevelValues()
 end
 
 function base_modifier_dot_debuff:OnIntervalThink()
@@ -320,13 +325,14 @@ modifier_imba_fire_breath_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 -- Override _UpdateDebuffLevelValues due to talent
 function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
-	local caster = self.caster
-	local ability = self.ability
-	local ability_level = ability:GetLevel() - 1
+	if IsServer() then
+		local caster = self.caster
+		local ability = self.ability
 
-	-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level) + caster:FindSpecificTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
-	self.tick_damage = damage * self.damage_interval
+		-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
+		local damage = ability:GetSpecialValueFor("damage") + caster:FindSpecificTalentValue("special_bonus_imba_jakiro_2", "fire_damage_increase")
+		self.tick_damage = damage * self.damage_interval
+	end
 end
 
 function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
@@ -766,8 +772,7 @@ modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
 
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
 	local ability = self.ability
-	local ability_level = ability:GetLevel() - 1
-	self.attack_slow = -(ability:GetLevelSpecialValueFor("attack_slow", ability_level))
+	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:_SubClassOnCreated()
