@@ -330,7 +330,7 @@ function modifier_imba_fire_breath_debuff:_UpdateDebuffLevelValues()
 end
 
 function modifier_imba_fire_breath_debuff:_SubClassOnCreated()
-	self.move_slow = self.ability:GetSpecialValueFor("move_slow")
+	self.move_slow = -(self.ability:GetSpecialValueFor("move_slow"))
 end
 
 function modifier_imba_fire_breath_debuff:DeclareFunctions()
@@ -372,8 +372,10 @@ function modifier_imba_ice_breath_debuff:_UpdateSubClassLevelValues()
 	local ability = self:GetAbility()
 	-- #2 Talent: Fire Breath DPS Increase, Ice Breath Slow Increase
 	local talent_slow = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_jakiro_2", "slow_increase")
-	self.attack_slow = ability:GetSpecialValueFor("attack_slow") * (1-talent_slow/100)
-	self.move_slow = ability:GetSpecialValueFor("move_slow") + talent_slow
+	-- slow_increase is positive
+	-- attack_slow is a constant, not a percentage
+	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow")) * (1+(talent_slow/100))
+	self.move_slow = -(ability:GetSpecialValueFor("move_slow")) - talent_slow
 end
 
 function modifier_imba_ice_breath_debuff:DeclareFunctions()
@@ -576,8 +578,8 @@ modifier_imba_ice_path_slow_debuff = class({
 
 function modifier_imba_ice_path_slow_debuff:OnCreated()
 	local ability = self:GetAbility()
-	self.attack_slow = ability:GetSpecialValueFor("attack_slow")
-	self.move_slow = ability:GetSpecialValueFor("move_slow")
+	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
+	self.move_slow = -(ability:GetSpecialValueFor("move_slow"))
 end
 
 function modifier_imba_ice_path_slow_debuff:DeclareFunctions()
@@ -765,11 +767,11 @@ modifier_imba_liquid_fire_debuff = ShallowCopy( base_modifier_dot_debuff )
 function modifier_imba_liquid_fire_debuff:_UpdateSubClassLevelValues()
 	local ability = self.ability
 	local ability_level = ability:GetLevel() - 1
-	self.attack_slow = ability:GetLevelSpecialValueFor("attack_slow", ability_level)
+	self.attack_slow = -(ability:GetLevelSpecialValueFor("attack_slow", ability_level))
 end
 
 function modifier_imba_liquid_fire_debuff:_SubClassOnCreated()
-	self.turn_slow = self.ability:GetSpecialValueFor("turn_slow")
+	self.turn_slow = -(self.ability:GetSpecialValueFor("turn_slow"))
 end
 
 function modifier_imba_liquid_fire_debuff:DeclareFunctions()
@@ -974,7 +976,7 @@ function modifier_imba_macropyre_debuff:_UpdateSubClassLevelValues()
 		-- This exludes slow from other abilities
 
 		if not self.move_slow or self.move_slow == 0 then
-			self.move_slow = caster:FindSpecificTalentValue("special_bonus_imba_jakiro_8", "init_slow")
+			self.move_slow = -(caster:FindSpecificTalentValue("special_bonus_imba_jakiro_8", "init_slow"))
 		else
 			--Cache scale_per_tick value
 			if not self.scale_per_tick then

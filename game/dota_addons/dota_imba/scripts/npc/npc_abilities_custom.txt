@@ -9570,7 +9570,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-10"
+				"move_slow"					"10"
 			}
 			"07"
 			{
@@ -9657,13 +9657,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-32"
+				"move_slow"					"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-32"
+				"attack_slow"				"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
@@ -9755,12 +9755,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
+				"move_slow"				"15 15 15 15 20 25 30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
+				"attack_slow"			"15 15 15 15 20 25 30"
 			}
 			"08"
 			{
@@ -9818,7 +9818,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
+				"attack_slow" 				"30 40 50 60 65 70 75"
 			}
 			"02"
 			{
@@ -9848,7 +9848,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"-50"
+				"turn_slow"					"50"
 			}
 			"08"
 			{
@@ -10005,7 +10005,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_increase"				"-8"
+				"slow_increase"				"8"
 			}
 		}
 	}
@@ -10143,7 +10143,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"init_slow"					"-5"
+				"init_slow"					"5"
 			}
 			"02"
 			{
