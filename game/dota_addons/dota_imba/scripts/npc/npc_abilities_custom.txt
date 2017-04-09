@@ -9543,12 +9543,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_distance"			"550"
 			}
 			"03"
 			{
@@ -9631,12 +9631,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_distance"			"550"
 			}
 			"03"
 			{

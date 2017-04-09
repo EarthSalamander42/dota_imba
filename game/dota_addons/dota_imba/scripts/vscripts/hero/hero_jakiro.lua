@@ -101,7 +101,11 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 			self.caster = caster
 			self.ability = ability
 			self.path_radius = ability:GetSpecialValueFor("path_radius")
+			self.spill_distance = ability:GetSpecialValueFor("spill_distance")
 			self.debuff_duration = ability:GetSpecialValueFor("duration")
+			self.ability_target_team = ability:GetAbilityTargetTeam()
+			self.ability_target_type = ability:GetAbilityTargetType()
+			self.ability_target_flags = ability:GetAbilityTargetFlags()
 
 			local caster_pos = caster:GetAbsOrigin()
 			local breath_direction = ( target - caster_pos ):Normalized()
@@ -144,21 +148,14 @@ function base_modifier_dual_breath_caster:OnCreated( kv )
 	end
 end
 
-function base_modifier_dual_breath_caster:_DualBreathApplyModifier( radius )
-	
+function base_modifier_dual_breath_caster:_DualBreathApplyModifierToEnemies( enemies )
 	local caster = self.caster
 	local ability = self.ability
-	
+
 	local affected_unit_list = self.affected_unit_list
 	local debuff_duration = self.debuff_duration
 	local modifier_debuff_name = self.modifier_debuff_name
 
-	local caster_pos = caster:GetAbsOrigin()
-
-	local target_vector = caster_pos + ( self.breath_direction * radius ) / 2
-
-	-- Apply Breath modifier on enemies
-	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_vector, nil, radius, ability:GetAbilityTargetTeam(), ability:GetAbilityTargetType(), ability:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
 	for _,enemy in pairs(enemies) do
 		--Apply Debuff only once per unit
 		if not affected_unit_list[enemy] then
@@ -166,9 +163,38 @@ function base_modifier_dual_breath_caster:_DualBreathApplyModifier( radius )
 			enemy:AddNewModifier(caster, ability, modifier_debuff_name, { duration = debuff_duration })
 		end
 	end
+end
+
+function base_modifier_dual_breath_caster:_DualBreathAOEApplyModifier()
+
+	local caster = self.caster
+	local ability = self.ability
+
+	local path_radius = self.path_radius
+
+	local ability_target_team = self.ability_target_team
+	local ability_target_type = self.ability_target_type
+	local ability_target_flags = self.ability_target_flags
+
+	local caster_pos = caster:GetAbsOrigin()
+
+	-- Apply Breath modifier on enemies around jakiro
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, path_radius, ability_target_team, ability_target_type, ability_target_flags, FIND_ANY_ORDER, false)
+	self:_DualBreathApplyModifierToEnemies( enemies )
 
 	-- Destroy trees
-	GridNav:DestroyTreesAroundPoint(target_vector, radius, false)
+	GridNav:DestroyTreesAroundPoint(caster_pos, path_radius, false)
+
+	-- Needs to minus the path_radius otherwise FindUnitsInLine will search the extra distance
+	local spill_distance = (self.spill_distance - path_radius)
+	local target_vector = caster_pos + ( self.breath_direction * spill_distance )
+
+	-- Apply Breath modifier on enemies infront of jakiro
+	enemies = FindUnitsInLine(caster:GetTeamNumber(), caster_pos, target_vector, nil, path_radius*2, ability_target_team, ability_target_type, ability_target_flags)
+	self:_DualBreathApplyModifierToEnemies( enemies )
+
+	-- Destroy trees
+	GridNav:DestroyTreesAroundPoint(target_vector, path_radius, false)
 end
 
 
@@ -180,20 +206,17 @@ function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
 		local breath_speed = self.breath_speed
 		local breath_traveled = self.breath_traveled
 
+		self:_DualBreathAOEApplyModifier()
+
 		if breath_traveled < self.breath_distance and not IsHardDisabled(caster) then
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.breath_direction * breath_speed)
 			self.breath_traveled = breath_traveled + breath_speed
-
-			self:_DualBreathApplyModifier( self.path_radius )
 		else
 			caster:InterruptMotionControllers( true )
 			if not IsStolenSpell(caster) then
 				-- Switch breath abilities if spell is not stolen
 				caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
 			end
-
-			-- Apply debuff modifier in spill_radius
-			self:_DualBreathApplyModifier( ability:GetSpecialValueFor("spill_radius") )
 
 			self:Destroy()
 		end
@@ -251,7 +274,6 @@ function base_modifier_dot_debuff:OnCreated()
 	self.parent 			= self:GetParent()
 
 	local ability 			= self:GetAbility()
-	
 
 	self.ability 			= ability
 
