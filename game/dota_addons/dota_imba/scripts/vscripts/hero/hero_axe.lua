@@ -605,7 +605,6 @@ function imba_axe_culling_blade:KillUnit(target)
 
   target:ForceKill(false)
   self.heal_amount = (self.caster:GetMaxHealth() / 100) * 20
-  print(self.heal_amount)
   self.caster:Heal(self.heal_amount, self.caster)
   -- Play the kill particle
   self.culling_kill_particle = ParticleManager:CreateParticle(self.particle_kill, PATTACH_CUSTOMORIGIN, self.caster)
