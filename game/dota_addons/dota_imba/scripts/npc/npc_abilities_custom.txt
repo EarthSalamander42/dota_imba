@@ -9534,6 +9534,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_fire_breath.vpcf"
+			"particle"						"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf"
 		}
 		
 		// Special	
@@ -9543,12 +9544,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_distance"			"550"
 			}
 			"03"
 			{
@@ -9570,7 +9571,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-10"
+				"move_slow"					"10"
 			}
 			"07"
 			{
@@ -9622,6 +9623,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_ice_breath.vpcf"
+			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 		
 		// Special	
@@ -9631,12 +9633,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"500"
+				"path_radius"				"250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_radius"				"550"
+				"spill_distance"			"550"
 			}
 			"03"
 			{
@@ -9657,13 +9659,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"-32"
+				"move_slow"					"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"-32"
+				"attack_slow"				"32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
@@ -9718,7 +9720,8 @@
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
+			"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
 
 		// Special
@@ -9755,12 +9758,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
+				"move_slow"				"15 15 15 15 20 25 30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
+				"attack_slow"			"15 15 15 15 20 25 30"
 			}
 			"08"
 			{
@@ -9818,7 +9821,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
+				"attack_slow" 				"30 40 50 60 65 70 75"
 			}
 			"02"
 			{
@@ -9848,7 +9851,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"-50"
+				"turn_slow"					"50"
 			}
 			"08"
 			{
@@ -9900,6 +9903,7 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
+			"particle"						"particles/world_environmental_fx/fire_camp_01_smoke.vpcf"
 		}
 
 		// Special
@@ -10005,7 +10009,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_increase"				"-8"
+				"slow_increase"				"8"
 			}
 		}
 	}
@@ -10143,7 +10147,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"init_slow"					"-5"
+				"init_slow"					"5"
 			}
 			"02"
 			{

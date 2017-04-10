@@ -2388,7 +2388,7 @@
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre"										"Macropyre"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Description"							"Jakiro exhales a huge cone of lasting flames, which deal damage over time to enemy units caught in the fire.\n<font color='#FF7800'>Reignite:</font> While afected by Macropyre, Fire Breath, Ice Breath, and Liquid Fire's durations will count down at half the normal rate.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter.</font>"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note0"									"The effect lingers for 1 second after targets leave the zone of effect."
-		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note1"									"Jakiro debuffs increases 0.25s per 0.5s while standing on Macropyre"
+		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Note1"									"Jakiro debuff durations increases 0.25s per 0.5s while standing on Macropyre"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_Lore"									"Ice and fire combine to rip the battlefield to shreds with extreme temperatures."
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_damage"									"DAMAGE PER SECOND:"
 		"DOTA_Tooltip_ability_imba_jakiro_macropyre_range"									"LENGTH:"
