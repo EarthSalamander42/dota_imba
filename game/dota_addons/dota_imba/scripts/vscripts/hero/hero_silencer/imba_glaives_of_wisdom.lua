@@ -182,7 +182,7 @@ function modifier_imba_silencer_glaives_of_wisdom:OnAttackLanded(keys)
 				EmitSoundOn(self.sound_hit, target)
 			end
 		end
-	end	
+	end
 end
 
 function modifier_imba_silencer_glaives_of_wisdom:OnOrder(keys)
