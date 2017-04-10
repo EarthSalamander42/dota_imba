@@ -47,7 +47,8 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		goldValue = playerInfo.player_gold;
 		
 		playerPanel.SetHasClass( "player_dead", ( playerInfo.player_respawn_seconds >= 0 ) );
-		playerPanel.SetHasClass( "local_player_teammate", (isTeammate || isSpectator) && ( playerId != Game.GetLocalPlayerID() ) );
+		playerPanel.SetHasClass( "local_player_teammate", isTeammate && ( playerId != Game.GetLocalPlayerID() ) );
+		playerPanel.SetHasClass( "spectator_view", isSpectator);
 
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "RespawnTimer", ( playerInfo.player_respawn_seconds + 1 ) ); // value is rounded down so just add one for rounded-up
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerName", playerInfo.player_name );
@@ -55,6 +56,31 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Kills", playerInfo.player_kills );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Deaths", playerInfo.player_deaths );
 		_ScoreboardUpdater_SetTextSafe( playerPanel, "Assists", playerInfo.player_assists );
+
+		var btnMuteVoice = playerPanel.FindChildInLayoutFile("BtnMuteVoice");
+		
+		if( btnMuteVoice )
+		{
+			btnMuteVoice.SetHasClass( "Activated", Game.IsPlayerMuted(playerId) );
+		}
+
+		var tableValue = CustomNetTables.GetTableValue( "shared_unit_control", Game.GetLocalPlayerID());
+		if ( tableValue && tableValue[playerId] != null){
+			var btnShareUnit = playerPanel.FindChildInLayoutFile("BtnShareUnit");
+			var btnShareHero = playerPanel.FindChildInLayoutFile("BtnShareHero");
+			var btnDisableHelp = playerPanel.FindChildInLayoutFile("BtnDisableHelp");
+
+			//bitmask; 1 shares heroes, 2 shares units, 4 disables help
+			if( btnShareUnit ){
+				btnShareUnit.SetHasClass( "Activated", ((tableValue[playerId] & 2) > 0) );
+			}
+			if( btnShareHero ){
+				btnShareHero.SetHasClass( "Activated", ((tableValue[playerId] & 1) > 0) );
+			}
+			if( btnDisableHelp ){
+				btnDisableHelp.SetHasClass( "Activated", ((tableValue[playerId] & 4) > 0) );
+			}
+		}
 
 		var playerPortrait = playerPanel.FindChildInLayoutFile( "HeroIcon" );
 		if ( playerPortrait )

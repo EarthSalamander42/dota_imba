@@ -6,7 +6,7 @@
     margin-top: 70px;
     flow-children: down;
 
-    transform: translatex( -600px );
+    transform: translatex( -650px );
     transition-property: transform;
     transition-duration: 0.1s;
 }
@@ -99,12 +99,24 @@
     text-align: center;
 }
 
+.ScoreCol_Buttons
+{
+    width: 110px;
+    text-align: center;
+    vertical-align: center;
+    flow-children: right;
+}
+
+.spectator_view .ScoreCol_Buttons
+{
+    width: 25px;
+}
+
 #TeamsContainer
 {
     flow-children: down;
     horizontal-align: left;
 }
-
 
 .FlyoutTeamData
 {
@@ -201,7 +213,7 @@
 {
     vertical-align: center;
     horizontal-align: center;
-    color: #898b8c;
+    color: #acacac;
     font-weight: bold;
     font-size: 26px;
 }
@@ -250,8 +262,74 @@
     text-decoration: underline;
 }
 
+.is_local_player .ScoreCol_Buttons Button
+{
+    visibility: collapse;
+}
+
+.ScoreCol_Buttons Button
+{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+    background-size: contain;
+}
+
+#BtnMuteVoice
+{
+    background-image: url("file://{images}/custom_game/mute_voice_off.png");
+}
+
+#BtnShareUnit
+{
+    background-image: url("file://{images}/custom_game/share_unit_off.png");
+    visibility: collapse;
+}
+
+#BtnShareHero
+{
+    background-image: url("file://{images}/custom_game/share_hero_off.png");
+    visibility: collapse;
+}
+
+#BtnDisableHelp
+{
+    background-image: url("file://{images}/custom_game/disable_help_off.png");
+    visibility: collapse;
+}
+
+.local_player_teammate #BtnShareUnit,
+.local_player_teammate #BtnShareHero,
+.local_player_teammate #BtnDisableHelp,
+{
+    visibility: visible;
+}
+
+#BtnMuteVoice.Activated
+{
+    background-image: url("file://{images}/custom_game/mute_voice_on.png");
+}
+
+#BtnShareUnit.Activated
+{
+    background-image: url("file://{images}/custom_game/share_unit_on.png");
+}
+
+#BtnShareHero.Activated
+{
+    background-image: url("file://{images}/custom_game/share_hero_on.png");
+}
+
+#BtnDisableHelp.Activated
+{
+    background-image: url("file://{images}/custom_game/disable_help_on.png");
+}
+
+
 .local_player_team #TeammateGoldAmount,
-.local_player_teammate #TeammateGoldAmount
+.spectator_view #TeammateGoldAmount
 {
     visibility: visible;
 }
