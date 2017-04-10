@@ -4641,8 +4641,8 @@
 		"DOTA_Tooltip_modifier_item_imba_solar_crest_debuff"								"Shine"
 		"DOTA_Tooltip_modifier_item_imba_solar_crest_debuff_Description"					"Armor decreased by %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS%, and accuracy decreased by %dMODIFIER_PROPERTY_MISS_PERCENTAGE%%%."
 
-		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength"									"Unholy Strength"
-		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_Description"						"Losing 45 health per second, but gaining %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength, %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage, %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor, and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
+		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_visual_effect"					"Unholy Strength"
+		"DOTA_Tooltip_modifier_imba_armlet_unholy_strength_visual_effect_Description"		"Losing 45 health per second, but gaining %dMODIFIER_PROPERTY_STATS_STRENGTH_BONUS% strength, %dMODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE% bonus damage, %dMODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS% armor, and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
 
 		"DOTA_Tooltip_modifier_item_imba_sange_maim"										"Maim"
 		"DOTA_Tooltip_modifier_item_imba_sange_maim_Description"							"Slowed by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE%%% move and %dMODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT% attack speed."
