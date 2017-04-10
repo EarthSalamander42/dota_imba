@@ -389,15 +389,12 @@ modifier_imba_curse_of_avernus_debuff = class({
 })
 
 function modifier_imba_curse_of_avernus_debuff:_UpdateSlowValues()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local ability_level = ability:GetLevel() - 1
+	local ability = self:GetAbility()
 
-		self.move_slow = -(ability:GetLevelSpecialValueFor("move_slow", ability_level))
-		self.attack_slow = -(ability:GetLevelSpecialValueFor("attack_slow", ability_level))
-		-- Convert heal_convert to decimal point (optimization)
-		self.heal_convert = (ability:GetLevelSpecialValueFor("heal_convert", ability_level) / 100)
-	end
+	self.move_slow = -(ability:GetSpecialValueFor("move_slow"))
+	self.attack_slow = -(ability:GetSpecialValueFor("attack_slow"))
+	-- Convert heal_convert to decimal point (optimization)
+	self.heal_convert = (ability:GetSpecialValueFor("heal_convert") / 100)
 end
 
 function modifier_imba_curse_of_avernus_debuff:OnCreated()
@@ -520,24 +517,19 @@ modifier_imba_curse_of_avernus_buff = class({
 })
 
 function modifier_imba_curse_of_avernus_buff:_UpdateIncreaseValues()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local caster = self:GetCaster()
-		local ability_level = ability:GetLevel() - 1
+	local ability = self:GetAbility()
+	local caster = self:GetCaster()
 
-		-- #4 Talent: +5% move speed/+30 attack speed on Curse of Avernus
-		local talent_name = "special_bonus_imba_abaddon_4"
-		local move_increase_name = "move_increase"
-		local attack_increase_name = "attack_increase"
-		self.move_increase = ability:GetSpecialValueFor( move_increase_name ) + caster:FindSpecificTalentValue( talent_name, move_increase_name )
-		self.attack_increase = ability:GetLevelSpecialValueFor( attack_increase_name , ability_level) + caster:FindSpecificTalentValue( talent_name, attack_increase_name )
-	end
+	-- #4 Talent: +5% move speed/+30 attack speed on Curse of Avernus
+	local talent_name = "special_bonus_imba_abaddon_4"
+	local move_increase_name = "move_increase"
+	local attack_increase_name = "attack_increase"
+	self.move_increase = ability:GetSpecialValueFor( move_increase_name ) + caster:FindSpecificTalentValue( talent_name, move_increase_name )
+	self.attack_increase = ability:GetSpecialValueFor( attack_increase_name ) + caster:FindSpecificTalentValue( talent_name, attack_increase_name )
 end
 
 function modifier_imba_curse_of_avernus_buff:OnCreated()
-	if IsServer() then
-		self:_UpdateIncreaseValues()
-	end
+	self:_UpdateIncreaseValues()
 end
 
 function modifier_imba_curse_of_avernus_buff:OnRefresh()
@@ -561,8 +553,7 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 -----------------------------
 
 imba_abaddon_over_channel = class({
-	IsStealable 			= function(self) return false end,
-	ResetToggleOnRespawn 	= function(self) return false end,
+	IsStealable 			= function(self) return false end
 })
 LinkLuaModifier("modifer_over_channel_caster", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
@@ -578,10 +569,24 @@ function imba_abaddon_over_channel:OnToggle()
 	end
 end
 
+function imba_abaddon_over_channel:OnOwnerSpawned()
+	-- self.death_toggle_mode can be nil but still works here
+	if self.death_toggle_mode ~= self:GetToggleState() then
+		self:ToggleAbility()
+	end
+end
+
+function imba_abaddon_over_channel:OnOwnerDied()
+	-- If this is not overriden, toggle will set back to off when hero dies
+	self.death_toggle_mode = self:GetToggleState()
+	-- Note that I have tried ResetToggleOnRespawn but it doesn't seem to work
+end
+
 modifer_over_channel_caster = class({
 	IsHidden				= function(self) return true end,
 	IsPurgable	  			= function(self) return false end,
 	IsDebuff	  			= function(self) return false end,
+	IsPermanent				= function(self) return true end,
 	RemoveOnDeath			= function(self) return false end,
 	AllowIllusionDuplicate	= function(self) return true end -- Allow illusions to carry this particle modifier
 })
