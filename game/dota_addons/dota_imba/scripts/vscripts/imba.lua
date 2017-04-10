@@ -652,9 +652,7 @@ function GameMode:OrderFilter( keys )
 		end
 	end
 	
-	
-	
-	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_NO_TARGET then
 		local ability = EntIndexToHScript(keys.entindex_ability)
 		
 		-- Magnataur Skewer handler

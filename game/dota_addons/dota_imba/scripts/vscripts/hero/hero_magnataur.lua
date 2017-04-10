@@ -136,7 +136,7 @@ function imba_magnataur_shockwave:OnSpellStart()
 		local polarize_duration = self:GetTalentSpecialValueFor("polarize_duration")
 		local speed = self:GetSpecialValueFor("speed")
 		local radius = self:GetSpecialValueFor("radius")
-		local direction = (target_loc - caster_loc):Normalized() 
+		local direction = (target_loc - caster_loc):Normalized()
 
 		-- Creating a unique list of hit-Targets, delete it after 15 secs
 		local index = "hit_targets_" .. tostring(GameRules:GetDOTATime(true,true))
@@ -159,7 +159,7 @@ function imba_magnataur_shockwave:OnSpellStart()
 		end
 
 		-- Launch projectile
-		local projectile = 
+		local projectile =
 		{
 			Ability				= self,
 			EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
@@ -223,7 +223,7 @@ function imba_magnataur_shockwave:OnProjectileHit_ExtraData(target, location, Ex
 					local new_direction = RotateVector2D(direction,angle,true)
 					local velocity = new_direction * ExtraData.speed
 					-- Launch projectile
-					local projectile = 
+					local projectile =
 					{
 						Ability				= self,
 						EffectName			= "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
@@ -315,6 +315,11 @@ modifier_imba_empower_aura = class({})
 function modifier_imba_empower_aura:GetAuraEntityReject(target)
     if IsServer() then
 		local parent = self:GetParent()
+		
+		-- Illusion handling
+		if (parent:GetUnitName() == target:GetUnitName()) and target ~= parent then
+			return true
+		end
 
     	-- Active only on Scepter
         if parent:HasScepter() then
@@ -331,13 +336,13 @@ function modifier_imba_empower_aura:GetAuraEntityReject(target)
 				ParticleManager:ReleaseParticleIndex(self.particle)
 				self.particle = nil
 			end
-        end        
-		
+        end
+
 		-- Always on caster
     	if target == parent then
     		return false
     	end
-		
+
         return true
     end
 end
@@ -606,7 +611,7 @@ function modifier_imba_supercharged:GetTexture()
 end
 
 function modifier_imba_supercharged:DeclareFunctions()
-	local decFuncs = 
+	local decFuncs =
 	{
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
@@ -638,6 +643,15 @@ function imba_magnataur_skewer:OnAbilityPhaseStart()
 	if caster:HasModifier("modifier_imba_skewer_motion_controller_linger") then return false end
 	return true
 end
+
+function imba_magnataur_skewer:GetBehavior()
+	if self:GetCaster():HasModifier("modifier_imba_skewer_motion_controller") then
+		return DOTA_ABILITY_BEHAVIOR_NO_TARGET
+	else
+		return DOTA_ABILITY_BEHAVIOR_POINT + DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+	end
+end
+
 
 function imba_magnataur_skewer:OnSpellStart()
 	if IsServer() then
@@ -758,7 +772,7 @@ function modifier_imba_skewer_motion_controller:RemoveOnDeath()
 end
 
 function modifier_imba_skewer_motion_controller:CheckState()
-	local state = 
+	local state =
 	{
 		[MODIFIER_STATE_STUNNED] = true
 	}
@@ -831,7 +845,7 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 					if self.begged_for_pardon and not enemy:HasModifier("modifier_imba_polarize_debuff") then
 						local knockup_duration = 0.5 + (math.random() * 0.3)
 						local angle = (math.random() - 0.5) * 100
-						local knockback = 
+						local knockback =
 						{
 							should_stun = 1,
 							knockback_duration = knockup_duration,
@@ -847,10 +861,25 @@ function modifier_imba_skewer_motion_controller:UpdateHorizontalMotion( unit, ti
 							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
 						end)
 					else
-						ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-					end
-					if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
-						enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+						local knockup_duration = 0.5
+						local knockback =
+						{
+							should_stun = 1,
+							knockback_duration = knockup_duration,
+							duration = knockup_duration,
+							knockback_distance = self.pardon_min_range + knockup_duration * 100,
+							knockback_height = 125 + (knockup_duration * 50),
+							center_x = caster_loc.x,
+							center_y = caster_loc.y,
+							center_z = caster_loc.z
+						}
+						enemy:AddNewModifier(caster, self:GetAbility(), "modifier_knockback", knockback)
+						Timers:CreateTimer(knockup_duration, function()
+							ApplyDamage({victim = enemy, attacker = caster, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
+							if enemy:HasModifier("modifier_imba_polarize_debuff") and (polarize_counter == 2) then
+								enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_entangle", {duration = self.entangle_dur})
+							end
+						end)
 					end
 					enemy:AddNewModifier(caster, ability, "modifier_imba_skewer_slow", {duration = self.slow_duration, pardoned = self.begged_for_pardon})
 				end
@@ -900,7 +929,7 @@ function modifier_imba_skewer_motion_controller_target:RemoveOnDeath()
 end
 
 function modifier_imba_skewer_motion_controller_target:CheckState()
-	local state = 
+	local state =
 	{
 		[MODIFIER_STATE_STUNNED] = true
 	}
@@ -932,7 +961,7 @@ function modifier_imba_skewer_motion_controller_target:GetOverrideAnimation()
 end
 
 function modifier_imba_skewer_motion_controller_target:DeclareFunctions()
-	local decFuncs = 
+	local decFuncs =
 	{
 		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
 	}
@@ -987,7 +1016,7 @@ function modifier_imba_skewer_entangle:GetModifierMoveSpeed_Limit()
 end
 
 function modifier_imba_skewer_entangle:CheckState()
-	local state = 
+	local state =
 	{
 		[MODIFIER_STATE_NO_UNIT_COLLISION] = true
 	}
