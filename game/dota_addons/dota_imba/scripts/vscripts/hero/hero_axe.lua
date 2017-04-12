@@ -178,12 +178,10 @@ function modifier_imba_berserkers_call_enemy:OnDestroy()
 end
 
 function modifier_imba_berserkers_call_enemy:GetModifierAttackSpeedBonus_Constant()
-  if IsServer() then
     local caster = self:GetCaster()
     local ability = self:GetAbility()
     self.speed_bonus = ability:GetSpecialValueFor("bonus_as") + caster:FindTalentValue("special_bonus_imba_axe_5")
     return self.speed_bonus
-  end
 end
 
 function modifier_imba_berserkers_call_enemy:GetStatusEffectName()
@@ -605,6 +603,7 @@ function imba_axe_culling_blade:KillUnit(target)
 
   target:ForceKill(false)
   self.heal_amount = (self.caster:GetMaxHealth() / 100) * 20
+  print(self.heal_amount)
   self.caster:Heal(self.heal_amount, self.caster)
   -- Play the kill particle
   self.culling_kill_particle = ParticleManager:CreateParticle(self.particle_kill, PATTACH_CUSTOMORIGIN, self.caster)
