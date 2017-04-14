@@ -2361,6 +2361,18 @@ function CalculateDistance(ent1, ent2)
 	return distance
 end
 
+function RollPseudoRandom(base_chance, entity)
+    entity.pseudoRandomModifier = entity.pseudoRandomModifier or 0
+    local prngBase = base_chance / 3
+    if RollPercentage( prngBase + entity.pseudoRandomModifier ) then
+        entity.pseudoRandomModifier = 0
+        return true
+    else
+        entity.pseudoRandomModifier = entity.pseudoRandomModifier + prngBase
+        return false
+    end
+end
+
 -------------------------------------------------------------------------------------------------------
 -- Client side daytime tracking system
 -------------------------------------------------------------------------------------------------------
