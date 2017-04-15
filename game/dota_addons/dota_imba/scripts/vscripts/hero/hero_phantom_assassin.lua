@@ -1,8 +1,10 @@
 --[[
 Author: sercankd
 Date: 06.04.2017
-Updated: 13.04.2017
+Updated: 15.04.2017
 ]]
+
+CreateEmptyTalents("phantom_assassin")
 
 -------------------------------------------
 -- Stifling Dagger
