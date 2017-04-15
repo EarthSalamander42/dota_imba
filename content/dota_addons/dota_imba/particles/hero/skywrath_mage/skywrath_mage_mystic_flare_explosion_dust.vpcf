@@ -54,8 +54,8 @@
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 200.0
-			m_flRadiusMin = 150.0
+			m_flRadiusMax = 150.0
+			m_flRadiusMin = 50.0
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
@@ -98,6 +98,21 @@
 			_class = "C_OP_ContinuousEmitter"
 			m_flEmissionDuration = 0.75
 			m_flEmitRate = 200.0
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }
