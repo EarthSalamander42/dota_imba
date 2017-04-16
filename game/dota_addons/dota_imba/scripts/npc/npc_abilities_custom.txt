@@ -4185,7 +4185,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
@@ -9534,7 +9534,6 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_fire_breath.vpcf"
-			"particle"						"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf"
 		}
 		
 		// Special	
@@ -9544,12 +9543,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"250"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_distance"			"550"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
@@ -9571,7 +9570,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"10"
+				"move_slow"					"-10"
 			}
 			"07"
 			{
@@ -9623,7 +9622,6 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_ice_breath.vpcf"
-			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 		
 		// Special	
@@ -9633,12 +9631,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"250"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_distance"			"550"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
@@ -9659,13 +9657,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"32"
+				"move_slow"					"-32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"32"
+				"attack_slow"				"-32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
@@ -9720,8 +9718,7 @@
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
-			"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
 
 		// Special
@@ -9758,12 +9755,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"15 15 15 15 20 25 30"
+				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"15 15 15 15 20 25 30"
+				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
 			}
 			"08"
 			{
@@ -9821,7 +9818,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"30 40 50 60 65 70 75"
+				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
 			}
 			"02"
 			{
@@ -9851,7 +9848,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"50"
+				"turn_slow"					"-50"
 			}
 			"08"
 			{
@@ -9903,7 +9900,6 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
-			"particle"						"particles/world_environmental_fx/fire_camp_01_smoke.vpcf"
 		}
 
 		// Special
@@ -10009,7 +10005,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_increase"				"8"
+				"slow_increase"				"-8"
 			}
 		}
 	}
@@ -10147,7 +10143,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"init_slow"					"5"
+				"init_slow"					"-5"
 			}
 			"02"
 			{
@@ -17733,14 +17729,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
-
+        "MaxLevel"						"7"
+        
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -17753,26 +17751,26 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"525 750 975 1200 1225 1250 1275"
 		"AbilityCastPoint"				"0.2"
-		
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
 		"AbilityDuration"				"4.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30 25 20 15"
-			
-		// Special	
+		"AbilityManaCost"				"30 25 20 15 10 5 0"
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-20 -30 -40 -50"
+				"move_slow"				"-50"
 			}
 			"02"
 			{
@@ -17782,7 +17780,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"4"
+				"slow_duration"			"1 2 3 4 4 4 4"
 			}
 			"04"
 			{
@@ -17792,102 +17790,27 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"25 50 75 100"
+				"bonus_damage"			"65"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"TrackingProjectile"
+			"06"
 			{
-				"Target"           		"TARGET"
-				"EffectName"       		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
-				"Dodgeable"        		"1"
-				"ProvidesVision"   		"1"
-				"VisionRadius"     		"600"
-				"MoveSpeed"        		"%dagger_speed"
-				"SourceAttachment"  	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+				"var_type"				    "FIELD_INTEGER"
+				"damage_reduction"			"75 60 45 30 20 10 0"
 			}
-
-			"FireSound"
+			"07"
 			{
-				"EffectName"			"Hero_PhantomAssassin.Dagger.Cast"
-				"Target"				"CASTER"
+				"var_type"				"FIELD_INTEGER"
+				"dagger_vision"			"200 200 200 200 350 500 650"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_phantom_assassin.lua"
-				"Function"				"StiflingDaggerHit"
-				"Target"				"TARGET"
-
-				"sound_hit"				"Hero_PhantomAssassin.Dagger.Target"
-				"ability_crit"			"imba_phantom_assassin_coup_de_grace"
-				"modifier_crit"			"modifier_imba_coup_de_grace_crit"
-				"modifier_stacks"		"modifier_imba_coup_de_grace_stacks"
-				"modifier_kill"			"modifier_imba_coup_de_grace_kill"
-				"modifier_silence"		"modifier_imba_stifling_dagger_silence"
-				"modifier_slow"			"modifier_imba_stifling_dagger_slow"
-				"modifier_damage"		"modifier_imba_stifling_dagger_bonus_damage"
+				"var_type"				"FIELD_INTEGER"
+				"scepter_dagger_count"	"3"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_stifling_dagger_slow"
+			"09"
 			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-
-				"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%move_slow"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_stifling_dagger_silence"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%silence_duration"
-
-				"EffectName"			"particles/generic_gameplay/generic_silenced.vpcf"
-				"EffectAttachType"		"follow_overhead"
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_stifling_dagger_bonus_damage"
-			{
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Duration"				"0.01"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-				}
+				"var_type"				    "FIELD_INTEGER"
+				"scepter_knives_interval"	"0.3"
 			}
 		}
 	}
@@ -17899,13 +17822,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+        "MaxLevel"						"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17915,21 +17840,21 @@
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.2"
 		"CastFilterRejectCaster"		"1"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 8 6 4"
+		"AbilityCooldown"				"14 11 8 5 5 5 5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17942,12 +17867,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"3.0"
+				"buff_duration"				"4.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"1400"
+				"tooltip_range"				"1000"
 			}
 			"04"
 			{
@@ -17959,69 +17884,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"projectile_width"			"125"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"06"
 			{
-				"ScriptFile"				"hero/hero_phantom_assassin.lua"
-				"Function"					"PhantomStrike"
-
-				"Target"					"TARGET"
-				"modifier_phantom_strike"	"modifier_imba_phantom_strike"
-				"modifier_stacks"			"modifier_imba_coup_de_grace_stacks"
-				"sound_start"				"Hero_PhantomAssassin.Strike.Start"
-				"sound_end"					"Hero_PhantomAssassin.Strike.End"
-				"particle_end"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-				"EffectAttachType"			"start_at_customorigin"
-				
-				"ControlPointEntities"
-				{
-					"TARGET"				"follow_origin"
-					"TARGET"				"follow_origin"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_PhantomAssassin.Attack"
-				"Target"					"TARGET"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_phantom_assassin.lua"
-				"Function"					"PhantomStrikeHit"
-
-				"ability_crit"				"imba_phantom_assassin_coup_de_grace"
-				"modifier_stacks"			"modifier_imba_coup_de_grace_stacks"
-				"modifier_crit"				"modifier_imba_coup_de_grace_crit"
-				"sound_kill"				"Hero_PhantomAssassin.CoupDeGrace"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_phantom_strike"
-			{
-				"IsBuff"					"1"
-				"Duration"					"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-				}
+				"var_type"					    "FIELD_INTEGER"
+				"bonus_coup_de_grace"			"1 1 1 1 4 7 10"
 			}
 		}
 	}
@@ -18033,10 +17899,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"				"phantom_assassin_blur"
 		"AbilityCastRange"					"1600"
+        "MaxLevel"						"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18053,7 +17921,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"evasion"					"25 35 45 55"
+				"evasion"					"20 30 40 50 53 56 60"
 			}
 			"02"
 			{
@@ -18063,78 +17931,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blur_ms"					"12"
+				"blur_ms"					"3 3 3 3 6 9 12"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_blur"
+			"04"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"Blur"
-
-						"modifier_blur"		"modifier_imba_blur_blur"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion"
-				}
-			}
-
-			"modifier_imba_blur_blur"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"StatusEffectName"			"particles/hero/phantom_assassin/blur_status_fx.vpcf"
-				"StatusEffectPriority"		"11"
-
-				"EffectName"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"BlurStart"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"BlurEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blur_ms"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"speed_bonus_duration"		"7"
 			}
 		}
 	}
@@ -18145,11 +17947,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"phantom_assassin_coup_de_grace"
+        "MaxLevel"						"6"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18168,7 +17972,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"250 350 450"
+				"crit_bonus"				"230 340 450 480 510 540"
 			}
 			"02"
 			{
@@ -18178,157 +17982,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_increase"				"2"
+				"crit_increase_damage"	    "10 10 10 20 30 40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"crit_increase_duration"	"3.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance_scepter"		"2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_coup_de_grace"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"OnAttackStart"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_crit"
-						"Target"			"CASTER"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_kill"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"CoupDeGrace"
-						"Target"			"TARGET"
-
-						"stack_modifier"	"modifier_imba_coup_de_grace_stacks"
-						"crit_modifier"		"modifier_imba_coup_de_grace_crit"
-						"kill_modifier"		"modifier_imba_coup_de_grace_kill"
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_crit"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_bonus"
-				}
-
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_crit"
-						"Target"			"CASTER"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_PhantomAssassin.CoupDeGrace"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_kill"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_coup_de_grace_kill"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_bonus"
-				}
-
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_kill"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"CoupDeGraceKill"
-
-						"sound_kill"		"Hero_PhantomAssassin.CoupDeGrace"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_stacks"
-			{
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"Passive"					"0"
-				"IsPurgable"				"0"
-
-				"Duration"					"%crit_increase_duration"
+				"crit_increase_duration"	"7.0"
 			}
 		}
 	}
@@ -19314,26 +18973,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pugna_nether_blast"
-		"AOERadius"						"%radius"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_pugna.lua"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"550"
+		"AbilityCastRange"				"400 400 400 400 450 500 550"
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"85 105 125 145"
+		"AbilityManaCost"				"85 105 125 145 150 155 160"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19352,97 +19012,59 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"80 120 160 200"
-			}
+				"mini_blast_count"			"3 3 3 3 4 5 6"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_damage"			"30 45 60 75"
-			}
+				"magic_res_reduction_pct"	"4"
+				"LinkedSpecialBonus"		"special_bonus_imba_pugna_8"
+			}			
+
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"secondary_delay"			"0.9"
-			}
+				"magic_res_duration"		"6.5"
+			}			
+
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"425"
-			}
+				"var_type"					"FIELD_FLOAT"
+				"blast_delay"				"0.9"
+			}			
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"-15"
-			}
+				"damage"					"100 175 250 325 350 375 400"
+				"LinkedSpecialBonus"		"special_bonus_imba_pugna_3"
+			}	
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"-10"
+				"damage_buildings_pct"		"50"
 			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"6"
-			}
+				"mini_blast_distance"		"350 350 350 350 325 300 275"
+			}	
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"secondary_blasts"			"3 4 5 6"
-			}
+				"mini_blast_radius"			"400"
+			}				
+
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"center_radius"				"30"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_amp_tooltip"			"20"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"slow_tooltip"				"10"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_pugna.lua"
-				"Function"					"NetherBlast"
-				"Target"					"POINT"
-
-				"sound_cast"				"Hero_Pugna.NetherBlastPreCast"
-				"sound_blast"				"Hero_Pugna.NetherBlast"
-				"particle_pre_blast"		"particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
-				"particle_blast"			"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
-				"modifier_debuff"			"modifier_imba_nether_blast_debuff"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_nether_blast_debuff"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"EffectName"				"particles/hero/pugna/nether_blast_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"		"%magic_amp"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow" 
-				}
-			}
-		}
+				"main_blast_radius"			"400"
+			}				
+		}		
 	}
 
 	//=================================================================================================================
@@ -19452,12 +19074,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"		
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"pugna_decrepify"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_pugna.lua"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -19466,7 +19089,7 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"15 12 9 6 6 6 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -19488,132 +19111,46 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"magic_amp"					"-30 -40 -50 -60"
-			}
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.5 3.5 3.5 3.5 3.75 4 4.25"
+				"LinkedSpecialBonus"		"special_bonus_imba_pugna_6"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow"						"-30 -40 -50 -60"
+				"ally_res_reduction_pct"	"25"
 			}
+
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.5"
+				"var_type"					"FIELD_INTEGER"
+				"enemy_res_reduction_pct"	"30 40 50 60 60 60 60"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blast_damage"				"60"
+				"enemy_slow_pct"			"30 40 50 60 60 60 60"
 			}
+
 			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"structure_damage"			"30"
-			}
-			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"blast_delay"				"0.9"
 			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_radius"				"100"
+			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blast_radius"				"500"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_pugna.lua"
-				"Function"					"Decrepify"
-
-				"sound_cast"				"Hero_Pugna.Decrepify"
-				"modifier_ally"				"modifier_imba_decrepify_ally"
-				"modifier_enemy"			"modifier_imba_decrepify_enemy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_decrepify_ally"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_pugna.lua"
-						"Function"				"DecrepifyBlast"
-
-						"sound_pre_blast"		"Hero_Pugna.NetherBlastPreCast"
-						"sound_blast"			"Hero_Pugna.NetherBlast"
-						"particle_pre_blast"	"particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
-						"particle_blast"		"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_decrepify_enemy"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"1"
-
-				"Duration"					"%duration"
-
-				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_pugna.lua"
-						"Function"				"DecrepifyBlast"
-
-						"sound_pre_blast"		"Hero_Pugna.NetherBlastPreCast"
-						"sound_blast"			"Hero_Pugna.NetherBlast"
-						"particle_pre_blast"	"particles/units/heroes/hero_pugna/pugna_netherblast_pre.vpcf"
-						"particle_blast"		"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE"		"%magic_amp"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"				"%slow"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"				"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ATTACK_IMMUNE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"total_dmg_conversion_pct"	"10 10 10 10 15 20 25"
+				"LinkedSpecialBonus"		"special_bonus_imba_pugna_4"
 			}
 		}
 	}
@@ -19625,21 +19162,23 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pugna_nether_ward"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_pugna.lua"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"150"
 		"AbilityCastPoint"				"0.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"30.0"
+		"AbilityCooldown"				"35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -19666,55 +19205,50 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1600"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_multiplier"		"1.25 1.5 1.75 2.0"
+				"mana_multiplier"		"1 1.25 1.5 1.75 1.8 1.85 1.9"
+				"LinkedSpecialBonus"	"special_bonus_imba_pugna_2"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_regen"			"-1"
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen_reduction"	"0.25 0.5 0.75 1 1.1 1.2 1.3"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"ward_health"			"20 24 28 32"
+				"ward_health"			"16 16 16 16 20 24 28"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hero_damage"			"4"
 			}
+
 			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage"			"1"
+			}			
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"
+			}
+
+			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_damage"			"4"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"35"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_regen_tooltip"	"1"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_pugna.lua"
-				"Function"				"NetherWard"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_Pugna.NetherWard"
-				"ability_ward"			"imba_pugna_nether_ward_aura"
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -19724,25 +19258,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"pugna_nether_ward"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_pugna.lua"				
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19753,112 +19276,38 @@
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1600"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_multiplier"		"1.25 1.5 1.75 2.0"
+				"mana_multiplier"		"1 1.25 1.5 1.75 1.8 1.85 1.9"
+				"LinkedSpecialBonus"	"special_bonus_imba_pugna_2"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"			"-1.0"
-			}
+				"mana_regen_reduction"	"0.25 0.5 0.75 1 1.1 1.2 1.3"
+			}			
+
 			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ward_health"			"20 24 28 32"
-			}
-			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hero_damage"			"4"
 			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"creep_damage"			"1"
+			}						
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"spell_damage"			"4"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"30"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_regen_tooltip"	"1"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_nether_ward"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_nether_ward_debuff"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster"		"0"
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"NetherWardDamage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_nether_ward_debuff"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnSpentMana"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"NetherWardZap"
-
-						"sound_zap"			"Hero_Pugna.NetherWard.Attack"
-						"sound_target"		"Hero_Pugna.NetherWard.Target"
-						"particle_heavy"	"particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_heavy_ti_5.vpcf"
-						"particle_medium"	"particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_medium_ti_5.vpcf"
-						"particle_light"	"particles/econ/items/pugna/pugna_ward_ti5/pugna_ward_attack_light_ti_5.vpcf"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mana_regen"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -19868,7 +19317,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -19876,19 +19325,11 @@
 		"SpellImmunityType"					"SPELL_IMMUNITY_ALLIES_YES"
 		"AbilityTextureName"				"custom/pugna_life_drain_end"
 		"MaxLevel"							"1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"0"
-		"AbilityCastPoint"					"0.0"
+		"ScriptFile"						"hero/hero_pugna.lua"			
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"0.5"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"
+		"AbilityCooldown"					"0.5"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19899,18 +19340,7 @@
 				"var_type"					"FIELD_INTEGER"
 				"search_range"				"1600"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_pugna.lua"
-				"Function"					"LifeDrainCancel"
-
-				"modifier_ally"				"modifier_imba_life_drain_ally"
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -19920,30 +19350,31 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"					"1"
 		"AbilityTextureName"				"pugna_life_drain"
+		"MaxLevel"							"6"
+		"ScriptFile"						"hero/hero_pugna.lua"		
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"900"
-		"AbilityCastPoint"					"0.2"
-		"CastFilterRejectCaster"			"1"
+		"AbilityCastRange"					"900 1050 1200 1200 1200 1200"
+		"AbilityCastPoint"					"0.2"		
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"22.0"
+		"AbilityCooldown"					"22"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"125 175 225"
+		"AbilityManaCost"					"125 175 225 240 255 270"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19961,151 +19392,46 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_drain"				"150 200 250"
+				"health_drain"				"150 200 250 280 310 340"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"health_drain_scepter"		"4"
+				"scepter_health_drain"		"180 240 300 330 360 390"
 			}
+			
 			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"break_range"				"1000 1100 1200"
-			}
-			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"10"
 			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_slow_pct"				"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_pugna_7"
+			}
+
 			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_per_second"			"0 0 0 2 4 6"
+			}
+
+			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_rate"					"0.25"
 			}
-		}
 
-		"OnUpgrade"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_pugna.lua"
-				"Function"					"LifeDrainCancelUpgrade"
-
-				"ability_cancel"			"imba_pugna_life_drain_end"
+				"var_type"					"FIELD_INTEGER"
+				"break_distance_extend"		"50"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_pugna.lua"
-				"Function"					"LifeDrain"
-
-				"sound_cast"				"Hero_Pugna.LifeDrain.Cast"
-				"sound_target"				"Imba.PugnaLifeDrainTarget"
-				"modifier_enemy"			"modifier_imba_life_drain_enemy"
-				"modifier_ally"				"modifier_imba_life_drain_ally"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_life_drain_enemy"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%duration"
-
-				"ThinkInterval"				"%tick_rate"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainTickEnemy"
-
-						"modifier_enemy"	"modifier_imba_life_drain_enemy"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainEnemyStart"
-
-						"particle_drain"	"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
-						"sound_loop"		"Imba.PugnaLifeDrainLoop"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainEnemyEnd"
-
-						"sound_loop"		"Imba.PugnaLifeDrainLoop"
-						"sound_target"		"Hero_Pugna.LifeDrain.Target"
-					}
-				}
-			}
-
-			"modifier_imba_life_drain_ally"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%duration"
-
-				"ThinkInterval"				"%tick_rate"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainTickAlly"
-
-						"modifier_ally"		"modifier_imba_life_drain_ally"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainAllyStart"
-
-						"particle_drain"	"particles/units/heroes/hero_pugna/pugna_life_give.vpcf"
-						"sound_loop"		"Imba.PugnaLifeDrainLoop"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_pugna.lua"
-						"Function"			"LifeDrainAllyEnd"
-
-						"sound_loop"		"Imba.PugnaLifeDrainLoop"
-						"sound_target"		"Hero_Pugna.LifeDrain.Target"
-					}
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -21325,7 +20651,7 @@
 		"BaseClass"							"ability_lua"
 		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
 
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
@@ -21637,7 +20963,7 @@
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"far_armor"						"-4 -5 -6 -17"
+				"far_armor"						"-4 -5 -6 -7"
 			}
 			"11"
 			{
@@ -23910,34 +23236,36 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"sandking_burrowstrike"
-		"AOERadius"						"%burrow_width"
+		"AbilityTextureName"			"sandking_burrowstrike"		
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 900 1100 1300"
+		"AbilityCastRange"				"350 450 550 650 775 900 1025"
 		"AbilityCastPoint"				"0.0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11.0"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"110 120 130 140 145 150 155"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sandking.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
 		}
 		
@@ -23948,84 +23276,56 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burrow_width"			"150"
-			}
+				"burrow_speed"			"3000"
+			}			
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"burrow_duration"		"2.17"
+				"var_type"				"FIELD_INTEGER"
+				"burrow_radius"			"150"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_1"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"burrow_speed"			"5000"
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.5"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burrow_anim_time"		"0.57"
+				"stun_duration"			"2.2"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"700 900 1100 1300"
+				"damage"				"100 160 220 280 310 340 370"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 160 220 280"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"LinearProjectile"
-			{
-				"MoveSpeed"					"%burrow_speed"
-				"StartRadius"				"%burrow_width"
-				"EndRadius"					"%burrow_width"
-				"TargetTeams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"HasFrontalCone"			"0"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
-				"EffectAttachType"			"start_at_customorigin"
-				"Target"					"CASTER"
-				"ControlPoints"
-				{
-					"01"					"POINT"
-				}
-			}
-			
-			"FireSound"
-			{
-				"EffectName"				"Ability.SandKing_BurrowStrike"
-				"Target"					"CASTER"
+				"max_push_distance"		"150 200 250 300 400 500 600"
 			}
 
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_sandking.lua"
-				"Function"					"Burrowstrike"
-				"TARGET"					"POINT"
+				"var_type"				"FIELD_INTEGER"
+				"knockup_height"		"350"
 			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
 
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"				"hero/hero_sandking.lua"
-				"Function"					"BurrowstrikeHit"
+				"var_type"				"FIELD_FLOAT"
+				"knockup_duration"		"0.52"
+			}
 
-				"modifier_caustic"			"modifier_imba_caustic_finale"
-				"modifier_sands"			"modifier_imba_sandking_treacherous_sands"
-				"ability_caustic"			"imba_sandking_caustic_finale"
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burrowstrike_time"		"0.45"
 			}
 		}
 	}
@@ -24037,7 +23337,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -24045,20 +23345,22 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_sand_storm"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"525 550 575 600"
+		"AbilityCastRange"				"525 525 525 525 560 595 630"
 		"AbilityCastPoint"				"0.01"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
-		"AbilityChannelTime"			"50.0"
+		"AbilityCooldown"				"34 26 18 10 9 8 7"
+		"AbilityChannelTime"			"50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 50 40 30"
+		"AbilityManaCost"				"60 50 40 30 20 10 0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -24067,6 +23369,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
+			"particle"					"particles/hero/sand_king/sandking_sandstorm_aura.vpcf"
 		}
 		
 		// Special
@@ -24075,90 +23378,39 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"invis_duration"		"1.5"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"25 50 75 100 110 120 130"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"525 550 575 600"
+				"radius"				"525 525 525 525 560 595 630"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 50 75 100"
+				"pull_speed"			"20 40 60 80 120 160 200"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_force"			"45 65 85 105"
+				"pull_prevent_radius"	"100"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"wind_force_tooltip"	"90 120 150 180"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_duration"			"50"
-			}
+				"var_type"				"FIELD_FLOAT"
+				"invis_extend_time"		"1.5"
+			}			
+
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_tick"			"0.5"
-			}
-		}
-		
-		"OnSpellStart"
-		{			
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"SandStorm"
-
-				"sound_cast"			"Ability.SandKing_SandStorm.start"
-				"sound_loop"			"Ability.SandKing_SandStorm.loop"
-				"sound_darude"			"Imba.SandKingSandStorm"
-				"particle_sandstorm"	"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
-				"modifier_caster"		"modifier_imba_sandstorm_caster"
-			}
-		}
-
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"SandStormChannelEnd"
-
-				"sound_loop"			"Ability.SandKing_SandStorm.loop"
-				"sound_darude"			"Imba.SandKingSandStorm"
-				"modifier_caster"		"modifier_imba_sandstorm_caster"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_sandstorm_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"%damage_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandStormTick"
-
-						"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-					}
-				}
+				"damage_interval"		"0.5"
 			}
 		}
 	}
@@ -24170,13 +23422,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"				"sandking_caustic_finale"
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_sand_king.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -24184,7 +23438,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"			
 		}
 		
 		// Special
@@ -24194,184 +23448,35 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
+				"poison_duration"			"6 6 6 6 5 4 3"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"75 100 125 150"
+				"damage"					"90 130 170 220 235 250 265"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration"			"6"
+				"radius"					"400"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_slow"					"-30"
+				"ms_slow_pct"				"30"
+				"LinkedSpecialBonus"		"special_bonus_imba_sand_king_5"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_duration"				"3"
+				"slow_duration"				"3"				
 			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_caustic_finale_caster"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"CausticFinale"
-
-						"modifier_debuff"	"modifier_imba_caustic_finale"
-						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_caustic_finale_caster"
-					}
-				}
-			}
-			
-			"modifier_imba_caustic_finale"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%debuff_duration"
-
-				"EffectName"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"CausticFinaleEnd"
-
-						"modifier_debuff"	"modifier_imba_caustic_finale"
-						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
-						"modifier_slow"		"modifier_imba_caustic_finale_slow"
-						"particle_explode"	"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-						"sound_explode"		"Ability.SandKing_CausticFinale"
-					}
-				}
-			}
-
-			"modifier_imba_caustic_finale_prevent"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%debuff_duration"
-			}
-
-			"modifier_imba_caustic_finale_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sand King's Treacherous Sands
-	//=================================================================================================================
-	"imba_sandking_treacherous_sands"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"MaxLevel"							"1"
-		"AbilityTextureName"				"custom/sandking_treacherous_sands"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"OnToggleOn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_sandking.lua"
-				"Function"			"SandsOn"
-
-				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-			}
-		}
-
-		"OnToggleOff"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_sandking.lua"
-				"Function"			"SandsOff"
-
-				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_sandking_treacherous_sands_toggler"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandsRespawnToggle"
-					}
-				}
-			}
-
-			"modifier_imba_sandking_treacherous_sands"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-			}
-		}
-	}
+		}				
+	}	
 
 	//=================================================================================================================
 	// Sand King's Epicenter
@@ -24380,7 +23485,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -24389,25 +23494,24 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sandking_epicenter"
+		"MaxLevel"						"6"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 100 80"
-		"AbilityCastRange"				"825"
-		"AbilityChannelTime"			"4.0"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"120 110 100 95 90 85"				
+		"AbilityCastPoint"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
+		"AbilityManaCost"				"150 225 300 325 350 375"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
-			"soundfile"					"soundevents/imba_soundevents.vsndevts"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"					
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sandking.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
 		}
@@ -24419,142 +23523,82 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"110"
-			}
+				"channel_time"			"2"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_pulses"			"12 16 20"
+				"scepter_channel_time"	"3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"275"
+				"pulse_count"			"6 8 10 12 14 16"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_6"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"step_radius"			"50"
+				"damage"				"110"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"825"
+				"ms_slow_pct"			"30"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-30"
+				"as_slow"				"30"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_duration"			"3"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"levels_per_pulse"		"5"
+				"base_radius"			"275 325 375 425 475 525"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"140"
+				"pulse_radius_increase"	"50"
 			}
+
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"pulse_duration"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"max_pulse_radius"		"825"
 			}
+
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_strength"			"80"
+				"pull_speed"			"75"				
 			}
+
 			"12"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius"			"600"
+				"var_type"					"FIELD_INTEGER"
+				"scepter_pulses_count_pct"	"50"
 			}
+
 			"13"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius_scepter"	"1100"
+				"var_type"					"FIELD_INTEGER"
+				"epicenter_duration"		"3"
 			}
 		}	
-			
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"EpicenterChannel"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"sound_cast"			"Ability.SandKing_Epicenter.spell"
-				"sound_darude"			"Imba.SandKingEpicenter"
-			}
-		}
-			
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"Epicenter"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"modifier_slow"			"modifier_imba_epicenter_slow"
-				"modifier_sands"		"modifier_imba_sandking_treacherous_sands"
-				"sound_epicenter"		"Ability.SandKing_Epicenter"
-				"sound_darude"			"Imba.SandKingEpicenter"
-				"particle_epicenter"	"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_epicenter_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
-						"EffectAttachType"	"start_at_custom_origin"
-
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-						}
-					}
-				}
-			}
-			
-			"modifier_imba_epicenter_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -26367,13 +25411,83 @@
 	}
 
 	//=================================================================================================================
+	// Tinker's Rearm
+	//=================================================================================================================
+	"imba_tinker_rearm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"ScriptFile"					"hero/hero_tinker"
+		"AbilityTextureName"			"tinker_rearm"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.53"
+		"AbilityChannelTime" 			"3.5 3.0 2.5 2.0 1.5 1.0 0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"particle"					"particles/hero/tinker/rearmshield_shield.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_tooltip"		"3.5 3.0 2.5 2.0 1.5 1.0 0.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aghs_spellpower"		"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aghs_interval_pct"		"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rearm_mana_per_lvl"	"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_manacost"			"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tinker's Laser
 	//=================================================================================================================
 	"imba_tinker_laser"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -26381,19 +25495,23 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_laser"
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.35"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14.0"
+		"AbilityCooldown"				"14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"95 120 145 170 175 180 185"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26409,81 +25527,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"base_duration"			"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 160 240 320 330 340 350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"refract_radius"		"200 200 200 200 350 500 650"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"blind_aoe"				"300"
+				"var_type"				"FIELD_FLOAT"
+				"blind_duration"		"3.0 3.5 4.0 4.5 4.5 4.5 4.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blind_amount"			"100"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_reduction"		"-1000"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_damage"			"50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"0.25"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"650"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Laser"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"particle_laser"		"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
-				"sound_cast"			"Hero_Tinker.Laser"
-				"sound_impact"			"Hero_Tinker.LaserImpact"
-				"modifier_blind"		"modifier_imba_laser_blind"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_laser_blind"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/ambient/tower_laser_blind.vpcf"
-				"EffectAttachType"		"follow_overhead"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_amount"
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_reduction"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_reduction"
-				}
+				"miss_chance_pct"		"100"
 			}
 		}
 	}
@@ -26495,24 +25555,31 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_heat_seeking_missile"
-
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"2500"
-		
+		"AbilityCastRange"				"2500"
+		"AbilityCastPoint"				"0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25.0"
+		"AbilityCooldown"				"25"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 140 160 180"
+		"AbilityManaCost"				"120 140 160 180 190 200 210"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26531,100 +25598,29 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"search_range"			"2500"
+				"damage"				"125 200 275 350 375 400 425"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_count"			"2"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_count"			"1"
+				"vision_radius"			"325 325 325 325 425 525 625"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 200 275 350"
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_4"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"2.0"
-			}
-			"06"
-			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"900"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Missile"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"particle_missile"		"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
-				"particle_dud"			"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
-				"sound_cast"			"Hero_Tinker.Heat-Seeking_Missile"
-				"sound_dud"				"Hero_Tinker.Heat-Seeking_Missile_Dud"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"FireEffect"
-			{
-				"Target"				"TARGET"
-				"EffectName"			"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-				"ControlPointEntities"
-				{
-					"TARGET"			"attach_origin"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Tinker.Heat-Seeking_Missile.Impact"
-				"Target"				"TARGET"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_heat_seeking_missile_vision"
-				"Target"				"TARGET"
-			}
-		
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Damage"				"%damage"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_heat_seeking_missile_vision"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%vision_duration"
-		
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -26636,31 +25632,49 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_march_of_the_machines"
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.53"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0"
+		"AbilityCooldown"				"35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130 150 170 190"
+		"AbilityManaCost"				"130 150 170 190 205 220 235"
 
-		// Data driven
+		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_motm.vpcf"
 			"particle"					"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_flame.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_fire_burn.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_tesla.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_drone.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_sticky.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_dismantle.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_railgun.vpcf"
+			"particle"					"particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_debuff_end.vpcf"
+			"particle"					"particles/units/heroes/hero_batrider/batrider_stickynapalm_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
 			"model"						"models/heroes/tinker/mom.vmdl"
 		}
 
@@ -26671,182 +25685,127 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawner_width"			"900"
+				"damage"				"16 24 32 40 42 44 46"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawner_amount"		"3"
+				"collision_radius"		"50"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawn_radius"			"300"
+				"explosion_radius"		"150"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawn_length"			"1400"
+				"spawn_radius"			"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"50"
+				"travel_distance"		"1800"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"32 48 64 80"
+				"robots_per_sec"		"24"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attacks_to_kill"		"3"
+				"touch_chance_pct"		"5"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_5"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"max_spawns"			"30"
+				"var_type"				"FIELD_INTEGER"
+				"flame_dmg_sec"			"35"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"475"
+				"flame_radius"			"125"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spawn_interval"		"0.3"
+				"flame_duration"		"1.5"
 			}
 			"11"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_scepter"		"150"
+				"var_type"				"FIELD_FLOAT"
+				"tesla_stun_duration"	"0.1"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_tooltip"		"250"
+				"dismantle_dmg_pct"		"15"
 			}
-		}
-		
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
+			"13"
 			{
-				"Target"				"CASTER"
-				"EffectName"			"Hero_Tinker.March_of_the_Machines.Cast"
+				"var_type"				"FIELD_INTEGER"
+				"dismantle_duration"	"7"
 			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
+			"14"
 			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"March"
-				"Target"				"POINT"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"sound_cast"			"Hero_Tinker.March_of_the_Machines"
-				"modifier_machine"		"modifier_imba_march_of_the_machines"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
+				"var_type"				"FIELD_INTEGER"
+				"railgun_damage"		"50"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-			
-			"Damage"
+			"15"
 			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%damage"
+				"var_type"				"FIELD_INTEGER"
+				"railgun_range"			"700"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_march_of_the_machines"
+			"16"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"%spawn_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"MarchSpawn"
-
-						"particle_machine"		"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
-					}
-				}
-		
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"MarchDamage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"railgun_radius"		"125"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"400"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_duration"		"6"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"sticky_duration"		"0.6"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"drone_order_interval"	"0.4"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"drone_duration"		"1.2"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Tinker's Rearm
+	// Tinker's Technomancy
 	//=================================================================================================================
-	"imba_tinker_rearm"
+	"imba_tinker_technomancy"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"tinker_rearm"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 1.5 0.75"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 200 300"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-			"particle"					"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
-		}
+		"BaseClass"              		"ability_lua"
+		"ScriptFile"					"hero/hero_tinker"
+		"AbilityBehavior"       	 	"DOTA_ABILITY_BEHAVIOR_PASSIVE"				
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"    	 	"custom/tinker_tinkermaster"	
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"RequiredLevel"					"6"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26854,74 +25813,202 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_tooltip"		"2.5 1.5 0.75"
+				"var_type"				"FIELD_INTEGER"
+				"laser_dmg"				"35 35 35 70 70 70"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"missile_count"			"0 2 2 2 4 4"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_penalty"			"-2.0"
+				"var_type"				"FIELD_INTEGER"
+				"rearm_mana_tooltip"	"50"
 			}
 		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Rearm"
+	}
 
-				"particle_rearm"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
-				"sound_cast"			"Hero_Tinker.Rearm"
-				"modifier_stack"		"modifier_imba_rearm_stack"
-				"modifier_mana"			"modifier_imba_rearm_mana_penalty"
+	//=================================================================================================================
+	// Tinker Talent 1 (Level 10): Reduced Rearm mana cost
+	//=================================================================================================================
+	"special_bonus_imba_tinker_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 2 (Level 10): Additional Missiles
+	//=================================================================================================================
+	"special_bonus_imba_tinker_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_rearm_stack"
+			"01"
 			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-
-				"Duration"				"%stack_duration"
-
-				"ThinkInterval"			"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"RearmStacksCheck"
-
-						"modifier_stack"		"modifier_imba_rearm_stack"
-						"modifier_mana"			"modifier_imba_rearm_mana_penalty"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
 			}
+		}
+	}
 
-			"modifier_imba_rearm_mana_penalty"
+	//=================================================================================================================
+	// Tinker Talent 3 (Level 20): %-based faster/longer March movement
+	//=================================================================================================================
+	"special_bonus_imba_tinker_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"				"0"
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"40"
+			}
+		}
+	}
 
-				"Duration"				"%stack_duration"
+	//=================================================================================================================
+	// Tinker Talent 4 (Level 20): Extra missile vision duration
+	//=================================================================================================================
+	"special_bonus_imba_tinker_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_penalty"
-				}
+	//=================================================================================================================
+	// Tinker Talent 5 (Level 30): %-based additional MotM specialization chance
+	//=================================================================================================================
+	"special_bonus_imba_tinker_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 6 (Level 30): Rearm grants a shield equal to % of your max HP on cast
+	//=================================================================================================================
+	"special_bonus_imba_tinker_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 7 (Level 40): Reducing all cast-animations
+	//=================================================================================================================
+	"special_bonus_imba_tinker_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 8 (Level 40): Rearm's channel time is converted into cooldown time
+	//=================================================================================================================
+	"special_bonus_imba_tinker_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -34357,167 +33444,4 @@
 			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
-
-	//=================================================================================================================
-    // Skywrath Mage's Talents 
-    //=================================================================================================================
-    "special_bonus_imba_skywrath_mage_1" // Arcane Bolt mana cost decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"25"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_2" // Ancient Seal duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_3" // Ancient Seal cooldown decrease 
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"4"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_4" // Mystic Flare double radius
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"170"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_5" // Arcane Bolt cooldown decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_6" // Mystic Flare deals the damage in half the duration
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"50"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_7" // Permanent flying movement
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    }
-
-    "special_bonus_imba_skywrath_mage_8" // Concussive Shot hits all visible heroes
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    }
 }
