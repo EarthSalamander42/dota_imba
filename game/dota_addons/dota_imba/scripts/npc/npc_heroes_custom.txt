@@ -1997,24 +1997,21 @@
 	//=================================================================================================================
 	"npc_imba_hero_sand_king"
 	{
-		"override_hero"				"npc_dota_hero_sand_king"
-
-		"AbilityLayout"				"5"
+		"override_hero"				"npc_dota_hero_sand_king"		
 
 		"Ability1"					"imba_sandking_burrowstrike"
 		"Ability2"					"imba_sandking_sand_storm"
-		"Ability3"					"imba_sandking_caustic_finale"
-		"Ability4"					"imba_sandking_treacherous_sands"
-		"Ability5"					"imba_sandking_epicenter"
+		"Ability3"					"imba_sandking_caustic_finale"		
+		"Ability4"					"imba_sandking_epicenter"
 
-		"Ability10"					"special_bonus_mp_150"
-		"Ability11"					"special_bonus_gold_income_15"
-		"Ability12"					"special_bonus_magic_resistance_10"
-		"Ability13"					"special_bonus_movement_speed_20"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_armor_6"
-		"Ability16"					"special_bonus_hp_regen_20"
-		"Ability17"					"special_bonus_spell_lifesteal_20"
+		"Ability10"					"special_bonus_imba_sand_king_1"
+		"Ability11"					"special_bonus_imba_sand_king_2"
+		"Ability12"					"special_bonus_imba_sand_king_3"
+		"Ability13"					"special_bonus_imba_sand_king_4"
+		"Ability14"					"special_bonus_imba_sand_king_5"
+		"Ability15"					"special_bonus_imba_sand_king_6"
+		"Ability16"					"special_bonus_imba_sand_king_7"
+		"Ability17"					"special_bonus_imba_sand_king_8"
 
 		"ProjectileSpeed"			"900"
 	}

@@ -1402,14 +1402,23 @@
 		"DOTA_Tooltip_modifier_imba_stasis_trap_stun"										"Stasis Trap"
 		"DOTA_Tooltip_modifier_imba_stasis_trap_stun_Description"							"Stunned by Techies' Stasis Trap"
 
-		"DOTA_Tooltip_modifier_imba_caustic_finale"											"Caustic Finale"
-		"DOTA_Tooltip_modifier_imba_caustic_finale_Description"								"O-oh."
+		"DOTA_Tooltip_modifier_imba_burrowstrike_stun"										"Burrowstrike"
+		"DOTA_Tooltip_modifier_imba_burrowstrike_stun_Description"							"Stunned."
 
-		"DOTA_Tooltip_modifier_imba_caustic_finale_slow"									"Caustic Finale"
-		"DOTA_Tooltip_modifier_imba_caustic_finale_slow_Description"						"Move speed slowed"
+		"DOTA_Tooltip_modifier_imba_sandstorm_invis"										"SandStorm"
+		"DOTA_Tooltip_modifier_imba_sandstorm_invis_Description"							"Invisible. Dealing damage to enemies and pulling them towards you."
 
-		"DOTA_Tooltip_modifier_imba_epicenter_slow"											"Epicenter"
-		"DOTA_Tooltip_modifier_imba_epicenter_slow_Description"								"Move and attack speed slowed by an earthquake"
+		"DOTA_Tooltip_modifier_imba_sandstorm_aura"											"SandStorm Aura"
+		"DOTA_Tooltip_modifier_imba_sandstorm_aura_Description"								"Passively dealing damage to enemies and pulling them towards you."
+
+		"DOTA_Tooltip_modifier_imba_caustic_finale_poison"									"Caustic Finale Poison"
+		"DOTA_Tooltip_modifier_imba_caustic_finale_poison_Description"						"A poison is brewing inside your body and will explode when it expires."
+
+		"DOTA_Tooltip_modifier_imba_caustic_finale_debuff"									"Caustic Finale Slow"
+		"DOTA_Tooltip_modifier_imba_caustic_finale_debuff_Description"						"Slowed by a recent Caustic Finale explosion."
+
+		"DOTA_Tooltip_modifier_imba_epicenter_slow"											"Epicenter Slow"
+		"DOTA_Tooltip_modifier_imba_epicenter_slow_Description"								"Slowed by a pulse from Epicenter."
 
 		"DOTA_Tooltip_modifier_imba_rearm_animation"										"Rearm"
 		"DOTA_Tooltip_modifier_imba_rearm_animation_Description"							"Currently reloading it's arsenal."
@@ -3321,48 +3330,44 @@
 		"DOTA_Tooltip_ability_imba_techies_minefield_teleport_Lore"							"A big minefield is a happy minefield!"
 
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike"									"Burrowstrike"
-		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"						"Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Disjoints projectiles.\n<font color='#FF7800'>Sinkhole:</font> Pushes enemies towards the destination point when Treacherous Sands is toggled on."
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Description"						"Sand King burrows into the ground and tunnels forward, damaging and stunning enemy units above him as he resurfaces. Disjoints projectiles.\n<font color='#FF7800'>Devil Spines:</font> Pushes enemies towards the destination point, or a maximum of distance. \n<font color='#FF7800'>Stingstrike:</font> Enemy heroes hit by Burrowstrike are stung, suffering the effects of Caustic Finale."
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Lore"								"Crixalis often lies in wait, burrowing under the surface to ambush his adversaries."
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_Note0"								"If the distance is closer than the maximum distance, units will be moved to the target point."
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_burrow_radius"						"RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_stun_duration"						"STUN DURATION:"
 		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_damage"							"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_burrow_duration"					"STUN DURATION:"
-		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_tooltip_range"						"RANGE:"
-		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_burrow_width"						"WIDTH:"
+		"DOTA_Tooltip_ability_imba_sandking_burrowstrike_max_push_distance"					"MAXIMUM DISTANCE:"
 
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm"										"Sand Storm"
-		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Description"							"Sand King creates a fearsome sandstorm, damaging enemies while hiding him from vision. The invisibility remains for %invis_duration% seconds after the sandstorm ends.\n<font color='#FF7800'>Dust devils:</font> Periodically pulls enemies towards Sand Storm's center if Treacherous Sands is toggled on."
+		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Description"							"Sand King creates a fearsome sandstorm, damaging enemies while hiding him from vision. The invisibility remains for %invis_extend_time% seconds after the sandstorm ends.\n<font color='#FF7800'>Sands of Betrayal:</font> Constantly pulls enemies towards Sand Storm's center."
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Lore"								"Some say Crixalis is a mirage; his carapace appearing then vanishing between the whirling sands of the Scintillant Waste."
-		"DOTA_Tooltip_ability_imba_sandking_sand_storm_radius"								"EFFECT RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_sand_storm_Note0"								"If an enemy is very close to Sand King, it will stop moving."
 		"DOTA_Tooltip_ability_imba_sandking_sand_storm_damage"								"DAMAGE PER SECOND:"
-		"DOTA_Tooltip_ability_imba_sandking_sand_storm_wind_force"							"PULL STRENGTH:"
-		"DOTA_Tooltip_ability_imba_sandking_sand_storm_max_duration"						"DURATION:"
+		"DOTA_Tooltip_ability_imba_sandking_sand_storm_radius"								"RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_sand_storm_pull_speed"							"PULL PER SECOND:"		
 
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale"									"Caustic Finale"
-		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"						"Sand King poisons his enemies with every attack. When the poison debuff expires, enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Contact poison:</font> Caustic Finale can be applied through any source of damage.\n<font color='#FF7800'>Nuclear Finale:</font> when the poison explodes, if any enemies also affected by Caustic Finale are hit, their own poison immediately ends and explodes."
+		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Description"						"Sand King poisons his enemies with every attack. When the poison debuff expires, the poison inside the enemies' body explodes, slowing and dealing damage to all nearby enemies.\n<font color='#FF7800'>Desert Poison:</font> When the poison explodes, any enemies that have been hit and are affected by Caustic Finale trigger their own poison immediately, causing a chain reaction."
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Lore"							"An injection from Crixalis makes one as brittle as the sands of his home."
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note0"							"Also activates if the affected unit dies, or if the debuff is purged."
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_Note1"							"Damaging an unit already affected by Caustic Finale does not refresh the debuff."
-		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_radius"							"EXPLOSION RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_poison_duration"					"POISON DURATION:"
 		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_damage"							"DAMAGE:"
-		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_debuff_duration"					"POISON DURATION:"
-		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow"							"%MOVEMENT SLOW:"
-		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"					"SLOW DURATION:"
-
-		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands"								"Treacherous Sands"
-		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Description"					"When toggled on, causes enemies hit by Sand King's abilities to be pulled towards him."
-		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Lore"							"Quicksand, dust devils, sinkholes - the desert follows its King, and in its wake, movement is exceedingly hard."
-		"DOTA_Tooltip_ability_imba_sandking_treacherous_sands_Note0"						"Does not affect spell immune enemies."
-
+		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_radius"							"EXPLOSION RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_ms_slow_pct"						"%MOVE SPEED SLOW:"
+		"DOTA_Tooltip_ability_imba_sandking_caustic_finale_slow_duration"					"SLOW DURATION:"		
+		
 		"DOTA_Tooltip_ability_imba_sandking_epicenter"										"Epicenter"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"							"After channeling Epicenter, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %step_radius%, up to %max_radius%.\n<font color='#FF7800'>Unstoppable:</font> Can be channeled for up to 4 seconds, launching up to %max_pulses% pulses, plus one extra for every %levels_per_pulse% levels of the caster. If interrupted early, will launch an amount of pulses proportional to the channeling time.\n<font color='#FF7800'>Quicksand:</font> Enemies in %pull_radius% radius are pulled towards you if Treacherous Sands is toggled on.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases damage per pulse to %damage_scepter%, and increases the Quicksand pull range to %pull_radius_scepter%."
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_Description"							"After channeling for %channel_time% seconds, Sand King causes a massive earthquake, which pulses several times, slowing and damaging enemies each time. Each pulse increases the damage radius by %pulse_radius_increase%, up to %max_pulse_radius%. \n<font color='#FF7800'>Pulses of Malice:</font> Enemies hit by a pulse are also pulled towards you by %pull_speed% units per pulse.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Increases the channel time to %scepter_channel_time%, but also increases the pulse count by %scepter_pulses_count_pct%%."
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_Lore"									"Many an explorer was lost to the quicksands of the Scintillant Waste."
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_damage"								"PULSE DAMAGE:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_max_pulses"							"MAX PULSES:"
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_Note0"								"Even with an Aghnaim's Scepter, if Sand King fails to complete the channeling fully, the spell is lost."
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_Note1"								"The slow effect refreshes itself when a slowed enemy is hit again by a pulse."
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_pulse_count"							"NUMBER OF PULSES:"
 		"DOTA_Tooltip_ability_imba_sandking_epicenter_base_radius"							"INITIAL RADIUS:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_slow"									"%MOVE SLOW:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_slow_duration"						"SLOW DURATION:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_pull_radius"							"QUICKSAND PULL RADIUS:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_damage_scepter"						"SCEPTER PULSE DAMAGE:"
-		"DOTA_Tooltip_ability_imba_sandking_epicenter_pull_radius_scepter"					"SCEPTER PULL RADIUS:"
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_damage"								"DAMAGE PER PULSE:"
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_ms_slow_pct"							"%MOVE SPEED SLOW:"
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_as_slow"								"ATTACK SPEED SLOW:"
+		"DOTA_Tooltip_ability_imba_sandking_epicenter_slow_duration"						"SLOW DURATION:"				
 
 		"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt"								"Arcane Bolt"
 		"DOTA_Tooltip_ability_imba_skywrath_mage_arcane_bolt_Description"					"Skywrath Mage launches a slow-moving bolt of arcane magic, dealing damage to an enemy unit based on Skywrath Mage's intelligence.\n<font color='#FF7800'>Arcane wrath:</font> Upon hitting an enemy hero, grants a stack of Arcane Wrath, which increases intelligence by %stack_int_bonus% and Arcane Bolt's intelligence multiplier by %stack_int_multi_bonus%. Arcane Wrath stacks and refreshes itself infinitely.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Casts a second Arcane Bolt at a random enemy in range."
@@ -4172,6 +4177,16 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_lion_7"					"+300 Frog Panic radius"
 		"DOTA_Tooltip_ability_special_bonus_imba_lion_8"					"Mana Drain targets all enemies in aura range"
 
+		// Sand King
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_1"					"+100 Burrowstrike path radius"		
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_2"					"+40 Sandstorm damage per second"
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_3"					"+275 Burrowstrike cast range"
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_4"					"+300 Epicenter pull radius"		
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_5"					"+20% Caustic Finale slow"
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_6"					"+4 Epicenter pulses"			
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_7"					"Passive Sandstorm aura with half Sandstorm values"					
+		"DOTA_Tooltip_ability_special_bonus_imba_sand_king_8"					"Caustic Finale triggers from all sources of damage"
+
 		// Pugna
 		"DOTA_Tooltip_ability_special_bonus_imba_pugna_1"						"-1s Nether Blast cooldown"					
 		"DOTA_Tooltip_ability_special_bonus_imba_pugna_2"						"+0.5 Nether Ward zap damage per mana used"
@@ -4181,6 +4196,7 @@
 		"DOTA_Tooltip_ability_special_bonus_imba_pugna_6"						"+1s Decrepify duration"	
 		"DOTA_Tooltip_ability_special_bonus_imba_pugna_7"						"+35% Essence of Life base slow"
 		"DOTA_Tooltip_ability_special_bonus_imba_pugna_8"						"+6% Nether Weakness magic resistance per blast"
+
 
 
 		//=================================================================================================================

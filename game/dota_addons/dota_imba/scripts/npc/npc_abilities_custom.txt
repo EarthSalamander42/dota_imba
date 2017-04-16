@@ -23573,34 +23573,36 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"sandking_burrowstrike"
-		"AOERadius"						"%burrow_width"
+		"AbilityTextureName"			"sandking_burrowstrike"		
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 900 1100 1300"
+		"AbilityCastRange"				"350 450 550 650 775 900 1025"
 		"AbilityCastPoint"				"0.0"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"11.0"
+		"AbilityCooldown"				"11"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"110 120 130 140 145 150 155"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sandking.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
 		}
 		
@@ -23611,84 +23613,56 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burrow_width"			"150"
-			}
+				"burrow_speed"			"3000"
+			}			
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"burrow_duration"		"2.17"
+				"var_type"				"FIELD_INTEGER"
+				"burrow_radius"			"150"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_1"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"burrow_speed"			"5000"
+				"var_type"				"FIELD_FLOAT"
+				"knockback_duration"	"0.5"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burrow_anim_time"		"0.57"
+				"stun_duration"			"2.2"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"700 900 1100 1300"
+				"damage"				"100 160 220 280 310 340 370"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 160 220 280"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"LinearProjectile"
-			{
-				"MoveSpeed"					"%burrow_speed"
-				"StartRadius"				"%burrow_width"
-				"EndRadius"					"%burrow_width"
-				"TargetTeams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"HasFrontalCone"			"0"
-			}
-			
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_sandking/sandking_burrowstrike.vpcf"
-				"EffectAttachType"			"start_at_customorigin"
-				"Target"					"CASTER"
-				"ControlPoints"
-				{
-					"01"					"POINT"
-				}
-			}
-			
-			"FireSound"
-			{
-				"EffectName"				"Ability.SandKing_BurrowStrike"
-				"Target"					"CASTER"
+				"max_push_distance"		"150 200 250 300 400 500 600"
 			}
 
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_sandking.lua"
-				"Function"					"Burrowstrike"
-				"TARGET"					"POINT"
+				"var_type"				"FIELD_INTEGER"
+				"knockup_height"		"350"
 			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
 
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"				"hero/hero_sandking.lua"
-				"Function"					"BurrowstrikeHit"
+				"var_type"				"FIELD_FLOAT"
+				"knockup_duration"		"0.52"
+			}
 
-				"modifier_caustic"			"modifier_imba_caustic_finale"
-				"modifier_sands"			"modifier_imba_sandking_treacherous_sands"
-				"ability_caustic"			"imba_sandking_caustic_finale"
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burrowstrike_time"		"0.45"
 			}
 		}
 	}
@@ -23700,7 +23674,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -23708,20 +23682,22 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sandking_sand_storm"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"525 550 575 600"
+		"AbilityCastRange"				"525 525 525 525 560 595 630"
 		"AbilityCastPoint"				"0.01"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"22 18 14 10"
-		"AbilityChannelTime"			"50.0"
+		"AbilityCooldown"				"34 26 18 10 9 8 7"
+		"AbilityChannelTime"			"50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60 50 40 30"
+		"AbilityManaCost"				"60 50 40 30 20 10 0"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -23730,6 +23706,7 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
+			"particle"					"particles/hero/sand_king/sandking_sandstorm_aura.vpcf"
 		}
 		
 		// Special
@@ -23738,90 +23715,39 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"invis_duration"		"1.5"
-			}
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"25 50 75 100 110 120 130"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_2"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"525 550 575 600"
+				"radius"				"525 525 525 525 560 595 630"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"25 50 75 100"
+				"pull_speed"			"20 40 60 80 120 160 200"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wind_force"			"45 65 85 105"
+				"pull_prevent_radius"	"100"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"wind_force_tooltip"	"90 120 150 180"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_duration"			"50"
-			}
+				"var_type"				"FIELD_FLOAT"
+				"invis_extend_time"		"1.5"
+			}			
+
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_tick"			"0.5"
-			}
-		}
-		
-		"OnSpellStart"
-		{			
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"SandStorm"
-
-				"sound_cast"			"Ability.SandKing_SandStorm.start"
-				"sound_loop"			"Ability.SandKing_SandStorm.loop"
-				"sound_darude"			"Imba.SandKingSandStorm"
-				"particle_sandstorm"	"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
-				"modifier_caster"		"modifier_imba_sandstorm_caster"
-			}
-		}
-
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"SandStormChannelEnd"
-
-				"sound_loop"			"Ability.SandKing_SandStorm.loop"
-				"sound_darude"			"Imba.SandKingSandStorm"
-				"modifier_caster"		"modifier_imba_sandstorm_caster"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_sandstorm_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"%damage_tick"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandStormTick"
-
-						"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-					}
-				}
+				"damage_interval"		"0.5"
 			}
 		}
 	}
@@ -23833,13 +23759,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"				"sandking_caustic_finale"
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_sand_king.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -23847,7 +23775,7 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
+			"particle"						"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"			
 		}
 		
 		// Special
@@ -23857,184 +23785,35 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"400"
-			}
+				"poison_duration"			"6 6 6 6 5 4 3"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"75 100 125 150"
+				"damage"					"90 130 170 220 235 250 265"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"debuff_duration"			"6"
+				"radius"					"400"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"ms_slow"					"-30"
+				"ms_slow_pct"				"30"
+				"LinkedSpecialBonus"		"special_bonus_imba_sand_king_5"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_duration"				"3"
+				"slow_duration"				"3"				
 			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_caustic_finale_caster"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"CausticFinale"
-
-						"modifier_debuff"	"modifier_imba_caustic_finale"
-						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_caustic_finale_caster"
-					}
-				}
-			}
-			
-			"modifier_imba_caustic_finale"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%debuff_duration"
-
-				"EffectName"				"particles/units/heroes/hero_sandking/sandking_caustic_finale_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-				
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"CausticFinaleEnd"
-
-						"modifier_debuff"	"modifier_imba_caustic_finale"
-						"modifier_prevent"	"modifier_imba_caustic_finale_prevent"
-						"modifier_slow"		"modifier_imba_caustic_finale_slow"
-						"particle_explode"	"particles/units/heroes/hero_sandking/sandking_caustic_finale_explode.vpcf"
-						"sound_explode"		"Ability.SandKing_CausticFinale"
-					}
-				}
-			}
-
-			"modifier_imba_caustic_finale_prevent"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%debuff_duration"
-			}
-
-			"modifier_imba_caustic_finale_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_slow"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sand King's Treacherous Sands
-	//=================================================================================================================
-	"imba_sandking_treacherous_sands"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"MaxLevel"							"1"
-		"AbilityTextureName"				"custom/sandking_treacherous_sands"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"OnToggleOn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_sandking.lua"
-				"Function"			"SandsOn"
-
-				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-			}
-		}
-
-		"OnToggleOff"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"hero/hero_sandking.lua"
-				"Function"			"SandsOff"
-
-				"modifier_sands"	"modifier_imba_sandking_treacherous_sands"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_sandking_treacherous_sands_toggler"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sandking.lua"
-						"Function"			"SandsRespawnToggle"
-					}
-				}
-			}
-
-			"modifier_imba_sandking_treacherous_sands"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-			}
-		}
-	}
+		}				
+	}	
 
 	//=================================================================================================================
 	// Sand King's Epicenter
@@ -24043,7 +23822,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -24052,25 +23831,24 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sandking_epicenter"
+		"MaxLevel"						"6"
+		"ScriptFile"					"hero/hero_sand_king.lua"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 100 80"
-		"AbilityCastRange"				"825"
-		"AbilityChannelTime"			"4.0"
-		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"120 110 100 95 90 85"				
+		"AbilityCastPoint"				"0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"150 200 250"
+		"AbilityManaCost"				"150 225 300 325 350 375"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
-			"soundfile"					"soundevents/imba_soundevents.vsndevts"
-			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"					
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sandking.vsndevts"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
 			"particle"					"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
 		}
@@ -24082,142 +23860,82 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"110"
-			}
+				"channel_time"			"2"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_pulses"			"12 16 20"
+				"scepter_channel_time"	"3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_radius"			"275"
+				"pulse_count"			"6 8 10 12 14 16"
+				"LinkedSpecialBonus"	"special_bonus_imba_sand_king_6"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"step_radius"			"50"
+				"damage"				"110"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"825"
+				"ms_slow_pct"			"30"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-30"
+				"as_slow"				"30"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_duration"			"3"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"levels_per_pulse"		"5"
+				"base_radius"			"275 325 375 425 475 525"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"140"
+				"pulse_radius_increase"	"50"
 			}
+
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"pulse_duration"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"max_pulse_radius"		"825"
 			}
+
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pull_strength"			"80"
+				"pull_speed"			"75"				
 			}
+
 			"12"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius"			"600"
+				"var_type"					"FIELD_INTEGER"
+				"scepter_pulses_count_pct"	"50"
 			}
+
 			"13"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"pull_radius_scepter"	"1100"
+				"var_type"					"FIELD_INTEGER"
+				"epicenter_duration"		"3"
 			}
 		}	
-			
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"EpicenterChannel"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"sound_cast"			"Ability.SandKing_Epicenter.spell"
-				"sound_darude"			"Imba.SandKingEpicenter"
-			}
-		}
-			
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sandking.lua"
-				"Function"				"Epicenter"
-
-				"modifier_caster"		"modifier_imba_epicenter_caster"
-				"modifier_slow"			"modifier_imba_epicenter_slow"
-				"modifier_sands"		"modifier_imba_sandking_treacherous_sands"
-				"sound_epicenter"		"Ability.SandKing_Epicenter"
-				"sound_darude"			"Imba.SandKingEpicenter"
-				"particle_epicenter"	"particles/units/heroes/hero_sandking/sandking_epicenter.vpcf"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_epicenter_caster"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-			
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/units/heroes/hero_sandking/sandking_epicenter_tell.vpcf"
-						"EffectAttachType"	"start_at_custom_origin"
-
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-							"CASTER"		"attach_tail"
-						}
-					}
-				}
-			}
-			
-			"modifier_imba_epicenter_slow"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -34282,167 +34000,4 @@
 			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
-
-	//=================================================================================================================
-    // Pugna's Talents 
-    //=================================================================================================================
-	"special_bonus_imba_pugna_1" // Nether Blast cooldown decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    }
-
-    "special_bonus_imba_pugna_2" // Increase Nether Ward damage per mana
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-             	"value"						"0.5"
-            }
-        }
-    } 
-
-    "special_bonus_imba_pugna_3" // Nether Blast damage increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"125"
-            }
-        }
-    }  
-
-    "special_bonus_imba_pugna_4" // Heal/damage increase at the end of Decrepify
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"15"
-            }
-        }
-    } 
-
-    "special_bonus_imba_pugna_5" // Life Drain heal increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"50"
-            }
-        }
-    }  
-
-    "special_bonus_imba_pugna_6" // Decrepify duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"1"
-            }
-        }
-    } 
-
-    "special_bonus_imba_pugna_7" // Life Drain base slow increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"35"
-            }
-        }
-    }
-
-    "special_bonus_imba_pugna_8" // Nether Blast mini blast magic reduction increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_INTEGER"
-             	"value"						"6"
-            }
-        }
-    }
 }
