@@ -4185,7 +4185,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"										"ability_lua"
 		"ScriptFile"									"hero/hero_abaddon.lua"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityTextureName"							"custom/abaddon_over_channel"
 		"MaxLevel"										"7"
 
@@ -9534,7 +9534,6 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_fire_breath.vpcf"
-			"particle"						"particles/units/heroes/hero_phoenix/phoenix_ambient_wings_flame.vpcf"
 		}
 		
 		// Special	
@@ -9544,12 +9543,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"250"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_distance"			"550"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
@@ -9571,7 +9570,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"10"
+				"move_slow"					"-10"
 			}
 			"07"
 			{
@@ -9623,7 +9622,6 @@
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_ice_breath.vpcf"
-			"particle"						"particles/generic_gameplay/generic_slowed_cold.vpcf"
 		}
 		
 		// Special	
@@ -9633,12 +9631,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"path_radius"				"250"
+				"path_radius"				"500"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_distance"			"550"
+				"spill_radius"				"550"
 			}
 			"03"
 			{
@@ -9659,13 +9657,13 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"32"
+				"move_slow"					"-32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"32"
+				"attack_slow"				"-32"
 				"LinkedSpecialBonus"		"special_bonus_imba_jakiro_2"
 			}
 			"08"
@@ -9720,8 +9718,7 @@
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_blob.vpcf"
 			"particle"					"particles/hero/jakiro/jakiro_ice_path_line_crack.vpcf"
 			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_b.vpcf"
-			"particle"					"particles/units/heroes/hero_jakiro/jakiro_ice_path_shards.vpcf"
-			"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
+		//	"particle"					"particles/units/heroes/hero_jakiro/jakiro_icepath_debuff.vpcf"
 		}
 
 		// Special
@@ -9758,12 +9755,12 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"15 15 15 15 20 25 30"
+				"move_slow"				"-15 -15 -15 -15 -20 -25 -30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_slow"			"15 15 15 15 20 25 30"
+				"attack_slow"			"-15 -15 -15 -15 -20 -25 -30"
 			}
 			"08"
 			{
@@ -9821,7 +9818,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow" 				"30 40 50 60 65 70 75"
+				"attack_slow" 				"-30 -40 -50 -60 -65 -70 -75"
 			}
 			"02"
 			{
@@ -9851,7 +9848,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"turn_slow"					"50"
+				"turn_slow"					"-50"
 			}
 			"08"
 			{
@@ -9903,7 +9900,6 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_jakiro.vsndevts"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre.vpcf"
 			"particle"						"particles/hero/jakiro/jakiro_macropyre_blue.vpcf"
-			"particle"						"particles/world_environmental_fx/fire_camp_01_smoke.vpcf"
 		}
 
 		// Special
@@ -10009,7 +10005,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"slow_increase"				"8"
+				"slow_increase"				"-8"
 			}
 		}
 	}
@@ -10147,7 +10143,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"init_slow"					"5"
+				"init_slow"					"-5"
 			}
 			"02"
 			{
@@ -20992,7 +20988,7 @@
 		"BaseClass"							"ability_lua"
 		"ScriptFile"						"hero/hero_silencer/imba_glaives_of_wisdom"
 
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
@@ -26253,13 +26249,83 @@
 	}
 
 	//=================================================================================================================
+	// Tinker's Rearm
+	//=================================================================================================================
+	"imba_tinker_rearm"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"ScriptFile"					"hero/hero_tinker"
+		"AbilityTextureName"			"tinker_rearm"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.53"
+		"AbilityChannelTime" 			"3.5 3.0 2.5 2.0 1.5 1.0 0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
+			"particle"					"particles/hero/tinker/rearmshield_shield.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown_tooltip"		"3.5 3.0 2.5 2.0 1.5 1.0 0.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aghs_spellpower"		"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aghs_interval_pct"		"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"rearm_mana_per_lvl"	"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_manacost"			"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Tinker's Laser
 	//=================================================================================================================
 	"imba_tinker_laser"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -26267,19 +26333,23 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_laser"
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.35"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14.0"
+		"AbilityCooldown"				"14"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 120 140 160"
+		"AbilityManaCost"				"95 120 145 170 175 180 185"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26295,81 +26365,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"base_duration"			"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"80 160 240 320 330 340 350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"refract_radius"		"200 200 200 200 350 500 650"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"blind_aoe"				"300"
+				"var_type"				"FIELD_FLOAT"
+				"blind_duration"		"3.0 3.5 4.0 4.5 4.5 4.5 4.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blind_amount"			"100"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_reduction"		"-1000"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stack_damage"			"50"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"0.25"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"650"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Laser"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"particle_laser"		"particles/units/heroes/hero_tinker/tinker_laser.vpcf"
-				"sound_cast"			"Hero_Tinker.Laser"
-				"sound_impact"			"Hero_Tinker.LaserImpact"
-				"modifier_blind"		"modifier_imba_laser_blind"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_laser_blind"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"EffectName"			"particles/ambient/tower_laser_blind.vpcf"
-				"EffectAttachType"		"follow_overhead"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_amount"
-					"MODIFIER_PROPERTY_BONUS_DAY_VISION"	"%vision_reduction"
-					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"	"%vision_reduction"
-				}
+				"miss_chance_pct"		"100"
 			}
 		}
 	}
@@ -26381,24 +26393,31 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_heat_seeking_missile"
-
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"2500"
-		
+		"AbilityCastRange"				"2500"
+		"AbilityCastPoint"				"0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25.0"
+		"AbilityCooldown"				"25"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 140 160 180"
+		"AbilityManaCost"				"120 140 160 180 190 200 210"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26417,100 +26436,29 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"search_range"			"2500"
+				"damage"				"125 200 275 350 375 400 425"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"base_count"			"2"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_count"			"1"
+				"vision_radius"			"325 325 325 325 425 525 625"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"125 200 275 350"
+				"var_type"				"FIELD_FLOAT"
+				"vision_duration"		"3.5"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_4"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"2.0"
-			}
-			"06"
-			{
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"900"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Missile"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"particle_missile"		"particles/units/heroes/hero_tinker/tinker_missile.vpcf"
-				"particle_dud"			"particles/units/heroes/hero_tinker/tinker_missile_dud.vpcf"
-				"sound_cast"			"Hero_Tinker.Heat-Seeking_Missile"
-				"sound_dud"				"Hero_Tinker.Heat-Seeking_Missile_Dud"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"FireEffect"
-			{
-				"Target"				"TARGET"
-				"EffectName"			"particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf"
-				"EffectAttachType"		"start_at_customorigin"
-				"ControlPointEntities"
-				{
-					"TARGET"			"attach_origin"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_Tinker.Heat-Seeking_Missile.Impact"
-				"Target"				"TARGET"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_heat_seeking_missile_vision"
-				"Target"				"TARGET"
-			}
-		
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Damage"				"%damage"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_heat_seeking_missile_vision"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%vision_duration"
-		
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 		}
 	}
@@ -26522,31 +26470,49 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"tinker_march_of_the_machines"
+		"ScriptFile"					"hero/hero_tinker"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.53"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35.0"
+		"AbilityCooldown"				"35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"130 150 170 190"
+		"AbilityManaCost"				"130 150 170 190 205 220 235"
 
-		// Data driven
+		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
+			"particle"					"particles/units/heroes/hero_tinker/tinker_motm.vpcf"
 			"particle"					"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_flame.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_fire_burn.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_tesla.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_drone.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_sticky.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_dismantle.vpcf"
+			"particle"					"particles/hero/tinker/tinker_march_railgun.vpcf"
+			"particle"					"particles/units/heroes/hero_batrider/batrider_firefly_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_stormspirit/stormspirit_electric_vortex_debuff_end.vpcf"
+			"particle"					"particles/units/heroes/hero_batrider/batrider_stickynapalm_debuff.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_arc_lightning_.vpcf"
 			"model"						"models/heroes/tinker/mom.vmdl"
 		}
 
@@ -26557,182 +26523,127 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawner_width"			"900"
+				"damage"				"16 24 32 40 42 44 46"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawner_amount"		"3"
+				"collision_radius"		"50"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawn_radius"			"300"
+				"explosion_radius"		"150"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spawn_length"			"1400"
+				"spawn_radius"			"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"collision_radius"		"50"
+				"travel_distance"		"1800"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"32 48 64 80"
+				"robots_per_sec"		"24"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attacks_to_kill"		"3"
+				"touch_chance_pct"		"5"
+				"LinkedSpecialBonus"	"special_bonus_imba_tinker_5"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"max_spawns"			"30"
+				"var_type"				"FIELD_INTEGER"
+				"flame_dmg_sec"			"35"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"475"
+				"flame_radius"			"125"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"spawn_interval"		"0.3"
+				"flame_duration"		"1.5"
 			}
 			"11"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_scepter"		"150"
+				"var_type"				"FIELD_FLOAT"
+				"tesla_stun_duration"	"0.1"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_tooltip"		"250"
+				"dismantle_dmg_pct"		"15"
 			}
-		}
-		
-		"OnAbilityPhaseStart"
-		{
-			"FireSound"
+			"13"
 			{
-				"Target"				"CASTER"
-				"EffectName"			"Hero_Tinker.March_of_the_Machines.Cast"
+				"var_type"				"FIELD_INTEGER"
+				"dismantle_duration"	"7"
 			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
+			"14"
 			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"March"
-				"Target"				"POINT"
-
-				"ability_rearm"			"imba_tinker_rearm"
-				"sound_cast"			"Hero_Tinker.March_of_the_Machines"
-				"modifier_machine"		"modifier_imba_march_of_the_machines"
-				"modifier_rearm_stack"	"modifier_imba_rearm_stack"
-				"modifier_rearm_mana"	"modifier_imba_rearm_mana_penalty"
+				"var_type"				"FIELD_INTEGER"
+				"railgun_damage"		"50"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-			
-			"Damage"
+			"15"
 			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%damage"
+				"var_type"				"FIELD_INTEGER"
+				"railgun_range"			"700"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_march_of_the_machines"
+			"16"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"%spawn_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"MarchSpawn"
-
-						"particle_machine"		"particles/units/heroes/hero_tinker/tinker_machine.vpcf"
-					}
-				}
-		
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"MarchDamage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"railgun_radius"		"125"
+			}
+			"17"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"400"
+			}
+			"18"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"spawn_duration"		"6"
+			}
+			"19"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"sticky_duration"		"0.6"
+			}
+			"20"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"drone_order_interval"	"0.4"
+			}
+			"21"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"drone_duration"		"1.2"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Tinker's Rearm
+	// Tinker's Technomancy
 	//=================================================================================================================
-	"imba_tinker_rearm"
+	"imba_tinker_technomancy"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityTextureName"			"tinker_rearm"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"2.5 1.5 0.75"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 200 300"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tinker.vsndevts"
-			"particle"					"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
-		}
+		"BaseClass"              		"ability_lua"
+		"ScriptFile"					"hero/hero_tinker"
+		"AbilityBehavior"       	 	"DOTA_ABILITY_BEHAVIOR_PASSIVE"				
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"    	 	"custom/tinker_tinkermaster"	
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"RequiredLevel"					"6"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26740,74 +26651,202 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"cooldown_tooltip"		"2.5 1.5 0.75"
+				"var_type"				"FIELD_INTEGER"
+				"laser_dmg"				"35 35 35 70 70 70"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"missile_count"			"0 2 2 2 4 4"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"mana_penalty"			"-2.0"
+				"var_type"				"FIELD_INTEGER"
+				"rearm_mana_tooltip"	"50"
 			}
 		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_tinker.lua"
-				"Function"				"Rearm"
+	}
 
-				"particle_rearm"		"particles/units/heroes/hero_tinker/tinker_rearm.vpcf"
-				"sound_cast"			"Hero_Tinker.Rearm"
-				"modifier_stack"		"modifier_imba_rearm_stack"
-				"modifier_mana"			"modifier_imba_rearm_mana_penalty"
+	//=================================================================================================================
+	// Tinker Talent 1 (Level 10): Reduced Rearm mana cost
+	//=================================================================================================================
+	"special_bonus_imba_tinker_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"75"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 2 (Level 10): Additional Missiles
+	//=================================================================================================================
+	"special_bonus_imba_tinker_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_rearm_stack"
+			"01"
 			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-
-				"Duration"				"%stack_duration"
-
-				"ThinkInterval"			"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_tinker.lua"
-						"Function"				"RearmStacksCheck"
-
-						"modifier_stack"		"modifier_imba_rearm_stack"
-						"modifier_mana"			"modifier_imba_rearm_mana_penalty"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"2"
 			}
+		}
+	}
 
-			"modifier_imba_rearm_mana_penalty"
+	//=================================================================================================================
+	// Tinker Talent 3 (Level 20): %-based faster/longer March movement
+	//=================================================================================================================
+	"special_bonus_imba_tinker_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"				"0"
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"40"
+			}
+		}
+	}
 
-				"Duration"				"%stack_duration"
+	//=================================================================================================================
+	// Tinker Talent 4 (Level 20): Extra missile vision duration
+	//=================================================================================================================
+	"special_bonus_imba_tinker_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"3.5"
+			}
+		}
+	}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_penalty"
-				}
+	//=================================================================================================================
+	// Tinker Talent 5 (Level 30): %-based additional MotM specialization chance
+	//=================================================================================================================
+	"special_bonus_imba_tinker_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"3"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 6 (Level 30): Rearm grants a shield equal to % of your max HP on cast
+	//=================================================================================================================
+	"special_bonus_imba_tinker_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 7 (Level 40): Reducing all cast-animations
+	//=================================================================================================================
+	"special_bonus_imba_tinker_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tinker Talent 8 (Level 40): Rearm's channel time is converted into cooldown time
+	//=================================================================================================================
+	"special_bonus_imba_tinker_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
