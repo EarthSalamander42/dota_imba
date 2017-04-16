@@ -1318,11 +1318,17 @@
 		"DOTA_Tooltip_modifier_imba_stifling_dagger_slow"									"Stifling Dagger"
 		"DOTA_Tooltip_modifier_imba_stifling_dagger_slow_Description"						"Slowed and granting vision to enemies"
 
+		"DOTA_Tooltip_modifier_imba_blur_speed_dummy"										"Swift and Silent"
+		"DOTA_Tooltip_modifier_imba_blur_speed_dummy_Description"							"Gaining movement speed for a short duration"
+        
+		"DOTA_Tooltip_modifier_imba_phantom_strike_coup_de_grace"							"Coup de Voilé Oracle"
+		"DOTA_Tooltip_modifier_imba_phantom_strike_coup_de_grace_Description"				"Increased Coup de Grace chance"
+        
 		"DOTA_Tooltip_modifier_imba_phantom_strike"											"Phantom Strike"
 		"DOTA_Tooltip_modifier_imba_phantom_strike_Description"								"Gaining attack speed for a short duration"
-
-		"DOTA_Tooltip_modifier_imba_coup_de_grace_stacks"									"Dance of Death"
-		"DOTA_Tooltip_modifier_imba_coup_de_grace_stacks_Description"						"Increased chance to crit"
+        
+		"DOTA_Tooltip_modifier_imba_coup_de_grace_bonus_damage_dummy"						"Die Hard"
+		"DOTA_Tooltip_modifier_imba_coup_de_grace_bonus_damage_dummy_Description"			"Increased damage"
 
 		"DOTA_Tooltip_modifier_imba_shadow_strike_base_slow"								"Shadow Strike"
 		"DOTA_Tooltip_modifier_imba_shadow_strike_base_slow_Description"					"Slowed and taking damage"
@@ -2962,35 +2968,35 @@
 		"DOTA_Tooltip_ability_imba_omniknight_guardian_angel_radius"						"EFFECT RADIUS:"
 
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger"						"Stifling Dagger"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"			"Throws a dagger at an enemy, attacking it with bonus damage once the dagger connects. Stifling Dagger can trigger any on-hit attack modifier, such as critical hits, bashes, or cleaves.\n<font color='#FF7800'>Silent as the grave:</font> Briefly silences enemies, interrupting their spellcasting."
+		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Description"			"Throws a dagger at an enemy, attacking it with bonus damage once the dagger connects. Stifling Dagger can trigger any on-hit attack modifier, such as critical hits, bashes, or cleaves.\n<font color='#FF7800'>Silent as the grave:</font> Briefly silences enemies, interrupting their spellcasting.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Mortred throws %scepter_dagger_count% additional daggers after the first one; these hit random enemies in range, but cannot hit the same target more than once, unless there are less enemies in the area than daggers to throw."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_Lore"					"The first skill learned by the Sisters of the Veil often signals an incoming hit."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_move_slow"				"%MOVEMENT SLOW:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_slow_duration"			"SLOW DURATION:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_stifling_dagger_bonus_damage"			"BONUS DAMAGE:"
 
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike"							"Phantom Strike"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"				"Teleports to a unit, friendly or enemy, while gaining bonus attack speed.\n<font color='#FF7800'>Phantom slash:</font> Attacks each enemy between you and the target once.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Note0"					"Phantom slash's attacks can trigger on-hit effects like critical hits, cleaves, and orb effects."
+		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Description"				"Teleports to a unit, friendly or enemy, while gaining bonus attack speed.\n<font color='#FF7800'>Coup de Voilé Oracle:</font> Increases Coup de Grace chance for the next 4 attacks.\n<font color='#00FF40'>Can be cast on structures and magic immune units.</font>"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_Lore"					"Mortred's silken veil is the last thing her unfortunate target sees."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_attack_speed"		"ATTACK SPEED BONUS:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_buff_duration"			"ATTACK SPEED DURATION:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_tooltip_range"			"BLINK RANGE:"
+        "DOTA_Tooltip_ability_imba_phantom_assassin_phantom_strike_bonus_coup_de_grace"		"BONUS COUP CHANCE:"
 
 		"DOTA_Tooltip_ability_imba_phantom_assassin_blur"									"Blur"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"						"Phantom Assassin focuses inward, allowing her to dodge incoming attacks effortlessly.\n<font color='#FF7800'>Immaterial girl:</font> Whenever she detects an enemy hero in %radius% range, Mortred gains bonus movement speed, and disappears from the enemies' minimap."
+		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Description"						"Phantom Assassin focuses inward, allowing her to dodge incoming attacks effortlessly.\n<font color='#FF7800'>Swift and Silent:</font> She moves faster with each dodged attack.\n<font color='#FF7800'>Shroud of Veiled Sisters:</font> Whenever she detects an enemy hero in %radius% range, Mortred becomes less visible."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_Lore"								"Meditation allows a Veiled Sister to carefully anticipate her opponents in combat."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_evasion"							"%EVASION:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_radius"							"EFFECT RADIUS:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_blur_blur_ms"							"%BONUS MOVE SPEED:"
-
+        "DOTA_Tooltip_ability_imba_phantom_assassin_blur_speed_bonus_duration"  			"SPEED BONUS DURATION:"
+        
 		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace"							"Coup de Grace"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"				"Phantom Assassin refines her combat abilities, gaining a chance of delivering a devastating critical strike to enemy units.\n<font color='#FF7800'>Dance of death:</font> Critical chance increases based on the number of enemies hit during Phantom Strike.\n\n<font color='#00FF40'>Upgradable by Aghanim's Scepter:</font> Grants a %crit_chance_scepter%%% chance on every attack to instantly kill enemies."
+		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Description"				"Phantom Assassin refines her combat abilities, gaining a chance of delivering a devastating critical strike to enemy units.\n<font color='#FF7800'>Die Hard:</font> After every crit on an enemy hero, Mortred's killing instinct sharpens, increasing her damage."
 		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_Lore"						"A divine strike, Mortred honors her opponent by choosing them for death."
-		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_chance_scepter"		"%SCEPTER KILL CHANCE:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_bonus"				"%CRITICAL DAMAGE:"
 		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_chance"				"%CRITICAL CHANCE:"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase"			"%DANCE OF DEATH CRIT BONUS:"
-		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase_duration"	"DANCE OF DEATH DURATION:"
+		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase_damage"		"%DIE HARD BONUS DAMAGE:"
+		"DOTA_Tooltip_ability_imba_phantom_assassin_coup_de_grace_crit_increase_duration"	"DIE HARD DURATION:"
 
 		"DOTA_Tooltip_ability_imba_riki_smoke_screen"										"Smoke Screen"
 		"DOTA_Tooltip_ability_imba_riki_smoke_screen_Description"							"Throws down a smoke bomb, silencing enemies, causing them to miss attacks, and slowing their movement.\n<font color='#FF7800'>Solid fog:</font> Also slows enemies' turn rate, and reduces their vision range. Vision reduction is stronger on the center of the cloud."

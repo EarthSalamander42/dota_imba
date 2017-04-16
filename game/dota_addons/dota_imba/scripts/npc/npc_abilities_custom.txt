@@ -17729,14 +17729,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"phantom_assassin_stifling_dagger"
-
+        "MaxLevel"						"7"
+        
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -17749,26 +17751,26 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"525 750 975 1200 1225 1250 1275"
 		"AbilityCastPoint"				"0.2"
-		
-		// Time		
+
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"6"
 		"AbilityDuration"				"4.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30 25 20 15"
-			
-		// Special	
+		"AbilityManaCost"				"30 25 20 15 10 5 0"
+
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"-20 -30 -40 -50"
+				"move_slow"				"-50"
 			}
 			"02"
 			{
@@ -17778,7 +17780,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"4"
+				"slow_duration"			"1 2 3 4 4 4 4"
 			}
 			"04"
 			{
@@ -17788,102 +17790,27 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"25 50 75 100"
+				"bonus_damage"			"65"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"TrackingProjectile"
+			"06"
 			{
-				"Target"           		"TARGET"
-				"EffectName"       		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
-				"Dodgeable"        		"1"
-				"ProvidesVision"   		"1"
-				"VisionRadius"     		"600"
-				"MoveSpeed"        		"%dagger_speed"
-				"SourceAttachment"  	"DOTA_PROJECTILE_ATTACHMENT_ATTACK_1"
+				"var_type"				    "FIELD_INTEGER"
+				"damage_reduction"			"75 60 45 30 20 10 0"
 			}
-
-			"FireSound"
+			"07"
 			{
-				"EffectName"			"Hero_PhantomAssassin.Dagger.Cast"
-				"Target"				"CASTER"
+				"var_type"				"FIELD_INTEGER"
+				"dagger_vision"			"200 200 200 200 350 500 650"
 			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_phantom_assassin.lua"
-				"Function"				"StiflingDaggerHit"
-				"Target"				"TARGET"
-
-				"sound_hit"				"Hero_PhantomAssassin.Dagger.Target"
-				"ability_crit"			"imba_phantom_assassin_coup_de_grace"
-				"modifier_crit"			"modifier_imba_coup_de_grace_crit"
-				"modifier_stacks"		"modifier_imba_coup_de_grace_stacks"
-				"modifier_kill"			"modifier_imba_coup_de_grace_kill"
-				"modifier_silence"		"modifier_imba_stifling_dagger_silence"
-				"modifier_slow"			"modifier_imba_stifling_dagger_slow"
-				"modifier_damage"		"modifier_imba_stifling_dagger_bonus_damage"
+				"var_type"				"FIELD_INTEGER"
+				"scepter_dagger_count"	"3"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_stifling_dagger_slow"
+			"09"
 			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%slow_duration"
-
-				"EffectName"			"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_slow"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%move_slow"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_stifling_dagger_silence"
-			{
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%silence_duration"
-
-				"EffectName"			"particles/generic_gameplay/generic_silenced.vpcf"
-				"EffectAttachType"		"follow_overhead"
-
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_stifling_dagger_bonus_damage"
-			{
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Duration"				"0.01"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%bonus_damage"
-				}
+				"var_type"				    "FIELD_INTEGER"
+				"scepter_knives_interval"	"0.3"
 			}
 		}
 	}
@@ -17895,13 +17822,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY | DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_BUILDING"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+        "MaxLevel"						"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -17911,21 +17840,21 @@
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 			"particle"					"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
 		}
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1400"
+		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.2"
 		"CastFilterRejectCaster"		"1"
 
-		// Time		
+		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 8 6 4"
+		"AbilityCooldown"				"14 11 8 5 5 5 5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"50"
-		
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -17938,12 +17867,12 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"buff_duration"				"3.0"
+				"buff_duration"				"4.0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_range"				"1400"
+				"tooltip_range"				"1000"
 			}
 			"04"
 			{
@@ -17955,69 +17884,10 @@
 				"var_type"					"FIELD_INTEGER"
 				"projectile_width"			"125"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"06"
 			{
-				"ScriptFile"				"hero/hero_phantom_assassin.lua"
-				"Function"					"PhantomStrike"
-
-				"Target"					"TARGET"
-				"modifier_phantom_strike"	"modifier_imba_phantom_strike"
-				"modifier_stacks"			"modifier_imba_coup_de_grace_stacks"
-				"sound_start"				"Hero_PhantomAssassin.Strike.Start"
-				"sound_end"					"Hero_PhantomAssassin.Strike.End"
-				"particle_end"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-
-			"FireEffect"
-			{
-				"EffectName"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-				"EffectAttachType"			"start_at_customorigin"
-				
-				"ControlPointEntities"
-				{
-					"TARGET"				"follow_origin"
-					"TARGET"				"follow_origin"
-				}
-			}
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_PhantomAssassin.Attack"
-				"Target"					"TARGET"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_phantom_assassin.lua"
-				"Function"					"PhantomStrikeHit"
-
-				"ability_crit"				"imba_phantom_assassin_coup_de_grace"
-				"modifier_stacks"			"modifier_imba_coup_de_grace_stacks"
-				"modifier_crit"				"modifier_imba_coup_de_grace_crit"
-				"sound_kill"				"Hero_PhantomAssassin.CoupDeGrace"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_phantom_strike"
-			{
-				"IsBuff"					"1"
-				"Duration"					"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_attack_speed"
-				}
+				"var_type"					    "FIELD_INTEGER"
+				"bonus_coup_de_grace"			"1 1 1 1 4 7 10"
 			}
 		}
 	}
@@ -18029,10 +17899,12 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"				"phantom_assassin_blur"
 		"AbilityCastRange"					"1600"
+        "MaxLevel"						"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18049,7 +17921,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"evasion"					"25 35 45 55"
+				"evasion"					"20 30 40 50 53 56 60"
 			}
 			"02"
 			{
@@ -18059,78 +17931,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"blur_ms"					"12"
+				"blur_ms"					"3 3 3 3 6 9 12"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_blur"
+			"04"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"Blur"
-
-						"modifier_blur"		"modifier_imba_blur_blur"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%evasion"
-				}
-			}
-
-			"modifier_imba_blur_blur"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"StatusEffectName"			"particles/hero/phantom_assassin/blur_status_fx.vpcf"
-				"StatusEffectPriority"		"11"
-
-				"EffectName"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_blur.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"BlurStart"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"BlurEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%blur_ms"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NOT_ON_MINIMAP_FOR_ENEMIES"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"speed_bonus_duration"		"7"
 			}
 		}
 	}
@@ -18141,11 +17947,13 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_phantom_assassin"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"phantom_assassin_coup_de_grace"
+        "MaxLevel"						"6"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -18164,7 +17972,7 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_bonus"				"250 350 450"
+				"crit_bonus"				"230 340 450 480 510 540"
 			}
 			"02"
 			{
@@ -18174,157 +17982,12 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_increase"				"2"
+				"crit_increase_damage"	    "10 10 10 20 30 40"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"crit_increase_duration"	"3.0"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance_scepter"		"2"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_coup_de_grace"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"OnAttackStart"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_crit"
-						"Target"			"CASTER"
-					}
-
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_kill"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"CoupDeGrace"
-						"Target"			"TARGET"
-
-						"stack_modifier"	"modifier_imba_coup_de_grace_stacks"
-						"crit_modifier"		"modifier_imba_coup_de_grace_crit"
-						"kill_modifier"		"modifier_imba_coup_de_grace_kill"
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_crit"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_bonus"
-				}
-
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_crit"
-						"Target"			"CASTER"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_PhantomAssassin.CoupDeGrace"
-						"Target"
-						{
-							"Center"		"TARGET"
-							"Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_kill"
-			{
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_coup_de_grace_kill"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_bonus"
-				}
-
-				"OnAttackLanded"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_imba_coup_de_grace_kill"
-						"Target"			"CASTER"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_phantom_assassin.lua"
-						"Function"			"CoupDeGraceKill"
-
-						"sound_kill"		"Hero_PhantomAssassin.CoupDeGrace"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						
-						"ControlPointEntities"
-						{
-							"TARGET"		"follow_origin"
-							"TARGET"		"follow_origin"
-						}
-					}
-				}
-			}
-
-			"modifier_imba_coup_de_grace_stacks"
-			{
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"Passive"					"0"
-				"IsPurgable"				"0"
-
-				"Duration"					"%crit_increase_duration"
+				"crit_increase_duration"	"7.0"
 			}
 		}
 	}
@@ -33999,6 +33662,169 @@
 			"BaseClass"                     "special_bonus_unique_centaur_2"                                                        
 			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	}
+
+	//=================================================================================================================
+	// Phantom Assassin Talents
+	//=================================================================================================================
+	"special_bonus_imba_phantom_assassin_1"	// +35 Stifling Dagger bonus damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"35"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_2"	// +30 Phantom Strike bonus attack speed
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"30.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_3"	// +1 Stifling Dagger bonus dagger (like aghs)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_4"	// +5% Phantom Strike bonus crit chance
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_5"	// +100% Coup de Grace crit damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"100"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_6"	// +2 Phantom Strike buffed attack count
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_7"	// +8 sec Coup de Grace bonus damage duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"8"
+			}
+		}
+	}
+
+	"special_bonus_imba_phantom_assassin_8"	// Blur now grants +30% chance to evade any damage
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"30"
+			}
+		}
 	}
 
 	//=================================================================================================================
