@@ -586,3 +586,11 @@ function modifier_imba_sonic_wave_daze:OnRefresh( params )
 end
 
 -------------------------------------------
+
+function modifier_imba_sonic_wave_daze:GetEffectName()
+	return "particles/hero/queenofpain/sonic_wave_daze.vpcf"
+end
+
+function modifier_imba_sonic_wave_daze:GetEffectAttachType()
+	return PATTACH_OVERHEAD_FOLLOW
+end
