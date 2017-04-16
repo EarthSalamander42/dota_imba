@@ -1872,15 +1872,15 @@
 		"Ability3"					"imba_pugna_nether_ward"
 		"Ability4"					"imba_pugna_life_drain_end"
 		"Ability5"					"imba_pugna_life_drain"
-
-		"Ability10"					"special_bonus_mp_regen_3"
-		"Ability11"					"special_bonus_hp_150"
-		"Ability12"					"special_bonus_respawn_reduction_25"
-		"Ability13"					"special_bonus_strength_6"
-		"Ability14"					"special_bonus_all_stats_7"
-		"Ability15"					"special_bonus_cast_range_100"
-		"Ability16"					"special_bonus_spell_lifesteal_20"
-		"Ability17"					"special_bonus_cooldown_reduction_15"
+		
+		"Ability10"					"special_bonus_imba_pugna_1"			
+		"Ability11"					"special_bonus_imba_pugna_2"			
+		"Ability12"					"special_bonus_imba_pugna_3"
+		"Ability13"					"special_bonus_imba_pugna_4"
+		"Ability14"					"special_bonus_imba_pugna_5"
+		"Ability15"					"special_bonus_imba_pugna_6"
+		"Ability16"					"special_bonus_imba_pugna_7"
+		"Ability17"					"special_bonus_imba_pugna_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_pugna/pugna_base_attack.vpcf"
 	}
@@ -2475,20 +2475,23 @@
 	"npc_imba_hero_tinker"
 	{
 		"override_hero"				"npc_dota_hero_tinker"
+		
+		"AbilityLayout"				"6"
 
 		"Ability1"					"imba_tinker_laser"
 		"Ability2"					"imba_tinker_heat_seeking_missile"
 		"Ability3"					"imba_tinker_march_of_the_machines"
-		"Ability4"					"imba_tinker_rearm"
+		"Ability4"					"imba_tinker_technomancy"
+		"Ability5"					"imba_tinker_rearm"
 
-		"Ability10"					"special_bonus_intelligence_8"
-		"Ability11"					"special_bonus_armor_4"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_spell_amplify_6"
-		"Ability14"					"special_bonus_cast_range_100"
-		"Ability15"					"special_bonus_magic_resistance_15"
-		"Ability16"					"special_bonus_spell_lifesteal_20"
-		"Ability17"					"special_bonus_mp_regen_8"
+		"Ability10"					"special_bonus_imba_tinker_1"
+		"Ability11"					"special_bonus_imba_tinker_2"
+		"Ability12"					"special_bonus_imba_tinker_3"
+		"Ability13"					"special_bonus_imba_tinker_4"
+		"Ability14"					"special_bonus_imba_tinker_5"
+		"Ability15"					"special_bonus_imba_tinker_6"
+		"Ability16"					"special_bonus_imba_tinker_7"
+		"Ability17"					"special_bonus_imba_tinker_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
 	}

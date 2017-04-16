@@ -816,7 +816,8 @@ function InitializeInnateAbilities( hero )
 		"imba_kunkka_ebb_and_flow",
 		"imba_necrolyte_sadist",
 		"imba_abaddon_over_channel",
-		"imba_night_stalker_stalker_in_the_night"
+		"imba_night_stalker_stalker_in_the_night",
+		"imba_tinker_rearm"
 	}
 
 	-- Cycle through any innate abilities found, then upgrade them
