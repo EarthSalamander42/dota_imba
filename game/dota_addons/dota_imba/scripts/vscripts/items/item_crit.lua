@@ -9,7 +9,6 @@
 if item_imba_greater_crit == nil then item_imba_greater_crit = class({}) end
 LinkLuaModifier( "modifier_item_imba_greater_crit", "items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )		-- Owner's bonus attributes, stackable
 LinkLuaModifier( "modifier_item_imba_greater_crit_buff", "items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )	-- Critical damage increase counter
-LinkLuaModifier( "modifier_item_imba_greater_crit_crit", "items/item_crit.lua", LUA_MODIFIER_MOTION_NONE )	-- Crit buff
 
 function item_imba_greater_crit:GetIntrinsicModifierName()
 	return "modifier_item_imba_greater_crit" end
@@ -45,64 +44,6 @@ function modifier_item_imba_greater_crit:OnDestroy()
 	end
 end
 
--- Declare modifier events/properties
-function modifier_item_imba_greater_crit:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_EVENT_ON_ATTACK_START,
-		MODIFIER_EVENT_ON_ATTACK_LANDED,
-	}
-	return funcs
-end
-
-function modifier_item_imba_greater_crit:GetModifierPreAttack_BonusDamage()
-	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
-
--- Roll for crits on attack start
-function modifier_item_imba_greater_crit:OnAttackStart(keys)
-	if IsServer() then
-		local owner = self:GetParent()
-
-		-- If this unit is the attacker, roll for a crit
-		if owner == keys.attacker then
-
-			-- If the target is not a hero or creep, remove the crit modifier and do nothing else
-			if not IsHeroOrCreep(keys.target) then
-				owner:RemoveModifierByName("modifier_item_imba_greater_crit_crit")
-				return
-			end
-
-			-- Roll for the actual crit
-			if RollPercentage(self:GetAbility():GetSpecialValueFor("crit_chance")) then
-				owner:AddNewModifier(owner, self:GetAbility(), "modifier_item_imba_greater_crit_crit", {duration = 1.0})
-			end
-		end
-	end
-end
-
--- On attack landed, remove the crit buff or increase the next crit's damage
-function modifier_item_imba_greater_crit:OnAttackLanded( keys )
-	if IsServer() then
-		local owner = self:GetParent()
-
-		-- If this attack was not performed by the modifier's owner, do nothing
-		if owner ~= keys.attacker then
-			return end
-
-		-- If the owner has the crit modifier, remove it and reset buff stacks
-		local modifier_crit_buff = owner:FindModifierByName("modifier_item_imba_greater_crit_buff")
-		if owner:HasModifier("modifier_item_imba_greater_crit_crit") then
-			owner:RemoveModifierByName("modifier_item_imba_greater_crit_crit")
-			modifier_crit_buff:SetStackCount(0)
-			keys.target:EmitSound("DOTA_Item.Daedelus.Crit")
-
-		-- Else, increase the crit damage bonus
-		else
-			modifier_crit_buff:SetStackCount(modifier_crit_buff:GetStackCount() + self:GetAbility():GetSpecialValueFor("crit_increase"))
-		end
-	end
-end
-
 -----------------------------------------------------------------------------------------------------------
 --	Daedalus crit damage buff
 -----------------------------------------------------------------------------------------------------------
@@ -113,33 +54,45 @@ function modifier_item_imba_greater_crit_buff:IsDebuff() return false end
 function modifier_item_imba_greater_crit_buff:IsPurgable() return false end
 function modifier_item_imba_greater_crit_buff:IsPermanent() return true end
 
------------------------------------------------------------------------------------------------------------
---	Daedalus crit buff
------------------------------------------------------------------------------------------------------------
+function modifier_item_imba_greater_crit_buff:OnCreated()	
+	-- Ability
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
 
-if modifier_item_imba_greater_crit_crit == nil then modifier_item_imba_greater_crit_crit = class({}) end
-function modifier_item_imba_greater_crit_crit:IsHidden() return true end
-function modifier_item_imba_greater_crit_crit:IsDebuff() return false end
-function modifier_item_imba_greater_crit_crit:IsPurgable() return false end
-
--- Track parameters to prevent errors if the item is unequipped
-function modifier_item_imba_greater_crit_crit:OnCreated()
-	if IsServer() then
-		self.crit_damage = self:GetAbility():GetSpecialValueFor("base_crit") + self:GetParent():FindModifierByName("modifier_item_imba_greater_crit_buff"):GetStackCount()
-	end
+	-- Special values
+	self.base_crit = self.ability:GetSpecialValueFor("base_crit")
+	self.crit_increase = self.ability:GetSpecialValueFor("crit_increase")
+	self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")
 end
 
--- Declare modifier events/properties
-function modifier_item_imba_greater_crit_crit:DeclareFunctions()
-	local funcs = {
-		MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE,
-	}
-	return funcs
+function modifier_item_imba_greater_crit_buff:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
+
+	return decFuncs
 end
 
--- Grant the crit damage multiplier
-function modifier_item_imba_greater_crit_crit:GetModifierPreAttack_CriticalStrike()
+function modifier_item_imba_greater_crit_buff:GetModifierPreAttack_CriticalStrike()	
 	if IsServer() then
-		return self.crit_damage
+		-- Find how many Daedaluses we have for calculating crits
+		local crit_modifiers = self.caster:FindAllModifiersByName("modifier_item_imba_greater_crit")
+
+		-- Get current power		
+		local stacks = self:GetStackCount()
+		local crit_power = self.base_crit + self.crit_increase/self.crit_increase * stacks 
+		
+		local crit_succeeded = false		
+		local multiplicative_chance = (1 - (1 - self.crit_chance * 0.01) ^ #crit_modifiers) * 100
+
+		if RollPercentage(multiplicative_chance) then
+			self:SetStackCount(0)			
+			crit_succeeded = true
+		end		
+
+		if crit_succeeded then
+			return crit_power
+		else
+			self:SetStackCount(stacks + self.crit_increase * #crit_modifiers)
+			return nil	
+		end
 	end
 end
