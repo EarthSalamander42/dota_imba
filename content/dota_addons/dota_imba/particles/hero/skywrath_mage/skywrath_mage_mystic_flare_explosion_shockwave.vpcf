@@ -4,7 +4,7 @@
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 64
 	m_flConstantRadius = 128.0
-	m_ConstantColor = [ 255, 182, 7, 255 ]
+	m_ConstantColor = [ 58, 127, 146, 255 ]
 	m_bShouldSort = false
 	m_Renderers = 
 	[
@@ -15,7 +15,7 @@
 			m_flOverbrightFactor = 6.0
 			m_flAddSelfAmount = 2.0
 			m_bSaturateColorPreAlphaBlend = false
-			m_hTexture = resource:"materials/particle/beam_fire_01.vtex"
+			m_hTexture = resource:"materials/particle/particle_ring_thicksoft_mod_bright.vtex"
 			m_nScaleCP1 = 0
 			m_nScaleCP2 = 1
 			m_flRadiusScale = 0.5
@@ -45,7 +45,7 @@
 		},
 		{
 			_class = "C_OP_ColorInterpolate"
-			m_ColorFade = [ 69, 37, 25, 255 ]
+			m_ColorFade = [ 56, 96, 105, 255 ]
 		},
 		{
 			_class = "C_OP_FadeOutSimple"
@@ -69,8 +69,8 @@
 	[
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 0.75
-			m_fLifetimeMax = 0.75
+			m_fLifetimeMin = 1.25
+			m_fLifetimeMax = 1.75
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
@@ -112,14 +112,14 @@
 		{
 			_class = "C_INIT_RandomRadius"
 			m_flRadiusMax = 128.0
-			m_flRadiusMin = 32.0
+			m_flRadiusMin = 128.0
 		},
 	]
 	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 33
+			m_nParticlesToEmit = 64
 		},
 	]
 	m_Children = 
@@ -129,6 +129,35 @@
 		},
 		{
 			m_ChildRef = resource:"particles/hero/skywrath_mage/skywrath_mage_mystic_flare_explosion_shockwave_golden_dust.vpcf"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 1
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 1.0, 1.0, 1.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+				{
+					m_iControlPoint = 3
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }
