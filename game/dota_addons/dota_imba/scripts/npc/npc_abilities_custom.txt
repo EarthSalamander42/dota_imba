@@ -34000,4 +34000,330 @@
 			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
 			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 	}
+
+	//=================================================================================================================
+    // Pugna's Talents 
+    //=================================================================================================================
+	"special_bonus_imba_pugna_1" // Nether Blast cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"1"
+            }
+        }
+    }
+
+    "special_bonus_imba_pugna_2" // Increase Nether Ward damage per mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+             	"value"						"0.5"
+            }
+        }
+    } 
+
+    "special_bonus_imba_pugna_3" // Nether Blast damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"125"
+            }
+        }
+    }  
+
+    "special_bonus_imba_pugna_4" // Heal/damage increase at the end of Decrepify
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"15"
+            }
+        }
+    } 
+
+    "special_bonus_imba_pugna_5" // Life Drain heal increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"50"
+            }
+        }
+    }  
+
+    "special_bonus_imba_pugna_6" // Decrepify duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"1"
+            }
+        }
+    } 
+
+    "special_bonus_imba_pugna_7" // Life Drain base slow increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"35"
+            }
+        }
+    }
+
+    "special_bonus_imba_pugna_8" // Nether Blast mini blast magic reduction increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"6"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Sand King's Talents 
+    //=================================================================================================================
+    "special_bonus_imba_sand_king_1" // Burrowstrike path radius increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "60"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_2" // Sandstorm damage per second increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "40"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_3" // Burrowstrike cast range increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "275"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_4" // Epicenter increase pull radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "300"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_5" // Caustic Finale slow increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_6" // Additional Epicenter pulses
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_7" // Sandstorm Aura
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "50"
+            }
+        }
+    }
+
+    "special_bonus_imba_sand_king_8" // Caustic Finale triggers from any damage source
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"                     "1"
+            }
+        }
+    }
 }
