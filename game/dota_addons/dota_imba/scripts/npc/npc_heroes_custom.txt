@@ -1901,14 +1901,14 @@
 		"Ability4"					"imba_queenofpain_delightful_torment"
 		"Ability5"					"imba_queenofpain_sonic_wave"
 
-		"Ability10"					"special_bonus_attack_damage_20"
-		"Ability11"					"special_bonus_strength_5"
-		"Ability12"					"special_bonus_cooldown_reduction_10"
-		"Ability13"					"special_bonus_spell_amplify_6"
-		"Ability14"					"special_bonus_attack_range_75"
-		"Ability15"					"special_bonus_hp_200"
-		"Ability16"					"special_bonus_intelligence_30"
-		"Ability17"					"special_bonus_spell_lifesteal_70"
+		"Ability10"					"special_bonus_imba_queenofpain_1"
+		"Ability11"					"special_bonus_imba_queenofpain_2"
+		"Ability12"					"special_bonus_imba_queenofpain_3"
+		"Ability13"					"special_bonus_imba_queenofpain_4"
+		"Ability14"					"special_bonus_imba_queenofpain_5"
+		"Ability15"					"special_bonus_imba_queenofpain_6"
+		"Ability16"					"special_bonus_imba_queenofpain_7"
+		"Ability17"					"special_bonus_imba_queenofpain_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_queenofpain/queen_base_attack.vpcf"
 	}
