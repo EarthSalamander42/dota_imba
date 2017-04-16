@@ -19435,20 +19435,64 @@
 	}
 
 	//=================================================================================================================
+	// Queen of Pain's Delightful Torment
+	//=================================================================================================================
+	"imba_queenofpain_delightful_torment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"		
+		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"					"custom/queenofpain_delightful_torment"
+		"MaxLevel"								"1"
+		"ScriptFile"							"hero/hero_queenofpain.lua"	
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_reduction"		"0.2"
+			}
+		}
+	}
+
+	//=================================================================================================================
 	// Queen of Pain's Shadow Strike
 	//=================================================================================================================
 	"imba_queenofpain_shadow_strike"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_queenofpain"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"queenofpain_shadow_strike"
+		"ScriptFile"					"hero/hero_queenofpain"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"450 500 550 600 625 650 675"
+		"AbilityCastPoint"				"0.4"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 12 8 4 3 2 1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19459,19 +19503,6 @@
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.36"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10 8 6 4"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90"
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -19480,148 +19511,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"strike_damage"			"50 75 100 125"
+				"damage"				"50 75 100 125 140 155 170"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_damage"		"15 25 35 45"
+				"sec_damage_total"		"150 225 300 375 400 425 450"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-20 -30 -40 -50"
+				"var_type"				"FIELD_FLOAT"
+				"damage_interval"		"3 3 3 3 2.5 2 1.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"900"
+				"duration"				"15"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration_tooltip"		"16"
+				"init_move_slow_pct"	"20 30 40 50 50 50 50"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_slow"				"-5"
+				"slow_decay_pct"		"10"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_slow"			"-2.0 -3.0 -4.5 -5.5"
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"ShadowStrikeCast"
-
-				"sound_cast"			"Hero_QueenOfPain.ShadowStrike"
-				"particle_caster"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
-				"particle_projectile"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"ShadowStrikeHit"
-				"Target"				"TARGET"
-
-				"stack_modifier"		"modifier_imba_shadow_strike_stacking_slow"
-				"modifier_base_slow"	"modifier_imba_shadow_strike_base_slow"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_shadow_strike_passive"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_queen_of_pain.lua"
-						"Function"				"ShadowStrikeAttack"
-
-						"sound_hit"				"Imba.QopShadowStrikeCreep"
-						"particle_caster"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike_body.vpcf"
-						"particle_projectile"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
-						"modifier_debuff"		"modifier_imba_shadow_strike_base_slow"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"internal/util.lua"
-						"Function"				"IllusionPassiveRemover"
-
-						"modifier"				"modifier_imba_shadow_strike_passive"
-					}
-				}
-			}
-
-			"modifier_imba_shadow_strike_base_slow"
-			{
-				"IsDebuff"							"1"
-				"IsPurgable"						"1"
-
-				"Duration"							"%duration_tooltip"
-
-				"EffectName"						"particles/units/heroes/hero_queenofpain/queen_shadow_strike_debuff.vpcf"
-				"EffectAttachType"					"follow_overhead"
-
-				"ThinkInterval"						"2.0"
-
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"					"TARGET"
-						"Type"						"DAMAGE_TYPE_MAGICAL"
-						"Damage"					"%duration_damage"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_queen_of_pain.lua"
-						"Function"					"ShadowStrikeDecay"
-						"Target"					"TARGET"
-
-						"stack_modifier"			"modifier_imba_shadow_strike_stacking_slow"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%base_slow"
-				}
-			}
-
-			"modifier_imba_shadow_strike_stacking_slow"
-			{
-				"IsHidden"							"1"
-				"IsDebuff"							"1"
-				"IsPurgable"						"1"
-
-				"Duration"							"%duration_tooltip"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%stack_slow"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"castrange_tooltip"		"450 500 550 600 625 650 675"
 			}
 		}
 	}
@@ -19633,10 +19558,28 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"queenofpain_blink"
+		"ScriptFile"					"hero/hero_queenofpain"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"0"
+		"AbilityCastPoint"				"0.33"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12 10 8 6 6 6 6"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60"
+		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -19645,20 +19588,6 @@
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.28"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 10 8 6"
-		
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"60"
-		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -19666,70 +19595,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"blink_range"			"1500"
+				"blink_range"			"1300"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_blink_range"		"200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"scream_damage"			"50 90 125 165"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"nausea_duration"		"3"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_QueenOfPain.Blink_out"
-				"Target"				"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"Blink"
-				"Target"				"POINT"
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_queenofpain/queen_blink_start.vpcf"
-				"Target"				"CASTER"
-				"EffectAttachType"		"attach_hitloc"
-			}
-
-			"FireSound"
-			{
-				"EffectName"			"Hero_QueenOfPain.Blink_in"
-				"Target"				"CASTER"
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_queenofpain/queen_blink_end.vpcf"
-				"Target"				"CASTER"
-				"EffectAttachType"		"follow_origin"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"BlinkScream"
-				"Target"				"TARGET"
-
-				"modifier_confusion"	"modifier_imba_confusion"
+				"scream_damage_pct"		"20 20 20 20 40 60 80"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_2"
 			}
 		}
 	}
@@ -19741,11 +19613,32 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"queenofpain_scream_of_pain"
+		"ScriptFile"					"hero/hero_queenofpain"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"475"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140 143 146 150"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19756,19 +19649,6 @@
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
 		}
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7.0 6.5 6.0 5.5"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -19776,163 +19656,29 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"500"
+				"damage"				"75 150 225 300 330 360 390"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"radius"				"475"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"nausea_duration"		"3"
+				"pain_duration"			"2"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"nausea_base_dmg"		"50"
+				"pain_reflect_pct"		"20 20 20 20 30 40 50"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"nausea_bonus_dmg"		"1 2 3 4"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"projectile_speed"		"900"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"			"Hero_QueenOfPain.ScreamOfPain"
-				"Target"				"CASTER"
-			}
-
-			"AttachEffect"
-			{
-				"EffectName"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain_owner.vpcf"
-				"EffectAttachType"		"attach_origin"
-				"Target"				"CASTER"
-			}
-
-			"ActOnTargets"
-			{
-				"Target"
-				{
-					"Center"			"CASTER"
-					"Radius"			"%area_of_effect"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				}
-
-				"Action"
-				{
-					"TrackingProjectile"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"particles/units/heroes/hero_queenofpain/queen_scream_of_pain.vpcf"
-						"Dodgeable"				"0"
-						"ProvidesVision"		"0"
-						"MoveSpeed"				"%projectile_speed"
-						"SourceAttachment"		"DOTA_PROJECTILE_ATTACHMENT_HITLOCATION"
-					}
-				}
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"Damage"
-			{
-				"Target"				"TARGET"
-				"Type"					"DAMAGE_TYPE_MAGICAL"
-				"Damage"				"%damage"
-			}
-
-			"ApplyModifier"
-			{
-				"ModifierName"			"modifier_imba_confusion"
-				"Target" 				"TARGET"
-				"Duration"				"%nausea_duration"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_confusion"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-		
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_queen_of_pain.lua"
-						"Function"		"NauseaCast"
-					}
-				}
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_queen_of_pain.lua"
-						"Function"		"NauseaAttack"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Queen of Pain's Delightful Torment
-	//=================================================================================================================
-	"imba_queenofpain_delightful_torment"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
-		"MaxLevel"							"1"
-		"AbilityTextureName"				"custom/queenofpain_delightful_torment"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_reduction"		"0.25"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_delightful_torment"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-				
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_queen_of_pain.lua"
-						"Function"			"Torment"
-					}
-				}
 			}
 		}
 	}
@@ -19944,13 +19690,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"		   
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_COURIER"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"queenofpain_sonic_wave"
+		"ScriptFile"					"hero/hero_queenofpain"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.452"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"135"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"250 375 500 550 600 650"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19958,21 +19725,9 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_queenofpain.vsndevts"
 			"particle"					"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
+			"particle"					"particles/hero/queenofpain/lifesteal.vpcf"
+			"particle"					"particles/hero/queenofpain/self_lifesteal.vpcf"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
-		"AbilityCastPoint"				"0.4"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120 80 40"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"240 360 480"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19981,97 +19736,232 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"starting_aoe"			"100"
+				"damage"				"290 380 470 510 550 590"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"distance"				"900"
+				"start_radius"			"100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"final_aoe"				"450"
+				"end_radius"			"450"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
+				"travel_distance"		"900"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"300 400 500"
+				"absorb_pct"			"30 30 30 50 70 90"
+				"LinkedSpecialBonus"	"special_bonus_imba_queenofpain_4"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"325 450 575"
+				"cooldown_scepter"		"40"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"debuff_duration"		"5"
+				"damage_scepter"		"325 440 555 600 645 690"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_increase"		"15 20 25"
+				"orders_scepter"		"4"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"900"
 			}
 		}
+	}
 
-		"OnSpellStart"
+	//=================================================================================================================
+	// Queen of Pain Talent 1 (Level 10): %-Extra Delightful Torment effect on Sonic Wave
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"FireSound"
+			"01"
 			{
-				"EffectName"			"Hero_QueenOfPain.SonicWave"
-				"Target"				"CASTER"
-			}
-
-			"LinearProjectile"
-			{
-				"Target"				"POINT"
-				"EffectName"			"particles/units/heroes/hero_queenofpain/queen_sonic_wave.vpcf"
-				"MoveSpeed"				"%speed"
-				"StartRadius"			"%starting_aoe"
-				"StartPosition"			"attach_origin"
-				"EndRadius"				"%final_aoe"
-				"FixedDistance"			"%distance"
-				"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"TargetTypes"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
-				"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"HasFrontalCone"		"1"
-				"ProvidesVision"		"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
 			}
 		}
+	}
 
-		"OnProjectileHitUnit"
+	//=================================================================================================================
+	// Queen of Pain Talent 2 (Level 10): %-Extra Blink scream of pain damage
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"DeleteOnHit"				"0"
-
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"			"hero/hero_queen_of_pain.lua"
-				"Function"				"SonicWave"
-
-				"modifier_daze"			"modifier_imba_sonic_wave_daze"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"20"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Queen of Pain Talent 3 (Level 20): Additional Scream of Pain radius
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_sonic_wave_daze"
+			"01"
 			{
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
+			}
+		}
+	}
 
-				"Duration"				"%debuff_duration"
+	//=================================================================================================================
+	// Queen of Pain Talent 4 (Level 20): %-based Sonic Wave spell-lifesteal
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"35"
+			}
+		}
+	}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_increase"
-				}
+	//=================================================================================================================
+	// Queen of Pain Talent 5 (Level 30): %-based additional Scream of Pain damage reflected
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 6 (Level 30): %-based additional Sonic Wave end radius/travel distance
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 7 (Level 40): Scream of Pain now applies Shadow Strike on enemies hit
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Queen of Pain Talent 8 (Level 40): Reduced Blink cooldown
+	//=================================================================================================================
+	"special_bonus_imba_queenofpain_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"2"
 			}
 		}
 	}
