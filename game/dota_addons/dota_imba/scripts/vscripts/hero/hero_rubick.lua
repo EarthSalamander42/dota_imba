@@ -1,211 +1,316 @@
---[[	Author: Firetoad
-		Date: 25.10.2016	]]
+  --[[	
+		Author: AtroCty
+		Date: 17.04.2017	
+	]]
 
-function Telekinesis(keys)
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local modifier_ally = keys.modifier_ally
-	local modifier_enemy = keys.modifier_enemy
-	local sound_cast = keys.sound_cast
-	local sound_target = keys.sound_target
-	local particle_lift = keys.particle_lift
+--CreateEmptyTalents("rubick")
 
-	-- If the target possesses a ready Linken's Sphere, do nothing
-	if target:GetTeam() ~= caster:GetTeam() then
-		if target:TriggerSpellAbsorb(ability) then
-			return nil
+-------------------------------------------
+--			TRANSPOSITION
+-------------------------------------------
+LinkLuaModifier("modifier_imba_telekinesis", "hero/hero_rubick", LUA_MODIFIER_MOTION_BOTH)
+LinkLuaModifier("modifier_imba_telekinesis_stun", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_telekinesis_caster", "hero/hero_rubick", LUA_MODIFIER_MOTION_NONE)
+
+imba_rubick_telekinesis = class({})
+function imba_rubick_telekinesis:IsHiddenWhenStolen() return false end
+function imba_rubick_telekinesis:IsRefreshable() return true end
+function imba_rubick_telekinesis:IsStealable() return true end
+function imba_rubick_telekinesis:IsNetherWardStealable() return true end
+-------------------------------------------
+
+function imba_rubick_telekinesis:OnSpellStart( params )
+	local caster = self:GetCaster()
+	-- Handler on lifted targets
+	if caster:HasModifier("modifier_imba_telekinesis_caster") then
+		local target_loc = self:GetCursorPosition()
+		-- Parameters
+		local maximum_distance
+		if self.target:GetTeam() == caster:GetTeam() then
+			maximum_distance = self:GetSpecialValueFor("ally_range") + GetCastRangeIncrease(caster)
+		else
+			maximum_distance = self:GetSpecialValueFor("enemy_range") + GetCastRangeIncrease(caster)
 		end
-	end
-	
-	-- Parameters
-	local ally_cooldown = ability:GetLevelSpecialValueFor("ally_cooldown", ability_level)
-	local enemy_lift_time = ability:GetLevelSpecialValueFor("enemy_lift_time", ability_level)
-	local ally_lift_time = ability:GetLevelSpecialValueFor("ally_lift_time", ability_level)
-	local target_loc = target:GetAbsOrigin()
-
-	-- Remember target's position for Telekinesis Land marking
-	caster.telekinesis_target_position = target:GetAbsOrigin()
-	caster.telekinesis_target_unit = target
-
-	-- Play cast/target sounds
-	caster:EmitSound(sound_cast)
-	target:EmitSound(sound_target)
-
-	-- Play lift particle
-	local lift_pfx = ParticleManager:CreateParticle(particle_lift, PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(lift_pfx, 0, target_loc)
-	ParticleManager:SetParticleControl(lift_pfx, 1, target_loc)
-
-	-- Lift target
-	target:SetAbsOrigin(target:GetAbsOrigin() + Vector(0, 0, 250))
-
-	-- If this is an ally, just root them in place
-	if target:GetTeam() == caster:GetTeam() then
 		
-		-- Apply root/phasing modifier
-		ability:ApplyDataDrivenModifier(caster, target, modifier_ally, {})
-
-		-- Trigger reduced cooldown
-		ability:EndCooldown()
-		ability:StartCooldown(ally_cooldown * GetCooldownReduction(caster))
-
-		-- Adjust particle duration
-		ParticleManager:SetParticleControl(lift_pfx, 2, Vector(ally_lift_time, 0, 0))
-		ParticleManager:ReleaseParticleIndex(lift_pfx)
-
-	-- Else, stun them
+		if self.telekinesis_marker_pfx then
+			ParticleManager:DestroyParticle(self.telekinesis_marker_pfx, false)
+			ParticleManager:ReleaseParticleIndex(self.telekinesis_marker_pfx)
+		end
+		
+		-- If the marked distance is too great, limit it
+		local marked_distance = (target_loc - self.target_origin):Length2D()
+		if marked_distance > maximum_distance then
+			target_loc = self.target_origin + (target_loc - self.target_origin):Normalized() * maximum_distance
+		end
+		
+		-- Draw marker particle
+		self.telekinesis_marker_pfx = ParticleManager:CreateParticleForTeam("particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf", PATTACH_CUSTOMORIGIN, caster, caster:GetTeam())
+		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 0, target_loc)
+		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 1, Vector(3, 0, 0))
+		ParticleManager:SetParticleControl(self.telekinesis_marker_pfx, 2, self.target_origin)
+		ParticleManager:SetParticleControl(self.target_modifier.tele_pfx, 1, target_loc)
+		
+		self.target_modifier.final_loc = target_loc
+		self.target_modifier.changed_target = true
+		self:EndCooldown()
+	-- Handler on regular 
 	else
-
-		-- Apply phasing/duration modifier
-		ability:ApplyDataDrivenModifier(caster, target, modifier_enemy, {})
-
-		-- Actually stun
-		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = enemy_lift_time})
-
-		-- Play flailing animation
-		StartAnimation(target, {activity = ACT_DOTA_FLAIL, rate = 1.0})
-
-		-- Adjust particle duration
-		ParticleManager:SetParticleControl(lift_pfx, 2, Vector(enemy_lift_time, 0, 0))
-		ParticleManager:ReleaseParticleIndex(lift_pfx)
-	end
-
-	-- Swap this ability with Telekinesis Land
-	local land_ability = caster:FindAbilityByName("imba_rubick_telekinesis_land")
-	if land_ability then
-		caster:SwapAbilities(ability:GetAbilityName(), "imba_rubick_telekinesis_land", false, true)
-	end
-end
-
-function TelekinesisLand(keys)
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_land = keys.sound_land
-	local particle_land = keys.particle_land
-	local particle_blink = keys.particle_blink
-	
-	-- Parameters
-	local landing_knockup_duration = ability:GetLevelSpecialValueFor("landing_knockup_duration", ability_level)
-	local landing_stun_duration = ability:GetLevelSpecialValueFor("landing_stun_duration", ability_level)
-	local landing_stun_radius = ability:GetLevelSpecialValueFor("landing_stun_radius", ability_level)
-	local landing_damage = ability:GetLevelSpecialValueFor("landing_damage", ability_level)
-	local origin_loc = target:GetAbsOrigin()
-	local target_loc = target:GetAbsOrigin()
-
-	-- If there is a marked spot for landing, use it
-	if caster.telekinesis_land_position then
-		target_loc = caster.telekinesis_land_position
-		caster.telekinesis_land_position = nil
-	end
-
-	-- Play landing sound
-	target:EmitSound(sound_land)
-
-	-- Play impact particle
-	local landing_pfx = ParticleManager:CreateParticle(particle_land, PATTACH_CUSTOMORIGIN, nil)
-	ParticleManager:SetParticleControl(landing_pfx, 0, target_loc)
-	ParticleManager:SetParticleControl(landing_pfx, 1, target_loc)
-	ParticleManager:ReleaseParticleIndex(landing_pfx)
-
-	-- Play blink particle, if necessary
-	if origin_loc ~= target_loc then
-		local blink_pfx = ParticleManager:CreateParticle(particle_blink, PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl(blink_pfx, 0, origin_loc)
-		ParticleManager:SetParticleControl(blink_pfx, 1, target_loc)
-		ParticleManager:ReleaseParticleIndex(blink_pfx)
-	end
-
-	-- Stop the flailing animation
-	EndAnimation(target)
-
-	-- Destroy telekinesis marker particle
-	if caster.telekinesis_marker_pfx then
-		ParticleManager:DestroyParticle(caster.telekinesis_marker_pfx, false)
-		ParticleManager:ReleaseParticleIndex(caster.telekinesis_marker_pfx)
-	end
-	caster.telekinesis_target_unit = nil
-	caster.telekinesis_target_position = nil
-	caster.telekinesis_marker_pfx = nil
-
-	-- Destroy trees around the landing spot
-	GridNav:DestroyTreesAroundPoint(target_loc, landing_stun_radius, false)
-
-	-- Find a legal position for the main target
-	FindClearSpaceForUnit(target, target_loc, true)
-
-	-- Iterate through nearby enemies
-	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), target_loc, nil, landing_stun_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	for _,enemy in pairs(nearby_enemies) do
+		-- Parameters
+		self.target = self:GetCursorTarget()
+		self.target_origin = self.target:GetAbsOrigin()
 		
-		-- Deal damage
-		ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = landing_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-		-- If this is not the main target, stun it
-		if enemy ~= target then
+		local duration
+		local is_ally = true
+		-- Create modifier and check Linken
+		if self.target:GetTeam() ~= caster:GetTeam() then
 			
-			-- Stun the enemy
-			enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = landing_stun_duration})
-
-			-- Knock it upwards
-			local knockback =
-			{	should_stun = 1,
-				knockback_duration = landing_knockup_duration,
-				duration = landing_knockup_duration,
-				knockback_distance = 0,
-				knockback_height = 60,
-				center_x = target_loc.x,
-				center_y = target_loc.y,
-				center_z = target_loc.z
-			}
-			enemy:RemoveModifierByName("modifier_knockback")
-			enemy:AddNewModifier(caster, ability, "modifier_knockback", knockback)
+			if self.target:TriggerSpellAbsorb(self) then
+				return nil
+			end
+			
+			duration = self:GetSpecialValueFor("enemy_lift_duration")
+			self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis_stun", { duration = duration })
+			is_ally = false
+		else
+			duration = self:GetSpecialValueFor("ally_lift_duration")
+			self.target:AddNewModifier(caster, self, "modifier_rooted", { duration = duration})
 		end
-	end
-
-	-- Swap this ability with Telekinesis
-	local land_ability = caster:FindAbilityByName("imba_rubick_telekinesis_land")
-	if land_ability then
-		caster:SwapAbilities(ability:GetAbilityName(), "imba_rubick_telekinesis_land", true, false)
+		
+		self.target_modifier = self.target:AddNewModifier(caster, self, "modifier_imba_telekinesis", { duration = duration })
+		
+		if is_ally then
+			self.target_modifier.is_ally = true
+		end
+		
+		-- Add the particle & sounds
+		self.target_modifier.tele_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControlEnt(self.target_modifier.tele_pfx, 0, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(self.target_modifier.tele_pfx, 1, self.target, PATTACH_POINT_FOLLOW, "attach_hitloc", self.target:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControl(self.target_modifier.tele_pfx, 2, Vector(duration,0,0))
+		self.target_modifier:AddParticle(self.target_modifier.tele_pfx, false, false, 1, false, false)
+		caster:EmitSound("Hero_Rubick.Telekinesis.Cast")
+		self.target:EmitSound("Hero_Rubick.Telekinesis.Target")
+		
+		-- Modifier-Params
+		self.target_modifier.final_loc = self.target_origin
+		self.target_modifier.changed_target = false
+		-- Add caster handler
+		caster:AddNewModifier(caster, self, "modifier_imba_telekinesis_caster", { duration = duration + FrameTime()})
+		
+		self:EndCooldown()
 	end
 end
 
-function TelekinesisMark(keys)
-	local caster = keys.caster
-	local target = keys.target_points[1]
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local particle_marker = keys.particle_marker
-	
-	-- Parameters
-	local maximum_distance
-	if caster.telekinesis_target_unit:GetTeam() == caster:GetTeam() then
-		maximum_distance = ability:GetLevelSpecialValueFor("ally_land_distance", ability_level) + GetCastRangeIncrease(caster)
+function imba_rubick_telekinesis:GetAbilityTextureName()
+	if self:GetCaster():HasModifier("modifier_imba_telekinesis_caster") then
+		return "rubick_telekinesis_land"
+	end
+	return "rubick_telekinesis"
+end
+
+function imba_rubick_telekinesis:GetBehavior()
+	if self:GetCaster():HasModifier("modifier_imba_telekinesis_caster") then
+		return DOTA_ABILITY_BEHAVIOR_POINT
+	end
+	return DOTA_ABILITY_BEHAVIOR_UNIT_TARGET
+end
+
+function imba_rubick_telekinesis:GetManaCost( target )
+	if self:GetCaster():HasModifier("modifier_imba_telekinesis_caster") then
+		return 0
 	else
-		maximum_distance = ability:GetLevelSpecialValueFor("enemy_land_distance", ability_level) + GetCastRangeIncrease(caster)
+		return self.BaseClass.GetManaCost(self, target)
 	end
+end
 
-	-- If there's an existing marker particle already, destroy it
-	if caster.telekinesis_marker_pfx then
-		ParticleManager:DestroyParticle(caster.telekinesis_marker_pfx, false)
-		ParticleManager:ReleaseParticleIndex(caster.telekinesis_marker_pfx)
+function imba_rubick_telekinesis:GetCastRange( location , target)
+	if self:GetCaster():HasModifier("modifier_imba_telekinesis_caster") then
+		return 25000
 	end
+	return self.BaseClass.GetCastRange(self,location,target)
+end
 
-	-- If the marked distance is too great, limit it
-	local marked_distance = (target - caster.telekinesis_target_position):Length2D()
-	if marked_distance > maximum_distance then
-		target = caster.telekinesis_target_position + (target - caster.telekinesis_target_position):Normalized() * maximum_distance
+function imba_rubick_telekinesis:CastFilterResultTarget( target )
+	if IsServer() then
+		local caster = self:GetCaster()
+		local casterID = caster:GetPlayerOwnerID()
+		local targetID = target:GetPlayerOwnerID()
+
+		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+			return UF_FAIL_DISABLE_HELP
+		end
+
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		return nResult
 	end
+	return UF_SUCCESS
+end
 
-	-- Draw marker particle
-	caster.telekinesis_marker_pfx = ParticleManager:CreateParticleForTeam(particle_marker, PATTACH_CUSTOMORIGIN, nil, caster:GetTeam())
-	ParticleManager:SetParticleControl(caster.telekinesis_marker_pfx, 0, target)
-	ParticleManager:SetParticleControl(caster.telekinesis_marker_pfx, 1, Vector(3, 0, 0))
-	ParticleManager:SetParticleControl(caster.telekinesis_marker_pfx, 2, caster.telekinesis_target_position)
+-------------------------------------------
+modifier_imba_telekinesis_caster = class({})
+function modifier_imba_telekinesis_caster:IsDebuff() return false end
+function modifier_imba_telekinesis_caster:IsHidden() return true end
+function modifier_imba_telekinesis_caster:IsPurgable() return false end
+function modifier_imba_telekinesis_caster:IsPurgeException() return false end
+function modifier_imba_telekinesis_caster:IsStunDebuff() return false end
+-------------------------------------------
 
-	-- Update landing position
-	caster.telekinesis_land_position = target
+function modifier_imba_telekinesis_caster:OnDestroy()
+	local ability = self:GetAbility()
+	if ability.telekinesis_marker_pfx then
+		ParticleManager:DestroyParticle(ability.telekinesis_marker_pfx, false)
+		ParticleManager:ReleaseParticleIndex(ability.telekinesis_marker_pfx)
+	end
+end
+
+-------------------------------------------
+modifier_imba_telekinesis = class({})
+function modifier_imba_telekinesis:IsDebuff() 
+	if self:GetParent():GetTeamNumber() ~= self:GetCaster():GetTeamNumber() then return true end
+	return false 
+end
+function modifier_imba_telekinesis:IsHidden() return false end
+function modifier_imba_telekinesis:IsPurgable() return false end
+function modifier_imba_telekinesis:IsPurgeException() return false end
+function modifier_imba_telekinesis:IsStunDebuff() return false end
+-------------------------------------------
+
+function modifier_imba_telekinesis:OnCreated( params )
+	if IsServer() then
+		 -- Ability properties
+		local caster = self:GetCaster()
+		local ability = self:GetAbility()
+		
+		self.z_height = 0
+		self.duration = params.duration
+		self.lift_animation = ability:GetSpecialValueFor("lift_animation")
+		self.fall_animation = ability:GetSpecialValueFor("fall_animation")
+		self.current_time = 0
+		if self:ApplyHorizontalMotionController() == false or self:ApplyVerticalMotionController() == false then
+			self:Destroy()
+		end
+	end
+end
+
+function modifier_imba_telekinesis:OnDestroy( params )
+	if IsServer() then
+		local caster = self:GetCaster()
+		local parent = self:GetParent()
+		local ability = self:GetAbility()
+		local parent_pos = parent:GetAbsOrigin()
+		
+		-- Parameters
+		local damage = ability:GetSpecialValueFor("damage")
+		local impact_radius = ability:GetSpecialValueFor("impact_radius")
+		local impact_stun_duration = ability:GetSpecialValueFor("impact_stun_duration")
+		local cooldown 
+		if self.is_ally then
+			cooldown = ability:GetSpecialValueFor("ally_cooldown")
+		else
+			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
+		end
+		
+		cooldown = (cooldown * GetCooldownReduction(caster)) - self:GetDuration()
+		
+		parent:StopSound("Hero_Rubick.Telekinesis.Target")
+		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")
+		ParticleManager:ReleaseParticleIndex(self.tele_pfx)
+		
+		-- Play impact particle
+		local landing_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster())
+		ParticleManager:SetParticleControl(landing_pfx, 0, parent_pos)
+		ParticleManager:SetParticleControl(landing_pfx, 1, parent_pos)
+		ParticleManager:ReleaseParticleIndex(landing_pfx)
+		
+		-- Deal damage and stun to enemies
+		local enemies = FindUnitsInRadius(caster:GetTeamNumber(), parent_pos, nil, impact_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
+		for _,enemy in ipairs(enemies) do
+			if enemy ~= parent then
+				enemy:AddNewModifier(caster, ability, "modifier_stunned", {duration = impact_stun_duration})
+			end
+			ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = ability:GetAbilityDamageType()})
+		end
+		
+		if #enemies > 0 and self.is_ally then
+			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
+		elseif #enemies > 1 and not self.is_ally then
+			parent:EmitSound("Hero_Rubick.Telekinesis.Target.Stun")
+		end
+		ability:StartCooldown(cooldown)
+	end
+end
+
+function modifier_imba_telekinesis:UpdateVerticalMotion(unit, dt)
+    if IsServer() then
+		self.current_time = self.current_time + dt
+		
+		local max_height = self:GetAbility():GetSpecialValueFor("max_height")
+		-- Check if it shall lift up
+        if self.current_time <= self.lift_animation  then
+			self.z_height = self.z_height + ((dt / self.lift_animation) * max_height)
+			unit:SetAbsOrigin(GetGroundPosition(unit:GetAbsOrigin(), unit) + Vector(0,0,self.z_height))
+		elseif self.current_time > (self.duration - self.fall_animation)  then
+			self.z_height = self.z_height - ((dt / self.fall_animation) * max_height)
+			if self.z_height < 0 then self.z_height = 0 end
+			unit:SetAbsOrigin(GetGroundPosition(unit:GetAbsOrigin(), unit) + Vector(0,0,self.z_height))
+		else
+			max_height = self.z_height
+		end
+		
+		if self.current_time >= self.duration then
+			unit:InterruptMotionControllers(true)
+			self:Destroy()
+		end
+    end
+end
+
+function modifier_imba_telekinesis:UpdateHorizontalMotion(unit, dt)
+	if IsServer() then
+		self.distance = self.distance or 0
+		if (self.current_time > (self.duration - self.fall_animation)) then
+			if self.changed_target then
+				local frames_to_end = math.ceil((self.duration - self.current_time) / dt)
+				self.distance = (unit:GetAbsOrigin() - self.final_loc):Length2D() / frames_to_end
+				self.changed_target = false
+			end
+			if (self.current_time + dt) >= self.duration then
+				unit:SetAbsOrigin(self.final_loc)
+			else
+				unit:SetAbsOrigin( unit:GetAbsOrigin() + ((self.final_loc - unit:GetAbsOrigin()):Normalized() * self.distance))
+			end
+		end
+	end
+end
+
+function modifier_imba_telekinesis:GetTexture()
+	return "rubick_telekinesis"
+end
+
+-------------------------------------------
+modifier_imba_telekinesis_stun = class({})
+function modifier_imba_telekinesis_stun:IsDebuff() return true end
+function modifier_imba_telekinesis_stun:IsHidden() return true end
+function modifier_imba_telekinesis_stun:IsPurgable() return false end
+function modifier_imba_telekinesis_stun:IsPurgeException() return false end
+function modifier_imba_telekinesis_stun:IsStunDebuff() return true end
+-------------------------------------------
+
+function modifier_imba_telekinesis_stun:DeclareFunctions()
+	local decFuns =
+	{
+		MODIFIER_PROPERTY_OVERRIDE_ANIMATION,
+	}
+	return decFuns
+end
+
+function modifier_imba_telekinesis_stun:GetOverrideAnimation()
+	return ACT_DOTA_FLAIL
+end
+
+function modifier_imba_telekinesis_stun:CheckState()
+    local state = 
+	{
+		[MODIFIER_STATE_STUNNED] = true
+	}
+    return state
 end

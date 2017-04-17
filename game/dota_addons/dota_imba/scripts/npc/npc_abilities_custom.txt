@@ -20222,28 +20222,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"rubick_telekinesis"
-
+		"ScriptFile"					"hero/hero_rubick"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.1"
-		
+		"AbilityCastRange"				"550 575 600 625 650 675 700"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20 18 16 14"
+		"AbilityCooldown"				"22"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110"
-
+		"AbilityManaCost"				"125"
+		
+		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -20252,7 +20258,6 @@
 			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
 			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
 			"particle"					"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
-			"particle"					"particles/hero/rubick/rubick_telekinesis.vpcf"
 		}
 
 		// Special
@@ -20261,183 +20266,58 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"enemy_lift_time"			"1.5 1.75 2.0 2.25"
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"25 50 75 100 150 200 250"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"ally_lift_time"			"1.25"
+				"impact_stun_duration"		"1.0 1.25 1.5 1.75 1.75 1.75 1.75"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"landing_knockup_duration"	"0.4"
+				"var_type"					"FIELD_INTEGER"
+				"impact_radius"				"325"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"landing_stun_radius"		"425"
+				"var_type"					"FIELD_FLOAT"
+				"ally_lift_duration"		"1.5"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"landing_stun_duration"		"1.0 1.25 1.5 1.75"
+				"var_type"					"FIELD_INTEGER"
+				"ally_range"				"750 750 750 750 875 1000 1125"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"enemy_land_distance"		"800"
+				"enemy_range"				"375 375 375 375 500 625 750"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ally_land_distance"		"1200"
+				"var_type"					"FIELD_FLOAT"
+				"enemy_lift_duration"		"1.5 1.75 2.0 2.25 2.25 2.25 2.25"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"landing_damage"			"50 100 150 200"
+				"var_type"					"FIELD_FLOAT"
+				"fall_animation"			"0.2"
 			}
 			"09"
 			{
+				"var_type"					"FIELD_FLOAT"
+				"lift_animation"			"0.2"
+			}
+			"10"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"ally_cooldown"				"9 8 7 6"
+				"max_height"				"325"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"				"hero/hero_rubick.lua"
-				"Function"					"Telekinesis"
-
-				"modifier_ally"				"modifier_imba_telekinesis_ally_lift"
-				"modifier_enemy"			"modifier_imba_telekinesis_enemy_lift"
-				"sound_cast"				"Hero_Rubick.Telekinesis.Cast"
-				"sound_target"				"Hero_Rubick.Telekinesis.Target"
-				"particle_lift"				"particles/units/heroes/hero_rubick/rubick_telekinesis.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_telekinesis_ally_lift"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%ally_lift_time"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_rubick.lua"
-						"Function"			"TelekinesisLand"
-
-						"sound_land"		"Hero_Rubick.Telekinesis.Stun"
-						"particle_land"		"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
-						"particle_blink"	"particles/hero/rubick/rubick_telekinesis.vpcf"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_telekinesis_enemy_lift"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%enemy_lift_time"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_rubick.lua"
-						"Function"			"TelekinesisLand"
-
-						"sound_land"		"Hero_Rubick.Telekinesis.Stun"
-						"particle_land"		"particles/units/heroes/hero_rubick/rubick_telekinesis_land.vpcf"
-						"particle_blink"	"particles/hero/rubick/rubick_telekinesis.vpcf"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Rubick's' Telekinesis Land
-	//=================================================================================================================
-	"imba_rubick_telekinesis_land"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AOERadius"						"%landing_stun_radius"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"rubick_telekinesis_land"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
-		"AbilityCastPoint"				"0.0"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"landing_stun_radius"	"425"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"enemy_land_distance"	"800"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ally_land_distance"	"1200"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_rubick.lua"
-				"Function"				"TelekinesisMark"
-				"Target"				"POINT"
-
-				"particle_marker"		"particles/units/heroes/hero_rubick/rubick_telekinesis_marker.vpcf"
+				"var_type"					"FIELD_INTEGER"
+				"ally_cooldown"				"10"
 			}
 		}
 	}
