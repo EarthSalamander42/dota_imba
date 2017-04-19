@@ -16360,7 +16360,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -16368,23 +16368,21 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"nyx_assassin_impale"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_nyx_assassin.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.4"
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0 11.0 9.0 7.0"
+		"AbilityCooldown"				"13"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 115 135 155"
-		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"80 140 200 260"
+		"AbilityManaCost"				"95 115 135 155 160 165 170"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16402,139 +16400,172 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"width"					"180"
+				"width"					"125"
 			}
+
 			"02"
 			{	
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.6 2.0 2.4 2.8"
+				"duration"				"1.6 2.0 2.4 2.8 2.8 2.8 2.8"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"length"				"700"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"2000"
+				"speed"					"1600"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"air_time"				"0.57"
+				"air_time"				"0.5"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_repeat"			"20 30 40 50"
+				"air_height"			"350"
 			}
+
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_duration"		"3.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_repeat_pct"		"16 16 16 16 24 32 40"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 140 200 260"
+				"damage_duration"		"3"
+				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_4"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"global_radius"			"25000"
+				"damage"				"80 140 200 260 290 320 350"
+				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_1"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burrow_cd_reduction"	"6"
+			}
+
+			"11"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"burrow_length_increase"	"450"
 			}
 		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_nyx_assassin.lua"
-				"Function"				"Impale"
-				"Target"				"POINT"
+	}
 
-				"sound_cast"			"Hero_NyxAssassin.Impale"
-				"particle_projectile"	"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale.vpcf"
-			}
+	//=================================================================================================================
+	// Nyx Assassin's Mana Burn
+	//=================================================================================================================
+	"imba_nyx_assassin_mana_burn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"nyx_assassin_mana_burn"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_nyx_assassin.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.4"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"28 20 12 4 4 4 4"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"particle"					"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_flames.vpcf"
+			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_charged.vpcf"
+			"particle"					"particles/hero/nyx_assassin/mana_burn_parasite_explosion.vpcf"
 		}
 		
-		"OnProjectileHitUnit"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"DeleteOnHit"				"0"
-		
-			"FireSound"
+			"01"
 			{
-				"Target"				"TARGET"
-				"EffectName"			"Hero_NyxAssassin.Impale.Target" 
-			}
-		
-			"RemoveModifier"
-			{
-				"Target"				"TARGET"
-				"ModifierName"			"modifier_knockback"
-			}
-			
-			"Knockback"
-			{
-				"Target"				"TARGET"
-				"Center"				"CASTER"
-				"Distance"				"0"
-				"Duration"				"%air_time"
-				"Height"				"200"
-				"IsFixedDistance"		"1"
-			}
-			
-			"Stun"
-			{
-				"Target"				"TARGET"
-				"Duration"				"%duration"
+				"var_type"						"FIELD_FLOAT"
+				"intelligence_mult"				"3.5 4 4.5 5 5 5 5"
+				"LinkedSpecialBonus"			"special_bonus_imba_nyx_assassin_5"
 			}
 
-			"RunScript"
+			"02"
 			{
-				"ScriptFile"			"hero/hero_nyx_assassin.lua"
-				"Function"				"ImpaleDamage"
-
-				"land_sound"			"Hero_NyxAssassin.Impale.TargetLand"
-				"particle_hit"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale_hit.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_impale_aura"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-		
-				"Aura"          		"modifier_imba_impale_damage_counter"
-				"Aura_Radius"   		"%global_radius"
-				"Aura_Teams"    		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"    		"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"    		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster" 	"0"
+				"var_type"						"FIELD_INTEGER"
+				"mana_burn_damage_pct"			"100"
 			}
 
-			"modifier_imba_impale_damage_counter"
+			"03"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
+				"var_type"						"FIELD_INTEGER"
+				"parasite_mana_leech"			"8 8 8 8 12 16 20"
+			}
 
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_nyx_assassin.lua"
-						"Function"		"ImpaleDamageCounter"
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"parasite_charge_threshold_pct"	"60 60 60 60 55 50 45"
+			}
 
-						"damage"		"%attack_damage"
-					}
-				}
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"explosion_delay"				"6"				
+			}	
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"parasite_mana_as_damage_pct"	"80"
+			}
+
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"parasite_duration"				"6"
+			}
+
+			"08"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"leech_interval"				"0.5"
+			}
+
+			"09"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"burrowed_cast_range_increase"	"300"
 			}
 		}
 	}
@@ -16546,23 +16577,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"nyx_assassin_spiked_carapace"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_nyx_assassin.lua"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"21 18 15 12"
-		"AbilityCastPoint"				"0.01"
+		"AbilityCooldown"				"25 20 15 10 10 10 10"		
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"40"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{			
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_nyx_assassin.vsndevts"
+		}
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -16572,117 +16614,38 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"reflect_duration"			"2.25"
+				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_7"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.6 1.2 1.8 2.4"
+				"stun_duration"				"0.6 1.2 1.8 2.4 2.4 2.4 2.4"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"burrow_stun_range"			"400"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"						"particles/generic_gameplay/generic_stunned.vpcf"
-			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
-			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-		}
-		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"					"CASTER"
-				"ModifierName"				"modifier_imba_spiked_carapace"
+				"burrow_stun_range"			"300"
 			}
 
-			"FireSound"
+			"04"
 			{
-				"EffectName"				"Hero_NyxAssassin.SpikedCarapace"
-				"Target" 					"CASTER"
+				"var_type"					"FIELD_INTEGER"
+				"damage_to_vendetta_pct"	"100 100 100 100 150 200 250"
+			}			
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"burrowed_vendetta_stacks"	"30"
 			}
 
-			"RunScript"
+			"06"
 			{
-				"ScriptFile"				"hero/hero_nyx_assassin.lua"
-				"Function"					"SpikedCarapace"
-
-				"modifier_stun"				"modifier_imba_spiked_carapaced_stun"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_spiked_carapace"
-			{
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-			
-				"Duration"					"%reflect_duration"
-				
-				"EffectName"				"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace.vpcf"
-				
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_nyx_assassin.lua"
-						"Function"			"SpikedCarapaceReflect"
-
-						"damage_taken"		"%attack_damage"
-						"stun_modifier"		"modifier_imba_spiked_carapaced_stun"
-					}
-				}
-			}
-			
-			"modifier_imba_spiked_carapaced_stun"
-			{
-				"IsDebuff"				"1"
-				"IsPurgable"			"0"
-			
-				"Duration"				"%stun_duration"
-				
-				"OverrideAnimation"		"ACT_DOTA_DISABLED"
-				
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_spiked_carapace_hit.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"ControlPoints"
-						{
-							"02"			"%stun_duration %stun_duration %stun_duration"
-						}
-					}
-				
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/generic_gameplay/generic_stunned.vpcf"
-						"EffectAttachType"	"follow_overhead"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_NyxAssassin.SpikedCarapace.Stun"
-						"Target" 			"TARGET"
-					}
-				}
-				
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"damage_reflection_pct"		"100"
+				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_3"
 			}
 		}
 	}
@@ -16694,21 +16657,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"nyx_assassin_vendetta"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"		
+		"ScriptFile"					"hero/hero_nyx_assassin.lua"
 
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"70.0 55.0 40.0"
+		"AbilityCooldown"				"70 60 50 45 40 35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160 210 260"
+		"AbilityManaCost"				"160 210 260 280 300 320"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"soundfile"						"soundevents/voscripts/game_sounds_vo_nyx_assassin.vsndevts"
+			"particle"						"particles/status_fx/status_effect_base.vpcf"
+			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
+		}
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -16717,130 +16693,29 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"40 50 60"
+				"duration"				"40 50 60 65 70 75"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"20"
+				"movement_speed_pct"	"16 18 20 22 24 26"
+				"LinkedSpecialBonus"	"special_bonus_imba_nyx_assassin_6"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"250 400 550"
+				"bonus_damage"			"250 400 550 625 700 775"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_storage"		"300 500 700"
-			}
-		}
-		
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
-			"particle"						"particles/status_fx/status_effect_base.vpcf"
-			"particle"						"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_nyx_assassin.lua"
-				"Function"					"Vendetta"
-
-				"sound_cast"				"Hero_NyxAssassin.Vendetta"
-				"modifier_vendetta"			"modifier_imba_vendetta"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_vendetta"
-			{
-				"Duration"					"%duration"
-			
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta_start.vpcf"
-						"EffectAttachType"	"start_at_origin"
-					}
-				}
-			
-				"OnAttack"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_nyx_assassin.lua"
-						"Function"			"VendettaStrike"
-
-						"modifier"			"modifier_imba_vendetta"
-						"stack_modifier"	"modifier_imba_vendetta_damage_stacks"
-						"particle_name"		"particles/units/heroes/hero_nyx_assassin/nyx_assassin_vendetta.vpcf"
-						"attack_sound"		"Hero_NyxAssassin.Vendetta.Crit"
-					}
-				}
-
-				"OnAbilityExecuted"
-				{	
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_nyx_assassin.lua"
-						"Function"			"VendettaCast"
-
-						"modifier_vendetta"	"modifier_imba_vendetta"
-						"ability_carapace"	"imba_nyx_assassin_spiked_carapace"
-					}
-				}
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movement_speed"
-				}
-			
-				"States"
-				{
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_CANNOT_MISS"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_vendetta_damage_counter"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_nyx_assassin.lua"
-						"Function"			"VendettaDamageCount"
-
-						"damage_taken"		"%attack_damage"
-						"stack_modifier"	"modifier_imba_vendetta_damage_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_vendetta_damage_stacks"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"0"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT"
-			}
-		}
+				"var_type"					"FIELD_INTEGER"
+				"maximum_vendetta_stacks"	"150 200 250 325 400 475"
+				"LinkedSpecialBonus"		"special_bonus_imba_nyx_assassin_8"
+			}			
+		}			
 	}
 
 	//=================================================================================================================
@@ -33863,6 +33738,169 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"                     "1"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Nyx Assassin's Talents
+    //=================================================================================================================
+    "special_bonus_imba_nyx_assassin_1" // Impale damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "50"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_2" // Scarab Parasite activation delay decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "3"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_3" // Spiked Carapace damage reflection increase (percentage)
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "100"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_4" // Impale Relive Suffering duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_5" // Mana Burn Int multiplier increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_6" // Vendetta movement speed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_7" // Spiked Carapace duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_nyx_assassin_8" // Maximum Vendetta stored damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "475"
             }
         }
     }
