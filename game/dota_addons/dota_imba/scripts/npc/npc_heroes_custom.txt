@@ -1571,30 +1571,26 @@
 	//=================================================================================================================
 	// HERO: Nyx Assassin
 	//=================================================================================================================
-	"npc_imba_hero_nyx_assassin"
+    "npc_imba_hero_nyx_assassin"
 	{
 		"override_hero"				"npc_dota_hero_nyx_assassin"
 
-		"AttributePrimary"			"DOTA_ATTRIBUTE_INTELLECT"
-
-		"AttributeBaseIntelligence"	"21"
-		"AttributeIntelligenceGain"	"2.25"
-
 		"Ability1"					"imba_nyx_assassin_impale"
-		//"Ability2"					"nyx_assassin_mana_burn"
+		"Ability2"					"imba_nyx_assassin_mana_burn"
 		"Ability3"					"imba_nyx_assassin_spiked_carapace"
-		//"Ability4"					"nyx_assassin_burrow"
-		//"Ability5"					"nyx_assassin_unburrow"
+		"Ability4"					"nyx_assassin_burrow"
+		"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
 
-		"Ability10"					"special_bonus_spell_amplify_4"
-		"Ability11"					"special_bonus_hp_150"
-		"Ability12"					"special_bonus_gold_income_25"
-		"Ability13"					"special_bonus_strength_6"
-		"Ability14"					"special_bonus_intelligence_15"
-		"Ability15"					"special_bonus_magic_resistance_15"
-		"Ability16"					"special_bonus_movement_speed_30"
-		"Ability17"					"special_bonus_armor_7"
+		"Ability9"					"imba_unlimited_level_powerup"
+		"Ability10"					"special_bonus_imba_nyx_assassin_1"
+		"Ability11"					"special_bonus_imba_nyx_assassin_2"
+		"Ability12"					"special_bonus_imba_nyx_assassin_3"
+		"Ability13"					"special_bonus_imba_nyx_assassin_4"
+		"Ability14"					"special_bonus_imba_nyx_assassin_5"
+		"Ability15"					"special_bonus_imba_nyx_assassin_6"
+		"Ability16"					"special_bonus_imba_nyx_assassin_7"
+		"Ability17"					"special_bonus_imba_nyx_assassin_8"
 
 		"ProjectileSpeed"			"900"
 	}
