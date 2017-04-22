@@ -25661,18 +25661,38 @@
 	//=================================================================================================================
 	// Vengeful Spirit's Magic Missile
 	//=================================================================================================================
-	"imba_vengeful_magic_missile"
+	"imba_vengefulspirit_magic_missile"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_vengefulspirit"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"vengefulspirit_magic_missile"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		"AOERadius"						"%split_radius"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13 12 11 10 10 10 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"110 120 130 140 145 150 155"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -25680,21 +25700,8 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
 			"particle"					"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
-			"particle"					"particles/hero/vengeful/rancor_magic_missile.vpcf"
+			"particle"					"particles/hero/vengefulspirit/rancor_magic_missile.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.2"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12 11 10 9"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -25703,73 +25710,72 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"100 175 250 325"
+				"damage"				"100 175 250 325 350 375 400"
+				"LinkedSpecialBonus"	"special_bonus_imba_vengefulspirit_1"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"rancor_damage"			"20 30 40 50"
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.2 1.4 1.6 1.8 1.8 1.8 1.8"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"rancor_radius"			"600 700 800 900"
+				"split_radius"			"300 300 300 300 450 600 750"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1350"
+				"split_reduce_pct"		"30"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.35 1.5 1.65 1.8"
+				"var_type"				"FIELD_INTEGER"
+				"split_amount"			"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"projectile_speed"		"1250"
 			}
 		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_vengeful.lua"
-				"Function"				"MagicMissile"
-
-				"sound_cast"			"Hero_VengefulSpirit.MagicMissile"
-				"particle_missile"		"particles/units/heroes/hero_vengeful/vengeful_magic_missle.vpcf"
-				"particle_rancor"		"particles/hero/vengeful/rancor_magic_missile.vpcf"
-				"modifier_rancor"		"modifier_imba_rancor"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_vengeful.lua"
-				"Function"				"MagicMissileHit"
-
-				"sound_hit"				"Hero_VengefulSpirit.MagicMissileImpact"
-				"particle_rancor"		"particles/hero/vengeful/rancor_magic_missile.vpcf"
-				"modifier_rancor"		"modifier_imba_rancor"
-			}					
-		}	
 	}
 
 	//=================================================================================================================
 	// Vengeful Spirit's Wave of Terror
 	//=================================================================================================================
-	"imba_vengeful_wave_of_terror"
+	"imba_vengefulspirit_wave_of_terror"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_vengefulspirit"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"	
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES | DOTA_UNIT_TARGET_FLAG_NO_INVIS"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"vengefulspirit_wave_of_terror"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1400"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20"
 
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"40"
+		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -25778,19 +25784,6 @@
 			"particle"					"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
 			"particle"  				"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"		
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2100"
-		"AbilityCastPoint"				"0.2"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"12.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"20"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -25799,106 +25792,42 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"2500"
+				"damage"				"45 70 95 120 140 160 180"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"length"				"2100"
+				"wave_speed"			"2000"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"width"					"300"
+				"wave_width"			"300"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"40 60 80 100"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor"					"-4 -5 -6 -7"
+				"var_type"				"FIELD_FLOAT"
+				"armor_reduction"		"3 4 5 6 6.5 7 7.5"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"8"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"15"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_aoe"			"600"
+				"var_type"				"FIELD_FLOAT"
+				"vision_aoe"			"500"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vision_duration"		"5.0"
+				"vision_duration"		"3.0"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"08"
 			{
-				"ScriptFile"			"hero/hero_vengeful.lua"
-				"Function"				"WaveOfTerror"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_VengefulSpirit.WaveOfTerror"
-				"particle_wave"			"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_vengeful.lua"
-				"Function"				"WaveOfTerrorHit"
-
-				"modifier_armor"		"modifier_imba_wave_of_terror_armor"
-				"modifier_terror"		"modifier_imba_wave_of_terror_stacks"
-				"modifier_rancor"		"modifier_imba_rancor"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_wave_of_terror_armor"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-		
-				"EffectName"			"particles/units/heroes/hero_vengeful/vengeful_wave_of_terror_recipient.vpcf"
-				"EffectAttachType"		"follow_origin"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
-				}
-			}
-
-			"modifier_imba_wave_of_terror_stacks"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"-1"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"atk_reduction_pct"		"10 10 10 10 20 30 40"
 			}
 		}
 	}
@@ -25906,14 +25835,18 @@
 	//=================================================================================================================
 	// Vengeful Spirit's Vengeance Aura
 	//=================================================================================================================
-	"imba_vengeful_command_aura"
+	"imba_vengefulspirit_command_aura"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"BaseClass"              			"ability_lua"
+		"ScriptFile"						"hero/hero_vengefulspirit.lua"
+		"AbilityBehavior"       	 		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"				
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityTextureName"				"vengefulspirit_command_aura"
+		"FightRecapLevel"					"1"
+		"AbilityTextureName"    	 		"vengefulspirit_command_aura"	
+		"MaxLevel"							"7"
+		"LevelsBetweenUpgrades"				"2"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -25921,11 +25854,11 @@
 		{
 			"particle"						"particles/units/heroes/hero_vengeful/vengeful_negative_aura.vpcf"
 		}	
-		
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200"
-		
+		"AbilityCastRange"					"900"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -25933,112 +25866,17 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"bonus_damage_pct"			"12 20 28 36 39 42 45"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"16 24 32 40"
+				"spell_power"				"3 3 3 3 7 11 15"
 			}
-			"05"
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"rancor_damage_bonus"		"2"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"negative_damage"			"-16 -24 -32 -40"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_command_aura_positive_aura"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-		
-				"Aura"						"modifier_imba_command_aura_positive"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				"Aura_ApplyToCaster"		"1"
-			}
-
-			"modifier_imba_command_aura_positive"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"1.0"
-				
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_vengeful.lua"
-						"Function"			"VengeanceAuraUpdate"
-
-						"modifier_stack"	"modifier_imba_command_aura_positive_stack"
-						"modifier_rancor"	"modifier_imba_rancor"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_bonus"
-				}
-			}
-
-			"modifier_imba_command_aura_negative_aura"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-		
-				"Aura"						"modifier_imba_command_aura_negative"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD"
-				"Aura_ApplyToCaster"		"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
-
-			"modifier_imba_command_aura_negative"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%negative_damage"
-				}
-			}
-
-			"modifier_imba_command_aura_positive_stack"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"1.0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%rancor_damage_bonus"
-				}
+				"aura_radius"				"900"
 			}
 		}
 	}
@@ -26046,47 +25884,45 @@
 	//=================================================================================================================
 	// Vengeful Spirit's Rancor
 	//=================================================================================================================
-	"imba_vengeful_rancor"
+	"imba_vengefulspirit_rancor"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_ALL"
 		"MaxLevel"							"1"
 		"AbilityTextureName"				"custom/vengeful_rancor"
-		
+		"ScriptFile"						"hero/hero_vengefulspirit"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
+		"AbilitySpecial"
 		{
-			"modifier_imba_rancor_start"
+			"01"
 			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_vengeful.lua"
-						"Function"			"RancorUpdate"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"stack_receive_pct"			"2"
 			}
-	
-			"modifier_imba_rancor"
+			"02"
 			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"1"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"1"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_duration"			"2"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"talent_radius"				"900"
 			}
 		}
 	}
@@ -26094,20 +25930,37 @@
 	//=================================================================================================================
 	// Vengeful Spirit's Nether Swap
 	//=================================================================================================================
-	"imba_vengeful_nether_swap"
+	"imba_vengefulspirit_nether_swap"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_vengefulspirit"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"				"SPELL_DISPELLABLE_YES_STRONG"
 		"FightRecapLevel"					"2"
 		"AbilityTextureName"				"vengefulspirit_nether_swap"
-		"CastFilterRejectCaster" 			"1"
+		"MaxLevel"							"6"
+		"LevelsBetweenUpgrades"				"6"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"700 950 1200 1250 1300 1350"
+		"AbilityCastPoint"					"0.3"
+		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"45"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"100 150 200 200 200 200"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -26116,21 +25969,8 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_vengefulspirit.vsndevts"
 			"particle"						"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
 			"particle"  					"particles/units/heroes/hero_vengeful/vengeful_nether_swap_target.vpcf"
-			"particle"						"particles/hero/vengeful/rancor_magic_missile.vpcf"
+			"particle"						"particles/hero/vengefulspirit/rancor_magic_missile.vpcf"
 		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1000 1500 2000"
-		"AbilityCastPoint"					"0.2"
-		
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"20.0 18.0 16.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"75 100 125"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26138,104 +25978,39 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"1000 1500 2000"
+				"var_type"							"FIELD_INTEGER"
+				"range"								"700 950 1200 1250 1300 1350"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"rancor_radius"				"450 550 650"
+				"var_type"							"FIELD_INTEGER"
+				"swapback_delay"					"3"
+				"LinkedSpecialBonus"				"special_bonus_imba_vengefulspirit_2"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"rancor_stun"				"0.5"
+				"var_type"							"FIELD_FLOAT"
+				"swapback_duration"					"1 1 1 1.5 2 2.5"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"rancor_damage"				"100 175 250"
+				"var_type"							"FIELD_FLOAT"
+				"tooltip_illu_dmg_scepter"			"50"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"rancor_speed"				"1350"
+				"var_type"							"FIELD_INTEGER"
+				"tooltip_illu_amp_scepter"			"150"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"swapback_min_time"			"1.0"
+				"var_type"							"FIELD_INTEGER"
+				"cooldown_scepter"					"10"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"swapback_max_time"			"3.0"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tree_radius"				"300"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"ministun_duration"			"0.1"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cooldown_scepter"			"7"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_vengeful.lua"
-				"Function"					"UpgradeSwapback"
-
-				"ability_swapback"			"imba_vengeful_swap_back"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_vengeful.lua"
-				"Function"					"NetherSwap"
-
-				"ability_swapback"			"imba_vengeful_swap_back"
-				"sound_swap"				"Hero_VengefulSpirit.NetherSwap"
-				"particle_caster"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
-				"particle_target"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap_target.vpcf"
-				"particle_rancor"			"particles/hero/vengeful/rancor_magic_missile.vpcf"
-				"modifier_rancor"			"modifier_imba_rancor"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"1"
-
-			"FireSound"
-			{
-				"EffectName"				"Hero_VengefulSpirit.MagicMissileImpact"
-				"Target"					"TARGET"
-			}
-
-			"Stun"
-			{
-				"Duration"					"%rancor_stun"
-				"Target"					"TARGET"
-			}
-
-			"Damage"
-			{
-				"Target"					"TARGET"
-				"Type"						"DAMAGE_TYPE_MAGICAL"
-				"Damage"					"%rancor_damage"
+				"var_type"							"FIELD_INTEGER"
+				"tree_radius"						"300"
 			}
 		}
 	}
@@ -26243,11 +26018,12 @@
 	//=================================================================================================================
 	// Vengeful Spirit's Swapback
 	//=================================================================================================================
-	"imba_vengeful_swap_back"
+	"imba_vengefulspirit_swap_back"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_vengefulspirit"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"							"1"
 		"AbilityTextureName"				"custom/vengeful_swap_back"
@@ -26266,16 +26042,213 @@
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_vengeful.lua"
-				"Function"					"NetherSwapBack"
+	}
 
-				"ability_swap"				"imba_vengeful_nether_swap"
-				"sound_swap"				"Hero_VengefulSpirit.NetherSwap"
-				"particle_caster"			"particles/units/heroes/hero_vengeful/vengeful_nether_swap.vpcf"
+	//=================================================================================================================
+	// Vengeful Spirit Talent 1 (Level 10): Additional Magic Missile damage 
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 2 (Level 10): Reduced Nether Swap swapback activation delay in sec
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 3 (Level 20):  +% damage/+ spell power to Vengeance Aura
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_damage_pct"			"15"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_power"				"5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 4 (Level 20): Rancor now benefits from damage nearby (900 radius) allies take, at with % the normal rate
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"rate_pct"					"33.33"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 5 (Level 30): Magic Missile's stun now pierces spell immunity 
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 6 (Level 30): Nether Swap/Swapback launch magic missiles to enemies in 600 radius of the start/end point
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"600"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 7 (Level 40): -% buyback cost, -% buyback cooldown 
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"buyback_cost_pct"			"50"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"buyback_cooldown_pct"		"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Vengeful Spirit Talent 8 (Level 40): Vengeance Aura now increases all attack damage (instead of base damage)
+	//=================================================================================================================
+	"special_bonus_imba_vengefulspirit_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
 	}
@@ -33738,169 +33711,6 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"                     "1"
-            }
-        }
-    }
-
-    //=================================================================================================================
-    // Nyx Assassin's Talents
-    //=================================================================================================================
-    "special_bonus_imba_nyx_assassin_1" // Impale damage increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "50"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_2" // Scarab Parasite activation delay decrease
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "3"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_3" // Spiked Carapace damage reflection increase (percentage)
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "100"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_4" // Impale Relive Suffering duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_5" // Mana Burn Int multiplier increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_6" // Vendetta movement speed increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "20"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_7" // Spiked Carapace duration increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "1"
-            }
-        }
-    }
-
-    "special_bonus_imba_nyx_assassin_8" // Maximum Vendetta stored damage increase
-    {
-        // General
-        //-------------------------------------------------------------------------------------------------------------
-        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
-        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-        
-        // Special
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilitySpecial"
-        {
-            "01"
-            {
-                "var_type"                  "FIELD_FLOAT"
-                "value"	                    "475"
             }
         }
     }

@@ -799,7 +799,7 @@ function InitializeInnateAbilities( hero )
 		"imba_faceless_void_timelord",
 		"imba_queenofpain_delightful_torment",
 		"imba_techies_minefield_sign",
-		"imba_vengeful_rancor",
+		"imba_vengefulspirit_rancor",
 		"vengefulspirit_nether_swap",
 		"imba_venomancer_toxicity",
 		"imba_magnus_magnetize",
@@ -1920,7 +1920,7 @@ end
 function CreateEmptyTalents(hero)
 	for i=1,8 do
 		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end})"    
+		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"    
 		load(class)()
 	end
 end
