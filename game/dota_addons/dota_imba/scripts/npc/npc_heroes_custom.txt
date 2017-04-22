@@ -2219,29 +2219,21 @@
 	//=================================================================================================================
 	"npc_imba_hero_sniper"
 	{
-		"override_hero"				"npc_dota_hero_sniper"
+		"override_hero"				"npc_dota_hero_sniper"		
 
-		"ModelScale" 				".60"
+		"Ability1"					"imba_sniper_shrapnel"
+		"Ability2"					"imba_sniper_headshot"
+		"Ability3"					"imba_sniper_take_aim"		
+		"Ability4"					"imba_sniper_assassinate"		
 
-		"AttackAcquisitionRange"	"1800"
-
-		"AbilityLayout"				"5"
-
-	//	"Ability1"					"imba_sniper_shrapnel"
-		"Ability2"					"imba_sniper_take_aim_near"
-		"Ability3"					"imba_sniper_take_aim_far"
-		"Ability4"					"imba_sniper_headshot"
-		"Ability5"					"imba_sniper_assassinate"
-		"Ability6"					"imba_sniper_take_aim_normal"
-
-		"Ability10"					"special_bonus_unique_sniper_1"
-		"Ability11"					"special_bonus_attack_speed_15"
-		"Ability12"					"special_bonus_unique_sniper_2"
-		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_armor_6"
-		"Ability15"					"special_bonus_mp_regen_6"
-		"Ability16"					"special_bonus_attack_range_75"
-		"Ability17"					"special_bonus_cooldown_reduction_20"
+		"Ability10"					"special_bonus_imba_sniper_1"
+		"Ability11"					"special_bonus_imba_sniper_2"
+		"Ability12"					"special_bonus_imba_sniper_3"
+		"Ability13"					"special_bonus_imba_sniper_4"
+		"Ability14"					"special_bonus_imba_sniper_5"
+		"Ability15"					"special_bonus_imba_sniper_6"
+		"Ability16"					"special_bonus_imba_sniper_7"
+		"Ability17"					"special_bonus_imba_sniper_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
 	}
