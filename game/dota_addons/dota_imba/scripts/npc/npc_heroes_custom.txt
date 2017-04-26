@@ -1656,26 +1656,21 @@
 	//=================================================================================================================
 	"npc_imba_hero_obsidian_destroyer"
 	{
-		"override_hero"				"npc_dota_hero_obsidian_destroyer"
-
-		"AttributeBaseIntelligence"	"30"
-		"AttributeIntelligenceGain"	"3.0"
-
-		"AttackRange"				"525"
+		"override_hero"				"npc_dota_hero_obsidian_destroyer"		
 
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
 		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 
-		"Ability10"					"special_bonus_mp_175"
-		"Ability11"					"special_bonus_movement_speed_15"
-		"Ability12"					"special_bonus_armor_5"
-		"Ability13"					"special_bonus_attack_speed_20"
-		"Ability14"					"special_bonus_intelligence_15"
-		"Ability15"					"special_bonus_hp_200"
-		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_spell_amplify_10"
+		"Ability10"					"special_bonus_imba_obsidian_destroyer_1"
+		"Ability11"					"special_bonus_imba_obsidian_destroyer_2"
+		"Ability12"					"special_bonus_imba_obsidian_destroyer_3"
+		"Ability13"					"special_bonus_imba_obsidian_destroyer_4"
+		"Ability14"					"special_bonus_imba_obsidian_destroyer_5"
+		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
+		"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
+		"Ability17"					"special_bonus_imba_obsidian_destroyer_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_base_attack.vpcf"
 	}
