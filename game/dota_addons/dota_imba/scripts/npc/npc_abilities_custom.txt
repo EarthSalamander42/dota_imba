@@ -19774,26 +19774,126 @@
 	}
 
 	//=================================================================================================================
+	// Sniper's Shrapnel
+	//=================================================================================================================
+	"imba_sniper_shrapnel"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"sniper_shrapnel"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sniper.lua"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"		
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sniper.vsndevts"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_shrapnel_launch.vpcf"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_shrapnel.vpcf"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"delay"						"1.2"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"15 35 55 75 80 85 90"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"ms_slow_pct"				"15 20 25 30 32 34 36"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"10"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"distance_damage_pct"		"20 20 20 20 30 40 50"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_1"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_charge_count"			"3"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_5"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"charge_replenish_rate"		"55"
+			}
+		}			
+	}
+
+	//=================================================================================================================
 	// Sniper's Headshot
 	//=================================================================================================================
 	"imba_sniper_headshot"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"					"sniper_headshot"
+		"MaxLevel"								"7"
+		"ScriptFile"							"hero/hero_sniper.lua"
 		
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
-			"particle"							"particles/generic_gameplay/generic_stunned.vpcf"
+			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"			
 			"particle"							"particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
 			"particle"							"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
+			"particle"							"particles/hero/sniper/perfectshot_stun.vpcf"
 		}
 		
 		// Special
@@ -19802,188 +19902,71 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"near_duration"					"0.2"
+				"var_type"						"FIELD_INTEGER"
+				"headshot_attacks"				"3"
 			}
+
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"normal_duration"				"0.6"
+				"var_type"						"FIELD_INTEGER"
+				"headshot_damage"				"20 50 80 110 120 130 140"
 			}
+
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"far_duration"					"3.0"
+				"var_type"						"FIELD_INTEGER"
+				"headshot_ms_slow_pct"			"100"
 			}
+
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"proc_chance"					"40"
+				"headshot_as_slow"				"100"
 			}
+
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"normal_move_slow"				"-100"
+				"var_type"						"FIELD_FLOAT"
+				"headshot_duration"				"0.6"				
 			}
+
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"normal_attack_slow"			"-100"
+				"perfectshot_attacks"			"9"
 			}
+
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"normal_damage"					"25 50 75 100"
+				"perfectshot_critical_dmg_pct"	"125 150 175 200 200 200 200"
+				"LinkedSpecialBonus"			"special_bonus_imba_sniper_6"
 			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_damage"					"25 50 75 100"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_aoe"						"300"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_armor"						"-4 -5 -6 -7"
-			}
-			"11"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_knockback"					"80 100 120 140"
-			}
-			"12"
+
+			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"knockback_speed"				"700"
+				"perfectshot_stun_duration"		"0.3"
 			}
-			"13"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_shot_speed"				"2500"
-			}
-			"14"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"far_proc_chance"				"30"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"						"1"
-
-			"ApplyModifier"
-			{
-				"ModifierName"					"modifier_imba_headshot_far_debuff"
-				"Target" 						"TARGET"
-			}
-
-			"Damage"
-			{
-				"Target"						"TARGET"
-				"Type"							"DAMAGE_TYPE_PHYSICAL"
-				"Damage"						"%far_damage"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_sniper.lua"
-				"Function"						"HeadshotKnockback"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_headshot"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"							"%proc_chance"
-						
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"				"hero/hero_sniper.lua"
-								"Function"					"Headshot"
-
-								"modifier_near"				"modifier_imba_take_aim_near"
-								"modifier_far"				"modifier_imba_take_aim_far"
-								"modifier_normal_debuff"	"modifier_imba_headshot_normal_debuff"
-							}
-						}
-					}
-				}
-			}
-
-			"modifier_imba_headshot_normal_debuff"
-			{
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"0"
-
-				"Duration"						"%normal_duration"
-
-				"EffectName"					"particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
-				"EffectAttachType"				"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%normal_attack_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%normal_move_slow" 
-				}
-			}
-
-			"modifier_imba_headshot_far_debuff"
-			{
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-				"IsHidden"						"0"
-
-				"Duration"						"%far_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"			"%far_armor"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
-	// Sniper's Take Aim (Near)
+	// Sniper's Take Aim
 	//=================================================================================================================
-	"imba_sniper_take_aim_near"
+	"imba_sniper_take_aim"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"				"custom/sniper_take_aim_near"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"300"
-		"AbilityCastPoint"					"0.0"
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"				"sniper_take_aim"
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_sniper.lua"				
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0 7.0 6.0 5.0"
-		"AbilitySharedCooldown"				"imba_sniper_take_aim"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"
+		"AbilityCooldown"					"27 27 27 27 21 15 9"		
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -19992,292 +19975,15 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"-250"
+				"passive_bonus_range"		"100 200 300 400 450 500 550"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"-30"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"BAT"						"0.9 0.8 0.7 0.6"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"move_speed"				"8"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"300"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"TakeAimUpgrade"
-
-				"near_skill"				"imba_sniper_take_aim_near"
-				"normal_skill"				"imba_sniper_take_aim_normal"
-				"far_skill"					"imba_sniper_take_aim_far"
-				"modifier_near"				"modifier_imba_take_aim_near"
-				"modifier_normal"			"modifier_imba_take_aim_normal"
-				"modifier_far"				"modifier_imba_take_aim_far"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"				"Ability.AssassinateLoad"
-				"Target" 					"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"TakeAimNear"
-
-				"modifier_near"				"modifier_imba_take_aim_near"
-				"modifier_normal"			"modifier_imba_take_aim_normal"
-				"modifier_far"				"modifier_imba_take_aim_far"
-				"normal_skill_name"			"imba_sniper_take_aim_normal"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_take_aim_near"
-			{
-				"Passive"					"0"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"TakeAimNearBatStart"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"TakeAimNearBatEnd"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"				"%range"
-					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"		"%damage_reduction"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%move_speed"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sniper's Take Aim (Normal)
-	//=================================================================================================================
-	"imba_sniper_take_aim_normal"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"				"custom/sniper_take_aim_normal"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"650 800 950 1100"
-		"AbilityCastPoint"					"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0 7.0 6.0 5.0"
-		"AbilitySharedCooldown"				"imba_sniper_take_aim"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"150 250 350 450"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_take_aim_normal"
-			{
-				"Passive"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"		"%range"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Sniper's Take Aim (Far)
-	//=================================================================================================================
-	"imba_sniper_take_aim_far"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"				"custom/sniper_take_aim_far"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1350 1500 1650 1800"
-		"AbilityCastPoint"					"0.0"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"8.0 7.0 6.0 5.0"
-		"AbilitySharedCooldown"				"imba_sniper_take_aim"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"0"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range"						"600 700 800 900"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_bonus"				"50 60 70 80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"BAT"						"2.5"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"range_tooltip"				"1350 1500 1650 1800"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"self_slow"					"-100"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"TakeAimUpgrade"
-
-				"near_skill"				"imba_sniper_take_aim_near"
-				"normal_skill"				"imba_sniper_take_aim_normal"
-				"far_skill"					"imba_sniper_take_aim_far"
-				"modifier_near"				"modifier_imba_take_aim_near"
-				"modifier_normal"			"modifier_imba_take_aim_normal"
-				"modifier_far"				"modifier_imba_take_aim_far"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"TakeAimFar"
-
-				"modifier_near"				"modifier_imba_take_aim_near"
-				"modifier_normal"			"modifier_imba_take_aim_normal"
-				"modifier_far"				"modifier_imba_take_aim_far"
-				"normal_skill_name"			"imba_sniper_take_aim_normal"
-				"sound_cast"				"Ability.AssassinateLoad"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_take_aim_far"
-			{
-				"Passive"					"0"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"ThinkInterval"				"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"TakeAimFarFountainRemover"
-						"normal_skill"		"imba_sniper_take_aim_normal"
-						"modifier_normal"	"modifier_imba_take_aim_normal"
-						"modifier_far"		"modifier_imba_take_aim_far"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"TakeAimFarBatStart"
-
-						"normal_skill"		"imba_sniper_take_aim_normal"
-						"modifier_normal"	"modifier_imba_take_aim_normal"
-						"modifier_far"		"modifier_imba_take_aim_far"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"TakeAimFarBatEnd"
-					}
-				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%range"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%damage_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%self_slow"
-				}
-			}
+				"aim_bonus_range"			"1000"
+				"LinkedSpecialBonus"		"special_bonus_imba_sniper_7"
+			}			
 		}
 	}
 
@@ -20288,7 +19994,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -20298,30 +20004,31 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"sniper_assassinate"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_sniper.lua"				
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"25000"
+		"AbilityCastRange"				"2000 2500 3000 3300 3600 3900"
 		"AbilityCastRangeBuffer"		"1000"
-		"AbilityCastPoint"				"1.7"
+		"AbilityCastPoint"				"2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 15.0 10.0"
+		"AbilityCooldown"				"20 15 10 10 10 10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"175 200 225"
+		"AbilityManaCost"				"175 275 375 410 445 480"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_sniper.vsndevts"
 			"particle"					"particles/units/heroes/hero_sniper/sniper_assassinate.vpcf"
-			"particle"					"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
-			"particle"					"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_guided_missile_death.vpcf"
-			"particle"					"particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
+			"particle"					"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"						
 		}
 
 		// Special
@@ -20330,208 +20037,44 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"projectile_travel_time"	"0.5"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"320 485 650 725 800 875"
+			}			
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"charge_time"				"1.7"
+				"ministun_duration"			"0.1"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"spill_range"				"750 1000 1250"
+				"bullet_radius"				"100 100 100 200 300 400"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"regular_range"				"2000 2500 3000"
+				"travel_speed"				"2500"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"320 485 650"
+				"sight_duration"			"4"
 			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_radius"			"400"
+			}
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"aoe_size"					"250"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"400 575 750"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_duration_scepter"		"3.0"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_pct_scepter"			"-80"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"knockback_speed_scepter"	"900"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"knockback_dist_scepter"	"1200"
-			}
-		}
-		
-		"OnAbilityPhaseStart"
-		{	
-			"ApplyModifier"
-			{
-				"ModifierName"				"modifier_imba_assassinate_caster_cast_check"
-				"Target" 					"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"AssassinateCast"
-
-				"modifier_shrapnel"			"modifier_sniper_shrapnel_slow"
-				"modifier_caster"			"modifier_imba_assassinate_caster"
-				"modifier_target"			"modifier_imba_assassinate_target"
-				"modifier_cast_check"		"modifier_imba_assassinate_caster_cast_check"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"Assassinate"
-			}
-
-			"FireSound"
-			{
-				"Target"					"CASTER"
-				"EffectName"				"Ability.Assassinate"
-			}
-			
-			"FireSound"
-			{
-				"Target"					"CASTER"
-				"EffectName"				"Hero_Sniper.AssassinateProjectile"
-			}
-		}
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"					"0"
-		
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sniper.lua"
-				"Function"					"AssassinateHit"
-				"Target"					"TARGET"
-
-				"modifier_slow"				"modifier_imba_assassinate_scepter_debuff"
-			}
-		}
-		
-		"Modifiers"
-		{	
-			"modifier_imba_assassinate_caster"
-			{
-				"Duration"					"%charge_time"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"OnOrder"
-				{
-					"RemoveModifier"
-					{
-						"Target"			"CASTER"
-						"ModifierName"		"modifier_imba_assassinate_caster"
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"AssassinateStop"
-
-						"target_modifier"	"modifier_imba_assassinate_target"
-					}
-				}
-			}
-
-			"modifier_imba_assassinate_target"
-			{
-				"IsHidden"				"0"
-				"IsPurgeble"			"0"
-				"IsDebuff"				"1"
-				"Duration"				"2.2"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"AssassinateParticleStart"
-
-						"particle_debuff"	"particles/units/heroes/hero_sniper/sniper_crosshair.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sniper.lua"
-						"Function"			"AssassinateParticleEnd"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE" 			"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_PROVIDES_VISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_assassinate_scepter_debuff"
-			{
-				"IsHidden"				"0"
-				"IsPurgeble"			"1"
-				"IsDebuff"				"1"
-				"Duration"				"%slow_duration_scepter"
-
-				"EffectName"			"particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
-				"EffectAttachType"		"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%slow_pct_scepter"
-				}
-			}
-
-			"modifier_imba_assassinate_caster_cast_check"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnOrder"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_sniper.lua"
-						"Function"		"AssassinateCastCheck"
-					}
-				}
+				"charge_time"				"2"
 			}
 		}
 	}
@@ -33473,6 +33016,169 @@
             {
                 "var_type"                  "FIELD_INTEGER"
              	"value"						"6"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Sniper's Talents
+    //=================================================================================================================
+    "special_bonus_imba_sniper_1" // Shrapnel Out-of-range attack damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "10"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_2" // Assassinate now knockbacks all units hit
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "500"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_3" // Headshot slow/Perfectshot stun duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "50"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_4" // Take Aim cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_5" // Max Shrapnel charges increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_6" // Perfectshot critical damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "80"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_7" // Take Aim Aimed Assault attack range
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "1000"
+            }
+        }
+    }
+
+    "special_bonus_imba_sniper_8" // Global Assassinate
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_FLOAT"
+                "value"	                    "25000"
             }
         }
     }
