@@ -931,9 +931,28 @@ function modifier_imba_nether_ward_degen:OnSpentMana(keys)
             ability_range = 25000
         end
 
-        -- Shadowraze #2/#3: face the caster
-        if cast_ability_name == "imba_nevermore_shadowraze3" or cast_ability_name == "imba_nevermore_shadowraze2" then
+       -- Shadowraze: face the caster
+        if cast_ability_name == "imba_nevermore_shadowraze_close" or cast_ability_name == "imba_nevermore_shadowraze_medium" or cast_ability_name == "imba_nevermore_shadowraze_far" then
             ward:SetForwardVector((target_point - ward_position):Normalized())
+        end
+
+        -- Reqiuem of Souls: Get target's Necromastery stack count        
+        if cast_ability_name == "imba_nevermore_requiem" and not ward:HasModifier("modifier_imba_necromastery_souls") and target:HasAbility("imba_nevermore_necromastery") then
+            local ability_handle = ward:AddAbility("imba_nevermore_necromastery")
+            ability_handle:SetLevel(7)
+
+            -- Find target's modifier and its stacks
+            if target:HasModifier("modifier_imba_necromastery_souls") then
+                local stacks = target:GetModifierStackCount("modifier_imba_necromastery_souls", target)                                                                
+
+                -- Set the ward stacks count to be the same as the caster
+                if ward:HasModifier("modifier_imba_necromastery_souls") then
+                    local modifier_souls_handler = ward:FindModifierByName("modifier_imba_necromastery_souls")
+                    if modifier_souls_handler then     
+                        modifier_souls_handler:SetStackCount(stacks)
+                    end
+                end             
+            end            
         end
 
         -- Storm Bolt: choose another target
