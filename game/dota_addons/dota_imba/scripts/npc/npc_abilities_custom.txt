@@ -16238,32 +16238,42 @@
 	}
 
 	//=================================================================================================================
-	// Outhouse Decorator's Arcane Orb
+	// Outworld Devourer's Arcane Orb
 	//=================================================================================================================
 	"imba_obsidian_destroyer_arcane_orb"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_ATTACK"
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AUTOCAST | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityTextureName"				"obsidian_destroyer_arcane_orb"
-		"AbilityCastRange"					"600"
+		"AbilityTextureName"				"obsidian_destroyer_arcane_orb"		
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_obsidian_destroyer.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
-			"particle"						"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
-			"particle"  					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
+			"particle"						"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"			
+			"particle"						"particles/hero/outworld_devourer/arcane_orb_explosion.vpcf"
+			"particle"						"particles/hero/outworld_devourer/arcane_orb_explosion_f.vpcf"
+			"particle"						"particles/hero/outworld_devourer/lifesteal_orb/lifesteal_arcane_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/desolator_orb/desolator_arcane_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/skadi_orb/skadi_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/lifesteal_deso_orb/lifesteal_deso_arcane_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/lifesteal_skadi_orb/lifesteal_skadi_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/deso_skadi_orb/deso_skadi_arcane_orb.vpcf"
+			"particle"						"particles/hero/outworld_devourer/lifesteal_deso_skadi_orb/deso_skadi_orb/lifesteal_deso_skadi_arcane_orb.vpcf"
 		}	
+
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"100 110 120 130"
+		"AbilityManaCost"					"100 120 140 160 160 160 160"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -16272,157 +16282,46 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_pool_damage_pct"		"7 8 9 10"
+				"mana_pool_damage_pct"		"6 7 8 9 9 9 9"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_1"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_buff_duration"			"50"
+				"illusion_bonus_dmg"		"100 200 300 400 500 600 700"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_debuff_duration"		"30"
+				"int_steal_count"			"1 2 3 4 4 5 5"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_3"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"int_gain"					"3 4 5 6"
+				"int_steal_duration"		"80"
+				"LinkedSpecialBonus"		"special_bonus_imba_obsidian_destroyer_4"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_arcane_orb"
+			"05"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-
-				"Orb"
-				{
-					"Priority"				"DOTA_ORB_PRIORITY_ABILITY"
-					"ProjectileName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_arcane_orb.vpcf"
-					"CastAttack"			"1"
-				}
-
-				"OnOrbFire"
-				{
-					"SpendMana"
-					{
-						"Mana"				"%AbilityManaCost"
-					}
-
-					"FireSound"
-					{
-						"EffectName"		"Hero_ObsidianDestroyer.ArcaneOrb"
-						"Target"			"TARGET"	
-					}
-
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"ArcaneOrbRestoreMana"
-						"Target"			"CASTER"
-
-						"ability_name"		"imba_obsidian_destroyer_essence_aura"
-						"particle_name"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
-						"sound_name"		"Hero_ObsidianDestroyer.EssenceAura"
-					}
-
-					"FireEffect"
-					{
-						"EffectName"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"			"CASTER"
-					}
-				}
-
-				"OnOrbImpact"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"ArcaneOrb"
-						"Target"			"TARGET"
-
-						"int_gain_modifier"	"modifier_imba_obsidian_destroyer_int_gain"
-						"int_loss_modifier"	"modifier_imba_obsidian_destroyer_int_steal"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"splash_radius"				"200 200 200 200 275 350 425"
 			}
-
-			"modifier_imba_obsidian_destroyer_int_gain_counter"
-			{
-				"Duration"					"%int_buff_duration"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"TextureName"				"custom/obsidian_destroyer_int_gain"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
-
-			"modifier_imba_obsidian_destroyer_int_gain"
-			{
-				"Duration"					"%int_buff_duration"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"IntGainCounterUp"
-
-						"int_gain_counter"	"modifier_imba_obsidian_destroyer_int_gain_counter"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"IntGainCounterDown"
-
-						"int_gain_counter"	"modifier_imba_obsidian_destroyer_int_gain_counter"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%int_gain"
-				}
-			}
-
-			"modifier_imba_obsidian_destroyer_int_steal"
-			{
-				"Duration"					"%int_debuff_duration"
-				"IsPurgable"				"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"0"
-
-				"TextureName"				"custom/obsidian_destroyer_int_steal"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
-	// Outhouse Decorator's Astral Imprisoment
+	// Outworld Devourer's Astral Imprisoment
 	//=================================================================================================================
 	"imba_obsidian_destroyer_astral_imprisonment"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -16430,6 +16329,8 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"			"obsidian_destroyer_astral_imprisonment"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_obsidian_destroyer.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16437,21 +16338,21 @@
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"		
 			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
+			"particle"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison_end.vpcf"
 		}
 
 		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDuration"				"4.0"
-		"AbilityCooldown"				"22 18 14 10"
+		//-------------------------------------------------------------------------------------------------------------		
+		"AbilityCooldown"				"22 18 14 10 10 10 10"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"225 300 375 450 475 500 525"
+		"AbilityCastPoint"				"0.25"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"120 140 160 180"
+		"AbilityManaCost"				"120 140 160 180 190 200 210"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -16459,109 +16360,58 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"prison_duration"		"4.0"
+				"var_type"				"FIELD_INTEGER"
+				"prison_duration"		"4"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"orb_stacks"			"0 1 2 3"
+				"radius"				"400 400 400 400 450 500 550"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 150 200 250"
+				"damage"				"100 175 250 325 360 395 430"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_aoe"			"450"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName" 			"Hero_ObsidianDestroyer.AstralImprisonment.Cast"
-				"Target"				"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_outhouse_decorator.lua"
-				"Function"				"AstralImprisonment"
-
-				"ability_orb"			"imba_obsidian_destroyer_arcane_orb"
-				"int_gain_counter"		"modifier_imba_obsidian_destroyer_int_gain_counter"
-				"int_gain_modifier"		"modifier_imba_obsidian_destroyer_int_gain"
-				"int_loss_modifier"		"modifier_imba_obsidian_destroyer_int_steal"
-				"modifier_debuff"		"modifier_imba_astral_imprisonment"
-				"sound_astral"			"Hero_ObsidianDestroyer.AstralImprisonment"
+				"prison_movespeed"		"100 100 100 100 150 200 250"
+				"LinkedSpecialBonus"	"special_bonus_imba_obsidian_destroyer_6"
 			}	
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_astral_imprisonment"
+			"05"
 			{
-				"Duration"				"%prison_duration"
-				"IsDebuff"				"1"
-				"IsHidden"				"0"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_outhouse_decorator.lua"
-						"Function"		"AstralImprisonmentParticle"
-
-						"particle_imprisonment"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_outhouse_decorator.lua"
-						"Function"		"AstralImprisonmentEnd"
-
-						"sound_name"	"Hero_ObsidianDestroyer.AstralImprisonment"
-						"particle_hit"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_prison_end.vpcf"
-					}
-
-					"FireSound"
-					{
-						"EffectName"	"Hero_ObsidianDestroyer.AstralImprisonment.End"
-						"Target"		"TARGET"
-					}
-				}				
+				"var_type"					"FIELD_INTEGER"
+				"scepter_int_steal_count"	"5"
 			}
-		}
+
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_int_steal_duration"	"80"
+				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_4"
+			}
+		}		
 	}
 
 	//=================================================================================================================
-	// Outhouse Decorator's Essence Aura
+	// Outworld Devourer's Essence Aura
 	//=================================================================================================================
 	"imba_obsidian_destroyer_essence_aura"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"obsidian_destroyer_essence_aura"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_obsidian_destroyer.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16578,162 +16428,70 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
+				"radius"				"900"
+			}			
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"1 2 3 4"
+				"restore_chance_pct"	"40"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"restore_amount"		"6 8 10 12"
+				"var_type"				"FIELD_INTEGER"
+				"restore_mana_pct"		"10 15 20 25 26 27 28"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_absorb"			"3"
+				"base_bonus_mana"		"125 200 275 350 350 350 350"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"int_duration"			"12.0"
+				"var_type"				"FIELD_INTEGER"
+				"int_bonus_mana_mult"	"0 0 0 0 1 2 3"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_int_pct"			"50"
+				"bonus_int_on_proc"		"2 2 2 2 3 4 5"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_essence_aura"
+			"07"
 			{
-				"Passive"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"Aura"						"modifier_imba_essence_aura_buff"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster" 		"1"
-
-				"ThinkInterval"  			"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator"
-						"Function"			"EssenceAuraUpdate"
-
-						"modifier_mana"		"modifier_imba_essence_aura_mana"
-						"modifier_dummy"	"modifier_imba_essence_aura_mana_dummy"
-						"modifier_stacks"	"modifier_imba_essence_aura_int_gain_stacks"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_essence_aura"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"int_proc_duration"		"10"
 			}
-
-			"modifier_imba_essence_aura_buff"
-			{
-				"IsHidden"					"0"
-				
-				"OnSpentMana"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"RestoreMana"
-
-						"Target"			"UNIT"
-						"essence_particle"	"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_essence_effect.vpcf"
-						"essence_sound"		"Hero_ObsidianDestroyer.EssenceAura"
-						"modifier_int"		"modifier_imba_essence_aura_int_gain"
-					}
-				}
-			}
-
-			"modifier_imba_essence_aura_int_gain"
-			{
-				"Duration"					"%int_duration"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_outhouse_decorator.lua"
-						"Function"			"EssenceAuraEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"1"
-				}
-			}
-
-			"modifier_imba_essence_aura_int_gain_stacks"
-			{
-				"Duration"					"%int_duration"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
-
-			"modifier_imba_essence_aura_mana"
-			{
-				"Passive"			"1"
-				"IsHidden"			"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_BONUS"	"%bonus_mana"
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
-	// Outhouse Decorator's Sanity Eclipse
+	// Outworld Devourer's Sanity Eclipse
 	//=================================================================================================================
 	"imba_obsidian_destroyer_sanity_eclipse"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityType"							"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"					"DAMAGE_TYPE_PURE"
+		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"2"
 		"AbilityTextureName"					"obsidian_destroyer_sanity_eclipse"
+		"MaxLevel"								"6"
+		"ScriptFile"							"hero/hero_obsidian_destroyer.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"						"700"
-		"AbilityCastPoint"						"0.2"
-		"AOERadius"								"%radius"
+		"AbilityCastPoint"						"0.25"		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -16748,11 +16506,11 @@
 		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"160.0"
+		"AbilityCooldown"						"160"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"200 350 500"
+		"AbilityManaCost"						"175 250 325 350 375 400"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -16761,70 +16519,33 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_multiplier"				"6 8 10"
+				"radius"						"375 475 575 600 625 650"
 			}
+
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"400 500 600"
+				"int_multiplier"				"8 9 10 11 12 13"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range"					"700"
+				"max_mana_burn_pct"				"40"
 			}
+
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_burn_pct"					"50"
+				"int_steal_count"				"0 1 2 3 4 5"
+			}
+
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"int_steal_duration"			"80"
+				"LinkedSpecialBonus"			"special_bonus_imba_obsidian_destroyer_4"
 			}	
-		}
-
-		"OnSpellStart"
-		{
-			"FireSound"
-			{
-				"EffectName"					"Hero_ObsidianDestroyer.SanityEclipse.Cast"
-				"Target"						"CASTER"
-			}
-
-			"FireSound"
-			{
-				"EffectName"					"Hero_ObsidianDestroyer.SanityEclipse"
-				"Target"						"POINT"
-			}
-
-			"FireEffect"
-			{ 
-				"EffectName"					"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
-				"EffectAttachType"				"start_at_customorigin"
-				"TargetPoint"					"POINT"
-
-				"ControlPoints"
-				{
-					"00"						"POINT"
-					"01"						"%radius 0 0"
-					"02"						"%radius 0 0"
-					"03"						"%radius 0 0"				
-				}
-			}		
-
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_outhouse_decorator.lua"
-				"Function"						"SanityEclipse"
-				"Target"						"POINT"
-
-				"ability_arcane_orb"			"imba_obsidian_destroyer_arcane_orb"
-				"ability_astral"				"imba_obsidian_destroyer_astral_imprisonment"
-				"astral_modifier"				"modifier_imba_astral_imprisonment"
-				"astral_sound"					"Hero_ObsidianDestroyer.AstralImprisonment"
-				"int_gain_counter"				"modifier_imba_obsidian_destroyer_int_gain_counter"
-				"int_gain_modifier"				"modifier_imba_obsidian_destroyer_int_gain"
-				"int_loss_modifier"				"modifier_imba_obsidian_destroyer_int_steal"
-				"particle_mana_burn"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_mana_loss.vpcf"
-				"particle_damage"				"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_damage.vpcf"
-			}			
 		}
 	}
 
@@ -33589,6 +33310,169 @@
             {
                 "var_type"                  "FIELD_FLOAT"
                 "value"	                    "2"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Outworld Devourer's Talents 
+    //=================================================================================================================
+    "special_bonus_imba_obsidian_destroyer_1" // Arcane Orb max mana as damage increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"1"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_2" // Astral Imprisonment cast range increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"200"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_3" // Arcane Orb int steal count increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"2"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_4" // Stolen intelligence duration increased
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"50"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_5" // Essence Aura now heals when proccing
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"0.5"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_6" // Astral Imprisonment movespeed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"100"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_7" // Sanity Eclipse pierces spell immunity
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"1"
+            }
+        }
+    }
+
+    "special_bonus_imba_obsidian_destroyer_8" // Essence Aura can go beyond maximum mana temporarily
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+             	"value"						"6"
             }
         }
     }
