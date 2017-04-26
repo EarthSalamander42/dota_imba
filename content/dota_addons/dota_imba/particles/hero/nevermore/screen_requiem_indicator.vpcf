@@ -68,9 +68,7 @@
 			m_bEaseInAndOut = true
 		},
 		{
-			_class = "C_OP_FadeAndKill"
-			m_flEndFadeInTime = 0.05
-			m_flStartFadeOutTime = 0.8
+			_class = "C_OP_FadeInSimple"
 		},
 	]
 	m_Initializers = 
@@ -92,6 +90,21 @@
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
 		},
 	]
 }
