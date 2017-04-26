@@ -8,9 +8,9 @@ CreateEmptyTalents("nyx_assassin")
 -------------------------------------------------
 
 imba_nyx_assassin_impale = class({})
-LinkLuaModifier("modifier_imba_imaple_suffering_aura", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_imaple_suffering", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_imaple_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering_aura", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_suffering", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_impale_stun", "hero/hero_nyx_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_nyx_assassin_impale:IsHiddenWhenStolen()
     return false
@@ -18,7 +18,7 @@ end
 
 function imba_nyx_assassin_impale:OnUnStolen()
     local caster = self:GetCaster()
-    local modifier_aura = "modifier_imba_imaple_suffering_aura"
+    local modifier_aura = "modifier_imba_impale_suffering_aura"
 
     if caster:HasModifier(modifier_aura) then
         caster:RemoveModifierByName(modifier_aura)
@@ -26,7 +26,7 @@ function imba_nyx_assassin_impale:OnUnStolen()
 end
 
 function imba_nyx_assassin_impale:GetIntrinsicModifierName()
-    return "modifier_imba_imaple_suffering_aura"
+    return "modifier_imba_impale_suffering_aura"
 end
 
 function imba_nyx_assassin_impale:GetCastRange(location, target)
@@ -128,8 +128,8 @@ function imba_nyx_assassin_impale:OnProjectileHit(target, location)
     local sound_impact = "Hero_NyxAssassin.Impale.Target"
     local sound_land = "Hero_NyxAssassin.Impale.TargetLand"
     local particle_impact = "particles/units/heroes/hero_nyx_assassin/nyx_assassin_impale_hit.vpcf"
-    local modifier_stun = "modifier_imba_imaple_stun"
-    local modifier_suffering = "modifier_imba_imaple_suffering"
+    local modifier_stun = "modifier_imba_impale_stun"
+    local modifier_suffering = "modifier_imba_impale_suffering"
 
     -- Ability specials
     local duration = ability:GetSpecialValueFor("duration")
@@ -216,45 +216,45 @@ end
 
  
 -- Relive Suffering aura modifier
-modifier_imba_imaple_suffering_aura = class({})
+modifier_imba_impale_suffering_aura = class({})
 
-function modifier_imba_imaple_suffering_aura:GetAuraRadius()
+function modifier_imba_impale_suffering_aura:GetAuraRadius()
     return 25000 --global
 end
 
-function modifier_imba_imaple_suffering_aura:GetAuraSearchFlags()
+function modifier_imba_impale_suffering_aura:GetAuraSearchFlags()
     return DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS
 end
 
-function modifier_imba_imaple_suffering_aura:GetAuraSearchTeam()
+function modifier_imba_impale_suffering_aura:GetAuraSearchTeam()
     return DOTA_UNIT_TARGET_TEAM_ENEMY
 end
 
-function modifier_imba_imaple_suffering_aura:GetAuraSearchType()
+function modifier_imba_impale_suffering_aura:GetAuraSearchType()
     return DOTA_UNIT_TARGET_HERO
 end
 
-function modifier_imba_imaple_suffering_aura:GetModifierAura()
-    return "modifier_imba_imaple_suffering"
+function modifier_imba_impale_suffering_aura:GetModifierAura()
+    return "modifier_imba_impale_suffering"
 end
 
-function modifier_imba_imaple_suffering_aura:IsAura()
+function modifier_imba_impale_suffering_aura:IsAura()
     return true
 end
 
-function modifier_imba_imaple_suffering_aura:IsAuraActiveOnDeath()
+function modifier_imba_impale_suffering_aura:IsAuraActiveOnDeath()
     return true
 end
 
-function modifier_imba_imaple_suffering_aura:IsDebuff() return true end
-function modifier_imba_imaple_suffering_aura:IsHidden() return true end
-function modifier_imba_imaple_suffering_aura:IsPermanent() return true end
-function modifier_imba_imaple_suffering_aura:IsPurgable() return false end
+function modifier_imba_impale_suffering_aura:IsDebuff() return true end
+function modifier_imba_impale_suffering_aura:IsHidden() return true end
+function modifier_imba_impale_suffering_aura:IsPermanent() return true end
+function modifier_imba_impale_suffering_aura:IsPurgable() return false end
 
 -- Relive Suffering damage counter
-modifier_imba_imaple_suffering = class({})
+modifier_imba_impale_suffering = class({})
 
-function modifier_imba_imaple_suffering:OnCreated()
+function modifier_imba_impale_suffering:OnCreated()
     if IsServer() then
         -- Ability properties
         self.caster = self:GetCaster()
@@ -276,7 +276,7 @@ function modifier_imba_imaple_suffering:OnCreated()
     end
 end
 
-function modifier_imba_imaple_suffering:OnIntervalThink()
+function modifier_imba_impale_suffering:OnIntervalThink()
     if IsServer() then
         -- #4 Talent: Impale Relive Suffering duration increase
         if self.caster:HasTalent("special_bonus_imba_nyx_assassin_4") and not self.talent_4_applied then
@@ -309,13 +309,13 @@ function modifier_imba_imaple_suffering:OnIntervalThink()
     end
 end
 
-function modifier_imba_imaple_suffering:DeclareFunctions()
+function modifier_imba_impale_suffering:DeclareFunctions()
     local decFuncs = {MODIFIER_EVENT_ON_TAKEDAMAGE}
 
     return decFuncs
 end
 
-function modifier_imba_imaple_suffering:OnTakeDamage(keys)
+function modifier_imba_impale_suffering:OnTakeDamage(keys)
     if IsServer() then
         local unit = keys.unit
         local damage = keys.damage
@@ -330,23 +330,23 @@ function modifier_imba_imaple_suffering:OnTakeDamage(keys)
     end
 end
 
-function modifier_imba_imaple_suffering:IsHidden() return true end
-function modifier_imba_imaple_suffering:IsPurgable() return false end
-function modifier_imba_imaple_suffering:IsDebuff() return true end
-function modifier_imba_imaple_suffering:IsPermanent() return true end
+function modifier_imba_impale_suffering:IsHidden() return true end
+function modifier_imba_impale_suffering:IsPurgable() return false end
+function modifier_imba_impale_suffering:IsDebuff() return true end
+function modifier_imba_impale_suffering:IsPermanent() return true end
 
 
 -- Impale stun modifier
-modifier_imba_imaple_stun = class({})
+modifier_imba_impale_stun = class({})
 
-function modifier_imba_imaple_stun:CheckState()
+function modifier_imba_impale_stun:CheckState()
     local state = {[MODIFIER_STATE_STUNNED] = true}
     return state
 end
 
-function modifier_imba_imaple_stun:IsHidden() return false end
-function modifier_imba_imaple_stun:IsPurgeException() return true end
-function modifier_imba_imaple_stun:IsStunDebuff() return true end
+function modifier_imba_impale_stun:IsHidden() return false end
+function modifier_imba_impale_stun:IsPurgeException() return true end
+function modifier_imba_impale_stun:IsStunDebuff() return true end
 
 
 
