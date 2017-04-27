@@ -2244,6 +2244,14 @@ function CDOTA_BaseNPC:GetSpellPower()
 	return spell_power
 end
 
+-- Calculate physical damage post reduction
+function CDOTA_BaseNPC:GetPhysicalArmorReduction()
+    local armornpc = self:GetPhysicalArmorValue()
+    local armor_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
+    armor_reduction = 100 - (armor_reduction * 100)
+    return armor_reduction
+end
+
 -- Physical damage block
 function CDOTA_BaseNPC:GetDamageBlock()
 

@@ -3,28 +3,23 @@
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
 	m_nMaxParticles = 32
-	m_ConstantColor =
-	[
-		83,
-		38,
-		18,
-		255,
-	]
-	m_flNoDrawTimeToGoToSleep = 2.000000
+	m_ConstantColor = [ 83, 38, 18, 155 ]
+	m_flNoDrawTimeToGoToSleep = 2.0
 	m_bShouldSort = false
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
 			m_nSequenceCombineMode = "SEQUENCE_COMBINE_MODE_USE_SEQUENCE_0"
 			m_bAdditive = true
-			m_flOverbrightFactor = 5.000000
+			m_bDisableZBuffering = true
+			m_flOverbrightFactor = 15.0
 			m_hTexture = resource:"materials/particle/particle_glow_05.vtex"
-			m_flAnimationRate = 30.000000
 			m_bAnimateInFPS = true
+			m_flAnimationRate = 30.0
 		},
 	]
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_BasicMovement"
@@ -34,12 +29,12 @@
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flBias = 0.860000
 			m_bEaseInAndOut = true
+			m_flBias = 0.86
 		},
 		{
 			_class = "C_OP_FadeInSimple"
-			m_flFadeInTime = 0.500000
+			m_flFadeInTime = 0.5
 		},
 		{
 			_class = "C_OP_FadeOutSimple"
@@ -53,15 +48,12 @@
 			m_nFieldOutput = 2
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMax = 178.000000
-			m_flRadiusMin = 120.000000
-		},
-		{
-			_class = "C_INIT_RandomAlpha"
+			m_flRadiusMin = 420.0
+			m_flRadiusMax = 578.0
 		},
 		{
 			_class = "C_INIT_RandomRotation"
@@ -71,18 +63,18 @@
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 0.400000
-			m_fLifetimeMax = 0.600000
+			m_fLifetimeMax = 0.8
+			m_fLifetimeMin = 0.8
 		},
 		{
 			_class = "C_INIT_CreateFromParentParticles"
 		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_InstantaneousEmitter"
-			m_nParticlesToEmit = 20
+			m_nParticlesToEmit = 1
 		},
 	]
 }
