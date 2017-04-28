@@ -395,42 +395,21 @@ function GetRandomUltimateAbility()
 end
 
 -- Picks a random tower ability of level in the interval [level - 1, level]
-function GetRandomTowerAbility(tier, type)
+function GetRandomTowerAbility(tier)
 
 	local ability
 
-	if tier == 1 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_one.attack)
-		end
-	elseif tier == 2 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_two.attack)
-		end
-	elseif tier == 3 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_three.attack)
-		end
-	elseif tier == 4 then
-		if type == "active" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.active)
-		elseif type == "aura" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.aura)
-		elseif type == "attack" then
-			ability = RandomFromTable(TOWER_ABILITIES.tier_four.attack)
-		end
+	if tier == 1 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_one)		
+		
+	elseif tier == 2 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_two)			
+		
+	elseif tier == 3 then		
+			ability = RandomFromTable(TOWER_ABILITIES.tier_three)					
+	
+	elseif tier == 4 then		
+			ability = RandomFromTable(TOWER_ABILITIES.active)		
 	end
 
 	return ability.ability_name
@@ -1920,7 +1899,11 @@ end
 function CreateEmptyTalents(hero)
 	for i=1,8 do
 		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
+<<<<<<< HEAD
 		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"    
+=======
+		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
+>>>>>>> 4eb6512d6ce36fdaaccf15cdb257addc6e79a84e
 		load(class)()
 	end
 end
@@ -2242,6 +2225,14 @@ function CDOTA_BaseNPC:GetSpellPower()
 
 	-- Return current spell power
 	return spell_power
+end
+
+-- Calculate physical damage post reduction
+function CDOTA_BaseNPC:GetPhysicalArmorReduction()
+    local armornpc = self:GetPhysicalArmorValue()
+    local armor_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
+    armor_reduction = 100 - (armor_reduction * 100)
+    return armor_reduction
 end
 
 -- Physical damage block

@@ -1656,26 +1656,21 @@
 	//=================================================================================================================
 	"npc_imba_hero_obsidian_destroyer"
 	{
-		"override_hero"				"npc_dota_hero_obsidian_destroyer"
-
-		"AttributeBaseIntelligence"	"30"
-		"AttributeIntelligenceGain"	"3.0"
-
-		"AttackRange"				"525"
+		"override_hero"				"npc_dota_hero_obsidian_destroyer"		
 
 		"Ability1"					"imba_obsidian_destroyer_arcane_orb"
 		"Ability2"					"imba_obsidian_destroyer_astral_imprisonment"
 		"Ability3"					"imba_obsidian_destroyer_essence_aura"
 		"Ability4"					"imba_obsidian_destroyer_sanity_eclipse"
 
-		"Ability10"					"special_bonus_mp_175"
-		"Ability11"					"special_bonus_movement_speed_15"
-		"Ability12"					"special_bonus_armor_5"
-		"Ability13"					"special_bonus_attack_speed_20"
-		"Ability14"					"special_bonus_intelligence_15"
-		"Ability15"					"special_bonus_hp_200"
-		"Ability16"					"special_bonus_attack_range_100"
-		"Ability17"					"special_bonus_spell_amplify_10"
+		"Ability10"					"special_bonus_imba_obsidian_destroyer_1"
+		"Ability11"					"special_bonus_imba_obsidian_destroyer_2"
+		"Ability12"					"special_bonus_imba_obsidian_destroyer_3"
+		"Ability13"					"special_bonus_imba_obsidian_destroyer_4"
+		"Ability14"					"special_bonus_imba_obsidian_destroyer_5"
+		"Ability15"					"special_bonus_imba_obsidian_destroyer_6"
+		"Ability16"					"special_bonus_imba_obsidian_destroyer_7"
+		"Ability17"					"special_bonus_imba_obsidian_destroyer_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_base_attack.vpcf"
 	}
@@ -2045,22 +2040,21 @@
 	{
 		"override_hero"				"npc_dota_hero_nevermore"
 	
-		"Ability1"					"imba_nevermore_shadowraze1"
-		"Ability2"					"imba_nevermore_shadowraze2"
-		"Ability3"					"imba_nevermore_shadowraze3"
+		"Ability1"					"imba_nevermore_shadowraze_close"
+		"Ability2"					"imba_nevermore_shadowraze_medium"
+		"Ability3"					"imba_nevermore_shadowraze_far"
 		"Ability4"					"imba_nevermore_necromastery"
 		"Ability5"					"imba_nevermore_dark_lord"
-		"Ability6"					"imba_nevermore_requiem"
-		"Ability7"					"imba_nevermore_requiem_aux"
+		"Ability6"					"imba_nevermore_requiem"		
 
-		"Ability10"					"special_bonus_movement_speed_15"
-		"Ability11"					"special_bonus_attack_speed_10"
-		"Ability12"					"special_bonus_spell_amplify_5"
-		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_attack_range_75"
-		"Ability15"					"special_bonus_evasion_20"
-		"Ability16"					"special_bonus_lifesteal_15"
-		"Ability17"					"special_bonus_spell_lifesteal_20"
+		"Ability10"					"special_bonus_imba_nevermore_1"
+		"Ability11"					"special_bonus_imba_nevermore_2"
+		"Ability12"					"special_bonus_imba_nevermore_3"
+		"Ability13"					"special_bonus_imba_nevermore_4"
+		"Ability14"					"special_bonus_imba_nevermore_5"
+		"Ability15"					"special_bonus_imba_nevermore_6"
+		"Ability16"					"special_bonus_imba_nevermore_7"
+		"Ability17"					"special_bonus_imba_nevermore_8"
 	
 		"ProjectileModel"			"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 	}
@@ -2219,29 +2213,21 @@
 	//=================================================================================================================
 	"npc_imba_hero_sniper"
 	{
-		"override_hero"				"npc_dota_hero_sniper"
+		"override_hero"				"npc_dota_hero_sniper"		
 
-		"ModelScale" 				".60"
+		"Ability1"					"imba_sniper_shrapnel"
+		"Ability2"					"imba_sniper_headshot"
+		"Ability3"					"imba_sniper_take_aim"		
+		"Ability4"					"imba_sniper_assassinate"		
 
-		"AttackAcquisitionRange"	"1800"
-
-		"AbilityLayout"				"5"
-
-	//	"Ability1"					"imba_sniper_shrapnel"
-		"Ability2"					"imba_sniper_take_aim_near"
-		"Ability3"					"imba_sniper_take_aim_far"
-		"Ability4"					"imba_sniper_headshot"
-		"Ability5"					"imba_sniper_assassinate"
-		"Ability6"					"imba_sniper_take_aim_normal"
-
-		"Ability10"					"special_bonus_unique_sniper_1"
-		"Ability11"					"special_bonus_attack_speed_15"
-		"Ability12"					"special_bonus_unique_sniper_2"
-		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_armor_6"
-		"Ability15"					"special_bonus_mp_regen_6"
-		"Ability16"					"special_bonus_attack_range_75"
-		"Ability17"					"special_bonus_cooldown_reduction_20"
+		"Ability10"					"special_bonus_imba_sniper_1"
+		"Ability11"					"special_bonus_imba_sniper_2"
+		"Ability12"					"special_bonus_imba_sniper_3"
+		"Ability13"					"special_bonus_imba_sniper_4"
+		"Ability14"					"special_bonus_imba_sniper_5"
+		"Ability15"					"special_bonus_imba_sniper_6"
+		"Ability16"					"special_bonus_imba_sniper_7"
+		"Ability17"					"special_bonus_imba_sniper_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_sniper/sniper_base_attack.vpcf"
 	}
@@ -2863,19 +2849,19 @@
 	{
 		"override_hero"				"npc_dota_hero_warlock"
 
-		//"Ability1"					"warlock_fatal_bonds"
+		"Ability1"					"imba_warlock_fatal_bonds"
 		"Ability2"					"imba_warlock_shadow_word"
 		"Ability3"					"imba_warlock_upheaval"
 		"Ability4"					"imba_warlock_rain_of_chaos"
 
-		"Ability10"					"special_bonus_exp_boost_15"
-		"Ability11"					"special_bonus_all_stats_6"
-		"Ability12"					"special_bonus_cast_range_100"
-		"Ability13"					"special_bonus_movement_speed_20"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_respawn_reduction_35"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_20_bash_2"
+		"Ability10"					"special_bonus_imba_warlock_1"
+		"Ability11"					"special_bonus_imba_warlock_2"
+		"Ability12"					"special_bonus_imba_warlock_3"
+		"Ability13"					"special_bonus_imba_warlock_4"
+		"Ability14"					"special_bonus_imba_warlock_5"
+		"Ability15"					"special_bonus_imba_warlock_6"
+		"Ability16"					"special_bonus_imba_warlock_7"
+		"Ability17"					"special_bonus_imba_warlock_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_warlock/warlock_base_attack.vpcf"
 	}
