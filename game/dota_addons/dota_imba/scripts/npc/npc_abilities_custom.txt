@@ -1840,19 +1840,17 @@
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	//=================================================================================================================
-	// Tower ability: Laser
+	// Tower ability: Protective Instinct
 	//=================================================================================================================
-	"imba_tower_laser"
+	"imba_tower_protective_instinct"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"tinker_laser"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"800 1000 1200"
-		"AbilityCooldown"						"10 9 8"
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"		
+		"MaxLevel"								"1"		
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -1861,99 +1859,207 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"blind_chance"					"100"
+				"radius"						"1200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Sniper (Tier 1)
+	//=================================================================================================================
+	"imba_tower_sniper"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"sniper_assassinate"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_range"					"100 125 150"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"range_per_protective"			"25"
+			}
+		}	
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Explosion Tower (Tier 1)
+	//=================================================================================================================
+	"imba_tower_splash_fire"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_explosion"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"splash_damage_pct"				"15 20 25"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_splash_per_protective"	"5"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"splash_radius"					"225"
+			}
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Replenishment (Spam Tower) (Tier 1)
+	//=================================================================================================================
+	"imba_tower_replenishment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"keeper_of_the_light_chakra_magic"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cooldown_reduction_pct"		"10 15 20"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_cooldown_reduction"		"3"
+			}			
+		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Aegis (Tier 1)
+	//=================================================================================================================
+	"imba_tower_aegis"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"modifier_invulnerable"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_armor"					"2 4 6"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"blind_aoe"						"800 1000 1200"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"blind_duration"				"2.0 2.5 3.0"
+				"var_type"						"FIELD_INTEGER"
+				"aura_stickyness"				"1.5"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"projectile_speed"				"1000"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"min_creeps"					"4"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"						"1"
-
-			"RunScript"
-			{
-				"ScriptFile"					"hero/tower_abilities.lua"
-				"Function"						"LaserHit"
-
-				"modifier_blind"				"modifier_imba_tower_laser_blind"
-				"particle_blind"				"particles/units/heroes/hero_tinker/laser_cutter_sparks_k.vpcf"
-				"sound_impact"					"Hero_Tinker.LaserImpact"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_laser"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"ThinkInterval"					"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Laser"
-
-						"projectile_laser"		"particles/units/heroes/hero_tinker/tinker_base_attack.vpcf"
-						"sound_impact"			"Hero_Tinker.LaserImpact"
-					}
-				}
-			}
-
-			"modifier_imba_tower_laser_blind"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%blind_duration"
-
-				"EffectName"					"particles/ambient/tower_laser_blind.vpcf"
-				"EffectAttachType"				"follow_overhead"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"%blind_chance"
-				}
-			}
+				"armor_per_protective"			"2"
+			}	
 		}
 	}
-
+	
 	//=================================================================================================================
-	// Tower ability: Multishot
+	// Tower ability: Toughness (Tier 1)
 	//=================================================================================================================
-	"imba_tower_multishot"
+	"imba_tower_toughness"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"sniper_shrapnel_muh_keen_gun"
+		"AbilityTextureName"					"custom/tower_toughness"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -1962,120 +2068,401 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bonus_range"					"100"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_multishot"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Multishot"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Hex Aura
-	//=================================================================================================================
-	"imba_tower_hex_aura"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"shadow_shaman_voodoo"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"800 1000 1200"
-		"AbilityCooldown"						"10 9 8"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hex_aoe"						"800 1000 1200"
+				"bonus_health"					"150 300 450"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"hex_duration"					"1.0 1.5 2.0"
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"min_creeps"					"4"
+				"aura_stickyness"				"1.5"
+			}
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"health_per_protective"			"150"
+			}	
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Star Tower (Aganlex Tower, Observatory) (Tier 1)
+	//=================================================================================================================
+	"imba_tower_observatory"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_observatory"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"additional_vision_per_hero"	"150"
+			}							
+		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Machinegun (Tier 1)
+	//=================================================================================================================
+	"imba_tower_machinegun"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"gyrocopter_skyhigh_flak_cannon"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities.lua"
+		"AbilityCastRange"						"%aura_radius"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_as"						"10 20 30"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"as_per_protective_instinct"	"10"
+			}
+		}		
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Thorns Aura (Tier 1)
+	//=================================================================================================================
+	"imba_tower_thorns"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_thorns"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle" 							"particles/units/heroes/hero_centaur/centaur_return.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"return_damage_pct"				"20 25 30"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"				
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"return_damage_per_stack"		"5"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"minimum_damage"				"15 20 25"
 			}
 		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Spell Shield (Tier 1)
+	//=================================================================================================================
+	"imba_tower_spell_shield"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_spellshield"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
 
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_tower_hex_aura"
+			"01"
 			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"ThinkInterval"					"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"HexAura"
-
-						"modifier_slow"			"modifier_imba_tower_hex_aura_slow"
-					}
-				}
+				"var_type"						"FIELD_INTEGER"
+				"magic_resistance"				"10 15 20"
 			}
-
-			"modifier_imba_tower_hex_aura_slow"
+			
+			"02"
 			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"				
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_mr_per_protective"		"5"
+			}			
+		}
 
-				"Duration"						"%hex_duration"
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Spellmastery Aura (Tier 2)
+	//=================================================================================================================
+	"imba_tower_spellmastery"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_spellmastery"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-500"
-				}
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cast_range_bonus"				"100 125 150"
+			}								
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spellamp_bonus"				"6 9 12"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"spellamp_per_protective"		"3"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Tower ability: Mana Burn
+	// Tower ability: Regeneration (Tier 2)
+	//=================================================================================================================
+	"imba_tower_regeneration"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_regen"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hp_regen"					"0.5 0.75 1.0"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"bonus_hp_regen_per_protective"	"0.5"
+			}
+		}
+
+	}
+
+	//=================================================================================================================
+	// Tower ability: Vicious Aura Tower (Tier 2)
+	//=================================================================================================================
+	"imba_tower_vicious"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_vicious"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crit_chance"					"15"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crit_damage"					"140"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"				
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"crit_chance_per_protective"	"5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Atrophy (Tier 2)
+	//=================================================================================================================
+	"imba_tower_atrophy"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_atrophy"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"-15 -20 -25"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"additional_dr_per_protective"	"-5"
+			}
+		}
+
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Mana Burn (Tier 2)
 	//=================================================================================================================
 	"imba_tower_mana_burn"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"antimage_mana_break"
+		"AbilityTextureName"					"custom/tower_mana_burn"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2084,7 +2471,37 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"mana_burn"						"50 75 100"
+				"mana_burn"						"15 25 35"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"additional_burn_per_hero"		"10"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"mana_burn_damage_pct"			"100"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"illusion_mana_burn_pct"		"33"
 			}
 		}
 
@@ -2109,21 +2526,21 @@
 			}
 		}
 	}
-
+	
 	//=================================================================================================================
-	// Tower ability: Mana Flare
+	// Tower ability: Plague (Tier 2)
 	//=================================================================================================================
-	"imba_tower_mana_flare"
+	"imba_tower_plague"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/mana_flare"
+		"AbilityTextureName"					"custom/tower_rot"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"800 1000 1200"
-		"AbilityCooldown"						"10 9 8"
+		"AbilityCastRange"						"700"
+		"ScriptFile"							"hero/tower_abilities"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2131,53 +2548,45 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"burn_aoe"						"800 1000 1200"
+				"var_type"							"FIELD_INTEGER"
+				"ms_slow"							"-15 -20 -25"
 			}
+			
 			"02"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"burn_pct"						"21 28 35"
+				"var_type"							"FIELD_INTEGER"
+				"as_slow"							"-15 -20 -25"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_mana_flare"
+			
+			"03"
 			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"ThinkInterval"					"0.5"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"ManaFlare"
-
-						"particle_burn"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
-						"sound_burn"			"Hero_NyxAssassin.ManaBurn.Target"
-					}
-				}
+				"var_type"							"FIELD_INTEGER"
+				"aura_radius"						"700"
 			}
-		}
+			
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"additional_slow_per_protective"	"-5"
+			}
+		}		
 	}
 
+
 	//=================================================================================================================
-	// Tower ability: Permabash
+	// Tower ability: Bash Tower (Tier 2)
 	//=================================================================================================================
 	"imba_tower_permabash"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"faceless_void_time_lock"
+		"AbilityTextureName"					"custom/tower_bash"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCooldown"						"4 3 2"
+		"ScriptFile"							"hero/tower_abilities"
+		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2186,57 +2595,563 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"bash_damage"					"50 75 100"
+				"bash_damage"					"20"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"bash_duration"					"1.0"
+				"bash_duration"					"0.25 0.5 0.75"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_permabash"
+			
+			"03"
 			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/tower_abilities.lua"
-						"Function"		"Permabash"
-
-						"sound_bash"	"Hero_FacelessVoid.TimeLockImpact"
-						"modifier_bash"	"modifier_imba_tower_permabash_bash"
-					}
-				}
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
 			}
-
-			"modifier_imba_tower_permabash_bash"
+			
+			"04"
 			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%bash_duration"
-
-				"StatusEffectName"				"particles/status_fx/status_effect_faceless_chronosphere.vpcf"
-				"StatusEffectPriority"			"1"
-
-				"States"
-				{
-					"MODIFIER_STATE_FROZEN"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
 			}
-		}
-	}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_damage_per_protective"	"15"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bash_chance"					"17"
+			}
+		}		
+	}	
+	
 
 	//=================================================================================================================
-	// Tower ability: Chronotower
+	// Tower ability: Grievous Wounds (Tier 3)
+	//=================================================================================================================
+	"imba_tower_grievous_wounds"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"ursa_fury_swipes"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_increase"				"6 9 12"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"	
+				"aura_radius"					"1200"				
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_increase_per_hero"		"3"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"debuff_duration"				"6"
+			}
+		}		
+	}	
+	
+
+	//=================================================================================================================
+	// Tower ability: Essence Drain (Tier 3)
+	//=================================================================================================================
+	"imba_tower_essence_drain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"slark_essence_shift"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stat_drain_amount_enemy"		"-1"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stat_drain_amount_ally"		"3"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration" 						"8 12 16"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"duration_per_protective"		"4"
+			}
+		}
+	}	
+
+	
+
+	//=================================================================================================================
+	// Tower ability: Starlight (Tier 3)
+	//=================================================================================================================
+	"imba_tower_starlight"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_starlight"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"miss_chance"						"50"				
+			}
+			
+			"02"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"blind_chance"						"15"
+			}
+			
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"blind_duration"					"1.5 2 2.5"
+			}
+			
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"additional_miss_per_protective"	"10"
+			}
+			
+			"05"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"aura_radius"						"1200"				
+			}
+			
+			"06"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"aura_stickyness"					"1.5"
+			}
+		}		
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Protection (Tier 3)
+	//=================================================================================================================
+	"imba_tower_protection"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_protection"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"-12 -16 -20"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"additional_dr_per_protective"	"-4"
+			}			
+		}		
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Disease (Tier 3)
+	//=================================================================================================================
+	"imba_tower_disease"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/disease_aura"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"stat_reduction"				"-8 -14 -20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"additional_sr_per_protective"	"-5"
+			}
+		}		
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Mass Confusion (Doppleganger) (Tier 3)
+	//=================================================================================================================
+	"imba_tower_doppleganger"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_doppleganger"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"							"particles/econ/items/phantom_lancer/phantom_lancer_immortal_ti6/phantom_lancer_immortal_ti6_spiritlance_cast.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"incoming_damage"				"0"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"outgoing_damage"				"-100"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"doppleganger_duration"			"12"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"doppleganger_cooldown"			"25"
+			}
+			
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"cd_reduction_per_protective"	"1"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"summon_distance"				"200"
+			}
+		}		
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Barrier Aura (Tier 3)
+	//=================================================================================================================
+	"imba_tower_barrier"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_barrier"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"		
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"							"particles/hero/tower/barrier_aura_shell.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"base_maxdamage"				"100 130 160"
+			}
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maxdamage_per_protective"		"25"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"replenish_duration"			"8"
+			}
+		}		
+	}
+	
+	//=================================================================================================================
+	// Tower ability: Soul Leech Aura (Tier 3)
+	//=================================================================================================================
+	"imba_tower_soul_leech"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_soul_leech"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"		
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"soul_leech_pct"				"8 10 12"
+			}
+		
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}						
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"leech_per_protective"			"2"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"creep_lifesteal_pct"			"50"
+			}
+		}		
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Frost Shroud Aura (Tier 3)
+	//=================================================================================================================
+	"imba_tower_frost_shroud"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_frost_shroud"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"1200"
+		"ScriptFile"							"hero/tower_abilities"		
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"							"particles/hero/tower/tower_frost_shroud.vpcf"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_shroud_chance"			"15"
+			}
+		
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aura_radius"					"1200"
+			}
+			
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"aura_stickyness"				"1.5"
+			}						
+			
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"frost_shroud_duration"			"3 4 5"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"as_slow"						"-10"
+			}
+			
+			"06"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"ms_slow"						"-10"
+			}
+			
+			"07"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"slow_per_protective"			"-3"
+			}
+			
+			"08"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"aoe_radius"					"250"
+			}
+		}		
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Chronotower (Actives)
 	//=================================================================================================================
 	"imba_tower_chrono"
 	{
@@ -2314,17 +3229,19 @@
 	}
 
 	//=================================================================================================================
-	// Tower ability: Grievous Wounds
+	// Tower ability: Mana Flare (Actives)
 	//=================================================================================================================
-	"imba_tower_grievous_wounds"
+	"imba_tower_mana_flare"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"ursa_fury_swipes"
+		"AbilityTextureName"					"custom/mana_flare"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"800 1000 1200"
+		"AbilityCooldown"						"10 9 8"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -2333,331 +3250,18 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_increase"				"10 15 20"
+				"burn_aoe"						"800 1000 1200"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"debuff_duration"				"5"
+				"burn_pct"						"21 28 35"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_tower_grievous_wounds"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"GrievousWounds"
-
-						"modifier_debuff"		"modifier_imba_tower_grievous_wounds_debuff"
-						"particle_hit"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_tower_grievous_wounds_debuff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"%debuff_duration"
-
-				"EffectName"					"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
-				"EffectAttachType"				"follow_overhead"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Machinegun
-	//=================================================================================================================
-	"imba_tower_machinegun"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"gyrocopter_skyhigh_flak_cannon"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_as"						"75 125 175"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_machinegun"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Essence Drain
-	//=================================================================================================================
-	"imba_tower_essence_drain"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"slark_essence_shift"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"drain_per_hit"					"1 2 3"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"drain_duration"				"8"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"armor_per_stack"				"0.25"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"as_per_stack"					"3"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"dmg_per_stack"					"3"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"100"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_essence_drain"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"EssenceDrain"
-
-						"modifier_str"			"modifier_imba_tower_essence_drain_str_stacks"
-						"modifier_agi"			"modifier_imba_tower_essence_drain_agi_stacks"
-						"modifier_int"			"modifier_imba_tower_essence_drain_int_stacks"
-						"modifier_stacks"		"modifier_imba_tower_essence_drain_tower_stacks"
-					}
-				}
-			}
-
-			"modifier_imba_tower_essence_drain_tower_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%drain_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_per_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%as_per_stack"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"		"%dmg_per_stack"
-				}
-			}
-
-			"modifier_imba_tower_essence_drain_str_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%drain_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-1"
-				}
-			}
-
-			"modifier_imba_tower_essence_drain_agi_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%drain_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-1"
-				}
-			}
-
-			"modifier_imba_tower_essence_drain_int_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%drain_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-1"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Fervor
-	//=================================================================================================================
-	"imba_tower_fervor"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"troll_warlord_fervor"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stack_as"						"20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"max_stacks"					"6 10 15"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"stack_duration"				"2.5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_fervor"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Fervor"
-
-						"modifier_fervor"		"modifier_imba_tower_fervor_buff"
-					}
-				}
-			}
-
-			"modifier_imba_tower_fervor_buff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Duration"						"%stack_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stack_as"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Berserk
-	//=================================================================================================================
-	"imba_tower_berserk"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"huskar_berserkers_blood"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stack_as"						"4 6 8"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stack_dmg"						"2 4 6"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_per_stack"					"4"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_berserk"
+			"modifier_imba_tower_mana_flare"
 			{
 				"Passive"						"1"
 				"IsHidden"						"1"
@@ -2669,652 +3273,18 @@
 					"RunScript"
 					{
 						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Berserk"
+						"Function"				"ManaFlare"
 
-						"modifier_berserk"		"modifier_imba_tower_berserk_buff"
-					}
-				}
-			}
-
-			"modifier_imba_tower_berserk_buff"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%stack_as"
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%stack_dmg"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Thorns
-	//=================================================================================================================
-	"imba_tower_thorns"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_thorns"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_hit"				"20 30 40"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_thorns"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttacked"
-				{
-					"Damage"
-					{
-						"Type"					"DAMAGE_TYPE_PURE"
-						"Damage"				"%damage_per_hit"
-						"Target"
-						{
-							"Center"			"ATTACKER"
-							"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-							"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-							"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						}
-					}
-
-					"FireEffect"
-					{
-						"EffectName"			"particles/units/heroes/hero_centaur/centaur_return.vpcf"
-						"EffectAttachType"		"attach_hitloc"
-						"Target"				"CASTER"
-
-						"ControlPointEntities"
-						{
-							"CASTER"			"attach_hitloc"
-							"ATTACKER"			"attach_hitloc"
-						}
+						"particle_burn"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+						"sound_burn"			"Hero_NyxAssassin.ManaBurn.Target"
 					}
 				}
 			}
 		}
-	}
-
+	}	
+	
 	//=================================================================================================================
-	// Tower ability: Multihit
-	//=================================================================================================================
-	"imba_tower_multihit"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"windrunner_focusfire"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_attacks"					"1 2 3"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"delay"							"0.15"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_multihit"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Multihit"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Spell Shield
-	//=================================================================================================================
-	"imba_tower_spell_shield"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"antimage_spell_shield"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"magic_resistance"				"100"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"magic_resistance_aura"			"15 25 35"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_spell_shield"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_tower_spell_shield_aura"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_tower_spell_shield_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%magic_resistance_aura"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Plague
-	//=================================================================================================================
-	"imba_tower_plague"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/tower_rot"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"700"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_second"				"30 40 50"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"slow"							"-15 -25 -35"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"area_of_effect"				"700"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_tick"				"15 20 25"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"tick_rate"						"0.5"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_plague"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_tower_plague_aura"
-				"Aura_Radius"					"%area_of_effect"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"PlagueParticle"
-
-						"particle_plague"		"particles/units/heroes/hero_pudge/pudge_rot_radius.vpcf"
-					}
-				}	
-			}
-
-			"modifier_imba_tower_plague_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"ThinkInterval"					"%tick_rate"
-
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"				"TARGET"
-						"Type"					"DAMAGE_TYPE_MAGICAL"
-						"Damage"				"%damage_per_tick"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow" 
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Aegis
-	//=================================================================================================================
-	"imba_tower_aegis"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"modifier_invulnerable"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_armor"					"4 8 12"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_health"					"400 800 1200"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_armor_aura"				"3 5 7"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"					"hero/tower_abilities.lua"
-				"Function"						"AegisUpdate"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_aegis"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_tower_aegis_aura"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
-				}
-			}
-
-			"modifier_imba_tower_aegis_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor_aura"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Self Repair
-	//=================================================================================================================
-	"imba_tower_self_repair"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"treant_living_armor"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"hp_regen"						"3 6 12"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hp_regen_aura"					"0.5 1.0 1.5"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_self_repair"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_tower_self_repair_aura"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"SelfRepairParticle"
-
-						"particle_regen"		"particles/units/heroes/hero_treant/treant_livingarmor.vpcf"
-					}
-				}	
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"		"%hp_regen"
-				}
-			}
-
-			"modifier_imba_tower_self_repair_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsBuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%hp_regen_aura"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Vicious
-	//=================================================================================================================
-	"imba_tower_vicious"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"giant_wolf_critical_strike"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crit_chance"					"35"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"crit_damage"					"200 250 300"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_vicious"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttack"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"			"modifier_imba_tower_vicious_crit"
-						"Target" 				"ATTACKER"
-					}
-
-					"Random"
-					{
-						"Chance"				"%crit_chance"
-
-						"OnSuccess"
-						{
-							"ApplyModifier"
-							{
-								"ModifierName"	"modifier_imba_tower_vicious_crit"
-								"Target" 		"ATTACKER"
-							}
-						}
-					}
-				}
-			}
-
-			"modifier_imba_tower_vicious_crit"
-			{
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" 	"%crit_damage"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Sniper
-	//=================================================================================================================
-	"imba_tower_sniper"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"sniper_assassinate"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_range"					"200 400 600"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_sniper"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"	"%bonus_range"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Greater Bash
-	//=================================================================================================================
-	"imba_tower_spacecow"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"spirit_breaker_greater_bash"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCooldown"						"5 4 3"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"knockback_damage"				"50 75 100"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"knockback_distance"			"450 600 750"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"knockback_duration"			"0.6"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_spacecow"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Spacecow"
-
-						"sound_creep"			"Hero_Spirit_Breaker.GreaterBash.Creep"
-						"sound_hero"			"Hero_Spirit_Breaker.GreaterBash"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Reality
+	// Tower ability: Reality (Actives)
 	//=================================================================================================================
 	"imba_tower_reality"
 	{
@@ -3363,7 +3333,7 @@
 	}
 
 	//=================================================================================================================
-	// Tower ability: Force
+	// Tower ability: Force (Actives)
 	//=================================================================================================================
 	"imba_tower_force"
 	{
@@ -3375,7 +3345,7 @@
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
 		"AbilityCastRange"						"600 800 1000"
-		"AbilityCooldown"						"5"
+		"AbilityCooldown"						"7 6 5"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3384,22 +3354,31 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"force_aoe"						"600 800 1000"
+				"force_aoe"						"800 900 1000"
 			}
+			
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"force_distance"				"300 400 500"
+				"force_distance"				"450"
 			}
+			
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"force_duration"				"0.2 0.3 0.4"
 			}
+			
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"min_creeps"					"4"
+			}
+			
+			"05"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"stun_duration"					"1.5"
 			}
 		}
 
@@ -3427,7 +3406,7 @@
 	}
 
 	//=================================================================================================================
-	// Tower ability: Nature
+	// Tower ability: Nature (Actives)
 	//=================================================================================================================
 	"imba_tower_nature"
 	{
@@ -3520,9 +3499,11 @@
 			}
 		}
 	}
+	
+	
 
 	//=================================================================================================================
-	// Tower ability: Mindblast
+	// Tower ability: Mindblast (Actives)
 	//=================================================================================================================
 	"imba_tower_mindblast"
 	{
@@ -3595,18 +3576,19 @@
 	}
 
 	//=================================================================================================================
-	// Tower ability: Atrophy
+	// Tower ability: Hex Aura (Active)
 	//=================================================================================================================
-	"imba_tower_atrophy"
+	"imba_tower_hex_aura"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"								"ability_datadriven"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"bane_enfeeble"
+		"AbilityTextureName"					"shadow_shaman_voodoo"
 		"MaxLevel"								"3"
 		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"1200"
+		"AbilityCastRange"						"800 1000 1200"
+		"AbilityCooldown"						"10 9 8"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -3615,283 +3597,117 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"damage_reduction"				"-30 -45 -60"
+				"hex_aoe"						"800 1000 1200"
 			}
 			"02"
 			{
+				"var_type"						"FIELD_FLOAT"
+				"hex_duration"					"1.0 1.5 2.0"
+			}
+			"03"
+			{
 				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
+				"min_creeps"					"4"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_imba_tower_atrophy"
+			"modifier_imba_tower_hex_aura"
 			{
 				"Passive"						"1"
 				"IsHidden"						"1"
 
-				"Aura"							"modifier_imba_tower_atrophy_aura"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster"			"0"
-			}
-
-			"modifier_imba_tower_atrophy_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%damage_reduction"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Disease
-	//=================================================================================================================
-	"imba_tower_disease"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"custom/disease_aura"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"1200"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"stat_reduction"				"-15 -25 -35"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"aura_radius"					"1200"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_disease"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"Aura"							"modifier_imba_tower_disease_aura"
-				"Aura_Radius"					"%aura_radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"					"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster"			"0"
-			}
-
-			"modifier_imba_tower_disease_aura"
-			{
-				"Passive"						"0"
-				"IsHidden"						"0"
-				"IsDebuff"						"1"
-				"IsPurgable"					"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%stat_reduction"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"			"%stat_reduction"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"%stat_reduction"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Forest
-	//=================================================================================================================
-	"imba_tower_forest"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"furion_sprout"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-		"AbilityCastRange"						"600 650 700"
-		"AbilityCooldown"						"12 10 8"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tree_radius"					"600 650 700"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tree_duration"					"240"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_forest"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"ThinkInterval"					"1.0"
+				"ThinkInterval"					"0.5"
 
 				"OnIntervalThink"
 				{
 					"RunScript"
 					{
 						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Forest"
+						"Function"				"HexAura"
 
-						"sound_tree"			"Tree.GrowBack"
+						"modifier_slow"			"modifier_imba_tower_hex_aura_slow"
 					}
 				}
 			}
-		}
-	}
 
-	//=================================================================================================================
-	// Tower ability: Splitting
-	//=================================================================================================================
-	"imba_tower_split"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"luna_moon_glaive"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+			"modifier_imba_tower_hex_aura_slow"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"split_chance"					"25 33 40"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"split_radius"					"625"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"split_amount"					"2"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"						"1"
-			
-			"RunScript"
-			{
-				"ScriptFile"					"hero/tower_abilities.lua"
-				"Function"						"SplitHit"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_split"
-			{
-				"Passive"						"1"
+				"Passive"						"0"
 				"IsHidden"						"1"
+				"IsDebuff"						"1"
+				"IsPurgable"					"1"
 
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Split"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tower ability: Cannon
-	//=================================================================================================================
-	"imba_tower_salvo"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"					"gyrocopter_rocket_barrage"
-		"MaxLevel"								"3"
-		"AbilitySharedWithTeammates"			"1"
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"as_slow"						"-50"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"salvo_dmg"						"100 150 200"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"salvo_aoe"						"250 300 350"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_tower_salvo"
-			{
-				"Passive"						"1"
-				"IsHidden"						"1"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/tower_abilities.lua"
-						"Function"				"Cannon"
-
-						"particle_explosion"	"particles/ambient/tower_salvo_explosion.vpcf"
-					}
-				}
+				"Duration"						"%hex_duration"
 
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%as_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-500"
 				}
 			}
 		}
+	}
+	
+	
+	//=================================================================================================================
+	// Tower ability: Healing Tower (Actives)
+	//=================================================================================================================
+	"imba_tower_healing_tower"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_lua"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"custom/tower_healing_wave"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+		"AbilityCastRange"						"900"
+		"AbilityCooldown"						"6"
+		"ScriptFile"							"hero/tower_abilities"		
+		
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"							"particles/hero/tower/tower_healing_wave.vpcf"
+			"soundfile"							"soundevents/game_sounds_greevils.vsndevts"
+		}
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"search_radius"				"900"
+			}
+			
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bounce_delay"				"0.5"
+			}
+			
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bounce_radius"				"600"
+			}
+			
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"heal_amount"				"150"
+			}
+			
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_threshold"				"85"
+			}
+		}		
 	}
 
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -25918,44 +25734,43 @@
 	}
 
 	//=================================================================================================================
-	// Warlock's Shadow Word
+	// Warlock's Fatal Bonds
 	//=================================================================================================================
-	"imba_warlock_shadow_word"
+	"imba_warlock_fatal_bonds"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"warlock_shadow_word"
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"warlock_fatal_bonds"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_warlock.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.35"
-		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"1000"
+		"AbilityCastAnimation"			"ACT_DOTA_FATAL_BONDS"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16"
+		"AbilityCooldown"				"24 22 20 18 18 18 18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"90 110 130 150"
+		"AbilityManaCost"				"140"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
-			"soundfile"					"soundevents/imba_soundevents.vsndevts"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
-			"particle"					"particles/hero/warlock/shadow_word_explosion_good.vpcf"
-			"particle"					"particles/hero/warlock/shadow_word_explosion_bad.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_fatal_bonds_hit.vpcf"			
 		}
 
 		// Special
@@ -25965,215 +25780,127 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"12"
+				"max_targets"			"3 4 5 6 7 8 9"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"link_damage_share_pct"	"25"
+				"LinkedSpecialBonus"	"special_bonus_imba_warlock_3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_damage"			"15 25 35 45"
+				"duration"				"25"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_ms_debuff"		"-1.5 -2.0 -2.5 -3.0"
+				"var_type"				"FIELD_INTEGER"
+				"golem_link_radius"		"300 300 300 300 500 700 900"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_as_debuff"		"-2 -3 -4 -5"
+				"golem_link_damage_pct"	"25"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tick_damage_debuff"	"-2 -3 -4 -5"
+				"link_search_radius"	"700"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_ms_buff"			"1.5 2.0 2.5 3.0"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_as_buff"			"2 3 4 5"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tick_damage_buff"		"2 3 4 5"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_ms"				"18 24 30 36"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_as"				"24 36 48 60"
-			}
-			"12"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"24 36 48 60"
-			}
-			"13"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_damage"			"180 300 420 540"
-			}
-			"14"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"spread_aoe"			"600"
-			}
-			"15"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_stacks"			"12"
-			}
-		}
+		}		
+	}
 
-		"OnSpellStart"
+
+	//=================================================================================================================
+	// Warlock's Shadow Word
+	//=================================================================================================================
+	"imba_warlock_shadow_word"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityTextureName"			"warlock_shadow_word"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_warlock.lua"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"525 600 675 750 775 800 825"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"90 110 130 150 155 160 165"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
 		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ShadowWord"
-
-				"sound_cast_good"		"Hero_Warlock.ShadowWordCastGood"
-				"sound_cast_bad"		"Hero_Warlock.ShadowWordCastBad"
-				"sound_target"			"Hero_Warlock.ShadowWord"
-				"modifier_buff"			"modifier_imba_shadow_word_buff"
-				"modifier_debuff"		"modifier_imba_shadow_word_debuff"
-			}
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"			
+			"particle"					"particles/hero/warlock/warlock_shadow_word_aoe.vpcf"
 		}
 
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_shadow_word_buff"
+			"01"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"ThinkInterval"			"%tick_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ShadowWordTickGood"
-
-						"modifier_stacks"		"modifier_imba_shadow_word_stacks_good"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ShadowWordExplode"
-
-						"particle_explode"		"particles/hero/warlock/shadow_word_explosion_good.vpcf"
-						"sound_explode"			"Imba.WarlockShadowWordExplosion"
-						"sound_cast_good"		"Hero_Warlock.ShadowWordCastGood"
-						"sound_cast_bad"		"Hero_Warlock.ShadowWordCastBad"
-						"sound_target"			"Hero_Warlock.ShadowWord"
-						"modifier_buff"			"modifier_imba_shadow_word_buff"
-						"modifier_debuff"		"modifier_imba_shadow_word_debuff"
-						"modifier_stacks"		"modifier_imba_shadow_word_stacks_good"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"275 275 275 275 350 425 500"
 			}
 
-			"modifier_imba_shadow_word_debuff"
+			"02"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"EffectName"			"particles/units/heroes/hero_warlock/warlock_shadow_word_debuff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"ThinkInterval"			"%tick_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ShadowWordTickBad"
-
-						"modifier_stacks"		"modifier_imba_shadow_word_stacks_bad"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_warlock.lua"
-						"Function"				"ShadowWordExplode"
-
-						"particle_explode"		"particles/hero/warlock/shadow_word_explosion_bad.vpcf"
-						"sound_explode"			"Imba.WarlockShadowWordExplosion"
-						"sound_cast_good"		"Hero_Warlock.ShadowWordCastGood"
-						"sound_cast_bad"		"Hero_Warlock.ShadowWordCastBad"
-						"sound_target"			"Hero_Warlock.ShadowWord"
-						"modifier_buff"			"modifier_imba_shadow_word_buff"
-						"modifier_debuff"		"modifier_imba_shadow_word_debuff"
-						"modifier_stacks"		"modifier_imba_shadow_word_stacks_bad"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"tick_value"			"15 25 35 45 48 51 54"
 			}
 
-			"modifier_imba_shadow_word_stacks_good"
+			"03"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%tick_ms_buff"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%tick_as_buff" 
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%tick_damage_buff"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"golem_bonus_ms_pct"	"0 0 0 0 5 10 15"
 			}
 
-			"modifier_imba_shadow_word_stacks_bad"
+			"04"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%tick_ms_debuff"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%tick_as_debuff" 
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%tick_damage_debuff"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"golem_bonus_as"		"0 0 0 0 10 20 30"
+				"LinkedSpecialBonus"	"special_bonus_imba_warlock_1"
 			}
-		}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"12"
+				"LinkedSpecialBonus"	"special_bonus_imba_warlock_5"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"tick_interval"			"1"
+			}
+		}		
 	}
 
 	//=================================================================================================================
@@ -26183,37 +25910,41 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"warlock_upheaval"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_warlock.lua"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.35"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCastRange"				"1200"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
-		"AOERadius"						"%slow_radius"
+		"AbilityCastAnimation"			"ACT_DOTA_CHANNEL_ABILITY_3"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"50 46 42 38"
+		"AbilityCooldown"				"50 46 42 38 36 34 32"
+		"AbilityChannelTime"			"16"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100 110 120 130"
+		"AbilityManaCost"				"100 110 120 130 140 150 160"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_warlock.vsndevts"
 			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
 			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval_debuff.vpcf"
 			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval_debuff_creep.vpcf"
+			"particle"					"particles/hero/warlock/warlock_upheaval_golem_burn.vpcf"
 		}
 
 		// Special
@@ -26223,161 +25954,33 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"16"
+				"radius"				"650 650 650 650 675 700 725"
 			}
+
 			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_slow_pct_per_tick"	"7 14 21 28 30 32 34"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"linger_duration"		"3"
+			}
+
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"tick_interval"			"0.5"
 			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_radius"			"725"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"move_slow_tooltip"		"-7 -14 -21 -28"
-			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_slow_tooltip"	"-5 -10 -15 -20"
-			}
-			"06"
-			{
 				"var_type"				"FIELD_FLOAT"
-				"move_slow_stack"		"-3.5 -7 -10.5 -14"
+				"max_slow_pct"			"100"
 			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"attack_slow_stack"		"-2.5 -5 -7.5 -10"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health"				"16 20 24 28"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hero_attacks_to_kill"	"4 5 6 7"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hero_damage"			"4"
-			}
-			"11"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"3"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"Upheaval"
-				"Target"				"POINT"
-
-				"sound_loop"			"Hero_Warlock.Upheaval"
-				"modifier_tower"		"modifier_imba_upheaval_aura"
-				"particle_aura"			"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_upheaval_aura"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"%tick_interval"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_warlock.lua"
-						"Function"			"UpheavalTowerAura"
-
-						"modifier_hero"		"modifier_imba_upheaval_aura_debuff"
-						"modifier_creep"	"modifier_imba_upheaval_aura_debuff_creep"
-					}
-				}
-
-				"OnAttacked"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_warlock.lua"
-						"Function"			"UpheavalTowerDamage"
-
-						"sound_loop"		"Hero_Warlock.Upheaval"
-						"sound_end"			"Hero_Warlock.Upheaval.Stop"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_upheaval_aura_debuff"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"EffectName"				"particles/units/heroes/hero_warlock/warlock_upheaval_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_stack" 
-				}
-			}
-
-			"modifier_imba_upheaval_aura_debuff_creep"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"EffectName"				"particles/units/heroes/hero_warlock/warlock_upheaval_debuff_creep.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%move_slow_stack"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_stack" 
-				}
-			}
-		}
+		}				
 	}
 
 	//=================================================================================================================
@@ -26387,42 +25990,42 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityTextureName"			"warlock_rain_of_chaos"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"2"
+		"MaxLevel"						"6"
+		"ScriptFile"					"hero/hero_warlock.lua"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.5"
-		"AbilityCastRange"				"1200"
-		"AOERadius"						"%stun_radius"
+		"AbilityCastRange"				"1200"		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120"
+		"AbilityCooldown"				"165"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200 300 400"
+		"AbilityManaCost"				"200 300 400 450 500 550"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
-			"particle"					"particles/units/heroes/hero_warlock/golem_ambient.vpcf"
-			"particle"					"particles/econ/items/warlock/warlock_golem_obsidian/golem_ambient_obsidian.vpcf"
-			"particle"					"particles/econ/items/warlock/warlock_golem_dark_curator/golem_ambient_dark_curator.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
-			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_staff.vpcf"
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_warlock.vsndevts"			
+			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"			
 			"particle"					"particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
-			"particle"					"particles/hero/warlock/warlock_rain_of_chaos_small.vpcf"
-			"particle"					"particles/hero/warlock/warlock_rain_of_chaos_start_small.vpcf"
+			"particle"					"particles/hero/warlock/warlock_demon_link.vpcf"
+			"particle"					"particles/hero/warlock/warlock_demon_link_damage.vpcf"
 		}
 
 		// Special
@@ -26432,126 +26035,136 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stun_radius"			"600"
+				"radius"				"600"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"60"
 			}
+
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_duration"			"1"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_health"			"1000 1500 2000 2250 2500 2750"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"			"25 50 75 90 105 120"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"6 9 12 13 14 15"
+				"LinkedSpecialBonus"	"special_bonus_imba_warlock_4"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"magic_resistance"		"33"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"base_damage"			"75 100 125 150 175 200"
+			}
+
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"move_speed"			"320 340 360 370 380 390"
+			}
+
+			"10"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"xp_bounty"				"100"
+			}
+
+			"11"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_bounty"			"100 150 200 225 250 275"
+			}
+
+			"12"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_hp_per_str"		"5 5 5 10 15 20"
+			}
+
+			"13"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_armor_per_agi"	"0.1"
+			}
+
+			"14"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_aspeed_per_agi"	"0.5"
+			}
+
+			"15"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_damage_per_int"	"0.25 0.25 0.25 0.5 0.75 1"
+			}
+
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_bonus_boots"		"1"
+			}
+
+			"15"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"effect_delay"			"0.5"
 			}
-			"04"
+
+			"16"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"65"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_health"			"900"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"health_per_level"		"50 75 100"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"90 150 220"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"secondary_delay"		"0.97"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_scepter"			"1.0"
-			}
-		}
-
-		"OnAbilityPhaseStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ChaoticOfferingPreCast"
-
-				"sound_precast"			"Hero_Warlock.RainOfChaos_buildup"
-				"particle_precast"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_staff.vpcf"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_warlock.lua"
-				"Function"				"ChaoticOffering"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_Warlock.RainOfChaos"
-				"particle_initial"		"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
-				"particle_secondary"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos.vpcf"
-				"particle_golem"		"particles/units/heroes/hero_warlock/golem_ambient.vpcf"
-				"particle_golem_4"		"particles/econ/items/warlock/warlock_golem_obsidian/golem_ambient_obsidian.vpcf"
-				"particle_golem_5"		"particles/econ/items/warlock/warlock_golem_dark_curator/golem_ambient_dark_curator.vpcf"
-				"modifier_golem"		"modifier_imba_rain_of_chaos_golem_innate"
-				"modifier_main_golem"	"modifier_imba_rain_of_chaos_main_golem_marker"
-				"particle_small_1"		"particles/hero/warlock/warlock_rain_of_chaos_start_small.vpcf"
-				"particle_small_2"		"particles/hero/warlock/warlock_rain_of_chaos_small.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_rain_of_chaos_golem_innate"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%base_damage"
-				}
+				"scepter_demon_count"	"5"
 			}
 
-			"modifier_imba_rain_of_chaos_main_golem_marker"
+			"17"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"ThinkInterval"			"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_warlock.lua"
-						"Function"		"ChaoticOfferingItemUpdate"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_warlock.lua"
-						"Function"		"ChaoticOfferingGolemDeath"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"scepter_demon_distance"	"500"
 			}
-		}
+
+			"18"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_demon_hp"			"150 200 250 300 350 400"
+			}
+
+			"19"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_damage_transfer_pct"	"50"
+			}
+
+			"20"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_damage_per_demon_pct"	"10"
+			}
+		}		
 	}
 
 	//=================================================================================================================
@@ -26561,14 +26174,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"	
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"				"warlock_golem_flaming_fists"
-		"MaxLevel"							"1"
+		"MaxLevel"							"7"
+		"ScriptFile"						"hero/hero_warlock.lua"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26577,34 +26191,15 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_pct"			"40"
+				"damage"				"40 50 60 65 70 75"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"300"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_golem_flaming_fists"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_warlock.lua"
-						"Function"			"GolemFlamingFists"
-					}
-				}
-			}
-		}
+		}	
 	}
 
 	//=================================================================================================================
@@ -26614,14 +26209,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"warlock_golem_permanent_immolation"
-		"MaxLevel"							"1"
+		"MaxLevel"							"6"
+		"ScriptFile"						"hero/hero_warlock.lua"
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26630,36 +26226,39 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375"
+				"radius"				"300"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_pct"			"3"
+				"damage"				"30 40 50 55 60 65"
 			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_imba_golem_permanent_immolation"
+
+			"03"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_warlock.lua"
-						"Function"			"GolemPermanentImmolation"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"burn_interval"			"1"
 			}
 		}
+	}
+
+	//=================================================================================================================
+	// Warlock's Infernal Spell Immunity
+	//=================================================================================================================
+	"imba_warlock_golem_spell_immunity"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityType"						"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"	
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"				"neutral_spell_immunity"
+		"MaxLevel"							"1"
+		"ScriptFile"						"hero/hero_warlock.lua"
 	}
 
 	//=================================================================================================================
@@ -33179,6 +32778,169 @@
             {
                 "var_type"                  "FIELD_FLOAT"
                 "value"	                    "25000"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Warlock's Talents
+    //=================================================================================================================
+    "special_bonus_imba_warlock_1" // Shadow Word Golem's attack speed increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "30"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_2" // Upheaval also reduces attack speed
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_3" // Fatal Bonds damage share increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "5"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_4" // Chaotic Golem armor increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "10"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_5" // Shadow Word duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "4"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_6" // Upheaval summons a demon to channel it for Warlock
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_7" // Golems share damage they take to Fatal Bonded units, no range limit
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "25000"
+            }
+        }
+    }
+
+    "special_bonus_imba_warlock_8" // Chaotic Golems are now Spell Immune
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "1"
             }
         }
     }
