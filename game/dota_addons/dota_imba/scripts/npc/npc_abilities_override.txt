@@ -12024,7 +12024,7 @@
 			"02"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"nether_swap_cooldown_scepter"		"0"
+				"nether_swap_cooldown_scepter"		"10"
 			}
 			"03"
 			{

@@ -778,7 +778,7 @@ function InitializeInnateAbilities( hero )
 		"imba_faceless_void_timelord",
 		"imba_queenofpain_delightful_torment",
 		"imba_techies_minefield_sign",
-		"imba_vengeful_rancor",
+		"imba_vengefulspirit_rancor",
 		"vengefulspirit_nether_swap",
 		"imba_venomancer_toxicity",
 		"imba_magnus_magnetize",
@@ -2229,6 +2229,15 @@ function CDOTA_BaseNPC:GetPhysicalArmorReduction()
     local armor_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
     armor_reduction = 100 - (armor_reduction * 100)
     return armor_reduction
+end
+
+function GetReductionFromArmor(armor)
+   local m = 0.06 * armor
+   return 100 * (1 - m/(1+math.abs(m)))
+end
+
+function CalculateReductionFromArmor_Percentage( armorOffset, armor )
+    return -GetReductionFromArmor(armor) + GetReductionFromArmor(armorOffset)
 end
 
 -- Physical damage block
