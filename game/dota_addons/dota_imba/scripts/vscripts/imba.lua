@@ -1252,61 +1252,82 @@ function GameMode:OnGameInProgress()
 	-------------------------------------------------------------------------------------------------
 
 	if TOWER_ABILITY_MODE then
-
+		local protective_instict = "imba_tower_protective_instinct"		
+		
 		-- Roll the random tower abilities for this game
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_1"][1] = GetRandomTowerAbility(1)		
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_2"][1] = GetRandomTowerAbility(2)
 
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["safelane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
-
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["safelane"]["tier_3"][1] = GetRandomTowerAbility(3)		
 		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_1"][1] = GetRandomTowerAbility(1)
 		
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
-
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][2] = GetRandomTowerAbility(1, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_1"][3] = GetRandomTowerAbility(1, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1] = GetRandomTowerAbility(2)
 		
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][2] = GetRandomTowerAbility(2, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_2"][3] = GetRandomTowerAbility(2, "active")
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = GetRandomTowerAbility(3)
+
+		TOWER_UPGRADE_TREE["midlane"]["tier_1"][1] = GetRandomTowerAbility(1)
 		
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][2] = GetRandomTowerAbility(3, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_3"][3] = GetRandomTowerAbility(3, "active")
+		TOWER_UPGRADE_TREE["midlane"]["tier_2"][1] = GetRandomTowerAbility(2)
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = GetRandomTowerAbility(3)
 
-		-- Make sure tier 4s are unique between themselves
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(4, "attack")
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4, "aura")
-		TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] = GetRandomTowerAbility(4, "active")
-
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
-		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(4, "attack")
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = GetRandomTowerAbility(3)	
+		
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = GetRandomTowerAbility(3)
+		
+		-- Make sure tier 3 abilities are unique between themselves. Includes tier 4 towers
+		local tier_3_and_4_towers = {} -- towers to index
+		local tier_3_abilities = {} -- distinct abilities		
+		local is_distinct = false	
+		local tower_ability_found = false
+		
+		-- Insert all tower upgrade trees into the table for easy looping		
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_3"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_41"][1])
+		table.insert(tier_3_and_4_towers, TOWER_UPGRADE_TREE["midlane"]["tier_42"][1])
+		
+		
+		-- First T3 tower ability is used for sure, no checking needed
+		table.insert(tier_3_abilities, TOWER_UPGRADE_TREE["safelane"]["tier_3"][1])
+		
+		-- Roll unique abilities for each tower. 
+		-- i resembles the current ability that was picked for a certain tower.
+		-- j resembles the current ability that former towers have already picked.
+		for i=1, #tier_3_and_4_towers do			
+			is_distinct = false		
+			while not is_distinct do
+				tower_ability_found = false
+				for j=1, #tier_3_abilities do				
+					if tier_3_and_4_towers[i] == tier_3_abilities[j] then						
+						tower_ability_found = true
+						tier_3_and_4_towers[i] = GetRandomTowerAbility(3)						
+						break
+					end				
+				end
+				
+				if not tower_ability_found then
+					is_distinct = true
+					table.insert(tier_3_abilities, tier_3_and_4_towers[i])
+				end			
+			end
 		end
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+		
+		-- Assign final tower abilities from the table
+		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = tier_3_and_4_towers[1]
+		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = tier_3_and_4_towers[2]
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = tier_3_and_4_towers[3]
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = tier_3_and_4_towers[4]
+		
+		-- Make sure that Tier 4 towers are distinct in the actives they get
+		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4)
+		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4, "aura")
+			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		end
-		TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
-		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][3] do
-			TOWER_UPGRADE_TREE["midlane"]["tier_42"][3] = GetRandomTowerAbility(4, "active")
-		end
+				
 		
 		-- Safelane towers
 		for i = 1, 3 do
@@ -1318,6 +1339,14 @@ function GameMode:OnGameInProgress()
 			local dire_tower = FindUnitsInRadius(DOTA_TEAM_BADGUYS, dire_tower_loc, nil, 50, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
+			
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
 
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
@@ -1335,6 +1364,7 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["safelane"]["tier_3"][1]
 			end
 
+			
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
 			dire_tower:AddAbility(ability_name)
@@ -1355,6 +1385,14 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
+			
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
@@ -1369,7 +1407,7 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_2"][1]
 			elseif i == 3 then
 				ability_name = TOWER_UPGRADE_TREE["midlane"]["tier_3"][1]
-			end
+			end			
 
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
@@ -1391,6 +1429,14 @@ function GameMode:OnGameInProgress()
 			radiant_tower = radiant_tower[1]
 			dire_tower = dire_tower[1]
 
+			-- Grant Protective Instinct ability to each tower
+			radiant_tower:AddAbility(protective_instict)
+			dire_tower:AddAbility(protective_instict)
+			local radiant_protective = radiant_tower:FindAbilityByName(protective_instict)
+			local dire_protective = dire_tower:FindAbilityByName(protective_instict)
+			radiant_protective:SetLevel(1)
+			dire_protective:SetLevel(1)
+			
 			-- Store the towers' tier and lane
 			radiant_tower.tower_tier = i
 			dire_tower.tower_tier = i
@@ -1405,8 +1451,9 @@ function GameMode:OnGameInProgress()
 				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_2"][1]
 			elseif i == 3 then
 				ability_name = TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1]
-			end
-
+			end			
+			
+			
 			-- Add and level up the ability
 			radiant_tower:AddAbility(ability_name)
 			dire_tower:AddAbility(ability_name)
@@ -1440,21 +1487,38 @@ function GameMode:OnGameInProgress()
 		dire_left_t4.tower_lane = "midlane"
 		dire_right_t4.tower_lane = "midlane"
 
-		-- Add and level up the multishot ability
-		local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][1]
-		local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][1]
-		radiant_left_t4:AddAbility(ability_name_1)
-		dire_left_t4:AddAbility(ability_name_1)
-		radiant_right_t4:AddAbility(ability_name_2)
-		dire_right_t4:AddAbility(ability_name_2)
-		local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
-		local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
-		local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
-		local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
-		radiant_left_ability:SetLevel(1)
-		dire_left_ability:SetLevel(1)
-		radiant_right_ability:SetLevel(1)
-		dire_right_ability:SetLevel(1)
+		-- Grant Protective Instinct ability to each tower
+		radiant_left_t4:AddAbility(protective_instict)
+		radiant_right_t4:AddAbility(protective_instict)
+		dire_left_t4:AddAbility(protective_instict)
+		dire_right_t4:AddAbility(protective_instict)
+		local radiant_protective_left = radiant_left_t4:FindAbilityByName(protective_instict)
+		local radiant_protective_right = radiant_right_t4:FindAbilityByName(protective_instict)
+		local dire_protective_left = dire_left_t4:FindAbilityByName(protective_instict)
+		local dire_protective_right = dire_right_t4:FindAbilityByName(protective_instict)
+		radiant_protective_left:SetLevel(1)
+		radiant_protective_right:SetLevel(1)
+		dire_protective_left:SetLevel(1)
+		dire_protective_right:SetLevel(1)
+		
+		-- Add and level up the aura and active
+		
+		for i = 1, 2 do
+			local ability_name_1 = TOWER_UPGRADE_TREE["midlane"]["tier_41"][i]
+			local ability_name_2 = TOWER_UPGRADE_TREE["midlane"]["tier_42"][i]
+			radiant_left_t4:AddAbility(ability_name_1)
+			dire_left_t4:AddAbility(ability_name_1)
+			radiant_right_t4:AddAbility(ability_name_2)
+			dire_right_t4:AddAbility(ability_name_2)
+			local radiant_left_ability = radiant_left_t4:FindAbilityByName(ability_name_1)
+			local dire_left_ability = dire_left_t4:FindAbilityByName(ability_name_1)
+			local radiant_right_ability = radiant_right_t4:FindAbilityByName(ability_name_2)
+			local dire_right_ability = dire_right_t4:FindAbilityByName(ability_name_2)
+			radiant_left_ability:SetLevel(1)
+			dire_left_ability:SetLevel(1)
+			radiant_right_ability:SetLevel(1)
+			dire_right_ability:SetLevel(1)
+		end
 	end
 
 end
