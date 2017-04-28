@@ -1899,11 +1899,7 @@ end
 function CreateEmptyTalents(hero)
 	for i=1,8 do
 		LinkLuaModifier("modifier_special_bonus_imba_"..hero.."_"..i, "hero/hero_"..hero, LUA_MODIFIER_MOTION_NONE)  
-<<<<<<< HEAD
-		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"    
-=======
 		local class = "modifier_special_bonus_imba_"..hero.."_"..i.." = class({IsHidden = function(self) return true end, RemoveOnDeath = function(self) return false end, AllowIllusionDuplicate = function(self) return true end})"  
->>>>>>> 4eb6512d6ce36fdaaccf15cdb257addc6e79a84e
 		load(class)()
 	end
 end
@@ -2233,6 +2229,15 @@ function CDOTA_BaseNPC:GetPhysicalArmorReduction()
     local armor_reduction = 1 - (0.06 * armornpc) / (1 + (0.06 * math.abs(armornpc)))
     armor_reduction = 100 - (armor_reduction * 100)
     return armor_reduction
+end
+
+function GetReductionFromArmor(armor)
+   local m = 0.06 * armor
+   return 100 * (1 - m/(1+math.abs(m)))
+end
+
+function CalculateReductionFromArmor_Percentage( armorOffset, armor )
+    return -GetReductionFromArmor(armor) + GetReductionFromArmor(armorOffset)
 end
 
 -- Physical damage block

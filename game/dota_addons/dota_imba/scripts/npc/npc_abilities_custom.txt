@@ -19902,16 +19902,34 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_sven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES_STRONG"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"sven_storm_bolt"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
 		"AOERadius"						"%radius"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"140"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -19922,21 +19940,9 @@
 			"particle"					"particles/hero/sven/sven_ult_storm_bolt.vpcf"
 			"particle"					"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"					"particles/generic_gameplay/generic_stunned.vpcf"
+			"particle"					"particles/units/heroes/hero_sven/sven_attack_blur.vpcf"
 		}
 		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastPoint"				"0.25"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"125"
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -19944,95 +19950,38 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
+				"damage"				"100 175 250 325 350 375 400"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"2.0"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"255"
+				"LinkedSpecialBonus"	"special_bonus_imba_sven_1"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"325"
+				"vision_radius"			"225"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"450"
+				"crit_pct"				"120 120 120 120 140 160 180"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"06"
 			{
-				"ScriptFile"			"hero/hero_sven.lua"
-				"Function"				"StormBoltLaunch"
-
-				"modifier_caster"		"modifier_imba_storm_bolt_caster"
-				"modifier_god_str"		"modifier_imba_god_strength"
-				"particle_bolt"			"particles/units/heroes/hero_sven/sven_spell_storm_bolt.vpcf"
-				"particle_ult"			"particles/hero/sven/sven_ult_storm_bolt.vpcf"
-				"sound_cast"			"Hero_Sven.StormBolt"
-
-				"Target"
-				{
-					"Center"			"TARGET"
-					"Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-					"Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"crit_max_duration"		"2"
 			}
-		}
-
-		"OnProjectileFinish"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"			"hero/hero_sven.lua"
-				"Function"				"StormBoltEnd"
-
-				"modifier_caster"		"modifier_imba_storm_bolt_caster"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sven.lua"
-				"Function"				"StormBoltHit"
-
-				"modifier_caster"		"modifier_imba_storm_bolt_caster"
-				"modifier_god_str"		"modifier_imba_god_strength"
-				"ability_god_str"		"imba_sven_gods_strength"
-				"sound_impact"			"Hero_Sven.StormBoltImpact"
-				"particle_impact"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_storm_bolt_caster"
-			{
-				"Passive"				"0"
-				"IsDebuff"				"1"
-				"IsHidden"				"1"
-				"IsPurgable"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"bolt_speed"			"1000"
 			}
 		}
 	}
@@ -20044,19 +19993,27 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityTextureName"				"sven_great_cleave"
+		"BaseClass"							"ability_lua"
+		"ScriptFile"						"hero/hero_sven"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityUnitDamageType"				"DAMAGE_TYPE_PHYSICAL"
+		"SpellDispellableType"				"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"					"1"
+		"AbilityTextureName"				"sven_great_cleave"
+		"MaxLevel"							"7"
+		"LevelsBetweenUpgrades"				"2"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"55 45 35 25"
 		"AbilityCastPoint"					"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"30"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -20069,7 +20026,7 @@
 			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"soundfile"						"soundevents/imba_soundevents.vsndevts"
 			"particle"						"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-			"particle"						"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
+			"particle"						"particles/hero/sven/great_cleave_glow_base.vpcf"
 		}
 		
 		// Special
@@ -20079,127 +20036,36 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"300"
-			}
+				"cleave_starting_width"		"150"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
+			}			
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cleave_pct"				"40 50 60 70"
-			}
+				"cleave_ending_width"		"300"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
+			}			
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_stack"			"10 15 20 25"
+				"cleave_distance"			"570"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_duration"			"3"
+				"great_cleave_damage"		"30 42 54 66 68 70 72"
 			}
 			"05"
+			{	
+				"var_type"					"FIELD_INTEGER"
+				"armor_ignore"				"3 3 3 3 7 11 15"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_6"
+			}
+			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"active_duration"			"7"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sven.lua"
-				"Function"					"GreatCleave"
-
-				"particle_great_cleave"		"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
-				"sound_cast"				"Imba.SvenGreatCleave"
-				"modifier_active"			"modifier_imba_great_cleave_active"
-				"modifier_passive"			"modifier_imba_great_cleave_passive"
-			}
-		}
-
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_sven.lua"
-				"Function"					"GreatCleaveLevelUp"
-
-				"modifier_active"			"modifier_imba_great_cleave_active"
-				"modifier_passive"			"modifier_imba_great_cleave_passive"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_great_cleave_passive"
-			{
-				"Passive"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"1"
-
-				"OnAttackLanded"
-				{
-					"CleaveAttack"
-					{
-						"CleavePercent"		"%cleave_pct"
-						"CleaveRadius"		"%radius"
-						"CleaveEffect"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_great_cleave_active"
-			{
-				"Passive"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Duration"					"%active_duration"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sven.lua"
-						"Function"			"GreatCleaveHit"
-
-						"sound_attack"		"Hero_Sven.Layer.GodsStrength"
-						"modifier_stack"	"modifier_imba_great_cleave_stack"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_sven.lua"
-						"Function"			"GreatCleaveEnd"
-
-						"modifier_passive"	"modifier_imba_great_cleave_passive"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_great_cleave_stack"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-				"IsHidden"					"0"
-
-				"Duration"					"%stack_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"%damage_per_stack"
-				}
+				"duration"					"8"
 			}
 		}
 	}
@@ -20211,11 +20077,30 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityTextureName"			"sven_warcry"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_sven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NONE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"sven_warcry"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"32 26 20 14 13 12 11"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"25"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -20224,20 +20109,8 @@
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"particle"					"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
 			"particle"					"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+			"particle"					"particles/items_fx/black_king_bar_avatar.vpcf"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0"
-		"AbilityCastRange"				"1200"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"20.0 18.0 16.0 14.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20246,77 +20119,33 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"8 12 16 20"		
+				"ms_bonus_pct"			"12"
+				"LinkedSpecialBonus"	"special_bonus_imba_sven_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_str"				"14 21 28 35"		
+				"armor_bonus"			"5 10 15 20 20 20 20"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"active_ms"				"12"
+				"tenacity_bonus_pct"	"0 0 0 0 4 8 12"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"tenacity_self_pct"		"5 5 5 5 10 15 20"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"duration"				"8"
-			}
-		}
-
-		"OnToggleOn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_sven.lua"
-				"Function"				"Warcry"
-
-				"particle_warcry"		"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
-				"sound_cast"			"Hero_Sven.WarCry"
-				"modifier_aura"			"modifier_imba_warcry_active_aura"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_warcry_active_aura"
-			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"1"
-
-				"Duration"				"%duration"
-
-				"Aura"					"modifier_imba_warcry_active"
-				"Aura_Radius"			"%radius"
-				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"	"1"
-			}
-
-			"modifier_imba_warcry_active"
-			{
-				"Passive"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-				"IsHidden"				"0"
-
-				"EffectName"			"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%bonus_str"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%bonus_armor"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_ms" 
-				}
 			}
 		}
 	}
@@ -20328,11 +20157,32 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
-		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityType"							"DOTA_ABILITY_TYPE_ULTIMATE"
-		"FightRecapLevel"						"1"
-		"AbilityTextureName"					"sven_gods_strength"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_sven"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AURA"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"sven_gods_strength"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80 80 80 70 60 50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100 150 200 205 210 215"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -20341,21 +20191,9 @@
 			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"soundfile"							"soundevents/imba_soundevents.vsndevts"
 			"particle"							"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
+			"particle"							"particles/units/heroes/hero_sven/sven_spell_gods_strength_ambient.vpcf"
 			"particle"							"particles/status_fx/status_effect_gods_strength.vpcf"
-			"particle"							"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"						"0.25"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"80 75 70"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"100"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20364,167 +20202,282 @@
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"self_damage_bonus"				"150 200 250"
+				"bonus_dmg_pct"					"100 150 200 225 250 275"
+				"LinkedSpecialBonus"			"special_bonus_imba_sven_8"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"ally_damage_bonus"				"50 75 100"
+				"duration"						"25"		
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
+				"ally_bonus_dmg_pct_scepter"	"75 100 125 140 155 170"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"storm_bolt_damage"				"100"
+				"aura_radius_scepter"			"900"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Sven's Colossal Slash
+	//=================================================================================================================
+	"imba_sven_colossal_slash"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_DIRECTIONAL | DOTA_ABILITY_BEHAVIOR_NORMAL_WHEN_STOLEN | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_COURIER"
+		"AbilityUnitTargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"MaxLevel"							"6"
+		"AbilityTextureName"				"custom/sven_colossal_strike"
+		"ScriptFile"						"hero/hero_sven"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"					"25000"
+		"AbilityCastPoint"					"0.6"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"					"0"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+			"soundfile"						"soundevents/imba_soundevents.vsndevts"
+			"particle"						"particles/hero/sven/colossal_slash.vpcf"
+			"particle"						"particles/hero/sven/colossal_slash_cast.vpcf"
+			"particle"						"particles/units/heroes/hero_earth_spirit/espirit_spawn_ground.vpcf.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"proj_speed"				"1700"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"450"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_bonus_pct"			"125 125 125 150 175 200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"base_range"				"300"
 			}
 			"05"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"storm_bolt_radius"				"50 75 100"
+				"var_type"					"FIELD_INTEGER"
+				"range_multiplier"			"20 20 20 40 60 80"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"duration"						"25.0"
-			}
-			"08"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ally_damage_bonus_scepter"		"100 125 150"
-			}
-			"09"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ally_cleave_pct_scepter"		"40"
-			}
-			"10"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"ally_cleave_radius_scepter"	"400"
+				"var_type"					"FIELD_INTEGER"
+				"bonus_dmg_pct"				"100 150 200 225 250 275"
+				"LinkedSpecialBonus"		"special_bonus_imba_sven_8"
 			}
 		}
+	}
 
-		"OnSpellStart"
+	//=================================================================================================================
+	// Sven Talent 1 (Level 10): Additional Storm Hammer effect radius
+	//=================================================================================================================
+	"special_bonus_imba_sven_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"					"hero/hero_sven.lua"
-				"Function"						"GodStrength"
-
-				"sound_cast"					"Hero_Sven.GodsStrength"
-				"sound_be_a_man"				"Imba.SvenBeAMan"
-				"particle_caster"				"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
-				"modifier_caster"				"modifier_imba_god_strength"
-				"modifier_aura"					"modifier_imba_god_strength_aura"
-				"modifier_aura_scepter"			"modifier_imba_god_strength_aura_scepter"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
 			}
 		}
+	}
 
-		"Modifiers"
+	//=================================================================================================================
+	// Sven Talent 2 (Level 10): Great Cleave length/end radius
+	//=================================================================================================================
+	"special_bonus_imba_sven_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_god_strength"
+			"01"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-				"IsHidden"			"0"
-
-				"Duration"			"%duration"
-
-				"StatusEffectName"				"particles/status_fx/status_effect_gods_strength.vpcf"
-				"StatusEffectPriority"			"10"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"		"%self_damage_bonus"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"value"						"100"
 			}
+		}
+	}
 
-			"modifier_imba_god_strength_aura"
+	//=================================================================================================================
+	// Sven Talent 3 (Level 20): %-based Warcry movement speed
+	//=================================================================================================================
+	"special_bonus_imba_sven_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-				"IsHidden"			"1"
-
-				"Duration"			"%duration"
-
-				"Aura"							"modifier_imba_god_strength_allies"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"			"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"9"
 			}
+		}
+	}
 
-			"modifier_imba_god_strength_allies"
+	//=================================================================================================================
+	// Sven Talent 4 (Level 20): God's Strength cooldown reduction
+	//=================================================================================================================
+	"special_bonus_imba_sven_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-				"IsHidden"			"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"		"%ally_damage_bonus"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"value"					"15"
 			}
+		}
+	}
 
-			"modifier_imba_god_strength_aura_scepter"
+	//=================================================================================================================
+	// Sven Talent 5 (Level 30): Storm Hammer cooldown reduction
+	//=================================================================================================================
+	"special_bonus_imba_sven_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-				"IsHidden"			"1"
-
-				"Duration"			"%duration"
-
-				"Aura"							"modifier_imba_god_strength_allies_scepter"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO"
-				"Aura_ApplyToCaster"			"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"8"
 			}
+		}
+	}
 
-			"modifier_imba_god_strength_allies_scepter"
+	//=================================================================================================================
+	// Sven Talent 6 (Level 30): Increased Great Cleave armor ignore
+	//=================================================================================================================
+	"special_bonus_imba_sven_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"			"0"
-				"IsBuff"			"1"
-				"IsPurgable"		"0"
-				"IsHidden"			"0"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
+			}
+		}
+	}
 
-				"StatusEffectName"				"particles/status_fx/status_effect_gods_strength.vpcf"
-				"StatusEffectPriority"			"10"
+	//=================================================================================================================
+	// Sven Talent 7 (Level 40): Warcry grants spell immunity for X-secs
+	//=================================================================================================================
+	"special_bonus_imba_sven_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"4"
+			}
+		}
+	}
 
-				"OnCreated"
-				{
-					"FireEffect"
-					{
-						"EffectName"			"particles/units/heroes/hero_sven/sven_spell_gods_strength.vpcf"
-						"EffectAttachType"		"follow_origin"
-						"Target"				"TARGET"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_sven.lua"
-						"Function"				"GodStrengthCleave"
-
-						"particle_cleave"		"particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
-						"damage"				"%attack_damage"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"		"%ally_damage_bonus_scepter"
-				}
+	//=================================================================================================================
+	// Sven Talent 8 (Level 40): Additional God's Strength damage bonus
+	//=================================================================================================================
+	"special_bonus_imba_sven_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"100"
 			}
 		}
 	}
@@ -32754,8 +32707,6 @@
             }
         }
     }
-<<<<<<< HEAD
-=======
 
     //=================================================================================================================
     // Warlock's Talents
@@ -32919,5 +32870,4 @@
             }
         }
     }
->>>>>>> 4eb6512d6ce36fdaaccf15cdb257addc6e79a84e
 }
