@@ -1,4 +1,4 @@
-"Imba.SvenGreatCleave"
+"Imba.SvenGetsugaTensho"
 {
 	"operator_stacks"
 	{
@@ -14,8 +14,12 @@
 					{
 						"value"
 						{
-							"value0"	"sounds/hero/sven/warcry_signet.vsnd"
+							"value0"	"sounds/hero/sven/getsuga_tensho.vsnd"
 						}
+					}
+					"volume"            
+					{   
+						"value"     "3.00000"  
 					}
 					"memory_type"
 					{
@@ -26,7 +30,38 @@
 		}
 	}
 }
-
+"Imba.SvenShockWave"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"				"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"	"sounds/hero/sven/shock_wave.vsnd"
+						}
+					}
+					"volume"            
+					{   
+						"value"     "4.00000"  
+					}
+					"memory_type"
+					{
+						"value"			"0"
+					}
+				}
+			}
+		}
+	}
+}
 "Imba.SvenBeAMan"
 {
 	"operator_stacks"
