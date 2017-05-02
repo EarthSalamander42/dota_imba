@@ -22906,7 +22906,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
@@ -22914,22 +22914,24 @@
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"skeleton_king_hellfire_blast"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeleton_king.vsndevts"
-			"particle"					"particles/neutral_fx/ghost_ambient.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeleton_king.vsndevts"			
+			"soundfile"					"soundevents/voscripts/game_sounds_vo_skeleton_king.vsndevts"
 			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
 			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
-			"model"						"models/creeps/neutral_creeps/n_creep_ghost_b/n_creep_ghost_frost.vmdl"
+			"particle"					"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"			
+			"particle"					"particles/hero/skeleton_king/wraithblast_lifesteal.vpcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"600"
+		"AbilityCastRange"				"525"
 		"AbilityCastPoint"				"0.35"
 		
 		// Time		
@@ -22946,116 +22948,63 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 100 150 200"
+				"var_type"							"FIELD_INTEGER"
+				"main_target_stun_duration"			"2"
 			}
+
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stun_duration"			"2"
+				"var_type"							"FIELD_INTEGER"
+				"damage"							"50 100 150 200 200 200 200"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"4"
+				"var_type"							"FIELD_INTEGER"
+				"secondary_targets_radius"			"250 250 250 250 400 550 700"
 			}
+
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"10 20 30 40"
+				"var_type"							"FIELD_FLOAT"
+				"secondary_target_stun_duration"	"0.5"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_lifesteal"		"20"
-			}
+				"var_type"							"FIELD_INTEGER"
+				"debuff_duration"					"4"
+				"LinkedSpecialBonus"				"special_bonus_imba_skeleton_king_1"
+			}			
+
 			"06"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_slow"				"-20"
+				"var_type"							"FIELD_INTEGER"
+				"ms_slow_pct"						"20"
 			}
+
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1000"
+				"var_type"							"FIELD_INTEGER"
+				"damage_per_second"					"8 16 24 32 40 48 56"
 			}
+
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bounce_range"			"700"
+				"var_type"							"FIELD_INTEGER"
+				"attacker_lifesteal_pct"			"20"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"09"
 			{
-				"ScriptFile"			"hero/hero_skeleton_king.lua"
-				"Function"				"HellfireBlast"
-
-				"sound_cast"			"Hero_SkeletonKing.Hellfire_Blast"
-				"particle_projectile"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-				"particle_warmup"		"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_warmup.vpcf"
+				"var_type"							"FIELD_INTEGER"
+				"projectile_speed"					"1000"
 			}
-		}
 
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-
-			"RunScript"
+			"10"
 			{
-				"ScriptFile"			"hero/hero_skeleton_king.lua"
-				"Function"				"HellfireBlastHit"
-
-				"sound_hit"				"Hero_SkeletonKing.Hellfire_BlastImpact"
-				"particle_projectile"	"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast.vpcf"
-				"modifier_slow"			"modifier_imba_wraithfire_blast_slow"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_wraithfire_blast_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"EffectName"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"			"TARGET"
-						"Type"				"DAMAGE_TYPE_MAGICAL"
-						"Damage"			"%damage_per_second"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_skeleton_king.lua"
-						"Function"				"HellfireBlastLifesteal"
-
-						"damage"				"%attack_damage"
-						"particle_lifesteal"	"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
-					}
-				}
-		
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%ms_slow" 
-				}
+				"var_type"							"FIELD_INTEGER"
+				"damage_interval"					"1"
 			}
 		}
 	}
@@ -23067,23 +23016,26 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"skeleton_king_vampiric_aura"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
+			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1200"
+		"AbilityCastRange"				"900"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23092,114 +23044,35 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
+				"radius"				"900"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_ally"		"15 20 25 30"
+				"lifesteal_pct"			"15 20 25 30 30 30 30"
+				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_3" 
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_self"		"25 30 35 40"
+				"spellsteal_pct"		"5 5 5 5 10 15 20"
+				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_3" 
 			}
-		}
 
-		"OnToggleOn"
-		{
-			"RunScript"
+			"04"
 			{
-				"ScriptFile"			"hero/hero_skeleton_king.lua"
-				"Function"				"VampiricAuraOn"
-
-				"modifier_aura"			"modifier_imba_vampiric_aura_creep"
+				"var_type"				"FIELD_INTEGER"
+				"caster_heal"			"20 20 20 20 30 40 50"
 			}
-		}
 
-		"OnToggleOff"
-		{
-			"RunScript"
+			"05"
 			{
-				"ScriptFile"			"hero/hero_skeleton_king.lua"
-				"Function"				"VampiricAuraOff"
-
-				"modifier_aura"			"modifier_imba_vampiric_aura_creep"
+				"var_type"				"FIELD_FLOAT"
+				"heal_delay"			"0.2"
 			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_vampiric_aura_hero"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_vampiric_aura_effect_hero"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
-				"Aura_ApplyToCaster"		"1"
-			}
-
-			"modifier_imba_vampiric_aura_creep"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_vampiric_aura_effect_creep"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_NONE"
-				"Aura_ApplyToCaster"		"0"
-			}
-
-			"modifier_imba_vampiric_aura_effect_hero"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnDealDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"VampiricAuraHit"
-
-						"damage"			"%attack_damage"
-						"particle_heal"		"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
-					}
-				}
-			}
-
-			"modifier_imba_vampiric_aura_effect_creep"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"VampiricAuraCreepHit"
-
-						"damage"			"%attack_damage"
-						"particle_heal"		"particles/units/heroes/hero_skeletonking/wraith_king_vampiric_aura_lifesteal.vpcf"
-					}
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -23209,12 +23082,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityTextureName"			"skeleton_king_mortal_strike"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23224,167 +23099,71 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"crit_chance"			"15"
+				"LinkedSpecialBonus" 	"special_bonus_imba_skeleton_king_2" 
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"crit_power"			"150 200 250 300"
+				"crit_damage_heroes"	"150 200 250 300 300 300 300"
 			}
+
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"str_drain_pct"			"2.0"
+				"var_type"				"FIELD_INTEGER"
+				"crit_damage_creeps"    "200 300 400 500 500 500 500"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"drain_duration"		"10"
+				"bonus_health_pct"	  	"20"
+				"LinkedSpecialBonus"	"special_bonus_imba_skeleton_king_5" 
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_mortal_strike"
+			"05"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"MortalStrikeCrit"
-
-						"modifier_crit"		"modifier_imba_mortal_strike_crit"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_duration" "16 16 16 16 18 20 22"
 			}
 
-			"modifier_imba_mortal_strike_crit"
+			"06"
 			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_mortal_strike_crit"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"MortalStrikeCritHit"
-
-						"damage"			"%attack_damage"
-						"modifier_drain"	"modifier_imba_mortal_strike_drain"
-						"modifier_dummy"	"modifier_imba_mortal_strike_drain_stacks_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE"	"%crit_power"
-				}
+				"var_type"					"FIELD_FLOAT"
+				"bonus_health_hero_mult" 	"1.5 1.5 1.5 1.5 2 2.5 3"
 			}
 
-			"modifier_imba_mortal_strike_drain"
+			"07"
 			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%drain_duration"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"MortalStrikeStackUp"
-
-						"modifier_dummy"	"modifier_imba_mortal_strike_drain_stacks_dummy"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_skeleton_king.lua"
-						"Function"			"MortalStrikeStackDown"
-
-						"modifier_drain"	"modifier_imba_mortal_strike_drain"
-						"modifier_dummy"	"modifier_imba_mortal_strike_drain_stacks_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"1"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"stack_value"			 	"10"
 			}
-
-			"modifier_imba_mortal_strike_drain_stacks_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%drain_duration"
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
-	// Wraith King's Reincarnation
+	// Wraith King's Kingdom Come
 	//=================================================================================================================
-	"imba_wraith_king_reincarnation"
+	"imba_wraith_king_kingdom_come"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-		"FightRecapLevel"				"2"
-		"AbilityTextureName"			"skeleton_king_reincarnation"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"140 100 60"
-		"AbilityCastRange"				"900"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"160"
+		"AbilityTextureName"			"custom/wraith_king_wraithfire_aura"
+		"MaxLevel"						"1"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
-		{
-			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"
+		{			
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeleton_king.vsndevts"			
+			"particle"					"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell.vpcf"	
 			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
-			"particle"					"particles/status_fx/status_effect_wraithking_ghosts.vpcf"
-			"particle"					"particles/hero/skeleton_king/wraith_king_hellfire_eruption_tell.vpcf"
 		}
 
 		// Special
@@ -23394,217 +23173,164 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_radius"			"900"
+				"radius"				"900"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_amount"			"-75"
+				"ms_slow_pct"			"75"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"5"
+				"as_slow"				"75"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reincarnate_delay"		"3"
+				"slow_duration"			"3"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"900"
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.75"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"kingdom_damage"		"100 150 200"
+				"damage"				"100"
 			}
+
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"kingdom_stun"			"1.0"
+				"var_type"				"FIELD_INTEGER"
+				"wraiths_attacks"		"3"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"kingdom_ms"			"12"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"aura_radius_scepter"	"900"
-			}
-			"10"
+				"max_hp_as_damage_pct"	"9"
+			}		
+		}		
+	}
+
+	//=================================================================================================================
+	// Wraith King's Reincarnation
+	//=================================================================================================================
+	"imba_wraith_king_reincarnation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"skeleton_king_reincarnation"
+		"MaxLevel"						"6"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
+
+		"HasScepterUpgrade"				"1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"240 140 40 40 40 40"
+		"AbilityCastRange"				"900"		
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_skeleton_king.vsndevts"			
+			"particle"					"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate.vpcf"			
+			"particle"					"particles/status_fx/status_effect_wraithking_ghosts.vpcf"			
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"wraith_duration_scepter"	"7"
+				"reincarnate_delay"			"3"
 			}
-			"11"
+
+			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"aura_linger"			"0.5"
+				"var_type"					"FIELD_INTEGER"
+				"reincarnate_mana_cost"		"160"
 			}
-			// This has to be changed in the damage filter to have any effect
-			"12"
+
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"passive_respawn_haste"		"0 0 0 0 8 16 24"
+			}						
+
+			"04"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"scepter_wraith_form_radius"	"1200"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"scepter_wraith_form_duration"		"7"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"max_wraith_form_heroes"	"4"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Wraith King's Wraith's Soul Strike
+	//=================================================================================================================
+	"imba_wraith_king_wraith_soul_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"FightRecapLevel"				"2"
+		"AbilityTextureName"			"ghost_frost_attack"
+		"MaxLevel"						"1"
+		"ScriptFile"					"hero/hero_skeleton_king.lua"
+				
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost"				"160"
+				"wraiths_attacks"		"3"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_reincarnation"
+			"02"
 			{
-				"Passive"							"1"
-				"IsHidden"							"1"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Attributes"						"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"ThinkInterval"						"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_skeleton_king.lua"
-						"Function"					"ReincarnationScepterAura"
-
-						"modifier_scepter"			"modifier_imba_reincarnation_scepter"
-						"modifier_wraith"			"modifier_imba_reincarnation_scepter_wraith"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"internal/util.lua"
-						"Function"					"IllusionPassiveRemover"
-
-						"modifier"					"modifier_imba_reincarnation"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"max_hp_as_damage_pct"	"9"
 			}
-
-			"modifier_imba_reincarnation_scepter"
-			{
-				"Passive"							"0"
-				"IsHidden"							"1"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Attributes"						"MODIFIER_ATTRIBUTE_PERMANENT"
-
-				"Duration"							"%aura_linger"
-			}
-
-			"modifier_imba_reincarnation_scepter_wraith"
-			{
-				"Passive"							"0"
-				"IsHidden"							"0"
-				"IsBuff"							"1"
-				"IsPurgable"						"0"
-
-				"Duration"							"%wraith_duration_scepter"
-
-				"StatusEffectName"					"particles/status_fx/status_effect_wraithking_ghosts.vpcf"
-				"StatusEffectPriority"				"10"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"				"hero/hero_skeleton_king.lua"
-						"Function"					"ReincarnationWraithEnd"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_NO_HEALTH_BAR"						"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FLYING_FOR_PATHING_PURPOSES_ONLY"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_reincarnation_death"
-			{
-				"Passive"					"0"
-				"IsDebuff"					"1"
-				"IsHidden"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%reincarnate_delay"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_MAGICAL"		"1"
-					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"			"1"
-					"MODIFIER_PROPERTY_DISABLE_HEALING"					"1"
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_GAME"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_reincarnation_slow"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"EffectName"				"particles/units/heroes/hero_skeletonking/wraith_king_reincarnate_slow_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"Duration"					"%slow_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_amount" 
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%slow_amount"
-				}
-			}
-
-			"modifier_imba_reincarnation_kingdom_ms"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%slow_duration"
-
-				"EffectName"				"particles/units/heroes/hero_skeletonking/skeletonking_hellfireblast_debuff.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%kingdom_ms" 
-				}
-			}
-		}
+		}		
 	}
 
 	//=================================================================================================================
@@ -32867,6 +32593,175 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"	                    "1"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Wraith King's Talents
+    //=================================================================================================================
+    "special_bonus_imba_skeleton_king_1" // Wraithfire Blast debuff duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_2" // Mortal Strike chance increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "5"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_3" // Vampiric Aura lifesteal/spellsteal increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "15"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_4" // Kingdom Come Wraiths's attacks slow enemies
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "ms_slow_pct"	            "25"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"				    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_5" // Mortal Strike bonus health per damage
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_6" // Reincarnation no longer needs mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "160"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_7" // Wraithfire Blast now summons Wraiths on all targets hit
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_8" // Reincarnate cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "20"
             }
         }
     }

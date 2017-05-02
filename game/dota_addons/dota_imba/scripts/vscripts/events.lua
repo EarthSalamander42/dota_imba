@@ -808,6 +808,16 @@ function GameMode:OnEntityKilled( keys )
 			respawn_time = math.max( respawn_time - killed_unit.bloodstone_respawn_reduction, 0)
 		end
 
+		-- Get all of the unit's modifiers
+		local respawn_modifiers = 0
+
+		local modifiers = killed_unit:FindAllModifiers()
+		for _,modifier in pairs(modifiers) do
+			if modifier.GetModifierStackingRespawnTime then
+				respawn_modifiers = respawn_modifiers + modifier:GetModifierStackingRespawnTime()				
+			end
+		end		
+
 		-- Multiply respawn timer by the lobby options
 		respawn_time = math.max( respawn_time * HERO_RESPAWN_TIME_MULTIPLIER * 0.01, 1)
 

@@ -39,6 +39,7 @@ require('events')
 require('addon_init')
 
 ApplyAllTalentModifiers()
+StoreCurrentDayCycle()
 
 -- storage API
 --require('libraries/json')
@@ -416,7 +417,7 @@ function GameMode:ItemAddedFilter( keys )
 	if item_name == "item_imba_aegis" then
 		
 		-- If this is a player, do Aegis stuff
-		if unit:GetPlayerOwnerID() and PlayerResource:IsImbaPlayer(unit:GetPlayerOwnerID()) then
+		if unit:IsRealHero() then
 			
 			-- Apply.refresh the Aegis reincarnation modifier
 			item:ApplyDataDrivenModifier(unit, unit, "modifier_item_imba_aegis", {})
@@ -900,7 +901,13 @@ function GameMode:DamageFilter( keys )
 				end
 				if scythe_caster and attacker ~= scythe_caster then
 					keys.damage = 0
-					TriggerNecrolyteReaperScytheDeath(victim, scythe_caster)
+
+					-- Find the Reaper's Scythe ability
+					local ability = caster:FindAbilityByName("imba_necrolyte_reapers_scythe")
+					if not ability then return nil end
+
+					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
+					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
 				end
 			end
 		end
@@ -941,39 +948,7 @@ function GameMode:DamageFilter( keys )
 					end
 				end
 			end
-		end
-
-		-- Reincarnation death prevention
-		if victim:HasModifier("modifier_imba_reincarnation") or victim:HasModifier("modifier_imba_reincarnation_scepter") then
-
-			-- Check if death is imminent
-			local victim_health = victim:GetHealth()
-			if keys.damage >= victim_health and not ( victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection") ) then
-
-				-- If this unit is reincarnation's owner and it is off cooldown, and there is enough mana, trigger reincarnation sequence
-				if victim:HasModifier("modifier_imba_reincarnation") and victim:GetMana() >= 160 then
-					local reincarnation_ability = victim:FindAbilityByName("imba_wraith_king_reincarnation")
-					if reincarnation_ability and reincarnation_ability:IsCooldownReady() then
-
-						-- Prevent death
-						keys.damage = 0
-
-						-- Trigger Reincarnation
-						TriggerWraithKingReincarnation(victim, reincarnation_ability)
-
-						-- Exit
-						return true
-					end
-				end
-				
-				-- Else, trigger Wraith Form
-				if victim:HasModifier("modifier_imba_reincarnation_scepter") then
-					keys.damage = 0
-					TriggerWraithKingWraithForm(victim, attacker)
-					return true
-				end
-			end
-		end
+		end		
 
 		-- Aegis death prevention
 		if victim:HasModifier("modifier_item_imba_aegis") then
