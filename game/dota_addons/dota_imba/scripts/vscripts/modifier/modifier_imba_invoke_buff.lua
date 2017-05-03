@@ -13,7 +13,7 @@ function modifier_imba_invoke_buff:OnCreated()
 		self.magic_resist = self:GetAbility():GetSpecialValueFor("magic_resistance_pct")
 		self.cooldown_reduction = self:GetAbility():GetSpecialValueFor("cooldown_reduction_pct")
 		self.spell_lifesteal = self:GetAbility():GetSpecialValueFor("spell_lifesteal")
-		self:StartIntervalThink(.25)
+		self:StartIntervalThink(1.0)
 end
 
 function modifier_imba_invoke_buff:OnIntervalThink()
@@ -37,29 +37,29 @@ function modifier_imba_invoke_buff:DeclareFunctions()
 end
 
 function modifier_imba_invoke_buff:GetModifierSpellAmplify_Percentage()
-		return self.spell_amp
+	return self.spell_amp
 end
 
 function modifier_imba_invoke_buff:GetModifierMagicalResistanceBonus()
-		return self.magic_resist
+	return self.magic_resist
 end
 function modifier_imba_invoke_buff:GetModifierBonusStats_Intellect()
-		return self.int_buff
+	return self.int_buff
 end
 
 function modifier_imba_invoke_buff:GetModifierPercentageCooldownStacking()
-		return self.cooldown_reduction
+	return self.cooldown_reduction
 end
 
 function modifier_imba_invoke_buff:GetModifierSpellLifesteal()
-		return self.spell_lifesteal
+	return self.spell_lifesteal
 end
 function modifier_imba_invoke_buff:IsPurgable()
 	return false
 end
 
 function modifier_imba_invoke_buff:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_invoke_buff:IsPermanent()
