@@ -490,7 +490,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		InitializeInnateAbilities(hero)
 
 		-- Initialize Invoker's innate invoke buff
-		-- ***NOTE: This should be removed when another solution is find, like giving Invoker a hidden passive ability to apply this ***
+		-- ***NOTE: This should be removed when another solution is found, like giving Invoker a hidden passive ability to apply the modifier ***
 		if(hero:HasAbility("invoker_invoke")) then
 			hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"),"modifier_imba_invoke_buff", {})
 		end
