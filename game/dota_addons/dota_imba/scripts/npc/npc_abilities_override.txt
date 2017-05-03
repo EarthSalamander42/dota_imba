@@ -649,7 +649,7 @@
 	//=================================================================================================================
 	"item_recipe_iron_talon"
 	{
-		"ItemCost"						"25"	
+		"ItemCost"						"2500"	
 	}
 
 	//=================================================================================================================
@@ -17719,6 +17719,7 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
+		"MaxLevel"							"7"
 		"AbilityCooldown"					"3"
 		"AbilityManaCost"					"0"
 		
@@ -17738,6 +17739,31 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_cost_scepter"			"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"0 5 8 11 14 17 20"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"0 0 9 12 15 18 21"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spellpower"			"0 0 0 6 9 12 15"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"0 0 0 0 10 15 20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_reduction_pct"	"0 0 0 0 0 10 15"
 			}
 		}
 	}

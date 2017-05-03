@@ -471,7 +471,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			PlayerResource:SetGold(player_id, HERO_RANDOM_GOLD, false)
 		else
 			PlayerResource:SetGold(player_id, HERO_INITIAL_GOLD, false)
-		end
+		end	
 
 		-- Randomize abilities
 		if IMBA_ABILITY_MODE_RANDOM_OMG then
@@ -489,6 +489,12 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Initialize innate hero abilities
 		InitializeInnateAbilities(hero)
 
+		-- Initialize Invoker's innate invoke buff
+		-- ***NOTE: This should be removed when InitiailizeInnateAbilities works, for now this is here to test functionality ***
+		if(hero:HasAbility("invoker_invoke")) then
+			hero:AddNewModifier(hero, hero:FindAbilityByName("invoker_invoke"),"modifier_imba_invoke_buff", {})
+		end
+		
 		-- Set up player color
 		PlayerResource:SetCustomPlayerColor(player_id, PLAYER_COLORS[player_id][1], PLAYER_COLORS[player_id][2], PLAYER_COLORS[player_id][3])
 
