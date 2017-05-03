@@ -17719,8 +17719,11 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
-		"AbilityCooldown"					"3"
-		"AbilityManaCost"					"0"
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"6 2 2 2 2 2 2"
+
+		"AbilityManaCost"					"60"
 		
 		"AbilitySpecial"
 		{
@@ -17732,12 +17735,37 @@
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"0"
+				"cooldown_scepter"			"2 0 0 0 0 0 0"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"mana_cost_scepter"			"0"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_intellect"			"0 0 9 12 15 18 21"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"magic_resistance_pct"		"0 0 0 10 14 18 22"
+			}	
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spellpower"			"0 0 0 0 8 12 16"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"spell_lifesteal"			"0 0 0 0 0 15 20"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"cooldown_reduction_pct"	"0 0 0 0 0 0 15"
 			}
 		}
 	}
