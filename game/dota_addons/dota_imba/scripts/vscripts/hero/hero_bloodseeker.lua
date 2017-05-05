@@ -470,14 +470,18 @@ imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
 function imba_bloodseeker_rupture:OnSpellStart(target)
 	local hTarget = target or self:GetCursorTarget()
 	local caster = self:GetCaster()
-	hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = self:GetSpecialValueFor("duration")})
-	EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
-	EmitSoundOn("hero_bloodseeker.rupture", hTarget)
+	if target then
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = 0.3})
+	else
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = self:GetSpecialValueFor("duration")})
+		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
+		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
+	end
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
 		ApplyDamage({victim = hTarget, attacker = caster, damage = hTarget:GetMaxHealth() * hpBurn / 100, damage_type = self:GetAbilityDamageType(), ability = self})
 		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_3") then 
-			caster:Heal(hpBurn, caster) 
+			caster:Heal(hpBurn, caster)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
