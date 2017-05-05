@@ -149,7 +149,9 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 			local damage = self:GetSpecialValueFor("damage")
 			target:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_silence", {duration = self:GetSpecialValueFor("silence_duration")})
 			if rupture then
-				rupture:OnSpellStart(target)
+				if rupture:GetLevel() >= 1 then
+					rupture:OnSpellStart(target)
+				end
 				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
 				local knockback =
 				{
