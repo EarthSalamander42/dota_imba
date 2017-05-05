@@ -837,7 +837,7 @@ function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchFlags()
 	return DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchType()
-	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING end
+	return DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BUILDING + DOTA_UNIT_TARGET_OTHER end
 
 function modifier_imba_faceless_void_chronosphere_aura:GetModifierAura()
 	return "modifier_imba_faceless_void_chronosphere_handler" end

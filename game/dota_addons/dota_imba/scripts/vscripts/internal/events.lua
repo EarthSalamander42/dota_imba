@@ -118,6 +118,14 @@ function GameMode:OnPlayerChat(keys)
 	-- Check for Blink-Colorcode
 	local blink_command = false
 	for str in string.gmatch(text, "%S+") do
+		if str == "-rangeoff" then
+			caster.norange = true
+		end
+		
+		if str == "-rangeon" then
+			caster.norange = nil
+		end
+		
 		if str == "-blink" then
 			blink_command = true
 		elseif blink_command == false then
@@ -139,6 +147,7 @@ function GameMode:OnPlayerChat(keys)
 			break
 		end
 	end
+	
 	if blink_command == true then
 		caster.blinkcolor = Vector ( color[1], color[2], color[3])
 		return nil

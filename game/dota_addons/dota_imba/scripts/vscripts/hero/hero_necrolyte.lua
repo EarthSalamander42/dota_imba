@@ -85,10 +85,8 @@ function modifier_imba_sadist_stack:OnCreated( params )
 		local modifier = self:GetParent():FindModifierByName("modifier_imba_sadist")
 		self.wasHero = params.wasHero
 		if params.wasHero ~= 0 then
-			print(params.wasHero)
 			multiplier = ability:GetTalentSpecialValueFor("hero_multiplier")
 			local stacks = modifier:GetStackCount() + 10
-			print(stacks)
 			modifier:SetStackCount(stacks)
 		else
 			modifier:IncrementStackCount()
