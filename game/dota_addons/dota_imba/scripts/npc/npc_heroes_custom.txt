@@ -1447,9 +1447,6 @@
 	{
 		"override_hero"				"npc_dota_hero_naga_siren"
 
-		"AttackDamageMin"			"33"
-		"AttackDamageMax"			"35"
-
 		//"Ability1"				"imba_naga_siren_mirror_image"
 		//"Ability2"				"imba_naga_siren_ensnare"
 		//"Ability3"				"imba_naga_siren_rip_tide"
@@ -1457,10 +1454,10 @@
 		//"Ability5"				"imba_naga_siren_song_of_the_siren_cancel"
 
 		"Ability10"					"special_bonus_mp_150"
-		"Ability11"					"special_bonus_attack_speed_15"
-		"Ability12"					"special_bonus_hp_175"
-		"Ability13"					"special_bonus_agility_14"
-		"Ability14"					"special_bonus_evasion_20"
+		"Ability11"					"special_bonus_hp_175"
+		"Ability12"					"special_bonus_attack_speed_15"
+		"Ability13"					"special_bonus_unique_naga_siren_2"
+		"Ability14"					"special_bonus_agility_14"
 		"Ability15"					"special_bonus_strength_8"
 		"Ability16"					"special_bonus_movement_speed_30"
 		"Ability17"					"special_bonus_unique_naga_siren"
@@ -1492,7 +1489,7 @@
 		"Ability10"					"special_bonus_attack_damage_20"
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_intelligence_12"
-		"Ability13"					"special_bonus_movement_speed_25"
+		"Ability13"					"special_bonus_unique_furion_2"
 		"Ability14"					"special_bonus_attack_speed_30"
 		"Ability15"					"special_bonus_armor_5"
 		"Ability16"					"special_bonus_respawn_reduction_40"
@@ -1767,7 +1764,7 @@
 
 		"Ability10"					"special_bonus_exp_boost_15"
 		"Ability11"					"special_bonus_hp_150"
-		"Ability12"					"special_bonus_strength_5"
+		"Ability12"					"special_bonus_unique_phoenix_3"
 		"Ability13"					"special_bonus_gold_income_25"
 		"Ability14"					"special_bonus_armor_6"
 		"Ability15"					"special_bonus_spell_amplify_8"
@@ -1784,10 +1781,6 @@
 	{
 		"override_hero"				"npc_dota_hero_puck"
 
-		"AttackDamageMin"			"25"
-
-		"MovementTurnRate"			"0.4"
-
 		//"Ability1"				"imba_puck_illusory_orb"
 		//"Ability2"				"imba_puck_waning_rift"
 		//"Ability3"				"imba_puck_phase_shift"
@@ -1799,7 +1792,7 @@
 		"Ability12"					"special_bonus_attack_damage_30"
 		"Ability13"					"special_bonus_movement_speed_20"
 		"Ability14"					"special_bonus_spell_amplify_6"
-		"Ability15"					"special_bonus_magic_resistance_15"
+		"Ability15"					"special_bonus_unique_puck_2"
 		"Ability16"					"special_bonus_gold_income_50"
 		"Ability17"					"special_bonus_unique_puck"
 
@@ -1905,8 +1898,6 @@
 	{
 		"override_hero"				"npc_dota_hero_razor"
 
-		"AttackRate"				"1.6"
-
 		//"Ability1"					"imba_razor_plasma_field"
 		//"Ability2"					"imba_razor_static_link"
 		//"Ability3"					"imba_razor_unstable_current"
@@ -1914,7 +1905,7 @@
 
 		"Ability10"					"special_bonus_movement_speed_15"
 		"Ability11"					"special_bonus_agility_13"
-		"Ability12"					"special_bonus_armor_5"
+		"Ability12"					"special_bonus_unique_razor_2"
 		"Ability13"					"special_bonus_cast_range_100"
 		"Ability14"					"special_bonus_hp_200"
 		"Ability15"					"special_bonus_attack_speed_30"
