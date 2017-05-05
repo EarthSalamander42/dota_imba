@@ -221,7 +221,7 @@ function modifier_imba_great_cleave:OnAttackLanded( params )
 		if (params.attacker == caster) and caster:IsRealHero() and (params.target:GetTeamNumber() ~= caster:GetTeamNumber()) and (not caster:HasModifier("modifier_imba_great_cleave_active")) and not caster:PassivesDisabled() then
 			local cleave_particle = "particles/units/heroes/hero_sven/sven_spell_great_cleave.vpcf"
 			local cleave_damage_pct = ability:GetSpecialValueFor("great_cleave_damage") / 100
-			local cleave_radius_start = ability:GetTalentSpecialValueFor("cleave_starting_width")
+			local cleave_radius_start = ability:GetSpecialValueFor("cleave_starting_width")
 			local cleave_radius_end = ability:GetTalentSpecialValueFor("cleave_ending_width")
 			local cleave_distance = ability:GetTalentSpecialValueFor("cleave_distance")
 			DoCleaveAttack( params.attacker, params.target, ability, (params.damage * cleave_damage_pct), cleave_radius_start, cleave_radius_end, cleave_distance, cleave_particle )

@@ -1576,9 +1576,11 @@
 		"BaseClass"					"npc_dota_venomancer_plagueward"
 		"Model"						"models/heroes/venomancer/venomancer_ward.vmdl"
 		"SoundSet"					"Hero_VenomancerWard"
+		"GameSoundsFile" 			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
 		"Level"						"1"
-		"ModelScale" 				"0.8"
+		"ModelScale" 				"0.6"
 		"SelectionGroup"			"Venomancer_Wards"
+		"UnitLabel"					"venomancer_ward"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1608,7 +1610,7 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"ProjectileCollisionSize"	"12"
 		"HealthBarOffset"			"170"
 
@@ -1616,24 +1618,24 @@
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 		"MovementSpeed"				"0"
-		"MovementTurnRate"			"1.0"
+		"MovementTurnRate"			"0.5"
 	
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"15"
-		"BountyGoldMin"				"8"
-		"BountyGoldMax"				"8"
+		"BountyXP"					"5"
+		"BountyGoldMin"				"5"
+		"BountyGoldMax"				"5"
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"2"
-		"StatusHealthRegen"			"0"
+		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
 		// Team
 		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
@@ -1656,11 +1658,13 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_venomancer_plagueward"
-		"Model"						"models/items/venomancer/deathbringer_ward/deathbringer_ward.vmdl"
+		"Model"						"models/items/venomancer/ward/ferocious_toxicants_embrace_ward/ferocious_toxicants_embrace_ward.vmdl"
 		"SoundSet"					"Hero_VenomancerWard"
+		"GameSoundsFile" 			"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
 		"Level"						"1"
-		"ModelScale" 				"1.25"
+		"ModelScale" 				"1.0"
 		"SelectionGroup"			"Venomancer_Wards"
+		"UnitLabel"					"venomancer_ward"
 
 		// Abilities
 		//----------------------------------------------------------------
@@ -1677,7 +1681,7 @@
 
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"30"
 		"AttackDamageMax"			"30"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
@@ -1690,7 +1694,7 @@
 
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
 		"ProjectileCollisionSize"	"20"
 		"HealthBarOffset"			"170"
 
@@ -1698,24 +1702,24 @@
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
 		"MovementSpeed"				"0"
-		"MovementTurnRate"			"1.0"
+		"MovementTurnRate"			"0.5"
 	
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyXP"					"30"
-		"BountyGoldMin"				"16"
-		"BountyGoldMax"				"16"
+		"BountyXP"					"20"
+		"BountyGoldMin"				"18"
+		"BountyGoldMax"				"18"
 
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"4"
-		"StatusHealthRegen"			"0"
+		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 
 		// Team
 		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
