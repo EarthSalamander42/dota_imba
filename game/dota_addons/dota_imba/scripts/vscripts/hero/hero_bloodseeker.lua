@@ -140,10 +140,30 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 		ParticleManager:ReleaseParticleIndex(bloodriteFX)
 		local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 		local overheal = caster:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_overheal", {duration = self:GetSpecialValueFor("overheal_duration")})
+		local rupture = false
+		if caster:HasScepter() and caster:HasAbility("imba_bloodseeker_rupture") then
+			rupture = caster:FindAbilityByName("imba_bloodseeker_rupture")
+		end
+		
 		for _,target in pairs(targets) do
 			local damage = self:GetSpecialValueFor("damage")
 			target:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_silence", {duration = self:GetSpecialValueFor("silence_duration")})
-			
+			if rupture then
+				rupture:OnSpellStart(target)
+				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
+				local knockback =
+				{
+					should_stun = false,
+					knockback_duration = 0.3,
+					duration = 0.3,
+					knockback_distance = distance,
+					knockback_height = 0,
+					center_x = vPos.x,
+					center_y = vPos.y,
+					center_z = vPos.z
+				}
+				target:AddNewModifier(caster, self, "modifier_knockback", knockback)
+			end
 			ApplyDamage({victim = target, attacker = self:GetCaster(), damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
 		end
 	end)
@@ -173,11 +193,6 @@ if IsServer() then
 					local cd = ability:GetCooldownTimeRemaining()
 					ability:EndCooldown()
 					ability:StartCooldown(cd * self.cdr)
-				end
-				if ability and ability:GetName() == "imba_bloodseeker_rupture" and self:GetCaster():HasScepter() then
-					local charges = self:GetCaster():FindModifierByName("")
-					charges:SetDuration(charges:GetRemainingTime()/2, true)
-					charges:Update()
 				end
 			end
 		end
@@ -450,21 +465,8 @@ end
 
 imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
 
-function imba_bloodseeker_rupture:OnInventoryContentsChanged()
-	-- Scepter stuff
-	-- if not self.hasScepter and self:GetCaster():HasScepter() then
-		-- self.hasScepter = true
-		-- self:GetParent():AddNewModifier(self:GetParent(), shield, "modifier_rupture_charges",
-		-- {
-			-- max_count = self:GetSpecialValueFor("max_charges_scepter"),
-			-- start_count = self:GetSpecialValueFor("max_charges_scepter"),
-			-- replenish_time = self:GetSpecialValueFor("cooldown_scepter")
-		-- })
-	-- end
-end
-
-function imba_bloodseeker_rupture:OnSpellStart()
-	local hTarget = self:GetCursorTarget()
+function imba_bloodseeker_rupture:OnSpellStart(target)
+	local hTarget = target or self:GetCursorTarget()
 	local caster = self:GetCaster()
 	hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = self:GetSpecialValueFor("duration")})
 	EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
@@ -555,90 +557,6 @@ end
 
 function modifier_imba_bloodseeker_rupture:GetEffectName()
 	return "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
-end
-
-
-LinkLuaModifier("modifier_rupture_charges", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_rupture_charges = class({})
-
-if IsServer() then
-    function modifier_rupture_charges:Update()
-        if self:GetDuration() == -1 then
-			local octarine = GetCooldownReduction(self:GetCaster())
-            self:SetDuration(self.kv.replenish_time*octarine, true)
-            self:StartIntervalThink(self.kv.replenish_time*octarine)
-        end
-		
-		if self:GetStackCount() == self.kv.max_count then
-			self:SetDuration(-1, true)
-		elseif self:GetStackCount() > self.kv.max_count then
-			self:SetDuration(-1, true)
-			self:SetStackCount(self.kv.max_count)
-		end
-
-        if self:GetStackCount() == 0 then
-            self:GetAbility():StartCooldown(self:GetRemainingTime())
-        end
-    end
-
-    function modifier_rupture_charges:OnCreated(kv)
-        self:SetStackCount(kv.start_count or kv.max_count)
-        self.kv = kv
-
-        if kv.start_count and kv.start_count ~= kv.max_count then
-            self:Update()
-        end
-    end
-
-    function modifier_rupture_charges:DeclareFunctions()
-        local funcs = {
-            MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
-        }
-
-        return funcs
-    end
-
-    function modifier_rupture_charges:OnAbilityFullyCast(params)
-        if params.unit == self:GetParent() then
-            local ability = params.ability
-            if params.ability == self:GetAbility() then
-                self:DecrementStackCount()
-				ability:EndCooldown()
-                self:Update()
-			elseif params.ability:GetName() == "item_refresher" and self:GetStackCount() < self.kv.max_count then
-                self:IncrementStackCount()
-                self:Update()
-            end
-        end
-
-        return 0
-    end
-
-    function modifier_rupture_charges:OnIntervalThink()
-        local stacks = self:GetStackCount()
-		local octarine = GetCooldownReduction(self:GetCaster())
-        if stacks < self.kv.max_count then
-            self:SetDuration(self.kv.replenish_time*octarine, true)
-            self:IncrementStackCount()
-
-            if stacks == self.kv.max_count - 1 then
-                self:SetDuration(-1, true)
-                self:StartIntervalThink(-1)
-            end
-        end
-    end
-end
-
-function modifier_rupture_charges:DestroyOnExpire()
-    return false
-end
-
-function modifier_rupture_charges:IsPurgable()
-    return false
-end
-
-function modifier_rupture_charges:RemoveOnDeath()
-    return false
 end
 
 --------------------------------------------------------------------------------
