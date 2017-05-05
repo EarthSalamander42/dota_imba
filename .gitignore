@@ -17,6 +17,8 @@ game/dota_addons/*
 # Cache crap that Valve autogenerates
 *.bin
 *.cfg
+*.soc
+*.tmp
 
 # Compiled formats
 *.vpcf_c
