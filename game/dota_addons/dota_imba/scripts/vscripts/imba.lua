@@ -709,6 +709,15 @@ function GameMode:OrderFilter( keys )
 	if unit:HasModifier("modifier_imba_tidebringer_manual") then
 		unit:RemoveModifierByName("modifier_imba_tidebringer_manual")
 	end
+
+	-- Techies' Focused Detonate cast-handlign
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
+        local ability = EntIndexToHScript(keys.entindex_ability)        
+        
+        if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
+            unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+        end
+    end
 	
 	return true
 end

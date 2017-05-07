@@ -2323,34 +2323,23 @@
 	//=================================================================================================================
 	"npc_imba_hero_techies"
 	{
-		"override_hero"				"npc_dota_hero_techies"
+		"override_hero"				"npc_dota_hero_techies"		
 
-		"ArmorPhysical"				"6"
+		"Ability1"					"imba_techies_proximity_mine"
+		"Ability2"					"imba_techies_stasis_trap"
+		"Ability3"					"imba_techies_blast_off"
+		"Ability4"					"imba_techies_focused_detonate"
+		"Ability5"					"imba_techies_minefield_sign"
+		"Ability6"					"imba_techies_remote_mine"
 
-		"AttackDamageMin"			"1"
-		"AttackDamageMax"			"3"
-
-		"AttackAcquisitionRange"	"800"
-		"AttackRange"				"750"
-
-		"AttributeBaseIntelligence"	"25"
-		"AttributeIntelligenceGain"	"3.0"
-
-		//"Ability1"					"imba_techies_land_mines"
-		//"Ability2"					"imba_techies_stasis_trap"
-		//"Ability3"					"imba_techies_suicide"
-		//"Ability4"					"imba_techies_focused_detonate"
-		//"Ability5"					"imba_techies_minefield_sign"
-		//"Ability6"					"imba_techies_remote_mines"
-
-		"Ability10"					"special_bonus_movement_speed_20"
-		"Ability11"					"special_bonus_mp_regen_2"
-		"Ability12"					"special_bonus_exp_boost_25"
-		"Ability13"					"special_bonus_cast_range_200"
-		"Ability14"					"special_bonus_gold_income_40"
-		"Ability15"					"special_bonus_respawn_reduction_60"
-		"Ability16"					"special_bonus_cooldown_reduction_15"
-		"Ability17"					"special_bonus_unique_techies"
+		"Ability10"					"special_bonus_imba_techies_1"
+		"Ability11"					"special_bonus_imba_techies_2"
+		"Ability12"					"special_bonus_imba_techies_3"
+		"Ability13"					"special_bonus_imba_techies_4"
+		"Ability14"					"special_bonus_imba_techies_5"
+		"Ability15"					"special_bonus_imba_techies_6"
+		"Ability16"					"special_bonus_imba_techies_7"
+		"Ability17"					"special_bonus_imba_techies_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_techies/techies_base_attack.vpcf"
 	}
