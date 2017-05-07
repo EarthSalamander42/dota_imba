@@ -27925,6 +27925,7 @@
 		"AbilityTextureName"			"bloodseeker_blood_bath"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"MaxLevel"						"7"
+		"HasScepterUpgrade"				"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -28089,14 +28090,12 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"FightRecapLevel"				"2"
 		"MaxLevel"						"6"
-		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
 			"soundfile"			"sounds/weapons/hero/bloodseeker/rupture.vsnd"
 			"soundfile"			"sounds/weapons/hero/bloodseeker/rupture_cast.vsnd"
-
 		}
 
 		// Casting
@@ -28152,27 +28151,17 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_charges_scepter"		"2"
+				"damage_initial_pct"		"75"
 			}
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"	"40"
+				"var_type"					"FIELD_INTEGER"
+				"attack_damage"				"20 35 50 60 70 80"
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_initial_pct"	"75"
-			}
-			"09"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_damage"			"20 35 50 60 70 80"
-			}
-			"10"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_damage"			"40 70 100 120 140 160"
+				"var_type"					"FIELD_INTEGER"
+				"cast_damage"				"40 70 100 120 140 160"
 			}
 		}
 	}
