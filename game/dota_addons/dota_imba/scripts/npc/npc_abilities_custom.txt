@@ -12666,7 +12666,6 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -30041,15 +30040,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"LinkedAbility"
-		{
-			"01"
-			{
-				"imba_general_hero_portrait"
-			}
-		}
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
