@@ -63,7 +63,7 @@ LinkLuaModifier("modifier_imba_bane_fiends_grip",               "hero/hero_bane"
 
 
 -- Generic Subroutines to make code easier (for me at least) to read
-local talentnamescheme = "special_bonus_unique_bane_"
+local talentnamescheme = "special_bonus_imba_bane_"
 
 
 

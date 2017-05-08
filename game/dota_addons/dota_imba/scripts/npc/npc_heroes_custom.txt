@@ -160,14 +160,14 @@
 		"Ability4"					"imba_bane_nightmare_end"
 		"Ability5"					"imba_bane_fiends_grip"
 
-		"Ability10"					"special_bonus_unique_bane_1"
-		"Ability11"					"special_bonus_unique_bane_2"
-		"Ability12"					"special_bonus_unique_bane_3"
-		"Ability13"					"special_bonus_unique_bane_4"
-		"Ability14"					"special_bonus_unique_bane_5"
-		"Ability15"					"special_bonus_unique_bane_6"
-		"Ability16"					"special_bonus_unique_bane_7"
-		"Ability17"					"special_bonus_unique_bane_8"
+		"Ability10"					"special_bonus_imba_bane_1"
+		"Ability11"					"special_bonus_imba_bane_2"
+		"Ability12"					"special_bonus_imba_bane_3"
+		"Ability13"					"special_bonus_imba_bane_4"
+		"Ability14"					"special_bonus_imba_bane_5"
+		"Ability15"					"special_bonus_imba_bane_6"
+		"Ability16"					"special_bonus_imba_bane_7"
+		"Ability17"					"special_bonus_imba_bane_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_bane/bane_projectile.vpcf"
 	}
@@ -240,14 +240,14 @@
 		"Ability3"			"imba_bloodseeker_thirst"
 		"Ability4"			"imba_bloodseeker_rupture"
 		
-		"Ability10"			"special_bonus_unique_bloodseeker_1"
-		"Ability11"			"special_bonus_unique_bloodseeker_2"
-		"Ability12"			"special_bonus_unique_bloodseeker_3"
-		"Ability13"			"special_bonus_unique_bloodseeker_4"
-		"Ability14"			"special_bonus_unique_bloodseeker_5"
-		"Ability15"			"special_bonus_unique_bloodseeker_6"
-		"Ability16"			"special_bonus_unique_bloodseeker_7"
-		"Ability17"			"special_bonus_unique_bloodseeker_8"
+		"Ability10"			"special_bonus_imba_bloodseeker_1"
+		"Ability11"			"special_bonus_imba_bloodseeker_2"
+		"Ability12"			"special_bonus_imba_bloodseeker_3"
+		"Ability13"			"special_bonus_imba_bloodseeker_4"
+		"Ability14"			"special_bonus_imba_bloodseeker_5"
+		"Ability15"			"special_bonus_imba_bloodseeker_6"
+		"Ability16"			"special_bonus_imba_bloodseeker_7"
+		"Ability17"			"special_bonus_imba_bloodseeker_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -265,14 +265,14 @@
 		"Ability4"					"imba_bounty_hunter_headhunter"
 		"Ability5"					"imba_bounty_hunter_track"
 
-		"Ability10"					"special_bonus_unique_bounty_hunter_1"
-		"Ability11"					"special_bonus_unique_bounty_hunter_2"
-		"Ability12"					"special_bonus_unique_bounty_hunter_3"
-		"Ability13"					"special_bonus_unique_bounty_hunter_4"
-		"Ability14"					"special_bonus_unique_bounty_hunter_5"
-		"Ability15"					"special_bonus_unique_bounty_hunter_6"
-		"Ability16"					"special_bonus_unique_bounty_hunter_7"
-		"Ability17"					"special_bonus_unique_bounty_hunter_8"
+		"Ability10"					"special_bonus_imba_bounty_hunter_1"
+		"Ability11"					"special_bonus_imba_bounty_hunter_2"
+		"Ability12"					"special_bonus_imba_bounty_hunter_3"
+		"Ability13"					"special_bonus_imba_bounty_hunter_4"
+		"Ability14"					"special_bonus_imba_bounty_hunter_5"
+		"Ability15"					"special_bonus_imba_bounty_hunter_6"
+		"Ability16"					"special_bonus_imba_bounty_hunter_7"
+		"Ability17"					"special_bonus_imba_bounty_hunter_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -525,14 +525,14 @@
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"					"imba_dazzle_weave"
 
-		"Ability10"					"special_bonus_unique_dazzle_1"
-		"Ability11"					"special_bonus_unique_dazzle_2"
-		"Ability12"					"special_bonus_unique_dazzle_3"
-		"Ability13"					"special_bonus_unique_dazzle_4"
-		"Ability14"					"special_bonus_unique_dazzle_5"
-		"Ability15"					"special_bonus_unique_dazzle_6"
-		"Ability16"					"special_bonus_unique_dazzle_7"
-		"Ability17"					"special_bonus_unique_dazzle_8"
+		"Ability10"					"special_bonus_imba_dazzle_1"
+		"Ability11"					"special_bonus_imba_dazzle_2"
+		"Ability12"					"special_bonus_imba_dazzle_3"
+		"Ability13"					"special_bonus_imba_dazzle_4"
+		"Ability14"					"special_bonus_imba_dazzle_5"
+		"Ability15"					"special_bonus_imba_dazzle_6"
+		"Ability16"					"special_bonus_imba_dazzle_7"
+		"Ability17"					"special_bonus_imba_dazzle_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
@@ -851,8 +851,7 @@
 		"Ability3"					"imba_faceless_void_time_lock"
 		"Ability4"					"imba_faceless_void_timelord"
 		"Ability5"					"imba_faceless_void_chronosphere"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_faceless_void_1"
 		"Ability11"					"special_bonus_imba_faceless_void_2"
 		"Ability12"					"special_bonus_imba_faceless_void_3"
@@ -1063,7 +1062,6 @@
 		"Ability5"					"imba_kunkka_ebb_and_flow"
 		"Ability6"					"imba_kunkka_ghostship"
 
-		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_kunkka_1"
 		"Ability11"					"special_bonus_imba_kunkka_2"
 		"Ability12"					"special_bonus_imba_kunkka_3"
@@ -1145,8 +1143,7 @@
 		"Ability3"					"imba_lich_dark_ritual"
 		"Ability4"					"imba_lich_cold_front"
 		"Ability5"					"imba_lich_chain_frost"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_lich_1"
 		"Ability11"					"special_bonus_imba_lich_2"
 		"Ability12"					"special_bonus_imba_lich_3"
@@ -1222,8 +1219,7 @@
 		"Ability2"					"imba_lion_hex"				
 		"Ability3"					"imba_lion_mana_drain"			
 		"Ability4"					"imba_lion_finger_of_death"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_lion_1"
 		"Ability11"					"special_bonus_imba_lion_2"
 		"Ability12"					"special_bonus_imba_lion_3"
@@ -1370,8 +1366,7 @@
 		"Ability2"					"imba_mirana_arrow"
 		"Ability3"					"imba_mirana_leap"		
 		"Ability4"					"imba_mirana_moonlight_shadow"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_mirana_1"
 		"Ability11"					"special_bonus_imba_mirana_2"
 		"Ability12"					"special_bonus_imba_mirana_3"
@@ -1503,13 +1498,9 @@
 	//=================================================================================================================
 	"npc_imba_hero_necrolyte"
 	{
-		"override_hero"				"npc_dota_hero_necrolyte"
-
-		"ArmorPhysical"				"1"
+		"override_hero"				"npc_dota_hero_necrolyte"		
 		
-		"AbilityLayout"				"5"
-
-		"AttributeBaseIntelligence"	"22"
+		"AbilityLayout"				"5"		
 
 		"Ability1"					"imba_necrolyte_death_pulse"
 		"Ability2"					"imba_necrolyte_ghost_shroud"
@@ -1572,8 +1563,7 @@
 		"Ability4"					"nyx_assassin_burrow"
 		"Ability5"					"nyx_assassin_unburrow"
 		"Ability6"					"imba_nyx_assassin_vendetta"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_nyx_assassin_1"
 		"Ability11"					"special_bonus_imba_nyx_assassin_2"
 		"Ability12"					"special_bonus_imba_nyx_assassin_3"
@@ -1804,11 +1794,7 @@
 	//=================================================================================================================
 	"npc_imba_hero_pudge"
 	{
-		"override_hero"				"npc_dota_hero_pudge"
-
-		"ModelScale"				"1.0"
-
-		"MovementTurnRate"			"1.0"
+		"override_hero"				"npc_dota_hero_pudge"				
 
 		"AbilityLayout"				"6"
 
@@ -1839,10 +1825,6 @@
 	"npc_imba_hero_pugna"
 	{
 		"override_hero"				"npc_dota_hero_pugna"
-
-		"ModelScale"				"0.69"
-
-		"AttributeIntelligenceGain"	"5.0"
 
 		"AbilityLayout"				"5"
 
@@ -2065,11 +2047,7 @@
 	//=================================================================================================================
 	"npc_imba_hero_silencer"
 	{
-		"override_hero"				"npc_dota_hero_silencer"
-
-		"AttackRate"				"1.5"
-
-		"AttributeIntelligenceGain"	"3.0"
+		"override_hero"				"npc_dota_hero_silencer"		
 
 		"AbilityLayout"				"5"
 
@@ -2078,8 +2056,7 @@
 		"Ability3"					"imba_silencer_last_word"
 		"Ability4"					"imba_silencer_arcane_supremacy"
 		"Ability5"					"imba_silencer_global_silence"
-
-		"Ability9"					"imba_unlimited_level_powerup"
+		
 		"Ability10"					"special_bonus_imba_silencer_1"
 		"Ability11"					"special_bonus_imba_silencer_2"
 		"Ability12"					"special_bonus_imba_silencer_3"
@@ -2290,13 +2267,7 @@
 	//=================================================================================================================
 	"npc_imba_hero_sven"
 	{
-		"override_hero"				"npc_dota_hero_sven"
-
-		"ModelScale"				".99"
-
-		"ArmorPhysical"				"3"
-
-		"AttackRange"				"200"
+		"override_hero"				"npc_dota_hero_sven"		
 		
 		"AbilityLayout"				"5"
 
@@ -2488,34 +2459,22 @@
 	//=================================================================================================================
 	"npc_imba_hero_tiny"
 	{
-		"override_hero"				"npc_dota_hero_tiny"
+		"override_hero"				"npc_dota_hero_tiny"		
 
-		"ModelScale"				"1.6"
+		"Ability1"			"imba_tiny_avalanche"				// Ability 1
+		"Ability2"			"imba_tiny_toss"
+		"Ability3"			"imba_tiny_craggy_exterior"
+		"Ability4"			"imba_tiny_rolling_stone"
+		"Ability5"			"imba_tiny_grow"
 
-		"AttackRate"				"1.6"
-
-		"AttributeBaseAgility"		"15"
-		"AttributeAgilityGain"		"1.5"
-
-		"RingRadius"				"130"
-		"HealthBarOffset"			"350"
-
-		"AttackRange"				"250"
-
-		//"Ability1"			"imba_tiny_avalanche"				// Ability 1
-		//"Ability2"			"imba_tiny_toss"
-		//"Ability3"			"imba_tiny_craggy_exterior"
-		//"Ability4"			"imba_tiny_rolling_stone"
-		//"Ability5"			"imba_tiny_grow"
-
-		"Ability10"			"special_bonus_strength_5"
-		"Ability11"			"special_bonus_intelligence_8"
-		"Ability12"			"special_bonus_attack_damage_50"
-		"Ability13"			"special_bonus_movement_speed_20"
-		"Ability14"			"special_bonus_attack_speed_30"
-		"Ability15"			"special_bonus_mp_regen_6"
-		"Ability16"			"special_bonus_cooldown_reduction_15"
-		"Ability17"			"special_bonus_unique_tiny"
+		"Ability10"			"special_bonus_imba_tiny_1"
+		"Ability11"			"special_bonus_imba_tiny_2"
+		"Ability12"			"special_bonus_imba_tiny_3"
+		"Ability13"			"special_bonus_imba_tiny_4"
+		"Ability14"			"special_bonus_imba_tiny_5"
+		"Ability15"			"special_bonus_imba_tiny_6"
+		"Ability16"			"special_bonus_imba_tiny_7"
+		"Ability17"			"special_bonus_imba_tiny_8"
 
 		"ProjectileSpeed"			"900"
 	}
@@ -2560,17 +2519,7 @@
 	//=================================================================================================================
 	"npc_imba_hero_troll_warlord"
 	{
-		"override_hero"				"npc_dota_hero_troll_warlord"
-
-		"AttackRate"				"1.55"
-
-		"StatusHealth"				"280"
-
-		"MovementSpeed"				"335"
-
-		"ArmorPhysical"				"2"
-
-		"AbilityLayout"				"5"
+		"override_hero"				"npc_dota_hero_troll_warlord"		
 
 		"Ability1"					"imba_troll_warlord_whirling_axes_melee"
 		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
@@ -2753,7 +2702,7 @@
 		"Ability4"					"imba_vengefulspirit_rancor"
 		"Ability5"					"imba_vengefulspirit_swap_back"
 		"Ability6"					"imba_vengefulspirit_nether_swap"
-		"Ability7"					"vengefulspirit_nether_swap"
+		//"Ability7"					"vengefulspirit_nether_swap"
 
 		"Ability10"					"special_bonus_imba_vengefulspirit_1"
 		"Ability11"					"special_bonus_imba_vengefulspirit_2"

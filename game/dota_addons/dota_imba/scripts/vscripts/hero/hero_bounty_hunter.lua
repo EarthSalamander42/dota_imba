@@ -110,10 +110,10 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		local pull_duration = ability:GetSpecialValueFor("pull_duration")	
 
 		-- #3 Talent - Shuriken Damage increase
-		damage = damage + caster:FindTalentValue("special_bonus_unique_bounty_hunter_3")
+		damage = damage + caster:FindTalentValue("special_bonus_imba_bounty_hunter_3")
 
 		-- #5 Talent - Shuriken bounce radius becomes global		
-		bounce_radius = bounce_radius + caster:FindTalentValue("special_bonus_unique_bounty_hunter_5")	
+		bounce_radius = bounce_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_5")	
 
 		-- Mark target as hit by the correct shuriken
 		if first_shuriken == 1 then
@@ -336,7 +336,7 @@ function imba_bounty_hunter_jinada:GetCooldown(level)
 	local cd = self.BaseClass.GetCooldown(self, level)
 
 	-- #7 Talent cd reduction	
-	cd = cd - caster:FindTalentValue("special_bonus_unique_bounty_hunter_7")
+	cd = cd - caster:FindTalentValue("special_bonus_imba_bounty_hunter_7")
 	return cd	
 end
 
@@ -450,8 +450,8 @@ function modifier_imba_jinada_slow_debuff:OnCreated()
 		self.as_slow = self.ability:GetSpecialValueFor("as_slow")		
 		
 		-- #2 Talent: Jinada's slow increase
-		 self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_unique_bounty_hunter_2")
-		 self.as_slow = self.as_slow + self.caster:FindTalentValue("special_bonus_unique_bounty_hunter_2")
+		 self.ms_slow_pct = self.ms_slow_pct + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
+		 self.as_slow = self.as_slow + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_2")
 end
 
 function modifier_imba_jinada_slow_debuff:DeclareFunctions()
@@ -654,7 +654,7 @@ function modifier_imba_shadow_walk_invisibility:OnCreated()
 	self.true_sight_radius = self.ability:GetSpecialValueFor("true_sight_radius") 	
 	
 	-- #1 Talent: Shadow Walk true sight radius increase
-	self.true_sight_radius = self.true_sight_radius + self.caster:FindTalentValue("special_bonus_unique_bounty_hunter_1")
+	self.true_sight_radius = self.true_sight_radius + self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_1")
 
 end
 
@@ -802,7 +802,7 @@ function imba_bounty_hunter_track:GetCooldown(level)
 	local caster = self:GetCaster()
 
 	-- #4 Talent: Track cooldown decrease
-	return self.BaseClass.GetCooldown(self, level) - caster:FindTalentValue("special_bonus_unique_bounty_hunter_4")
+	return self.BaseClass.GetCooldown(self, level) - caster:FindTalentValue("special_bonus_imba_bounty_hunter_4")
 end
 
 function imba_bounty_hunter_track:OnSpellStart()
@@ -821,7 +821,7 @@ function imba_bounty_hunter_track:OnSpellStart()
 		local duration = ability:GetSpecialValueFor("duration")
 
 		-- #6 Talent: Track duration increase
-		duration = duration + caster:FindTalentValue("special_bonus_unique_bounty_hunter_6")
+		duration = duration + caster:FindTalentValue("special_bonus_imba_bounty_hunter_6")
 
 		-- Cast responses
 		local cast_response_chance = 10
@@ -932,7 +932,7 @@ end
 
 function modifier_imba_track_debuff:IsPurgable()	
 	-- #8 Talent - unpurgable track
-	local purge_value = self.caster:FindTalentValue("special_bonus_unique_bounty_hunter_8")
+	local purge_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
 	if purge_value == 1 then
 	 	return false
 	end
@@ -946,7 +946,7 @@ end
 
 function modifier_imba_track_debuff:IsHidden()	
 	-- #8 Talent - unpurgable track
-	local hidden_value = self.caster:FindTalentValue("special_bonus_unique_bounty_hunter_8")
+	local hidden_value = self.caster:FindTalentValue("special_bonus_imba_bounty_hunter_8")
 	if hidden_value == 1 then
 		return true
 	end

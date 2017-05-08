@@ -4098,6 +4098,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_aphotic_shield"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4120,6 +4128,15 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_aphotic_shield"
+			}
+		}
+		    
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4144,6 +4161,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_mist_coil"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4166,6 +4191,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_curse_of_avernus"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4195,6 +4228,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_aphotic_shield"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4217,6 +4258,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_over_channel"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4241,6 +4290,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_borrowed_time"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4263,6 +4320,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_abaddon_borrowed_time"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4516,6 +4581,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_blink"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4538,6 +4611,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_spell_shield"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4562,6 +4643,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_blink"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4584,6 +4673,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_mana_break"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4608,6 +4705,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_blink"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4630,6 +4735,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_mana_break"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4654,6 +4767,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_mana_void"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -4676,6 +4797,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_antimage_mana_void"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -4846,7 +4975,8 @@
 		"SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"
 		"AbilityTextureName"            "axe_counter_helix"
-				"MaxLevel"						"7"
+		"MaxLevel"						"7"
+
 		// Cast
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"350"
@@ -4899,7 +5029,8 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"axe_culling_blade"
-				"MaxLevel"						"6"
+		"MaxLevel"						"6"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
@@ -7685,7 +7816,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cooldown"								"12 11 10 9 8 7 6"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_5"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_5"
 			}
 			"02"
 			{
@@ -7770,7 +7901,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"mana_cost"								"150"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_1"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_1"
 			}
 			"02"
 			{
@@ -7786,7 +7917,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"nothl_protection_cooldown"				"90 90 90 90 70 50 30"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_7"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_7"
 			}
 		}
 	}
@@ -7830,7 +7961,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bounce_distance"						"475"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_2"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_2"
 			}
 			"02"
 			{
@@ -7841,13 +7972,13 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage"								"80 100 120 140 160 180 200"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_4"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_4"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage_radius"							"185"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_3"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_3"
 			}
 			"05"
 			{
@@ -7912,7 +8043,7 @@
 			{
 				"var_type"								"FIELD_INTEGER"
 				"cooldown"								"40"
-				"LinkedSpecialBonus"					"special_bonus_unique_dazzle_5"
+				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_5"
 			}
 			"02"
 			{
@@ -9786,6 +9917,19 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_fire_breath"
+			}
+
+			"02"
+			{
+				"imba_jakiro_ice_breath"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -9808,6 +9952,19 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_fire_breath"
+			}
+
+			"02"
+			{
+				"imba_jakiro_ice_breath"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9837,6 +9994,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_ice_path"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -9859,6 +10024,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_liquid_fire"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9883,6 +10056,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_ice_path"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -9905,6 +10086,19 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_fire_breath"
+			}
+
+			"02"
+			{
+				"imba_jakiro_ice_breath"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -9929,6 +10123,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_ice_path"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -9951,6 +10153,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_jakiro_macropyre"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10372,6 +10582,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_dance"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10394,6 +10612,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_healing_ward"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10418,6 +10644,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_fury"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10440,6 +10674,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_fury"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10464,6 +10706,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_dance"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10486,6 +10736,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_fury"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -10510,6 +10768,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_fury"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10532,6 +10798,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_juggernaut_blade_dance"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11120,6 +11394,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_ebb_and_flow"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -11142,6 +11424,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_torrent"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11166,6 +11456,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_torrent"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -11188,6 +11486,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_x_marks_the_spot"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -11212,6 +11518,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_ebb_and_flow"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -11235,6 +11549,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_tidebringer"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -11257,6 +11579,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_kunkka_ghostship"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12114,6 +12444,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_dragon_slave"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12136,6 +12474,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_light_strike_array"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12160,6 +12506,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_dragon_slave"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12183,6 +12537,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_light_strike_array"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12196,7 +12558,7 @@
 	}
 
 	//=================================================================================================================
-	// Lina Talent 5 (Level 30): Additional move-/attack speed per Fiery Soul stack
+	// Lina Talent 5 (Level 30): Additional move/attack speed per Fiery Soul stack
 	//=================================================================================================================
 	"special_bonus_imba_lina_5"
 	{
@@ -12205,6 +12567,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_fiery_soul"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -12234,6 +12604,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_laguna_blade"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12257,6 +12635,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lina_fiery_soul"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -12279,6 +12665,7 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13638,6 +14025,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_shockwave"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -13661,6 +14056,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_reverse_polarity"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -13683,6 +14086,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_empower"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13717,6 +14128,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_skewer"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -13740,6 +14159,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_shockwave"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -13762,6 +14189,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_empower"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -13791,6 +14226,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_reverse_polarity"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -13813,6 +14256,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_magnataur_reverse_polarity"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14560,6 +15011,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_death_pulse"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -14582,6 +15041,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_sadist"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14606,6 +15073,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_death_pulse"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -14628,6 +15103,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_heartstopper_aura"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14652,6 +15135,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_ghost_shroud"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -14674,6 +15165,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_sadist"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -14698,6 +15197,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_reapers_scythe"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -14720,6 +15227,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_necrolyte_heartstopper_aura"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18724,6 +19239,19 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_sonic_wave"
+			}
+
+			"02"
+			{
+				"imba_queenofpain_delightful_torment"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18746,6 +19274,19 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_blink"
+			}
+
+			"02"
+			{
+				"imba_queenofpain_scream_of_pain"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18770,6 +19311,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_scream_of_pain"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18792,6 +19341,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_sonic_wave"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18816,6 +19373,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_scream_of_pain"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18838,6 +19403,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_sonic_wave"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -18862,6 +19435,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_shadow_strike"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -18884,6 +19465,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_queenofpain_blink"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20308,6 +20897,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_storm_bolt"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20330,6 +20927,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_great_cleave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20354,6 +20959,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_warcry"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20376,6 +20989,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_gods_strength"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20400,6 +21021,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_storm_bolt"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20422,6 +21051,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_great_cleave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -20446,6 +21083,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_warcry"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -20468,6 +21113,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedSpecial"
+		{
+			"01"
+			{
+				"imba_sven_gods_strength"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23541,6 +24194,15 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_rearm"
+			}
+			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23563,6 +24225,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_heat_seeking_missile"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23587,6 +24257,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_march_of_the_machines"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23609,6 +24287,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_heat_seeking_missile"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23633,6 +24319,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_march_of_the_machines"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23655,6 +24349,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_rearm"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23679,6 +24381,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_technomancy"
+			}			
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -23701,6 +24411,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tinker_rearm"
+			}			
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24111,6 +24829,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_magic_missile"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24134,6 +24860,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_nether_swap"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24156,6 +24890,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_command_aura"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24185,6 +24927,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_rancor"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24213,6 +24963,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_magic_missile"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24235,6 +24993,19 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_nether_swap"
+			}
+
+			"02"
+			{
+				"imba_vengefulspirit_magic_missile"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24296,6 +25067,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_vengefulspirit_command_aura"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24711,6 +25490,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_venomous_gale"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24733,6 +25520,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_poison_sting"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24757,6 +25552,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_toxicity"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24779,6 +25582,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_poison_nova"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24803,6 +25614,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_plague_ward"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24825,6 +25644,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_poison_sting"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -24849,6 +25676,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_venomous_gale"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -24871,6 +25706,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_venomancer_plague_ward"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -26627,7 +27470,7 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"attackspeed_reduction"		"-1"
-				"LinkedSpecialBonus"		"special_bonus_unique_tiny_8"
+				"LinkedSpecialBonus"		"special_bonus_imba_tiny_8"
 			}
 			"03"
 			{
@@ -26721,7 +27564,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"avalanche_damage"			"100 180 260 295 330 365 400"
-				"LinkedSpecialBonus"		"special_bonus_unique_tiny_6"
+				"LinkedSpecialBonus"		"special_bonus_imba_tiny_6"
 			}
 			"07"
 			{
@@ -26732,7 +27575,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"passive_ticks"				"1"
-				"LinkedSpecialBonus"		"special_bonus_unique_tiny_1"
+				"LinkedSpecialBonus"		"special_bonus_imba_tiny_1"
 			}
 			////// WEIRD INTERACTION
 			"09"
@@ -26897,7 +27740,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_reduction"			"-5 -10 -15 -20 -25 -30 -35"
-				"LinkedSpecialBonus"		"special_bonus_unique_tiny_5"
+				"LinkedSpecialBonus"		"special_bonus_imba_tiny_5"
 			}
 			"06"
 			{
@@ -27417,13 +28260,21 @@
 	//=================================================================================================================
 	// Talent: Bonus Passive Avalanche Instance
 	//=================================================================================================================
-	"special_bonus_unique_tiny_1"
+	"special_bonus_imba_tiny_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_avalanche"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27432,20 +28283,28 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"1"
+				"value"						"1"
 			}
 		}
 	}
 	//=================================================================================================================
 	// Talent: 10 Rolling Stone Stacks
 	//=================================================================================================================
-	"special_bonus_unique_tiny_2"
+	"special_bonus_imba_tiny_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_rolling_stone"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27461,13 +28320,21 @@
 	//=================================================================================================================
 	// Talent: Avalanche Projectile
 	//=================================================================================================================
-	"special_bonus_unique_tiny_3"
+	"special_bonus_imba_tiny_3"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_avalanche"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27476,20 +28343,28 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"value"				"400"
+				"value"						"400"
 			}
 		}
 	}
 	//=================================================================================================================
 	// Talent: AoE Craggy
 	//=================================================================================================================
-	"special_bonus_unique_tiny_4"
+	"special_bonus_imba_tiny_4"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_craggy_exterior"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27505,13 +28380,22 @@
 	//=================================================================================================================
 	// Talent: Bonus Craggy Damage Reduction
 	//=================================================================================================================
-	"special_bonus_unique_tiny_5"
+	"special_bonus_imba_tiny_5"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_craggy_exterior"
+			}
+		}
+
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27527,13 +28411,22 @@
 	//=================================================================================================================
 	// Talent: Bonus Total Avalanche Damage
 	//=================================================================================================================
-	"special_bonus_unique_tiny_6"
+	"special_bonus_imba_tiny_6"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_avalanche"
+			}
+		}
+
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27549,13 +28442,21 @@
 	//=================================================================================================================
 	// Talent: AoE Toss Grab
 	//=================================================================================================================
-	"special_bonus_unique_tiny_7"
+	"special_bonus_imba_tiny_7"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_toss"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27571,13 +28472,21 @@
 	//=================================================================================================================
 	// Talent: Rolling Stone Attackspeed Debuff Removal
 	//=================================================================================================================
-	"special_bonus_unique_tiny_8"
+	"special_bonus_imba_tiny_8"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_tiny_rolling_stone"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27771,7 +28680,7 @@
 			{
 				"var_type"						"FIELD_FLOAT"
 				"cooldown_reduction"			"25"
-				"LinkedSpecialBonus"			"special_bonus_unique_bloodseeker_2"
+				"LinkedSpecialBonus"			"special_bonus_imba_bloodseeker_2"
 			}
 		}
 	}
@@ -27835,7 +28744,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"atk_buff_duration"			"5"
-				"LinkedSpecialBonus"		"special_bonus_unique_bloodseeker_4"
+				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_4"
 			}
 			"09"
 			{
@@ -27915,7 +28824,7 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"damage_cap_amount"			"1300"
-				"LinkedSpecialBonus"		"special_bonus_unique_bloodseeker_6"
+				"LinkedSpecialBonus"		"special_bonus_imba_bloodseeker_6"
 			}
 			"04"
 			{
@@ -27948,13 +28857,21 @@
 	//=================================================================================================================
 	// Bane Talents
 	//=================================================================================================================
-	"special_bonus_unique_bane_1"	// Brain Sap Debuff Duration Increase
+	"special_bonus_imba_bane_1"	// Brain Sap Debuff Duration Increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_brain_sap"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27968,13 +28885,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_2"	// Baleful Vision Duration Increase
+	"special_bonus_imba_bane_2"	// Baleful Vision Duration Increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_nightmare"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -27988,13 +28913,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_3"	// Enfeeble Damage Reduction
+	"special_bonus_imba_bane_3"	// Enfeeble Damage Reduction
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_enfeeble"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28008,13 +28941,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_4"	// Brain Sap Cast Range
+	"special_bonus_imba_bane_4"	// Brain Sap Cast Range
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_brain_sap"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28028,13 +28969,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_5"	// Brain Sap Damage & Heal Bonus
+	"special_bonus_imba_bane_5"	// Brain Sap Damage & Heal Bonus
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_brain_sap"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28048,13 +28997,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_6"	// Fiends Grip Channel Time Increase
+	"special_bonus_imba_bane_6"	// Fiends Grip Channel Time Increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_fiends_grip"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28068,13 +29025,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_7"	// Ally Nightmare Invulnerability duration
+	"special_bonus_imba_bane_7"	// Ally Nightmare Invulnerability duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_nightmare"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28088,13 +29053,21 @@
 		}
 	}
 
-	"special_bonus_unique_bane_8"	// Fiends Grip Cooldown
+	"special_bonus_imba_bane_8"	// Fiends Grip Cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bane_fiends_grip"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28111,13 +29084,21 @@
 	//=================================================================================================================
 	// Bloodseeker Talents
 	//=================================================================================================================
-	"special_bonus_unique_bloodseeker_1"	// Amp Shift
+	"special_bonus_imba_bloodseeker_1"	// Amp Shift
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_bloodrage"
+			}
+		}		
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28131,13 +29112,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_2"	// +25% Blood Rite Hero Kill Cooldown Reduction
+	"special_bonus_imba_bloodseeker_2"	// +25% Blood Rite Hero Kill Cooldown Reduction
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_blood_bath"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28151,13 +29140,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_3"	// Rupture Damage Heals Bloodseeker
+	"special_bonus_imba_bloodseeker_3"	// Rupture Damage Heals Bloodseeker
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_rupture"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28171,13 +29168,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_4"	// Thirst On-Hit +Duration
+	"special_bonus_imba_bloodseeker_4"	// Thirst On-Hit +Duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_thirst"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28191,13 +29196,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_5"	// +% Rupture Cast/Attack Bonus Damage
+	"special_bonus_imba_bloodseeker_5"	// +% Rupture Cast/Attack Bonus Damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_rupture"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28211,13 +29224,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_6"	// + Rupture Distance Cap
+	"special_bonus_imba_bloodseeker_6"	// + Rupture Distance Cap
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_rupture"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28231,13 +29252,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_7"	// Bonus Thirst Movespeed/Damage
+	"special_bonus_imba_bloodseeker_7"	// Bonus Thirst Movespeed/Damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_thirst"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28256,13 +29285,21 @@
 		}
 	}
 
-	"special_bonus_unique_bloodseeker_8"	// Bloodrage Bonus Amp Per Missing Health
+	"special_bonus_imba_bloodseeker_8"	// Bloodrage Bonus Amp Per Missing Health
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bloodseeker_bloodrage"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28284,13 +29321,21 @@
 	//=================================================================================================================
 	// Bounty Hunter Talents
 	//=================================================================================================================
-	"special_bonus_unique_bounty_hunter_1"	// Shadow Walk true sight radius increase
+	"special_bonus_imba_bounty_hunter_1"	// Shadow Walk true sight radius increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_shadow_walk"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28304,13 +29349,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_2"	// Jinada's slow increase
+	"special_bonus_imba_bounty_hunter_2"	// Jinada's slow increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_jinada"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28324,13 +29377,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_3"	// Shuriken Toss Damage increase
+	"special_bonus_imba_bounty_hunter_3"	// Shuriken Toss Damage increase
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_shuriken_toss"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28344,13 +29405,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_4"	// Track cooldown decrease
+	"special_bonus_imba_bounty_hunter_4"	// Track cooldown decrease
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_track"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28364,13 +29433,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_5"	// Global Shuriken Toss bounce range
+	"special_bonus_imba_bounty_hunter_5"	// Global Shuriken Toss bounce range
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_shuriken_toss"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28384,13 +29461,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_6"	// Increased Track duration
+	"special_bonus_imba_bounty_hunter_6"	// Increased Track duration
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_track"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28404,13 +29489,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_7"	// Decreased Jinada Cooldown
+	"special_bonus_imba_bounty_hunter_7"	// Decreased Jinada Cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_jinada"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28424,13 +29517,21 @@
 		}
 	}
 
-	"special_bonus_unique_bounty_hunter_8"	// Track hidden and unpurgable
+	"special_bonus_imba_bounty_hunter_8"	// Track hidden and unpurgable
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_bounty_hunter_track"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28447,13 +29548,21 @@
 	//=================================================================================================================
 	// Dazzle Talents
 	//=================================================================================================================
-	"special_bonus_unique_dazzle_1"		// Reduces Shallow Grave mana cost to 0
+	"special_bonus_imba_dazzle_1"		// Reduces Shallow Grave mana cost to 0
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_shallow_grave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28467,13 +29576,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_2"		// Increases Shadow Wave bounce distance
+	"special_bonus_imba_dazzle_2"		// Increases Shadow Wave bounce distance
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_shadow_wave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28487,13 +29604,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_3"		// Increases Shadow Wave damage AoE
+	"special_bonus_imba_dazzle_3"		// Increases Shadow Wave damage AoE
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_shadow_wave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28507,13 +29632,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_4"		// Increases Shadow Wave heal/damage
+	"special_bonus_imba_dazzle_4"		// Increases Shadow Wave heal/damage
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_shadow_wave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28527,13 +29660,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_5"		// Reduces Poison Touch cooldown
+	"special_bonus_imba_dazzle_5"		// Reduces Poison Touch cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_poison_touch"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28547,13 +29688,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_6"		// Weave ticks and decays faster
+	"special_bonus_imba_dazzle_6"		// Weave ticks and decays faster
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_weave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28567,13 +29716,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_7"		// Reduces Nothl Protection cooldown
+	"special_bonus_imba_dazzle_7"		// Reduces Nothl Protection cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_shallow_grave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28587,13 +29744,21 @@
 		}
 	}
 
-	"special_bonus_unique_dazzle_8"		// Reduces Weave cooldown
+	"special_bonus_imba_dazzle_8"		// Reduces Weave cooldown
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_dazzle_weave"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28618,6 +29783,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_kinetic_field"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28637,6 +29810,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_glimpse"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28658,6 +29839,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_stormbearer"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28677,6 +29866,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_thunder_strike"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28698,6 +29895,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_static_storm"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28717,6 +29922,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_kinetic_field"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28738,6 +29951,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_static_storm"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28757,6 +29978,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_disruptor_thunder_strike"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28786,6 +30015,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_frost_arrows"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28805,6 +30042,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_general_hero_portrait"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28826,6 +30071,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_trueshot"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28845,6 +30098,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_gust"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28866,6 +30127,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_marksmanship"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28885,6 +30154,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_deadeye"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28906,6 +30183,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_deadeye"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28926,6 +30211,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_drow_ranger_marksmanship"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28937,7 +30230,8 @@
 			}
 		}
 	}
-//=================================================================================================================
+
+	//=================================================================================================================
 	// Lycan Talents
 	//=================================================================================================================
 	"special_bonus_imba_lycan_1"	// Wolf level increases
@@ -28947,6 +30241,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_summon_wolves"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -28968,6 +30270,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_feral_impulse"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -28987,6 +30297,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_howl"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29008,6 +30326,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_wolfsbane"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29027,6 +30353,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_summon_wolves"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29048,6 +30382,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_summoned_wolf_wicked_crunch"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29067,6 +30409,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_howl"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29113,6 +30463,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_lycan_shapeshift"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29136,6 +30494,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_guardian_sprint"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29145,6 +30511,7 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"50"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -29160,6 +30527,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_guardian_sprint"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29181,6 +30556,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_bash_of_the_deep"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29200,6 +30583,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_corrosive_haze"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29221,6 +30612,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_guardian_sprint"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29241,6 +30640,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_slithereen_crush"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29260,6 +30667,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_corrosive_haze"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29286,6 +30701,14 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_slardar_corrosive_haze"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29316,6 +30739,14 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_earthshock"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29335,6 +30766,14 @@
 		"BaseClass"							"special_bonus_unique_centaur_2"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_fury_swipes"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29356,6 +30795,14 @@
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_fury_swipes"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29375,6 +30822,14 @@
 		"BaseClass"							"special_bonus_unique_centaur_2"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_overpower"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29396,6 +30851,14 @@
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_overpower"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29415,6 +30878,19 @@
 		"BaseClass"							"special_bonus_unique_centaur_2"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_earthshock"
+			}
+
+			"02"
+			{
+				"imba_ursa_overpower"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29436,6 +30912,14 @@
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_territorial_hunter"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -29455,6 +30939,14 @@
 		"BaseClass"							"special_bonus_unique_centaur_2"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_ursa_enrage"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -29640,13 +31132,21 @@
     //=================================================================================================================
     // Lich Talents
     //=================================================================================================================
-    "special_bonus_imba_lich_1" //Chain Frost bounce delay decrease
+    "special_bonus_imba_lich_1" // Chain Frost bounce delay decrease
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_chain_frost"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29660,13 +31160,21 @@
         }
     }
 
-    "special_bonus_imba_lich_2" //Sacrifice bonuses increase
+    "special_bonus_imba_lich_2" // Sacrifice bonuses increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_dark_ritual"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29688,6 +31196,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_chain_frost"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29700,13 +31216,21 @@
         }
     }
 
-    "special_bonus_imba_lich_4" //Frost Nova cooldown decrease
+    "special_bonus_imba_lich_4" // Frost Nova cooldown decrease
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_frost_nova"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29720,13 +31244,21 @@
         }
     }
 
-    "special_bonus_imba_lich_5" //Cold Front duration increase
+    "special_bonus_imba_lich_5" // Cold Front duration increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_cold_front"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29740,13 +31272,21 @@
         }
     }
 
-    "special_bonus_imba_lich_6" //Massive Ice Armor armor increase when cast on buildings
+    "special_bonus_imba_lich_6" // Massive Ice Armor armor increase when cast on buildings
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_frost_armor"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29760,13 +31300,21 @@
         }
     }
 
-    "special_bonus_imba_lich_7" //Chain Frost bounce speed increase
+    "special_bonus_imba_lich_7" // Chain Frost bounce speed increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_chain_frost"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29787,6 +31335,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lich_cold_front"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29811,6 +31367,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_hammer_of_virtue"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29830,6 +31394,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_purification"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29859,6 +31431,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_repel"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29878,6 +31458,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_purification"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29899,6 +31487,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_guardian_angel"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29918,6 +31514,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_repel"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -29945,6 +31549,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_guardian_angel"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29965,6 +31577,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_omniknight_purification"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -29982,167 +31602,232 @@
 	//=================================================================================================================
 	"special_bonus_imba_night_stalker_1" // Void vision reduction increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"200"
-					}
+				"imba_night_stalker_void"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+				"value"						"200"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_2" // Crippling Fear miss chance increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"25"
-					}
+				"imba_night_stalker_crippling_fear"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"25"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_3" // Hunter in the Night bonuses
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"ms_bonus_pct"				"10"
-					}
-					"02"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"as_bonus"					"20"
-					}
+				"imba_night_stalker_hunter_in_the_night"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"ms_bonus_pct"				"10"
+			}
+
+			"02"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"as_bonus"					"20"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_4" // Crippling Fear On-kill effect duration
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"1"
-					}
+				"imba_night_stalker_crippling_fear"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_5" // Stalker in the Night night vision bonus
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"400"
-					}
+				"imba_night_stalker_stalker_in_the_night"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"400"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_6" // Crippling Fear now mutes the target as well
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"1"
-					}
+				"imba_night_stalker_crippling_fear"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_7" // Darkness maximum vision range reduction
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"150"
-					}
+				"imba_night_stalker_darkness"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"150"
+			}
+		}
 	}
 
 	"special_bonus_imba_night_stalker_8" // Crippling Fear cooldown decrease
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-						"value"						"8"
-					}
+				"imba_night_stalker_crippling_fear"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"						"8"
+			}
+		}
 	}
 
     //=================================================================================================================
@@ -30155,6 +31840,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_earth_spike"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30176,6 +31869,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_earth_spike"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30195,6 +31896,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_hex"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30216,6 +31925,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_mana_drain"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30235,6 +31952,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_finger_of_death"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30256,6 +31981,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_hex"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30275,6 +32008,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_finger_of_death"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30296,6 +32037,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_lion_mana_drain"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30313,303 +32062,453 @@
 	//=================================================================================================================
 	"special_bonus_imba_mirana_1" // Starfall search radius increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "100"
-					}
+				"imba_mirana_starfall"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"                  "FIELD_INTEGER"
+				"value"	                    "100"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_2" // Leap Aura linger duration increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "4"
-					}
+				"imba_mirana_leap"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "4"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_3" // Sacred Arrow's stun duration increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "1"
-					}
+				"imba_mirana_arrow"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "1"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_4" // Two additional Sacred Arrows to the sides
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "2"
-					}
+				"imba_mirana_arrow"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "2"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_5" // Leap Aura attack speed increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "100"
-					}
+				"imba_mirana_leap"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "100"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_6" // Free Sacred Arrow after Leap ends
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "1"
-					}
+				"imba_mirana_leap"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "1"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_7" // Starfall wave interval decrease
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_FLOAT"
-							"value"	                    "-1.25"
-					}
+				"imba_mirana_starfall"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_FLOAT"
+					"value"	                    "-1.25"
+			}
+		}
 	}
 
 	"special_bonus_imba_mirana_8" // Moonlight Shadow cooldown decrease
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "40"
-					}
+				"imba_mirana_moonlight_shadow"
 			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "40"
+			}
+		}
 	}
 
 	//=================================================================================================================
 	// Silencer Talents
 	//=================================================================================================================
-	"special_bonus_imba_silencer_1" //Mana burned by Arcane Curse is now absorbed by Silencer as health
+	"special_bonus_imba_silencer_1" // Mana burned by Arcane Curse is now absorbed by Silencer as health
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-	}
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-	"special_bonus_imba_silencer_2" //Arcane Curse cast penalty duration increase
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "2"
-					}
+				"imba_silencer_arcane_curse"
 			}
-	}
+		}
 
-	"special_bonus_imba_silencer_3" //Arcane Supremacy Intelligence steal increase
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "2"
-					}
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "1"
 			}
+		}
 	}
 
-	"special_bonus_imba_silencer_4" //Arcane Supremacy silence reduction increase
+	"special_bonus_imba_silencer_2" // Arcane Curse cast penalty duration increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "50"
-					}
+				"imba_silencer_arcane_curse"
 			}
-	}
+		}
 
-	"special_bonus_imba_silencer_5" //Glaives of Wisdom silence duration increase
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_FLOAT"
-							"value"	                    "0.25"
-					}
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "2"
 			}
+		}
 	}
 
-	"special_bonus_imba_silencer_6" //Glaives of Wisdom intelligence-based damage increase
+	"special_bonus_imba_silencer_3" // Arcane Supremacy Intelligence steal increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		"LinkedAbility"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "25"
-					}
+				"imba_silencer_arcane_supremacy"
 			}
-	}
+		}
 
-	"special_bonus_imba_silencer_7" //Arcane Curse slow increase
-	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-			// Special
-			//-------------------------------------------------------------------------------------------------------------
-			"AbilitySpecial"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-					"01"
-					{
-							"var_type"                  "FIELD_INTEGER"
-							"value"	                    "20"
-					}
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "2"
 			}
+		}
 	}
 
-	"special_bonus_imba_silencer_8" //Last Word Aura talent
+	"special_bonus_imba_silencer_4" // Arcane Supremacy silence reduction increase
 	{
-			// General
-			//-------------------------------------------------------------------------------------------------------------
-			"BaseClass"                     "special_bonus_unique_centaur_2"
-			"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-			"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_silencer_arcane_supremacy"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "50"
+			}
+		}
+	}
+
+	"special_bonus_imba_silencer_5" // Glaives of Wisdom silence duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_silencer_glaives_of_wisdom"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_FLOAT"
+					"value"	                    "0.25"
+			}
+		}
+	}
+
+	"special_bonus_imba_silencer_6" // Glaives of Wisdom intelligence-based damage increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_silencer_glaives_of_wisdom"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "25"
+			}
+		}
+	}
+
+	"special_bonus_imba_silencer_7" // Arcane Curse slow increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_silencer_arcane_curse"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "20"
+			}
+		}
+	}
+
+	"special_bonus_imba_silencer_8" // Last Word Aura talent
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"                     "special_bonus_unique_centaur_2"
+		"AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_silencer_last_word"
+			}
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+					"var_type"                  "FIELD_INTEGER"
+					"value"	                    "20"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -30622,6 +32521,14 @@
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_stifling_dagger"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -30643,6 +32550,14 @@
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_phantom_strike"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -30662,6 +32577,14 @@
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_stifling_dagger"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -30683,6 +32606,14 @@
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_phantom_strike"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -30702,6 +32633,14 @@
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_coup_de_grace"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -30723,6 +32662,14 @@
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_phantom_strike"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -30743,6 +32690,14 @@
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_coup_de_grace"
+			}
+		}
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -30762,6 +32717,14 @@
 		"BaseClass"				"special_bonus_unique_centaur_2"
 		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"
+			{
+				"imba_phantom_assassin_blur"
+			}
+		}
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -30786,6 +32749,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_arcane_bolt"
+			}
+		}
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30805,6 +32776,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_ancient_seal"
+			}
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30826,6 +32805,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_ancient_seal"
+			}
+		}
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30845,6 +32832,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_mystic_flare"
+			}
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30866,6 +32861,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_arcane_bolt"
+			}
+		}
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30886,6 +32889,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_mystic_flare"
+			}
+		}
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30904,7 +32915,7 @@
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"        
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30925,6 +32936,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01"
+			{
+				"imba_skywrath_mage_concussive_shot"
+			}
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30949,6 +32968,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_nether_blast"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -30968,6 +32995,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_nether_ward"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30989,6 +33024,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_nether_blast"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31008,6 +33051,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_decrepify"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31029,6 +33080,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_life_drain"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31048,6 +33107,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_decrepify"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31069,6 +33136,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_life_drain"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31088,6 +33163,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_pugna_nether_blast"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31112,6 +33195,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_burrowstrike"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31131,6 +33222,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_sand_storm"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31152,6 +33251,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_burrowstrike"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31171,6 +33278,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_epicenter"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31192,6 +33307,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_caustic_finale"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31211,6 +33334,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_epicenter"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31232,6 +33363,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_sand_storm"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31251,6 +33390,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sandking_caustic_finale"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31275,6 +33422,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_impale"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31294,6 +33449,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_mana_burn"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31315,6 +33478,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_spiked_carapace"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31334,6 +33505,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_impale"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31355,6 +33534,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_mana_burn"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31374,6 +33561,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_vendetta"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31395,6 +33590,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_spiked_carapace"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31414,6 +33617,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nyx_assassin_vendetta"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31438,6 +33649,24 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_shadowraze_close"
+        	}
+
+        	"02"
+        	{
+        		"imba_nevermore_shadowraze_medium"
+        	}
+
+        	"03"
+        	{
+        		"imba_nevermore_shadowraze_far"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31457,6 +33686,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_dark_lord"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31484,6 +33721,24 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_shadowraze_close"
+        	}
+
+        	"02"
+        	{
+        		"imba_nevermore_shadowraze_medium"
+        	}
+
+        	"03"
+        	{
+        		"imba_nevermore_shadowraze_far"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31503,6 +33758,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_necromastery"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31524,6 +33787,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_dark_lord"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31543,6 +33814,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_necromastery"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31564,6 +33843,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_necromastery"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31583,6 +33870,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_nevermore_necromastery"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31607,6 +33902,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_arcane_orb"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31626,6 +33929,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_astral_imprisonment"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31647,6 +33958,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_arcane_orb"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31666,6 +33985,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_arcane_orb"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31687,6 +34014,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_essence_aura"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31706,6 +34041,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_astral_imprisonment"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31727,6 +34070,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_sanity_eclipse"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31746,6 +34097,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_obsidian_destroyer_essence_aura"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31770,6 +34129,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_shrapnel"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31789,6 +34156,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_assassinate"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31810,6 +34185,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_headshot"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31829,6 +34212,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_take_aim"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31850,6 +34241,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_shrapnel"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31869,6 +34268,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_headshot"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31890,6 +34297,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_take_aim"
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31909,6 +34324,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_sniper_assassinate"
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31933,6 +34356,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_shadow_word"	
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31952,6 +34383,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_upheaval"	
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -31973,6 +34412,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_fatal_bonds"	
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -31992,6 +34439,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_rain_of_chaos"	
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32013,6 +34468,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_shadow_word"	
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -32032,6 +34495,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_upheaval"	
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32053,6 +34524,14 @@
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_rain_of_chaos"	
+        	}
+        }
+
         // Special
         //-------------------------------------------------------------------------------------------------------------
         "AbilitySpecial"
@@ -32072,6 +34551,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_warlock_rain_of_chaos"	
+        	}
+        }
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32095,6 +34582,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_proximity_mine"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32115,6 +34610,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_stasis_trap"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32135,6 +34638,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_stasis_trap"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32155,6 +34666,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_stasis_trap"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32175,6 +34694,19 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_blast_off"
+        	}
+
+        	"02"
+        	{
+        		"imba_techies_proximity_mine"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32195,6 +34727,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_minefield_sign"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32215,6 +34755,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_proximity_mine"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -32235,6 +34783,14 @@
         "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_techies_blast_off"
+        	}
+        }
         
         // Special
         //-------------------------------------------------------------------------------------------------------------
