@@ -19587,31 +19587,37 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"200 555"
 			}
+			
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.5"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"turn_rate_slow"		"20"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"full_cast_range"		"1000 1600 2200 2800"	// max range (+600 per jump)
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"no_jump_cast_range"	"1000"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_range"			"600"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -34791,6 +34797,239 @@
             {
                 "var_type"                  "FIELD_INTEGER"
                 "value"	                    "1"
+            }
+        }
+    }
+
+    //=================================================================================================================
+    // Wraith King's Talents
+    //=================================================================================================================
+    "special_bonus_imba_skeleton_king_1" // Wraithfire Blast debuff duration increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_wraithfire_blast"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_2" // Mortal Strike chance increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_mortal_strike"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "5"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_3" // Vampiric Aura lifesteal/spellsteal increase
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_vampiric_aura"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"	                    "15"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_4" // Kingdom Come Wraiths's attacks slow enemies
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_kingdom_come"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "ms_slow_pct"	            "25"
+            }
+
+            "02"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "duration"				    "2"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_5" // Mortal Strike bonus health per damage
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_mortal_strike"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "20"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_6" // Reincarnation no longer needs mana
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_reincarnation"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "160"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_7" // Wraithfire Blast now summons Wraiths on all targets hit
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_wraithfire_blast"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "1"
+            }
+        }
+    }
+
+    "special_bonus_imba_skeleton_king_8" // Reincarnate cooldown decrease
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "special_bonus_unique_centaur_2"                                                        
+        "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+        	"01"
+        	{
+        		"imba_wraith_king_reincarnation"
+        	}
+        }
+        
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"                  "FIELD_INTEGER"
+                "value"			            "20"
             }
         }
     }
