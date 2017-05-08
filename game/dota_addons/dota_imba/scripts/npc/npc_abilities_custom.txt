@@ -471,6 +471,70 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Fountain ability: Grievous Wounds
+	//=================================================================================================================
+	"imba_fountain_grievous_wounds"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"								"ability_datadriven"
+		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"					"ursa_fury_swipes"
+		"MaxLevel"								"3"
+		"AbilitySharedWithTeammates"			"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_increase"				"10 15 20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"debuff_duration"				"5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_imba_fountain_grievous_wounds"
+			{
+				"Passive"						"1"
+				"IsHidden"						"1"
+
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"hero/tower_abilities.lua"
+						"Function"				"GrievousWounds"
+
+						"modifier_debuff"		"modifier_imba_fountain_grievous_wounds_debuff"
+						"particle_hit"			"particles/units/heroes/hero_ursa/ursa_fury_swipes.vpcf"
+					}
+				}
+			}
+
+			"modifier_imba_fountain_grievous_wounds_debuff"
+			{
+				"Passive"						"0"
+				"IsHidden"						"0"
+				"IsDebuff"						"1"
+				"IsPurgable"					"0"
+
+				"Duration"						"%debuff_duration"
+
+				"EffectName"					"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+				"EffectAttachType"				"follow_overhead"
+			}
+		}
+	}
+
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	//	[ROSH]		ROSHAN STUFF
 	//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -4100,10 +4164,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_aphotic_shield"
-			}
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 
 		// Special
@@ -4131,10 +4192,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_aphotic_shield"
-			}
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 		    
 
@@ -4163,10 +4221,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_mist_coil"
-			}
+			"01"	 "imba_abaddon_mist_coil"
 		}
 
 		// Special
@@ -4194,10 +4249,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_curse_of_avernus"
-			}
+			"01"	 "imba_abaddon_curse_of_avernus"
 		}
 
 		// Special
@@ -4230,10 +4282,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_aphotic_shield"
-			}
+			"01" 	"imba_abaddon_aphotic_shield"			
 		}
 
 		// Special
@@ -4261,10 +4310,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_over_channel"
-			}
+			"01"  "imba_abaddon_over_channel"
 		}
 
 		// Special
@@ -4292,10 +4338,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_borrowed_time"
-			}
+			"01" 	"imba_abaddon_borrowed_time"
 		}
 
 		// Special
@@ -4323,10 +4366,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_abaddon_borrowed_time"
-			}
+			"01" 	"imba_abaddon_borrowed_time"
 		}
 
 		// Special
@@ -4583,10 +4623,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_blink"
-			}
+			"01"  "imba_antimage_blink"
 		}
 
 		// Special
@@ -4614,10 +4651,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_spell_shield"
-			}
+			"01" 	"imba_antimage_spell_shield"
 		}
 
 		// Special
@@ -4645,10 +4679,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_blink"
-			}
+			"01" 	"imba_antimage_blink"
 		}
 
 		// Special
@@ -4676,10 +4707,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_mana_break"
-			}
+			"01" 	"imba_antimage_mana_break"
 		}
 
 		// Special
@@ -4707,10 +4735,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_blink"
-			}
+			"01" 	"imba_antimage_blink"
 		}
 
 		// Special
@@ -4738,10 +4763,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_mana_break"
-			}
+			"01" 	"imba_antimage_mana_break"
 		}
 
 		// Special
@@ -4769,10 +4791,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_mana_void"
-			}
+			"01" 	"imba_antimage_mana_void"
 		}
 
 		// Special
@@ -4800,10 +4819,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_antimage_mana_void"
-			}
+			"01" 	"imba_antimage_mana_void"
 		}
 
 		// Special
@@ -9919,15 +9935,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_fire_breath"
-			}
-
-			"02"
-			{
-				"imba_jakiro_ice_breath"
-			}
+			"01" 	"imba_jakiro_fire_breath"
+			"02" 	"imba_jakiro_ice_breath"
 		}
 
 		// Special
@@ -9955,15 +9964,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_fire_breath"
-			}
-
-			"02"
-			{
-				"imba_jakiro_ice_breath"
-			}
+			"01" 	"imba_jakiro_fire_breath"
+			"02" 	"imba_jakiro_ice_breath"
 		}
 
 		// Special
@@ -9996,10 +9998,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_ice_path"
-			}
+			"01" 	"imba_jakiro_ice_path"
 		}
 
 		// Special
@@ -10027,10 +10026,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_liquid_fire"
-			}
+			"01" 	"imba_jakiro_liquid_fire"
 		}
 
 		// Special
@@ -10058,10 +10054,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_ice_path"
-			}
+			"01" 	"imba_jakiro_ice_path"
 		}
 
 		// Special
@@ -10089,15 +10082,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_fire_breath"
-			}
-
-			"02"
-			{
-				"imba_jakiro_ice_breath"
-			}
+			"01" 	"imba_jakiro_fire_breath"
+			"02" 	"imba_jakiro_ice_breath"
 		}
 
 		// Special
@@ -10125,10 +10111,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_ice_path"
-			}
+			"01" 	"imba_jakiro_ice_path"
 		}
 
 		// Special
@@ -10156,10 +10139,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_jakiro_macropyre"
-			}
+			"01" 	"imba_jakiro_macropyre"
 		}
 
 		// Special
@@ -10584,10 +10564,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_dance"
-			}
+			"01" 	"imba_juggernaut_blade_dance"
 		}
 
 		// Special
@@ -10615,10 +10592,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_healing_ward"
-			}
+			"01" 	"imba_juggernaut_healing_ward"
 		}
 
 		// Special
@@ -10646,10 +10620,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_fury"
-			}
+			"01" 	"imba_juggernaut_blade_fury"
 		}
 
 		// Special
@@ -10677,10 +10648,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_fury"
-			}
+			"01" "imba_juggernaut_blade_fury"
 		}
 
 		// Special
@@ -10708,10 +10676,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_dance"
-			}
+			"01" 	"imba_juggernaut_blade_dance"
 		}
 
 		// Special
@@ -10739,10 +10704,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_fury"
-			}
+			"01" 	"imba_juggernaut_blade_fury"
 		}
 
 		// Special
@@ -10770,10 +10732,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_fury"
-			}
+			"01" 	"imba_juggernaut_blade_fury"
 		}
 
 		// Special
@@ -10801,10 +10760,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_juggernaut_blade_dance"
-			}
+			"01" 	"imba_juggernaut_blade_dance"
 		}
 
 		// Special
@@ -11396,10 +11352,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_ebb_and_flow"
-			}
+			"01" 	"imba_kunkka_ebb_and_flow"
 		}
 
 		// Special
@@ -11427,10 +11380,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_torrent"
-			}
+			"01" 	"imba_kunkka_torrent"
 		}
 
 		// Special
@@ -11458,10 +11408,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_torrent"
-			}
+			"01" 	"imba_kunkka_torrent"
 		}
 
 		// Special
@@ -11489,10 +11436,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_x_marks_the_spot"
-			}
+			"01" 	"imba_kunkka_x_marks_the_spot"
 		}
 
 		// Special
@@ -11520,10 +11464,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_ebb_and_flow"
-			}
+			"01" 	"imba_kunkka_ebb_and_flow"
 		}
 
 		// Special
@@ -11551,10 +11492,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_tidebringer"
-			}
+			"01" 	"imba_kunkka_tidebringer"
 		}
 
 		// Special
@@ -11582,10 +11520,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_kunkka_ghostship"
-			}
+			"01" 	"imba_kunkka_ghostship"
 		}
 
 		// Special
@@ -12446,10 +12381,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_dragon_slave"
-			}
+			"01" 	"imba_lina_dragon_slave"
 		}
 
 		// Special
@@ -12477,10 +12409,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_light_strike_array"
-			}
+			"01" 	"imba_lina_light_strike_array"
 		}
 
 		// Special
@@ -12508,10 +12437,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_dragon_slave"
-			}
+			"01" 	"imba_lina_dragon_slave"
 		}
 
 		// Special
@@ -12539,10 +12465,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_light_strike_array"
-			}
+			"01" 	"imba_lina_light_strike_array"
 		}
 
 		// Special
@@ -12570,10 +12493,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_fiery_soul"
-			}
+			"01" 	"imba_lina_fiery_soul"
 		}
 
 		// Special
@@ -12606,10 +12526,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_laguna_blade"
-			}
+			"01" 	"imba_lina_laguna_blade"
 		}
 
 		// Special
@@ -12637,10 +12554,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lina_fiery_soul"
-			}
+			"01" 	"imba_lina_fiery_soul"
 		}
 
 		// Special
@@ -14026,10 +13940,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_shockwave"
-			}
+			"01" 	"imba_magnataur_shockwave"
 		}
 
 		// Special
@@ -14057,10 +13968,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_reverse_polarity"
-			}
+			"01" 	"imba_magnataur_reverse_polarity"
 		}
 
 		// Special
@@ -14088,10 +13996,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_empower"
-			}
+			"01" 	"imba_magnataur_empower"
 		}
 
 		// Special
@@ -14129,10 +14034,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_skewer"
-			}
+			"01" 	"imba_magnataur_skewer"
 		}
 
 		// Special
@@ -14160,10 +14062,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_shockwave"
-			}
+			"01" 	"imba_magnataur_shockwave"
 		}
 
 		// Special
@@ -14191,10 +14090,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_empower"
-			}
+			"01" 	"imba_magnataur_empower"
 		}
 
 		// Special
@@ -14227,10 +14123,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_reverse_polarity"
-			}
+			"01" 	"imba_magnataur_reverse_polarity"
 		}
 
 		// Special
@@ -14258,10 +14151,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_magnataur_reverse_polarity"
-			}
+			"01" 	"imba_magnataur_reverse_polarity"
 		}
 
 		// Special
@@ -15012,10 +14902,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_death_pulse"
-			}
+			"01" 	"imba_necrolyte_death_pulse"
 		}
 
 		// Special
@@ -15043,10 +14930,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_sadist"
-			}
+			"01" 	"imba_necrolyte_sadist"
 		}
 
 		// Special
@@ -15074,10 +14958,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_death_pulse"
-			}
+			"01" 	"imba_necrolyte_death_pulse"
 		}
 
 		// Special
@@ -15105,10 +14986,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_heartstopper_aura"
-			}
+			"01" 	"imba_necrolyte_heartstopper_aura"
 		}
 
 		// Special
@@ -15136,10 +15014,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_ghost_shroud"
-			}
+			"01" 	"imba_necrolyte_ghost_shroud"
 		}
 
 		// Special
@@ -15167,10 +15042,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_sadist"
-			}
+			"01" 	"imba_necrolyte_sadist"
 		}
 
 		// Special
@@ -15198,10 +15070,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_reapers_scythe"
-			}
+			"01" 	"imba_necrolyte_reapers_scythe"
 		}
 
 		// Special
@@ -15229,10 +15098,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_necrolyte_heartstopper_aura"
-			}
+			"01" 	"imba_necrolyte_heartstopper_aura"
 		}
 
 		// Special
@@ -19240,15 +19106,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_sonic_wave"
-			}
-
-			"02"
-			{
-				"imba_queenofpain_delightful_torment"
-			}
+			"01" 	"imba_queenofpain_sonic_wave"
+			"02" 	"imba_queenofpain_delightful_torment"
 		}
 
 		// Special
@@ -19276,15 +19135,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_blink"
-			}
-
-			"02"
-			{
-				"imba_queenofpain_scream_of_pain"
-			}
+			"01" 	"imba_queenofpain_blink"
+			"02" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -19312,10 +19164,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_scream_of_pain"
-			}			
+			"01" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -19343,10 +19192,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_sonic_wave"
-			}			
+			"01" 	"imba_queenofpain_sonic_wave"	
 		}
 
 		// Special
@@ -19374,10 +19220,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_scream_of_pain"
-			}			
+			"01" 	"imba_queenofpain_scream_of_pain"
 		}
 
 		// Special
@@ -19405,10 +19248,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_sonic_wave"
-			}			
+			"01" 	"imba_queenofpain_sonic_wave"
 		}
 
 		// Special
@@ -19436,10 +19276,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_shadow_strike"
-			}			
+			"01" 	"imba_queenofpain_shadow_strike"
 		}
 
 		// Special
@@ -19467,10 +19304,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_queenofpain_blink"
-			}			
+			"01" 	"imba_queenofpain_blink"
 		}
 
 		// Special
@@ -20902,12 +20736,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_storm_bolt"
-			}
+			"01"	"imba_sven_storm_bolt"
 		}
 
 		// Special
@@ -20933,12 +20764,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_great_cleave"
-			}
+			"01"	"imba_sven_great_cleave"
 		}
 
 		// Special
@@ -20964,12 +20792,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_warcry"
-			}
+			"01"	"imba_sven_warcry"
 		}
 
 		// Special
@@ -20995,12 +20820,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_gods_strength"
-			}
+			"01" 	"imba_sven_gods_strength"
 		}
 
 		// Special
@@ -21026,12 +20848,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_storm_bolt"
-			}
+			"01"	"imba_sven_storm_bolt"
 		}
 
 		// Special
@@ -21057,12 +20876,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_great_cleave"
-			}
+			"01"	"imba_sven_great_cleave"
 		}
 
 		// Special
@@ -21088,12 +20904,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_warcry"
-			}
+			"01"	"imba_sven_warcry"
 		}
 
 		// Special
@@ -21119,12 +20932,9 @@
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"LinkedSpecial"
+		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_sven_gods_strength"
-			}
+			"01"	"imba_sven_gods_strength"
 		}
 
 		// Special
@@ -24201,10 +24011,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_rearm"
-			}
+			"01" 	"imba_tinker_rearm"
 			
 		}
 
@@ -24233,10 +24040,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_heat_seeking_missile"
-			}			
+			"01" 	"imba_tinker_heat_seeking_missile"
 		}
 
 		// Special
@@ -24264,10 +24068,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_march_of_the_machines"
-			}			
+			"01" 	"imba_tinker_march_of_the_machines"	
 		}
 
 		// Special
@@ -24295,10 +24096,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_heat_seeking_missile"
-			}			
+			"01" 	"imba_tinker_heat_seeking_missile"
 		}
 
 		// Special
@@ -24326,10 +24124,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_march_of_the_machines"
-			}			
+			"01" 	"imba_tinker_march_of_the_machines"
 		}
 
 		// Special
@@ -24357,10 +24152,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_rearm"
-			}			
+			"01" 	"imba_tinker_rearm"		
 		}
 
 		// Special
@@ -24388,10 +24180,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_technomancy"
-			}			
+			"01" 	"imba_tinker_technomancy"		
 		}
 
 		// Special
@@ -24419,10 +24208,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tinker_rearm"
-			}			
+			"01" 	"imba_tinker_rearm"		
 		}
 
 		// Special
@@ -24836,10 +24622,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_magic_missile"
-			}
+			"01" 	"imba_vengefulspirit_magic_missile"
 		}
 
 		// Special
@@ -24867,10 +24650,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_nether_swap"
-			}
+			"01" 	"imba_vengefulspirit_nether_swap"
 		}
 
 		// Special
@@ -24898,10 +24678,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_command_aura"
-			}
+			"01" 	"imba_vengefulspirit_command_aura"
 		}
 
 		// Special
@@ -24934,10 +24711,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_rancor"
-			}
+			"01" 	"imba_vengefulspirit_rancor"
 		}
 
 		// Special
@@ -24970,10 +24744,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_magic_missile"
-			}
+			"01" 	"imba_vengefulspirit_magic_missile"
 		}
 
 		// Special
@@ -25001,15 +24772,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_nether_swap"
-			}
-
-			"02"
-			{
-				"imba_vengefulspirit_magic_missile"
-			}
+			"01" 	"imba_vengefulspirit_nether_swap"
+			"02"	"imba_vengefulspirit_magic_missile"
 		}
 
 		// Special
@@ -25075,10 +24839,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_vengefulspirit_command_aura"
-			}
+			"01" 	"imba_vengefulspirit_command_aura"
 		}
 
 		// Special
@@ -25497,10 +25258,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_venomous_gale"
-			}
+			"01" 	"imba_venomancer_venomous_gale"
 		}
 
 		// Special
@@ -25528,10 +25286,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_poison_sting"
-			}
+			"01" 	"imba_venomancer_poison_sting"
 		}
 
 		// Special
@@ -25559,10 +25314,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_toxicity"
-			}
+			"01" 	"imba_venomancer_toxicity"
 		}
 
 		// Special
@@ -25590,10 +25342,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_poison_nova"
-			}
+			"01" 	"imba_venomancer_poison_nova"
 		}
 
 		// Special
@@ -25621,10 +25370,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_plague_ward"
-			}
+			"01" 	"imba_venomancer_plague_ward"
 		}
 
 		// Special
@@ -25652,10 +25398,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_poison_sting"
-			}
+			"01"	 "imba_venomancer_poison_sting"
 		}
 
 		// Special
@@ -25683,10 +25426,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_venomous_gale"
-			}
+			"01"	 "imba_venomancer_venomous_gale"
 		}
 
 		// Special
@@ -25714,10 +25454,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_venomancer_plague_ward"
-			}
+			"01" 	"imba_venomancer_plague_ward"
 		}
 
 		// Special
@@ -28275,10 +28012,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_avalanche"
-			}
+			"01" 	"imba_tiny_avalanche"
 		}
 
 		// Special
@@ -28305,10 +28039,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_rolling_stone"
-			}
+			"01" 	"imba_tiny_rolling_stone"
 		}
 
 		// Special
@@ -28335,10 +28066,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_avalanche"
-			}
+			"01" 	"imba_tiny_avalanche"
 		}
 
 		// Special
@@ -28365,10 +28093,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_craggy_exterior"
-			}
+			"01" 	"imba_tiny_craggy_exterior"
 		}
 
 		// Special
@@ -28395,10 +28120,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_craggy_exterior"
-			}
+			"01" 	"imba_tiny_craggy_exterior"
 		}
 
 
@@ -28426,10 +28148,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_avalanche"
-			}
+			"01" 	"imba_tiny_avalanche"
 		}
 
 
@@ -28457,10 +28176,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_toss"
-			}
+			"01" 	"imba_tiny_toss"
 		}
 
 		// Special
@@ -28487,10 +28203,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_tiny_rolling_stone"
-			}
+			"01" 	"imba_tiny_rolling_stone"
 		}
 
 		// Special
@@ -28872,10 +28585,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_brain_sap"
-			}
+			"01" 	"imba_bane_brain_sap"
 		}
 
 		// Special
@@ -28900,10 +28610,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_nightmare"
-			}
+			"01" 	"imba_bane_nightmare"
 		}
 
 		// Special
@@ -28928,10 +28635,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_enfeeble"
-			}
+			"01" 	"imba_bane_enfeeble"
 		}
 
 		// Special
@@ -28956,10 +28660,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_brain_sap"
-			}
+			"01" 	"imba_bane_brain_sap"
 		}
 
 		// Special
@@ -28984,10 +28685,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_brain_sap"
-			}
+			"01" 	"imba_bane_brain_sap"
 		}
 
 		// Special
@@ -29012,10 +28710,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_fiends_grip"
-			}
+			"01" 	"imba_bane_fiends_grip"
 		}
 
 		// Special
@@ -29040,10 +28735,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_nightmare"
-			}
+			"01" 	"imba_bane_nightmare"
 		}
 
 		// Special
@@ -29068,10 +28760,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bane_fiends_grip"
-			}
+			"01" 	"imba_bane_fiends_grip"
 		}
 
 		// Special
@@ -29099,10 +28788,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_bloodrage"
-			}
+			"01" 	"imba_bloodseeker_bloodrage"
 		}		
 
 		// Special
@@ -29127,10 +28813,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_blood_bath"
-			}
+			"01" 	"imba_bloodseeker_blood_bath"
 		}
 
 		// Special
@@ -29155,10 +28838,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_rupture"
-			}
+			"01" 	"imba_bloodseeker_rupture"
 		}
 
 		// Special
@@ -29183,10 +28863,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_thirst"
-			}
+			"01" 	"imba_bloodseeker_thirst"
 		}
 
 		// Special
@@ -29211,10 +28888,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_rupture"
-			}
+			"01" 	"imba_bloodseeker_rupture"
 		}
 
 		// Special
@@ -29239,10 +28913,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_rupture"
-			}
+			"01" 	"imba_bloodseeker_rupture"
 		}
 
 		// Special
@@ -29267,10 +28938,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_thirst"
-			}
+			"01" 	"imba_bloodseeker_thirst"
 		}
 
 		// Special
@@ -29300,10 +28968,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bloodseeker_bloodrage"
-			}
+			"01" 	"imba_bloodseeker_bloodrage"
 		}
 
 		// Special
@@ -29336,10 +29001,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_shadow_walk"
-			}
+			"01" 	"imba_bounty_hunter_shadow_walk"
 		}
 
 		// Special
@@ -29364,10 +29026,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_jinada"
-			}
+			"01" 	"imba_bounty_hunter_jinada"
 		}
 
 		// Special
@@ -29392,10 +29051,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_shuriken_toss"
-			}
+			"01" 	"imba_bounty_hunter_shuriken_toss"
 		}
 
 		// Special
@@ -29420,10 +29076,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_track"
-			}
+			"01" 	"imba_bounty_hunter_track"
 		}
 
 		// Special
@@ -29448,10 +29101,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_shuriken_toss"
-			}
+			"01" 	"imba_bounty_hunter_shuriken_toss"
 		}
 
 		// Special
@@ -29476,10 +29126,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_track"
-			}
+			"01" 	"imba_bounty_hunter_track"
 		}
 
 		// Special
@@ -29504,10 +29151,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_jinada"
-			}
+			"01" 	"imba_bounty_hunter_jinada"
 		}
 
 		// Special
@@ -29532,10 +29176,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_bounty_hunter_track"
-			}
+			"01" 	"imba_bounty_hunter_track"
 		}
 
 		// Special
@@ -29563,10 +29204,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_shallow_grave"
-			}
+			"01" 	"imba_dazzle_shallow_grave"
 		}
 
 		// Special
@@ -29591,10 +29229,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_shadow_wave"
-			}
+			"01" 	"imba_dazzle_shadow_wave"
 		}
 
 		// Special
@@ -29619,10 +29254,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_shadow_wave"
-			}
+			"01" 	"imba_dazzle_shadow_wave"
 		}
 
 		// Special
@@ -29647,10 +29279,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_shadow_wave"
-			}
+			"01" 	"imba_dazzle_shadow_wave"
 		}
 
 		// Special
@@ -29675,10 +29304,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_poison_touch"
-			}
+			"01" 	"imba_dazzle_poison_touch"
 		}
 
 		// Special
@@ -29703,10 +29329,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_weave"
-			}
+			"01" 	"imba_dazzle_weave"
 		}
 
 		// Special
@@ -29731,10 +29354,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_shallow_grave"
-			}
+			"01" 	"imba_dazzle_shallow_grave"
 		}
 
 		// Special
@@ -29759,10 +29379,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_dazzle_weave"
-			}
+			"01" 	"imba_dazzle_weave"
 		}
 
 		// Special
@@ -29790,10 +29407,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_kinetic_field"
-			}
+			"01" 	"imba_disruptor_kinetic_field"
 		}
 
 		// Special
@@ -29818,10 +29432,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_glimpse"
-			}
+			"01" 	"imba_disruptor_glimpse"
 		}
 
 		// Special
@@ -29846,10 +29457,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_stormbearer"
-			}
+			"01" 	"imba_disruptor_stormbearer"
 		}
 
 		// Special
@@ -29874,10 +29482,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_thunder_strike"
-			}
+			"01" 	"imba_disruptor_thunder_strike"
 		}
 
 		// Special
@@ -29902,10 +29507,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_static_storm"
-			}
+			"01" 	"imba_disruptor_static_storm"
 		}
 
 		// Special
@@ -29930,10 +29532,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_kinetic_field"
-			}
+			"01" 	"imba_disruptor_kinetic_field"
 		}
 
 		// Special
@@ -29958,10 +29557,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_static_storm"
-			}
+			"01" 	"imba_disruptor_static_storm"
 		}
 
 		// Special
@@ -29986,10 +29582,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_disruptor_thunder_strike"
-			}
+			"01" 	"imba_disruptor_thunder_strike"
 		}
 
 		// Special
@@ -30022,10 +29615,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_frost_arrows"
-			}
+			"01" 	"imba_drow_ranger_frost_arrows"
 		}
 
 		// Special
@@ -30070,10 +29660,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_trueshot"
-			}
+			"01" 	"imba_drow_ranger_trueshot"
 		}
 
 		// Special
@@ -30098,10 +29685,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_gust"
-			}
+			"01" 	"imba_drow_ranger_gust"
 		}
 
 		// Special
@@ -30126,10 +29710,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_marksmanship"
-			}
+			"01" 	"imba_drow_ranger_marksmanship"
 		}
 
 		// Special
@@ -30154,10 +29735,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_deadeye"
-			}
+			"01" 	"imba_drow_ranger_deadeye"
 		}
 
 		// Special
@@ -30182,10 +29760,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_deadeye"
-			}
+			"01" 	"imba_drow_ranger_deadeye"
 		}
 
 		// Special
@@ -30210,10 +29785,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_drow_ranger_marksmanship"
-			}
+			"01" 	"imba_drow_ranger_marksmanship"
 		}
 
 		// Special
@@ -30241,10 +29813,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_summon_wolves"
-			}
+			"01" 	"imba_lycan_summon_wolves"
 		}
 
 		// Special
@@ -30269,10 +29838,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_feral_impulse"
-			}
+			"01" 	"imba_lycan_feral_impulse"
 		}
 
 		// Special
@@ -30297,10 +29863,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_howl"
-			}
+			"01" 	"imba_lycan_howl"
 		}
 
 		// Special
@@ -30325,10 +29888,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_wolfsbane"
-			}
+			"01" 	"imba_lycan_wolfsbane"
 		}
 
 		// Special
@@ -30353,10 +29913,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_summon_wolves"
-			}
+			"01" 	"imba_lycan_summon_wolves"
 		}
 
 		// Special
@@ -30381,10 +29938,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_summoned_wolf_wicked_crunch"
-			}
+			"01" 	"imba_summoned_wolf_wicked_crunch"
 		}
 
 		// Special
@@ -30409,10 +29963,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_howl"
-			}
+			"01" 	"imba_lycan_howl"
 		}
 
 		// Special
@@ -30462,10 +30013,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_lycan_shapeshift"
-			}
+			"01" 	"imba_lycan_shapeshift"
 		}
 
 		// Special
@@ -30493,10 +30041,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_guardian_sprint"
-			}
+			"01" 	"imba_slardar_guardian_sprint"
 		}
 
 		// Special
@@ -30527,10 +30072,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_guardian_sprint"
-			}
+			"01" 	"imba_slardar_guardian_sprint"
 		}
 
 		// Special
@@ -30555,10 +30097,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_bash_of_the_deep"
-			}
+			"01" 	"imba_slardar_bash_of_the_deep"
 		}
 
 		// Special
@@ -30583,10 +30122,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_corrosive_haze"
-			}
+			"01" 	"imba_slardar_corrosive_haze"
 		}
 
 		// Special
@@ -30611,10 +30147,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_guardian_sprint"
-			}
+			"01" 	"imba_slardar_guardian_sprint"
 		}
 
 		// Special
@@ -30639,10 +30172,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_slithereen_crush"
-			}
+			"01" 	"imba_slardar_slithereen_crush"
 		}
 
 		// Special
@@ -30667,10 +30197,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_corrosive_haze"
-			}
+			"01" 	"imba_slardar_corrosive_haze"
 		}
 
 		// Special
@@ -30701,10 +30228,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_slardar_corrosive_haze"
-			}
+			"01" 	"imba_slardar_corrosive_haze"
 		}
 
 		// Special
@@ -30738,10 +30262,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_earthshock"
-			}
+			"01" 	"imba_ursa_earthshock"
 		}
 
 		// Special
@@ -30766,10 +30287,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_fury_swipes"
-			}
+			"01" 	"imba_ursa_fury_swipes"
 		}
 
 		// Special
@@ -30794,10 +30312,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_fury_swipes"
-			}
+			"01" 	"imba_ursa_fury_swipes"
 		}
 
 		// Special
@@ -30822,10 +30337,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_overpower"
-			}
+			"01" 	"imba_ursa_overpower"
 		}
 
 		// Special
@@ -30850,10 +30362,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_overpower"
-			}
+			"01" 	"imba_ursa_overpower"
 		}
 
 		// Special
@@ -30878,15 +30387,8 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_earthshock"
-			}
-
-			"02"
-			{
-				"imba_ursa_overpower"
-			}
+			"01" 	"imba_ursa_earthshock"
+			"02" 	"imba_ursa_overpower"
 		}
 
 		// Special
@@ -30911,10 +30413,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_territorial_hunter"
-			}
+			"01" 	"imba_ursa_territorial_hunter"
 		}
 
 		// Special
@@ -30939,10 +30438,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_ursa_enrage"
-			}
+			"01" 	"imba_ursa_enrage"
 		}
 
 		// Special
@@ -31139,10 +30635,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_chain_frost"
-        	}
+        	"01" 	"imba_lich_chain_frost"
         }
 
         // Special
@@ -31167,10 +30660,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_dark_ritual"
-        	}
+        	"01" 	"imba_lich_dark_ritual"
         }
 
         // Special
@@ -31195,10 +30685,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_chain_frost"
-        	}
+        	"01" 	"imba_lich_chain_frost"
         }
 
         // Special
@@ -31223,10 +30710,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_frost_nova"
-        	}
+        	"01" 	"imba_lich_frost_nova"
         }
 
         // Special
@@ -31251,10 +30735,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_cold_front"
-        	}
+        	"01" 	"imba_lich_cold_front"
         }
 
         // Special
@@ -31279,10 +30760,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_frost_armor"
-        	}
+        	"01" 	"imba_lich_frost_armor"
         }
 
         // Special
@@ -31307,10 +30785,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_chain_frost"
-        	}
+        	"01" 	"imba_lich_chain_frost"
         }
 
         // Special
@@ -31335,10 +30810,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lich_cold_front"
-        	}
+        	"01" 	"imba_lich_cold_front"
         }
 
         // Special
@@ -31366,10 +30838,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_hammer_of_virtue"
-        	}
+        	"01" 	"imba_omniknight_hammer_of_virtue"
         }
 
         // Special
@@ -31394,10 +30863,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_purification"
-        	}
+        	"01" 	"imba_omniknight_purification"
         }
 
         // Special
@@ -31430,10 +30896,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_repel"
-        	}
+        	"01" 	"imba_omniknight_repel"
         }
 
         // Special
@@ -31458,10 +30921,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_purification"
-        	}
+        	"01" 	"imba_omniknight_purification"
         }
 
         // Special
@@ -31486,10 +30946,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_guardian_angel"
-        	}
+        	"01" 	"imba_omniknight_guardian_angel"
         }
 
         // Special
@@ -31514,10 +30971,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_repel"
-        	}
+        	"01" 	"imba_omniknight_repel"
         }
 
         // Special
@@ -31548,10 +31002,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_guardian_angel"
-        	}
+        	"01" 	"imba_omniknight_guardian_angel"
         }
 
         // Special
@@ -31576,10 +31027,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_omniknight_purification"
-        	}
+        	"01" 	"imba_omniknight_purification"
         }
 
         // Special
@@ -31607,10 +31055,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_void"
-			}
+			"01" 	"imba_night_stalker_void"
 		}
 
 		// Special
@@ -31635,10 +31080,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_crippling_fear"
-			}
+			"01" 	"imba_night_stalker_crippling_fear"
 		}
 
 		// Special
@@ -31663,10 +31105,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_hunter_in_the_night"
-			}
+			"01" 	"imba_night_stalker_hunter_in_the_night"
 		}
 
 		// Special
@@ -31697,10 +31136,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_crippling_fear"
-			}
+			"01" 	"imba_night_stalker_crippling_fear"
 		}
 
 		// Special
@@ -31725,10 +31161,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_stalker_in_the_night"
-			}
+			"01" 	"imba_night_stalker_stalker_in_the_night"
 		}
 
 		// Special
@@ -31753,10 +31186,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_crippling_fear"
-			}
+			"01" 	"imba_night_stalker_crippling_fear"
 		}
 
 		// Special
@@ -31781,10 +31211,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_darkness"
-			}
+			"01" 	"imba_night_stalker_darkness"
 		}
 
 		// Special
@@ -31809,10 +31236,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_night_stalker_crippling_fear"
-			}
+			"01" 	"imba_night_stalker_crippling_fear"
 		}
 
 		// Special
@@ -31840,10 +31264,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_earth_spike"
-        	}
+        	"01" 	"imba_lion_earth_spike"
         }
 
         // Special
@@ -31868,10 +31289,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_earth_spike"
-        	}
+        	"01" 	"imba_lion_earth_spike"
         }
 
         // Special
@@ -31896,10 +31314,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_hex"
-        	}
+        	"01" 	"imba_lion_hex"
         }
 
         // Special
@@ -31924,10 +31339,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_mana_drain"
-        	}
+        	"01" 	"imba_lion_mana_drain"
         }
 
         // Special
@@ -31952,10 +31364,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_finger_of_death"
-        	}
+        	"01" 	"imba_lion_finger_of_death"
         }
 
         // Special
@@ -31980,10 +31389,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_hex"
-        	}
+        	"01" 	"imba_lion_hex"
         }
 
         // Special
@@ -32008,10 +31414,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_finger_of_death"
-        	}
+        	"01"	"imba_lion_finger_of_death"
         }
 
         // Special
@@ -32036,10 +31439,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_lion_mana_drain"
-        	}
+        	"01" 	"imba_lion_mana_drain"
         }
 
         // Special
@@ -32067,10 +31467,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_starfall"
-			}
+			"01" 	"imba_mirana_starfall"
 		}
 
 		// Special
@@ -32095,10 +31492,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_leap"
-			}
+			"01" 	"imba_mirana_leap"
 		}
 
 		// Special
@@ -32123,10 +31517,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_arrow"
-			}
+			"01" 	"imba_mirana_arrow"
 		}
 
 		// Special
@@ -32151,10 +31542,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_arrow"
-			}
+			"01"	"imba_mirana_arrow"
 		}
 
 		// Special
@@ -32179,10 +31567,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_leap"
-			}
+			"01"	"imba_mirana_leap"
 		}
 
 		// Special
@@ -32207,10 +31592,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_leap"
-			}
+			"01"	"imba_mirana_leap"
 		}
 
 		// Special
@@ -32235,10 +31617,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_starfall"
-			}
+			"01" 	"imba_mirana_starfall"
 		}
 
 		// Special
@@ -32263,10 +31642,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_mirana_moonlight_shadow"
-			}
+			"01"	"imba_mirana_moonlight_shadow"
 		}
 
 		// Special
@@ -32294,10 +31670,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_arcane_curse"
-			}
+			"01"	"imba_silencer_arcane_curse"
 		}
 
 		// Special
@@ -32322,10 +31695,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_arcane_curse"
-			}
+			"01"	"imba_silencer_arcane_curse"
 		}
 
 		// Special
@@ -32350,10 +31720,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_arcane_supremacy"
-			}
+			"01"	"imba_silencer_arcane_supremacy"
 		}
 
 		// Special
@@ -32378,10 +31745,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_arcane_supremacy"
-			}
+			"01"	"imba_silencer_arcane_supremacy"
 		}
 
 		// Special
@@ -32406,10 +31770,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_glaives_of_wisdom"
-			}
+			"01"	"imba_silencer_glaives_of_wisdom"
 		}
 
 		// Special
@@ -32434,10 +31795,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_glaives_of_wisdom"
-			}
+			"01"	"imba_silencer_glaives_of_wisdom"
 		}
 
 		// Special
@@ -32462,10 +31820,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_arcane_curse"
-			}
+			"01"	"imba_silencer_arcane_curse"
 		}
 
 		// Special
@@ -32490,10 +31845,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_silencer_last_word"
-			}
+			"01"	"imba_silencer_last_word"
 		}
 
 		// Special
@@ -32521,10 +31873,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_stifling_dagger"
-			}
+			"01"	"imba_phantom_assassin_stifling_dagger"
 		}
 
 		// Special
@@ -32549,10 +31898,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_phantom_strike"
-			}
+			"01"	"imba_phantom_assassin_phantom_strike"
 		}
 
 		// Special
@@ -32577,10 +31923,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_stifling_dagger"
-			}
+			"01"	"imba_phantom_assassin_stifling_dagger"
 		}
 
 		// Special
@@ -32605,10 +31948,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_phantom_strike"
-			}
+			"01"	"imba_phantom_assassin_phantom_strike"
 		}
 
 		// Special
@@ -32633,10 +31973,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_coup_de_grace"
-			}
+			"01"	"imba_phantom_assassin_coup_de_grace"
 		}
 
 		// Special
@@ -32661,10 +31998,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_phantom_strike"
-			}
+			"01"	"imba_phantom_assassin_phantom_strike"
 		}
 
 		// Special
@@ -32689,10 +32023,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_coup_de_grace"
-			}
+			"01"	"imba_phantom_assassin_coup_de_grace"
 		}
 
 		// Special
@@ -32717,10 +32048,7 @@
 
 		"LinkedAbility"
 		{
-			"01"
-			{
-				"imba_phantom_assassin_blur"
-			}
+			"01"	"imba_phantom_assassin_blur"
 		}
 
 		// Special
@@ -32748,10 +32076,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_arcane_bolt"
-			}
+			"01"	"imba_skywrath_mage_arcane_bolt"
 		}
 
         // Special
@@ -32776,10 +32101,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_ancient_seal"
-			}
+			"01"	"imba_skywrath_mage_ancient_seal"
 		}
 
         // Special
@@ -32804,10 +32126,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_ancient_seal"
-			}
+			"01"	"imba_skywrath_mage_ancient_seal"
 		}
 
         // Special
@@ -32832,10 +32151,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_mystic_flare"
-			}
+			"01"	"imba_skywrath_mage_mystic_flare"
 		}
 
         // Special
@@ -32860,10 +32176,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_arcane_bolt"
-			}
+			"01"	"imba_skywrath_mage_arcane_bolt"
 		}
 
         // Special
@@ -32888,10 +32201,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_mystic_flare"
-			}
+			"01"	"imba_skywrath_mage_mystic_flare"
 		}
 
         // Special
@@ -32936,10 +32246,7 @@
 
         "LinkedAbility"
 		{
-			"01"
-			{
-				"imba_skywrath_mage_concussive_shot"
-			}
+			"01" 	"imba_skywrath_mage_concussive_shot"
 		}
 
         // Special
@@ -32967,10 +32274,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_nether_blast"
-        	}
+	        "01"	"imba_pugna_nether_blast"
         }
 
         // Special
@@ -32995,10 +32299,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_nether_ward"
-        	}
+        	"01"	"imba_pugna_nether_ward"
         }
 
         // Special
@@ -33023,10 +32324,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_nether_blast"
-        	}
+        	"01"	"imba_pugna_nether_blast"
         }
 
         // Special
@@ -33051,10 +32349,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_decrepify"
-        	}
+        	"01"	"imba_pugna_decrepify"
         }
 
         // Special
@@ -33079,10 +32374,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_life_drain"
-        	}
+        	"01" 	"imba_pugna_life_drain"
         }
 
         // Special
@@ -33107,10 +32399,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_decrepify"
-        	}
+        	"01"	"imba_pugna_decrepify"
         }
 
         // Special
@@ -33135,10 +32424,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_life_drain"
-        	}
+        	"01"	"imba_pugna_life_drain"
         }
 
         // Special
@@ -33163,10 +32449,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_pugna_nether_blast"
-        	}
+        	"01"	"imba_pugna_nether_blast"
         }
 
         // Special
@@ -33194,10 +32477,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_burrowstrike"
-        	}
+        	"01"	"imba_sandking_burrowstrike"
         }
 
         // Special
@@ -33222,10 +32502,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_sand_storm"
-        	}
+        	"01"	"imba_sandking_sand_storm"
         }
 
         // Special
@@ -33250,10 +32527,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_burrowstrike"
-        	}
+        	"01"	"imba_sandking_burrowstrike"
         }
 
         // Special
@@ -33278,10 +32552,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_epicenter"
-        	}
+        	"01"	"imba_sandking_epicenter"
         }
 
         // Special
@@ -33306,10 +32577,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_caustic_finale"
-        	}
+        	"01"	"imba_sandking_caustic_finale"
         }
 
         // Special
@@ -33334,10 +32602,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_epicenter"
-        	}
+        	"01"	"imba_sandking_epicenter"
         }
 
         // Special
@@ -33362,10 +32627,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_sand_storm"
-        	}
+        	"01"	"imba_sandking_sand_storm"
         }
 
         // Special
@@ -33390,10 +32652,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sandking_caustic_finale"
-        	}
+        	"01"	"imba_sandking_caustic_finale"
         }
 
         // Special
@@ -33421,10 +32680,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_impale"
-        	}
+        	"01"	"imba_nyx_assassin_impale"
         }
 
         // Special
@@ -33449,10 +32705,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_mana_burn"
-        	}
+        	"01"	"imba_nyx_assassin_mana_burn"
         }
 
         // Special
@@ -33477,10 +32730,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_spiked_carapace"
-        	}
+        	"01"	"imba_nyx_assassin_spiked_carapace"
         }
 
         // Special
@@ -33505,10 +32755,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_impale"
-        	}
+        	"01"	"imba_nyx_assassin_impale"
         }
 
         // Special
@@ -33533,10 +32780,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_mana_burn"
-        	}
+        	"01"	"imba_nyx_assassin_mana_burn"
         }
 
         // Special
@@ -33561,10 +32805,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_vendetta"
-        	}
+        	"01"	"imba_nyx_assassin_vendetta"
         }
 
         // Special
@@ -33589,10 +32830,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_spiked_carapace"
-        	}
+        	"01"	"imba_nyx_assassin_spiked_carapace"
         }
 
         // Special
@@ -33617,10 +32855,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nyx_assassin_vendetta"
-        	}
+        	"01"	"imba_nyx_assassin_vendetta"
         }
 
         // Special
@@ -33648,20 +32883,9 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_shadowraze_close"
-        	}
-
-        	"02"
-        	{
-        		"imba_nevermore_shadowraze_medium"
-        	}
-
-        	"03"
-        	{
-        		"imba_nevermore_shadowraze_far"
-        	}
+        	"01"	"imba_nevermore_shadowraze_close"
+        	"02"	"imba_nevermore_shadowraze_medium"
+        	"03"	"imba_nevermore_shadowraze_far"
         }
 
         // Special
@@ -33686,10 +32910,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_dark_lord"
-        	}
+        	"01" 	"imba_nevermore_dark_lord"
         }
 
         // Special
@@ -33720,20 +32941,9 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_shadowraze_close"
-        	}
-
-        	"02"
-        	{
-        		"imba_nevermore_shadowraze_medium"
-        	}
-
-        	"03"
-        	{
-        		"imba_nevermore_shadowraze_far"
-        	}
+        	"01"	"imba_nevermore_shadowraze_close"
+        	"02"	"imba_nevermore_shadowraze_medium"
+        	"03"	"imba_nevermore_shadowraze_far"
         }
 
         // Special
@@ -33758,10 +32968,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_necromastery"
-        	}
+        	"01"	"imba_nevermore_necromastery"
         }
 
         // Special
@@ -33786,10 +32993,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_dark_lord"
-        	}
+        	"01"	"imba_nevermore_dark_lord"
         }
 
         // Special
@@ -33814,10 +33018,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_necromastery"
-        	}
+        	"01"	"imba_nevermore_necromastery"
         }
 
         // Special
@@ -33842,10 +33043,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_necromastery"
-        	}
+        	"01"	"imba_nevermore_necromastery"
         }
 
         // Special
@@ -33870,10 +33068,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_nevermore_necromastery"
-        	}
+        	"01"	"imba_nevermore_necromastery"
         }
 
         // Special
@@ -33901,10 +33096,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_arcane_orb"
-        	}
+        	"01"	"imba_obsidian_destroyer_arcane_orb"
         }
 
         // Special
@@ -33929,10 +33121,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_astral_imprisonment"
-        	}
+        	"01"	"imba_obsidian_destroyer_astral_imprisonment"
         }
 
         // Special
@@ -33957,10 +33146,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_arcane_orb"
-        	}
+        	"01"	"imba_obsidian_destroyer_arcane_orb"
         }
 
         // Special
@@ -33985,10 +33171,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_arcane_orb"
-        	}
+        	"01"	"imba_obsidian_destroyer_arcane_orb"
         }
 
         // Special
@@ -34013,10 +33196,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_essence_aura"
-        	}
+        	"01"	"imba_obsidian_destroyer_essence_aura"
         }
 
         // Special
@@ -34041,10 +33221,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_astral_imprisonment"
-        	}
+        	"01"	"imba_obsidian_destroyer_astral_imprisonment"
         }
 
         // Special
@@ -34069,10 +33246,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_sanity_eclipse"
-        	}
+        	"01"	"imba_obsidian_destroyer_sanity_eclipse"
         }
 
         // Special
@@ -34097,10 +33271,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_obsidian_destroyer_essence_aura"
-        	}
+        	"01"	"imba_obsidian_destroyer_essence_aura"
         }
 
         // Special
@@ -34128,10 +33299,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_shrapnel"
-        	}
+        	"01"	"imba_sniper_shrapnel"
         }
 
         // Special
@@ -34156,10 +33324,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_assassinate"
-        	}
+        	"01"	"imba_sniper_assassinate"
         }
 
         // Special
@@ -34184,10 +33349,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_headshot"
-        	}
+        	"01"	"imba_sniper_headshot"
         }
 
         // Special
@@ -34212,10 +33374,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_take_aim"
-        	}
+        	"01"	"imba_sniper_take_aim"
         }
 
         // Special
@@ -34240,10 +33399,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_shrapnel"
-        	}
+        	"01"	"imba_sniper_shrapnel"
         }
 
         // Special
@@ -34268,10 +33424,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_headshot"
-        	}
+        	"01"	"imba_sniper_headshot"
         }
 
         // Special
@@ -34296,10 +33449,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_take_aim"
-        	}
+        	"01"	"imba_sniper_take_aim"
         }
 
         // Special
@@ -34324,10 +33474,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_sniper_assassinate"
-        	}
+        	"01"	"imba_sniper_assassinate"
         }
 
         // Special
@@ -34355,10 +33502,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_shadow_word"	
-        	}
+        	"01"	"imba_warlock_shadow_word"
         }
 
         // Special
@@ -34383,10 +33527,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_upheaval"	
-        	}
+        	"01"	"imba_warlock_upheaval"
         }
 
         // Special
@@ -34411,10 +33552,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_fatal_bonds"	
-        	}
+        	"01"	"imba_warlock_fatal_bonds"
         }
 
         // Special
@@ -34439,10 +33577,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_rain_of_chaos"	
-        	}
+        	"01"	"imba_warlock_rain_of_chaos"
         }
 
         // Special
@@ -34467,10 +33602,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_shadow_word"	
-        	}
+        	"01"	"imba_warlock_shadow_word"
         }
 
         // Special
@@ -34495,10 +33627,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_upheaval"	
-        	}
+        	"01"	"imba_warlock_upheaval"
         }
 
         // Special
@@ -34523,10 +33652,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_rain_of_chaos"	
-        	}
+        	"01"	"imba_warlock_rain_of_chaos"
         }
 
         // Special
@@ -34551,10 +33677,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_warlock_rain_of_chaos"	
-        	}
+        	"01"	"imba_warlock_rain_of_chaos"
         }
 
         // Special
@@ -34582,10 +33705,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_proximity_mine"
-        	}
+        	"01"	"imba_techies_proximity_mine"
         }
         
         // Special
@@ -34610,10 +33730,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_stasis_trap"
-        	}
+        	"01"	"imba_techies_stasis_trap"
         }
         
         // Special
@@ -34638,10 +33755,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_stasis_trap"
-        	}
+        	"01"	"imba_techies_stasis_trap"
         }
         
         // Special
@@ -34666,10 +33780,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_stasis_trap"
-        	}
+        	"01"	"imba_techies_stasis_trap"
         }
         
         // Special
@@ -34694,15 +33805,8 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_blast_off"
-        	}
-
-        	"02"
-        	{
-        		"imba_techies_proximity_mine"
-        	}
+        	"01"	"imba_techies_blast_off"
+        	"02"	"imba_techies_proximity_mine"
         }
         
         // Special
@@ -34727,10 +33831,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_minefield_sign"
-        	}
+        	"01"	"imba_techies_minefield_sign"
         }
         
         // Special
@@ -34755,10 +33856,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_proximity_mine"
-        	}
+        	"01"	"imba_techies_proximity_mine"
         }
         
         // Special
@@ -34783,10 +33881,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_techies_blast_off"
-        	}
+        	"01"	"imba_techies_blast_off"
         }
         
         // Special
@@ -34814,10 +33909,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_wraithfire_blast"
-        	}
+        	"01"	"imba_wraith_king_wraithfire_blast"
         }
         
         // Special
@@ -34842,10 +33934,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_mortal_strike"
-        	}
+        	"01"	"imba_wraith_king_mortal_strike"
         }
         
         // Special
@@ -34870,10 +33959,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_vampiric_aura"
-        	}
+        	"01"	"imba_wraith_king_vampiric_aura"
         }
         
         // Special
@@ -34898,10 +33984,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_kingdom_come"
-        	}
+        	"01"	"imba_wraith_king_kingdom_come"
         }
         
         // Special
@@ -34932,10 +34015,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_mortal_strike"
-        	}
+        	"01"	"imba_wraith_king_mortal_strike"
         }
         
         // Special
@@ -34960,10 +34040,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_reincarnation"
-        	}
+        	"01"	"imba_wraith_king_reincarnation"
         }
         
         // Special
@@ -34988,10 +34065,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_wraithfire_blast"
-        	}
+        	"01"	"imba_wraith_king_wraithfire_blast"
         }
         
         // Special
@@ -35016,10 +34090,7 @@
 
         "LinkedAbility"
         {
-        	"01"
-        	{
-        		"imba_wraith_king_reincarnation"
-        	}
+        	"01"	"imba_wraith_king_reincarnation"
         }
         
         // Special
