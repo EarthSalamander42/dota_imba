@@ -1,0 +1,12 @@
+<root>
+    <styles>
+ 		<include src="file://{resources}/styles/custom_game/talent_window.css" />
+    </styles>
+	<Panel class="IMBA_Talent_Choice">
+        <Panel hittest="false" id="IMBA_Talent_Choice_Image_Container"/>
+        <Panel hittest="false" class="IMBA_Talent_Choice_Text_Container">
+            <Label hittest="false" id="IMBA_Talent_Choice_Text"/>
+        </Panel>
+        <Panel hittest="false" class="IMBA_Talent_Choice_Overlay"/>
+    </Panel>
+</root>

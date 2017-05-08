@@ -501,6 +501,9 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		-- Set initial spawn setup as having been done
 		PlayerResource:IncrementTeamPlayerCount(player_id)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
+
+		-- This is from imba_talent_events.lua
+		PopulatePlayerHeroImbaTalents(player_id);
 	end, player_id)
 end
 
