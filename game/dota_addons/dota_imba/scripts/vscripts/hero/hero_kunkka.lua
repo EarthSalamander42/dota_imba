@@ -1001,6 +1001,22 @@ function imba_kunkka_x_marks_the_spot:OnUpgrade()
 	end
 end
 
+function imba_kunkka_x_marks_the_spot:CastFilterResultTarget(target)
+    if IsServer() then
+        local caster = self:GetCaster()
+        local casterID = caster:GetPlayerOwnerID()
+        local targetID = target:GetPlayerOwnerID()
+
+        if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+            return UF_FAIL_DISABLE_HELP
+        end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
+    end
+    return UF_SUCCESS
+end
+
 function imba_kunkka_x_marks_the_spot:GetAssociatedSecondaryAbilities()
 	return "imba_kunkka_return"
 end
