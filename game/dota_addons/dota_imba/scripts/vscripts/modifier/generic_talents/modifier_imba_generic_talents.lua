@@ -9,26 +9,38 @@ local function ShallowCopy(orig)
 end
 
 local function RetrieveValueFromTalentTable(talent_name, level)
-    if talent_name and level then
-        local generic_talent_table
-        if IsServer() then
-            generic_talent_table = IMBA_GENERIC_TALENT_LIST
-        else
-            -- TODO consider adding it to addon_init simiar to AbilityKV
-            generic_talent_table = CustomNetTables:GetTableValue("imba_talent_manager", "imba_generic_talent_info")
-        end
+    local e
+    if IsServer() then
+        e = "server"
+    else
+        e = "client"
+    end
 
-        if generic_talent_table and generic_talent_table[talent_name] then
-            local values = generic_talent_table[talent_name].value
+    if talent_name and level then
+        local talent_kv = IMBA_GENERIC_TALENT_LIST[talent_name]
+        if talent_kv then
+            local values = talent_kv.value
             if values then
                 -- Split the values by empty space
-                local value_array = values:gmatch("%S+")
-                if value_array then
-                    -- Can still return null here if level does not exist
-                    return value_array[level]
+                local value_array = {}
+
+                --Convert single line into table
+                for v in values:gmatch("%S+") do
+                    table.insert(value_array, v)
                 end
+
+                -- Can still return null here if level does not exist
+                return value_array[level]
+            else
+                print("missing values "..e)
             end
+        else
+            print("missing talent_kv "..e)
         end
+    else
+        print("missing talent name or level "..e)
+        print("talent_name "..talent_name)
+        print("level"..level)
     end
 
     return nil
@@ -39,19 +51,36 @@ local modifier_imba_generic_talent_base = class({
     IsHidden 				= function(self) return true end,
 	IsPurgable 				= function(self) return false end,
 	IsDebuff 				= function(self) return false end,
+    IsBuff                  = function(self) return true end,
 	RemoveOnDeath 			= function(self) return false end,
     AllowIllusionDuplicate	= function(self) return true end,
     IsPermanent             = function(self) return true end
 })
 
-function modifier_imba_generic_talent_base:OnCreated(kv)
-    local talent_name = self:GetName():gsub("modifier_", "")
-    self.value = RetrieveValueFromTalentTable(talent_name, kv.level)
+function modifier_imba_generic_talent_base:_updateValue()
+    local stack_count = self:GetStackCount()
 
-    if self.value == nil then
-        --Remove if value not valid
-        self:Destroy()
+    -- Can be 0 for server when first created
+    if stack_count > 0 then
+        local talent_name = self:GetName():gsub("modifier_", "")
+        local table_value = RetrieveValueFromTalentTable(talent_name, stack_count)
+
+        if table_value == nil then
+            print("generic talent value not found "..e)
+            --Remove if value not valid
+            self:Destroy()
+        else
+            self.value = tonumber(table_value)
+        end
     end
+end
+
+function modifier_imba_generic_talent_base:OnCreated()
+    self:_updateValue()
+end
+
+function modifier_imba_generic_talent_base:OnRefresh()
+    self:_updateValue()
 end
 
 -----------------------------

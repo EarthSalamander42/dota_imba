@@ -120,7 +120,6 @@
 
 #IMBA_Talent_Choice_Image_Container
 {
-    flow-children: right;
     width: 100%;
     height: 100%;
 }
@@ -150,7 +149,6 @@
 
 .IMBA_Talent_Choice_Overlay,
 .IMBA_Talent_Choice_Text_Container,
-#IMBA_Talent_Choice_Image_Container,
 #IMBA_Talent_Choice_Image_Container
 {
     border-radius: 10px;

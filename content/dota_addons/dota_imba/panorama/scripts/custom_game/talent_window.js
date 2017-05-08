@@ -127,17 +127,36 @@ function LocalizeTalentName(talent_name){
     var localized_name = $.Localize(prefix + talent_name);
 
     if(localized_name !== prefix + talent_name){
+        //For ability names
 		return localized_name;
 	}else{
+        //For generic talent names
 		return $.Localize(talent_name);
     }
 }
 
-function CreateImagePanelForTalent(talent_name, parent_panel){
+function FormatGenericTalentValue(talent_name, talent_value){
+    switch(talent_name){
+        case "imba_generic_talent_magic_resistance":
+        case "imba_generic_talent_evasion":
+        case "imba_generic_talent_attack_life_steal":
+        case "imba_generic_talent_spell_life_steal":
+        case "imba_generic_talent_spell_power":
+        case "imba_generic_talent_cd_reduction":
+        case "imba_generic_talent_bonus_xp":
+            return "+"+talent_value+"%";
+        case "imba_generic_talent_respawn_reduction":
+            return talent_value;
+        default:
+            return "+"+talent_value;
+    }
+}
+
+function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
     if(parent_panel != null){
 
         //Check using generic talent table first
-        var generic_talent_table = CustomNetTables.GetTableValue("imba_talent_manager", "imba_generic_talent_info")
+        var generic_talent_table = CustomNetTables.GetTableValue("imba_talent_manager", "imba_generic_talent_info");
         var generic_talent_image_path = null;
         if(generic_talent_table != null){
             if(generic_talent_table[talent_name] != null){
@@ -154,14 +173,30 @@ function CreateImagePanelForTalent(talent_name, parent_panel){
             var linked_ability_table = CustomNetTables.GetTableValue("imba_talent_manager", "talent_linked_abilities")
             var linked_abilities_list = linked_ability_table[talent_name]
             if(linked_abilities_list){
-                var abilityContainerPanel = $.CreatePanel('Panel', parent_panel, '');
-                for(var index in linked_abilities_list){
+
+                if(Object.keys(linked_abilities_list).length == 1){
                     var imagePanel = $.CreatePanel('DOTAAbilityImage', parent_panel, '');
-                    imagePanel.abilityname = linked_abilities_list[index];
+                    imagePanel.abilityname = linked_abilities_list[1]; //Lua starts at 1
                     imagePanel.style.align = "center center";
+                }else{
+                    var abilityContainerPanel = $.CreatePanel('Panel', parent_panel, '');
+                    abilityContainerPanel.style.align = "center center";
+                    abilityContainerPanel.style.flowChildren = "right";
+
+                    for(var index in linked_abilities_list){
+                        var imagePanel = $.CreatePanel('DOTAAbilityImage', abilityContainerPanel, '');
+                        imagePanel.abilityname = linked_abilities_list[index];
+                    }
                 }
             }else{
-                //TODO set default image
+                //Set default image as hero protrait
+                var heroPanel = $.CreatePanel('DOTAHeroImage', parent_panel, '');
+                heroPanel.heroimagestyle = "landscape";
+                heroPanel.heroname = Entities.GetUnitName(hero_id);
+                heroPanel.style.align = "center center";
+                //128x72 landscape default size
+                heroPanel.style.height = "100px"; //height will be 100px for the image
+                heroPanel.style.width = "177px"; //128 * (100/72)
             }
         }
     }
@@ -182,6 +217,7 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
+//TODO remove if no longer needed
 function AttachToolTip(ability_panel, ability_text){
     ability_panel.ClearPanelEvent("onmouseover");
     ability_panel.ClearPanelEvent("onmouseout");
@@ -206,6 +242,7 @@ function PopulateIMBATalentWindow(){
         //Note that hero_talent_list only populates for heroes picked by players (will not work for -createhero)
         var heroTalentList = CustomNetTables.GetTableValue("imba_talent_manager", "hero_talent_list_"+currentShownUnitID );
         var heroTalentChoices = CustomNetTables.GetTableValue("imba_talent_manager", "hero_talent_choice_"+currentShownUnitID );
+        var generic_talent_table = CustomNetTables.GetTableValue("imba_talent_manager", "imba_generic_talent_info");
 
         if(heroTalentList){
             for(var i=0; i<8; i++){
@@ -221,6 +258,8 @@ function PopulateIMBATalentWindow(){
                         numOfChoices = 6;
                     }
 
+                    var rowLevelIndex = (currentRowLevel-5)/10;
+
                     for(var k=0; k<numOfChoices; k++){
                         var luaIndex = k+1; //Lua tables start at index 1
                         var TalentChoiceID = "Talent_Choice_"+currentRowLevel+"_"+k;
@@ -230,11 +269,14 @@ function PopulateIMBATalentWindow(){
                             var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
                             if(labelChoiceText){
                                 if(TalentChoiceData){
-                                    labelChoiceText.text = LocalizeTalentName(TalentChoiceData);
+                                    var displayText = LocalizeTalentName(TalentChoiceData)
+                                    if(generic_talent_table[TalentChoiceData] && generic_talent_table[TalentChoiceData].value){
+                                        displayText += "\n"+FormatGenericTalentValue(TalentChoiceData, generic_talent_table[TalentChoiceData].value.split(" ")[rowLevelIndex]);
+                                    }
+                                    labelChoiceText.text = displayText;
                                 }else{
                                     labelChoiceText.text = "ERR";
                                 }
-                                AttachToolTip(TalentChoicePanel, LocalizeTalentName(TalentChoiceData));
                             }
 
                             var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
@@ -266,10 +308,8 @@ function PopulateIMBATalentWindow(){
                                 imageChoiceContainer.RemoveAndDeleteChildren();
                                 //Special talents will be abilities
                                 //Generic stat talents will be modifiers
-                                CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer);
+                                CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
                             }
-
-                            //TODO add tooltip
                         }
                     }
                 }
