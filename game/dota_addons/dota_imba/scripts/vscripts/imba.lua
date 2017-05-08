@@ -29,6 +29,8 @@ require('internal/gamemode')
 require('internal/events')
 -- This library used to handle scoreboard events
 require('internal/scoreboard_events')
+-- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
+require('internal/imba_talent_events')
 
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
@@ -1524,6 +1526,7 @@ function GameMode:InitGameMode()
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
 	initScoreBoardEvents()
+	InitPlayerHeroImbaTalents();
 end
 
 -- This is an example console command

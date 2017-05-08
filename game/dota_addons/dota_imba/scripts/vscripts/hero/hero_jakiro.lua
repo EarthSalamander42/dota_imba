@@ -2,7 +2,7 @@
 		Date: 24.03.2017.			]]
 
 -- Copy shallow copy given input
-function ShallowCopy(orig)
+local function ShallowCopy(orig)
     local copy = {}
         for orig_key, orig_value in pairs(orig) do
             copy[orig_key] = orig_value

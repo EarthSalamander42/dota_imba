@@ -1,0 +1,11 @@
+<root>
+    <styles>
+ 		<include src="file://{resources}/styles/custom_game/talent_window.css" />
+    </styles>
+	<Panel class="IMBA_Talent_Row">
+        <Panel class="IMBA_Talent_Level_Container">
+            <Label id="IMBA_Talent_Level"/>
+        </Panel>
+        <Panel id="IMBA_Talent_Specials_Row"/>
+    </Panel>
+</root>
