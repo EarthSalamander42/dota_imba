@@ -34106,4 +34106,208 @@
             }
         }
     }
+
+
+    //=================================================================================================================
+    // Axe Talents
+    //=================================================================================================================
+    "special_bonus_imba_axe_1"  // +90 Berserker's Call radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_berserkers_call"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "90"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_2"  // +1 armor with every hit taken during Berserker's Call, lasts for 4 seconds after it ends.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_berserkers_call"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_FLOAT"
+                "value"         "1.0"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_3"  // +90 Counter helix radius
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_counter_helix"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "90"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_4"  // +30% of your strength added to Counter Helix damage.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_counter_helix"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "30"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_5"  // +150 Berserker's Call taunted attack speed
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_berserkers_call"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "150"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_6"  // +100 Battle Hunger damage per second.
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_battle_hunger"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "100"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_7"  // +400 Culling Blade kill threshold
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_culling_blade"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "400"
+            }
+        }
+    }
+
+    "special_bonus_imba_axe_8"  // +650 Culling Blade cast range (leaps into the target to execute it).
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"             "special_bonus_unique_centaur_2"
+        "AbilityType"           "DOTA_ABILITY_TYPE_ATTRIBUTES"
+        "AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"    "imba_axe_culling_blade"
+        }
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"      "FIELD_INTEGER"
+                "value"         "650"
+            }
+        }
+    }
 }
