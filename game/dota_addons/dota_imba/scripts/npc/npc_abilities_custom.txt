@@ -34839,6 +34839,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_double_edge"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34862,6 +34867,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34885,6 +34895,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_double_edge"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34908,6 +34923,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34932,6 +34952,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_hoof_stomp"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34955,6 +34980,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_return"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -34978,6 +35008,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_return"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -35001,6 +35036,11 @@
 		"BaseClass"						"special_bonus_unique_centaur_2"														
 		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_centaur_stampede"
+        }
 		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
