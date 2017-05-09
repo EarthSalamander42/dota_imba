@@ -132,18 +132,15 @@ local function PopulateHeroTalentLinkedAbilities(hero)
     CustomNetTables:SetTableValue( "imba_talent_manager", "talent_linked_abilities", existing_table )
 end
 
-function PopulatePlayerHeroImbaTalents(player_id)
-    -- This function is used in hero_selection.lua
+local function HasNotPopulatedValues(hero_id)
+    return (CustomNetTables:GetTableValue( "imba_talent_manager", "hero_talent_list_"..hero_id) == nil)
+end
 
-    if PlayerResource:IsValidPlayerID(player_id) then
-        local playerRef = PlayerResource:GetPlayer(player_id)
-        local assignedHero = playerRef:GetAssignedHero()
-
-        if assignedHero then
-            PopulateHeroTalentChoice(assignedHero)
-            PopulateHeroTalentList(assignedHero)
-            PopulateHeroTalentLinkedAbilities(assignedHero)
-        end
+function PopulateHeroImbaTalents(hero)
+    if HasNotPopulatedValues(hero:entindex()) then
+        PopulateHeroTalentChoice(hero)
+        PopulateHeroTalentList(hero)
+        PopulateHeroTalentLinkedAbilities(hero)
     end
 end
 
@@ -158,7 +155,7 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
     if hero and IsValidEntity(hero) then
         local ownerPlayerID = hero:GetPlayerID()
         -- Check that player has granted share hero with player (bit mask 1 is for hero sharing)
-        if ownerPlayerID == thisPlayerID or (PlayerResource:GetUnitShareMaskForPlayer(ownerPlayerID, thisPlayerID) % 1 == 1) then
+        if ownerPlayerID == thisPlayerID or (PlayerResource:GetUnitShareMaskForPlayer(ownerPlayerID, thisPlayerID) % 2 == 1) then
             local hero_talent_list = CustomNetTables:GetTableValue( "imba_talent_manager", "hero_talent_list_"..heroID )
             local hero_talent_choices = CustomNetTables:GetTableValue( "imba_talent_manager", "hero_talent_choice_"..heroID )
             local currentUnspentAbilityPoints = hero:GetAbilityPoints()
@@ -218,6 +215,9 @@ function HandlePlayerUpgradeImbaTalent(unused, kv)
             end
         else
             print("Talent: Invalid hero ownership")
+            print("ownerPlayerID :"..ownerPlayerID)
+            print("thisPlayerID :"..thisPlayerID)
+            print("mask: "..PlayerResource:GetUnitShareMaskForPlayer(ownerPlayerID, thisPlayerID))
         end
     else
         print("Talent: Invalid hero index")

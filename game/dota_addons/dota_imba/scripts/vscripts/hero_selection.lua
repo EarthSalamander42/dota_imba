@@ -503,7 +503,7 @@ function HeroSelection:AssignHero(player_id, hero_name)
 		CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(player_id), "picking_done", {})
 
 		-- This is from imba_talent_events.lua
-		PopulatePlayerHeroImbaTalents(player_id);
+		PopulateHeroImbaTalents(hero);
 	end, player_id)
 end
 
