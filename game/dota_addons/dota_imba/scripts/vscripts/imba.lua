@@ -1021,9 +1021,9 @@ function GameMode:OnAllPlayersLoaded()
 
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_tower_grievous_wounds")
+			building:AddAbility("imba_fountain_grievous_wounds")
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_tower_grievous_wounds")
+			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(1)
 		elseif string.find(building_name, "tower") then
