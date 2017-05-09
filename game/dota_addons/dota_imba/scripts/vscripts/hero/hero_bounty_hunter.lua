@@ -358,7 +358,7 @@ function imba_bounty_hunter_jinada:CastFilterResultTarget(target)
 end
 
 function imba_bounty_hunter_jinada:GetCustomCastErrorTarget(target)	
-	return "Ability can only be used on Tracked enemies"
+	return "#dota_hud_error_shadow_jaunt_track"
 end
 
 function imba_bounty_hunter_jinada:OnSpellStart()
@@ -1056,6 +1056,10 @@ LinkLuaModifier("modifier_imba_headhunter_debuff_illusion", "hero/hero_bounty_hu
 
 function imba_bounty_hunter_headhunter:GetIntrinsicModifierName()
 	return "modifier_imba_headhunter"
+end
+
+function imba_bounty_hunter_headhunter:IsInnateAbility()
+	return true
 end
 
 function imba_bounty_hunter_headhunter:OnProjectileHit(target, location)

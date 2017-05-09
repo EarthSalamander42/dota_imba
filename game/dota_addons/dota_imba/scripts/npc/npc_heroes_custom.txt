@@ -418,9 +418,7 @@
 	//=================================================================================================================
 	"npc_imba_hero_clinkz"
 	{
-		"override_hero"				"npc_dota_hero_clinkz"
-
-		"AttackAnimationPoint"		"0.3"
+		"override_hero"				"npc_dota_hero_clinkz"		
 
 		"Ability1"					"imba_clinkz_strafe"
 		"Ability2"					"imba_clinkz_searing_arrows"

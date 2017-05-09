@@ -23,7 +23,7 @@ function item_imba_sheepstick:CastFilterResultTarget(target)
 			return UF_FAIL_CUSTOM
 		elseif target:IsBuilding() then
 			return UF_FAIL_CUSTOM
-		elseif target:HasModifier("modifier_item_imba_sheepstick_buff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+		elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 			return UF_FAIL_CUSTOM
 		end
 		return UF_SUCCESS
@@ -36,7 +36,7 @@ function item_imba_sheepstick:GetCustomCastErrorTarget(target)
 		return "#dota_hud_error_only_cast_on_self"
 	elseif target:IsBuilding() then
 		return "#dota_hud_error_cant_cast_on_building"
-	elseif target:HasModifier("modifier_item_imba_sheepstick_buff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
+	elseif target:HasModifier("modifier_item_imba_sheepstick_debuff") or target:HasModifier("modifier_imba_lion_hex") or target:HasModifier("modifier_shadow_shaman_voodoo") then
 		return "#dota_hud_error_cant_use_already_hexed"
 	end
 end

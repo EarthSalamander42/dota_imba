@@ -12,6 +12,9 @@ LinkLuaModifier("modifier_imba_cold_front_passive", "hero/hero_lich", LUA_MODIFI
 LinkLuaModifier("modifier_imba_cold_front_debuff", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_cold_front_freeze", "hero/hero_lich", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lich_cold_front:IsInnateAbility()
+    return true
+end
 
 function imba_lich_cold_front:GetIntrinsicModifierName()
     return "modifier_imba_cold_front_passive"
@@ -441,7 +444,7 @@ function imba_lich_frost_armor:CastFilterResultTarget(target)
 end
 
 function imba_lich_frost_armor:GetCustomCastErrorTarget(target)
-    return "Ice Armor is eternally applied to you!"
+    return "dota_hud_error_lich_self_ice_armor"
 end
 
 function imba_lich_frost_armor:IsHiddenWhenStolen()

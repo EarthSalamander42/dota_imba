@@ -1151,12 +1151,12 @@ function imba_pugna_life_drain:GetCustomCastErrorTarget(target)
 
     -- Cannot be cast on self
     if target == caster then
-        return "You cannot suck yourself"
+        return "dota_hud_error_life_drain_self"
     end
 
     -- Cannot be cast on targets already afflicted with Life Drain
     if target:HasModifier(modifier_drain) then
-        return "Target is already afflicted with Life Drain"
+        return "dota_hud_error_life_drain_target"
     end
 end
 

@@ -159,14 +159,6 @@ function imba_enigma_demonic_conversion:CastFilterResultTarget(target)
 	end
 end
 
-function imba_enigma_demonic_conversion:GetCustomCastErrorTarget( target )
-	if self:GetCaster() == target then
-		return "#dota_hud_error_cant_cast_on_self"
-	elseif target:IsHero() then
-		return "Can't target heroes"
-	end
-end
-
 function modifier_eidolon_buffs:OnCreated(var)
 	if IsServer() then
 		local shard_percentage,attacks_to_split = getkvValues(self:GetAbility(),"shard_percentage","attacks_to_split") 
