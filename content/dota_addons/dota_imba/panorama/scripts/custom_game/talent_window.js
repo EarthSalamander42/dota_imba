@@ -285,16 +285,21 @@ function PopulateIMBATalentWindow(){
                                 var currentRowChoiceIndex = heroTalentChoices[currentRowLevel];
 
                                 TalentChoicePanel.RemoveClass("selectable");
+                                TalentChoicePanel.RemoveClass("upgraded");
+                                TalentChoicePanel.RemoveClass("disabled");
                                 //Remove onClick event
                                 TalentChoicePanel.hittest = false;
                                 TalentChoicePanel.ClearPanelEvent("onactivate");
 
                                 if(currentRowChoiceIndex >= 0){
 
-                                    //Add .upgraded class to TalentChoicePanel if user has upgraded the index
-                                    TalentChoicePanel.SetHasClass("upgraded", currentRowChoiceIndex == luaIndex);
-                                    //Add .disabled class to TalentChoicePanel if user has already upgraded the row but not the index
-                                    TalentChoicePanel.SetHasClass("disabled", currentRowChoiceIndex != luaIndex);
+                                    if(currentRowChoiceIndex == luaIndex){
+                                        //Add .upgraded class to TalentChoicePanel if user has upgraded the index
+                                        TalentChoicePanel.AddClass("upgraded");
+                                    }else{
+                                        //Add .disabled class to TalentChoicePanel if user has already upgraded the row but not the index
+                                        TalentChoicePanel.AddClass("disabled");
+                                    }
 
                                 }else if(Entities.GetLevel(currentShownUnitID) >= currentRowLevel && Entities.GetAbilityPoints(currentShownUnitID) > 0){
                                     //Only selectable if entity has the right level and has an ability point to spend

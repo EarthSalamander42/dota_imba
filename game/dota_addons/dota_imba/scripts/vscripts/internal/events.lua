@@ -19,6 +19,7 @@ function GameMode:_OnNPCSpawned(keys)
 
 	if npc:IsRealHero() and npc.bFirstSpawned == nil then
 		npc.bFirstSpawned = true
+        PopulateHeroImbaTalents(npc)
 		GameMode:OnHeroInGame(npc)
 	end
 end
