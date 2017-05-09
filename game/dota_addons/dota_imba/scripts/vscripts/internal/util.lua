@@ -827,7 +827,7 @@ function PickupBountyRune(item, unit)
 
 	-- If this is the first bounty rune spawn, double the base bounty
 	if item.is_initial_bounty_rune then
-		current_bounty = base_bounty * 2
+		current_bounty = current_bounty  * 2
 	end
 
 	-- Adjust value for lobby options
@@ -837,15 +837,23 @@ function PickupBountyRune(item, unit)
 	unit:AddExperience(current_bounty, DOTA_ModifyXP_CreepKill, false, true)
 
 	-- If this is alchemist, increase the gold amount
-	if unit:FindAbilityByName("alchemist_goblins_greed") and unit:FindAbilityByName("alchemist_goblins_greed"):GetLevel() > 0 then
-		current_bounty = current_bounty * 4
+	if unit:FindAbilityByName("imba_alchemist_goblins_greed") and unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetLevel() > 0 then
+		current_bounty = current_bounty * unit:FindAbilityByName("imba_alchemist_goblins_greed"):GetSpecialValueFor("bounty_multiplier")
+
+		-- #7 Talent: Doubles gold from bounty runes
+		if unit:HasTalent("special_bonus_imba_alchemist_7") then
+			current_bounty = current_bounty * unit:FindTalentValue("special_bonus_imba_alchemist_7")
+		end
 	end
 
 	-- Grant the unit gold
 	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_CreepKill)
 
 	-- Show the gold gained message to everyone
-	SendOverheadEventMessage(PlayerResource:GetPlayer(unit:GetPlayerID()), OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)
+
+	-- Play the gold gained sound
+	unit:EmitSound("General.Coins")
 
 	-- Play the bounty rune activation sound to the unit's team
 	EmitSoundOnLocationForAllies(unit:GetAbsOrigin(), "Rune.Bounty", unit)
