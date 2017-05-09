@@ -27,7 +27,7 @@ function base_ability_dual_breath:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
 		-- Do not switch dual breath abilities if it is a stolen spell
-		if IsStolenSpell(caster) then
+		if self:IsStolen() then
 			return nil
 		end
 
@@ -208,12 +208,12 @@ function base_modifier_dual_breath_caster:UpdateHorizontalMotion()
 
 		self:_DualBreathAOEApplyModifier()
 
-		if breath_traveled < self.breath_distance and not IsHardDisabled(caster) then
+		if breath_traveled < self.breath_distance and not caster:IsStunned() and not caster:IsSilenced() and not caster:IsHexed() and not caster:IsNightmared() then
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + self.breath_direction * breath_speed)
 			self.breath_traveled = breath_traveled + breath_speed
 		else
 			caster:InterruptMotionControllers( true )
-			if not IsStolenSpell(caster) then
+			if not ability:IsStolen() then
 				-- Switch breath abilities if spell is not stolen
 				caster:SwapAbilities(ability:GetAbilityName(), self.ability_other_breath_name, false, true)
 			end

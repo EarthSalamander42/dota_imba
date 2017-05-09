@@ -726,6 +726,11 @@ function modifier_imba_bash_of_the_deep_attack:OnAttackLanded( keys )
 
 		-- #3 Talent: Forceful Smack duration increase
 		extend_duration = extend_duration + caster:FindTalentValue("special_bonus_imba_slardar_3")
+
+		-- If the target is a building, do nothing
+		if target:IsBuilding() then
+			return nil
+		end
 		
 		-- Set up variables
 		local continue_looking_lua_stuns = true
@@ -873,6 +878,42 @@ imba_slardar_corrosive_haze = class({})
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_debuff_secondary", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 LinkLuaModifier("modifier_imba_corrosive_haze_slip_debuff", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
+
+function imba_slardar_corrosive_haze:OnInventoryContentsChanged()
+	-- Checks if Slardar now has a scepter, or still has it.
+	if IsServer() then
+		local caster = self:GetCaster()		
+		local rain_ability = "imba_slardar_rain_cloud"
+		local modifier_slardar = "modifier_imba_rain_cloud_slardar"		
+
+		if caster:HasAbility(rain_ability) then
+			local rain_ability_handler = caster:FindAbilityByName(rain_ability)
+			if rain_ability_handler then
+				if caster:HasScepter() then			
+					rain_ability_handler:SetLevel(1)
+					rain_ability_handler:SetHidden(false)					
+				else
+					-- Clear dummy and rain after a game tick
+					Timers:CreateTimer(FrameTime(), function()
+						if rain_ability_handler.dummy and not caster:HasScepter() then									
+							-- Release rain effects
+							ParticleManager:DestroyParticle(rain_ability_handler.particle_rain_fx, false)
+							ParticleManager:ReleaseParticleIndex(rain_ability_handler.particle_rain_fx)
+							
+							caster:RemoveModifierByName(modifier_slardar)
+						end		
+					end)					
+
+					if rain_ability_handler:GetLevel() > 0 then
+						rain_ability_handler:SetLevel(0)
+						rain_ability_handler:SetHidden(true)
+					end					
+				end
+			end
+		end
+	end
+end
+
 
 function imba_slardar_corrosive_haze:GetAOERadius()
 	local caster = self:GetCaster()
@@ -1262,33 +1303,6 @@ LinkLuaModifier("modifier_imba_rain_cloud_slardar", "hero/hero_slardar", LUA_MOD
 LinkLuaModifier("modifier_imba_rain_cloud_buff", "hero/hero_slardar", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_rain_cloud_dummy", "hero/hero_slardar", LUA_MODIFIER_MOTION_HORIZONTAL)
 
-
-function imba_slardar_rain_cloud:OnInventoryContentsChanged()
-	-- Checks if Slardar now has a scepter, or still has it.
-	if IsServer() then
-		local caster = self:GetCaster()		
-		local modifier_slardar = "modifier_imba_rain_cloud_slardar"		
-		
-		if caster:HasScepter() then
-			self:SetLevel(1)
-			self:SetHidden(false)
-		else
-			-- Clear dummy and rain after a game tick
-			Timers:CreateTimer(0.01, function()
-				if self.dummy and not caster:HasScepter() then									
-					-- Release rain effects
-					ParticleManager:DestroyParticle(self.particle_rain_fx, false)
-					ParticleManager:ReleaseParticleIndex(self.particle_rain_fx)
-					
-					caster:RemoveModifierByName(modifier_slardar)
-				end		
-			end)
-			
-			self:SetLevel(0)
-			self:SetHidden(true)
-		end
-	end
-end
 
 function imba_slardar_rain_cloud:GetIntrinsicModifierName()
 	return "modifier_imba_rain_cloud_slardar"
