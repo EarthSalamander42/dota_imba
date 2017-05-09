@@ -20,6 +20,7 @@ imba_enigma_gravity_well       = imba_enigma_gravity_well       or class({
 		IsHiddenWhenStolen         = function(self) return true                                       end,   
 		IsStealable                = function(self) return false                                      end,   
 		GetIntrinsicModifierName   = function(self) return 'modifier_imba_enigma_gravity_well_stacks' end,   
+		IsInnateAbility 		   = function(self) return true 									  end,
 	}) 
 
 LinkLuaModifier("modifier_imba_enigma_malefice",           "hero/hero_enigma", LUA_MODIFIER_MOTION_NONE)

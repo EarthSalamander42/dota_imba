@@ -339,6 +339,8 @@ function GameMode:ModifierFilter( keys )
 			end
 		end
 
+
+
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
 	-------------------------------------------------------------------------------------------------
@@ -883,14 +885,7 @@ function GameMode:DamageFilter( keys )
 				victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
 				keys.damage = 0
 			end
-		end
-
-		-- Decrepify damage counter
-		if victim.decrepify_damage_counter then
-			if damage_type == DAMAGE_TYPE_MAGICAL then
-				victim.decrepify_damage_counter = victim.decrepify_damage_counter + keys.damage
-			end
-		end
+		end		
 
 		-- Damage overhead display
 		if display_red_crit_number then
@@ -920,6 +915,18 @@ function GameMode:DamageFilter( keys )
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
 					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
 				end
+			end
+		end
+
+		-- Centaur Bulging Hide
+		if victim:HasModifier("modifier_imba_return_damage_block") then
+			local return_ability = victim:FindAbilityByName("imba_centaur_return")
+			local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
+			if return_ability and stacks then
+				local damage_block = return_ability:GetSpecialValueFor("damage_block")
+				local block = damage_block * stacks
+
+				keys.damage = keys.damage - block
 			end
 		end
 

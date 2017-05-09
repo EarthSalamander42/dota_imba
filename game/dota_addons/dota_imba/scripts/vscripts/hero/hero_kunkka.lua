@@ -41,6 +41,10 @@ function imba_kunkka_ebb_and_flow:GetIntrinsicModifierName()
     return "modifier_imba_ebb_and_flow_thinker"
 end
 
+function imba_kunkka_ebb_and_flow:IsInnateAbility()
+    return true
+end
+
 function imba_kunkka_ebb_and_flow:IsStealable()
 	return false
 end

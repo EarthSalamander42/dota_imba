@@ -19,6 +19,10 @@ function modifier_imba_faceless_void_chronocharges:GetTexture()
 if imba_faceless_void_timelord == nil then imba_faceless_void_timelord = class({}) end
 LinkLuaModifier("modifier_imba_faceless_void_timelord", "hero/hero_faceless_void.lua", LUA_MODIFIER_MOTION_NONE)	-- increases attack speed by [current attack speed] * 0.15
 
+function imba_faceless_void_timelord:IsInnateAbility()
+	return true
+end
+
 function imba_faceless_void_timelord:GetBehavior()
 	return DOTA_ABILITY_BEHAVIOR_PASSIVE + DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE end
 

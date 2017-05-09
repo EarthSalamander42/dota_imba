@@ -474,39 +474,15 @@ function PrecacheUnitWithQueue( unit_name )
 end
 
 -- Initializes heroes' innate abilities
-function InitializeInnateAbilities( hero )
+function InitializeInnateAbilities( hero )	
 
-	-- List of innate abilities
-	local innate_abilities = {
-		"imba_faceless_void_timelord",
-		"imba_queenofpain_delightful_torment",
-		"imba_techies_minefield_sign",
-		"imba_vengefulspirit_rancor",
-		"vengefulspirit_nether_swap",
-		"imba_venomancer_toxicity",
-		"imba_magnus_magnetize",
-		"imba_enigma_gravity",
-		"imba_troll_warlord_berserkers_rage",
-		"imba_antimage_magehunter",
-		"imba_necrolyte_death_pulse_aux",
-		"imba_sandking_treacherous_sands",
-		"imba_rubick_telekinesis_land",
-		"imba_skywrath_mage_concussive_shot_ghastly",
-		"imba_silencer_arcane_supremacy",
-		"imba_tiny_rolling_stone",
-		"imba_centaur_thick_hide",
-		"imba_kunkka_ebb_and_flow",
-		"imba_necrolyte_sadist",
-		"imba_abaddon_over_channel",
-		"imba_night_stalker_stalker_in_the_night",
-		"imba_tinker_rearm"
-	}
-
-	-- Cycle through any innate abilities found, then upgrade them
-	for i = 1, #innate_abilities do
-		local current_ability = hero:FindAbilityByName(innate_abilities[i])
-		if current_ability then
-			current_ability:SetLevel(1)
+	-- Cycle through all of the heroes' abilities, and upgrade the innates ones
+	for i = 0, 15 do		
+		local current_ability = hero:GetAbilityByIndex(i)		
+		if current_ability and current_ability.IsInnateAbility then
+			if current_ability:IsInnateAbility() then
+				current_ability:SetLevel(1)
+			end
 		end
 	end
 end

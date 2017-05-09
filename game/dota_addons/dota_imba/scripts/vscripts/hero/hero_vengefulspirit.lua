@@ -59,6 +59,7 @@ function imba_vengefulspirit_rancor:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_rancor:IsRefreshable() return false end
 function imba_vengefulspirit_rancor:IsStealable() return false end
 function imba_vengefulspirit_rancor:IsNetherWardStealable() return false end
+function imba_vengefulspirit_rancor:IsInnateAbility() return true end
 -------------------------------------------
 
 function imba_vengefulspirit_rancor:GetIntrinsicModifierName()

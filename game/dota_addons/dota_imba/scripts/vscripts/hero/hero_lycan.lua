@@ -1217,6 +1217,10 @@ LinkLuaModifier("modifier_imba_wolfsbane_wolves", "hero/hero_lycan", LUA_MODIFIE
 LinkLuaModifier("modifier_imba_wolfsbane_lycan", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lycan_wolfsbane:IsInnateAbility()
+	return true
+end
+
 function imba_lycan_wolfsbane:OnUpgrade()
 	-- Ability properties	
 	local caster = self:GetCaster()
@@ -1233,8 +1237,6 @@ function imba_lycan_wolfsbane:OnUpgrade()
 	end
 	
 end
-
-
 
 --wolfsbane's aura
 modifier_imba_wolfsbane_aura = class({})

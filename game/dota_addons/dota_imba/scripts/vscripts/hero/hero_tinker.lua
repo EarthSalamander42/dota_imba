@@ -33,6 +33,10 @@ function imba_tinker_rearm:IsNetherWardStealable()
 	return false
 end
 
+function imba_tinker_rearm:IsInnateAbility()
+	return true
+end
+
 function imba_tinker_rearm:GetAssociatedSecondaryAbilities()
 	return "imba_tinker_technomancy"
 end

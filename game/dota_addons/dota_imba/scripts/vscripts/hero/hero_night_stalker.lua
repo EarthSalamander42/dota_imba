@@ -17,6 +17,10 @@ function imba_night_stalker_stalker_in_the_night:GetIntrinsicModifierName()
     return "modifier_imba_stalker_in_the_night"
 end
 
+function imba_night_stalker_stalker_in_the_night:IsInnateAbility()
+    return true
+end
+
 -- Stalker in the night modifier
 modifier_imba_stalker_in_the_night = class({})
 

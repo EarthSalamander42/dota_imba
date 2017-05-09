@@ -17,6 +17,8 @@ function imba_techies_proximity_mine:IsNetherWardStealable()
     return false
 end
 
+
+
 function imba_techies_proximity_mine:CastFilterResultLocation(location)
     if IsServer() then        
         -- Ability properties
@@ -1783,6 +1785,10 @@ end
 
 function imba_techies_minefield_sign:IsNetherWardStealable()
     return false
+end
+
+function imba_techies_minefield_sign:IsInnateAbility()
+    return true
 end
 
 function imba_techies_minefield_sign:GetAOERadius()

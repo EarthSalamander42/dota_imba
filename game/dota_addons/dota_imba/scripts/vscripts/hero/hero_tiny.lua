@@ -1,4 +1,9 @@
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
+
+function imba_tiny_rolling_stone:IsInnateAbility()
+	return true
+end
+
 function imba_tiny_rolling_stone:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_rolling_stone"
 end

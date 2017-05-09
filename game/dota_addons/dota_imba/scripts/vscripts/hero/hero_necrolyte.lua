@@ -20,6 +20,10 @@ function imba_necrolyte_sadist:GetIntrinsicModifierName()
 	return false
 end
 
+function imba_necrolyte_sadist:IsInnateAbility()
+	return true
+end
+
 modifier_imba_sadist = class({})
 function modifier_imba_sadist:DeclareFunctions()
 	local decFuncs = 
