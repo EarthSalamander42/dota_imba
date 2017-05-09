@@ -254,7 +254,7 @@ function Force( keys )
 		end
 
 		-- Put the ability on cooldown
-		ability:StartCooldown(ability:GetCooldown())
+		ability:StartCooldown(ability:GetCooldown(-1))
 	end
 end
 
@@ -4087,6 +4087,10 @@ function modifier_tower_healing_think:OnCreated()
 
 		self:StartIntervalThink(0.2)
 	end
+end
+
+function modifier_tower_healing_think:OnRefresh()
+	self:OnCreated()
 end
 
 function modifier_tower_healing_think:OnIntervalThink()
