@@ -444,7 +444,6 @@ for i = 21, 100 do
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
-IS_BANNED_PLAYER = false													-- Is this player banned from playing the game?
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Keyvalue tables

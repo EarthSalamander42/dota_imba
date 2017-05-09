@@ -56,18 +56,7 @@ function GameMode:_OnConnectFull(keys)
 	
 	-- Store player's player ID
 	local player_id = keys.PlayerID
-	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))
-
-	-- If this is Baumi, end the game
-	if player_steam_id_64 == "76561198003571172" then
-		IS_BANNED_PLAYER = true
-		GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-		GameRules:SetHeroSelectionTime(1)
-		GameRules:SetPreGameTime(3)
-		GameRules:SetPostGameTime(2)
-		GameRules:SetCustomGameSetupAutoLaunchDelay(3)
-		GameRules:SetCustomGameSetupRemainingTime(0)
-	end
+	local player_steam_id_64 = tostring(PlayerResource:GetSteamID(player_id))	
 end
 
 -- This function is called once a player says something on any chat

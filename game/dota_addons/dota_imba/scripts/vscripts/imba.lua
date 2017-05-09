@@ -1030,17 +1030,7 @@ function GameMode:OnAllPlayersLoaded()
 			building:SetDayTimeVisionRange(1900)
 			building:SetNightTimeVisionRange(800)
 		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Banned player message
-	-------------------------------------------------------------------------------------------------
-
-	if IS_BANNED_PLAYER then
-		Timers:CreateTimer(1, function()
-			Say(nil, "You are banned from playing IMBA. Game will not start.", false)
-		end)
-	end
+	end	
 end
 
 --[[
