@@ -4381,6 +4381,387 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Alchemist's Acid Spray
+	//=================================================================================================================
+	"imba_alchemist_acid_spray"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             		"ability_lua"		
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
+		"AbilityTextureName"			"alchemist_acid_spray"
+		"MaxLevel"						"7"
+		"ScriptFile"					"hero/hero_alchemist"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"900"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"22"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"130 140 150 160 170 180 190"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"soundfile" "soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_acid_spray.vpcf"
+			"particle"	"particles/ui_mouseactions/range_display_grnd.vpcf"
+			"particle"	"particles/ui_mouseactions/range_display.vpcf"
+			"particle"	"particles/ui_mouseactions/range_display_b.vpcf"
+			"particle"	"particles/hero/alchemist/acid_spray_blast.vpcf"
+		}
+		
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"400 475 550 625 625 625 625"
+				"LinkedSpecialBonus"	"special_bonus_imba_alchemist_1"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"16"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"15 20 25 30 35 40 45"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"4 5 6 7 8 9 10"
+				"LinkedSpecialBonus"	"special_bonus_imba_alchemist_2"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"1.0"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_damage"			"5"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_armor_reduction"	"1"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_stacks"			"2 2 3 3 4 4 5"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Alchemist's Unstable Concoction
+	//=================================================================================================================
+	"imba_alchemist_unstable_concoction"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"             		"ability_lua"
+		"ScriptFile"					"hero/hero_alchemist"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"AbilityTextureName"			"alchemist_unstable_concoction"
+		"MaxLevel"						"7"
+		"FightRecapLevel"				"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+		"AbilityCastRange"				"775"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16.0"
+		
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"120"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"soundfile" "soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_projectile.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_explosion.vpcf"
+			"particle"	"particles/generic_gameplay/generic_stunned.vpcf"
+
+			// This particle isn't used because it would need a separate rule to attach to the hands or weapons for each hero
+			// CP1 and CP2 are left and right hands respectively
+			"particle"  "particles/units/heroes/hero_alchemist/alchemist_unstableconc_bottles.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"brew_time"					"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_alchemist_3"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"extra_brew_time"			"0.5"
+			}
+
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun"						"1.75 2.5 3.25 4.0 4.0 4.0 4.0"
+			}
+
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"150 220 290 360 400 440 480"
+			}
+
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"175"
+			}
+
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_increase"			"0 0 0 0 45 90 135"
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"time_per_stack"			"0.02"
+			}
+
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"acid_spray_damage"			"25"
+				"LinkedSpecialBonus"		"special_bonus_imba_alchemist_4"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"900"
+			}
+			
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"vision_range"				"400"
+			}
+		}		
+	}
+
+	//=================================================================================================================
+	// Alchemist: Goblin's Greed
+	//=================================================================================================================
+	"imba_alchemist_goblins_greed"
+	{
+		"BaseClass"             		"ability_lua"
+		"ScriptFile"					"hero/hero_alchemist"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel" 						"7"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCooldown"				"30"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"soundfile" "soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_lasthit_msg_gold.vpcf"
+			"particle"	"particles/hero/alchemist/greevil_midas_touch.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"30"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_gold"			"8 10 12 14 14 14 14"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_bonus_gold"		"5"
+			}
+
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_multiplier"		"1 1.5 2 2.5 3 3.5 4"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bounty_multiplier"		"2"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"greed_duration"		"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alchemist Pet Greevil: Greevil's Greed
+	//=================================================================================================================
+	"imba_alchemist_greevils_greed"
+	{
+		"BaseClass"             		"ability_lua"
+		"ScriptFile"					"hero/hero_alchemist"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"MaxLevel" 						"1"
+	}
+	
+	//=================================================================================================================
+	// Alchemist: Chemical Rage
+	//=================================================================================================================
+	"imba_alchemist_chemical_rage"
+	{
+		"BaseClass"             		"ability_lua"
+		"ScriptFile"					"hero/hero_alchemist"
+		"AbilityTextureName"			"alchemist_chemical_rage"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"MaxLevel" 						"6"
+
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50 100 150 160 170 180"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_alchemist.vsndevts"
+			"soundfile" "soundevents/voscripts/game_sounds_vo_alchemist.vsndevts"
+			"particle"	"particles/status_fx/status_effect_chemical_rage.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage.vpcf"
+			"particle"	"particles/units/heroes/hero_alchemist/alchemist_chemical_rage_hero_effect.vpcf"
+			"particle"	"particles/hero/alchemist/chemical_rage_acid_aura.vpcf"
+		}
+
+		// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25"
+				"LinkedSpecialBonus"	"special_bonus_imba_alchemist_5"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"transformation_time"	"0.35"
+			}
+
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"1.4 1.2 1.0 0.9 0.8 0.75"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health_regen"	"50 75 100 125 150 175"
+				"LinkedSpecialBonus"	"special_bonus_imba_alchemist_6"
+			}
+
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mana_regen"		"4 8 12 16 20 24"
+			}
+
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movespeed"		"40 50 60 70 80 90"
+			}
+
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"scepter_gold_damage"	"2"				
+			}
+		}		
+	}
+
+
+
 	//=================================================================================================================
 	// Antimage Mana Break
 	//=================================================================================================================
@@ -34241,6 +34622,209 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"value"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alchemist's Talents
+	//=================================================================================================================
+	"special_bonus_imba_alchemist_1"	// Acid Spray radius increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_acid_spray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"200"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_2"	// Acid Spray armor reduction
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_acid_spray"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"4"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_3"	// Unstable Concoction duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_unstable_concoction"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_4"	// Unstable Concoction blows stronger on Acid Spray
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_unstable_concoction"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"25"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_5"	// Chemical Rage duration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_chemical_rage"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_6"	// Chemical Rage health regeneration increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_chemical_rage"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"75"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_7"	// Doubles gold from bounty runes
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_goblins_greed"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_alchemist_8"	// Halves Greevil's Greed's cooldown
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_alchemist_goblins_greed"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"15"
 			}
 		}
 	}
