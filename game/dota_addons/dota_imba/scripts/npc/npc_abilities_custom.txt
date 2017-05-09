@@ -8437,15 +8437,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_malefice"
-		"AOERadius"						"%glitch_radius"
+		"AbilityTextureName"			"enigma_malefice"		
+	    "MaxLevel"     					"7"
+	    "ScriptFile"      				"hero/hero_enigma"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8463,14 +8464,14 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"15"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"110 120 130 140"
+		"AbilityManaCost"				"110 120 130 140 150 160 170"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8479,107 +8480,47 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"tick_damage"				"30 50 70 90"
+				"tick_damage"				"30 50 70 90 100 110 120"
 			}
+
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tick_interval"				"2.0"
+				"var_type"					"FIELD_INTEGER"
+				"tick_interval"				"2"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.25 0.5 0.75 1.0"
+				"stun_duration"				"0.25 0.5 0.75 1 1 1 1"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"tick_amount"				"4"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"total_duration"			"6.0"
-			}
+				"total_duration"			"4"
+				"LinkedSpecialBonus"		"special_bonus_imba_enigma_1"
+			}			
+
 			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"glitch_radius"				"225"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"glitch_pull"				"160 190 220 250"
-			}
-			"08"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"pull_delay"				"0.4"
 			}
-		}
 
-		"OnSpellStart"
-		{
-			"RunScript"
+			"07"
 			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"Malefice"
-
-				"sound_cast"				"Hero_Enigma.Malefice"
-				"modifier_target"			"modifier_imba_enigma_malefice"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"well_pull_strength" 		"50 60 70 80 100 120 140"
+			}									
 		}
 
-		"Modifiers"
-		{
-			"modifier_imba_enigma_malefice"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%total_duration"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"StatusEffectName"			"particles/status_fx/status_effect_enigma_malefice.vpcf"
-				"StatusEffectPriority"		"10"
-
-				"EffectName"				"particles/units/heroes/hero_enigma/enigma_malefice.vpcf"
-				"EffectAttachType"			"follow_origin"
-
-				"ThinkInterval"				"%tick_interval"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"MaleficeTick"
-
-						"sound_tick"		"Hero_Enigma.MaleficeTick"
-						"particle_start"	"particles/hero/enigma/malefice_targetstart.vpcf"
-						"particle_travel"	"particles/hero/enigma/malefice_travel.vpcf"
-						"particle_end"		"particles/hero/enigma/malefice_targetend.vpcf"
-					}
-				}
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"MaleficeTick"
-
-						"sound_tick"		"Hero_Enigma.MaleficeTick"
-						"particle_start"	"particles/hero/enigma/malefice_targetstart.vpcf"
-						"particle_travel"	"particles/hero/enigma/malefice_travel.vpcf"
-						"particle_end"		"particles/hero/enigma/malefice_targetend.vpcf"
-					}
-				}
-			}
-		}
 	}
 
 	//=================================================================================================================
@@ -8589,14 +8530,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"enigma_demonic_conversion"
+    	"MaxLevel"   				    "7"
+   		"ScriptFile"     			    "hero/hero_enigma"    
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8609,10 +8552,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.3"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"35"
+		"AbilityCooldown"				"35 35 35 35 32 29 26"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8627,101 +8570,61 @@
 				"var_type"					"FIELD_INTEGER"
 				"eidolon_count"				"3"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"attacks_to_split"			"6"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"36"
+				"duration"					"35 35 35 35 35 40 40"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"child_duration"			"12"
+				"child_duration"			"3 3 3 3 6 9 12"
 			}
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_health"				"180 210 240 270"
-			}
+				"base_health"				"180 200 220 240 240 240 240"
+			}			
+
 			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"health_per_level"			"18"
-			}
+		    {
+		        "var_type"      			"FIELD_INTEGER"
+		        "shard_percentage" 			"5 5 5 5 10 15 20"
+		        "LinkedSpecialBonus"		"special_bonus_imba_enigma_3"
+		    }
+
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_damage"				"20 28 36 44"
-			}
+			}			
+
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_level"			"3"
-			}
+				"base_ms"					"260 280 300 320 340 370"
+			}			
+
 			"09"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"base_ms"					"260 280 300 320"
+				"var_type"     				"FIELD_FLOAT"
+				"increased_mass_duration" 	"2.5"
 			}
+
 			"10"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"ms_per_level"				"1"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"DemonicConversion"
-
-				"sound_cast"				"Hero_Enigma.Demonic_Conversion"
-				"modifier_eidolons"			"modifier_imba_enigma_eidolon"
-				"modifier_buffs"			"modifier_imba_enigma_eidolon_buffs"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_enigma_eidolon"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_enigma.lua"
-						"Function"			"EidolonAttack"
-
-						"modifier_eidolons"	"modifier_imba_enigma_eidolon"
-						"modifier_buffs"	"modifier_imba_enigma_eidolon_buffs"
-					}
-				}
-			}
-
-			"modifier_imba_enigma_eidolon_buffs"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"		"%damage_per_level"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_per_level"
-				}
-			}
+				"var_type"     				"FIELD_INTEGER"
+				"increased_mass_pull_pct" 	"7"
+			}																	
 		}
 	}
 
@@ -8732,15 +8635,16 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"				"1"
-		"AbilityTextureName"			"enigma_midnight_pulse"
-		"AOERadius"						"%radius"
+		"AbilityTextureName"			"enigma_midnight_pulse"		
+	    "ScriptFile" 					"hero/hero_enigma"
+	    "MaxLevel"  					"7"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8755,14 +8659,14 @@
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.1"
 		"AbilityCastAnimation"			"ACT_DOTA_MIDNIGHT_PULSE"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"35"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"95 110 125 140"
+		"AbilityManaCost"				"95 110 125 140 145 150 155"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8772,62 +8676,52 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"550"
-			}
+			}			
+
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"singularity_radius"		"10"
-			}
-			"03"
-			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_per_tick"			"3.0 3.5 4.0 4.5"
+				"damage_per_tick"			"3.0 3.75 4.5 5.25 5.25 5.25 5.25"
 			}
-			"04"
+
+			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"duration"					"11"
-			}
+			}			
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"pull_distance"				"60 70 80 90"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"MidnightPulse"
-				"Target"					"POINT"
-
-				"sound_cast"				"Hero_Enigma.Midnight_Pulse"
-				"particle_pulse"			"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
-				"modifier_singularity"		"modifier_imba_enigma_black_hole_singularity"
-			}
+				"well_pull_strength"		"45 45 45 45 60 75 90"
+			}									
 		}
 	}
 
 	//=================================================================================================================
-	// Enigma's Event Horizon
+	// Enigma's Gravity Well
 	//=================================================================================================================
-	"imba_enigma_gravity"
+	"imba_enigma_gravity_well"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"BaseClass"							"ability_lua"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
+		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
 		"AbilityTextureName"				"custom/imba_enigma_gravity"
 		"MaxLevel"							"1"
+    	"ScriptFile" 						"hero/hero_enigma"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1200"
+		"AbilityCastRange"					"900"
+    	"AbilityManaCost"		            "25"
+
+    	// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"					"60"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8836,45 +8730,32 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"radius"					"900"
 			}
-			// Stun duration increase hardcoded in the modifier filter
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_increase"				"20"
-			}
+
+	    	"02"
+	        {
+	        	"var_type"  				"FIELD_INTEGER"
+	        	"duration"   				"30"
+	      	}
+
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"think_interval"			"0.2"
+				"var_type" 					"FIELD_INTEGER"
+				"stack_bonus_radius" 		"20"
 			}
-		}
 
-		"Modifiers"
-		{
-			"modifier_imba_enigma_gravity_aura"
+			"04"
 			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Aura"						"modifier_imba_enigma_gravity"
-				"Aura_Radius"				"%radius"
-				"Aura_Teams"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"				"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-				"Aura_ApplyToCaster"		"0"
+				"var_type" 					"FIELD_INTEGER"
+				"stack_bonus_pull" 			"5"			
 			}
 
-			"modifier_imba_enigma_gravity"
+			"05"
 			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-			}
+				"var_type"					"FIELD_INTEGER"
+				"pull_strength" 			"60 70 80 90 90 90 90"			
+			}	
 		}
 	}
 
@@ -8885,7 +8766,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
+		"BaseClass"							"ability_lua"
 		"AbilityType"						"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -8893,8 +8774,11 @@
 		"AbilityUnitDamageType"				"DAMAGE_TYPE_PURE"
 		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_YES"
 		"FightRecapLevel"					"2"
-		"AbilityTextureName"				"enigma_black_hole"
-		"AOERadius"							"%radius"
+		"AbilityTextureName"				"enigma_black_hole"		
+	    "MaxLevel"           				"6"
+	    "ScriptFile"        				"hero/hero_enigma"
+
+	    "HasScepterUpgrade"					"1"
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -8915,14 +8799,14 @@
 		"AbilityCastPoint"					"0.3"
 		"AbilityChannelTime"				"4.0"
 		"AbilityCastAnimation"				"ACT_DOTA_CAST_ABILITY_4"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"200 180 160"
+		"AbilityCooldown"					"200 180 160 155 150 145"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"275 325 375"
+		"AbilityManaCost"					"275 325 375 390 405 420"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -8932,191 +8816,38 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"radius"					"420"
+				"LinkedSpecialBonus"		"special_bonus_imba_enigma_6"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"base_pull_distance"		"1000"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"stack_pull_distance"		"30"
-			}
+			}									
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"base_pull_speed"			"100 140 180"
-			}
+				"damage"					"50 100 150 175 200 225"
+			}			
+
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_pull_speed"			"8"
-			}
+				"well_pull_strength" 		"100 125 150 175 200 225"			
+			}		
+
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"inner_pull_speed"			"50"
-			}
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"50 100 150"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"pull_speed_scepter"		"100"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"damage_scepter"			"5.25"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"BlackHole"
-				"Target"					"POINT"
-
-				"sound_cast"				"Hero_Enigma.Black_Hole"
-				"sound_ti5"					"Imba.EnigmaBlackHoleTi5"
-				"particle_hole_ti5"			"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5.vpcf"
-				"particle_hole"				"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
-				"modifier_debuff"			"imba_enigma_black_hole"
-				"modifier_debuff_ti5"		"imba_enigma_black_hole_ti5"
-				"modifier_singularity"		"modifier_imba_enigma_black_hole_singularity"
-			}
-		}
-
-		"OnChannelFinish"
-		{
-			"RunScript"
-			{
-				"ScriptFile"				"hero/hero_enigma.lua"
-				"Function"					"BlackHoleEnd"
-
-				"sound_stop"				"Hero_Enigma.Black_Hole.Stop"
-			}
-		}
-
-		"Modifiers"
-		{
-			"imba_enigma_black_hole"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.05"
-
-				"StatusEffectName"			"particles/status_fx/status_effect_enigma_blackhole_tgt.vpcf"
-				"StatusEffectPriority"		"11"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffTick"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffStart"
-
-						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-						"particle_screen"		"particles/hero/enigma/screen_blackhole_indicator.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffEnd"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"imba_enigma_black_hole_ti5"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"0.05"
-
-				"StatusEffectName"			"particles/econ/items/enigma/enigma_world_chasm/status_effect_enigma_blackhole_tgt_ti5.vpcf"
-				"StatusEffectPriority"		"11"
-
-				"ThinkInterval"				"1.0"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffTick"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffStart"
-
-						"particle_target"		"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_target_ti5.vpcf"
-						"particle_screen"		"particles/hero/enigma/screen_blackhole_indicator.vpcf"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"			"hero/hero_enigma.lua"
-						"Function"				"BlackHoleDebuffEnd"
-					}
-				}
-
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_enigma_black_hole_singularity"
-			{
-				"Passive"					"1"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
+				"pull_strength" 			"100 140 180 190 200 210"			
+			}			
 		}
 	}
 
@@ -34310,4 +34041,207 @@
             }
         }
     }
+
+    //=================================================================================================================
+	// Enigma Talents
+	//=================================================================================================================
+	"special_bonus_imba_enigma_1"	// Malefice Duration bonus (2s)
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_malefice"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"2"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_2"	// Malefice Effect Radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_malefice"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"215"
+			}
+		}
+	}
+		
+	"special_bonus_imba_enigma_3"	// Eidolon Attribute Share
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_demonic_conversion"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"15"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_4"	// Black Hole Cast Range
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"225"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_5"	// Singularity Pull & Speed
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_gravity_well"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"15"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_6"	// Black Hole Radius
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"80"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_7"	// Black Hole Duration
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_black_hole"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"value"			"1.0"
+			}
+		}
+	}
+
+	"special_bonus_imba_enigma_8"	// Cast Eidolons on heroes
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"special_bonus_unique_centaur_2"                                                        
+		"AbilityType"			"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		"LinkedAbility"
+		{
+			"01"		"imba_enigma_demonic_conversion"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"value"			"1"
+			}
+		}
+	}
 }
