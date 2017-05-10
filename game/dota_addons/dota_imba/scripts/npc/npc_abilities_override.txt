@@ -9344,32 +9344,31 @@
 	//=================================================================================================================
 	"storm_spirit_static_remnant"
 	{
-		"AbilityCooldown"				"3.0"
-		"AbilityDuration"				"30.0"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"100"
+		"AbilityDuration"				"12 12 12 12 28 44 60"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"static_remnant_radius"			"275"		
+				"static_remnant_radius"			"235 235 235 235 255 275 295"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"static_remnant_damage_radius"	"325"
+				"static_remnant_damage_radius"	"260 260 260 260 290 320 350"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"static_remnant_delay"			"0.5"
+				"static_remnant_delay"			"1.0 1.0 1.0 1.0 0.75 0.5 0.25"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"static_remnant_damage"			"140 180 220 260"
+				"static_remnant_damage"			"140 180 220 260 280 300 320"
 			}
 		}
 	}
@@ -9379,25 +9378,25 @@
 	//=================================================================================================================
 	"storm_spirit_electric_vortex"
 	{
-		"AbilityCastPoint"				"0.2"
-		"AbilityCastRange"				"450 600 750 900"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"18.0 16.0 14.0 12.0"
-		"AbilityDuration"				"1.6 1.9 2.2 2.5"
-	
-		"AbilityManaCost"				"85"
+		"AbilityCastRange"				"300 300 300 300 450 600 750"
+
+		"AbilityCooldown"				"21 20 19 18 17 16 15"
+
+		"AbilityDuration"				"1.6 1.9 2.2 2.5 2.6 2.7 2.8"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"electric_vortex_pull_units_per_second"		"200 250 300 350"		
+				"electric_vortex_pull_units_per_second"		"100 100 100 100 150 200 250"		
 			}
 			"02"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"electric_vortex_pull_tether_range"			"1200.0"		
+				"var_type"									"FIELD_INTEGER"
+				"electric_vortex_pull_tether_range"			"1200"		
 			}
 			"03"
 			{
@@ -9412,13 +9411,13 @@
 			"05"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"duration"									"1.6 1.9 2.2 2.5"
+				"duration"									"1.6 1.9 2.2 2.5 2.6 2.7 2.8"
 				"LinkedSpecialBonus"						"special_bonus_unique_storm_spirit"
 			}
 			"06"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"radius_scepter"							"750"
+				"radius_scepter"							"650"
 			}
 		}
 	}
@@ -9432,8 +9431,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"1.0"
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.0"
 			}
 		}
 	}
@@ -9443,16 +9442,18 @@
 	//=================================================================================================================
 	"storm_spirit_overload"
 	{
-		"AbilityDuration"				"0.75"
-		
-		"AbilityDamage"					"40 60 80 100"
+		"MaxLevel"						"7"
+
+		"AbilityDuration"				"0.6 0.6 0.6 0.6 0.73 0.86 1.0"
+
+		"AbilityDamage"					"40 60 80 100 110 120 130"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"overload_aoe"					"330"
+				"overload_aoe"					"300 300 300 300 325 350 375"
 			}
 			"02"
 			{
@@ -9462,12 +9463,12 @@
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"overload_attack_slow"			"-60"
+				"overload_attack_slow"			"-50"
 			}
 			"04"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"tooltip_duration"				"0.75"
+				"tooltip_duration"				"0.6 0.6 0.6 0.6 0.73 0.86 1.0"
 			}
 		}
 	}
@@ -9477,292 +9478,55 @@
 	//=================================================================================================================
 	"storm_spirit_ball_lightning"
 	{
-		"AbilityCastPoint"				"0.3"
+		"MaxLevel"						"6"
 
-		"AbilityDamage"					"8 12 16"
-		
-		"AbilityManaCost"				"30"
+		"AbilityCastPoint"				"0.3 0.3 0.3 0.25 0.2 0.15"
+
+		"AbilityDamage"					"8 12 16 17 18 19"
+
+		"AbilityManaCost"				"30 30 30 20 10 0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_initial_mana_percentage"	"7 6 5"		
+				"ball_lightning_initial_mana_percentage"	"8 8 8 7 6 5"
 			}
 			"02"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_initial_mana_base"			"30 20 10"		
+				"ball_lightning_initial_mana_base"			"30 30 30 20 10 0"
 			}
 			"03"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_move_speed"					"1600 2200 3000"		
+				"ball_lightning_move_speed"					"1400 2000 2600 2800 3000 3200"
 			}
 			"04"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_aoe"						"200 250 300"		
+				"ball_lightning_aoe"						"125 200 275 290 305 320"
 			}
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_travel_cost_base"			"12"		
+				"ball_lightning_travel_cost_base"			"12 12 12 11 10 9"
 			}
 			"06"
 			{
 				"var_type"									"FIELD_FLOAT"
-				"ball_lightning_travel_cost_percent"		"0.7"		
+				"ball_lightning_travel_cost_percent"		"0.7 0.7 0.7 0.66 0.63 0.6"
 			}
 			"07"
 			{
 				"var_type"									"FIELD_INTEGER"
-				"ball_lightning_vision_radius"				"400"		
+				"ball_lightning_vision_radius"				"400"
 			}
 			"08"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"blocker_duration"							"5"		
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Techies: Land Mines
-	//=================================================================================================================
-	"techies_land_mines"
-	{
-		"AbilityCastRange"				"300"
-
-		"AbilityCooldown"				"12 11 10 9"
-	
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"450"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"proximity_threshold"		"1.75 1.5 1.25 1.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 450 600 750"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"burn_duration"				"5"
-			}	
-			"05"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"building_damage_pct"		"25"
-			}	
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activation_delay"			"0.75"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Techies: Stasis Trap
-	//=================================================================================================================
-	"techies_stasis_trap"
-	{
-		"AbilityCastRange"				"300"
-
-		"AbilityCastPoint"				"0.5"
-
-		"AbilityCooldown"				"18 15 12 9"
-
-		"AbilitySpecial"
-		{		
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"activation_radius"			"450"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"explode_delay"				"0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_radius"				"650"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"2 3 4 5"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activation_time"			"1.5"
-			}	
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"1.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Techies: Blast off!
-	//=================================================================================================================
-	"techies_suicide"
-	{
-		"AbilityCastRange"				"1000 1200 1400 1600"
-
-		"AbilityCooldown"				"35 30 25 20"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450 500 550 600"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"300 450 600 750"
-				"LinkedSpecialBonus"	"special_bonus_unique_techies"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"silence_duration"		"4 5 6 7"
-			} 
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_cost"				"35"
-			} 
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"0.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Techies: bonus Blast Off! damage
-	//=================================================================================================================
-	"special_bonus_unique_techies"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Techies: Remote Mines
-	//=================================================================================================================
-	"techies_remote_mines"
-	{
-		"AbilityCastRange"				"550 625 700"
-		"AbilityCastPoint"				"1.4"
-		
-		"AbilityCooldown"				"10.0"
-	
-		"AbilityManaCost"				"180 240 300"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_mines"					"100"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"300 450 600"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius"					"450"
-			}		
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"600"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"activation_time"			"0.5"
-			}	
-			"06"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_tooltip"		"550 625 700"
-			}				
-			"07"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_scepter"			"450 600 750"
-			}
-			"08"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"radius_scepter"			"550"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"cast_range_scepter"		"1000"
-			}			
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"vision_radius"				"600"
-			}
-			"11"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"vision_duration"			"3.0"
-			}
-			"12"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"model_scale"				"5 20 35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Techies: Remote Mine Self Detonate
-	//=================================================================================================================
-	"techies_remote_mines_self_detonate"
-	{
-		"MaxLevel"						"3"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450"
+				"var_type"									"FIELD_INTEGER"
+				"blocker_duration"							"5"
 			}
 		}
 	}
@@ -9772,30 +9536,47 @@
 	//=================================================================================================================
 	"templar_assassin_refraction"
 	{
-		"AbilityManaCost"					"75"
-		
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"17 17 17 17 16 15 14"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"instances"					"6 8 10 12"
+				"instances"					"4 5 6 7 8 9 10"
 				"LinkedSpecialBonus"		"special_bonus_unique_templar_assassin"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"70 80 90 100"
+				"bonus_damage"				"30 50 70 90 100 110 120"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_threshold"			"10"
+				"damage_threshold"			"5"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"30.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"17"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Templar Assassin: bonus Refraction instances
+	//=================================================================================================================
+	"special_bonus_unique_templar_assassin"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"4"
 			}
 		}
 	}
@@ -9805,19 +9586,23 @@
 	//=================================================================================================================
 	"templar_assassin_meld"
 	{
-		"AbilityCooldown"					"4.0"
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"6 6 6 6 5.5 5.0 4.5"
+
+		"AbilityDuration"					"10"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_damage"							"100 150 200 250"
+				"bonus_damage"							"80 120 160 200 220 240 260"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_armor"							"-4 -6 -8 -10"
+				"bonus_armor"							" -3 -5 -7 -9 -10 -11 -12"
 			}
 			"03"
 			{
@@ -9832,22 +9617,24 @@
 	//=================================================================================================================
 	"templar_assassin_psi_blades"
 	{
+		"MaxLevel"							"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_range"		"175 250 325 400"
+				"bonus_attack_range"		"90 140 190 240 270 300 330"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_range"		"800"
+				"attack_spill_range"		"590 630 670 710 750 790 830"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_spill_width"		"100"
+				"attack_spill_width"		"75 75 75 75 90 105 120"
 			}
 		}
 	}	
@@ -9857,38 +9644,35 @@
 	//=================================================================================================================
 	"templar_assassin_psionic_trap"
 	{
-		"AbilityCastRange"				"2500"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"10.0 7.0 4.0"
-	
-		"AbilityManaCost"				"0"
+		"MaxLevel"							"6"
+
+		"AbilityCooldown"					"11 8 5 4 3 2"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"max_traps"					"30"
+				"var_type"						"FIELD_INTEGER"
+				"max_traps"						"5 8 11 14 17 20"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"trap_fade_time"			"0.5"
+				"var_type"						"FIELD_FLOAT"
+				"trap_fade_time"				"2.0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_min_tooltip"	"40"
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_min_tooltip"	"30"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"movement_speed_max_tooltip"	"60"
+				"var_type"						"FIELD_INTEGER"
+				"movement_speed_max_tooltip"	"90"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
+				"var_type"						"FIELD_INTEGER"
 				"trap_duration_tooltip"			"5"
 			}
 		}
@@ -9904,12 +9688,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus"		"-40"
+				"movement_speed_bonus"		"-30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trap_radius"				"500"
+				"trap_radius"				"400"
 			}
 			"03"
 			{
@@ -9919,7 +9703,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus_stage"		"-5"
+				"movement_speed_bonus_stage"		"-10"
 			}	
 		}
 	}
@@ -9929,19 +9713,17 @@
 	//=================================================================================================================
 	"templar_assassin_self_trap"
 	{
-		"AbilityCastPoint"				"0.0"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus"		"-40"
+				"movement_speed_bonus"		"-30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trap_radius"				"500"
+				"trap_radius"				"400"
 			}
 			"03"
 			{
@@ -9951,22 +9733,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_speed_bonus_stage"		"-5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Templar Assassin: bonus Refraction instances
-	//=================================================================================================================
-	"special_bonus_unique_templar_assassin"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"6"
+				"movement_speed_bonus_stage"		"-10"
 			}
 		}
 	}
@@ -9976,11 +9743,11 @@
 	//=================================================================================================================
 	"terrorblade_reflection"
 	{
-		"AbilityCastRange"					"1200"
+		"MaxLevel"							"7"
 
-		"AbilityCooldown"					"21 18 15 12"
+		"AbilityCastRange"					"900"
 
-		"AbilityManaCost"					"50"
+		"AbilityCooldown"					"22 20 18 16 15 14 13"
 
 		"AbilitySpecial"
 		{
@@ -9991,28 +9758,28 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_damage"	"-60.0 -40.0 -20.0 0.0"
+				"var_type"					"FIELD_INTEGER"
+				"illusion_outgoing_damage"	"-75 -50 -25 0 0 0 0"
 			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"illusion_outgoing_tooltip"	"40.0 60.0 80.0 100.0"
+				"var_type"					"FIELD_INTEGER"
+				"illusion_outgoing_tooltip"	"25 50 75 100 100 100 100"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"25"
+				"move_slow"					"25 25 25 25 28 31 34"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow_tooltip"		"25"
+				"attack_slow_tooltip"		"25 25 25 25 28 31 34"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1200"
+				"range"						"900"
 			}
 		}
 	}
@@ -10022,36 +9789,36 @@
 	//=================================================================================================================
 	"terrorblade_conjure_image"
 	{
-		"AbilityCastPoint"				"0.15"
+		"MaxLevel"							"7"
 
-		"AbilityCooldown"				"12.0"
+		"AbilityCooldown"					"16 16 16 16 15 14 13"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"illusion_duration"							"36.0"
+				"var_type"									"FIELD_INTEGER"
+				"illusion_duration"							"34 35 36 37 38 39 40"
 			}
 			"02"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"illusion_outgoing_damage"					"-40.0"		
+				"var_type"									"FIELD_INTEGER"
+				"illusion_outgoing_damage"					"-70 -60 -50 -40 -35 -30 -25"
 			}
 			"03"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"illusion_outgoing_tooltip"					"60.0"
+				"var_type"									"FIELD_INTEGER"
+				"illusion_outgoing_tooltip"					"30 40 50 60 65 70 75"
 			}
 			"04"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"illusion_incoming_damage"					"300.0 250.0 200.0 150.0"
+				"var_type"									"FIELD_INTEGER"
+				"illusion_incoming_damage"					"300 300 300 300 250 200 150"
 			}
 			"05"
 			{
-				"var_type"									"FIELD_FLOAT"
-				"illusion_incoming_damage_total_tooltip"	"400.0 350.0 300.0 250.0"
+				"var_type"									"FIELD_INTEGER"
+				"illusion_incoming_damage_total_tooltip"	"400 400 400 400 350 300 250"
 			}		
 		}
 	}
@@ -10061,46 +9828,44 @@
 	//=================================================================================================================
 	"terrorblade_metamorphosis"
 	{
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"135.0 120.0 105.0 90.0"
+		"MaxLevel"						"7"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"60"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"40 44 48 52 56 60 64"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"transformation_time"	"0.2"
+				"transformation_time"	"0.35"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"base_attack_time"		"1.4"
+				"base_attack_time"		"1.5 1.5 1.5 1.5 1.45 1.45 1.4"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"422"
+				"bonus_range"			"400 400 400 400 400 450 450"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"tooltip_attack_range"	"550"
+				"tooltip_attack_range"	"550 550 550 550 550 600 600"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40 60 80 100"
+				"bonus_damage"			"30 50 70 90 100 110 120"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_loss"			"-5 -10 -15 -20"
+				"speed_loss"			"25 25 25 25 15 5 0"
 			}
 			"08"
 			{
@@ -10115,20 +9880,20 @@
 	//=================================================================================================================
 	"terrorblade_sunder"
 	{
-		"AbilityCooldown"				"100 60 20"
+		"MaxLevel"						"6"
 
-		"AbilityCastRange"				"600"
+		"AbilityCooldown"				"120 80 40 35 30 25"
 
-		"AbilityManaCost"				"100 50 0"
+		"AbilityManaCost"				"200 100 0 0 0 0"
 
-		"AbilityCastPoint"				"0.15"
+		"AbilityCastPoint"				"0.35 0.35 0.35 0.3 0.2 0.1"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_point_minimum_pct"		"1"
+				"hit_point_minimum_pct"		"24 24 24 16 8 0"
 			}
 		}
 	}
@@ -10143,7 +9908,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"16"
+				"value"				"20"
 			}
 		}
 	}
