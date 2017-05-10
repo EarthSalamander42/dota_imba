@@ -5,6 +5,7 @@
 
 //Timer for talent window to close when user selects another unit
 var _current_window_check_timer = null;
+var _current_show_all_text_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
@@ -117,10 +118,27 @@ function CloseIMBATalentWindowWhenDeselectUnit(){
             }
         }
 
-        talentWindow.SetHasClass("show_all_text", GameUI.IsAltDown());
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
 
         //Rerun this check until window is force closed or stopped by the other function
         _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
+    }
+}
+
+function HandleShowAllTextTimer(){
+    var talentWindow = $.GetContextPanel();
+    talentWindow.SetHasClass("show_all_text", GameUI.IsAltDown());
+
+    if(talentWindow.BHasClass("preview") || talentWindow.BHasClass("show_talent_window")){
+        _current_show_all_text_timer = $.Schedule(0.1, HandleShowAllTextTimer);
+    }else{
+        _current_show_all_text_timer = null;
+    }
+}
+
+function ShowAllTextWhenTalentWindowVisibleAndAltIsDown(){
+    if(_current_show_all_text_timer == null){
+        HandleShowAllTextTimer();
     }
 }
 
@@ -390,6 +408,7 @@ function InsertIMBATalentButton(){
         //Allow preview even if it is an illusion/clone
         PopulateIMBATalentWindow();
         talentWindow.AddClass(PREVIEW_CLASS)
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
     });
 
     newButton.SetPanelEvent("onmouseout", function(){
@@ -410,6 +429,5 @@ $.Schedule(2, InitializeIMBATalentWindow);
 CustomNetTables.SubscribeNetTableListener( "imba_talent_manager", OnTalentChoiceUpdated );
 
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
-//TODO when user click on talent, inform server which will inform client of what was successfully learnt
 //TODO animate imba talent button
 
