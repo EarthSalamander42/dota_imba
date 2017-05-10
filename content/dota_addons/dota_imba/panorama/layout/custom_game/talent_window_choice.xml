@@ -8,5 +8,6 @@
             <Label hittest="false" id="IMBA_Talent_Choice_Text"/>
         </Panel>
         <Panel hittest="false" class="IMBA_Talent_Choice_Overlay"/>
+        <Panel hittest="false" class="IMBA_Talent_Choice_Glow"/> <!-- This must always exist for animation sync -->
     </Panel>
 </root>

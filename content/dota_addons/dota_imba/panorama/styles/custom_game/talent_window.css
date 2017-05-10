@@ -59,11 +59,13 @@
 
 #IMBA_Talent_Level
 {
+    font-family: "RadianceM";
     color: #d9b284;
     text-shadow: 0px 0px 8px #906127;
     font-size: 20px;
     vertical-align: middle;
     text-align: center;
+    margin-top: 3px;
     width: 100%;
 }
 
@@ -125,17 +127,51 @@
     height: 100%;
 }
 
+.IMBA_Talent_Choice .IMBA_Talent_Choice_Glow,
 .IMBA_Talent_Choice .IMBA_Talent_Choice_Overlay
 {
     width: 100%;
     height: 100%;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
 }
 
-.IMBA_Talent_Choice.selectable:hover .IMBA_Talent_Choice_Overlay
+@keyframes 'glowingborder'
+{
+    0%
+    {
+        opacity : 1;
+    }
+    100%
+    {
+        opacity: 0.05;
+    }
+}
+
+.IMBA_Talent_Choice .IMBA_Talent_Choice_Glow
+{
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
+    border-style: solid;
+    animation-name: glowingborder;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+    border-color: #FFD700;
+    visibility: collapse;
+}
+
+.IMBA_Talent_Choice.selectable .IMBA_Talent_Choice_Glow
+{
+    visibility: visible;
+}
+
+.IMBA_Talent_Choice.selectable:hover .IMBA_Talent_Choice_Glow
 {
     border-color: white;
+    visibility: visible;
 }
 
 .IMBA_Talent_Choice.upgraded .IMBA_Talent_Choice_Overlay
@@ -148,6 +184,7 @@
     background-color: #000000fa;
 }
 
+.IMBA_Talent_Choice .IMBA_Talent_Choice_Glow,
 .IMBA_Talent_Choice_Overlay,
 .IMBA_Talent_Choice_Text_Container,
 #IMBA_Talent_Choice_Image_Container
