@@ -5938,7 +5938,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bounty_hunter_jinada"
 		"ScriptFile"					"hero/hero_bounty_hunter"
@@ -6008,7 +6008,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL" 
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"bounty_hunter_wind_walk"
 		"ScriptFile"					"hero/hero_bounty_hunter"
@@ -13202,7 +13202,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"lycan/hunter_of_kings_ability_icons/lycan_shapeshift"
+		"AbilityTextureName"			"custom/wolfsbane"
 		"ScriptFile"					"hero/hero_lycan"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
@@ -15860,7 +15860,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"AbilityTextureName"			"night_stalker_void"
+		"AbilityTextureName"			"custom/stalker_in_the_night"
 		"MaxLevel"						"1"
 		"ScriptFile"					"hero/hero_night_stalker.lua"
 

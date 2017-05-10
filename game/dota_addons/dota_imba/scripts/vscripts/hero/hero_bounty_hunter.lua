@@ -29,31 +29,17 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	local scepter_throw_delay = ability:GetSpecialValueFor("scepter_throw_delay")
 
 	-- Play cast responses (25% chance)
-	local cast_response_chance = 25
-	local cast_response_roll = RandomInt(1, 100)
-
-	if cast_response_roll <= cast_response_chance then
+	if RollPercentage(25) then
 		EmitSoundOn(cast_response, caster)
 	end
 
 	-- Play cast sound
 	EmitSoundOn(sound_cast, caster)	
 
-	-- Clear all target's marks	
-		local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-										  caster:GetAbsOrigin(),
-										  nil,
-										  50000,
-										  DOTA_UNIT_TARGET_TEAM_ENEMY,
-										  DOTA_UNIT_TARGET_HERO,
-										  DOTA_UNIT_TARGET_FLAG_NONE,
-										  FIND_ANY_ORDER,
-										  false)
-
-	for _,enemy in pairs(enemies) do
-		enemy.hit_by_first_shuriken = nil
-		enemy.hit_by_second_shuriken = nil
-	end
+	-- Prepare enemy table
+	local enemy_table = {}
+	table.insert(enemy_table, target)
+	local enemy_table_string = TableToStringCommaEnt(enemy_table)
 
 	-- Launch projectile on target
 	local shuriken_projectile
@@ -67,7 +53,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 		bVisibleToEnemies = true,
 		bReplaceExisting = false,
 		bProvidesVision = false,
-		ExtraData = {first_shuriken = true}
+		ExtraData = {enemy_table_string = enemy_table_string}
 		}
 
 	ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
@@ -75,6 +61,8 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 	-- If caster has scepter, launch another one after a second delay
 	if scepter then
 		Timers:CreateTimer(scepter_throw_delay, function()
+			caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+
 			shuriken_projectile = {
 			Target = target,
 			Source = caster,
@@ -85,7 +73,7 @@ function imba_bounty_hunter_shuriken_toss:OnSpellStart()
 			bVisibleToEnemies = true,
 			bReplaceExisting = false,
 			bProvidesVision = false,
-			ExtraData = {first_shuriken = false}
+			ExtraData = {enemy_table_string = enemy_table_string}
 			}
 			ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
 		end)
@@ -99,7 +87,8 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		local ability = self		
 		local particle_projectile = "particles/units/heroes/hero_bounty_hunter/bounty_hunter_suriken_toss.vpcf"		
 		local scepter = caster:HasScepter()					
-		local first_shuriken = extradata.first_shuriken
+		local enemy_table_string = extradata.enemy_table_string
+		local enemy_table = StringToTableEnt(enemy_table_string, ",")		
 
 		-- Ability specials
 		local projectile_speed = ability:GetSpecialValueFor("projectile_speed")		
@@ -113,14 +102,7 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 		damage = damage + caster:FindTalentValue("special_bonus_imba_bounty_hunter_3")
 
 		-- #5 Talent - Shuriken bounce radius becomes global		
-		bounce_radius = bounce_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_5")	
-
-		-- Mark target as hit by the correct shuriken
-		if first_shuriken == 1 then
-			target.hit_by_first_shuriken = true
-		else						
-			target.hit_by_second_shuriken = true
-		end
+		bounce_radius = bounce_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_5")			
 
 		-- If target dodged at the last moment, do nothing
 		if not target then
@@ -170,34 +152,50 @@ function imba_bounty_hunter_shuriken_toss:OnProjectileHit_ExtraData(target, loca
 										  FIND_CLOSEST,
 										  false)
 
+		
+		local projectile_fired = false
 		for _,enemy in pairs(enemies) do						
 			-- Look for proper enemy to bounce to 					
-			
-			if (first_shuriken == 1 and not enemy.hit_by_first_shuriken) or (first_shuriken == 0 and not enemy.hit_by_second_shuriken)  then				
-				-- Only commence if the enemy has track
-				if enemy:HasModifier("modifier_imba_track_debuff") and enemy ~= target then
-					
-					-- Bounce
-					local shuriken_projectile
-					shuriken_projectile = {
-					Target = enemy,
-					Source = target,
-					Ability = ability,
-					EffectName = particle_projectile,
-					iMoveSpeed = projectile_speed,
-					bDodgeable = true, 
-					bVisibleToEnemies = true,
-					bReplaceExisting = false,
-					bProvidesVision = false,
-					ExtraData = {first_shuriken = first_shuriken}
-					}
+			local enemy_found = false
+			for _,enemy_in_table in pairs(enemy_table) do
 
-					ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
-					break -- Stop looking for this jump
-				end
+				-- Find enemy in the table
+				if enemy == enemy_in_table then
+					enemy_found = true					
+					break									
+				end			
 			end
-		end
 
+			-- Only commence if the enemy has track and was not found in the table
+			if enemy:HasModifier("modifier_imba_track_debuff") and not enemy_found then
+				
+				-- Add enemy to the enemy table
+				table.insert(enemy_table, enemy)					
+
+				-- Stringify enemy table
+				enemy_table_string = TableToStringCommaEnt(enemy_table)
+
+				-- Bounce to enemy
+				local shuriken_projectile
+				shuriken_projectile = {
+				Target = enemy,
+				Source = target,
+				Ability = ability,
+				EffectName = particle_projectile,
+				iMoveSpeed = projectile_speed,
+				bDodgeable = true, 
+				bVisibleToEnemies = true,
+				bReplaceExisting = false,
+				bProvidesVision = false,
+				ExtraData = {enemy_table_string = enemy_table_string}
+				}
+
+				ProjectileManager:CreateTrackingProjectile(shuriken_projectile)
+
+				projectile_fired = true				
+				break -- Stop looking for this jump
+			end						
+		end
 	end
 end
 
@@ -596,6 +594,16 @@ end
 imba_bounty_hunter_shadow_walk = class({})
 LinkLuaModifier("modifier_imba_shadow_walk_invisibility", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_shadow_walk_true_sight", "hero/hero_bounty_hunter", LUA_MODIFIER_MOTION_NONE)
+
+function imba_bounty_hunter_shadow_walk:GetCastRange(location, target)
+	local caster = self:GetCaster()
+	local ability = self
+	local true_sight_radius = ability:GetSpecialValueFor("true_sight_radius")
+
+	-- #1 Talent: Shadow Walk true sight radius increase	
+	true_sight_radius = true_sight_radius + caster:FindTalentValue("special_bonus_imba_bounty_hunter_1")	
+	return true_sight_radius
+end
 
 function imba_bounty_hunter_shadow_walk:OnSpellStart()
 	if IsServer() then
