@@ -12768,6 +12768,7 @@
 		"precache"
 		{
 			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+			"particle"					"particles/item/curseblade/imba_curseblade_curse.vpcf"			
 		}
 
 		"AbilitySpecial"
@@ -12777,41 +12778,49 @@
 				"var_type"						"FIELD_INTEGER"
 				"agility_bonus"					"16"
 			}
+
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"intelligence_bonus"			"10"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"strength_bonus"				"9"
 			}
+
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"45"
 			}
+
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"lifedrain_per_second"			"60"
 			}	
+
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"manadrain_per_second"			"60"
 			}		
+
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"duration"						"5"
 			}
+
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"slow_amount"					"-35"
+				"slow_amount"					"35"
 			}
+
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
@@ -12854,7 +12863,7 @@
 		"ID"							"2229"
 		"BaseClass"						"item_lua"
 		"AbilityTextureName"			"custom/imba_hellblade"
-		"ScriptFile"					"items/item_curseblade.lua"
+		"ScriptFile"					"items/item_hellblade.lua"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -12881,6 +12890,7 @@
 		"precache"
 		{
 			"particle"					"particles/hero/skeleton_king/skeleton_king_vampiric_aura_lifesteal.vpcf"			
+			"particle"					"particles/item/curseblade/imba_hellblade_curse.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -12890,46 +12900,55 @@
 				"var_type"						"FIELD_INTEGER"
 				"agility_bonus"					"18"
 			}
+
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"intelligence_bonus"			"12"
 			}
+
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"strength_bonus"				"16"
 			}
+
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"damage"						"90"
 			}
+
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"lifedrain_per_second"			"80"
 			}
+
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"manadrain_per_second"			"80"
 			}
+
 			"07"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"duration"						"5"
 			}
+
 			"08"
 			{
 				"var_type"						"FIELD_INTEGER"
 				"slow_amount"					"-40"
 			}
+
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
 				"tick_rate"						"0.1"
 			}
+			
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"

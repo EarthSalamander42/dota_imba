@@ -8,7 +8,6 @@ end
 LinkLuaModifier("modifier_item_imba_curseblade", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_item_imba_curseblade_debuff", "items/item_curseblade", LUA_MODIFIER_MOTION_NONE)
 
-
 function item_imba_curseblade:GetIntrinsicModifierName()
 	return "modifier_item_imba_curseblade"
 end
@@ -25,7 +24,7 @@ function item_imba_curseblade:OnSpellStart()
 		local debuff = "modifier_item_imba_curseblade_debuff"
 		
 		-- Ability specials
-		local duration = self:GetSpecialValueFor("duration")
+		local duration = self:GetSpecialValueFor("duration")		
 		
 		-- Play sound cast
 		EmitSoundOn(sound_cast, caster)
@@ -36,6 +35,9 @@ function item_imba_curseblade:OnSpellStart()
 				return nil
 			end
 		end	
+
+		-- Add the curse debuff to the target
+		target:AddNewModifier(caster, ability, debuff, {duration = duration})	
 		
 		-- Find all modifiers on caster	
 		local modifiers = caster:FindAllModifiers()		
@@ -74,10 +76,7 @@ function item_imba_curseblade:OnSpellStart()
 					modifier_ability:ApplyDataDrivenModifier(caster, target, modifier_name, {duration = modifier_duration})
 				else					
 					target:AddNewModifier(caster, modifier_ability, modifier_name, {duration = modifier_duration})
-				end
-
-				-- Add debuff to target
-				target:AddNewModifier(caster, ability, debuff, {duration = duration})	
+				end				
 			end
 		end				
 	end
@@ -101,9 +100,10 @@ function modifier_item_imba_curseblade:OnCreated()
 	self.damage = self.ability:GetSpecialValueFor("damage") 
 end
 
-function modifier_item_imba_curseblade:IsHidden()
-	return true
-end
+function modifier_item_imba_curseblade:IsHidden() return true end
+function modifier_item_imba_curseblade:IsPurgable() return false end
+function modifier_item_imba_curseblade:IsDebuff() return false end
+function modifier_item_imba_curseblade:GetAttributes() return MODIFIER_ATTRIBUTE_MULTIPLE end
 
 function modifier_item_imba_curseblade:DeclareFunctions()
 	local decFuncs = {MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -205,6 +205,5 @@ function modifier_item_imba_curseblade_debuff:OnIntervalThink()
 		-- Reduce enemy's mana, replenish caster's.
 		self.parent:ReduceMana(manadrain)
 		self.caster:GiveMana(manadrain)
-	end
-	
+	end	
 end
