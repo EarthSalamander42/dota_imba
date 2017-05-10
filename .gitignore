@@ -38,3 +38,7 @@ resource/overviews/*
 
 #Github dump
 *.stackdump
+
+game/dota_addons/dota_imba/rich_presence_persistent_data\.txt
+
+game/dota_addons/dota_imba/server_log\.txt
