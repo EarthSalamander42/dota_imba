@@ -139,7 +139,11 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 		ParticleManager:DestroyParticle(bloodriteFX, false)
 		ParticleManager:ReleaseParticleIndex(bloodriteFX)
 		local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
-		local overheal = caster:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_overheal", {duration = self:GetSpecialValueFor("overheal_duration")})
+
+		if #targets > 0 then
+			local overheal = caster:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_overheal", {duration = self:GetSpecialValueFor("overheal_duration")})
+		end
+
 		local rupture = false
 		if caster:HasScepter() and caster:HasAbility("imba_bloodseeker_rupture") then
 			rupture = caster:FindAbilityByName("imba_bloodseeker_rupture")
@@ -217,15 +221,21 @@ LinkLuaModifier("modifier_imba_bloodseeker_blood_bath_overheal", "hero/hero_bloo
 modifier_imba_bloodseeker_blood_bath_overheal = class({})
 
 function modifier_imba_bloodseeker_blood_bath_overheal:IsHidden()
-	return true
+	return false
 end
 
 function modifier_imba_bloodseeker_blood_bath_overheal:OnCreated()
-	self.overheal = self:GetAbility():GetSpecialValueFor("dmg_to_overheal") / 100
+	self.caster = self:GetCaster()
+	self.overheal = self:GetAbility():GetSpecialValueFor("dmg_to_overheal") * 0.01
+	self.particle_overheal = "particles/hero/bloodseeker/blood_bath_power.vpcf"
+
+	local particle_overheal_fx = ParticleManager:CreateParticle(self.particle_overheal, PATTACH_OVERHEAD_FOLLOW, self.caster)
+	ParticleManager:SetParticleControl(particle_overheal_fx, 0, self.caster:GetAbsOrigin())
+	self:AddParticle(particle_overheal_fx, false, false, -1, false, true)
 end
 
 function modifier_imba_bloodseeker_blood_bath_overheal:OnRefresh()
-	self.overheal = self:GetAbility():GetSpecialValueFor("dmg_to_overheal") / 100
+	self.overheal = self:GetAbility():GetSpecialValueFor("dmg_to_overheal") * 0.01
 	self:SetStackCount(0)
 end
 
@@ -236,16 +246,6 @@ function modifier_imba_bloodseeker_blood_bath_overheal:DeclareFunctions()
 	}
 	return funcs
 end
-
-function modifier_imba_bloodseeker_blood_bath_overheal:GetEffectName()
-	return "particles/units/heroes/hero_bloodseeker/bloodrage_silenced_old.vpcf"
-end
-
-function modifier_imba_bloodseeker_blood_bath_overheal:GetEffectAttachType()
-	return PATTACH_OVERHEAD_FOLLOW
-end
-
-
 	
 function modifier_imba_bloodseeker_blood_bath_overheal:OnTakeDamage(params)
 	if params.attacker == self:GetParent() and params.inflictor == self:GetAbility() then
@@ -370,7 +370,9 @@ function modifier_imba_bloodseeker_thirst_passive:OnTakeDamage(params)
 					attackerCount = 1
 					if params.attacker == self:GetCaster() then attackerCount = 2 end
 					confirmTheKill = true
-					modifier:SetStackCount(attackerCount)
+					if modifier:GetStackCount() <= attackerCount then
+						modifier:SetStackCount(attackerCount)						
+					end
 					modifier:SetDuration(duration, true)
 					break
 				end
@@ -380,7 +382,9 @@ function modifier_imba_bloodseeker_thirst_passive:OnTakeDamage(params)
 				modifier.sourceUnit = params.unit
 				attackerCount = 1
 				if params.attacker == self:GetCaster() then attackerCount = 2 end
-				modifier:SetStackCount(attackerCount)
+				if modifier:GetStackCount() <= attackerCount then
+					modifier:SetStackCount(attackerCount)
+				end
 			end
 		end
 	end
@@ -420,7 +424,7 @@ function modifier_imba_bloodseeker_thirst_attack_buff:GetModifierMoveSpeedBonus_
 end
 
 function modifier_imba_bloodseeker_thirst_attack_buff:IsHidden()
-	return true
+	return false
 end
 
 function modifier_imba_bloodseeker_thirst_attack_buff:GetEffectName()

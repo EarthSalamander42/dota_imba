@@ -28467,7 +28467,7 @@
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 			"particle"	"particles/units/heroes/hero_bloodseeker/bloodseeker_bloodritual_ring.vpcf"
 			"particle"	"particles/generic_gameplay/generic_silence.vpcf"
-			"particle"	"particles/units/heroes/hero_bloodseeker/bloodrage_silenced_old.vpcf"
+			"particle"	"particles/hero/bloodseeker/blood_bath_power.vpcf"
 		}
 
 
@@ -28498,21 +28498,21 @@
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"delay_plus_castpoint_tooltip"	"3.0"
+				"delay_plus_castpoint_tooltip"	"3"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_FLOAT"
+				"var_type"						"FIELD_INTEGER"
 				"dmg_to_overheal"				"25"
 			}
 			"07"
 			{
-				"var_type"						"FIELD_FLOAT"
+				"var_type"						"FIELD_INTEGER"
 				"overheal_duration"				"7"
 			}
 			"08"
 			{
-				"var_type"						"FIELD_FLOAT"
+				"var_type"						"FIELD_INTEGER"
 				"cooldown_reduction"			"25"
 				"LinkedSpecialBonus"			"special_bonus_imba_bloodseeker_2"
 			}
