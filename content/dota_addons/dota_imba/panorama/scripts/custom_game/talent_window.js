@@ -117,6 +117,8 @@ function CloseIMBATalentWindowWhenDeselectUnit(){
             }
         }
 
+        talentWindow.SetHasClass("show_all_text", GameUI.IsAltDown());
+
         //Rerun this check until window is force closed or stopped by the other function
         _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
     }
@@ -232,6 +234,8 @@ function AttachToolTip(ability_panel, ability_text){
 
 function PopulateIMBATalentWindow(){
     var talentPanel = $.GetContextPanel()
+
+    talentPanel.SetHasClass("show_all_text", GameUI.IsAltDown());
 
     //Do for selected hero, not hero that player owns
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit()

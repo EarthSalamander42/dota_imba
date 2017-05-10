@@ -338,14 +338,13 @@ end
 --	  Cooldown Reduction   --
 -----------------------------
 modifier_imba_generic_talent_cd_reduction = ShallowCopy(modifier_imba_generic_talent_base)
---TODO I do not think this works
---TODO handle GetCooldownReduction in util.lua
+
 function modifier_imba_generic_talent_cd_reduction:DeclareFunctions()
-    local funcs = { MODIFIER_PROPERTY_COOLDOWN_REDUCTION_CONSTANT }
+    local funcs = { MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING }
 	return funcs
 end
 
-function modifier_imba_generic_talent_cd_reduction:GetModifierCooldownReduction_Constant()
+function modifier_imba_generic_talent_cd_reduction:GetModifierPercentageCooldownStacking()
     return self.value
 end
 
@@ -367,11 +366,11 @@ end
 -----------------------------
 modifier_imba_generic_talent_respawn_reduction = ShallowCopy(modifier_imba_generic_talent_base)
 function modifier_imba_generic_talent_bonus_xp:DeclareFunctions()
-    local funcs = { MODIFIER_PROPERTY_RESPAWNTIME }
+    local funcs = { MODIFIER_PROPERTY_RESPAWNTIME_STACKING }
 	return funcs
 end
 
-function modifier_imba_generic_talent_bonus_xp:GetModifierConstantRespawnTime()
+function modifier_imba_generic_talent_bonus_xp:GetModifierStackingRespawnTime()
     -- Return negative value
     return -(self.value)
 end
