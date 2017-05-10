@@ -30580,13 +30580,19 @@
 	//=================================================================================================================
     // Clinkz Talents
     //=================================================================================================================
-    "special_bonus_imba_clinkz_1" //Strafe Bonus attack range when mounted
+    "special_bonus_imba_clinkz_1" // Strafe Bonus attack range when mounted
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_strafe"
+		}
+
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30600,13 +30606,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_2" //Spook search radius increase
+    "special_bonus_imba_clinkz_2" // Spook search radius increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30620,13 +30631,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_3" //Searing arrows damage increase
+    "special_bonus_imba_clinkz_3" // Searing arrows damage increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_searing_arrows"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30640,13 +30656,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_4" //Searing Arrow active hits in an AoE
+    "special_bonus_imba_clinkz_4" // Searing Arrow active hits in an AoE
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_searing_arrows"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30660,13 +30681,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_5" //Strafe bonus attack speed
+    "special_bonus_imba_clinkz_5" // Strafe bonus attack speed
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_strafe"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30680,13 +30706,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_6" //Skeleton Walk move speed persists for a small period
+    "special_bonus_imba_clinkz_6" // Skeleton Walk move speed persists for a small period
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_skeleton_walk"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30700,13 +30731,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_7" //Death Pact bonuses increase
+    "special_bonus_imba_clinkz_7" // Death Pact bonuses increase
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
@@ -30720,13 +30756,18 @@
         }
     }
 
-    "special_bonus_imba_clinkz_8" //Death Pact bonuses stay permanently if target dies quickly
+    "special_bonus_imba_clinkz_8" // Death Pact bonuses stay permanently if target dies quickly
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "special_bonus_unique_centaur_2"
         "AbilityType"                   "DOTA_ABILITY_TYPE_ATTRIBUTES"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+		{
+			"01" 	"imba_clinkz_death_pact"
+		}
 
         // Special
         //-------------------------------------------------------------------------------------------------------------
