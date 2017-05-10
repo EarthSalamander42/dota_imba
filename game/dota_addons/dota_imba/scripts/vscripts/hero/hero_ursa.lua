@@ -589,8 +589,8 @@ function modifier_imba_fury_swipes:IsPurgable()
 end
 
 function modifier_imba_fury_swipes:DeclareFunctions()		
-		local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}					 
-		return decFuncs		
+	local decFuncs = {MODIFIER_EVENT_ON_ATTACK_LANDED}					 
+	return decFuncs		
 end
 
 function modifier_imba_fury_swipes:OnAttackLanded( keys )
@@ -620,6 +620,7 @@ function modifier_imba_fury_swipes:OnAttackLanded( keys )
 		-- #3 Talent: Increased fury swipes damage
 		damage_per_stack = damage_per_stack + caster:FindTalentValue("special_bonus_imba_ursa_3")		
 		
+		-- If the caster is broken, do nothing
 		if caster:PassivesDisabled() then
 			return nil
 		end
@@ -629,10 +630,15 @@ function modifier_imba_fury_swipes:OnAttackLanded( keys )
 			if IsRoshan(target) then
 				stack_duration = roshan_stack_duration
 			end
+
+			-- If the target is a building, do nothing
+			if target:IsBuilding() then
+				return nil
+			end
 			
-			-- Reset values, broke down for unknown reason o_o
-			local fury_swipes_debuff_handler = nil
-			local damage = nil
+			-- Initialize variables
+			local fury_swipes_debuff_handler
+			local damage
 			
 			-- Add debuff/increment stacks if already exists
 			if target:HasModifier(fury_swipes_debuff) then
@@ -947,6 +953,9 @@ imba_ursa_territorial_hunter = class({})
 LinkLuaModifier("modifier_terrorital_hunter_aura", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_terrorital_hunter_fogvision", "hero/hero_ursa", LUA_MODIFIER_MOTION_NONE)
 
+function imba_ursa_territorial_hunter:IsInnateAbility()
+	return true
+end
 
 function imba_ursa_territorial_hunter:OnSpellStart()
 	if IsServer() then
