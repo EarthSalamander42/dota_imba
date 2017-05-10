@@ -15,11 +15,18 @@ LinkLuaModifier( "modifier_item_imba_skadi_freeze", "items/item_skadi.lua", LUA_
 
 -- Passive modifier
 function item_imba_skadi:GetIntrinsicModifierName()
-	return "modifier_item_imba_skadi" end
+	return "modifier_item_imba_skadi" 
+end
 
 -- Dynamic cast range
 function item_imba_skadi:GetCastRange()
-	return self:GetCaster():GetModifierStackCount("modifier_item_imba_skadi", nil) end
+	local caster = self:GetCaster()
+	if caster:HasModifier("modifier_item_imba_skadi") then
+		return caster:GetModifierStackCount("modifier_item_imba_skadi", caster) 
+	end
+
+	return 0	
+end
 
 -- Root active
 function item_imba_skadi:OnSpellStart()
@@ -91,10 +98,20 @@ function modifier_item_imba_skadi:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 -- Adds the unique modifier to the caster when created
 function modifier_item_imba_skadi:OnCreated(keys)
 	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_item_imba_skadi_unique") then
-			parent:AddNewModifier(parent, self:GetAbility(), "modifier_item_imba_skadi_unique", {})
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+
+		-- Ability specials
+		self.radius = self:GetAbility():GetSpecialValueFor("base_radius")
+
+		if not self.parent:HasModifier("modifier_item_imba_skadi_unique") then
+			self.parent:AddNewModifier(self.parent, self.ability, "modifier_item_imba_skadi_unique", {})
 		end
+		
+		-- Set stack count
+		self:UpdateCastRange()
 
 		-- Cast range update thinker
 		self:StartIntervalThink(0.5)
@@ -103,24 +120,26 @@ end
 
 -- Removes the unique modifier from the caster if this is the last skadi in its inventory
 function modifier_item_imba_skadi:OnDestroy()
-	if IsServer() then
-		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_item_imba_skadi") then
-			parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
+	if IsServer() then		
+		if not self.parent:HasModifier("modifier_item_imba_skadi") then
+			self.parent:RemoveModifierByName("modifier_item_imba_skadi_unique")
 		end
 	end
 end
 
 -- Cast range update thinker
-function modifier_item_imba_skadi:OnIntervalThink()
-	if IsServer() then
-		local owner = self:GetParent()
-		local radius = self:GetAbility():GetSpecialValueFor("base_radius")
-		if owner:IsRealHero() then
-			radius = radius + owner:GetStrength() * self:GetAbility():GetSpecialValueFor("radius_per_str")
-		end
-		self:SetStackCount(radius)
-	end
+function modifier_item_imba_skadi:OnIntervalThink()	
+	self:UpdateCastRange()
+end
+
+function modifier_item_imba_skadi:UpdateCastRange()
+	if IsServer() then						
+		if self.parent:IsRealHero() then
+			self.radius = self.radius + self.parent:GetStrength() * self.ability:GetSpecialValueFor("radius_per_str")
+		end		
+
+		self:SetStackCount(self.radius)
+	end	
 end
 
 -- Declare modifier events/properties

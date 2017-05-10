@@ -118,7 +118,7 @@
 							<Panel id="npc_dota_hero_abaddon" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_abaddon')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_abaddon.png');" />
-							<Panel id="npc_dota_hero_alchemist" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_alchemist" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_alchemist')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_alchemist.png');" />
 							<Panel id="npc_dota_hero_axe" class="ClassImbaOption"
@@ -207,7 +207,7 @@
 							<Panel id="npc_dota_hero_shredder" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_shredder')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_shredder.png');" />
-							<Panel id="npc_dota_hero_tiny" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_tiny" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_tiny')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_tiny.png');" />
 							<Panel id="npc_dota_hero_treant" class="ClassNormalOption" 
@@ -437,7 +437,7 @@
 							<Panel id="npc_dota_hero_storm_spirit" class="ClassNormalOption" 
 								onactivate="SelectHero('npc_dota_hero_storm_spirit')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_storm_spirit.png');" />
-							<Panel id="npc_dota_hero_techies" class="ClassNormalOption" 
+							<Panel id="npc_dota_hero_techies" class="ClassImbaOption" 
 								onactivate="SelectHero('npc_dota_hero_techies')" 
 								style="background-image: url('file://{images}/heroes/selection/npc_dota_hero_techies.png');" />
 							<Panel id="npc_dota_hero_tinker" class="ClassImbaOption" 

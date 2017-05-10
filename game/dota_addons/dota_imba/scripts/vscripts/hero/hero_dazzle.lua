@@ -12,7 +12,7 @@ LinkLuaModifier( "modifier_imba_dazzle_poison_touch_debuff", "hero/hero_dazzle.l
 
 function imba_dazzle_poison_touch:GetCooldown()
 	local cooldown = self:GetSpecialValueFor("cooldown")
-	local cooldownbonus = self:GetCaster():FindTalentValue("special_bonus_unique_dazzle_5")
+	local cooldownbonus = self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_5")
 	
 	return cooldown + cooldownbonus
 end
@@ -183,7 +183,7 @@ LinkLuaModifier( "modifier_imba_dazzle_shallow_grave", "hero/hero_dazzle.lua", L
 LinkLuaModifier( "modifier_imba_dazzle_nothl_protection", "hero/hero_dazzle.lua", LUA_MODIFIER_MOTION_NONE )-- Passive self-cast
 
 function imba_dazzle_shallow_grave:GetManaCost()
-	if self:GetCaster():HasTalent("special_bonus_unique_dazzle_1") then 
+	if self:GetCaster():HasTalent("special_bonus_imba_dazzle_1") then 
 		return 0 end
 	return self:GetSpecialValueFor("mana_cost")
 end
@@ -348,7 +348,7 @@ function modifier_imba_dazzle_nothl_protection:OnTakeDamage( keys )
 						
 						local nothl_cooldown = ability:GetSpecialValueFor("nothl_protection_cooldown")
 						print(nothl_cooldown)
-						nothl_cooldown = nothl_cooldown + parent:FindTalentValue("special_bonus_unique_dazzle_7")
+						nothl_cooldown = nothl_cooldown + parent:FindTalentValue("special_bonus_imba_dazzle_7")
 						print(nothl_cooldown)
 						
 						self:SetStackCount(math.floor(nothl_cooldown))
@@ -423,8 +423,8 @@ function imba_dazzle_shadow_wave:WaveBounce(target)
 		local bounceDistance = self:GetSpecialValueFor("bounce_distance")
 		local newTarget
 		
-		if caster:HasTalent("special_bonus_unique_dazzle_2") then
-			bounceDistance = bounceDistance + caster:FindTalentValue("special_bonus_unique_dazzle_2")
+		if caster:HasTalent("special_bonus_imba_dazzle_2") then
+			bounceDistance = bounceDistance + caster:FindTalentValue("special_bonus_imba_dazzle_2")
 		end
 		
 		-- Prioritize injured heroes, then heroes, then injured creeps, then creeps
@@ -492,12 +492,12 @@ function imba_dazzle_shadow_wave:WaveHit(unit)
 		local bonusHeal = self:GetSpecialValueFor("bonus_heal") / 100
 		local damageRadius = self:GetSpecialValueFor("damage_radius")
 		
-		if caster:HasTalent("special_bonus_unique_dazzle_3") then
-			damageRadius = damageRadius + caster:FindTalentValue("special_bonus_unique_dazzle_3")
+		if caster:HasTalent("special_bonus_imba_dazzle_3") then
+			damageRadius = damageRadius + caster:FindTalentValue("special_bonus_imba_dazzle_3")
 		end
 		
-		if caster:HasTalent("special_bonus_unique_dazzle_4") then
-			damage = damage + caster:FindTalentValue("special_bonus_unique_dazzle_4")
+		if caster:HasTalent("special_bonus_imba_dazzle_4") then
+			damage = damage + caster:FindTalentValue("special_bonus_imba_dazzle_4")
 		end
 		
 		local buffDuration = self:GetSpecialValueFor("buff_duration")
@@ -572,8 +572,8 @@ LinkLuaModifier( "modifier_imba_dazzle_weave_debuff", "hero/hero_dazzle.lua", LU
 
 function imba_dazzle_weave:GetCooldown()
 	local cooldown = self:GetSpecialValueFor("cooldown")
-	if self:GetCaster():HasTalent("special_bonus_unique_dazzle_8") then
-		cooldown = cooldown + self:GetCaster():FindTalentValue("special_bonus_unique_dazzle_8")
+	if self:GetCaster():HasTalent("special_bonus_imba_dazzle_8") then
+		cooldown = cooldown + self:GetCaster():FindTalentValue("special_bonus_imba_dazzle_8")
 	end
 	
 	return cooldown
@@ -595,7 +595,7 @@ function imba_dazzle_weave:OnSpellStart()
 		local vision_duration = self:GetSpecialValueFor("vision_duration")
 		local vision_radius = self:GetSpecialValueFor("vision_radius")
 		
-		if caster:HasTalent("special_bonus_unique_dazzle_6") then
+		if caster:HasTalent("special_bonus_imba_dazzle_6") then
 			modifier_duration = modifier_duration / 2
 		end
 		
@@ -644,7 +644,7 @@ function modifier_imba_dazzle_weave_buff:OnCreated()
 		local tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval")
 		
 		if not parent:IsBuilding() then
-			if self:GetAbility():GetCaster():HasTalent("special_bonus_unique_dazzle_6") then
+			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_6") then
 				tick_interval = tick_interval / 2
 			end
 			self:StartIntervalThink(tick_interval)
@@ -699,7 +699,7 @@ function modifier_imba_dazzle_weave_debuff:OnCreated()
 		local tick_interval = self:GetAbility():GetSpecialValueFor("tick_interval")
 		
 		if not parent:IsBuilding() then
-			if self:GetAbility():GetCaster():HasTalent("special_bonus_unique_dazzle_6") then
+			if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_dazzle_6") then
 				tick_interval = tick_interval / 2
 			end
 			self:StartIntervalThink(tick_interval)
@@ -735,37 +735,37 @@ function modifier_imba_dazzle_weave_debuff:GetModifierPhysicalArmorBonus()
 end
 
 for i = 1,8 do
-	LinkLuaModifier("modifier_special_bonus_unique_dazzle_"..i, "hero/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_special_bonus_imba_dazzle_"..i, "hero/hero_dazzle", LUA_MODIFIER_MOTION_NONE)
 end
 
-modifier_special_bonus_unique_dazzle_1 = class({
+modifier_special_bonus_imba_dazzle_1 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_2 = class({
+modifier_special_bonus_imba_dazzle_2 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_3 = class({
+modifier_special_bonus_imba_dazzle_3 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_4 = class({
+modifier_special_bonus_imba_dazzle_4 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_5 = class({
+modifier_special_bonus_imba_dazzle_5 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_6 = class({
+modifier_special_bonus_imba_dazzle_6 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_7 = class({
+modifier_special_bonus_imba_dazzle_7 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })
 	
-modifier_special_bonus_unique_dazzle_8 = class({
+modifier_special_bonus_imba_dazzle_8 = class({
 	IsHidden      = function(self) return true  end,
 	RemoveOnDeath = function(self) return false end })

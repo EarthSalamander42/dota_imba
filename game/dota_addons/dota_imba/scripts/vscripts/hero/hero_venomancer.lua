@@ -18,7 +18,7 @@ function imba_venomancer_toxicity:IsHiddenWhenStolen() return false end
 function imba_venomancer_toxicity:IsRefreshable() return false end
 function imba_venomancer_toxicity:IsStealable() return false end
 function imba_venomancer_toxicity:IsNetherWardStealable() return false end
-function imba_venomancer_toxicity:IsInnate() return true end
+function imba_venomancer_toxicity:IsInnateAbility() return true end
 -------------------------------------------
 
 function imba_venomancer_toxicity:GetIntrinsicModifierName()

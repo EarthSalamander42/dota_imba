@@ -63,7 +63,7 @@ LinkLuaModifier("modifier_imba_bane_fiends_grip",               "hero/hero_bane"
 
 
 -- Generic Subroutines to make code easier (for me at least) to read
-local talentnamescheme = "special_bonus_unique_bane_"
+local talentnamescheme = "special_bonus_imba_bane_"
 
 
 
@@ -151,6 +151,22 @@ function imba_bane_nightmare:OnSpellStart()
 	if caster ~= target then
 		EmitSoundOn ("bane_bane_ability_nightmare_"..string.format("%02d",RandomInt(1,3)), self:GetCaster())   
 		end
+end
+
+function imba_bane_nightmare:CastFilterResultTarget(target)
+	if IsServer() then
+		local caster = self:GetCaster()
+		local casterID = caster:GetPlayerOwnerID()
+		local targetID = target:GetPlayerOwnerID()
+
+		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+			return UF_FAIL_DISABLE_HELP
+		end
+
+		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+		return nResult
+	end
+	return UF_SUCCESS
 end
 
 function imba_bane_nightmare_end:OnSpellStart()

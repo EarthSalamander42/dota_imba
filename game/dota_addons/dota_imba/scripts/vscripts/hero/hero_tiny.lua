@@ -1,4 +1,9 @@
 imba_tiny_rolling_stone = imba_tiny_rolling_stone or class({})
+
+function imba_tiny_rolling_stone:IsInnateAbility()
+	return true
+end
+
 function imba_tiny_rolling_stone:GetIntrinsicModifierName()
 	return "modifier_imba_tiny_rolling_stone"
 end
@@ -42,15 +47,15 @@ function modifier_imba_tiny_rolling_stone:OnIntervalThink()
 		self:IncrementStackCount()
 	end
 	if not self.talent8 then
-		if self:GetParent():HasTalent("special_bonus_unique_tiny_8") then
+		if self:GetParent():HasTalent("special_bonus_imba_tiny_8") then
 			self.talent8 = true
-			self:GetParent():AddNewModifier(self:GetParent(), self:GetParent():FindAbilityByName("special_bonus_unique_tiny_8"), "modifier_special_bonus_unique_tiny_8", {})
+			self:GetParent():AddNewModifier(self:GetParent(), self:GetParent():FindAbilityByName("special_bonus_imba_tiny_8"), "modifier_special_bonus_imba_tiny_8", {})
 		end
 	end
 	if not self.talent2 then
-		if self:GetParent():HasTalent("special_bonus_unique_tiny_2") then
+		if self:GetParent():HasTalent("special_bonus_imba_tiny_2") then
 			self.talent2 = true
-			self:SetStackCount(self:GetStackCount() + self:GetParent():FindTalentValue("special_bonus_unique_tiny_2") )
+			self:SetStackCount(self:GetStackCount() + self:GetParent():FindTalentValue("special_bonus_imba_tiny_2") )
 		end
 	end
 end
@@ -82,7 +87,7 @@ function modifier_imba_tiny_rolling_stone:GetModifierMoveSpeedBonus_Constant()
 end
 
 function modifier_imba_tiny_rolling_stone:GetModifierAttackSpeedBonus_Constant()
-	if not self:GetParent():HasModifier("modifier_special_bonus_unique_tiny_8") then
+	if not self:GetParent():HasModifier("modifier_special_bonus_imba_tiny_8") then
 		return self.attackspeed * self:GetStackCount()
 	else
 		return 0
@@ -144,8 +149,8 @@ if IsServer() then
 				ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
 		local offset = 0
 		local ticks = extradata.ticks
-		if self:GetCaster():HasAbility("special_bonus_unique_tiny_3") then
-			offset = self:GetCaster():FindTalentValue("special_bonus_unique_tiny_3")
+		if self:GetCaster():HasAbility("special_bonus_imba_tiny_3") then
+			offset = self:GetCaster():FindTalentValue("special_bonus_imba_tiny_3")
 			local projDuration = offset * 0.03 / (ticks * interval) 
 			local newLoc = vLocation
 			local distanceTravelled = 0
@@ -273,7 +278,7 @@ if IsServer() then
 		for _, victim in pairs(tossVictims) do
 			if victim ~= caster then
 				victim:AddNewModifier(caster, self, "modifier_tiny_toss_movement", {})
-				if self:GetCaster():HasTalent("special_bonus_unique_tiny_7") then
+				if self:GetCaster():HasTalent("special_bonus_imba_tiny_7") then
 					break
 				end
 			end
@@ -625,9 +630,9 @@ function modifier_imba_tiny_craggy_exterior_passive:OnAttackLanded(params)
 		if params.target == self:GetParent() then
 			local caster = self:GetCaster()
 			if RollPercentage(self.chance + self.prng) then
-				if self:GetParent():HasTalent("special_bonus_unique_tiny_4") then
+				if self:GetParent():HasTalent("special_bonus_imba_tiny_4") then
 					EmitSoundOn("Hero_Tiny.CraggyExterior", self:GetCaster())
-					local radius = self:GetParent():FindTalentValue("special_bonus_unique_tiny_4")
+					local radius = self:GetParent():FindTalentValue("special_bonus_imba_tiny_4")
 					local avalanche = ParticleManager:CreateParticle("particles/units/heroes/hero_tiny/tiny_avalanche.vpcf", PATTACH_CUSTOMORIGIN, params.attacker) 
 						ParticleManager:SetParticleControl(avalanche, 0, params.attacker:GetAbsOrigin())
 						ParticleManager:SetParticleControl(avalanche, 1, Vector(radius, 1, radius))
@@ -666,7 +671,7 @@ function modifier_craggy_exterior_blunt:OnCreated()
 	self.verified = false
 	self:SetStackCount(1)
 	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_unique_tiny_5") then
+		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
 			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
 		end
 	end
@@ -676,7 +681,7 @@ function modifier_craggy_exterior_blunt:OnRefresh()
 	self.reduction = self:GetAbility():GetSpecialValueFor("damage_reduction")
 	self.verified = false
 	if IsServer() then
-		if self:GetCaster():HasTalent("special_bonus_unique_tiny_5") then
+		if self:GetCaster():HasTalent("special_bonus_imba_tiny_5") then
 			CustomNetTables:SetTableValue("talents", "hero_tiny_talents", {talent5 = self:GetAbility():GetTalentSpecialValueFor("damage_reduction")})
 		end
 	end
@@ -817,90 +822,90 @@ function modifier_imba_tiny_grow_passive:OnAttackLanded( params )
 end
 --------------------------------------------------------------------------------
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_1", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_1 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_1", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_1 = class({})
 
-function modifier_special_bonus_unique_tiny_1:IsHidden()
+function modifier_special_bonus_imba_tiny_1:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_1:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_1:RemoveOnDeath()
 	return false
 end
 
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_2", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_2 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_2", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_2 = class({})
 
-function modifier_special_bonus_unique_tiny_2:IsHidden()
+function modifier_special_bonus_imba_tiny_2:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_2:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_2:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_3", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_3 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_3", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_3 = class({})
 
-function modifier_special_bonus_unique_tiny_3:IsHidden()
+function modifier_special_bonus_imba_tiny_3:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_3:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_3:RemoveOnDeath()
 	return false
 end
-LinkLuaModifier("modifier_special_bonus_unique_tiny_4", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_4 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_4", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_4 = class({})
 
-function modifier_special_bonus_unique_tiny_4:IsHidden()
+function modifier_special_bonus_imba_tiny_4:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_unique_tiny_5", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_5 = class({})
-
-function modifier_special_bonus_unique_tiny_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_unique_tiny_5:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_4:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_6", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_6 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_5", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_5 = class({})
 
-function modifier_special_bonus_unique_tiny_6:IsHidden()
+function modifier_special_bonus_imba_tiny_5:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_6:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_5:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_7", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_7 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_6", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_6 = class({})
 
-function modifier_special_bonus_unique_tiny_7:IsHidden()
+function modifier_special_bonus_imba_tiny_6:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_7:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_6:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_tiny_8", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_tiny_8 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_tiny_7", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_7 = class({})
 
-function modifier_special_bonus_unique_tiny_8:IsHidden()
+function modifier_special_bonus_imba_tiny_7:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_tiny_8:RemoveOnDeath()
+function modifier_special_bonus_imba_tiny_7:RemoveOnDeath()
+	return false
+end
+
+LinkLuaModifier("modifier_special_bonus_imba_tiny_8", "hero/hero_tiny", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_tiny_8 = class({})
+
+function modifier_special_bonus_imba_tiny_8:IsHidden()
+	return true
+end
+
+function modifier_special_bonus_imba_tiny_8:RemoveOnDeath()
 	return false
 end

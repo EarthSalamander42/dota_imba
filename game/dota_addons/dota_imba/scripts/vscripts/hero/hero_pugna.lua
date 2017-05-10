@@ -228,25 +228,22 @@ function imba_pugna_decrepify:IsHiddenWhenStolen()
 end
 
 function imba_pugna_decrepify:CastFilterResultTarget(target)
+    if IsServer() then
+        local caster = self:GetCaster()
+        local casterID = caster:GetPlayerOwnerID()
+        local targetID = target:GetPlayerOwnerID()
 
-    -- If the target is a building, do nothing
-    if target:IsBuilding() then
-        return UF_FAIL_BUILDING
-    end
+        if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+            return UF_FAIL_DISABLE_HELP
+        end    
 
-    -- If the target is either a nether ward or a tombstone, approve
-    if string.find(target:GetUnitName(),"npc_dota_unit_tombstone") or string.find(target:GetUnitName(), "npc_imba_pugna_nether_ward")then
-        return UF_SUCCESS
-    end
+        -- If the target is either a nether ward or a tombstone, approve
+        if string.find(target:GetUnitName(),"npc_dota_unit_tombstone") or string.find(target:GetUnitName(), "npc_imba_pugna_nether_ward")then
+            return UF_SUCCESS
+        end
 
-    -- If the target is magic immune, do nothing
-    if target:IsMagicImmune() then
-        return UF_FAIL_MAGIC_IMMUNE_ENEMY
-    end    
-
-    -- If the target is a hero or a creep, approve
-    if target:IsHero() or target:IsCreep() then
-        return UF_SUCCESS
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
     end
 end
 
@@ -1154,12 +1151,12 @@ function imba_pugna_life_drain:GetCustomCastErrorTarget(target)
 
     -- Cannot be cast on self
     if target == caster then
-        return "You cannot suck yourself"
+        return "dota_hud_error_life_drain_self"
     end
 
     -- Cannot be cast on targets already afflicted with Life Drain
     if target:HasModifier(modifier_drain) then
-        return "Target is already afflicted with Life Drain"
+        return "dota_hud_error_life_drain_target"
     end
 end
 

@@ -18,13 +18,13 @@ if IsServer() then
 		self.damage = self:GetAbility():GetSpecialValueFor("aoe_damage")
 		self.radius = self:GetAbility():GetSpecialValueFor("aoe_radius")
 		self.alliedpct = self:GetAbility():GetSpecialValueFor("allied_damage") / 100
-		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_1") then
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
 			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
-				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
-				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
+				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			else
-				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
-				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
+				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			end
 		end
 		self:StartIntervalThink(1)
@@ -37,13 +37,13 @@ if IsServer() then
 		self.damage = self:GetAbility():GetSpecialValueFor("aoe_damage")
 		self.alliedpct = self:GetAbility():GetSpecialValueFor("allied_damage") / 100
 		self.radius = self:GetAbility():GetSpecialValueFor("aoe_radius")
-		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_1") then
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_1") then
 			if self:GetParent():GetTeam() == self:GetCaster():GetTeam() then
-				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
-				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
+				self.ampin = self.ampin - self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.ampout = self.ampout + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			else
-				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
-				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_1")
+				self.ampin = self.ampin + self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
+				self.ampout = self.ampout -	self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_1")
 			end
 		end
 	end
@@ -71,8 +71,8 @@ if IsServer() then
 			if CalcDistanceBetweenEntityOBB(params.target, params.attacker) > self:GetAbility():GetSpecialValueFor("red_val_distance") then
 				outamp = outamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
-			if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_8") then
-				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_unique_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_unique_bloodseeker_8", "value2") -- find amp per pct
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
+				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 				local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 -- missing hp in pct
 				outamp = outamp + ampPct * hpPct
 			end
@@ -85,8 +85,8 @@ if IsServer() then
 			if CalcDistanceBetweenEntityOBB(params.target, params.attacker) > self:GetAbility():GetSpecialValueFor("red_val_distance") then
 				inamp = inamp * self:GetAbility():GetSpecialValueFor("red_val_amount") / 100
 			end
-			if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_8") then
-				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_unique_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_unique_bloodseeker_8", "value2") -- find amp per pct
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_8") then
+				local ampPct = self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value") / self:GetCaster():FindSpecificTalentValue("special_bonus_imba_bloodseeker_8", "value2") -- find amp per pct
 				local hpPct = (1 - self:GetParent():GetHealth() / self:GetParent():GetMaxHealth()) * 100 -- missing hp in pct
 				inamp = inamp + ampPct * hpPct
 			end
@@ -140,10 +140,32 @@ function imba_bloodseeker_blood_bath:OnSpellStart()
 		ParticleManager:ReleaseParticleIndex(bloodriteFX)
 		local targets = FindUnitsInRadius(self:GetCaster():GetTeamNumber(), vPos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, 0, 0, false)
 		local overheal = caster:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_overheal", {duration = self:GetSpecialValueFor("overheal_duration")})
+		local rupture = false
+		if caster:HasScepter() and caster:HasAbility("imba_bloodseeker_rupture") then
+			rupture = caster:FindAbilityByName("imba_bloodseeker_rupture")
+		end
+		
 		for _,target in pairs(targets) do
 			local damage = self:GetSpecialValueFor("damage")
 			target:AddNewModifier(caster, self, "modifier_imba_bloodseeker_blood_bath_silence", {duration = self:GetSpecialValueFor("silence_duration")})
-			
+			if rupture then
+				if rupture:GetLevel() >= 1 then
+					rupture:OnSpellStart(target)
+				end
+				local distance = radius - (target:GetAbsOrigin() - vPos):Length2D()
+				local knockback =
+				{
+					should_stun = false,
+					knockback_duration = 0.3,
+					duration = 0.3,
+					knockback_distance = distance,
+					knockback_height = 0,
+					center_x = vPos.x,
+					center_y = vPos.y,
+					center_z = vPos.z
+				}
+				target:AddNewModifier(caster, self, "modifier_knockback", knockback)
+			end
 			ApplyDamage({victim = target, attacker = self:GetCaster(), damage = damage, damage_type = self:GetAbilityDamageType(), ability = self})
 		end
 	end)
@@ -173,11 +195,6 @@ if IsServer() then
 					local cd = ability:GetCooldownTimeRemaining()
 					ability:EndCooldown()
 					ability:StartCooldown(cd * self.cdr)
-				end
-				if ability and ability:GetName() == "imba_bloodseeker_rupture" and self:GetCaster():HasScepter() then
-					local charges = self:GetCaster():FindModifierByName("")
-					charges:SetDuration(charges:GetRemainingTime()/2, true)
-					charges:Update()
 				end
 			end
 		end
@@ -274,9 +291,9 @@ function modifier_imba_bloodseeker_thirst_passive:OnRefresh()
 	self.deathstick = self:GetAbility():GetSpecialValueFor("stick_time")
 	self.talent7 = false
 	if IsServer() then
-		if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
-			self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value") / (self.minhp - self.maxhp)
-			self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
+		if self:GetParent():HasTalent("special_bonus_imba_bloodseeker_7") then
+			self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value") / (self.minhp - self.maxhp)
+			self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value2") / (self.minhp - self.maxhp)
 			CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
 		end
 	end
@@ -285,10 +302,10 @@ end
 function modifier_imba_bloodseeker_thirst_passive:OnIntervalThink()
 	if IsServer() then
 		if not self.talent7 then
-			if self:GetParent():HasTalent("special_bonus_unique_bloodseeker_7") then
+			if self:GetParent():HasTalent("special_bonus_imba_bloodseeker_7") then
 				self.talent7 = true
-				self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
-				self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_unique_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
+				self.movespeed = self.movespeed + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value")  / (self.minhp - self.maxhp)
+				self.damage = self.damage + self:GetParent():FindSpecificTalentValue("special_bonus_imba_bloodseeker_7", "value2")  / (self.minhp - self.maxhp)
 				CustomNetTables:SetTableValue("talents", "hero_bloodseeker_talents", {talent7_ms = self.movespeed, talent7_dmg = self.damage})
 			end
 		end
@@ -450,30 +467,21 @@ end
 
 imba_bloodseeker_rupture = imba_bloodseeker_rupture or class({})
 
-function imba_bloodseeker_rupture:OnInventoryContentsChanged()
-	-- Scepter stuff
-	-- if not self.hasScepter and self:GetCaster():HasScepter() then
-		-- self.hasScepter = true
-		-- self:GetParent():AddNewModifier(self:GetParent(), shield, "modifier_rupture_charges",
-		-- {
-			-- max_count = self:GetSpecialValueFor("max_charges_scepter"),
-			-- start_count = self:GetSpecialValueFor("max_charges_scepter"),
-			-- replenish_time = self:GetSpecialValueFor("cooldown_scepter")
-		-- })
-	-- end
-end
-
-function imba_bloodseeker_rupture:OnSpellStart()
-	local hTarget = self:GetCursorTarget()
+function imba_bloodseeker_rupture:OnSpellStart(target)
+	local hTarget = target or self:GetCursorTarget()
 	local caster = self:GetCaster()
-	hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = self:GetSpecialValueFor("duration")})
-	EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
-	EmitSoundOn("hero_bloodseeker.rupture", hTarget)
+	if target then
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = 0.3})
+	else
+		hTarget:AddNewModifier(caster, self, "modifier_imba_bloodseeker_rupture", {duration = self:GetSpecialValueFor("duration")})
+		EmitSoundOn("hero_bloodseeker.rupture.cast", caster)
+		EmitSoundOn("hero_bloodseeker.rupture", hTarget)
+	end
 	if hTarget:GetHealthPercent() > self:GetSpecialValueFor("damage_initial_pct") then
 		local hpBurn = hTarget:GetHealthPercent() - self:GetSpecialValueFor("damage_initial_pct")
 		ApplyDamage({victim = hTarget, attacker = caster, damage = hTarget:GetMaxHealth() * hpBurn / 100, damage_type = self:GetAbilityDamageType(), ability = self})
-		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_3") then 
-			caster:Heal(hpBurn, caster) 
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
+			caster:Heal(hpBurn, caster)
 			local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 			ParticleManager:ReleaseParticleIndex(healFX)
 		end
@@ -488,9 +496,9 @@ if IsServer() then
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100
 		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
 		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
-		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_5")
-			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_5")
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
 		end
 		self.damagecap = self:GetAbility():GetTalentSpecialValueFor("damage_cap_amount")
 		self.prevLoc = self:GetParent():GetAbsOrigin()
@@ -501,9 +509,9 @@ if IsServer() then
 		self.movedamage = self:GetAbility():GetSpecialValueFor("movement_damage_pct") / 100
 		self.attackdamage = self:GetAbility():GetSpecialValueFor("attack_damage")
 		self.castdamage = self:GetAbility():GetSpecialValueFor("cast_damage")
-		if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_5") then
-			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_5")
-			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_unique_bloodseeker_5")
+		if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_5") then
+			self.attackdamage = self.attackdamage + self.attackdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
+			self.castdamage = self.castdamage + self.castdamage * self:GetCaster():FindTalentValue("special_bonus_imba_bloodseeker_5")
 		end
 		self.damagecap = self:GetAbility():GetSpecialValueFor("damage_cap_amount")
 	end
@@ -512,7 +520,7 @@ if IsServer() then
 		if CalculateDistance(self.prevLoc, self:GetParent()) < self.damagecap then
 			local move_damage = CalculateDistance(self.prevLoc, self:GetParent()) * self.movedamage
 			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = move_damage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
-			if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_3") then 
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
 				self:GetCaster():Heal(move_damage, self:GetCaster()) 
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 				ParticleManager:ReleaseParticleIndex(healFX)
@@ -533,7 +541,7 @@ if IsServer() then
 	function modifier_imba_bloodseeker_rupture:OnAbilityStart(params)
         if params.unit == self:GetParent() then
 			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.castdamage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
-			if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_3") then 
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
 				self:GetCaster():Heal(self.castdamage, self:GetCaster()) 
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 				ParticleManager:ReleaseParticleIndex(healFX)
@@ -544,7 +552,7 @@ if IsServer() then
 	function modifier_imba_bloodseeker_rupture:OnAttackStart(params)
         if params.attacker == self:GetParent() then
 			ApplyDamage({victim = self:GetParent(), attacker = self:GetCaster(), damage = self.attackdamage, damage_type = self:GetAbility():GetAbilityDamageType(), ability = self:GetAbility()})
-			if self:GetCaster():HasTalent("special_bonus_unique_bloodseeker_3") then 
+			if self:GetCaster():HasTalent("special_bonus_imba_bloodseeker_3") then 
 				self:GetCaster():Heal(self.attackdamage, self:GetCaster()) 
 				local healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, self:GetParent())
 				ParticleManager:ReleaseParticleIndex(healFX)
@@ -557,177 +565,93 @@ function modifier_imba_bloodseeker_rupture:GetEffectName()
 	return "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
 end
 
-
-LinkLuaModifier("modifier_rupture_charges", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_rupture_charges = class({})
-
-if IsServer() then
-    function modifier_rupture_charges:Update()
-        if self:GetDuration() == -1 then
-			local octarine = GetCooldownReduction(self:GetCaster())
-            self:SetDuration(self.kv.replenish_time*octarine, true)
-            self:StartIntervalThink(self.kv.replenish_time*octarine)
-        end
-		
-		if self:GetStackCount() == self.kv.max_count then
-			self:SetDuration(-1, true)
-		elseif self:GetStackCount() > self.kv.max_count then
-			self:SetDuration(-1, true)
-			self:SetStackCount(self.kv.max_count)
-		end
-
-        if self:GetStackCount() == 0 then
-            self:GetAbility():StartCooldown(self:GetRemainingTime())
-        end
-    end
-
-    function modifier_rupture_charges:OnCreated(kv)
-        self:SetStackCount(kv.start_count or kv.max_count)
-        self.kv = kv
-
-        if kv.start_count and kv.start_count ~= kv.max_count then
-            self:Update()
-        end
-    end
-
-    function modifier_rupture_charges:DeclareFunctions()
-        local funcs = {
-            MODIFIER_EVENT_ON_ABILITY_FULLY_CAST
-        }
-
-        return funcs
-    end
-
-    function modifier_rupture_charges:OnAbilityFullyCast(params)
-        if params.unit == self:GetParent() then
-            local ability = params.ability
-            if params.ability == self:GetAbility() then
-                self:DecrementStackCount()
-				ability:EndCooldown()
-                self:Update()
-			elseif params.ability:GetName() == "item_refresher" and self:GetStackCount() < self.kv.max_count then
-                self:IncrementStackCount()
-                self:Update()
-            end
-        end
-
-        return 0
-    end
-
-    function modifier_rupture_charges:OnIntervalThink()
-        local stacks = self:GetStackCount()
-		local octarine = GetCooldownReduction(self:GetCaster())
-        if stacks < self.kv.max_count then
-            self:SetDuration(self.kv.replenish_time*octarine, true)
-            self:IncrementStackCount()
-
-            if stacks == self.kv.max_count - 1 then
-                self:SetDuration(-1, true)
-                self:StartIntervalThink(-1)
-            end
-        end
-    end
-end
-
-function modifier_rupture_charges:DestroyOnExpire()
-    return false
-end
-
-function modifier_rupture_charges:IsPurgable()
-    return false
-end
-
-function modifier_rupture_charges:RemoveOnDeath()
-    return false
-end
-
 --------------------------------------------------------------------------------
 
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_1", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_1 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_1", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_1 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_1:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_1:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_1:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_1:RemoveOnDeath()
 	return false
 end
 
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_2", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_2 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_2", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_2 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_2:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_2:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_2:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_2:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_3", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_3 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_3", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_3 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_3:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_3:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_3:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_3:RemoveOnDeath()
 	return false
 end
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_4", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_4 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_4", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_4 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_4:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_4:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_5", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_5 = class({})
-
-function modifier_special_bonus_unique_bloodseeker_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_unique_bloodseeker_5:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_4:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_6", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_6 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_5", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_5 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_6:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_5:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_6:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_5:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_7", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_7 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_6", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_6 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_7:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_6:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_7:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_6:RemoveOnDeath()
 	return false
 end
 
-LinkLuaModifier("modifier_special_bonus_unique_bloodseeker_8", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_unique_bloodseeker_8 = class({})
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_7", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_7 = class({})
 
-function modifier_special_bonus_unique_bloodseeker_8:IsHidden()
+function modifier_special_bonus_imba_bloodseeker_7:IsHidden()
 	return true
 end
 
-function modifier_special_bonus_unique_bloodseeker_8:RemoveOnDeath()
+function modifier_special_bonus_imba_bloodseeker_7:RemoveOnDeath()
+	return false
+end
+
+LinkLuaModifier("modifier_special_bonus_imba_bloodseeker_8", "hero/hero_bloodseeker", LUA_MODIFIER_MOTION_NONE)
+modifier_special_bonus_imba_bloodseeker_8 = class({})
+
+function modifier_special_bonus_imba_bloodseeker_8:IsHidden()
+	return true
+end
+
+function modifier_special_bonus_imba_bloodseeker_8:RemoveOnDeath()
 	return false
 end

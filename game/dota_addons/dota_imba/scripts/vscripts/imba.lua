@@ -29,6 +29,8 @@ require('internal/gamemode')
 require('internal/events')
 -- This library used to handle scoreboard events
 require('internal/scoreboard_events')
+-- This library used to handle custom IMBA talent UI (hero_selection will need to use a function in this)
+require('internal/imba_talent_events')
 
 -- settings.lua is where you can specify many different properties for your game mode and is one of the core barebones files.
 require('settings')
@@ -336,6 +338,8 @@ function GameMode:ModifierFilter( keys )
 				end
 			end
 		end
+
+
 
 	-------------------------------------------------------------------------------------------------
 	-- Silencer Arcane Supremacy silence duration reduction
@@ -709,6 +713,15 @@ function GameMode:OrderFilter( keys )
 	if unit:HasModifier("modifier_imba_tidebringer_manual") then
 		unit:RemoveModifierByName("modifier_imba_tidebringer_manual")
 	end
+
+	-- Techies' Focused Detonate cast-handlign
+	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
+        local ability = EntIndexToHScript(keys.entindex_ability)        
+        
+        if ability:GetAbilityName() == "imba_techies_focused_detonate" then                        
+            unit:AddNewModifier(unit, ability, "modifier_imba_focused_detonate", {duration = 0.2})            
+        end
+    end
 	
 	return true
 end
@@ -872,14 +885,7 @@ function GameMode:DamageFilter( keys )
 				victim:SetModifierStackCount("modifier_item_imba_initiate_robe_stacks", victim, math.floor(shield_stacks - keys.damage))
 				keys.damage = 0
 			end
-		end
-
-		-- Decrepify damage counter
-		if victim.decrepify_damage_counter then
-			if damage_type == DAMAGE_TYPE_MAGICAL then
-				victim.decrepify_damage_counter = victim.decrepify_damage_counter + keys.damage
-			end
-		end
+		end		
 
 		-- Damage overhead display
 		if display_red_crit_number then
@@ -909,6 +915,18 @@ function GameMode:DamageFilter( keys )
 					-- Attempt to kill the target, crediting it to the caster of Reaper's Scythe
 					ApplyDamage({attacker = caster, victim = target, ability = ability, damage = target:GetHealth(), damage_type = DAMAGE_TYPE_PURE})
 				end
+			end
+		end
+
+		-- Centaur Bulging Hide
+		if victim:HasModifier("modifier_imba_return_damage_block") then
+			local return_ability = victim:FindAbilityByName("imba_centaur_return")
+			local stacks = victim:FindModifierByName("modifier_imba_return_damage_block"):GetStackCount()
+			if return_ability and stacks then
+				local damage_block = return_ability:GetSpecialValueFor("damage_block")
+				local block = damage_block * stacks
+
+				keys.damage = keys.damage - block
 			end
 		end
 
@@ -1010,26 +1028,16 @@ function GameMode:OnAllPlayersLoaded()
 
 			-- Add fountain passive abilities
 			building:AddAbility("imba_fountain_buffs")
-			building:AddAbility("imba_tower_grievous_wounds")
+			building:AddAbility("imba_fountain_grievous_wounds")
 			local fountain_ability = building:FindAbilityByName("imba_fountain_buffs")
-			local swipes_ability = building:FindAbilityByName("imba_tower_grievous_wounds")
+			local swipes_ability = building:FindAbilityByName("imba_fountain_grievous_wounds")
 			fountain_ability:SetLevel(1)
 			swipes_ability:SetLevel(1)
 		elseif string.find(building_name, "tower") then
 			building:SetDayTimeVisionRange(1900)
 			building:SetNightTimeVisionRange(800)
 		end
-	end
-
-	-------------------------------------------------------------------------------------------------
-	-- IMBA: Banned player message
-	-------------------------------------------------------------------------------------------------
-
-	if IS_BANNED_PLAYER then
-		Timers:CreateTimer(1, function()
-			Say(nil, "You are banned from playing IMBA. Game will not start.", false)
-		end)
-	end
+	end	
 end
 
 --[[
@@ -1515,6 +1523,7 @@ function GameMode:InitGameMode()
 	GameRules.UnitKV = LoadKeyValues("scripts/npc/npc_units_custom.txt")
 
 	initScoreBoardEvents()
+	InitPlayerHeroImbaTalents();
 end
 
 -- This is an example console command

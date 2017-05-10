@@ -17,6 +17,7 @@ function imba_queenofpain_delightful_torment:IsHiddenWhenStolen() return false e
 function imba_queenofpain_delightful_torment:IsRefreshable() return false end
 function imba_queenofpain_delightful_torment:IsStealable() return false end
 function imba_queenofpain_delightful_torment:IsNetherWardStealable() return false end
+function imba_queenofpain_delightful_torment:IsInnateAbility() return true end
 -------------------------------------------
 
 function imba_queenofpain_delightful_torment:GetIntrinsicModifierName()

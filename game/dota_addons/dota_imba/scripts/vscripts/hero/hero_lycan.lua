@@ -405,10 +405,6 @@ function imba_lycan_howl:OnSpellStart()
 	
 	-- #3 Talent howl duration	
 	duration = duration + caster:FindTalentValue("special_bonus_imba_lycan_3")	
-	
-	if IsServer() then -- set custom nettable to store current day/night cycle on the time of cast
-		CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID()).."daytime", { dayTime = GameRules:IsDaytime()} )
-	end
 		
 	-- Play global cast sound, only for allies
 	EmitSoundOnLocationForAllies(caster:GetAbsOrigin(), sound_cast, caster)
@@ -583,13 +579,8 @@ function modifier_imba_howl_buff:GetModifierMoveSpeedBonus_Constant()
 	local ability = self:GetAbility()
 	local parent = self:GetParent()	
 	
-	-- Goddamn you Valve, goddamn you! Get daytime value from custom net table.
-	local day = CustomNetTables:GetTableValue("player_table", tostring(self:GetCaster():GetPlayerOwnerID()).."daytime").dayTime	
-	if day == 1 then
-		day = true
-	else
-		day = false
-	end
+	--Get daytime value
+	local day = IsDaytime()
 	
 	-- Ability specials
 	local bonus_ms_heroes = ability:GetSpecialValueFor("bonus_ms_heroes")
@@ -772,78 +763,51 @@ end
 -- Feral Impulse modifier
 modifier_imba_feral_impulse = class({})
 
-function modifier_imba_feral_impulse:OnCreated()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local aura_buff = "modifier_imba_feral_impulse_aura" 
-		
-		-- Find aura stacks	
-		if caster:HasModifier(aura_buff) then
-			local stacks = caster:FindModifierByName(aura_buff):GetStackCount()
-			CustomNetTables:SetTableValue("player_table", tostring(caster:GetPlayerOwnerID()).."feral_impulse", { feral_impulse_stacks = stacks})
-		end
-		
-		self:StartIntervalThink(0.5)
-	end
-	
+function modifier_imba_feral_impulse:OnCreated()	
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.aura_buff = "modifier_imba_feral_impulse_aura" 
+	self.feral_impulse_stacks = self.caster:GetModifierStackCount(self.aura_buff, self.caster)
+
+	-- Start thinking
+	self:StartIntervalThink(0.1)
 end
 
 function modifier_imba_feral_impulse:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = self:GetAbility()
-		local aura_buff = "modifier_imba_feral_impulse_aura" 
-		
-		-- Find aura stacks	
-		if caster:HasModifier(aura_buff) then
-			local stacks = caster:FindModifierByName(aura_buff):GetStackCount()			
-			CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID()).."feral_impulse", { feral_impulse_stacks = stacks})
-		end
-	end
+	self.feral_impulse_stacks = self.caster:GetModifierStackCount(self.aura_buff, self.caster)
 end
 
 function modifier_imba_feral_impulse:DeclareFunctions()	
-		local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
-						  MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
-		
-		return decFuncs	
+	local decFuncs = {MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE,
+					  MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT}
+	
+	return decFuncs	
 end
 
-function modifier_imba_feral_impulse:GetModifierBaseDamageOutgoing_Percentage()	 
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()	
-		
-	local stacks = CustomNetTables:GetTableValue("player_table", tostring(caster:GetPlayerOwnerID()).."feral_impulse").feral_impulse_stacks			
-	
+function modifier_imba_feral_impulse:GetModifierBaseDamageOutgoing_Percentage()	 		
 	-- Ability specials
-	local base_bonus_damage_perc = ability:GetSpecialValueFor("base_bonus_damage_perc")
-	local damage_inc_per_unit = ability:GetSpecialValueFor("damage_inc_per_unit")			
+	local base_bonus_damage_perc = self.ability:GetSpecialValueFor("base_bonus_damage_perc")
+	local damage_inc_per_unit = self.ability:GetSpecialValueFor("damage_inc_per_unit")			
 	
 	-- #2 Talent: damage increase bonus 	
-	damage_inc_per_unit = damage_inc_per_unit + caster:FindTalentValue("special_bonus_imba_lycan_2")	
+	damage_inc_per_unit = damage_inc_per_unit + self.caster:FindTalentValue("special_bonus_imba_lycan_2")	
 	
 	-- Calculate damage percents
-	local damage_perc_increase = base_bonus_damage_perc + damage_inc_per_unit * stacks			
+	local damage_perc_increase = base_bonus_damage_perc + damage_inc_per_unit * self.feral_impulse_stacks
 	return damage_perc_increase		
 end
 
 function modifier_imba_feral_impulse:GetModifierConstantHealthRegen()
-	-- Ability properties
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()			
-	local stacks = CustomNetTables:GetTableValue("player_table", tostring(caster:GetPlayerOwnerID()).."feral_impulse").feral_impulse_stacks			
-	
 	-- Ability specials
-	local health_regen = ability:GetSpecialValueFor("health_regen")
-	local regen_inc_per_unit = ability:GetSpecialValueFor("regen_inc_per_unit")			
+	local health_regen = self.ability:GetSpecialValueFor("health_regen")
+	local regen_inc_per_unit = self.ability:GetSpecialValueFor("regen_inc_per_unit")			
 	
 	-- #2 Talent - HP regen increase bonus 	
-	regen_inc_per_unit = regen_inc_per_unit + caster:FindTalentValue("special_bonus_imba_lycan_2")		
+	regen_inc_per_unit = regen_inc_per_unit + self.caster:FindTalentValue("special_bonus_imba_lycan_2")		
 	
-	-- Calculate damage percents
-	local health_increase = health_regen + regen_inc_per_unit * stacks			
+	-- Calculate HP regeneration
+	local health_increase = health_regen + regen_inc_per_unit * self.feral_impulse_stacks
 	return health_increase	
 end
 
@@ -920,44 +884,21 @@ function imba_lycan_shapeshift:GetCooldown( level )
 	local base_cooldown = self.BaseClass.GetCooldown( self, level )			
 	local wolfsbane_modifier = "modifier_imba_wolfsbane_lycan"			
 	
-	if IsServer() then		
-		-- Get amount of Wolfsbane stacks
-		if caster:HasModifier(wolfsbane_modifier) and not caster:PassivesDisabled() then
-			local wolfsbane_modifier_handler = caster:FindModifierByName(wolfsbane_modifier)			
-			local stacks = wolfsbane_modifier_handler:GetStackCount()
-			
-			-- Cooldown can't get lower than 0
-			local final_cooldown = (base_cooldown - stacks)
-			
-			if final_cooldown < 0 then
-				final_cooldown = 0
-			end
-			
-			return final_cooldown
-		end	
+	-- Get amount of Wolfsbane stacks
+	if caster:HasModifier(wolfsbane_modifier) and not caster:PassivesDisabled() then
+		local stacks = caster:GetModifierStackCount(wolfsbane_modifier, caster)
 		
-		return self.BaseClass.GetCooldown( self, level )			
-	end
+		-- Cooldown can't get lower than 0
+		local final_cooldown = (base_cooldown - stacks)
 		
-	
-		-- Client side cooldown UI
-	local wolfsbaneStacks = 0
-	if ability_level > 0 then	
-		wolfsbaneStacks = CustomNetTables:GetTableValue("player_table", tostring(caster:GetPlayerOwnerID().."shapeshift_cooldown")).wolfsbane_stacks	
-	end
-		
-	--Lower cooldown if there are stacks. Cooldown can't get lower than 0
-	if wolfsbaneStacks and wolfsbaneStacks > 0 then			
-		local final_cooldown = (base_cooldown - wolfsbaneStacks)
-			
 		if final_cooldown < 0 then
 			final_cooldown = 0
 		end
-			
+		
 		return final_cooldown
-	end				
-
-	return self.BaseClass.GetCooldown( self, level )	
+	end	
+	
+	return self.BaseClass.GetCooldown( self, level )			
 end
 
 -- Transform modifier (stuns Lycan so he can't do anything but channel his transformation)
@@ -1217,6 +1158,10 @@ LinkLuaModifier("modifier_imba_wolfsbane_wolves", "hero/hero_lycan", LUA_MODIFIE
 LinkLuaModifier("modifier_imba_wolfsbane_lycan", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_wolfsbane_lycan_prevent", "hero/hero_lycan", LUA_MODIFIER_MOTION_NONE)
 
+function imba_lycan_wolfsbane:IsInnateAbility()
+	return true
+end
+
 function imba_lycan_wolfsbane:OnUpgrade()
 	-- Ability properties	
 	local caster = self:GetCaster()
@@ -1233,8 +1178,6 @@ function imba_lycan_wolfsbane:OnUpgrade()
 	end
 	
 end
-
-
 
 --wolfsbane's aura
 modifier_imba_wolfsbane_aura = class({})
@@ -1488,10 +1431,6 @@ function modifier_imba_wolfsbane_lycan:OnHeroKilled( keys )
 				EmitSoundOn(sound_howl, caster)				
 				AddStacksLua(ability, caster, caster, aura, 1, false)				
 				caster:AddNewModifier(caster, ability, prevent_modifier, {duration = prevent_modifier_duration})
-				
-				-- Store lycan stacks for client side cooldown UI
-				aura_handler = caster:FindModifierByName(aura)
-				CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID().."shapeshift_cooldown"), { wolfsbane_stacks = aura_handler:GetStackCount()} )			
 			end
 		end		
 	end	
@@ -1515,8 +1454,7 @@ end
 
 function modifier_imba_wolfsbane_lycan:OnCreated()
 	if IsServer() then
-		local caster = self:GetCaster()
-		CustomNetTables:SetTableValue( "player_table", tostring(caster:GetPlayerOwnerID().."shapeshift_cooldown"), { wolfsbane_stacks = 0} )			
+		local caster = self:GetCaster()		
 		self:StartIntervalThink(0.5)
 	end
 	
@@ -1568,8 +1506,6 @@ end
 function modifier_imba_wolfsbane_lycan_prevent:IsDebuff()
 	return false
 end
-
-
 
 
 

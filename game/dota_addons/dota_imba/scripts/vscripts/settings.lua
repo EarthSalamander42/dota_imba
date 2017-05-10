@@ -444,7 +444,6 @@ for i = 21, 100 do
 end
 
 USE_MEME_SOUNDS = true														-- Should we use meme/fun sounds on abilities occasionally?
-IS_BANNED_PLAYER = false													-- Is this player banned from playing the game?
 
 -------------------------------------------------------------------------------------------------
 -- IMBA: Keyvalue tables
@@ -456,3 +455,6 @@ RANDOM_OMG_HEROES = LoadKeyValues("scripts/npc/KV/random_omg_heroes.kv")
 RANDOM_OMG_ABILITIES = LoadKeyValues("scripts/npc/KV/random_omg_abilities.kv")
 RANDOM_OMG_ULTIMATES = LoadKeyValues("scripts/npc/KV/random_omg_ultimates.kv")
 PURGE_BUFF_LIST = LoadKeyValues("scripts/npc/KV/purge_buffs_list.kv")
+IMBA_GENERIC_TALENT_LIST = LoadKeyValues("scripts/npc/KV/imba_generic_talent_list.kv")
+IMBA_HERO_TALENTS_LIST = LoadKeyValues("scripts/npc/KV/imba_hero_talents_list.kv")
+DISPELLABLE_DEBUFF_LIST = LoadKeyValues("scripts/npc/KV/dispellable_debuffs_list.kv")

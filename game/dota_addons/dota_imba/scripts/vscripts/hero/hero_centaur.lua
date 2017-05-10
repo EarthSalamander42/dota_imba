@@ -14,6 +14,10 @@ function imba_centaur_thick_hide:GetIntrinsicModifierName()
 	return "modifier_imba_thick_hide"
 end
 
+function imba_centaur_thick_hide:IsInnateAbility()
+	return true
+end
+
 -- Thick hide modifier
 modifier_imba_thick_hide = class({})
 

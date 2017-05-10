@@ -895,11 +895,16 @@ function imba_clinkz_death_pact:CastFilterResultTarget(target)
         return UF_FAIL_CUSTOM
     end
 
+    -- Can't target buildings
+    if target:IsBuilding() then
+        return UF_FAIL_BUILDING
+    end
+
     return UF_SUCCESS
 end
 
 function imba_clinkz_death_pact:GetCustomCastErrorTarget(target) 
-    return "Ability cannot be cast on yourself"
+    return "dota_hud_error_cant_cast_on_self"
 end
 
 function imba_clinkz_death_pact:IsHiddenWhenStolen()

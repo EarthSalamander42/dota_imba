@@ -59,6 +59,7 @@ function imba_vengefulspirit_rancor:IsHiddenWhenStolen() return false end
 function imba_vengefulspirit_rancor:IsRefreshable() return false end
 function imba_vengefulspirit_rancor:IsStealable() return false end
 function imba_vengefulspirit_rancor:IsNetherWardStealable() return false end
+function imba_vengefulspirit_rancor:IsInnateAbility() return true end
 -------------------------------------------
 
 function imba_vengefulspirit_rancor:GetIntrinsicModifierName()
@@ -699,6 +700,8 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 	if IsServer() then
 		
 		local caster = self:GetCaster()
+		local casterID = caster:GetPlayerOwnerID()
+		local targetID = target:GetPlayerOwnerID()
 		
 		if target ~= nil and target == caster then
 			return UF_FAIL_OTHER
@@ -706,6 +709,10 @@ function imba_vengefulspirit_nether_swap:CastFilterResultTarget( target )
 		
 		if target ~= nil and (not target:IsHero()) and (not caster:HasScepter()) then
 			return UF_FAIL_CREEP
+		end
+
+		if target ~= nil and not target:IsOpposingTeam(caster:GetTeamNumber()) and PlayerResource:IsDisableHelpSetForPlayerID(targetID,casterID) then
+			return UF_FAIL_DISABLE_HELP
 		end
 
 		local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), caster:GetTeamNumber() )

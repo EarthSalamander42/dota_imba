@@ -374,6 +374,10 @@ function IsUninterruptableForcedMovement( unit )
 	return false
 end
 
+function CDOTA_BaseNPC:GetBonusDamage(tEntity)
+  return tEntity:GetAverageTrueAttackDamage(tEntity) - ( tEntity:GetBaseDamageMin()  + tEntity:GetBaseDamageMax() ) / 2 
+end
+
 -- Detect hero-creeps with an inventory, like warlock golems or lone druid's bear
 function IsHeroCreep( unit )
 

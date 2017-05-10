@@ -24,7 +24,7 @@ function item_imba_hand_of_midas:CastFilterResultTarget(target)
 		end
 
 		-- If the target is a ward, deny it
-		if target:IsOther() or IsWardTypeUnit(target) then
+		if target:IsOther() then
 			return UF_FAIL_CUSTOM
 		end
 
@@ -52,7 +52,7 @@ function item_imba_hand_of_midas:GetCustomCastErrorTarget(target)
 		end
 
 		-- Ward message
-		if target:IsOther() or IsWardTypeUnit(target) then
+		if target:IsOther() then
 			return "#dota_hud_error_cant_use_on_wards"
 		end
 

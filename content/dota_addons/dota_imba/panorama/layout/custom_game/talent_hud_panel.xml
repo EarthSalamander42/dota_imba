@@ -1,0 +1,8 @@
+<root>
+    <styles>
+ 		<include src="file://{resources}/styles/custom_game/talent_window.css" />
+    </styles>
+	<Panel class="IMBA_Talent_HUD_Panel">
+        <Button id="IMBA_Talent_HUD_Button"/>
+    </Panel>
+</root>

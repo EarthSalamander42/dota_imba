@@ -20,6 +20,10 @@ function imba_disruptor_stormbearer:GetIntrinsicModifierName()
 	return "modifier_imba_stormbearer"
 end
 
+function imba_disruptor_stormbearer:IsInnateAbility()
+	return true
+end
+
 -- Stormbearer's stacks buffs
 modifier_imba_stormbearer = class({})
 

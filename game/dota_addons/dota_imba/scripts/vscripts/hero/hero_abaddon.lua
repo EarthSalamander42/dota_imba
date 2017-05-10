@@ -553,7 +553,9 @@ function modifier_imba_curse_of_avernus_buff:GetModifierAttackSpeedBonus_Constan
 -----------------------------
 
 imba_abaddon_over_channel = class({
-	IsStealable 			= function(self) return false end
+	IsStealable 			= function(self) return false end,
+	IsInnateAbility			= function(self) return true end,
+
 })
 LinkLuaModifier("modifer_over_channel_caster", "hero/hero_abaddon", LUA_MODIFIER_MOTION_NONE)
 
