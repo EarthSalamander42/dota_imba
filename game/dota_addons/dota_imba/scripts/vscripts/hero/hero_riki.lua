@@ -209,6 +209,7 @@ end
 -------------------------	Blink Strike	-------------------------
 ---------------------------------------------------------------------
 if imba_riki_blink_strike == nil then imba_riki_blink_strike = class({}) end
+LinkLuaModifier( "modifier_imba_riki_blink_strike_on_cast", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )
 LinkLuaModifier( "modifier_imba_riki_blink_strike_debuff", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )					-- Turn rate slow
 LinkLuaModifier( "modifier_imba_riki_blink_strike_outofworld", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )				-- Sets the caster out of world for Blink Strike jumping
 LinkLuaModifier( "modifier_imba_riki_blink_strike_small_range_indicator", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Small cast range indicator
@@ -337,10 +338,11 @@ function imba_riki_blink_strike:OnSpellStart()
 	end
 end
 
-function imba_riki_blink_strike:CastFilterResultTarget( target )
+function imba_riki_blink_strike:CastFilterResultTarget(target)
 	if IsServer() then
-		local caster = self:GetCaster()
-		
+		local caster = self:GetCaster()		
+		caster:AddNewModifier(caster, self, "modifier_imba_riki_blink_strike_on_cast", {})
+
 		-- Can't cast on self, buildings, or spell immune
 		if target:IsBuilding() then
 			return UF_FAIL_BUILDING
@@ -349,7 +351,31 @@ function imba_riki_blink_strike:CastFilterResultTarget( target )
 		elseif target:IsMagicImmune() then
 			return UF_FAIL_MAGIC_IMMUNE_ENEMY
 		end
-		
+
+		local jump_check_result = self:BeginJumpCheck(target)
+
+		if jump_check_result then
+			return UF_SUCCESS
+		end
+
+		caster:MoveToTargetToAttack(target)
+		self.caster = caster
+		self.target = target		
+
+		Timers:CreateTimer(function()			
+			if self:BeginJumpCheck(self.target) then
+				self.caster:CastAbilityOnTarget(self.target, self, self.caster:GetEntityIndex())
+			else
+				if self.caster:HasModifier("modifier_imba_riki_blink_strike_on_cast") then
+					return FrameTime()
+				end
+			end
+		end)		
+	end
+end
+
+function imba_riki_blink_strike:BeginJumpCheck(target)
+	if IsServer() then
 		-- Clear tables
 		self.jumpTargets = {}
 		self.checkedTargets = {}
@@ -395,19 +421,19 @@ function imba_riki_blink_strike:CastFilterResultTarget( target )
 					-- Check if the unit is closer to the target, and that it's in effective range to reach new targets outside of no-jump range
 					if unit_caster_distance > unit_caster_distance_minimum and caster_target_distance > unit_target_distance then
 						-- Check if JumpCheck returned true
-						local foundPath = self:JumpCheck(target, unit, caster_target_distance, jump_range, find_filter, jumps-1)
-						
-						-- If a path to the target was found, index the unit and commence spell casting
-						if foundPath then
-							table.insert(self.jumpTargets, unit)
-							return UF_SUCCESS
-						end
+						local foundPath = self:JumpCheck(target, unit, caster_target_distance, jump_range, find_filter, jumps-1)											
 					end
+
+					-- If a path to the target was found, index the unit and commence spell casting
+					if foundPath then
+						table.insert(self.jumpTargets, unit)
+						return true
+					end	
 				end
 			end
 		end
-		
-		return UF_FAIL_CUSTOM
+
+		return false
 	end
 end
  
@@ -466,8 +492,6 @@ function imba_riki_blink_strike:GetCustomCastErrorTarget( target )
 	if self:GetCaster() == target then
 		return "#dota_hud_error_cant_cast_on_self"
 	end
-	
-	return "#dota_hud_error_target_unreachable"
 end
 
 ---------------------------------------------------
@@ -509,6 +533,29 @@ function modifier_imba_riki_blink_strike_small_range_indicator:OnIntervalThink()
 	end
 end
 
+
+---------------------------------------------------
+-----	Blink Strike cast modifier	  -----
+---------------------------------------------------
+modifier_imba_riki_blink_strike_on_cast = class({})
+function modifier_imba_riki_blink_strike_on_cast:IsHidden() return true end
+function modifier_imba_riki_blink_strike_on_cast:IsPurgable() return false end
+function modifier_imba_riki_blink_strike_on_cast:IsDebuff() return false end
+
+function modifier_imba_riki_blink_strike_on_cast:DeclareFunctions()
+	local decFuncs = {MODIFIER_EVENT_ON_ORDER}
+
+	return decFuncs
+end
+
+function modifier_imba_riki_blink_strike_on_cast:OnOrder(keys)
+	local unit = keys.unit
+
+	if unit == self:GetCaster() then
+		self:Destroy()
+	end
+end
+
 -----------------------------------
 -----	Blink Strike Debuff	  -----
 -----------------------------------
@@ -541,10 +588,7 @@ function modifier_imba_riki_blink_strike_outofworld:GetPriority()
 	
 function modifier_imba_riki_blink_strike_outofworld:CheckState()
 	if IsServer() then
-		local state = {	[MODIFIER_STATE_MUTED] = true,
-						[MODIFIER_STATE_ROOTED] = true,
-						[MODIFIER_STATE_SILENCED] = true,
-						[MODIFIER_STATE_DISARMED ] = true,
+		local state = {	[MODIFIER_STATE_STUNNED] = true,
 						[MODIFIER_STATE_INVULNERABLE] = true,
 						[MODIFIER_STATE_NO_HEALTH_BAR ] = true,
 						[MODIFIER_STATE_NO_UNIT_COLLISION] = true,}
@@ -578,71 +622,94 @@ function modifier_imba_riki_cloak_and_dagger:IsPurgable() return false end
 function modifier_imba_riki_cloak_and_dagger:IsDebuff() return false end
 function modifier_imba_riki_cloak_and_dagger:IsHidden()	return true end
 
+function modifier_imba_riki_cloak_and_dagger:OnCreated()
+	if IsServer() then
+		-- Ability properties
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()
+		self.backstab_sound = "Hero_Riki.Backstab"
+		self.backstab_invisbreak_sound = "Imba.RikiCritStab"
+		self.backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
+		
+		-- Ability specials
+		self.fade_time = self.ability:GetSpecialValueFor("fade_time") 
+		self.agility_multiplier = self.ability:GetSpecialValueFor("agility_damage_multiplier")
+		self.agility_multiplier_smoke = self.ability:GetSpecialValueFor("agility_damage_multiplier_smoke")
+		self.agility_multiplier_invis_break = self.ability:GetSpecialValueFor("invis_break_agility_multiplier")		
+		self.backstab_angle = self.ability:GetSpecialValueFor("backstab_angle")
+
+		-- Ability begins with cooldown when first learned
+		if self.ability:GetLevel() == 1 then
+			self.ability:StartCooldown(self.ability:GetCooldown(-1))
+		end
+
+		-- Start thinking		
+		self:StartIntervalThink(FrameTime())
+	end
+end
+
+function modifier_imba_riki_cloak_and_dagger:OnRefresh()
+	self:OnCreated()
+end
+
+function modifier_imba_riki_cloak_and_dagger:OnIntervalThink()
+	if IsServer() then
+		local fade_time = self.fade_time + self.caster:FindTalentValue("special_bonus_imba_riki_6")		
+		
+		-- If the owner is broken, remove invis modifier and restart cooldown
+		if self.parent:PassivesDisabled() then
+			
+			-- Remove the invis modifier if it exists
+			if self.parent:HasModifier("modifier_imba_riki_invisibility") then
+				self.parent:RemoveModifierByName("modifier_imba_riki_invisibility")
+			end
+			
+			-- Reset cooldown if it smaller than the fade time
+			if self.ability:GetCooldownTimeRemaining() < fade_time then
+				self.ability:StartCooldown(fade_time)
+			end
+		
+		-- If the passive cooldown is ready
+		elseif self.ability:IsCooldownReady() then
+			if not self.parent:HasModifier("modifier_imba_riki_invisibility") then 
+				self.parent:AddNewModifier(self.parent, self.ability, "modifier_imba_riki_invisibility", {})
+			end
+		
+		-- If the passive is on cooldown, remove the invis modifier
+		elseif self.parent:HasModifier("modifier_imba_riki_invisibility") then
+			self.parent:RemoveModifierByName("modifier_imba_riki_invisibility")
+		end
+	end
+end
+
 function modifier_imba_riki_cloak_and_dagger:DeclareFunctions()
 	local funcs = { MODIFIER_EVENT_ON_ATTACK_LANDED,}
 	return funcs
 end
 
-function modifier_imba_riki_cloak_and_dagger:CheckState()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local parent = self:GetParent()
-		local fade_time = ability:GetSpecialValueFor("fade_time") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_6")
-		
-		-- If the owner is broken, remove invis modifier and restart cooldown
-		if parent:PassivesDisabled() then
-			
-			-- Remove the invis modifier if it exists
-			if parent:HasModifier("modifier_imba_riki_invisibility") then
-				parent:RemoveModifierByName("modifier_imba_riki_invisibility")
-			end
-			
-			-- Reset cooldown if it smaller than the fade time
-			if ability:GetCooldownTimeRemaining() < fade_time then
-				ability:StartCooldown(fade_time)
-			end
-		
-		-- If the passive cooldown is ready
-		elseif ability:IsCooldownReady() then
-			if not parent:HasModifier("modifier_imba_riki_invisibility") then 
-				parent:AddNewModifier(parent, ability, "modifier_imba_riki_invisibility", {})
-			end
-		
-		-- If the passive is on cooldown, remove the invis modifier
-		elseif parent:HasModifier("modifier_imba_riki_invisibility") then
-			parent:RemoveModifierByName("modifier_imba_riki_invisibility")
-		end
-	end
-end
 
 function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 	if IsServer() then
 		local target = keys.target		-- Unit getting hit
-		local attacker = keys.attacker	-- Unit landing the hit
-		local parent = self:GetParent()	-- Unit holding this modifier
-		local ability = self:GetAbility()
+		local attacker = keys.attacker	-- Unit landing the hit		
 		
 		-- Check if the parent is the attacker
-		if parent == attacker then
+		if self.parent == attacker then
 			
 			-- Get values
-			local fade_time = ability:GetSpecialValueFor("fade_time") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_6")
-			local agility_multiplier = ability:GetSpecialValueFor("agility_damage_multiplier") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_5")
-			local agility_multiplier_smoke = ability:GetSpecialValueFor("agility_damage_multiplier_smoke") * 0.01 * agility_multiplier
-			local agility_multiplier_invis_break = ability:GetSpecialValueFor("invis_break_agility_multiplier")
-			
-			local backstab_sound = "Hero_Riki.Backstab"
-			local backstab_invisbreak_sound = "Imba.RikiCritStab"
-			local backstab_particle = "particles/units/heroes/hero_riki/riki_backstab.vpcf"
+			local fade_time = self.fade_time + self.caster:FindTalentValue("special_bonus_imba_riki_6")		
+			local agility_multiplier = self.agility_multiplier + self.caster:FindTalentValue("special_bonus_imba_riki_5")
+			local agility_multiplier_smoke = self.agility_multiplier_smoke * 0.01 * agility_multiplier			
 			
 			-- If the target is not a building, and passives are not disabled for the passive owner
 			-- Also checks if the parent is not channeling Tricks of the Trade, since backstab is handled through there.
-			if not parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not parent:PassivesDisabled() then
+			if not self.parent:HasModifier("modifier_imba_riki_tricks_of_the_trade_primary") and not target:IsBuilding() and not self.parent:PassivesDisabled() then
 			
 				-- If the passive is off cooldown, apply invis break bonus to backstab damage
-				if ability:IsCooldownReady() and parent:IsInvisible() then
-					agility_multiplier = agility_multiplier * agility_multiplier_invis_break
-					agility_multiplier_smoke = agility_multiplier_smoke * agility_multiplier_invis_break
+				if self.ability:IsCooldownReady() and self.parent:IsInvisible() then
+					agility_multiplier = agility_multiplier * self.agility_multiplier_invis_break
+					agility_multiplier_smoke = agility_multiplier_smoke * self.agility_multiplier_invis_break
 				end
 				
 				-- Find targets back
@@ -658,49 +725,49 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 				result_angle = math.abs(result_angle)
 				
 				-- If the attacker is in backstab angle
-				if result_angle >= (180 - (ability:GetSpecialValueFor("backstab_angle") / 2)) and result_angle <= (180 + (ability:GetSpecialValueFor("backstab_angle") / 2)) then
+				if result_angle >= (180 - (self.backstab_angle / 2)) and result_angle <= (180 + (self.backstab_angle / 2)) then
 				
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(self.backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
-					EmitSoundOn(backstab_sound, target)
+					EmitSoundOn(self.backstab_sound, target)
 					
 					-- If breaking invisibility, play the critstab sound
-					if ability:IsCooldownReady() then
-						EmitSoundOn(backstab_invisbreak_sound, target)
+					if self.ability:IsCooldownReady() then
+						EmitSoundOn(self.backstab_invisbreak_sound, target)
 					end
 					
 					-- If the attacker is an illusion, don't apply the damage
-					if not parent:IsIllusion() then
-						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier, damage_type = ability:GetAbilityDamageType()})
+					if not self.parent:IsIllusion() then
+						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier, damage_type = self.ability:GetAbilityDamageType(), ability = self.ability})
 					end
 				
 				-- If the attacker is not in backstab angle but the target has the smoke screen modifier
 				elseif target:HasModifier("modifier_imba_riki_smoke_screen_debuff") then
 				
 					-- Play sound and particle
-					local particle = ParticleManager:CreateParticle(backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
+					local particle = ParticleManager:CreateParticle(self.backstab_particle, PATTACH_ABSORIGIN_FOLLOW, target) 
 					ParticleManager:SetParticleControlEnt(particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 					ParticleManager:ReleaseParticleIndex(particle)
-					EmitSoundOn(backstab_sound, target)
+					EmitSoundOn(self.backstab_sound, target)
 					
 					-- If breaking invisibility, play the critstab sound
-					if ability:IsCooldownReady() then
-						EmitSoundOn(backstab_invisbreak_sound, target)
+					if self.ability:IsCooldownReady() then
+						EmitSoundOn(self.backstab_invisbreak_sound, target)
 					end
 					
 					-- If the attacker is an illusion, don't apply the damage
-					if not parent:IsIllusion() then
-						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier_smoke, damage_type = ability:GetAbilityDamageType()})
+					if not self.parent:IsIllusion() then
+						ApplyDamage({victim = target, attacker = attacker, damage = attacker:GetAgility() * agility_multiplier_smoke, damage_type = self.ability:GetAbilityDamageType()})
 					end
 				end
 			end
 			
 			-- Set skill cooldown to fade time (cooldown is used as an indicator for invis and backstab break bonus)
-			-- Checks if its smaller than the fade time (Should this behavior apply?)
-			if ability:GetCooldownTimeRemaining() < fade_time then
-				ability:StartCooldown(fade_time)
+			-- Checks if its smaller than the fade time
+			if self.ability:GetCooldownTimeRemaining() < fade_time then
+				self.ability:StartCooldown(fade_time)
 			end
 		end
 	end
