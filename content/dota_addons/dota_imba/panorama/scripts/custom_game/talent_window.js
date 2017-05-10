@@ -9,6 +9,9 @@ var _current_show_all_text_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
+var ATTRIBUTE_UNIT_ID = "open_unit_id";
+var TALENT_TABLE_NAME = "imba_talent_manager";
+
 function GetHUDRootUI(){
     var rootUI = $.GetContextPanel();
     while(rootUI.id != "Hud" && rootUI.GetParent() != null){
@@ -42,6 +45,10 @@ function HideDefaultDotaTalentWidgets(){
     HidePanel(GetDefaultTalentButtonExtFrame()); //Frame that glows on the button when you level up
 }
 
+function ConvertRowToLevelRequirement(row){
+    return (40-(row*5));
+}
+
 function InitializeIMBATalentWindow(){
     //Initialize panels for the talent window (without information)
 
@@ -51,7 +58,7 @@ function InitializeIMBATalentWindow(){
 
     //Ignore if max_level for heroes are more than or less than 40, we will still show the full 8 rows
     for(var i=0; i<8; i++){
-        var currentRowLevel = (40-(i*5));
+        var currentRowLevel = ConvertRowToLevelRequirement(i);
         var newTalentRowID = "Talent_Row_"+currentRowLevel;
         var newTalentRow = $.CreatePanel("Panel", talentPanel, newTalentRowID);
         newTalentRow.BLoadLayout("file://{resources}/layout/custom_game/talent_window_row.xml", false, false);
@@ -88,19 +95,57 @@ function InitializeIMBATalentWindow(){
     }
 }
 
+
+function GetGenericTalentInfoTable(){
+    return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "imba_generic_talent_info");
+}
+
+function GetHeroTalentChoicesTable(hero_id){
+    return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_choice_"+hero_id );
+}
+
 function OnTalentChoiceUpdated(table_name, key, value){
     if(key.indexOf("hero_talent_choice_") == 0){
         var talentWindow = $.GetContextPanel();
         if(talentWindow.BHasClass("preview") || talentWindow.BHasClass("show_talent_window")){
             //Update UI
             PopulateIMBATalentWindow();
+
+            //Ensure that player is still selecting the same unit that was updated
+            var currentShownUnitID = Players.GetLocalPlayerPortraitUnit()
+            if(currentShownUnitID == talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
+                if(Entities.GetAbilityPoints(currentShownUnitID) <= 1){ //Note that this is <= 1 because it takes time for server to update the abilityPoints
+                    //Close window if hero no longer has ability points
+                    ToggleIMBATalentWindow();
+                }else{
+                    //Check if there are talents left to upgrade
+                    var heroTalentChoices = GetHeroTalentChoicesTable(currentShownUnitID);
+
+                    if(heroTalentChoices){
+                        var currentHeroLevel = Entities.GetLevel(currentShownUnitID);
+                        var bolHasTalentsToUpgrade = false;
+
+                        for(var i=0; i<8; i++){
+                            var currentRowLevel = ConvertRowToLevelRequirement(i);
+                            if(currentRowLevel <= currentHeroLevel && heroTalentChoices[currentRowLevel] < 0){
+                                bolHasTalentsToUpgrade = true;
+                                break;
+                            }
+                        }
+
+                        if(!bolHasTalentsToUpgrade){
+                            //Close window if there are no more talents to upgrade
+                             ToggleIMBATalentWindow();
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 function CloseIMBATalentWindowWhenDeselectUnit(){
     var talentWindow = $.GetContextPanel();
-    var ATTRIBUTE_UNIT_ID = "open_unit_id";
 
     //Remove schedule reference
     _current_window_check_timer = null;
@@ -176,7 +221,7 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
     if(parent_panel != null){
 
         //Check using generic talent table first
-        var generic_talent_table = CustomNetTables.GetTableValue("imba_talent_manager", "imba_generic_talent_info");
+        var generic_talent_table = GetGenericTalentInfoTable();
         var generic_talent_image_path = null;
         if(generic_talent_table != null){
             if(generic_talent_table[talent_name] != null){
@@ -190,7 +235,7 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
             imagePanel.SetImage(generic_talent_image_path);
         }else{
             //Search for linked ability
-            var linked_ability_table = CustomNetTables.GetTableValue("imba_talent_manager", "talent_linked_abilities")
+            var linked_ability_table = CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "talent_linked_abilities")
             var linked_abilities_list = linked_ability_table[talent_name]
             if(linked_abilities_list){
 
@@ -243,7 +288,7 @@ function AttachToolTip(ability_panel, ability_text){
     ability_panel.ClearPanelEvent("onmouseout");
 
     ability_panel.SetPanelEvent("onmouseover", function(){
-         $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, "title test", ability_text);
+        $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, "title test", ability_text);
     });
     ability_panel.SetPanelEvent("onmouseout", function(){
         $.DispatchEvent("DOTAHideTitleTextTooltip");
@@ -262,13 +307,13 @@ function PopulateIMBATalentWindow(){
         _current_ability_points = Entities.GetAbilityPoints(currentShownUnitID);
 
         //Note that hero_talent_list only populates for heroes picked by players (will not work for -createhero)
-        var heroTalentList = CustomNetTables.GetTableValue("imba_talent_manager", "hero_talent_list_"+currentShownUnitID );
-        var heroTalentChoices = CustomNetTables.GetTableValue("imba_talent_manager", "hero_talent_choice_"+currentShownUnitID );
-        var generic_talent_table = CustomNetTables.GetTableValue("imba_talent_manager", "imba_generic_talent_info");
+        var heroTalentList = CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_list_"+currentShownUnitID );
+        var heroTalentChoices = GetHeroTalentChoicesTable(currentShownUnitID);
+        var generic_talent_table = GetGenericTalentInfoTable();
 
         if(heroTalentList){
             for(var i=0; i<8; i++){
-                var currentRowLevel = (40-(i*5));
+                var currentRowLevel = ConvertRowToLevelRequirement(i);
 
                 if(heroTalentList[currentRowLevel]){
                     var numOfChoices;
@@ -348,7 +393,6 @@ function PopulateIMBATalentWindow(){
 function ToggleIMBATalentWindow(){
     var talentWindow = $.GetContextPanel();
     var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
-    var ATTRIBUTE_UNIT_ID = "open_unit_id";
 
     //Toggle open/close of talent window
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
@@ -426,7 +470,7 @@ $.Schedule(2, InsertIMBATalentButton);
 $.Schedule(2, InitializeIMBATalentWindow);
 //Listen to talent choice updates
 //WARNING: This will allow cheating where clients can actually know what talents the other team has picked
-CustomNetTables.SubscribeNetTableListener( "imba_talent_manager", OnTalentChoiceUpdated );
+CustomNetTables.SubscribeNetTableListener( TALENT_TABLE_NAME, OnTalentChoiceUpdated );
 
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
 //TODO animate imba talent button
