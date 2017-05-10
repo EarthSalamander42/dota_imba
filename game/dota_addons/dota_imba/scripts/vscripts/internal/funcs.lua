@@ -283,7 +283,7 @@ function GetBaseRangedProjectileName( unit )
 	return unit_table and unit_table["ProjectileModel"] or ""
 end
 
-function ChangeAttackProjectileImba( unit )
+function ChangeAttackProjectileImba(unit)
 
 	local particle_deso = "particles/items_fx/desolator_projectile.vpcf"
 	local particle_skadi = "particles/items2_fx/skadi_projectile.vpcf"
@@ -296,8 +296,8 @@ function ChangeAttackProjectileImba( unit )
 	local particle_terrorblade_transform = "particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_base_attack.vpcf"
 
 	-- If the unit has a Desolator and a Skadi, use the special projectile
-	if unit:HasModifier("modifier_item_imba_desolator_unique") or unit:HasModifier("modifier_item_imba_desolator_2_unique") then
-		if unit:HasModifier("modifier_item_imba_skadi_unique") then
+	if unit:HasModifier("modifier_item_imba_desolator") or unit:HasModifier("modifier_item_imba_desolator_2") then
+		if unit:HasModifier("modifier_item_imba_skadi") then
 			unit:SetRangedProjectileName(particle_deso_skadi)
 
 		-- If only a Desolator, use its attack projectile instead
@@ -306,16 +306,12 @@ function ChangeAttackProjectileImba( unit )
 		end
 
 	-- If only a Skadi, use its attack projectile instead
-	elseif unit:HasModifier("modifier_item_imba_skadi_unique") then
+	elseif unit:HasModifier("modifier_item_imba_skadi") then
 		unit:SetRangedProjectileName(particle_skadi)
 
 	-- If the unit has any form of lifesteal, use the lifesteal projectile
-	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir_aura") or unit:HasModifier("modifier_item_imba_vladmir_blood_aura") then
-		unit:SetRangedProjectileName(particle_lifesteal)
-
-	-- If it's a Clinkz with Searing Arrows, use its attack projectile instead
-	elseif unit:HasModifier("modifier_imba_searing_arrows_caster") then
-		unit:SetRangedProjectileName(particle_clinkz_arrows)
+	elseif unit:HasModifier("modifier_imba_morbid_mask") or unit:HasModifier("modifier_imba_mask_of_madness") or unit:HasModifier("modifier_imba_satanic") or unit:HasModifier("modifier_item_imba_vladmir") or unit:HasModifier("modifier_item_imba_vladmir_blood") then		
+		unit:SetRangedProjectileName(particle_lifesteal)	
 
 	-- If it's one of Dragon Knight's forms, use its attack projectile instead
 	elseif unit:HasModifier("modifier_dragon_knight_corrosive_breath") then

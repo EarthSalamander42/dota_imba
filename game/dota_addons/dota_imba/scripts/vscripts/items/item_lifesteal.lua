@@ -7,6 +7,7 @@
 
 item_imba_morbid_mask = class({})
 LinkLuaModifier("modifier_imba_morbid_mask", "items/item_lifesteal.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_morbid_mask_unique", "items/item_lifesteal.lua", LUA_MODIFIER_MOTION_NONE)
 
 function item_imba_morbid_mask:GetIntrinsicModifierName()
     return "modifier_imba_morbid_mask"
@@ -16,17 +17,21 @@ end
 modifier_imba_morbid_mask = class({})
 
 function modifier_imba_morbid_mask:OnCreated()        
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()    
-        self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()    
+    self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
 
-        -- Ability specials
-        self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
-        self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+    -- Ability specials
+    self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")    
+
     if IsServer() then
         -- Change to lifesteal projectile, if there's nothing "stronger"    
         ChangeAttackProjectileImba(self.caster)
+
+        if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
+            self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_morbid_mask_unique", {})
+        end
     end
 end
 
@@ -41,40 +46,12 @@ function modifier_imba_morbid_mask:GetModifierPreAttack_BonusDamage()
     return self.damage_bonus
 end
 
-function modifier_imba_morbid_mask:OnAttackLanded(keys)
-    if IsServer() then
-        local attacker = keys.attacker
-        local target = keys.target
-        local damage = keys.damage
-
-        -- Only apply on caster attacking an enemy
-        if self.caster == attacker and self.caster:GetTeamNumber() ~= target:GetTeamNumber() then
-            -- If it is not a hero or a unit, do nothing            
-            if not target:IsHero() and not target:IsCreep() then
-                return nil
-            end
-
-            -- Apply particle
-            self.particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN, self.caster)
-            ParticleManager:SetParticleControl(self.particle_lifesteal_fx, 0, self.caster:GetAbsOrigin())
-            ParticleManager:ReleaseParticleIndex(self.particle_lifesteal_fx)
-
-            -- Only actually lifesteal if it's not an illusion
-            if self.caster:IsIllusion() then
-                return nil
-            end
-
-            -- Calculate heal amount
-            local lifesteal = damage * (self.lifesteal_pct/100)
-
-            -- Heal as a percent of the damage dealt
-            self.caster:Heal(lifesteal, self.caster)
-        end
-    end
-end
-
 function modifier_imba_morbid_mask:OnDestroy()
     if IsServer() then
+        if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
+            self.caster:RemoveModifierByName("modifier_imba_morbid_mask_unique")
+        end
+
         -- Remove lifesteal projectile
         ChangeAttackProjectileImba(self.caster) 
     end
@@ -90,4 +67,29 @@ end
 
 function modifier_imba_morbid_mask:IsDebuff()
     return false
+end
+
+function modifier_imba_morbid_mask:GetAttributes()
+    return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+modifier_imba_morbid_mask_unique = class({})
+function modifier_imba_morbid_mask_unique:IsHidden() return true end
+function modifier_imba_morbid_mask_unique:IsPurgable() return false end
+function modifier_imba_morbid_mask_unique:IsDebuff() return false end
+
+function modifier_imba_morbid_mask_unique:OnCreated()
+    -- Ability properties
+    self.ability = self:GetAbility()
+
+    -- Ability specials
+    self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+end
+
+function modifier_imba_morbid_mask_unique:OnRefresh()
+    self:OnCreated()
+end
+
+function modifier_imba_morbid_mask_unique:GetModifierLifesteal()
+    return self.lifesteal_pct 
 end
