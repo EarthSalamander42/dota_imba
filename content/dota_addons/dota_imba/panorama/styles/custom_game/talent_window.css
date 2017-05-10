@@ -101,7 +101,8 @@
     visibility: collapse;
 }
 
-.IMBA_Talent_Choice:hover .IMBA_Talent_Choice_Text_Container
+.IMBA_Talent_Choice:hover .IMBA_Talent_Choice_Text_Container,
+.IMBA_Talent_Window.show_all_text .IMBA_Talent_Choice_Text_Container
 {
     visibility: visible;
 }
