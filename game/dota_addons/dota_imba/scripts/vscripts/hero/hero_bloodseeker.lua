@@ -424,7 +424,7 @@ function modifier_imba_bloodseeker_thirst_attack_buff:GetModifierMoveSpeedBonus_
 end
 
 function modifier_imba_bloodseeker_thirst_attack_buff:IsHidden()
-	return false
+	return true
 end
 
 function modifier_imba_bloodseeker_thirst_attack_buff:GetEffectName()
