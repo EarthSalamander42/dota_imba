@@ -95,7 +95,6 @@ function InitializeIMBATalentWindow(){
     }
 }
 
-
 function GetGenericTalentInfoTable(){
     return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "imba_generic_talent_info");
 }
@@ -104,42 +103,65 @@ function GetHeroTalentChoicesTable(hero_id){
     return CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_choice_"+hero_id );
 }
 
+function GetImbaTalentButtonOverlayPanel(){
+    var baseUI = GetHUDRootUI();
+    baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
+    return baseUI.FindChildTraverse("IMBA_Talent_HUD_Button_Overlay");
+}
+
+function IsImbaTalentWindowVisible(){
+    var talentWindow = $.GetContextPanel();
+    return talentWindow.BHasClass("preview") || talentWindow.BHasClass("show_talent_window");
+}
+
+function CanHeroUpgradeAnyTalents(hero_id){
+    if(Entities.GetAbilityPoints(hero_id) > 0){
+        //Check if there are talents left to upgrade
+        var heroTalentChoices = GetHeroTalentChoicesTable(hero_id);
+
+        if(heroTalentChoices){
+            var currentHeroLevel = Entities.GetLevel(hero_id);
+
+            for(var i=0; i<8; i++){
+                var currentRowLevel = ConvertRowToLevelRequirement(i);
+                if(currentRowLevel <= currentHeroLevel && heroTalentChoices[currentRowLevel] < 0){
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 function OnTalentChoiceUpdated(table_name, key, value){
     if(key.indexOf("hero_talent_choice_") == 0){
-        var talentWindow = $.GetContextPanel();
-        if(talentWindow.BHasClass("preview") || talentWindow.BHasClass("show_talent_window")){
+
+        var bol_to_animate_btn = true;
+        if(IsImbaTalentWindowVisible()){
             //Update UI
             PopulateIMBATalentWindow();
 
             //Ensure that player is still selecting the same unit that was updated
-            var currentShownUnitID = Players.GetLocalPlayerPortraitUnit()
+            var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
+            var talentWindow = $.GetContextPanel();
             if(currentShownUnitID == talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
-                if(Entities.GetAbilityPoints(currentShownUnitID) <= 1){ //Note that this is <= 1 because it takes time for server to update the abilityPoints
+                if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
+                    !CanHeroUpgradeAnyTalents(currentShownUnitID)){
                     //Close window if hero no longer has ability points
                     ToggleIMBATalentWindow();
-                }else{
-                    //Check if there are talents left to upgrade
-                    var heroTalentChoices = GetHeroTalentChoicesTable(currentShownUnitID);
 
-                    if(heroTalentChoices){
-                        var currentHeroLevel = Entities.GetLevel(currentShownUnitID);
-                        var bolHasTalentsToUpgrade = false;
-
-                        for(var i=0; i<8; i++){
-                            var currentRowLevel = ConvertRowToLevelRequirement(i);
-                            if(currentRowLevel <= currentHeroLevel && heroTalentChoices[currentRowLevel] < 0){
-                                bolHasTalentsToUpgrade = true;
-                                break;
-                            }
-                        }
-
-                        if(!bolHasTalentsToUpgrade){
-                            //Close window if there are no more talents to upgrade
-                             ToggleIMBATalentWindow();
-                        }
-                    }
+                    //Force remove .upgrade class
+                    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
+                    //Should not be null as you need it to open talent window
+                    imbaBtnOverlay.RemoveClass("upgrade");
+                    bol_to_animate_btn = false;
                 }
             }
+        }
+
+        if(bol_to_animate_btn){
+            AnimateImbaTalentButton();
         }
     }
 }
@@ -147,26 +169,50 @@ function OnTalentChoiceUpdated(table_name, key, value){
 function CloseIMBATalentWindowWhenDeselectUnit(){
     var talentWindow = $.GetContextPanel();
 
+    //TODO possible to use `dota_player_update_query_unit` to update, however data given is the legacy data 'splitscreenplayer' only, hence this shall be pending which will allow us to remove the usage of timer
+
     //Remove schedule reference
     _current_window_check_timer = null;
-    var currentShownUnitID = Players.GetLocalPlayerPortraitUnit()
+    var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
     if(currentShownUnitID != talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
         //Force close window if player selects another unit
         _current_ability_points = 0;
         ToggleIMBATalentWindow();
     }else{
+
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+
+        //Rerun this check until window is force closed or stopped by the other function
+        _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
+    }
+}
+
+function RepopulateImbaTalentWindowOnAbilityPointsChanged(){
+    var talentWindow = $.GetContextPanel();
+    var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
+    if(currentShownUnitID == talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
         //Update talent window when user spends/gains ability points
         if(Entities.IsValidEntity(currentShownUnitID) && Entities.IsRealHero(currentShownUnitID)){
             if(_current_ability_points != Entities.GetAbilityPoints(currentShownUnitID)){
                 PopulateIMBATalentWindow();
             }
         }
+    }
+}
 
-        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
+function AnimateImbaTalentButton(){
+    var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
 
-        //Rerun this check until window is force closed or stopped by the other function
-        _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
+    //Might not be created yet
+    if(imbaBtnOverlay){
+        var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
+
+        if(Entities.IsValidEntity(currentShownUnitID) && Entities.IsRealHero(currentShownUnitID)){
+            imbaBtnOverlay.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
+        }else{
+            imbaBtnOverlay.RemoveClass("upgrade");
+        }
     }
 }
 
@@ -413,27 +459,29 @@ function ToggleIMBATalentWindow(){
         _current_window_check_timer = null;
     }
 
+    var btnOverlay = GetImbaTalentButtonOverlayPanel();
+
     if(bol_open_window){
         talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
         PopulateIMBATalentWindow();
         talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
         CloseIMBATalentWindowWhenDeselectUnit();
+        btnOverlay.AddClass("selected");
     }else{
         talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
         talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
+        btnOverlay.RemoveClass("selected");
     }
 
     talentWindow.RemoveClass("preview");
 }
 
-
-
 function InsertIMBATalentButton(){
     $.Msg("InsertIMBATalentButton");
     var baseUI = GetHUDRootUI();
     baseUI = baseUI.FindChildTraverse("AbilitiesAndStatBranch");
-    var IMBA_TALENT_BTN_ID = "ImbaTalentBtn"
-    var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID)
+    var IMBA_TALENT_BTN_ID = "ImbaTalentBtn";
+    var newButton = baseUI.FindChildTraverse(IMBA_TALENT_BTN_ID);
     if(newButton){
         //Remove existing button
         newButton.DeleteAsync(0);
@@ -464,6 +512,10 @@ function InsertIMBATalentButton(){
     newButton.SetPanelEvent("onactivate", ToggleIMBATalentWindow);
 }
 
+//////////////////////////////
+//      Initialization      //
+//////////////////////////////
+
 //Perform overriding after delay to avoid modifying/populating paranoma at the same time as the custom pick screen
 $.Schedule(1, HideDefaultDotaTalentWidgets);
 $.Schedule(2, InsertIMBATalentButton);
@@ -472,6 +524,25 @@ $.Schedule(2, InitializeIMBATalentWindow);
 //WARNING: This will allow cheating where clients can actually know what talents the other team has picked
 CustomNetTables.SubscribeNetTableListener( TALENT_TABLE_NAME, OnTalentChoiceUpdated );
 
+//////////////////////////////
+//      Event handling      //
+//////////////////////////////
+
+function OnPlayerGainedLevel(data){
+    //data contains PlayerID, level
+    RepopulateImbaTalentWindowOnAbilityPointsChanged();
+    AnimateImbaTalentButton();
+}
+
+function OnPlayerLearnedAbility(data){
+    //data contains PlayerID, abilityname
+    RepopulateImbaTalentWindowOnAbilityPointsChanged();
+    AnimateImbaTalentButton();
+}
+
+GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
+GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
+
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
-//TODO animate imba talent button
+
 
