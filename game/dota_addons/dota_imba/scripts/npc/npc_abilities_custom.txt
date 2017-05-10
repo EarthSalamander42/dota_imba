@@ -10631,38 +10631,46 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"80"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"jump_amount"			"3 6 9 10 11 12"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bounce_range"			"550"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"bounce_delay"			"0.40"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cdr_per_attack"		"0.25 0.25 0.25 0.5 0.75 1.0"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bounce_range_scepter"	"900"
+				"scepter_bounce_range"	"900"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_amount_scepter"	"6 9 12 13 14 15"
+				"scepter_jump_amt"  	"6 9 12 13 14 15"
 			}
 		}
 	}
+
+	
 	//=================================================================================================================
 	// Juggernaut Talent 1 (Level 10): +5% Blade Dance crit chance
 	//=================================================================================================================
