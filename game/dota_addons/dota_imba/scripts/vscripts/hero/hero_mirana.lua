@@ -641,10 +641,6 @@ function modifier_imba_sacred_arrow_stun:OnDestroy()
     end
 end
 
-
-
-
-
 -- Allies haste modifier
 modifier_imba_sacred_arrow_haste = class({})
 
