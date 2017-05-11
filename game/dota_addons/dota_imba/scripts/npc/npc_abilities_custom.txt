@@ -5515,7 +5515,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK "
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -5528,7 +5528,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"95"
 
@@ -5537,6 +5537,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/voscripts/game_sounds_vo_bane.vsndevts"
+			"particle"					"particles/units/heroes/hero_bane/bane_enfeeble.vpcf"
 		}
 
 		// Special
@@ -5545,23 +5546,20 @@
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"enfeeble_duration"			"20"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stat_reduction"			"-5 -10 -15 -20 -30 -40 -50"
+				"stat_reduction"			"5 10 15 20 30 40 50"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_reduction"			"-30 -60 -90 -120 -130 -140 -150"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"talent_damage_reduction"	"-75"
+				"damage_reduction"			"30 60 90 120 130 140 150"
 				"LinkedSpecialBonus"		"special_bonus_imba_bane_3"
 			}
 		}
@@ -5587,10 +5585,10 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"10"
-		"AbilityManaCost"				"60 90 120 150"
+		"AbilityCastRange"				"600"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"14 13 12 11 10 9 8"
+		"AbilityManaCost"				"70 100 130 160 170 180 190"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5600,36 +5598,20 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"brain_sap_duration"		"3.5"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_1"
 			}
 
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"manapool_reduction"		"-0.50 -0.50 -0.50 -0.50 -0.60 -0.70 -0.80"
+				"var_type"					"FIELD_INTEGER"
+				"manapool_reduction"		"50 50 50 50 60 70 80"
 			}
 
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"brain_sap_damage"			"90 160 230 300 330 360 390"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"talent_duration_bonus"		"1.5"
-				"LinkedSpecialBonus"		"special_bonus_imba_bane_1"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"talent_damage_bonus"		"200"
-				"LinkedSpecialBonus"		"special_bonus_imba_bane_1"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"talent_range_bonus"		"300"
-				"LinkedSpecialBonus"		"special_bonus_imba_bane_4"
+				"LinkedSpecialBonus"		"special_bonus_imba_bane_5"
 			}
 		}
 	}
@@ -5654,10 +5636,10 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"650"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"16 15 14 13"
-		"AbilityManaCost"				"150"
+		"AbilityCastRange"				"500 550 600 650 700 750 800"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"22 19 16 13 13 13 13"
+		"AbilityManaCost"				"165"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -5668,38 +5650,32 @@
 				"var_type"									"FIELD_FLOAT"
 				"nightmare_duration"						"4 5 6 7 7 7 7"
 			}
+
 			"02"
 			{
 				"var_type"									"FIELD_INTEGER"
 				"nightmare_damage"							"20"
 			}
+
 			"03"
 			{
 				"var_type"									"FIELD_FLOAT"
 				"nightmare_invuln_duration"					"1"
+				"LinkedSpecialBonus"						"special_bonus_imba_bane_7"
 			}
+
 			"04"
 			{
 				"var_type"									"FIELD_FLOAT"
 				"nightmare_baleful_visions_duration"		"4 4 5 5 6 6 7"
+				"LinkedSpecialBonus"						"special_bonus_imba_bane_2"
 			}
+
 			"05"
 			{
 				"var_type"									"FIELD_INTEGER"
 				"nightmare_baleful_visions_sight_reduction"	"100"
-			}
-			"06"
-			{
-				"var_type"									"FIELD_FLOAT"
-				"talent_debuff_duration_bonus"				"1"
-				"LinkedSpecialBonus"						"special_bonus_imba_bane_2"
-			}
-			"07"
-			{
-				"var_type"									"FIELD_FLOAT"
-				"talent_invuln_duration_bonus"				"6"
-				"LinkedSpecialBonus"						"special_bonus_imba_bane_7"
-			}
+			}			
 		}
 	}
 
@@ -5708,7 +5684,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
@@ -5720,7 +5696,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastRange"				"25000"
-		"AbilityCooldown"				"0.1"
+		"AbilityCooldown"				"1"
 		"AbilityManaCost"				"0"
 	}
 
@@ -5746,10 +5722,12 @@
 		"ScriptFile"					"hero/hero_bane"
 		"MaxLevel"						"6"
 
+		"HasScepterUpgrade"				"1"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"625 625 625 675 725 775"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"100 100 100 90 80 70"
 		"AbilityManaCost"				"200 300 400 425 450 475"
 
@@ -5760,50 +5738,39 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_duration"					"5.0"
+				"fiends_grip_duration"					"5"
+				"LinkedSpecialBonus"					"special_bonus_imba_bane_6"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"fiends_grip_linger_duration"			"0.5 1.0 1.5 2.0 2.5 3.0"
 			}
+
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"fiends_grip_damage"					"100 160 220 240 260 280"
 			}
+
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"fiends_grip_mana_damage"				"5 5 5 6 7 8"
 			}
+
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"fiends_grip_scepter_radius"			"900"
 			}
+
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"fiends_grip_scepter_vision_cone"		"45"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"fiends_grip_extra_duration_scepter"	"3.0 3.5 4.0"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"talent_channel_bonus"					"2"
-				"LinkedSpecialBonus"					"special_bonus_imba_bane_6"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"talent_cooldown_bonus"					"30"
-				"LinkedSpecialBonus"					"special_bonus_imba_bane_8"
-			}
+				"fiends_grip_scepter_vision_cone"		"40"
+			}									
 		}
 	}
 
@@ -28816,7 +28783,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"value"			"-75"
+				"value"			"75"
 			}
 		}
 	}
@@ -28891,7 +28858,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"value"			"2.0"
+				"value"			"2"
 			}
 		}
 	}

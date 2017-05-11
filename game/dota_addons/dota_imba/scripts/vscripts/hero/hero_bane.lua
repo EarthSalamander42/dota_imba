@@ -23,7 +23,7 @@ modifier_imba_bane_enfeeble = class({
 -- brain_sap Debuff
 modifier_imba_bane_brain_sap = class({
 		IsDebuff                         = function(self) return true                                                                                                           end,
-		GetModifierManaBonus             = function(self) return (((self:GetParent():GetIntellect() * 12) + 50) * (self:GetAbility():GetSpecialValueFor("manapool_reduction"))) end,    
+		GetModifierManaBonus             = function(self) return (((self:GetParent():GetIntellect() * 12) + 50) * (self:GetAbility():GetSpecialValueFor("manapool_reduction") * 0.01 * (-1))) end,    
 	})
 -- Nightmare Debuff
 modifier_imba_bane_nightmare = class({
@@ -62,11 +62,6 @@ LinkLuaModifier("modifier_imba_bane_fiends_grip",               "hero/hero_bane"
 
 
 
--- Generic Subroutines to make code easier (for me at least) to read
-local talentnamescheme = "special_bonus_imba_bane_"
-
-
-
 -- ####Main Ability Functions Start####
 -- define one line functions here because they look make working code look confusing
 function imba_bane_fiends_grip:  GetChannelAnimation() return ACT_DOTA_CHANNEL_ABILITY_4 or ACT_DOTA_CHANNEL_ABILITY_5 end
@@ -96,7 +91,8 @@ function imba_bane_brain_sap:OnSpellStart()
 	if not IsServer() then return end
 	local target,caster = findtarget(self)
 	local sapdamage,sapduration = getkvValues(self,"brain_sap_damage","brain_sap_duration")  
-	local talentdamagebonus,talentdurationbonus = TalentManager(self:GetCaster(),talentnamescheme,{5},{1})
+	local talentdurationbonus = caster:FindTalentValue("special_bonus_imba_bane_1")
+	local talentdamagebonus = caster:FindTalentValue("special_bonus_imba_bane_5")	
 	if target:TriggerSpellAbsorb(self) then return end -- Does player have linkins or another spell absorb?
 	damage = {
 		victim      = target,
@@ -121,7 +117,7 @@ end
 
 function imba_bane_brain_sap:GetCastRange(l,t)
 	if IsClient() then return self.BaseClass.GetCastRange(self,l,t)                  end  
-	local talentrangebonus = TalentManager(self:GetCaster(), talentnamescheme, {4})
+	local talentrangebonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_4")
 	if IsServer() then return self.BaseClass.GetCastRange(self,l,t)+talentrangebonus end
 end
 
@@ -141,7 +137,7 @@ function imba_bane_nightmare:OnSpellStart()
 	local target,caster = findtarget(self) -- who did we target? who are we?
 	if target:TriggerSpellAbsorb(self) then return end    -- 'ting!' linkins
 	local invulnduration,nightmareduration = getkvValues(self,"nightmare_invuln_duration","nightmare_duration")    -- get kv valuse
-	local talentinvulnbonus = TalentManager(self:GetCaster(),talentnamescheme,{7})        -- get talent bonus
+	local talentinvulnbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_7")
 	if caster:GetTeamNumber() == target:GetTeamNumber() then -- are we on the same team? if so buff the invuln duration by the talent 
 		invulnduration=invulnduration+talentinvulnbonus
 	end    
@@ -171,13 +167,17 @@ end
 
 function imba_bane_nightmare_end:OnSpellStart()
 	if not IsServer() then return end
-	local target,caster = findtarget(self)
+	local caster = self:GetCaster()
 	EmitSoundOn("Hero_Bane.Nightmare.End", caster)
-	if target:HasModifier("modifier_imba_bane_nightmare_invuln_period") then -- We can't debuff an immune target! so remove this first
-		target:RemoveModifierByName("modifier_imba_bane_nightmare_invuln_period")
-	end    
-	if target:HasModifier("modifier_imba_bane_nightmare") then  --do we have it? remove it
-		target:RemoveModifierByName("modifier_imba_bane_nightmare")
+	local units = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 25000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD, FIND_ANY_ORDER, false)
+	for _,unit in pairs(units) do	
+		if unit:HasModifier("modifier_imba_bane_nightmare_invuln_period") then -- We can't debuff an immune target! so remove this first
+			unit:RemoveModifierByName("modifier_imba_bane_nightmare_invuln_period")
+		end    
+
+		if unit:HasModifier("modifier_imba_bane_nightmare") then  --do we have it? remove it
+			unit:RemoveModifierByName("modifier_imba_bane_nightmare")
+		end
 	end
 end
 
@@ -187,12 +187,12 @@ function imba_bane_nightmare_end:GetAssociatedPrimaryAbilities()
 -- Fiends Grip Spell Cast
 
 function imba_bane_fiends_grip:GetChannelTime()
-	local talentchannelbonus = TalentManager(self:GetCaster(),talentnamescheme,{6})  -- net tables
+	local talentchannelbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_6")  -- net tables
 	return (self:GetSpecialValueFor("fiends_grip_duration")+talentchannelbonus)
 end
 
 function imba_bane_fiends_grip:GetCooldown(nLevel)
-	local talentcooldownbonus = TalentManager(self:GetCaster(),talentnamescheme,{8}) -- net tables
+	local talentcooldownbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_8")
 	return self.BaseClass.GetCooldown( self, nLevel )-talentcooldownbonus 
 end
 
@@ -202,7 +202,7 @@ function imba_bane_fiends_grip:OnSpellStart()
 	self.fiendtarget,self.fiendcaster = findtarget(self) -- we append fiendcaster and fiendtarget into class values for use later in cases of channel interruption or spell reflection to avoid conflicts
 	if self.fiendtarget:TriggerSpellAbsorb(self) then self.fiendcaster:Interrupt() return end    
 	local fiends_grip_duration = getkvValues(self,"fiends_grip_duration")  
-	local talentchannelbonus = TalentManager(self:GetCaster(),talentnamescheme,{6}) 
+	local talentchannelbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_6")
 	self.fiendgriptable = {} -- set table to blank when skill is invoked to avoid weird shit
 	table.insert(self.fiendgriptable,self.fiendtarget)  -- o ur about to get spooked really good now fiendtarget!
 	self.fiendtarget:Interrupt()  -- !
@@ -229,7 +229,7 @@ function imba_bane_fiends_grip:OnChannelThink()
 	if not IsServer() then return end
 	if self:GetCaster():HasScepter() then
 		local vision_radius,vision_cone,fiends_grip_duration = getkvValues(self,"fiends_grip_duration","fiends_grip_scepter_radius","fiends_grip_scepter_vision_cone") 
-		local talentchannelbonus = TalentManager(self:GetCaster(),talentnamescheme,{6}) 
+		local talentchannelbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_6")
 		local caster_location = self.fiendcaster:GetAbsOrigin()
 		local enemies_to_check = FindUnitsInRadius(self.fiendcaster:GetTeamNumber(), caster_location, nil, vision_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, self:GetAbilityTargetType(), 0, FIND_CLOSEST, false)
 		for _,v in pairs(enemies_to_check) do
@@ -262,12 +262,13 @@ end
 
 function modifier_imba_bane_enfeeble:OnCreated()
 	local statreduction,damagereduction = getkvValues(self:GetAbility(),"stat_reduction","damage_reduction") 
-	local talentdamagereduction = TalentManager(self:GetCaster(),talentnamescheme,{3})
-	self.damagereduction   = damagereduction+talentdamagereduction   
+	local talentdamagereduction = self:GetCaster():FindTalentValue("special_bonus_imba_bane_3")
+	self.damagereduction   = (damagereduction+talentdamagereduction) * (-1)  
+
 	if not IsServer() then return end
-	self.strengthmodifier  = self:GetParent():GetStrength()  * (statreduction/100) -- Note these are only evaluated once, on spell cast.  On refresh they will                      
-	self.agilitymodifier   = self:GetParent():GetAgility()   * (statreduction/100) -- NOT be recalculated, this can be rewritten to calculate stat reduction on
-	self.intellectmodifier = self:GetParent():GetIntellect() * (statreduction/100) -- recast or w/e is required
+	self.strengthmodifier  = self:GetParent():GetStrength()  * (statreduction * 0.01 * (-1)) -- Note these are only evaluated once, on spell cast.  On refresh they will                      
+	self.agilitymodifier   = self:GetParent():GetAgility()   * (statreduction * 0.01 * (-1)) -- NOT be recalculated, this can be rewritten to calculate stat reduction on
+	self.intellectmodifier = self:GetParent():GetIntellect() * (statreduction * 0.01 * (-1)) -- recast or w/e is required
 end
 
 -- Enfeeble Debuff End
@@ -355,7 +356,7 @@ function modifier_imba_bane_nightmare:OnDestroy()
 	if self:GetCaster():GetTeamNumber() ~= self:GetParent():GetTeamNumber() then -- when nightmare is destroyed, are we an enemy?
 		if not self:GetParent():IsMagicImmune() then  -- are we magic immune if we're an enemy?
 			local nightmare_baleful_visions_duration = getkvValues(self:GetAbility(),"nightmare_baleful_visions_duration") 
-			local talentdurationbonus = TalentManager(self:GetCaster(),talentnamescheme,{2}) 
+			local talentdurationbonus = self:GetCaster():FindTalentValue("special_bonus_imba_bane_2")
 			self:GetParent():AddNewModifier(self:GetCaster(), self:GetAbility(), "modifier_imba_bane_nightmare_baleful_visions", {duration = nightmare_baleful_visions_duration+talentdurationbonus}) -- blind them
 		end
 	end

@@ -155,6 +155,8 @@
 	{
 		"override_hero"				"npc_dota_hero_bane"
 
+        "AbilityLayout"             "5"
+
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
 		"Ability3"					"imba_bane_nightmare"
