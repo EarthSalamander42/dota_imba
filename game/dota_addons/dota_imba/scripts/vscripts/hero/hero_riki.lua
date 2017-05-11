@@ -217,7 +217,7 @@ LinkLuaModifier( "modifier_imba_riki_blink_strike_small_range_indicator", "hero/
 function imba_riki_blink_strike:GetCastRange()
 	local baseCastRange = self:GetSpecialValueFor("no_jump_cast_range")
 	local bonusPerJump = self:GetSpecialValueFor("jump_range")
-	local jumps = self:GetSpecialValueFor("max_jumps") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_4")
+	local jumps = self:GetSpecialValueFor("max_jumps") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_3")
 	
 	if IsServer() then
 		return baseCastRange + bonusPerJump * jumps - GetCastRangeIncrease(self:GetCaster()) end
@@ -698,7 +698,7 @@ function modifier_imba_riki_cloak_and_dagger:OnAttackLanded( keys )
 		if self.parent == attacker then
 			
 			-- Get values
-			local fade_time = self.fade_time + self.caster:FindTalentValue("special_bonus_imba_riki_6")		
+			local fade_time = self.fade_time - self.caster:FindTalentValue("special_bonus_imba_riki_6")		
 			local agility_multiplier = self.agility_multiplier + self.caster:FindTalentValue("special_bonus_imba_riki_5")
 			local agility_multiplier_smoke = self.agility_multiplier_smoke * 0.01 * agility_multiplier			
 			
@@ -952,7 +952,7 @@ end
 function modifier_imba_riki_tricks_of_the_trade_primary:OnCreated()
 	if IsServer() then
 		local ability = self:GetAbility()
-		local interval = ability:GetSpecialValueFor("attack_interval") + self:GetCaster():FindTalentValue("special_bonus_imba_riki_7")
+		local interval = ability:GetSpecialValueFor("attack_interval") - self:GetCaster():FindTalentValue("special_bonus_imba_riki_7")
 		self:StartIntervalThink(interval)
 	end
 end

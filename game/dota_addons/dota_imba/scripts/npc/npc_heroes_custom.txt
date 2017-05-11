@@ -1910,14 +1910,14 @@
 		"Ability3"					"imba_riki_cloak_and_dagger"
 		"Ability4"					"imba_riki_tricks_of_the_trade"
 
-		"Ability10"					"special_bonus_hp_150"
-		"Ability11"					"special_bonus_movement_speed_15"
-		"Ability12"					"special_bonus_agility_14"
-		"Ability13"					"special_bonus_exp_boost_20"
-		"Ability14"					"special_bonus_cast_range_150"
-		"Ability15"					"special_bonus_all_stats_8"
-		"Ability16"					"special_bonus_unique_riki_1"
-		"Ability17"					"special_bonus_unique_riki_2"
+		"Ability10"					"special_bonus_imba_riki_1"
+		"Ability11"					"special_bonus_imba_riki_4"
+		"Ability12"					"special_bonus_imba_riki_3"
+		"Ability13"					"special_bonus_imba_riki_5"
+		"Ability14"					"special_bonus_imba_riki_2"
+		"Ability15"					"special_bonus_imba_riki_8"
+		"Ability16"					"special_bonus_imba_riki_7"
+		"Ability17"					"special_bonus_imba_riki_6"
 
 		"ProjectileSpeed"			"900"
 	}
