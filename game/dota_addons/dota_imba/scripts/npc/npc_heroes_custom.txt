@@ -528,14 +528,14 @@
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"					"imba_dazzle_weave"
 
-		"Ability10"					"special_bonus_imba_dazzle_1"
+		"Ability10"					"special_bonus_imba_dazzle_3"
 		"Ability11"					"special_bonus_imba_dazzle_2"
-		"Ability12"					"special_bonus_imba_dazzle_3"
-		"Ability13"					"special_bonus_imba_dazzle_4"
-		"Ability14"					"special_bonus_imba_dazzle_5"
-		"Ability15"					"special_bonus_imba_dazzle_6"
-		"Ability16"					"special_bonus_imba_dazzle_7"
-		"Ability17"					"special_bonus_imba_dazzle_8"
+		"Ability12"					"special_bonus_imba_dazzle_1"
+		"Ability13"					"special_bonus_imba_dazzle_8"
+		"Ability14"					"special_bonus_imba_dazzle_7"
+		"Ability15"					"special_bonus_imba_dazzle_4"
+		"Ability16"					"special_bonus_imba_dazzle_5"
+		"Ability17"					"special_bonus_imba_dazzle_6"
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}

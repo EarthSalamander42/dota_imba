@@ -5341,20 +5341,23 @@
 				"var_type"					"FIELD_INTEGER"
 				"slow"						"-12"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"speed_bonus"				"12"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"				"16 24 32 40 48 56 64"
+				"damage"					"16 24 32 40 48 56 64"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"units"				"1 1 2 2 3 3 4"
+				"units"						"1 1 2 2 3 3 4"
 			}
 		}
 	}
@@ -5395,15 +5398,17 @@
 				"var_type"								"FIELD_INTEGER"
 				"radius"								"275 285 295 305 315 325 335"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"proc_chance"							"50"
+				"proc_chance"							"20"
 			}
+
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"base_damage"							"30 45 60 75 90 105 120"
+				"base_damage"							"75 110 145 180 200 220 240"
 			}
 		}
 	}
@@ -8182,41 +8187,49 @@
 				"cooldown"								"12 11 10 9 8 7 6"
 				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_5"
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"set_in_time"							"3"
 			}
+
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"minimum_slow"							"33"
 			}
+
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"maximum_slow"							"66"
 			}
+
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"poison_duration"						"7"
 			}
+
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"poison_base_damage"					"14 20 26 32 38 44 50"
 			}
+
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"poison_stack_damage"					"1.0 2.0 3.0 4.0 5.0 6.0 7.0"
 			}
+
 			"08"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"stack_armor_reduction"					"1.0"
 			}
+
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
@@ -8338,31 +8351,36 @@
 				"damage"								"80 100 120 140 160 180 200"
 				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_4"
 			}
+
 			"04"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"damage_radius"							"185"
 				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_3"
 			}
+			
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"bonus_armor"							"3"
 			}
+
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_armor_injured"					"12"
+				"bonus_armor_injured"					"15"
 			}
+
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"injured_threshold"						"50"
+				"injured_threshold"						"35"
 			}
+
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"buff_duration"							"1 2 3 4 5 6 7"
+				"buff_duration"							"2 2 3 3 4 5 6"
 			}
 		}
 	}
@@ -8406,50 +8424,56 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"cooldown"								"40"
-				"LinkedSpecialBonus"					"special_bonus_imba_dazzle_5"
+				"cooldown"								"40"				
 			}
+
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"area_of_effect"						"575 650 725 800 875 950"
 			}
+
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"base_shift"							"2 3 4 5 6 7"
 			}
+
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"stack_shift"							"0.75 1.0 1.25 1.5 1.75 2.0"
 			}
+
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"modifier_duration"						"24"
 			}
+
 			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"tick_interval"							"1"
 			}
+
 			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"vision_duration"						"3"
 			}
+
 			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"vision_radius"							"800"
 			}
+
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"scepter_aoe_bonus"						"200"
 			}
-
 		}
 	}
 
