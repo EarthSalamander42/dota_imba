@@ -1,385 +1,756 @@
---[[	Author: Firetoad
-		Date: 25.02.2015	]]
+--[[
+		By: AtroCty
+		Prev. Authors: Firetoad
+		Date: 25.02.2015
+		Updated:  09.04.2017
+--]]
 
-function WhirlingAxesMelee( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local sound_hit = keys.sound_hit
-	local particle_axe = keys.particle_axe
-	local modifier_miss = keys.modifier_miss
+CreateEmptyTalents("troll_warlord")
 
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-	local damage_tick = ability:GetLevelSpecialValueFor("damage_tick", ability_level)
-	local damage_duration = ability:GetLevelSpecialValueFor("damage_duration", ability_level)
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local elapsed_duration = 0
-	local enemies_hit = {}
-	
-	-- Play cast sound
-	caster:EmitSound(sound_cast)
+-------------------------------------------
+--			  BESERKERS RAGE
+-------------------------------------------
+LinkLuaModifier("modifier_imba_berserkers_rage_ranged", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_berserkers_rage_slow", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_berserkers_rage_melee", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
 
-	-- Play cast animation
-	StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_2, rate = 1.0, translate="melee"})
+imba_troll_warlord_berserkers_rage = class({})
+function imba_troll_warlord_berserkers_rage:IsHiddenWhenStolen() return false end
+function imba_troll_warlord_berserkers_rage:IsRefreshable() return true end
+function imba_troll_warlord_berserkers_rage:IsStealable() return false end
+function imba_troll_warlord_berserkers_rage:IsNetherWardStealable() return false end
+-------------------------------------------
 
-	-- Main loop
-	Timers:CreateTimer(0, function()
-
-		-- Update caster location and facing
-		local caster_pos = caster:GetAbsOrigin()
-		local caster_direction = caster:GetForwardVector()
-
-		-- Create axe particles
-		for i = 1,5 do
-			local axe_target_point = RotatePosition(caster_pos, QAngle(0, i * 72 - 72 * elapsed_duration, 0), caster_pos + caster_direction * (radius-175))
-			local axe_pfx = ParticleManager:CreateParticle(particle_axe, PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(axe_pfx, 0, caster_pos + Vector(0, 0, 100))
-			ParticleManager:SetParticleControl(axe_pfx, 1, axe_target_point + Vector(0, 0, 100))
-			ParticleManager:SetParticleControl(axe_pfx, 4, Vector(0.65, 0, 0))	
-			Timers:CreateTimer(0.4, function()
-				ParticleManager:SetParticleControl(axe_pfx, 1, caster:GetAbsOrigin() + Vector(0, 0, 100))
-			end)		
-		end
-		
-		-- Iterate through affected enemies
-		local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-		for _,enemy in pairs(nearby_enemies) do
-
-			-- If this enemy is being hit for the first time, damage it
-			if not enemies_hit[enemy] then
-				enemies_hit[enemy] = true
-				ApplyDamage({attacker = caster, victim = enemy, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-			end
-
-			-- Play hit sound
-			enemy:EmitSound(sound_hit)
-
-			-- Apply a stack of the dummy blind modifier
-			AddStacks(ability, caster, enemy, modifier_miss, 1, true)
-		end
-
-		-- If the duration is over, end
-		if elapsed_duration < damage_duration then
-
-			-- Add a tick to the elapsed duration
-			elapsed_duration = elapsed_duration + damage_tick
-			return damage_tick
-		end
-	end)
-end
-
-function WhirlingAxesMeleeAttackMiss( keys )
-	local caster = keys.caster
-	local attacker = keys.attacker
-	local modifier_dummy = keys.modifier_dummy
-
-	-- Retrieve current dummy modifier count
-	local current_stacks = attacker:GetModifierStackCount(modifier_dummy, caster)
-
-	-- If this is the last stack, remove the dummy modifier
-	if current_stacks <= 1 then
-		attacker:RemoveModifierByName(modifier_dummy)
-
-	-- Else, reduce the amount of stacks by one
-	else
-		attacker:SetModifierStackCount(modifier_dummy, caster, current_stacks - 1)
-	end
-end
-
-function WhirlingAxesMeleeDebuffCreate( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_miss = keys.modifier_miss
-
-	-- Apply the actual miss modifier
-	ability:ApplyDataDrivenModifier(caster, target, modifier_miss, {})
-end
-
-function WhirlingAxesMeleeDebuffEnd( keys )
-	local target = keys.target
-	local modifier_miss = keys.modifier_miss
-
-	-- Remove the actual miss modifier
-	target:RemoveModifierByName(modifier_miss)
-end
-
-function WhirlingAxesRanged( keys )
-	local caster = keys.caster
-	local target = keys.target_points[1]
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_cast = keys.sound_cast
-	local particle_axe = keys.particle_axe
-
-	-- Parameters
-	local range = ability:GetLevelSpecialValueFor("range", ability_level)
-	local radius = ability:GetLevelSpecialValueFor("radius", ability_level)
-	local speed = ability:GetLevelSpecialValueFor("speed", ability_level)
-	local base_axes = ability:GetLevelSpecialValueFor("base_axes", ability_level)
-	local spread_angle = ability:GetLevelSpecialValueFor("spread_angle", ability_level)
-	local agility_per_axe = ability:GetLevelSpecialValueFor("agility_per_axe", ability_level)
-
-	-- Play cast sound
-	caster:EmitSound(sound_cast)
-
-	-- Projectile geometry
-	local caster_pos = caster:GetAbsOrigin()
-	local direction = (target - caster_pos):Normalized()
-
-	-- Calculate amount of axes to generate
-	local total_axes = base_axes
-	if caster:IsHero() then
-		total_axes = base_axes + math.floor(caster:GetAgility() / agility_per_axe)
-	end
-
-	-- Reduce spread angle if too many axes are present
-	if (total_axes - 1) * spread_angle > 72 then
-		spread_angle = 72 / (total_axes - 1)
-	end
-
-	-- Projectile creation loop
-	for i = 1, total_axes do
-		
-		local start_angle = (total_axes - 1) * spread_angle / 2
-		local target_pos = RotatePosition(caster_pos, QAngle(0, start_angle - (i-1) * spread_angle, 0), caster_pos + direction * range)
-		local this_axe_direction = (target_pos - caster_pos):Normalized()
-
-		ProjectileManager:CreateLinearProjectile( {
-			Ability				= ability,
-			EffectName			= particle_axe,
-			vSpawnOrigin		= caster_pos,
-			fDistance			= range,
-			fStartRadius		= radius,
-			fEndRadius			= radius,
-			Source				= caster,
-			bHasFrontalCone		= false,
-			bReplaceExisting	= false,
-			iUnitTargetTeam		= DOTA_UNIT_TARGET_TEAM_ENEMY,
-			iUnitTargetFlags	= DOTA_UNIT_TARGET_FLAG_NONE,
-			iUnitTargetType		= DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_CREEP,
-		--	fExpireTime			= ,
-			bDeleteOnHit		= false,
-			vVelocity			= this_axe_direction * speed,
-			bProvidesVision		= false,
-		--	iVisionRadius		= ,
-		--	iVisionTeamNumber	= caster:GetTeamNumber(),
-		} )
-	end
-end
-
-function WhirlingAxesRangedHit( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_hit = keys.sound_hit
-	local modifier_slow = keys.modifier_slow
-	local modifier_stack = keys.modifier_stack
-
-	-- Parameters
-	local damage = ability:GetLevelSpecialValueFor("damage", ability_level)
-
-	-- Play hit sound if the target is not affected by the slow
-	if not target:HasModifier(modifier_slow) then
-		target:EmitSound(sound_hit)
-	end
-
-	-- Apply damage
-	ApplyDamage({attacker = caster, victim = target, ability = ability, damage = damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-	-- If the slow is already present, increase it by one stack
-	if target:HasModifier(modifier_slow) then
-		AddStacks(ability, caster, target, modifier_stack, 1, false)
-
-	-- Else, apply the initial slow
-	else
-		ability:ApplyDataDrivenModifier(caster, target, modifier_slow, {})
-	end
-end
-
-function BerserkersRageAttackStart( keys )
-	local caster = keys.caster
-	
-	-- Make the caster a ranged unit
-	caster:SetAttackCapability(2)
-end
-
-function BerserkersRageAttack( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
-	local sound_bash = keys.sound_bash
-
-	-- Parameters
-	local bash_chance = ability:GetLevelSpecialValueFor("bash_chance", ability_level)
-	local bash_damage = ability:GetLevelSpecialValueFor("bash_damage", ability_level)
-	local bash_duration = ability:GetLevelSpecialValueFor("bash_duration", ability_level)
-
-	-- Calculate bash damage
-	bash_damage = caster:GetAttackDamage() * bash_damage / 100
-
-	-- Roll for a bash proc
-	if RandomInt(1, 100) <= bash_chance and not target:IsBuilding() then
-		
-		-- Apply bash damage
-		ApplyDamage({attacker = caster, victim = target, ability = ability, damage = bash_damage, damage_type = DAMAGE_TYPE_MAGICAL})
-
-		-- Apply bash stun
-		target:AddNewModifier(caster, ability, "modifier_stunned", {duration = bash_duration})
-
-		-- Play bash sound
-		target:EmitSound(sound_bash)
-	end
-	
-	-- Make the caster a melee unit
-	caster:SetAttackCapability(1)
-end
-
-function FervorLimitBreak( keys )
-	local caster = keys.caster
-	
-	-- Increase attack speed cap
-	IncreaseAttackSpeedCap(caster, 10000)
-end
-
-function FervorLimitBreakEnd( keys )
-	local caster = keys.caster
-	local modifier_stacks = keys.modifier_stacks
-	local modifier_dummy = keys.modifier_dummy
-
-	-- Remove current stacks
-	caster:RemoveModifierByName(modifier_stacks)
-	caster:RemoveModifierByName(modifier_dummy)
-	
-	-- Revert to the normal attack speed cap
-	RevertAttackSpeedCap(caster)
-end
-
-function FervorAttack( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_stacks = keys.modifier_stacks
-
-	-- Apply a stack of Fervor
-	ability:ApplyDataDrivenModifier(caster, caster, modifier_stacks, {})
-end
-
-function FervorStackUp( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_dummy = keys.modifier_dummy
-
-	-- Add a stack to the dummy modifier
-	AddStacks(ability, caster, target, modifier_dummy, 1, true)
-end
-
-function FervorStackDown( keys )
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local modifier_dummy = keys.modifier_dummy
-
-	-- If this is the last stack, remove the dummy modifier
-	if caster:GetModifierStackCount(modifier_dummy, caster) <= 1 then
-		caster:RemoveModifierByName(modifier_dummy)
-
-	-- Else, decrease the stack count by one
-	else
-		AddStacks(ability, caster, target, modifier_dummy, -1, false)
-	end
-end
-
-function BattleTrance( keys )
-	local caster = keys.caster
-	local ability = keys.ability
-	local modifier_buff = keys.modifier_buff
-	local modifier_trance = keys.modifier_trance
-	local modifier_scepter = keys.modifier_scepter
-	local particle_cast = keys.particle_cast
-	local sound_cast = keys.sound_cast
-	local sound_global = keys.sound_global
-	local scepter = HasScepter(caster)
-
-	-- Parameters
-	local caster_pos = caster:GetAbsOrigin()
-
-	-- Play local cast sound
-	caster:EmitSound(sound_cast)
-
-	-- Play cast animation
-	StartAnimation(caster, {activity = ACT_DOTA_CAST_ABILITY_4, rate = 1.0})
-
-	-- Play allied buff sound
-	EmitSoundOnLocationForAllies(caster_pos, sound_global, caster)
-
-	-- Play cast particle
-	local trance_pfx = ParticleManager:CreateParticle(particle_cast, PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(trance_pfx, 0, caster_pos)
-
-	-- Iterate through all affected allies
-	local allies = FindUnitsInRadius(caster:GetTeamNumber(), caster_pos, nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC + DOTA_UNIT_TARGET_BUILDING, DOTA_UNIT_TARGET_FLAG_NONE, FIND_ANY_ORDER, false)
-	for _,ally in pairs(allies) do
-		
-		-- Grant the attack speed buff
-		ability:ApplyDataDrivenModifier(caster, ally, modifier_buff, {})
-
-		-- If this unit is a real hero, apply the trance buff
-		if ally:IsRealHero() then
-			ability:ApplyDataDrivenModifier(caster, ally, modifier_trance, {})
-
-			-- If the caster has a scepter, also apply the BAT reduction modifier
-			if scepter then
-				ability:ApplyDataDrivenModifier(caster, ally, modifier_scepter, {})
+-- Always have one of the buffs
+function imba_troll_warlord_berserkers_rage:OnUpgrade()
+    if IsServer() then
+		local caster = self:GetCaster()
+		if not (caster:HasModifier("modifier_imba_berserkers_rage_ranged") or caster:HasModifier("modifier_imba_berserkers_rage_melee")) then
+			if self:GetToggleState() then
+				caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_melee", {})
+			else
+				caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_ranged", {})
 			end
 		end
 	end
 end
 
-function BattleTranceAttack( keys )
-	local caster = keys.caster
-	local unit = keys.attacker
-	local ability = keys.ability
-	local modifier_buff = keys.modifier_buff
-	local modifier_stacks = keys.modifier_stacks
-
-	-- If the unit still has the Battle Trance modifier, refresh the stacks' duration
-	if unit:HasModifier(modifier_buff) then
-		AddStacks(ability, caster, unit, modifier_stacks, 1, true)
-
-	-- Else, add a stack without refreshing the buff
-	else
-		AddStacks(ability, caster, unit, modifier_stacks, 1, false)
+function imba_troll_warlord_berserkers_rage:OnToggle()
+    if IsServer() then
+		local caster = self:GetCaster()
+		caster:EmitSound("Hero_TrollWarlord.BerserkersRage.Toggle")
+		-- Randomly play a cast line
+		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_troll_warlord") and not caster.beserk_sound then
+			caster:EmitSound("troll_warlord_troll_beserker_0"..math.random(1,4))
+			caster.beserk_sound = true
+			Timers:CreateTimer( 10, function()
+				caster.beserk_sound = nil
+			end)
+		end
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
+		if caster:HasModifier("modifier_imba_berserkers_rage_ranged") and self:GetToggleState() then
+			caster:RemoveModifierByName("modifier_imba_berserkers_rage_ranged")
+			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_melee", {})
+		else
+			caster:RemoveModifierByName("modifier_imba_berserkers_rage_melee")
+			caster:AddNewModifier(caster, self, "modifier_imba_berserkers_rage_ranged", {})
+		end
 	end
 end
 
-function BattleTranceBatStart( keys )
-	local caster = keys.caster
-	local unit = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
+-------------------------------------------
+modifier_imba_berserkers_rage_melee = class({})
+function modifier_imba_berserkers_rage_melee:AllowIllusionDuplicate() return true end
+function modifier_imba_berserkers_rage_melee:IsDebuff() return false end
+function modifier_imba_berserkers_rage_melee:IsHidden() return true end
+function modifier_imba_berserkers_rage_melee:IsPurgable() return false end
+function modifier_imba_berserkers_rage_melee:IsPurgeException() return false end
+function modifier_imba_berserkers_rage_melee:IsStunDebuff() return false end
+function modifier_imba_berserkers_rage_melee:RemoveOnDeath() return false end
+-------------------------------------------
 
-	-- Parameters
-	local bat_reduction = ability:GetLevelSpecialValueFor("bat_scepter", ability_level)
-
-	-- Apply BAT reduction
-	ModifyBAT(unit, -bat_reduction, 0)
+function modifier_imba_berserkers_rage_melee:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_TRANSLATE_ACTIVITY_MODIFIERS,
+		MODIFIER_PROPERTY_ATTACK_RANGE_BONUS,
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS,
+		MODIFIER_PROPERTY_TRANSLATE_ATTACK_SOUND
+    }
+    return decFuns
 end
 
-function BattleTranceBatEnd( keys )
-	local caster = keys.caster
-	local unit = keys.target
-	local ability = keys.ability
-	local ability_level = ability:GetLevel() - 1
+function modifier_imba_berserkers_rage_melee:GetAttackSound()
+	return "Hero_TrollWarlord.ProjectileImpact"
+end
 
-	-- Parameters
-	local bat_reduction = ability:GetLevelSpecialValueFor("bat_scepter", ability_level)
-	local bat_increase = 100 * ( 100 / ( 100 - bat_reduction ) - 1 )
+function modifier_imba_berserkers_rage_melee:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetAbility():GetSpecialValueFor("bonus_move_speed")
+end
 
-	-- Remove BAT reduction
-	ModifyBAT(unit, bat_increase, 0)
+function modifier_imba_berserkers_rage_melee:GetModifierPhysicalArmorBonus()
+	return self:GetAbility():GetSpecialValueFor("bonus_armor")
+end
+
+function modifier_imba_berserkers_rage_melee:GetModifierBaseAttackTimeConstant()
+	return self:GetAbility():GetSpecialValueFor("base_attack_time")
+end
+
+function modifier_imba_berserkers_rage_melee:OnAttackLanded( params )
+	if IsServer() then
+		if params.attacker:PassivesDisabled() then
+			return nil
+		end
+		local parent = self:GetParent()
+		if (parent == params.attacker) and (parent:IsRealHero()) and not params.target:IsBuilding() then
+			local ability = self:GetAbility()
+			if RollPseudoRandom(ability:GetTalentSpecialValueFor("bash_chance"), ability) then
+				local bash_damage = ability:GetSpecialValueFor("bash_damage")
+				local bash_duration = ability:GetSpecialValueFor("bash_duration")
+				ApplyDamage({victim = params.target, attacker = parent, ability = ability, damage = bash_damage, damage_type = ability:GetAbilityDamageType()})
+				params.target:AddNewModifier(parent, ability, "modifier_stunned", {duration = bash_duration})
+				params.target:EmitSound("DOTA_Item.SkullBasher")
+			end
+		end
+	end
+end
+
+function modifier_imba_berserkers_rage_melee:GetActivityTranslationModifiers()
+	if self:GetParent():GetName() == "npc_dota_hero_troll_warlord" then
+		return "melee"
+	end
+	return 0
+end
+
+function modifier_imba_berserkers_rage_melee:OnCreated()
+	if IsServer() then
+		local parent = self:GetParent()
+		if parent:HasAbility("imba_troll_warlord_whirling_axes_melee") then
+			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetHidden(false)
+			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetHidden(true)
+		end
+		parent:SetAttackCapability(DOTA_UNIT_CAP_MELEE_ATTACK)
+	end
+end
+
+-- Note: This is for BAT-modifying, since only troll modify BAT of others and himself
+function modifier_imba_berserkers_rage_melee:GetPriority()
+	return 1
+end
+
+function modifier_imba_berserkers_rage_melee:GetModifierAttackRangeBonus()
+	return -350
+end
+-------------------------------------------
+modifier_imba_berserkers_rage_ranged = class({})
+function modifier_imba_berserkers_rage_ranged:AllowIllusionDuplicate() return true end
+function modifier_imba_berserkers_rage_ranged:IsDebuff() return false end
+function modifier_imba_berserkers_rage_ranged:IsHidden() return true end
+function modifier_imba_berserkers_rage_ranged:IsPurgable() return false end
+function modifier_imba_berserkers_rage_ranged:IsPurgeException() return false end
+function modifier_imba_berserkers_rage_ranged:IsStunDebuff() return false end
+function modifier_imba_berserkers_rage_ranged:RemoveOnDeath() return false end
+-------------------------------------------
+
+function modifier_imba_berserkers_rage_ranged:OnCreated()
+	if IsServer() then
+		local parent = self:GetParent()
+		if parent:HasAbility("imba_troll_warlord_whirling_axes_ranged") then
+			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_ranged"):SetHidden(false)
+			parent:FindAbilityByName("imba_troll_warlord_whirling_axes_melee"):SetHidden(true)
+		end
+		parent:SetAttackCapability(DOTA_UNIT_CAP_RANGED_ATTACK)
+	end
+end
+
+function modifier_imba_berserkers_rage_ranged:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_EVENT_ON_ATTACK_LANDED,
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT,
+		MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS
+    }
+    return decFuns
+end
+
+function modifier_imba_berserkers_rage_ranged:GetModifierMoveSpeedBonus_Percentage()
+	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "movespeed_pct")
+end
+
+function modifier_imba_berserkers_rage_ranged:GetModifierPhysicalArmorBonus()
+	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "armor")
+end
+
+function modifier_imba_berserkers_rage_ranged:GetModifierBaseAttackTimeConstant()
+	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_troll_warlord_1", "bat")
+end
+
+-- Note: This is for BAT-modifying, since only troll modify BAT of others and himself
+function modifier_imba_berserkers_rage_ranged:GetPriority()
+	return 1
+end
+
+function modifier_imba_berserkers_rage_ranged:OnAttackLanded( params )
+	if IsServer() then
+		local parent = self:GetParent()
+		if params.attacker:PassivesDisabled() then
+			return nil
+		end
+		if (parent == params.attacker) and (parent:IsRealHero()) then
+			local ability = self:GetAbility()
+			if RollPseudoRandom(ability:GetTalentSpecialValueFor("hamstring_chance"), ability) then
+				local hamstring_duration = ability:GetSpecialValueFor("hamstring_duration")
+				params.target:AddNewModifier(parent, ability, "modifier_imba_berserkers_rage_slow", {duration = hamstring_duration})
+				params.target:EmitSound("DOTA_Item.Daedelus.Crit")
+			end
+		end
+	end
+end
+
+-------------------------------------------
+modifier_imba_berserkers_rage_slow = class({})
+function modifier_imba_berserkers_rage_slow:IsDebuff() return true end
+function modifier_imba_berserkers_rage_slow:IsHidden() return false end
+function modifier_imba_berserkers_rage_slow:IsPurgable() return true end
+function modifier_imba_berserkers_rage_slow:IsStunDebuff() return false end
+function modifier_imba_berserkers_rage_slow:RemoveOnDeath() return true end
+-------------------------------------------
+
+function modifier_imba_berserkers_rage_slow:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+    }
+    return decFuns
+end
+
+function modifier_imba_berserkers_rage_slow:OnCreated()
+	self.slow = self:GetAbility():GetSpecialValueFor("hamstring_slow_pct") * (-1)
+end
+
+function modifier_imba_berserkers_rage_slow:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow
+end
+
+-------------------------------------------
+--		  WHIRLING AXES (RANGED)
+-------------------------------------------
+LinkLuaModifier("modifier_imba_whirling_axes_ranged", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+imba_troll_warlord_whirling_axes_ranged = class({})
+function imba_troll_warlord_whirling_axes_ranged:IsHiddenWhenStolen() return false end
+function imba_troll_warlord_whirling_axes_ranged:IsRefreshable() return true end
+function imba_troll_warlord_whirling_axes_ranged:IsStealable() return true end
+function imba_troll_warlord_whirling_axes_ranged:IsNetherWardStealable() return true end
+-------------------------------------------
+
+function imba_troll_warlord_whirling_axes_ranged:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_troll_warlord_5")
+end
+
+function imba_troll_warlord_whirling_axes_ranged:OnUpgrade()
+	if IsServer() then
+		local ability_melee = self:GetCaster():FindAbilityByName("imba_troll_warlord_whirling_axes_melee")
+		local level = self:GetLevel()
+		if ability_melee then
+			if ability_melee:GetLevel() < level then
+				ability_melee:SetLevel(level)
+			end
+		end
+	end
+end
+
+function imba_troll_warlord_whirling_axes_ranged:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local target_loc = self:GetCursorPosition()
+		local caster_loc = caster:GetAbsOrigin()
+
+		-- Parameters
+		local axe_width = self:GetSpecialValueFor("axe_width")
+		local axe_speed = self:GetSpecialValueFor("axe_speed")
+		local axe_range = self:GetSpecialValueFor("axe_range") + GetCastRangeIncrease(caster)
+		local axe_damage = self:GetSpecialValueFor("axe_damage")
+		local duration = self:GetSpecialValueFor("duration")
+		local axe_spread = self:GetSpecialValueFor("axe_spread")
+		local axe_count = self:GetSpecialValueFor("axe_count")
+		local on_hit_pct = self:GetSpecialValueFor("on_hit_pct")
+		local direction
+		if target_loc == caster_loc then
+			direction = caster:GetForwardVector()
+		else
+			direction = (target_loc - caster_loc):Normalized()
+		end
+		-- Emit sounds
+		caster:EmitSound("Hero_TrollWarlord.WhirlingAxes.Ranged")
+		-- Randomly play a cast line
+		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_troll_warlord") then
+			caster:EmitSound("troll_warlord_troll_whirlingaxes_0"..math.random(1,6))
+		end
+		-- Create a unique table with stored hit enemies
+		local index = DoUniqueString("index")
+		self[index] = {}
+		-- Dynamic projectile spawning via angles
+		local start_angle
+		local interval_angle = 0
+		if axe_count == 1 then
+			start_angle = 0
+		else
+			start_angle = axe_spread / 2 * (-1)
+			interval_angle = axe_spread / (axe_count - 1)
+		end
+		for i = 1, axe_count, 1 do
+			local angle = start_angle + (i-1) * interval_angle
+			local velocity = RotateVector2D(direction,angle,true) * axe_speed
+			
+			local projectile = 
+			{
+				Ability				= self,
+				EffectName			= "particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf",
+				vSpawnOrigin		= caster_loc,
+				fDistance			= axe_range,
+				fStartRadius		= axe_width,
+				fEndRadius			= axe_width,
+				Source				= caster,
+				bHasFrontalCone		= false,
+				bReplaceExisting	= false,
+				iUnitTargetTeam		= self:GetAbilityTargetTeam(),
+				iUnitTargetFlags	= self:GetAbilityTargetFlags(),
+				iUnitTargetType		= self:GetAbilityTargetType(),
+				fExpireTime 		= GameRules:GetGameTime() + 10.0,
+				bDeleteOnHit		= false,
+				vVelocity			= Vector(velocity.x,velocity.y,0),
+				bProvidesVision		= false,
+				ExtraData			= {index = index, damage = axe_damage, duration = duration, axe_count = axe_count, on_hit_pct = on_hit_pct}
+			}
+			ProjectileManager:CreateLinearProjectile(projectile)
+		end
+	end
+end
+
+function imba_troll_warlord_whirling_axes_ranged:OnProjectileHit_ExtraData(target, location, ExtraData)
+	local caster = self:GetCaster()
+	if target then
+		local was_hit = false
+		for _, stored_target in ipairs(self[ExtraData.index]) do
+			if target == stored_target then
+				was_hit = true
+				break
+			end
+		end
+		if was_hit then
+			return nil
+		end
+		table.insert(self[ExtraData.index],target)
+		ApplyDamage({victim = target, attacker = caster, ability = self, damage = ExtraData.damage, damage_type = self:GetAbilityDamageType()})
+		if RollPseudoRandom(ExtraData.on_hit_pct, self) then
+			caster:PerformAttack(target, true, true, true, true, false, true, true)
+		end
+		target:AddNewModifier(caster, self, "modifier_imba_whirling_axes_ranged", {duration = ExtraData.duration})
+		target:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
+	else
+		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] or 0
+		self[ExtraData.index]["count"] = self[ExtraData.index]["count"] + 1
+		if self[ExtraData.index]["count"] == ExtraData.axe_count then
+			self[ExtraData.index] = nil
+		end
+	end
+end
+
+-------------------------------------------
+modifier_imba_whirling_axes_ranged = class({})
+function modifier_imba_whirling_axes_ranged:IsDebuff() return true end
+function modifier_imba_whirling_axes_ranged:IsHidden() return false end
+function modifier_imba_whirling_axes_ranged:IsPurgable() return true end
+function modifier_imba_whirling_axes_ranged:IsPurgeException() return false end
+function modifier_imba_whirling_axes_ranged:IsStunDebuff() return false end
+function modifier_imba_whirling_axes_ranged:RemoveOnDeath() return true end
+-------------------------------------------
+
+function modifier_imba_whirling_axes_ranged:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE
+    }
+    return decFuns
+end
+
+function modifier_imba_whirling_axes_ranged:OnCreated()
+	self.slow = self:GetAbility():GetTalentSpecialValueFor("movement_speed") * (-1)
+end
+
+function modifier_imba_whirling_axes_ranged:GetModifierMoveSpeedBonus_Percentage()
+	return self.slow
+end
+-------------------------------------------
+--		  WHIRLING AXES (MELEE)
+-------------------------------------------
+LinkLuaModifier("modifier_imba_whirling_axes_melee", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+imba_troll_warlord_whirling_axes_melee = class({})
+function imba_troll_warlord_whirling_axes_melee:IsHiddenWhenStolen() return false end
+function imba_troll_warlord_whirling_axes_melee:IsRefreshable() return true end
+function imba_troll_warlord_whirling_axes_melee:IsStealable() return true end
+function imba_troll_warlord_whirling_axes_melee:IsNetherWardStealable() return true end
+-------------------------------------------
+
+function imba_troll_warlord_whirling_axes_melee:GetCooldown( nLevel )
+	return self.BaseClass.GetCooldown( self, nLevel ) - self:GetCaster():FindTalentValue("special_bonus_imba_troll_warlord_5")
+end
+
+function imba_troll_warlord_whirling_axes_melee:OnUpgrade()
+	if IsServer() then
+		local ability_ranged = self:GetCaster():FindAbilityByName("imba_troll_warlord_whirling_axes_ranged")
+		local level = self:GetLevel()
+		if ability_ranged then
+			if ability_ranged:GetLevel() < level then
+				ability_ranged:SetLevel(level)
+			end
+		end
+	end
+end
+
+function imba_troll_warlord_whirling_axes_melee:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local caster_loc = caster:GetAbsOrigin()
+
+		-- Parameters
+		local axe_radius = self:GetSpecialValueFor("axe_radius")
+		local max_range = self:GetSpecialValueFor("max_range")
+		local axe_movement_speed = self:GetSpecialValueFor("axe_movement_speed")
+		local whirl_duration = self:GetSpecialValueFor("whirl_duration")
+		local direction = caster:GetForwardVector()
+		-- Emit sounds
+		caster:EmitSound("Hero_TrollWarlord.WhirlingAxes.Melee")
+		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_troll_warlord") then
+			caster:EmitSound("troll_warlord_troll_whirlingaxes_0"..math.random(1,6))
+		end
+		-- Create a unique table with stored hit enemies
+		local index = DoUniqueString("index")
+		self[index] = {}
+		-- Set the particle
+		local axe_pfx = {}
+		local axe_loc = {}
+		local axe_random = {}
+		for i=1, 10, 1 do
+			table.insert(axe_pfx, ParticleManager:CreateParticle("particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster))
+			ParticleManager:SetParticleControl(axe_pfx[i], 1, caster_loc)
+			ParticleManager:SetParticleControl(axe_pfx[i], 4, Vector(whirl_duration,0,0))
+			table.insert(axe_random, math.random()*0.9+1.8)
+		end
+		local counter = 0
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_2)
+		-- Projectile logic
+		-- Note: Most of it is purely cosmetical, it's basicly just checking if new units are in the increasing range
+		-- Why? Because trollolololo
+		Timers:CreateTimer(FrameTime(), function()
+			counter = counter + FrameTime()
+			caster_loc = caster:GetAbsOrigin()
+			if counter <= (whirl_duration / 2) then
+				for i=1, 10, 1 do
+					axe_loc[i] = counter * (max_range - axe_radius) * RotateVector2D(direction,36*i + counter*axe_movement_speed,true):Normalized()
+					self:DoAxeStuff(index,counter * (max_range-axe_radius)+axe_radius,caster_loc)
+				end
+			else
+				for i=1, 10, 1 do
+					axe_loc[i] = (whirl_duration - counter/2) * (max_range - axe_radius) * RotateVector2D(direction,36*i + counter*axe_movement_speed*axe_random[i],true):Normalized()
+					self:DoAxeStuff(index,(whirl_duration - counter/2) * (max_range-axe_radius)+axe_radius,caster_loc)
+				end
+			end
+			for i=1, 10, 1 do
+				ParticleManager:SetParticleControl(axe_pfx[i], 1, caster_loc + axe_loc[i] + Vector(0,0,40))
+			end
+			if counter <= whirl_duration then
+				return FrameTime()
+			else
+				for i=1, 10, 1 do
+					ParticleManager:DestroyParticle(axe_pfx[i], false)
+					ParticleManager:ReleaseParticleIndex(axe_pfx[i])
+				end
+			end
+		end)
+	end
+end
+
+function imba_troll_warlord_whirling_axes_melee:DoAxeStuff(index,range,caster_loc)
+	local caster = self:GetCaster()
+	local damage = self:GetSpecialValueFor("damage")
+	local blind_duration = self:GetSpecialValueFor("blind_duration")
+	local blind_stacks = self:GetSpecialValueFor("blind_stacks")
+	local enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster_loc, nil, range, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+	for _,enemy in ipairs(enemies) do
+		local was_hit = false
+		for _, stored_target in ipairs(self[index]) do
+			if enemy == stored_target then
+				was_hit = true
+				break
+			end
+		end
+		if was_hit then
+			return nil
+		else
+			table.insert(self[index],enemy)
+		end
+		ApplyDamage({victim = enemy, attacker = caster, ability = self, damage = damage, damage_type = self:GetAbilityDamageType()})
+		enemy:AddNewModifier(caster, self, "modifier_imba_whirling_axes_melee", {duration = blind_duration, blind_stacks = blind_stacks})
+		enemy:EmitSound("Hero_TrollWarlord.WhirlingAxes.Target")
+	end
+end
+
+-------------------------------------------
+modifier_imba_whirling_axes_melee = class({})
+function modifier_imba_whirling_axes_melee:IsDebuff() return true end
+function modifier_imba_whirling_axes_melee:IsHidden() return false end
+function modifier_imba_whirling_axes_melee:IsPurgable() return true end
+function modifier_imba_whirling_axes_melee:IsPurgeException() return false end
+function modifier_imba_whirling_axes_melee:IsStunDebuff() return false end
+function modifier_imba_whirling_axes_melee:RemoveOnDeath() return true end
+-------------------------------------------
+
+function modifier_imba_whirling_axes_melee:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_MISS_PERCENTAGE,
+		MODIFIER_EVENT_ON_ATTACK_FAIL
+    }
+    return decFuns
+end
+
+function modifier_imba_whirling_axes_melee:OnCreated(params)
+	self.miss_chance = self:GetAbility():GetSpecialValueFor("blind_pct")
+	if IsServer() then
+		self:SetStackCount(params.blind_stacks)
+	end
+end
+
+function modifier_imba_whirling_axes_melee:GetModifierMiss_Percentage()
+	return self.miss_chance
+end
+
+function modifier_imba_whirling_axes_melee:OnRefresh(params)
+	self:OnCreated(params)
+end
+
+function modifier_imba_whirling_axes_melee:OnAttackFail(params)
+	if IsServer() then
+		if params.attacker == self:GetParent() then
+			if self:GetStackCount() == 1 then
+				self:Destroy()
+			else
+				self:DecrementStackCount()
+			end
+		end
+	end
+end
+-------------------------------------------
+--				FERVOR
+-------------------------------------------
+LinkLuaModifier("modifier_imba_fervor", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_fervor_stacks", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+imba_troll_warlord_fervor = class({})
+function imba_troll_warlord_fervor:IsHiddenWhenStolen() return false end
+function imba_troll_warlord_fervor:IsRefreshable() return false end
+function imba_troll_warlord_fervor:IsStealable() return false end
+function imba_troll_warlord_fervor:IsNetherWardStealable() return false end
+-------------------------------------------
+
+function imba_troll_warlord_fervor:GetIntrinsicModifierName()
+	if self:GetCaster():IsRealHero() then
+		return "modifier_imba_fervor"
+	end
+	return nil
+end
+
+function imba_troll_warlord_fervor:OnUpgrade()
+	if IsServer() then
+		local caster = self:GetCaster()
+		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_troll_warlord") then
+			caster:EmitSound("troll_warlord_troll_fervor_0"..math.random(1,6))
+		end
+	end
+end
+
+-------------------------------------------
+modifier_imba_fervor = class({})
+function modifier_imba_fervor:IsDebuff() return false end
+function modifier_imba_fervor:IsHidden() return true end
+function modifier_imba_fervor:IsPurgable() return false end
+function modifier_imba_fervor:IsPurgeException() return false end
+function modifier_imba_fervor:IsStunDebuff() return false end
+function modifier_imba_fervor:RemoveOnDeath() return false end
+-------------------------------------------
+
+function modifier_imba_fervor:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_EVENT_ON_ATTACK_START
+    }
+    return decFuns
+end
+
+function modifier_imba_fervor:OnAttackStart(params)
+	local parent = self:GetParent()
+	if (
+	(params.attacker == parent) or 
+	((params.attacker:GetTeamNumber() == parent:GetTeamNumber()) and params.attacker:HasModifier("modifier_imba_battle_trance") and parent:HasScepter())) and 
+	(not params.attacker:PassivesDisabled()) and params.attacker:IsRealHero() then
+		local modifier = params.attacker:FindModifierByNameAndCaster("modifier_imba_fervor_stacks",parent)
+		if modifier then
+			if modifier.last_target == params.target then
+				modifier:IncrementStackCount()
+			else
+				local loss_pct = 1 - (self:GetAbility():GetTalentSpecialValueFor("switch_lose_pct") / 100)
+				modifier:SetStackCount(math.max(math.floor(modifier:GetStackCount() * loss_pct),1))
+				modifier.last_target = params.target
+			end
+		else
+			modifier = params.attacker:AddNewModifier(parent, self:GetAbility(), "modifier_imba_fervor_stacks", {})
+			modifier.last_target = params.target
+		end
+	end
+end
+
+-------------------------------------------
+modifier_imba_fervor_stacks = class({})
+function modifier_imba_fervor_stacks:IsDebuff() return false end
+function modifier_imba_fervor_stacks:IsHidden() return false end
+function modifier_imba_fervor_stacks:IsPurgable() return false end
+function modifier_imba_fervor_stacks:IsPurgeException() return false end
+function modifier_imba_fervor_stacks:IsStunDebuff() return false end
+function modifier_imba_fervor_stacks:RemoveOnDeath() return false end
+-------------------------------------------
+
+function modifier_imba_fervor_stacks:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT
+    }
+    return decFuns
+end
+
+function modifier_imba_fervor_stacks:OnCreated()
+    if IsServer() then
+		self:SetStackCount(1)
+	end
+end
+
+function modifier_imba_fervor_stacks:GetModifierAttackSpeedBonus_Constant()
+	if not self:GetParent():PassivesDisabled() then
+		return self:GetAbility():GetTalentSpecialValueFor("bonus_as") * self:GetStackCount()
+	end
+	return 0
+end
+
+-------------------------------------------
+--			  BATTLE TRANCE
+-------------------------------------------
+LinkLuaModifier("modifier_imba_battle_trance", "hero/hero_troll_warlord", LUA_MODIFIER_MOTION_NONE)
+
+imba_troll_warlord_battle_trance = class({})
+function imba_troll_warlord_battle_trance:IsHiddenWhenStolen() return false end
+function imba_troll_warlord_battle_trance:IsRefreshable() return true end
+function imba_troll_warlord_battle_trance:IsStealable() return true end
+function imba_troll_warlord_battle_trance:IsNetherWardStealable() return true end
+-------------------------------------------
+
+function imba_troll_warlord_battle_trance:OnSpellStart()
+	if IsServer() then
+		local caster = self:GetCaster()
+		local duration = self:GetTalentSpecialValueFor("buff_duration")
+		
+		-- Decide which cast sound to play
+		local sound = "troll_warlord_troll_battletrance_0"..math.random(1,6)
+		if (math.random(1,100) <= 30) then		
+			local heroes = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
+			if #heroes >= IMBA_PLAYERS_ON_GAME * 0.6666 then
+				sound = "Imba.TrollAK47"
+			end
+		end
+		local allies = FindUnitsInRadius(caster:GetTeamNumber(), Vector(0,0,0), nil, 25000, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), FIND_ANY_ORDER, false)
+		caster:EmitSound(sound)
+		for _,ally in ipairs(allies) do
+			local mod = ally:AddNewModifier(caster, self, "modifier_imba_battle_trance", {duration = duration})
+			mod.sound = sound
+		end
+		local cast_pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+		ParticleManager:SetParticleControlEnt( cast_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc" , caster:GetOrigin(), true )
+		ParticleManager:ReleaseParticleIndex(cast_pfx)
+		caster:StartGesture(ACT_DOTA_CAST_ABILITY_4)
+	end
+end
+
+-------------------------------------------
+modifier_imba_battle_trance = class({})
+function modifier_imba_battle_trance:IsDebuff() return false end
+function modifier_imba_battle_trance:IsHidden() return false end
+function modifier_imba_battle_trance:IsPurgable() return false end
+function modifier_imba_battle_trance:IsPurgeException() return false end
+function modifier_imba_battle_trance:IsStunDebuff() return false end
+function modifier_imba_battle_trance:RemoveOnDeath() return true end
+-------------------------------------------
+
+function modifier_imba_battle_trance:DeclareFunctions()
+    local decFuns =
+    {
+		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
+		MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT
+    }
+    return decFuns
+end
+
+function modifier_imba_battle_trance:OnCreated()
+	local ability = self:GetAbility()
+	local parent = self:GetParent()
+    self.bonus_as = ability:GetTalentSpecialValueFor("bonus_as")
+	local bonus_bat = ability:GetTalentSpecialValueFor("bonus_bat")
+	if parent:IsRealHero() and IsServer() then
+		EmitSoundOnClient("Hero_TrollWarlord.BattleTrance.Cast.Team", parent:GetPlayerOwner())
+		if self.sound == "Imba.TrollAK47" then
+			EmitSoundOnClient("Imba.TrollAK47.Team", parent:GetPlayerOwner())
+		end
+	end
+	if parent:GetBaseAttackTime() <= bonus_bat then
+		self.bonus_bat = bonus_bat
+	else
+		self.bonus_bat = 0
+	end
+end
+
+function modifier_imba_battle_trance:OnRefresh()
+    self:OnCreated()
+end
+
+function modifier_imba_battle_trance:OnDestroy()
+    if IsServer() then
+		local parent = self:GetParent()
+		if not parent:HasAbility("imba_troll_warlord_fervor") and parent:HasModifier("modifier_imba_fervor_stacks") then
+			parent:RemoveModifierByName("modifier_imba_fervor_stacks")
+		end
+	end
+end
+
+function modifier_imba_battle_trance:GetPriority()
+    return 10
+end
+
+function modifier_imba_battle_trance:GetModifierAttackSpeedBonus_Constant()
+	return self.bonus_as
+end
+
+function modifier_imba_battle_trance:GetModifierBaseAttackTimeConstant()
+	return self.bonus_bat
+end
+
+function modifier_imba_battle_trance:GetEffectName()
+	return "particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
+end
+
+function modifier_imba_battle_trance:GetEffectAttachType()
+	return PATTACH_POINT_FOLLOW
 end
