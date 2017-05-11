@@ -325,7 +325,7 @@ function modifier_imba_axe_battle_hunger_enemy:DeclareFunctions()
 end
 
 function modifier_imba_axe_battle_hunger_enemy:GetModifierMoveSpeedBonus_Percentage()
-  return self:GetAbility():GetSpecialValueFor( "slow")
+  return self:GetAbility():GetSpecialValueFor("slow") * 0.01
 end
 
 function modifier_imba_axe_battle_hunger_enemy:GetStatusEffectName()
@@ -385,16 +385,6 @@ function imba_axe_counter_helix:GetIntrinsicModifierName()
   return "modifier_imba_counter_helix"
 end
 
-function imba_axe_counter_helix:OnUpgrade()
-  local caster = self:GetCaster()
-  local modifier_aura = "modifier_imba_counter_helix"
-
-  if caster:HasModifier(modifier_aura) then
-    caster:RemoveModifierByName(modifier_aura)
-    caster:AddNewModifier(caster, self, modifier_aura, {})
-  end
-end
-
 -------------------------------------------
 -- Counter Helix modifier
 -------------------------------------------
@@ -407,12 +397,17 @@ function modifier_imba_counter_helix:OnCreated()
   self.ability = self:GetAbility()
   self.particle_spin_1 = "particles/units/heroes/hero_axe/axe_attack_blur_counterhelix.vpcf"
   self.particle_spin_2 = "particles/units/heroes/hero_axe/axe_counterhelix.vpcf"
+  self.modifier_enemy_taunt = "modifier_imba_berserkers_call_enemy"
 
   --ability specials
   self.radius = self.ability:GetSpecialValueFor("radius") + self.caster:FindTalentValue("special_bonus_imba_axe_3")
   self.proc_chance = self.ability:GetSpecialValueFor("proc_chance")
   self.base_damage = self.ability:GetSpecialValueFor("base_damage")
+  self.taunted_damage_bonus_pct = self.ability:GetSpecialValueFor("taunted_damage_bonus_pct")
+end
 
+function modifier_imba_counter_helix:OnRefresh()
+    self:OnCreated()
 end
 
 function modifier_imba_counter_helix:DeclareFunctions()
@@ -426,7 +421,7 @@ function modifier_imba_counter_helix:OnAttacked(keys)
     if keys.target == self:GetParent() then
 
       if self.caster:PassivesDisabled() then
-        return nil
+          return nil
       end
 
       -- +30% of your strength added to Counter Helix damage.
@@ -439,8 +434,8 @@ function modifier_imba_counter_helix:OnAttacked(keys)
         self.total_damage = self.base_damage
       end
 
-      --calculate %50 chance then attack
-      if RandomInt(1, 100) <= self.proc_chance then
+      --calculate chance to counter helix
+      if RollPercentage(self.proc_chance) then
         self.helix_pfx_1 = ParticleManager:CreateParticle(self.particle_spin_1, PATTACH_ABSORIGIN_FOLLOW, self.caster)
         ParticleManager:SetParticleControl(self.helix_pfx_1, 0, self.caster:GetAbsOrigin())
 
@@ -454,6 +449,14 @@ function modifier_imba_counter_helix:OnAttacked(keys)
         self.enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
         -- Apply damage to valid enemies
         for _,enemy in pairs(self.enemies) do
+          local damage = self.total_damage
+
+          -- If an enemy is tauned, increase damage on it
+          if enemy:HasModifier(self.modifier_enemy_taunt) then            
+              damage = damage * (1 + self.taunted_damage_bonus_pct * 0.01)            
+              SendOverheadEventMessage(nil, OVERHEAD_ALERT_DAMAGE, enemy, damage, nil)
+          end
+
           ApplyDamage({attacker = self.caster, victim = enemy, ability = self.ability, damage = self.total_damage, damage_type = DAMAGE_TYPE_PURE})
         end
       end
@@ -497,6 +500,7 @@ function imba_axe_culling_blade:OnSpellStart()
   self.ability = self
   self.target = self:GetCursorTarget()
   self.target_location = self.target:GetAbsOrigin()
+  self.scepter = self.caster:HasScepter()
 
   --particle
   self.particle_kill = "particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
@@ -509,7 +513,7 @@ function imba_axe_culling_blade:OnSpellStart()
   self.as_bonus = self.ability:GetSpecialValueFor("as_bonus")
   self.speed_duration = self.ability:GetSpecialValueFor("speed_duration")
   self.speed_aoe_radius = self.ability:GetSpecialValueFor("speed_aoe")
-  self.scepter = HasScepter(self.caster)
+  self.max_health_kill_heal_pct = self.ability:GetSpecialValueFor("max_health_kill_heal_pct")  
 
   -- Check for Linkens
   if self.target:GetTeamNumber() ~= self.caster:GetTeamNumber() then
@@ -602,8 +606,7 @@ end
 function imba_axe_culling_blade:KillUnit(target)
 
   target:ForceKill(false)
-  self.heal_amount = (self.caster:GetMaxHealth() / 100) * 20
-  print(self.heal_amount)
+  self.heal_amount = (self.caster:GetMaxHealth() / 100) * self.max_health_kill_heal_pct  
   self.caster:Heal(self.heal_amount, self.caster)
   -- Play the kill particle
   self.culling_kill_particle = ParticleManager:CreateParticle(self.particle_kill, PATTACH_CUSTOMORIGIN, self.caster)
@@ -678,12 +681,11 @@ end
 
 modifier_imba_axe_culling_blade_leap = class({})
 
-local AXE_MINIMUM_HEIGHT_ABOVE_LOWEST = 500
-local AXE_MINIMUM_HEIGHT_ABOVE_HIGHEST = 100
-local AXE_ACCELERATION_Z = 4000
-local AXE_MAX_HORIZONTAL_ACCELERATION = 3000
-
 function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
+  local axe_minimum_height_above_lowest = 500
+  local axe_minimum_height_above_highest = 100
+  local axe_acceleration_z = 4000
+  local axe_max_horizontal_acceleration = 3000
 
 	if IsServer() then
 
@@ -700,17 +702,17 @@ function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
 		self.vLastKnownTargetPos = self.vLoc
 
 		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
-		local flDesiredHeight = AXE_MINIMUM_HEIGHT_ABOVE_LOWEST * duration * duration
+		local flDesiredHeight = axe_minimum_height_above_lowest * duration * duration
 		local flLowZ = math.min( self.vLastKnownTargetPos.z, self.vStartPosition.z )
 		local flHighZ = math.max( self.vLastKnownTargetPos.z, self.vStartPosition.z )
-		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + AXE_MINIMUM_HEIGHT_ABOVE_HIGHEST )
+		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + axe_minimum_height_above_highest )
 
 		local flArcDeltaZ = flArcTopZ - self.vStartPosition.z
-		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * AXE_ACCELERATION_Z )
+		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * axe_acceleration_z )
 
 		local flDeltaZ = self.vLastKnownTargetPos.z - self.vStartPosition.z
-		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * AXE_ACCELERATION_Z * flDeltaZ ) )
-		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / AXE_ACCELERATION_Z, ( self.flInitialVelocityZ - flSqrtDet) / AXE_ACCELERATION_Z )
+		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * axe_acceleration_z * flDeltaZ ) )
+		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / axe_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / axe_acceleration_z )
 
 		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
 		self.vHorizontalVelocity.z = 0.0
@@ -731,7 +733,7 @@ function modifier_imba_axe_culling_blade_leap:UpdateHorizontalMotion( me, dt )
 		local vVelDif = vDesiredVel - self.vHorizontalVelocity
 		local flVelDif = vVelDif:Length2D()
 		vVelDif = vVelDif:Normalized()
-		local flVelDelta = math.min( flVelDif, AXE_MAX_HORIZONTAL_ACCELERATION )
+		local flVelDelta = math.min( flVelDif, axe_max_horizontal_acceleration )
 
 		self.vHorizontalVelocity = self.vHorizontalVelocity + vVelDif * flVelDelta * dt
 		local vNewPos = vOldPos + self.vHorizontalVelocity * dt
@@ -742,10 +744,10 @@ end
 function modifier_imba_axe_culling_blade_leap:UpdateVerticalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
-		local bGoingDown = ( -AXE_ACCELERATION_Z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
+		local bGoingDown = ( -axe_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
 		
 		local vNewPos = me:GetOrigin()
-		vNewPos.z = self.vStartPosition.z + ( -0.5 * AXE_ACCELERATION_Z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
+		vNewPos.z = self.vStartPosition.z + ( -0.5 * axe_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
 
 		local flGroundHeight = GetGroundHeight( vNewPos, self:GetParent() )
 		local bLanded = false

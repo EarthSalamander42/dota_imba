@@ -1215,8 +1215,7 @@ function imba_disruptor_static_storm:OnSpellStart()
 		local scepter_max_damage = ability:GetSpecialValueFor("scepter_max_damage")
 		local interval = ability:GetSpecialValueFor("interval")
 		local damage_increase_enemy = ability:GetSpecialValueFor("damage_increase_enemy")	
-		local stormbearer_stack_damage = ability:GetSpecialValueFor("stormbearer_stack_damage")	 
-		local scepter_stormbearer_stack_damage = ability:GetSpecialValueFor("scepter_stormbearer_stack_damage")
+		local stormbearer_stack_damage = ability:GetSpecialValueFor("stormbearer_stack_damage")	 		
 
 		-- #5 Talent: Max damage increase
 		max_damage = max_damage + caster:FindTalentValue("special_bonus_imba_disruptor_5")
@@ -1228,8 +1227,7 @@ function imba_disruptor_static_storm:OnSpellStart()
 		-- if has scepter, assign appropriate values	
 		if scepter then
 			duration = scepter_duration
-			max_damage = scepter_max_damage
-			stormbearer_stack_damage = scepter_stormbearer_stack_damage
+			max_damage = scepter_max_damage			
 		end
 
 		-- consume Stormbearer stacks, increase initial damage of the spell

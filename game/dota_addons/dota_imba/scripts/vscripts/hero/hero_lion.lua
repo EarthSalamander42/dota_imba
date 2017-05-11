@@ -521,7 +521,38 @@ end
 
 function imba_lion_mana_drain:GetIntrinsicModifierName()
      return "modifier_imba_manadrain_aura"
-end 
+end
+
+function imba_lion_mana_drain:CastFilterResultTarget(target)
+    local caster = self:GetCaster()
+
+    -- Don't apply on targets with 0 max mana (no mana)
+    if target:GetMaxMana() == 0 then
+        return UF_FAIL_CUSTOM
+    end
+
+    -- Can't suck yourself
+    if target == caster then
+        return UF_FAIL_CUSTOM
+    end
+
+    local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+    return nResult
+end
+
+function imba_lion_mana_drain:GetCustomCastErrorTarget(target)
+    local caster = self:GetCaster()
+
+    -- Don't apply on targets with 0 max mana (no mana)
+    if target:GetMaxMana() == 0 then
+        return "dota_hud_error_mana_drain_no_mana"
+    end
+
+    -- Can't suck yourself
+    if target == caster then
+        return "dota_hud_error_mana_drain_self"
+    end
+end
 
 function imba_lion_mana_drain:OnSpellStart()
     -- Ability properties
@@ -766,8 +797,8 @@ function modifier_imba_manadrain_debuff:OnCreated()
         self.mana_drained = nil
 
         -- Add particles
-        self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN_FOLLOW, self.parent)
-        ParticleManager:SetParticleControl(self.particle_drain_fx, 0, self.parent:GetAbsOrigin())
+        self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
+        ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)        
         ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.caster, PATTACH_POINT_FOLLOW, "attach_mouth", self.caster:GetAbsOrigin(), true)        
         self:AddParticle(self.particle_drain_fx, false, false, -1, false, false)
 
@@ -848,9 +879,9 @@ function modifier_imba_manadrain_buff:OnCreated()
         self.mana_drained = nil
 
         -- Add particles
-        self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+        self.particle_drain_fx = ParticleManager:CreateParticle(self.particle_drain, PATTACH_CUSTOMORIGIN_FOLLOW, self.parent)
         ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 0, self.caster, PATTACH_POINT_FOLLOW, "attach_mouth", self.caster:GetAbsOrigin(), true)        
-        ParticleManager:SetParticleControl(self.particle_drain_fx, 1, self.parent:GetAbsOrigin())        
+        ParticleManager:SetParticleControlEnt(self.particle_drain_fx, 1, self.parent, PATTACH_POINT_FOLLOW, "attach_hitloc", self.parent:GetAbsOrigin(), true)        
         self:AddParticle(self.particle_drain_fx, false, false, -1, false, false)
 
         -- Start interval
@@ -943,22 +974,21 @@ function imba_lion_finger_of_death:OnSpellStart()
     local caster = self:GetCaster()
     local ability = self
     local target = self:GetCursorTarget()
-    local sound_cast = "Hero_Lion.FingerOfDeath"        
+    local sound_cast = "Hero_Lion.FingerOfDeath"            
+    local modifier_finger = "modifier_imba_trigger_finger_debuff"    
     local modifier_hex = "modifier_imba_finger_of_death_hex"
-    local modifier_finger = "modifier_imba_trigger_finger_debuff"
     local scepter = caster:HasScepter()
 
     -- Ability specials    
     local damage = ability:GetSpecialValueFor("damage")
     local scepter_damage = ability:GetSpecialValueFor("scepter_damage")    
     local scepter_radius = ability:GetSpecialValueFor("scepter_radius")    
-    local triggerfinger_duration = ability:GetSpecialValueFor("triggerfinger_duration")
-    local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")
-    local enemies_frog_duration = ability:GetSpecialValueFor("enemies_frog_duration")
-    local projectile_speed = ability:GetSpecialValueFor("projectile_speed")    
+    local triggerfinger_duration = ability:GetSpecialValueFor("triggerfinger_duration")    
+    local projectile_speed = ability:GetSpecialValueFor("projectile_speed")        
+    local enemies_frog_radius = ability:GetSpecialValueFor("enemies_frog_radius")        
 
     -- #5 Talent: Trigger Finger duration decrease
-    triggerfinger_duration = triggerfinger_duration - caster:FindTalentValue("special_bonus_imba_lion_5")
+    triggerfinger_duration = triggerfinger_duration - caster:FindTalentValue("special_bonus_imba_lion_5")    
 
     -- #7 Talent: Finger of Death Hex radius increase
     enemies_frog_radius = enemies_frog_radius + caster:FindTalentValue("special_bonus_imba_lion_7")
@@ -979,31 +1009,34 @@ function imba_lion_finger_of_death:OnSpellStart()
         if target:TriggerSpellAbsorb(ability) then
             return nil
         end
-    end     
-
-    -- Find all nearby enemies
-    local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
-                                      target:GetAbsOrigin(),
-                                      nil,
-                                      enemies_frog_radius,
-                                      DOTA_UNIT_TARGET_TEAM_ENEMY,
-                                      DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                      DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
-                                      FIND_ANY_ORDER,
-                                      false)
-
-    for _, enemy in pairs(enemies) do
-        -- Hex them
-        if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
-            enemy:AddNewModifier(caster, ability, modifier_hex, {duration = enemies_frog_duration})
-        end
-    end           
+    end         
 
     -- Finger main enemy
-    FingerOfDeath(caster, ability, target, damage)
+    FingerOfDeath(caster, ability, target, target, damage, enemies_frog_radius)    
 
-    -- If caster has scepter, find all targets in the scepter radius
+    -- If caster has scepter, find all targets in the scepter radius and fire at them
     if scepter then
+
+        -- Index a table for enemies to be marked
+        local finger_scepter_enemies = {}
+
+        enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                    target:GetAbsOrigin(),
+                                    nil,
+                                    enemies_frog_radius,
+                                    DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                    DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                    DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+                                    FIND_ANY_ORDER,
+                                    false)
+
+        for _, enemy in pairs(enemies) do            
+            if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
+                -- Add enemy to the table
+                table.insert(finger_scepter_enemies, enemy)
+            end
+        end
+
         enemies = FindUnitsInRadius(caster:GetTeamNumber(),
                                     target:GetAbsOrigin(),
                                     nil,
@@ -1015,18 +1048,27 @@ function imba_lion_finger_of_death:OnSpellStart()
                                     false)
 
         for _,enemy in pairs(enemies) do
+            local marked = false
+            -- Look at the table to see if enemy was marked (is gonna become hexed)
+            for _,marked_enemy in pairs(finger_scepter_enemies) do
+                if marked_enemy == enemy then
+                    marked = true
+                    break
+                end
+            end
+
             -- If target is not the main target, not magic immune, is either stunned or hexed, finger it
             if enemy ~= target and not enemy:IsMagicImmune() then
-                if enemy:IsStunned() or enemy:IsHexed() then
+                if enemy:IsStunned() or enemy:IsHexed() or marked then
 
                     -- Finger enemy (kek)    
-                    FingerOfDeath(caster, ability, enemy, damage)
+                    FingerOfDeath(caster, ability, target, enemy, damage, enemies_frog_radius)
                 end
             end         
         end        
-    end 
+    end    
 
-    -- Wait for 0.3 seconds, check if a target has been marked as dead
+    -- Wait for small duration, check if a target has been marked as dead
     Timers:CreateTimer(0.5, function()
         if ability.enemy_killed then
             -- Apply and/or Grant stack of Trigger Finger
@@ -1047,10 +1089,15 @@ function imba_lion_finger_of_death:OnSpellStart()
 end 
 
     
-function FingerOfDeath(caster, ability, target, damage)
+function FingerOfDeath(caster, ability, main_target, target, damage, enemies_frog_radius)
+    -- Ability properties
     local sound_impact = "Hero_Lion.FingerOfDeathImpact"
     local particle_finger = "particles/units/heroes/hero_lion/lion_spell_finger_of_death.vpcf"
-    local damage_delay = ability:GetSpecialValueFor("damage_delay")
+    local modifier_hex = "modifier_imba_finger_of_death_hex"    
+
+    -- Ability specials
+    local damage_delay = ability:GetSpecialValueFor("damage_delay")    
+    local enemies_frog_duration = ability:GetSpecialValueFor("enemies_frog_duration")
 
     -- Add particle effects
     local particle_finger_fx = ParticleManager:CreateParticle(particle_finger, PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -1059,10 +1106,30 @@ function FingerOfDeath(caster, ability, target, damage)
     ParticleManager:SetParticleControlEnt(particle_finger_fx, 0, caster, PATTACH_POINT_FOLLOW, "attach_attack2", caster:GetAbsOrigin(), true)
     ParticleManager:SetParticleControl(particle_finger_fx, 1, target:GetAbsOrigin())
     ParticleManager:SetParticleControl(particle_finger_fx, 2, target:GetAbsOrigin())
-    ParticleManager:ReleaseParticleIndex(particle_finger_fx)
+    ParticleManager:ReleaseParticleIndex(particle_finger_fx)           
 
     -- Wait a short delay
     Timers:CreateTimer(damage_delay, function()
+
+        -- Hex all nearby units when Finger hits, however, only if this the main target being fingered
+        if main_target == target then
+            local enemies = FindUnitsInRadius(caster:GetTeamNumber(),
+                                              target:GetAbsOrigin(),
+                                              nil,
+                                              enemies_frog_radius,
+                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                              DOTA_UNIT_TARGET_FLAG_NOT_ANCIENTS,
+                                              FIND_ANY_ORDER,
+                                              false)
+
+            for _, enemy in pairs(enemies) do
+                -- Hex them
+                if not enemy:IsMagicImmune() and not enemy:HasModifier(modifier_hex) then
+                    enemy:AddNewModifier(caster, ability, modifier_hex, {duration = enemies_frog_duration})
+                end
+            end
+        end
 
         -- Make sure the target is not magic immune
         if target:IsMagicImmune() then
@@ -1083,7 +1150,7 @@ function FingerOfDeath(caster, ability, target, damage)
         ApplyDamage(damageTable)            
 
         -- Find out if target has died, mark it
-        Timers:CreateTimer(0.1, function()
+        Timers:CreateTimer(FrameTime(), function()
             if not target:IsAlive() and not target:IsIllusion() then
                 ability.enemy_killed = true                                
             end

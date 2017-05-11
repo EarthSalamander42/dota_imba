@@ -136,10 +136,10 @@
 		"Ability3"					"imba_axe_counter_helix"
 		"Ability4"					"imba_axe_culling_blade"
 
-		"Ability10"					"special_bonus_imba_axe_1"
+		"Ability10"					"special_bonus_imba_axe_4"
 		"Ability11"					"special_bonus_imba_axe_2"
 		"Ability12"					"special_bonus_imba_axe_3"
-		"Ability13"					"special_bonus_imba_axe_4"
+		"Ability13"					"special_bonus_imba_axe_1"
 		"Ability14"					"special_bonus_imba_axe_5"
 		"Ability15"					"special_bonus_imba_axe_6"
 		"Ability16"					"special_bonus_imba_axe_7"
@@ -154,6 +154,8 @@
 	"npc_imba_hero_bane"
 	{
 		"override_hero"				"npc_dota_hero_bane"
+
+        "AbilityLayout"             "5"
 
 		"Ability1"					"imba_bane_enfeeble"
 		"Ability2"					"imba_bane_brain_sap"
@@ -526,14 +528,14 @@
 		"Ability3"					"imba_dazzle_shadow_wave"
 		"Ability4"					"imba_dazzle_weave"
 
-		"Ability10"					"special_bonus_imba_dazzle_1"
+		"Ability10"					"special_bonus_imba_dazzle_3"
 		"Ability11"					"special_bonus_imba_dazzle_2"
-		"Ability12"					"special_bonus_imba_dazzle_3"
-		"Ability13"					"special_bonus_imba_dazzle_4"
-		"Ability14"					"special_bonus_imba_dazzle_5"
-		"Ability15"					"special_bonus_imba_dazzle_6"
-		"Ability16"					"special_bonus_imba_dazzle_7"
-		"Ability17"					"special_bonus_imba_dazzle_8"
+		"Ability12"					"special_bonus_imba_dazzle_1"
+		"Ability13"					"special_bonus_imba_dazzle_8"
+		"Ability14"					"special_bonus_imba_dazzle_7"
+		"Ability15"					"special_bonus_imba_dazzle_4"
+		"Ability16"					"special_bonus_imba_dazzle_5"
+		"Ability17"					"special_bonus_imba_dazzle_6"
 
 		"ProjectileModel"			"particles/units/heroes/hero_dazzle/dazzle_base_attack.vpcf"
 	}
@@ -570,6 +572,8 @@
 	"npc_imba_hero_disruptor"
 	{
 		"override_hero"				"npc_dota_hero_disruptor"
+
+		"AbilityLayout"				"5"
 
 		"Ability1"					"imba_disruptor_thunder_strike"
 		"Ability2"					"imba_disruptor_glimpse"
