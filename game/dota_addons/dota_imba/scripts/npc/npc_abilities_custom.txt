@@ -26512,6 +26512,8 @@
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"1"
 
+		"HasScepterUpgrade"				"1"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -26548,7 +26550,7 @@
 		"ScriptFile"					"hero/hero_disruptor"
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"7"
-		"LevelsBetweenUpgrades"			"2"
+		"LevelsBetweenUpgrades"			"2"		
 
 		"precache"
 		{
@@ -26562,7 +26564,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation"			"ACT_DOTA_THUNDER_STRIKE"
 		"AbilityCastRange"				"800"
 
 		// Time
@@ -26653,6 +26655,8 @@
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"7"
 		"LevelsBetweenUpgrades"			"2"
+
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -26754,7 +26758,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"disruptor_kinetic_field"
@@ -26776,7 +26780,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastAnimation"			"ACT_DOTA_KINETIC_FIELD"
 		"AbilityCastRange"				"900"
 
 		// Time
@@ -26849,7 +26853,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityTextureName"			"disruptor_static_storm"
@@ -26858,6 +26862,8 @@
 		"FightRecapLevel"				"1"
 		"MaxLevel"						"6"
 		"LevelsBetweenUpgrades"			"6"
+
+		"HasScepterUpgrade"				"1"
 
 		"precache"
 		{
@@ -26869,7 +26875,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.05"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastAnimation"			"ACT_DOTA_STATIC_STORM"
 		"AbilityCastRange"				"800"
 
 		// Time
@@ -26931,23 +26937,20 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"damage_increase_enemy"		"1 1.5 2 2.5 3 3.5"
+				"damage_increase_enemy"		"1 1 1 1 2 3"
 			}
+
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"linger_time"			"1 1.5 2 2 2 2"
+				"var_type"					"FIELD_FLOAT"
+				"linger_time"				"1 1.5 2 2 2 2"
 			}
+
 			"11"
 			{
 				"var_type"					"FIELD_FLOAT"
 				"stormbearer_stack_damage"	"0.05"
-			}
-			"12"
-			{
-				"var_type"							"FIELD_FLOAT"
-				"scepter_stormbearer_stack_damage"	"0.1"
-			}
+			}			
 		}
 	}
 
