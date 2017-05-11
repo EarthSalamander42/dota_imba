@@ -568,6 +568,11 @@ function modifier_imba_frost_armor_buff:OnAttackLanded(keys)
             return nil
         end        
 
+        -- If the attacker is a building (tower), do nothing
+        if attacker:IsBuilding() then
+            return nil
+        end
+
         -- Set variable
         local modifier_debuff_handler
 
@@ -1042,10 +1047,10 @@ function imba_lich_chain_frost:OnSpellStart()
     local ministun_duration = ability:GetSpecialValueFor("ministun_duration")
     local projectile_base_speed = ability:GetSpecialValueFor("projectile_base_speed")
     local projectile_vision = ability:GetSpecialValueFor("projectile_vision")
-    local num_bounces = ability:GetSpecialValueFor("num_bounces")
+    local num_bounces = ability:GetSpecialValueFor("num_bounces")    
 
-    -- #7 Talent: Chain Frost bounce speed increase
-    projectile_base_speed = projectile_base_speed + caster:FindTalentValue("special_bonus_imba_lich_7")
+    -- #7 Talent: Chain Frost bounces infinitely
+    num_bounces = num_bounces + caster:FindTalentValue("special_bonus_imba_lich_7")
 
     -- Play cast sound
     EmitSoundOn(sound_cast, caster)

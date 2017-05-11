@@ -34,15 +34,26 @@ function modifier_imba_sadist:DeclareFunctions()
 	return decFuncs
 end
 
-function modifier_imba_sadist:IsHidden()
-    if self:GetStackCount() > 0 then return false end
+function modifier_imba_sadist:OnCreated()
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()	
+	self.modifier_sadist = "modifier_imba_sadist_stack"
+
+	-- Ability specials
+	self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")	
+	self.hero_multiplier = self.ability:GetSpecialValueFor("hero_multiplier")
+end
+
+
+
+function modifier_imba_sadist:IsHidden()    
 	return true
 end
 
 function modifier_imba_sadist:OnAttackLanded( params )
-	if IsServer() then
-		local parent = self:GetParent()
-		
+	if IsServer() then		
+
 		-- If this is an illusion, do nothing
 		if not params.attacker:IsRealHero() then
 			return nil
@@ -53,18 +64,29 @@ function modifier_imba_sadist:OnAttackLanded( params )
 			return nil
 		end
 		
-		if parent:HasTalent("special_bonus_imba_necrolyte_2") then
-			if params.attacker == parent and params.target:IsHero() then
-				local ability = self:GetAbility()
-				params.attacker:AddNewModifier(params.attacker, ability, "modifier_imba_sadist_stack", {duration = ability:GetSpecialValueFor("regen_duration"), wasHero = false})
+		if self.caster:HasTalent("special_bonus_imba_necrolyte_2") then
+			if params.attacker == self.caster and params.target:IsHero() then				
+
+				-- If the caster doesn't have the modifier, add it
+				if not self.caster:HasModifier(self.modifier_sadist) then
+					self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_sadist_stack", {duration = self.regen_duration})
+				end
+
+				-- Increment a stack
+				local modifier_sadist_handler = self.caster:FindModifierByName(self.modifier_sadist)
+				if modifier_sadist_handler then
+					modifier_sadist_handler:IncrementStackCount()
+					modifier_sadist_handler:ForceRefresh()
+				end
 			end
-		end
-		return nil
+		end		
 	end
 end
 
 function modifier_imba_sadist:OnDeath(params)
 	if IsServer() then
+		local unit = params.unit
+
 		if params.attacker == self:GetParent() then
 			-- If this is an illusion, do nothing
 			if not params.attacker:IsRealHero() then
@@ -75,66 +97,112 @@ function modifier_imba_sadist:OnDeath(params)
 			if params.attacker:PassivesDisabled() then
 				return nil
 			end
-			local ability = self:GetAbility()
-			params.attacker:AddNewModifier(params.attacker, ability, "modifier_imba_sadist_stack", {duration = ability:GetSpecialValueFor("regen_duration"), wasHero = params.unit:IsRealHero()})
+			
+			-- Initialize stacks
+			local stacks = 1
+
+			-- If the target was a real hero, increase stack count
+			if unit:IsRealHero() then
+				stacks = self.hero_multiplier
+			end
+			
+			-- If the caster doesn't have the modifier, add it
+			if not self.caster:HasModifier(self.modifier_sadist) then
+				self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_sadist_stack", {duration = self.regen_duration})
+			end
+
+			-- Increment stacks
+			local modifier_sadist_handler = self.caster:FindModifierByName(self.modifier_sadist)
+			if modifier_sadist_handler then
+				for i = 1, stacks do
+					modifier_sadist_handler:IncrementStackCount()
+					modifier_sadist_handler:ForceRefresh()
+				end
+			end
 		end
 	end
 end
 
+
 modifier_imba_sadist_stack = class({})
-function modifier_imba_sadist_stack:OnCreated( params )
-	if IsServer() then
-		local ability = self:GetAbility()
-		local multiplier = 1
-		local modifier = self:GetParent():FindModifierByName("modifier_imba_sadist")
-		self.wasHero = params.wasHero
-		if params.wasHero ~= 0 then
-			multiplier = ability:GetTalentSpecialValueFor("hero_multiplier")
-			local stacks = modifier:GetStackCount() + 10
-			modifier:SetStackCount(stacks)
-		else
-			modifier:IncrementStackCount()
-		end
-		self.mana_regen = ability:GetTalentSpecialValueFor("mana_regen") * multiplier
-		self.health_regen = ability:GetTalentSpecialValueFor("regen_duration") * multiplier
+
+function modifier_imba_sadist_stack:OnCreated()
+    if IsServer() then
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
+
+        -- Ability specials
+        self.regen_duration = self.ability:GetSpecialValueFor("regen_duration")        
+        self.mana_regen = self.ability:GetSpecialValueFor("mana_regen")
+        self.health_regen = self.ability:GetSpecialValueFor("health_regen")
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
     end
 end
 
-function modifier_imba_sadist_stack:OnDestroy()
-	if IsServer() then
-		local modifier = self:GetParent():FindModifierByName("modifier_imba_sadist")
-		if self.wasHero ~= 0 then
-			modifier:SetStackCount(modifier:GetStackCount() - 10)
-		else
-			modifier:DecrementStackCount()
-		end
+function modifier_imba_sadist_stack:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.regen_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end            
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
     end
 end
 
-function modifier_imba_sadist_stack:GetModifierConstantManaRegen()
-	return self.mana_regen
+function modifier_imba_sadist_stack:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
+
+function modifier_imba_sadist_stack:IsHidden() return false end
+function modifier_imba_sadist_stack:IsPurgable() return false end
+function modifier_imba_sadist_stack:IsDebuff() return false end
+
+function modifier_imba_sadist_stack:DeclareFunctions()
+    local decFunc = {MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+					 MODIFIER_PROPERTY_MANA_REGEN_CONSTANT}
+
+    return decFunc
+end
+
+function modifier_imba_sadist_stack:GetModifierConstantManaRegen()	
+	local mana_regen = self.mana_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
+	return mana_regen * self:GetStackCount()
 end
 
 function modifier_imba_sadist_stack:GetModifierConstantHealthRegen()
-	return self.health_regen
+	local health_regen = self.health_regen + self.caster:FindTalentValue("special_bonus_imba_necrolyte_6")
+	return health_regen * self:GetStackCount()
 end
 
-function modifier_imba_sadist_stack:IsHidden()
-	return true
-end
-
-function modifier_imba_sadist_stack:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
-
-function modifier_imba_sadist_stack:DeclareFunctions()
-	local decFuncs =
-	{
-		MODIFIER_PROPERTY_MANA_REGEN_CONSTANT,
-		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT
-	}
-	return decFuncs
-end
 
 -------------------------------------------
 --			DEATH PULSE
@@ -823,11 +891,17 @@ function modifier_imba_reapers_scythe_respawn:OnRespawn( params )
 	if IsServer() then
 		if (self:GetParent() == params.unit) then
 			params.unit:AddNewModifier(params.unit, self:GetAbility(), "modifier_imba_reapers_scythe_debuff", {duration = self.debuff_duration})
+			self:Destroy()
 		end
 	end
 end
 
 modifier_imba_reapers_scythe_debuff = class({})
+
+function modifier_imba_reapers_scythe_debuff:GetStatusEffectName()
+	return "particles/hero/necrophos/status_effect_reaper_scythe_sickness.vpcf"
+end
+
 function modifier_imba_reapers_scythe_debuff:DeclareFunctions()
 	local decFuncs = 
 	{

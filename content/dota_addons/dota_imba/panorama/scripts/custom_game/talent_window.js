@@ -4,13 +4,13 @@
  */
 
 //Timer for talent window to close when user selects another unit
-var _current_window_check_timer = null;
 var _current_show_all_text_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
 var ATTRIBUTE_UNIT_ID = "open_unit_id";
 var TALENT_TABLE_NAME = "imba_talent_manager";
+var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
 
 function GetHUDRootUI(){
     var rootUI = $.GetContextPanel();
@@ -56,6 +56,10 @@ function InitializeIMBATalentWindow(){
     //Clear existing children first
     talentPanel.RemoveAndDeleteChildren();
 
+    var headerText = $.CreatePanel("Label", talentPanel, "");
+    headerText.AddClass("header");
+    headerText.text = $.Localize("talent_window_header");
+
     //Ignore if max_level for heroes are more than or less than 40, we will still show the full 8 rows
     for(var i=0; i<8; i++){
         var currentRowLevel = ConvertRowToLevelRequirement(i);
@@ -93,6 +97,10 @@ function InitializeIMBATalentWindow(){
             }
         }
     }
+
+    var footerText = $.CreatePanel("Label", talentPanel, "");
+    footerText.AddClass("footer");
+    footerText.text = $.Localize("talent_window_footer");
 }
 
 function GetGenericTalentInfoTable(){
@@ -149,7 +157,7 @@ function OnTalentChoiceUpdated(table_name, key, value){
                 if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
                     !CanHeroUpgradeAnyTalents(currentShownUnitID)){
                     //Close window if hero no longer has ability points
-                    ToggleIMBATalentWindow();
+                    OpenImbaTalentWindow(false);
 
                     //Force remove .upgrade class
                     var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
@@ -169,22 +177,12 @@ function OnTalentChoiceUpdated(table_name, key, value){
 function CloseIMBATalentWindowWhenDeselectUnit(){
     var talentWindow = $.GetContextPanel();
 
-    //TODO possible to use `dota_player_update_query_unit` to update, however data given is the legacy data 'splitscreenplayer' only, hence this shall be pending which will allow us to remove the usage of timer
-
-    //Remove schedule reference
-    _current_window_check_timer = null;
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
     if(currentShownUnitID != talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
         //Force close window if player selects another unit
         _current_ability_points = 0;
-        ToggleIMBATalentWindow();
-    }else{
-
-        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
-
-        //Rerun this check until window is force closed or stopped by the other function
-        _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
+        OpenImbaTalentWindow(false);
     }
 }
 
@@ -233,19 +231,6 @@ function ShowAllTextWhenTalentWindowVisibleAndAltIsDown(){
     }
 }
 
-function LocalizeTalentName(talent_name){
-    var prefix = "DOTA_Tooltip_ability_";
-    var localized_name = $.Localize(prefix + talent_name);
-
-    if(localized_name !== prefix + talent_name){
-        //For ability names
-		return localized_name;
-	}else{
-        //For generic talent names
-		return $.Localize(talent_name);
-    }
-}
-
 function FormatGenericTalentValue(talent_name, talent_value){
     switch(talent_name){
         case "imba_generic_talent_magic_resistance":
@@ -260,6 +245,21 @@ function FormatGenericTalentValue(talent_name, talent_value){
             return talent_value;
         default:
             return "+"+talent_value;
+    }
+}
+
+function GetTalentLabelText(talent_name, rowLevelIndex){
+
+    //Add more label text if it is a generic imba talent
+    var generic_talent_table = GetGenericTalentInfoTable();
+    var talent_data = generic_talent_table[talent_name];
+
+    if(talent_data && talent_data.value){
+        //Generic Talent
+        return $.Localize(talent_name)+"\n"+FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
+    }else{
+        //Ability talent
+        return $.Localize("DOTA_Tooltip_ability_" + talent_name); //This is consistent with default dota talent localization
     }
 }
 
@@ -285,18 +285,21 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
             var linked_abilities_list = linked_ability_table[talent_name]
             if(linked_abilities_list){
 
-                if(Object.keys(linked_abilities_list).length == 1){
+                var numOfLinkedAbilities = Object.keys(linked_abilities_list).length;
+                if(numOfLinkedAbilities == 1){
                     var imagePanel = $.CreatePanel('DOTAAbilityImage', parent_panel, '');
                     imagePanel.abilityname = linked_abilities_list[1]; //Lua starts at 1
-                    imagePanel.style.align = "center center";
                 }else{
                     var abilityContainerPanel = $.CreatePanel('Panel', parent_panel, '');
-                    abilityContainerPanel.style.align = "center center";
-                    abilityContainerPanel.style.flowChildren = "right";
 
                     for(var index in linked_abilities_list){
                         var imagePanel = $.CreatePanel('DOTAAbilityImage', abilityContainerPanel, '');
                         imagePanel.abilityname = linked_abilities_list[index];
+
+                        //3 abilites is the max that can fit into the box, hence we will be doing some css hack to 
+                        if(index == 2 && numOfLinkedAbilities == 3){
+                            imagePanel.AddClass("fix_cluster");
+                        }
                     }
                 }
             }else{
@@ -304,10 +307,6 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
                 var heroPanel = $.CreatePanel('DOTAHeroImage', parent_panel, '');
                 heroPanel.heroimagestyle = "landscape";
                 heroPanel.heroname = Entities.GetUnitName(hero_id);
-                heroPanel.style.align = "center center";
-                //128x72 landscape default size
-                heroPanel.style.height = "100px"; //height will be 100px for the image
-                heroPanel.style.width = "177px"; //128 * (100/72)
             }
         }
     }
@@ -328,17 +327,52 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
-//TODO remove if no longer needed
-function AttachToolTip(ability_panel, ability_text){
+function AttachToolTip(ability_panel, talent_name, rowLevelIndex){
     ability_panel.ClearPanelEvent("onmouseover");
     ability_panel.ClearPanelEvent("onmouseout");
 
-    ability_panel.SetPanelEvent("onmouseover", function(){
-        $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, "title test", ability_text);
-    });
-    ability_panel.SetPanelEvent("onmouseout", function(){
-        $.DispatchEvent("DOTAHideTitleTextTooltip");
-    });
+    var title;
+    var description;
+
+    var generic_talent_table = GetGenericTalentInfoTable();
+    var talent_data = generic_talent_table[talent_name];
+
+    if(talent_data){
+        title = $.Localize(talent_name);
+        if(talent_data.value){
+            description = FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
+        }
+    }else{
+        //Note that the localized strings are to be located in /game/dota_addons/dota_imba/panorama/localization, this is different from localization of abilities
+        var prefix = "Dota_Tooltip_talent_" + talent_name;
+        var title_key = prefix + "_title";
+        title = $.Localize(title_key);
+        if(title != title_key){
+            //Localization exist
+            description = $.Localize(prefix + "_Description");
+        }else{
+            //Fallback to the default text
+            title = "";
+            description = $.Localize("DOTA_Tooltip_ability_" + talent_name);
+        }
+    }
+
+    if(title){
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, title, description);
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            $.DispatchEvent("DOTAHideTitleTextTooltip");
+        });
+    }else{
+        //Fall back display
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            $.DispatchEvent("DOTAShowTextTooltip", ability_panel, description);
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            $.DispatchEvent("DOTAHideTextTooltip");
+        });
+    }
 }
 
 function PopulateIMBATalentWindow(){
@@ -382,11 +416,7 @@ function PopulateIMBATalentWindow(){
                             var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
                             if(labelChoiceText){
                                 if(TalentChoiceData){
-                                    var displayText = LocalizeTalentName(TalentChoiceData)
-                                    if(generic_talent_table[TalentChoiceData] && generic_talent_table[TalentChoiceData].value){
-                                        displayText += "\n"+FormatGenericTalentValue(TalentChoiceData, generic_talent_table[TalentChoiceData].value.split(" ")[rowLevelIndex]);
-                                    }
-                                    labelChoiceText.text = displayText;
+                                    labelChoiceText.text = GetTalentLabelText(TalentChoiceData, rowLevelIndex);
                                 }else{
                                     labelChoiceText.text = "ERR";
                                 }
@@ -394,7 +424,6 @@ function PopulateIMBATalentWindow(){
 
                             var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
                             if(imageChoiceContainer){
-
                                 var currentRowChoiceIndex = heroTalentChoices[currentRowLevel];
 
                                 TalentChoicePanel.RemoveClass("selectable");
@@ -427,6 +456,12 @@ function PopulateIMBATalentWindow(){
                                 //Special talents will be abilities
                                 //Generic stat talents will be modifiers
                                 CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
+
+                                var firstChild = imageChoiceContainer.GetChild(0);
+                                if(firstChild){
+                                    //Attach tooltip to first direct child
+                                    AttachToolTip(firstChild, TalentChoiceData, rowLevelIndex);
+                                }
                             }
                         }
                     }
@@ -436,44 +471,42 @@ function PopulateIMBATalentWindow(){
     }
 }
 
-function ToggleIMBATalentWindow(){
-    var talentWindow = $.GetContextPanel();
-    var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
+function OpenImbaTalentWindow(bol_open){
 
-    //Toggle open/close of talent window
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
     var localPlayerID = Players.GetLocalPlayer();
 
-    var bol_open_window = false;
+    //check if valid
+    if(!bol_open || (Entities.IsValidEntity(currentShownUnitID) &&
+            Entities.IsRealHero(currentShownUnitID) &&
+            Entities.IsControllableByPlayer(currentShownUnitID, localPlayerID))){
 
-    if(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS)){
-        if(Entities.IsValidEntity(currentShownUnitID) &&
-            Entities.IsRealHero(currentShownUnitID) && 
-            Entities.IsControllableByPlayer(currentShownUnitID, localPlayerID)){
-            bol_open_window = true;
+        var talentWindow = $.GetContextPanel();
+
+        var btnOverlay = GetImbaTalentButtonOverlayPanel();
+
+        if(bol_open){
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
+            PopulateIMBATalentWindow();
+            talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
+            CloseIMBATalentWindowWhenDeselectUnit();
+            btnOverlay.AddClass("selected");
+        }else{
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
+            talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
+            btnOverlay.RemoveClass("selected");
         }
+
+        talentWindow.RemoveClass("preview");
+
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
     }
+}
 
-    if(_current_window_check_timer){
-        $.CancelScheduled(_current_window_check_timer);
-        _current_window_check_timer = null;
-    }
-
-    var btnOverlay = GetImbaTalentButtonOverlayPanel();
-
-    if(bol_open_window){
-        talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
-        PopulateIMBATalentWindow();
-        talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
-        CloseIMBATalentWindowWhenDeselectUnit();
-        btnOverlay.AddClass("selected");
-    }else{
-        talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
-        talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
-        btnOverlay.RemoveClass("selected");
-    }
-
-    talentWindow.RemoveClass("preview");
+function ToggleIMBATalentWindow(){
+    var talentWindow = $.GetContextPanel();
+    OpenImbaTalentWindow(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS));
 }
 
 function InsertIMBATalentButton(){
@@ -540,8 +573,21 @@ function OnPlayerLearnedAbility(data){
     AnimateImbaTalentButton();
 }
 
+function OnPlayerUpdateQueryUnit(){
+    //Data given is the legacy data 'splitscreenplayer' only
+    AnimateImbaTalentButton();
+    CloseIMBATalentWindowWhenDeselectUnit();
+}
+
+function OnPlayerUpdateSelectedUnit(){
+    AnimateImbaTalentButton();
+    CloseIMBATalentWindowWhenDeselectUnit();
+}
+
 GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
 GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
+GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
+GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
 
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
 
