@@ -22612,6 +22612,600 @@
 			}
 		}
 	}
+	
+	//=================================================================================================================
+	// Timbersaw's Dendrophobia
+	//=================================================================================================================
+	"imba_shredder_dendrophobia"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TREE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/shredder_dendrophobia"
+		"MaxLevel"						"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"dmg_amp_stack_pct"			"0.2"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"min_stacks"				"-40"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stack_duration"			"20"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fear_trees"				"8"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fear_range"				"450"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"fear_duration"				"5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Whirling Death
+	//=================================================================================================================
+	"imba_shredder_whirling_death"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"shredder_whirling_death"
+		"AbilitySound"					"Hero_Shredder.WhirlingDeath.Cast"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"6.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"70"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_whirling_death.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_whirling_death_debuff.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"main_radius"				"300"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage"					"100 150 200 250 260 270 280"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"whirling_linger"			"0.3"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"stat_loss_pct"				"15 15 15 15 18 21 24"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"14"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius_per_tree"			"100 100 100 100 150 200 250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw's Timber Chain
+	//=================================================================================================================
+	"imba_shredder_timber_chain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_AUTOCAST"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"shredder_timber_chain"
+		"AbilitySound"					"Hero_Shredder.TimberChain.Cast"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800 1000 1200 1400 1400 1400 1400"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_2"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 12 8 4 3 2 1"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 70 80 90 95 100 105"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timberchain.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_chain_trail.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_chain_tree.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_dmg.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_timber_dmg_glow.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"chain_radius"			"90"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"800 1000 1200 1400 1400 1400 1400"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"225"
+				"LinkedSpecialBonus"	"special_bonus_imba_shredder_2"
+			}
+			"04"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1600 2000 2400 2800 3000 3200 3400"
+			}
+			"05"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 140 180 220 240 260 280"
+			}
+			"06"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"chain_counter"			"1 1 2 2 3 3 4"
+			}
+			"07"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"combo_cooldown"		"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw's Reactive Armor
+	//=================================================================================================================
+	"imba_shredder_reactive_armor"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"custom/shredder_reactive"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/units/heroes/hero_shredder/shredder_armor_lyr.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_armor"						"1.0 1.2 1.4 1.6 1.75 1.9 2.05"
+			}
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"magic_res_pct"						"0.2 0.4 0.6 0.8 0.8 0.8 0.8"
+			}
+			"03"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"bonus_hp_regen"					"1.0 1.2 1.4 1.6 1.6 1.6 1.6"
+			}
+			"04"
+			{
+				"var_type"							"FIELD_INTEGER"
+				"stack_limit"						"5 10 15 20 22 24 26"
+			}
+			"05"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"stack_duration"					"10 13 16 19 19 19 19"
+				"LinkedSpecialBonus"				"special_bonus_imba_shredder_1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw's Chakram
+	//=================================================================================================================
+	"imba_shredder_chakram"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_TREE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"shredder_chakram"
+		"AbilitySound"					"Hero_Shredder.Chakram.Cast"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade"				"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"60 70 80 90 95 100 105"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_chakram.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_chakram_stay.vpcf"
+			"particle"					"particles/units/heroes/hero_shredder/shredder_chakram_return.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"speed"						"900"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"radius"					"200"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"pass_damage"				"100 140 180 180 180 180"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_per_second"			"50 75 100 110 120 130"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow_pct"					"5"
+				"LinkedSpecialBonus"		"special_bonus_imba_shredder_6"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_interval"			"0.5"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"break_distance"			"2000"
+				"LinkedSpecialBonus"		"special_bonus_imba_shredder_7"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second"			"20 25 30 35 40 45"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"pass_slow_duration"		"0.5"
+			}
+			"10"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second_scepter"	"20 23 26 29 32 35"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Timbersaw's Chakram Return
+	//=================================================================================================================
+	"imba_shredder_return_chakram"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_shredder"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"shredder_return_chakram"
+		"MaxLevel"						"1"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.0"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 1 (Level 10): Increased Reactive Armor duration
+	//=================================================================================================================
+	"special_bonus_imba_shredder_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"12"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 2 (Level 10): Additional Timber Chain hit radius
+	//=================================================================================================================
+	"special_bonus_imba_shredder_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 3 (Level 20): Additional Dendrophobia stacks per cut tree
+	//=================================================================================================================
+	"special_bonus_imba_shredder_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 4 (Level 20): Chakram roots at X-% health
+	//=================================================================================================================
+	"special_bonus_imba_shredder_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 5 (Level 30): Whirling Death deals more pure damage for each tree cut in the AoE
+	//=================================================================================================================
+	"special_bonus_imba_shredder_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 6 (Level 30): Additional Chakram slow per lost health
+	//=================================================================================================================
+	"special_bonus_imba_shredder_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 7 (Level 40): Chakrams can be cast globally
+	//=================================================================================================================
+	"special_bonus_imba_shredder_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"21000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Timbersaw Talent 8 (Level 40): Timber Chain can be cast in a combo infinitely
+	//=================================================================================================================
+	"special_bonus_imba_shredder_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Troll Warlord's Berserker's Rage
@@ -27243,6 +27837,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_ursa/ursa_fury_swipes_debuff.vpcf"
+			"particle"		"particles/hero/ursa/ursa_range_finder.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ursa.vsndevts"
 		}
 

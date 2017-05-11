@@ -1,30 +1,54 @@
---[[	Author: d2imba
-		Date:	13.08.2015	]]
+--[[
+		By: AtroCty
+		Date: 11.05.2017
+		Updated:  11.05.2017
+	]]
+	
+item_imba_aegis = item_imba_aegis or class({})
+LinkLuaModifier("modifier_item_imba_aegis", "items/item_aegis.lua", LUA_MODIFIER_MOTION_NONE)
+modifier_item_imba_aegis = modifier_item_imba_aegis or class({})
+-- Passive modifier
+function modifier_item_imba_aegis:OnCreated()
+	-- Parameters
+	local item = self:GetAbility()
+	self:SetDuration(item:GetSpecialValueFor("disappear_time"),true)
+	self.reincarnate_time = item:GetSpecialValueFor("reincarnate_time")
+	self.vision_radius = item:GetSpecialValueFor("vision_radius")
+end
 
-function AegisHeal( keys )
-	local caster = keys.caster
-	local sound_heal = keys.sound_heal
+function modifier_item_imba_aegis:OnRefresh()
+	self:SetDuration(self:GetAbility():GetSpecialValueFor("disappear_time"),true)
+end
 
-	-- Play sound
-	caster:EmitSound(sound_heal)
+function modifier_item_imba_aegis:DeclareFunctions()
+    local decFuncs =
+	{
+		MODIFIER_PROPERTY_REINCARNATION,
+	}
+    return decFuncs
+end
 
-	-- Heal
-	caster:Heal(caster:GetMaxHealth(), caster)
-	caster:GiveMana(caster:GetMaxMana())
-
-	-- Remove this item
-	caster:RemoveItem(ability)
-
+function modifier_item_imba_aegis:ReincarnateTime()
+	local parent = self:GetParent()
 	-- Refresh all your abilities
 	for i = 0, 15 do
-		local current_ability = caster:GetAbilityByIndex(i)
+		local current_ability = parent:GetAbilityByIndex(i)
 
 		-- Refresh
 		if current_ability then
 			current_ability:EndCooldown()
 		end
 	end
-
-	-- Flag caster as no longer having aegis
-	caster.has_aegis = false
+	self:GetAbility():CreateVisibilityNode(parent:GetAbsOrigin(), self.vision_radius, self.reincarnate_time)
+	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+	ParticleManager:SetParticleControl(particle, 1, Vector(self.reincarnate_time,0,0))
+	ParticleManager:SetParticleControl(particle, 3, parent:GetAbsOrigin())
+	ParticleManager:ReleaseParticleIndex(particle)
+	return self.reincarnate_time
 end
+
+function modifier_item_imba_aegis:IsDebuff() return false end
+function modifier_item_imba_aegis:IsHidden() return false end
+function modifier_item_imba_aegis:IsPurgable() return false end
+function modifier_item_imba_aegis:IsPurgeException() return false end
+function modifier_item_imba_aegis:IsStunDebuff() return false end
