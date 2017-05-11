@@ -989,7 +989,9 @@ modifier_terrorital_hunter_aura = class({})
 
 function modifier_terrorital_hunter_aura:OnCreated()
 	-- Start interval
-	self.range_pfx = ParticleManager:CreateParticleForPlayer("particles/hero/ursa/ursa_range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetPlayerOwner())
+	if IsServer() then
+		self.range_pfx = ParticleManager:CreateParticleForPlayer("particles/hero/ursa/ursa_range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetPlayerOwner())
+	end
 	self:StartIntervalThink(0.2)
 end
 
@@ -1011,8 +1013,10 @@ function modifier_terrorital_hunter_aura:OnIntervalThink()
 end
 
 function modifier_terrorital_hunter_aura:OnDestroy()
-	ParticleManager:DestroyParticle(self.range_pfx, true)
-	ParticleManager:ReleaseParticleIndex(self.range_pfx)
+	if IsServer() then
+		ParticleManager:DestroyParticle(self.range_pfx, true)
+		ParticleManager:ReleaseParticleIndex(self.range_pfx)
+	end
 	self:StartIntervalThink(-1)
 end
 
@@ -1083,42 +1087,3 @@ end
 function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
 	return 1
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
