@@ -40,7 +40,7 @@
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flStartScale = 0.5
+			m_flStartScale = 0.6
 			m_flEndScale = 0.0
 			m_flEndTime = 1.3
 		},
@@ -61,12 +61,12 @@
 		},
 		{
 			_class = "C_INIT_RandomColor"
-			m_ColorMin = [ 98, 238, 98, 255 ]
-			m_ColorMax = [ 34, 169, 106, 255 ]
+			m_ColorMin = [ 7, 244, 7, 255 ]
+			m_ColorMax = [ 12, 250, 139, 255 ]
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
-			m_nAlphaMin = 170
+			m_nAlphaMin = 200
 			m_nAlphaMax = 250
 		},
 	]

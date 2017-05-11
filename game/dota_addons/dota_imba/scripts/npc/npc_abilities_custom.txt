@@ -14701,17 +14701,20 @@
 				"mana_regen"			"7"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"health_regen"			"7"
 				"LinkedSpecialBonus"	"special_bonus_imba_necrolyte_6"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"hero_multiplier"		"10"
 			}
+			
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
