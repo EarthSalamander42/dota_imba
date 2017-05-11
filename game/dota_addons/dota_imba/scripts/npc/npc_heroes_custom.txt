@@ -2605,10 +2605,6 @@
 	{
 		"override_hero"				"npc_dota_hero_undying"
 
-		"AttributeBaseAgility"		"20"
-
-		"AttributeAgilityGain"		"2.0"
-
 		//"Ability1"					"imba_undying_decay"
 		//"Ability2"					"imba_undying_soul_rip"
 		//"Ability3"					"imba_undying_tombstone"
@@ -2618,10 +2614,10 @@
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_exp_boost_25"
 		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_all_stats_7"
+		"Ability14"					"special_bonus_unique_undying"
 		"Ability15"					"special_bonus_movement_speed_25"
 		"Ability16"					"special_bonus_armor_7"
-		"Ability17"					"special_bonus_unique_undying"
+		"Ability17"					"special_bonus_unique_undying_2"
 
 		"ProjectileSpeed"			"900"
 	}

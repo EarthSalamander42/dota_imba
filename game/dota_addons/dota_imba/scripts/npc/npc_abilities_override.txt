@@ -10805,11 +10805,9 @@
 	{
 		"MaxLevel"						"6"
 
-		"AbilityCastPoint"				"0.4"
+		"AbilityCooldown"				"130 120 110 100 90 80"
 
-		"AbilityCooldown"				"90 80 70"
-
-		"AbilityManaCost"				"75"
+		"AbilityManaCost"				"75 150 225 230 235 240"
 
 		"AbilitySpecial"
 		{
@@ -10821,7 +10819,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"teleport_delay"		"3.0 2.0 1.0"
+				"teleport_delay"		"6.0 5.0 4.0 3.25 2.5 1.75"
 			}
 		}
 	}
@@ -10831,48 +10829,61 @@
 	//=================================================================================================================
 	"undying_decay"
 	{
-		"AbilityCastRange"					"650"
+		"MaxLevel"							"7"
 
-		"AbilityCastPoint"					"0.35"
+		"AbilityCooldown"					"10 8 6 4 4 4 4"
 
-		"AbilityCooldown"					"7 6 5 4"
+		"AbilityDuration"					"45"
 
-		"AbilityDuration"					"30"
-
-		"AbilityManaCost"					"70 80 90 100"
+		"AbilityManaCost"					"70 90 110 130 135 140 145"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"decay_damage"				"50 80 110 140"
+				"decay_damage"				"40 80 120 160 180 200 220"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal"					"4 5 6 7"
-			}	
+				"str_steal"					"4 4 4 4 5 6 7"
+			}
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"decay_duration"			"45.0"
+				"var_type"					"FIELD_INTEGER"
+				"decay_duration"			"45"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"475"
-			}			
+				"radius"					"325 325 325 325 375 425 475"
+			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_scale_up"				"3"
-			}		
+				"str_scale_up"				"2"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"str_steal_scepter"			"18"
-			}				
+				"str_steal_scepter"			"14"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Undying: Decay cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_undying_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"2"
+			}
 		}
 	}
 
@@ -10881,28 +10892,28 @@
 	//=================================================================================================================
 	"undying_soul_rip"
 	{
-		"AbilityCastPoint"				"0.35"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"15 12 9 6"
+		"AbilityCooldown"				"24 18 12 6 5 4 3"
 
-		"AbilityManaCost"				"100"		
+		"AbilityManaCost"				"100 110 120 130 135 140 145"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"18 22 26 30"
+				"damage_per_unit"		"18 22 26 30 32 34 36"
 			}			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_units"				"10 15 20 25"
+				"max_units"				"10 12 14 16 18 20 22"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1800"
+				"radius"				"1300 1300 1300 1300 1400 1500 1600"
 			}
 			"04"
 			{
@@ -10917,48 +10928,42 @@
 	//=================================================================================================================
 	"undying_tombstone"
 	{
-		"AbilityCastPoint"				"0.35"
-
-		"AbilityCooldown"				"60"
-
-		"AbilityManaCost"				"120"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"tombstone_health"		"8 10 12 14"
+				"var_type"					"FIELD_INTEGER"
+				"tombstone_health"			"8 10 12 16"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hits_to_destroy_tooltip"	"4 5 6 7"
+				"hits_to_destroy_tooltip"	"5 6 7 8"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"60.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"15 25 35 45"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900 1100 1300 1500"
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"725 950 1175 1400"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"400"
+				"var_type"					"FIELD_INTEGER"
+				"health_threshold"			"250 350 450 550"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"health_threshold_pct_tooltip"	"50"
+				"health_threshold_pct_tooltip"	"40"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"3.0"
+				"var_type"					"FIELD_FLOAT"
+				"zombie_interval"			"3.0 2.75 2.5 2.25"
 			}
 		}
 	}
@@ -10972,8 +10977,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"70"
 			}
 		}
 	}
@@ -10988,22 +10993,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"900 1100 1300 1500"
+				"radius"				"725 950 1175 1400"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"400"
+				"health_threshold"		"250 350 450 550"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"zombie_interval"		"3.0"
+				"zombie_interval"		"3.0 2.75 2.5 2.25"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"150"
+				"bonus_speed"			"100"
 			}
 		}
 	}
@@ -11018,17 +11023,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-9"
+				"slow"					"-7"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_threshold"		"400"
+				"health_threshold"		"250 350 450 550"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_threshold_pct"	"50"
+				"health_threshold_pct"	"40"
 			}
 			"04"
 			{
@@ -11038,12 +11043,12 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"150"
+				"bonus_speed"			"100"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1800"
+				"radius"				"1400"
 			}
 		}
 	}
@@ -11053,187 +11058,57 @@
 	//=================================================================================================================
 	"undying_flesh_golem"
 	{
+		"MaxLevel"							"6"
+
+		"AbilityCooldown"					"75 75 75 65 55 45"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"30 45 60"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"30"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"radius"					"750 750 750 900 1050 1200"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"full_power_radius"			"200 400 600"
+				"full_power_radius"			"200 200 200 300 400 500"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_damage_amp"			"20 30 40"
+				"max_damage_amp"			"20 25 30 32 34 36"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_damage_amp"			"10"
+				"min_damage_amp"			"5 7 9 11 13 15"
 			}			
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_speed_slow"			"25"
+				"max_speed_slow"			"20 22 24 26 28 30"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"min_speed_slow"			"5"
+				"min_speed_slow"			"2 4 6 8 10 12"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"death_heal"				"15"
+				"death_heal"				"10 10 10 15 15 20"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"death_heal_creep"			"3"
+				"death_heal_creep"			"2 2 2 2 3 3"
 			}		
-		}
-	}
-
-	//=================================================================================================================
-	// Ursa: Earthshock
-	//=================================================================================================================
-	"ursa_earthshock"
-	{
-		"AbilityCastRange"				"450"
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"5.0"
-
-		"AbilityDamage"					"100 175 250 325"
-
-		"AbilityManaCost"				"50"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"shock_radius"			"450"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"-42 -48 -54 -60"
-			}
-		}
-	}	
-
-	//=================================================================================================================
-	// Ursa: Overpower
-	//=================================================================================================================
-	"ursa_overpower"
-	{
-		"AbilityCastPoint"				"0.0"
-
-		"AbilityCooldown"				"1.0"
-		"AbilityDuration"				"60.0"
-
-		"AbilityManaCost"				"90"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"max_attacks"				"6 8 10 12"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_bonus_pct"	"1000"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration_tooltip"			"60"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Ursa: Fury Swipes
-	//=================================================================================================================
-	"ursa_fury_swipes"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_reset_time"				"20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"bonus_reset_time_roshan"		"8"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_stack"				"20 30 40 50"
-				"LinkedSpecialBonus"			"special_bonus_unique_ursa"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Ursa: Fury Swipes bonus damage per stack
-	//=================================================================================================================
-	"special_bonus_unique_ursa"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ursa: Enrage
-	//=================================================================================================================
-	"ursa_enrage"
-	{
-		"AbilityCooldown"					"30 24 18"
-
-		"AbilitySpecial"
-		{			
-			"01"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"enrage_multiplier"			"3.0"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_reduction"			"80"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"5"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"20 15 10"
-			}
 		}
 	}
 
