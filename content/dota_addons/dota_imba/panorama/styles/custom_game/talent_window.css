@@ -212,6 +212,25 @@
     border-radius: 10px;
 }
 
+#IMBA_Talent_Choice_Image_Container > Panel,
+#IMBA_Talent_Choice_Image_Container > DOTAAbilityImage,
+#IMBA_Talent_Choice_Image_Container > DOTAHeroImage
+{
+    align : center center;
+}
+
+#IMBA_Talent_Choice_Image_Container > Panel
+{
+    flow-children : right;
+}
+
+#IMBA_Talent_Choice_Image_Container > Panel .fix_cluster
+{
+    margin-left : -5px;
+    margin-right : -5px;
+    z-index: 1;
+}
+
 /*
     128x72 landscape default size
     80px will be the height for IMBA_Talent_Choice_Image_Container
@@ -219,17 +238,12 @@
 */
 #IMBA_Talent_Choice_Image_Container DOTAHeroImage
 {
-    align : center center;
     height : 80px;
     width : 143px;
 }
 
+.NonHero .IMBA_Talent_HUD_Panel,
 .IMBA_Talent_Choice.disabled .IMBA_Talent_Choice_Text_Container
-{
-    visibility: collapse;
-}
-
-.NonHero .IMBA_Talent_HUD_Panel
 {
     visibility: collapse;
 }

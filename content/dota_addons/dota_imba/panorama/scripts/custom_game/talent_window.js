@@ -293,18 +293,21 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
             var linked_abilities_list = linked_ability_table[talent_name]
             if(linked_abilities_list){
 
-                if(Object.keys(linked_abilities_list).length == 1){
+                var numOfLinkedAbilities = Object.keys(linked_abilities_list).length;
+                if(numOfLinkedAbilities == 1){
                     var imagePanel = $.CreatePanel('DOTAAbilityImage', parent_panel, '');
                     imagePanel.abilityname = linked_abilities_list[1]; //Lua starts at 1
-                    imagePanel.style.align = "center center";
                 }else{
                     var abilityContainerPanel = $.CreatePanel('Panel', parent_panel, '');
-                    abilityContainerPanel.style.align = "center center";
-                    abilityContainerPanel.style.flowChildren = "right";
 
                     for(var index in linked_abilities_list){
                         var imagePanel = $.CreatePanel('DOTAAbilityImage', abilityContainerPanel, '');
                         imagePanel.abilityname = linked_abilities_list[index];
+
+                        //3 abilites is the max that can fit into the box, hence we will be doing some css hack to 
+                        if(index == 2 && numOfLinkedAbilities == 3){
+                            imagePanel.AddClass("fix_cluster");
+                        }
                     }
                 }
             }else{
