@@ -515,7 +515,7 @@ function GameMode:OnPlayerLevelUp(keys)
 	-------------------------------------------------------------------------------------------------
 
 	-- If the generic powerup isn't present, apply it
-	if hero_level > 25 then
+	if hero_level > 40 then
 		local ability_powerup = hero:FindAbilityByName("imba_unlimited_level_powerup")
 		local is_this_hero_fucked_by_valve = false
 		local heroes_fucked_by_valve = {

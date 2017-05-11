@@ -2489,11 +2489,8 @@
 
 		"ModelScale"				"0.92"
 
-		"AttackDamageMin"			"94"
-		"AttackDamageMax"			"102"
-
-		"AttributeBaseStrength"		"29"
-		"AttributeStrengthGain"		"4.0"
+		"AttackDamageMin"			"92"
+		"AttackDamageMax"			"100"
 
 		"AttackRange"				"200"
 
@@ -2558,7 +2555,7 @@
 
 		"Ability10"					"special_bonus_exp_boost_20"
 		"Ability11"					"special_bonus_attack_damage_35"
-		"Ability12"					"special_bonus_strength_6"
+		"Ability12"					"special_bonus_unique_tusk_2"
 		"Ability13"					"special_bonus_gold_income_20"
 		"Ability14"					"special_bonus_armor_6"
 		"Ability15"					"special_bonus_magic_resistance_15"

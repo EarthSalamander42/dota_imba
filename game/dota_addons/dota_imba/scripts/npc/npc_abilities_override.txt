@@ -9918,21 +9918,23 @@
 	//=================================================================================================================
 	"shredder_whirling_death"
 	{
-		"AbilityCastRange"				"400"
+		"MaxLevel"							"7"
 
-		"AbilityCooldown"				"5"
+		"AbilityCastRange"					"300 300 300 300 350 400 400"
+
+		"AbilityCooldown"					"6 6 6 6 6 6 5"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_radius"			"400"
+				"whirling_radius"			"300 300 300 300 350 400 400"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"whirling_damage"			"100 175 250 325"
+				"whirling_damage"			"110 165 220 275 300 325 350"
 			}
 			"03"
 			{
@@ -9942,7 +9944,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stat_loss_pct"				"18"
+				"stat_loss_pct"				"15 15 15 15 17 19 21"
 				"LinkedSpecialBonus"		"special_bonus_unique_timbersaw"
 			}
 			"05"
@@ -9963,7 +9965,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"7"
+				"value"				"6"
 			}
 		}
 	}
@@ -9973,38 +9975,38 @@
 	//=================================================================================================================
 	"shredder_timber_chain"
 	{
-		"AbilityCastPoint"			"0.2"
+		"MaxLevel"					"7"
 
-		"AbilityCastRange"			"2000"
-		
-		"AbilityCooldown"			"3.0"
-		
+		"AbilityCastRange"			"850 1050 1250 1450 1600 1750 1750"
+
+		"AbilityCooldown"			"4 4 4 4 4 4 3"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"chain_radius"		"120"
+				"chain_radius"		"90"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"2000"
+				"range"				"850 1050 1250 1450 1600 1750 1750"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"300"
+				"radius"			"225 225 225 225 255 285 285"
 			}
 			"04"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"2000 2500 3000 3500"
+				"speed"				"1600 2000 2400 2800 3200 3600 3600"
 			}
 			"05"
 			{	
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"100 160 220 280"
+				"damage"			"110 155 200 245 270 295 320"
 			}
 		}
 	}
@@ -10014,27 +10016,29 @@
 	//=================================================================================================================
 	"shredder_reactive_armor"
 	{
+		"MaxLevel"					"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_armor"			"1.8 2.0 2.2 2.4"
+				"bonus_armor"			"0.5 0.9 1.3 1.7 1.9 2.1 2.3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"bonus_hp_regen"		"1.8 2.0 2.2 2.4"
+				"bonus_hp_regen"		"0.5 0.9 1.3 1.7 1.9 2.1 2.3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_limit"			"5 10 15 20"
+				"stack_limit"			"20"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_duration"		"14 16 18 20"
+				"var_type"				"FIELD_INTEGER"
+				"stack_duration"		"10 13 16 19 20 21 22"
 			}
 		}
 	}
@@ -10044,40 +10048,40 @@
 	//=================================================================================================================
 	"shredder_chakram"
 	{
-		"AbilityCastRange"				"1400"
+		"MaxLevel"						"6"
 
-		"AbilityCastPoint"				"0.2"
+		"AbilityCastRange"				"1200 1200 1200 1300 1400 1500"
 
-		"AbilityCooldown"				"8 7 6"
+		"AbilityCooldown"				"8 8 8 7 6 5"
 
-		"AbilityManaCost"				"100 150 200"
+		"AbilityManaCost"				"100 150 200 215 230 245"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1100 1250 1400"
+				"speed"					"900 900 900 1050 1200 1350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
+				"radius"				"200 200 200 215 230 245"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"120 180 240"
+				"pass_damage"			"110 155 200 220 240 260"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"70 110 150"
+				"damage_per_second"		"55 85 115 130 145 160"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"8"
+				"slow"					"5 5 5 6 7 8"
 			}
 			"06"
 			{
@@ -10087,12 +10091,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"5000"
+				"break_distance"		"3000"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_per_second"		"20"
+				"mana_per_second"		"20 25 30 31 32 33"
 			}
 			"09"
 			{
@@ -10107,40 +10111,40 @@
 	//=================================================================================================================
 	"shredder_chakram_2"
 	{
-		"AbilityCastRange"				"1400"
-		
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"6"
 
-		"AbilityCooldown"				"8 7 6"
+		"AbilityCastRange"				"1200 1200 1200 1300 1400 1500"
 
-		"AbilityManaCost"				"100 150 200"
+		"AbilityCooldown"				"8 8 8 7 6 5"
+
+		"AbilityManaCost"				"100 150 200 215 230 245"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1100 1250 1400"
+				"speed"					"900 900 900 1050 1200 1350"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
+				"radius"				"200 200 200 215 230 245"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"pass_damage"			"120 180 240"
+				"pass_damage"			"110 155 200 220 240 260"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"70 110 150"
+				"damage_per_second"		"55 85 115 130 145 160"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"8"
+				"slow"					"5 5 5 6 7 8"
 			}
 			"06"
 			{
@@ -10150,12 +10154,12 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"break_distance"		"5000"
+				"break_distance"		"3000"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_per_second"		"20"
+				"mana_per_second"		"20 25 30 31 32 33"
 			}
 			"09"
 			{
@@ -10166,239 +10170,40 @@
 	}
 
 	//=================================================================================================================
-	// Tiny: Avalanche
-	//=================================================================================================================
-	"tiny_avalanche"
-	{
-		"AbilityCastRange"				"750"
-
-		"AbilityCooldown"				"12.0"
-
-		"AbilityDamage"					"120 190 260 330"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_interval"			"0.25"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"num_ticks"				"4"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"1.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"projectile_duration"	"0.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Tiny: bonus Avalanche damage
-	//=================================================================================================================
-	"special_bonus_unique_tiny"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"220"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tiny: Toss
-	//=================================================================================================================
-	"tiny_toss"
-	{
-		"AbilityCastRange"				"1600"
-
-		"AbilityCooldown"				"7"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grab_radius"			"325"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"400"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage_pct"		"30"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"grow_bonus_damage_pct"	"40 60 80 100"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"tooltip_range"			"1600"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"toss_damage"			"120 190 260 330"
-			}
-
-		}
-	}
-
-	//=================================================================================================================
-	// Tiny: Craggy Exterior
-	//=================================================================================================================
-	"tiny_craggy_exterior"
-	{
-		"AbilityDamage"						"40 60 80 100"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"stun_chance"				"25"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.8 1.2 1.6 2.0"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_armor"				"4 6 8 10"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"40 60 80 100"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Tiny: Grow
-	//=================================================================================================================
-	"tiny_grow"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_damage"						"75 150 225"
-			}
-			"02"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_attack_speed"				"0"
-			}
-			"03"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_movement_speed"				"40 50 60"
-			}
-			"04"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"grow_bonus_damage_pct"				"40 60 80"
-			}
-			"05"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_range_scepter"				"147"
-			}
-			"06"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"cleave_starting_width"				"250"
-			}			
-			"07"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"cleave_ending_width"				"450"
-			}			
-			"08"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"cleave_distance"					"600"
-			}
-			"09"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_cleave_damage_scepter"		"75"
-			}
-			"10"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"bonus_building_damage_scepter"		"75"
-			}
-			"11"
-			{
-				"var_type"							"FIELD_INTEGER"
-				"grow_bonus_damage_pct_scepter"		"60 80 100"
-			}
-		}
-	}
-
-	//=================================================================================================================
 	// Treant Protector: Nature's Guise
 	//=================================================================================================================
 	"treant_natures_guise"
 	{
+		"MaxLevel"							"7"
+
+		"AbilityCastRange"					"265 265 265 265 310 355 400"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"fade_time"					"4.0 3.5 3.0 2.5"
+				"fade_time"					"6.0 5.0 4.0 3.0 2.8 2.6 2.4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"325"
+				"radius"					"265 265 265 265 310 355 400"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_move_speed"			"20 25 30 35"
+				"bonus_move_speed"			"12 20 28 36 38 40 42"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"grace_time"				"1.5"
+				"grace_time"				"0.75 0.75 0.75 0.75 1.1 1.45 1.8"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.3 1.6 1.9 2.2"
+				"bash_duration"				"1.0 1.4 1.8 2.2 2.2 2.2 2.2"
 			}
 		}
 	}	
@@ -10408,12 +10213,11 @@
 	//=================================================================================================================
 	"treant_leech_seed"
 	{
-		"AbilityCastRange"					"600"
-		"AbilityCastPoint"					"0.36"
-		
-		"AbilityCooldown"					"10.0 9.0 8.0 7.0"
+		"MaxLevel"							"7"
 
-		"AbilityManaCost"					"80"
+		"AbilityCastRange"					"350 350 350 350 450 550 650"
+
+		"AbilityManaCost"					"80 95 110 125 130 135 140"
 
 		"AbilitySpecial"
 		{
@@ -10425,27 +10229,27 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"leech_damage"				"15 25 35 45"
+				"leech_damage"				"16 24 32 40 40 40 40"
 			}		
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_slow"				"-30"
+				"movement_slow"				"-16 -20 -24 -28 -30 -32 -34"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"600 700 800 900"
+				"radius"					"500 500 500 500 625 750 875"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"duration"					"6.0"
+				"duration"					"4.5 4.5 4.5 4.5 5.0 5.5 6.0"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"projectile_speed"			"400 475 550 625"
+				"projectile_speed"			"400 400 400 400 450 500 550"
 			}
 		}
 	}
@@ -10455,46 +10259,63 @@
 	//=================================================================================================================
 	"treant_living_armor"
 	{
-		"AbilityCastPoint"			"0.36"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"			"18 15 12 9"
-
-		"AbilityManaCost"			"50 45 40 35"
+		"AbilityCooldown"				"30 24 18 12 11 10 9"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_count"			"6 8 10 12"
+				"damage_count"			"4 5 6 7 8 9 10"
 				"LinkedSpecialBonus"	"special_bonus_unique_treant"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_regen"			"5 10 15 20"
+				"health_regen"			"4 8 12 16 18 20 22"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_block"			"20 40 60 80"
+				"damage_block"			"50 60 70 80 90 100 110"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"30.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15 15 15 15 20 25 30"
 			}
 		}
 	}
-	
+
+	//=================================================================================================================
+	//	Treant Protector: bonus Living Armor damage block instances
+	//=================================================================================================================
+	"special_bonus_unique_treant"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
+			}
+		}
+	}
+
 	//=================================================================================================================
 	// Treant Protector: Overgrowth
 	//=================================================================================================================
 	"treant_overgrowth"
 	{
-		"AbilityCastPoint"				"0.4"
-		
-		"AbilityCooldown"				"60"
+		"MaxLevel"						"6"
+
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+
+		"AbilityCastPoint"				"0.0"
+
+		"AbilityCooldown"				"100 85 70 65 60 55"
 
 		"AbilityManaCost"				"0"
 
@@ -10503,17 +10324,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 3.75 4.5"
+				"duration"				"3.0 3.75 4.5 4.5 4.5 4.5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"1600"
+				"radius"				"800 800 800 1000 1200 1400"
 			}	
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"eyes_radius"			"1100"
+				"eyes_radius"			"900"
 			}				
 		}
 	}
@@ -10523,13 +10344,8 @@
 	//=================================================================================================================
 	"treant_eyes_in_the_forest"
 	{
-		"AbilityCastRange"				"160"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"25"
 
-		"AbilityManaCost"				"50"
-		
 		"AbilitySpecial"
 		{
 			"01"
@@ -10545,22 +10361,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"				"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Treant Protector: bonus Living Armor damage block instances
-	//=================================================================================================================
-	"special_bonus_unique_treant"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"8"
+				"damage"				"180"
 			}
 		}
 	}
@@ -10570,11 +10371,11 @@
 	//=================================================================================================================
 	"tusk_ice_shards"
 	{
-		"AbilityCastRange"				"2500"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"15 13 11 9"
+		"AbilityCooldown"				"19 16 13 10"
 
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"100 105 110 115 120 125 130"
 
 		"AbilitySpecial"
 		{
@@ -10583,11 +10384,10 @@
 				"var_type"				"FIELD_INTEGER"
 				"shard_width"			"200"
 			}
-			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shard_damage"			"100 175 250 325"
+				"shard_damage"			"100 150 200 250 280 310 340"
 			}
 			"03"
 			{
@@ -10596,18 +10396,18 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"shard_speed"			"1800.0"
+				"var_type"				"FIELD_INTEGER"
+				"shard_speed"			"1100 1100 1100 1100 2000 4000 8000"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"shard_duration"		"15.0"
+				"var_type"				"FIELD_INTEGER"
+				"shard_duration"		"7 8 9 10 12 14 16"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"shard_angle_step"		"40.0"
+				"var_type"				"FIELD_INTEGER"
+				"shard_angle_step"		"40"
 			}
 			"07"
 			{
@@ -10617,7 +10417,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_tooltip"	"2500"
+				"cast_range_tooltip"	"1800"
 			}
 		}
 	}
@@ -10627,33 +10427,34 @@
 	//=================================================================================================================
 	"tusk_snowball"
 	{
-		"AbilityCastRange"					"1800"
+		"MaxLevel"							"7"
 
-		"AbilityCooldown"					"19 17 15 13"
+		"AbilityCastRange"					"1250 1250 1250 1250 1400 1550 1700"
 
-		"AbilityManaCost"					"50"
+		"AbilityCooldown"					"21 20 19 18 16 14 12"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_damage"			"90 150 210 270"
+				"snowball_damage"			"80 120 160 200 220 240 260"
+				"LinkedSpecialBonus"		"special_bonus_unique_tusk_2"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_speed"			"900 1000 1100 1200"
+				"snowball_speed"			"675 675 675 675 800 925 1050"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_damage_bonus"		"50 60 70 80"
+				"snowball_damage_bonus"		"50 60 70 80 90 100 110"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.25"
+				"stun_duration"				"0.8 0.95 1.1 1.25 1.35 1.45 1.55"
 			}
 			"05"
 			{
@@ -10663,7 +10464,7 @@
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"snowball_duration"			"3.0"
+				"snowball_duration"			"4.0"
 			}
 			"07"
 			{
@@ -10673,7 +10474,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_grow_rate"		"90"
+				"snowball_grow_rate"		"40 40 40 40 60 80 100"
 			}
 			"09"
 			{
@@ -10683,7 +10484,22 @@
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"snowball_grab_radius"		"600"
+				"snowball_grab_radius"		"350 350 350 350 450 550 650"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Tusk: bonus Snowball damage
+	//=================================================================================================================
+	"special_bonus_unique_tusk_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"140"
 			}
 		}
 	}
@@ -10693,31 +10509,29 @@
 	//=================================================================================================================
 	"tusk_frozen_sigil"
 	{
-		"AbilityCooldown"					"30"
-
-		"AbilityManaCost"					"50"
+		"AbilityCooldown"					"50 45 40 35"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"sigil_radius"				"900"
+				"sigil_radius"				"600 700 800 900"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"sigil_duration"			"30.0"
+				"var_type"					"FIELD_INTEGER"
+				"sigil_duration"			"30"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"10 15 20 25"
+				"move_slow"					"15 20 25 30"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"attack_slow"				"60 80 100 120"
+				"attack_slow"				"35 50 65 80"
 			}
 		}
 	}
@@ -10727,42 +10541,39 @@
 	//=================================================================================================================
 	"tusk_walrus_punch"
 	{
-		"AbilityCooldown"					"12"
+		"MaxLevel"							"6"
 
-		"AbilityManaCost"					"50"
+		"AbilityCooldown"					"36 24 12 11 10 9"
+
+		"AbilityManaCost"					"50 75 100 105 110 115"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"crit_multiplier"			"500 700 900"
+				"crit_multiplier"			"400 500 600 650 700 750"
 				"LinkedSpecialBonus"		"special_bonus_unique_tusk"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"air_time"					"1.5"
+				"air_time"					"1.0 1.0 1.0 1.25 1.5 1.75"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"slow_duration"				"5.0"
+				"slow_duration"				"4.0"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"move_slow"					"40"
+				"move_slow"					"40 40 40 50 60 70"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"push_length"				"1000"
-			}
-			"06"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"cooldown_scepter"			"12"
 			}
 		}
 	}
@@ -10777,7 +10588,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
+				"value"				"150"
 			}
 		}
 	}
@@ -10787,11 +10598,7 @@
 	//=================================================================================================================
 	"tusk_walrus_kick"
 	{
-		"AbilityCastRange"				"400"
-
 		"AbilityCooldown"				"7"
-
-		"AbilityManaCost"				"50"
 
 		"AbilitySpecial"
 		{
@@ -10803,7 +10610,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"air_time"				"1.5"
+				"air_time"				"1.75"
 			}
 			"03"
 			{
@@ -10813,12 +10620,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"move_slow"				"40"
+				"move_slow"				"70"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow_duration"			"5"
+				"slow_duration"			"4"
 			}			
 			"06"
 			{
@@ -10828,7 +10635,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"450"
+				"damage"				"400"
 			}
 		}
 	}
