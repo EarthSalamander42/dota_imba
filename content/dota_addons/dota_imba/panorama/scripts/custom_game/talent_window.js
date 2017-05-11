@@ -231,19 +231,6 @@ function ShowAllTextWhenTalentWindowVisibleAndAltIsDown(){
     }
 }
 
-function LocalizeTalentName(talent_name){
-    var prefix = "DOTA_Tooltip_ability_";
-    var localized_name = $.Localize(prefix + talent_name);
-
-    if(localized_name !== prefix + talent_name){
-        //For ability names
-		return localized_name;
-	}else{
-        //For generic talent names
-		return $.Localize(talent_name);
-    }
-}
-
 function FormatGenericTalentValue(talent_name, talent_value){
     switch(talent_name){
         case "imba_generic_talent_magic_resistance":
@@ -258,6 +245,21 @@ function FormatGenericTalentValue(talent_name, talent_value){
             return talent_value;
         default:
             return "+"+talent_value;
+    }
+}
+
+function GetTalentLabelText(talent_name, rowLevelIndex){
+
+    //Add more label text if it is a generic imba talent
+    var generic_talent_table = GetGenericTalentInfoTable();
+    var talent_data = generic_talent_table[talent_name];
+
+    if(talent_data && talent_data.value){
+        //Generic Talent
+        return $.Localize(talent_name)+"\n"+FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
+    }else{
+        //Ability talent
+        return $.Localize("DOTA_Tooltip_ability_" + talent_name); //This is consistent with default dota talent localization
     }
 }
 
@@ -325,17 +327,52 @@ function ConfigureTalentClick(panel, heroID, level, luaIndex){
     panel.hittest = true;
 }
 
-//TODO remove if no longer needed
-function AttachToolTip(ability_panel, ability_text){
+function AttachToolTip(ability_panel, talent_name, rowLevelIndex){
     ability_panel.ClearPanelEvent("onmouseover");
     ability_panel.ClearPanelEvent("onmouseout");
 
-    ability_panel.SetPanelEvent("onmouseover", function(){
-        $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, "title test", ability_text);
-    });
-    ability_panel.SetPanelEvent("onmouseout", function(){
-        $.DispatchEvent("DOTAHideTitleTextTooltip");
-    });
+    var title;
+    var description;
+
+    var generic_talent_table = GetGenericTalentInfoTable();
+    var talent_data = generic_talent_table[talent_name];
+
+    if(talent_data){
+        title = $.Localize(talent_name);
+        if(talent_data.value){
+            description = FormatGenericTalentValue(talent_name, talent_data.value.split(" ")[rowLevelIndex]);
+        }
+    }else{
+        //Note that the localized strings are to be located in /game/dota_addons/dota_imba/panorama/localization, this is different from localization of abilities
+        var prefix = "Dota_Tooltip_talent_" + talent_name;
+        var title_key = prefix + "_title";
+        title = $.Localize(title_key);
+        if(title != title_key){
+            //Localization exist
+            description = $.Localize(prefix + "_Description");
+        }else{
+            //Fallback to the default text
+            title = "";
+            description = $.Localize("DOTA_Tooltip_ability_" + talent_name);
+        }
+    }
+
+    if(title){
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            $.DispatchEvent("DOTAShowTitleTextTooltip", ability_panel, title, description);
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            $.DispatchEvent("DOTAHideTitleTextTooltip");
+        });
+    }else{
+        //Fall back display
+        ability_panel.SetPanelEvent("onmouseover", function(){
+            $.DispatchEvent("DOTAShowTextTooltip", ability_panel, description);
+        });
+        ability_panel.SetPanelEvent("onmouseout", function(){
+            $.DispatchEvent("DOTAHideTextTooltip");
+        });
+    }
 }
 
 function PopulateIMBATalentWindow(){
@@ -379,11 +416,7 @@ function PopulateIMBATalentWindow(){
                             var labelChoiceText = TalentChoicePanel.FindChildTraverse("IMBA_Talent_Choice_Text");
                             if(labelChoiceText){
                                 if(TalentChoiceData){
-                                    var displayText = LocalizeTalentName(TalentChoiceData)
-                                    if(generic_talent_table[TalentChoiceData] && generic_talent_table[TalentChoiceData].value){
-                                        displayText += "\n"+FormatGenericTalentValue(TalentChoiceData, generic_talent_table[TalentChoiceData].value.split(" ")[rowLevelIndex]);
-                                    }
-                                    labelChoiceText.text = displayText;
+                                    labelChoiceText.text = GetTalentLabelText(TalentChoiceData, rowLevelIndex);
                                 }else{
                                     labelChoiceText.text = "ERR";
                                 }
@@ -391,7 +424,6 @@ function PopulateIMBATalentWindow(){
 
                             var imageChoiceContainer = TalentChoicePanel.FindChild("IMBA_Talent_Choice_Image_Container");
                             if(imageChoiceContainer){
-
                                 var currentRowChoiceIndex = heroTalentChoices[currentRowLevel];
 
                                 TalentChoicePanel.RemoveClass("selectable");
@@ -424,6 +456,12 @@ function PopulateIMBATalentWindow(){
                                 //Special talents will be abilities
                                 //Generic stat talents will be modifiers
                                 CreateImagePanelForTalent(TalentChoiceData, imageChoiceContainer, currentShownUnitID);
+
+                                var firstChild = imageChoiceContainer.GetChild(0);
+                                if(firstChild){
+                                    //Attach tooltip to first direct child
+                                    AttachToolTip(firstChild, TalentChoiceData, rowLevelIndex);
+                                }
                             }
                         }
                     }
