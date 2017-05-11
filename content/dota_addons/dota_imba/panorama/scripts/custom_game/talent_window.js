@@ -4,13 +4,13 @@
  */
 
 //Timer for talent window to close when user selects another unit
-var _current_window_check_timer = null;
 var _current_show_all_text_timer = null;
 //Integer to remove "selectable" class from talent choice panel
 var _current_ability_points = 0;
 
 var ATTRIBUTE_UNIT_ID = "open_unit_id";
 var TALENT_TABLE_NAME = "imba_talent_manager";
+var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
 
 function GetHUDRootUI(){
     var rootUI = $.GetContextPanel();
@@ -157,7 +157,7 @@ function OnTalentChoiceUpdated(table_name, key, value){
                 if(Entities.GetAbilityPoints(currentShownUnitID) <= 1 || //Note that this is <= 1 because it takes time for server to update the abilityPoints
                     !CanHeroUpgradeAnyTalents(currentShownUnitID)){
                     //Close window if hero no longer has ability points
-                    ToggleIMBATalentWindow();
+                    OpenImbaTalentWindow(false);
 
                     //Force remove .upgrade class
                     var imbaBtnOverlay = GetImbaTalentButtonOverlayPanel();
@@ -177,22 +177,12 @@ function OnTalentChoiceUpdated(table_name, key, value){
 function CloseIMBATalentWindowWhenDeselectUnit(){
     var talentWindow = $.GetContextPanel();
 
-    //TODO possible to use `dota_player_update_query_unit` to update, however data given is the legacy data 'splitscreenplayer' only, hence this shall be pending which will allow us to remove the usage of timer
-
-    //Remove schedule reference
-    _current_window_check_timer = null;
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
     if(currentShownUnitID != talentWindow.GetAttributeInt(ATTRIBUTE_UNIT_ID, -1)){
         //Force close window if player selects another unit
         _current_ability_points = 0;
-        ToggleIMBATalentWindow();
-    }else{
-
-        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
-
-        //Rerun this check until window is force closed or stopped by the other function
-        _current_window_check_timer = $.Schedule(0.1, CloseIMBATalentWindowWhenDeselectUnit);
+        OpenImbaTalentWindow(false);
     }
 }
 
@@ -443,44 +433,42 @@ function PopulateIMBATalentWindow(){
     }
 }
 
-function ToggleIMBATalentWindow(){
-    var talentWindow = $.GetContextPanel();
-    var OPEN_TALENT_WINDOW_CLASS = "show_talent_window";
+function OpenImbaTalentWindow(bol_open){
 
-    //Toggle open/close of talent window
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
     var localPlayerID = Players.GetLocalPlayer();
 
-    var bol_open_window = false;
+    //check if valid
+    if(!bol_open || (Entities.IsValidEntity(currentShownUnitID) &&
+            Entities.IsRealHero(currentShownUnitID) &&
+            Entities.IsControllableByPlayer(currentShownUnitID, localPlayerID))){
 
-    if(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS)){
-        if(Entities.IsValidEntity(currentShownUnitID) &&
-            Entities.IsRealHero(currentShownUnitID) && 
-            Entities.IsControllableByPlayer(currentShownUnitID, localPlayerID)){
-            bol_open_window = true;
+        var talentWindow = $.GetContextPanel();
+
+        var btnOverlay = GetImbaTalentButtonOverlayPanel();
+
+        if(bol_open){
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
+            PopulateIMBATalentWindow();
+            talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
+            CloseIMBATalentWindowWhenDeselectUnit();
+            btnOverlay.AddClass("selected");
+        }else{
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
+            talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
+            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
+            btnOverlay.RemoveClass("selected");
         }
+
+        talentWindow.RemoveClass("preview");
+
+        ShowAllTextWhenTalentWindowVisibleAndAltIsDown();
     }
+}
 
-    if(_current_window_check_timer){
-        $.CancelScheduled(_current_window_check_timer);
-        _current_window_check_timer = null;
-    }
-
-    var btnOverlay = GetImbaTalentButtonOverlayPanel();
-
-    if(bol_open_window){
-        talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, currentShownUnitID);
-        PopulateIMBATalentWindow();
-        talentWindow.AddClass(OPEN_TALENT_WINDOW_CLASS);
-        CloseIMBATalentWindowWhenDeselectUnit();
-        btnOverlay.AddClass("selected");
-    }else{
-        talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
-        talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
-        btnOverlay.RemoveClass("selected");
-    }
-
-    talentWindow.RemoveClass("preview");
+function ToggleIMBATalentWindow(){
+    var talentWindow = $.GetContextPanel();
+    OpenImbaTalentWindow(!talentWindow.BHasClass(OPEN_TALENT_WINDOW_CLASS));
 }
 
 function InsertIMBATalentButton(){
@@ -547,8 +535,21 @@ function OnPlayerLearnedAbility(data){
     AnimateImbaTalentButton();
 }
 
+function OnPlayerUpdateQueryUnit(){
+    //Data given is the legacy data 'splitscreenplayer' only
+    AnimateImbaTalentButton();
+    CloseIMBATalentWindowWhenDeselectUnit();
+}
+
+function OnPlayerUpdateSelectedUnit(){
+    AnimateImbaTalentButton();
+    CloseIMBATalentWindowWhenDeselectUnit();
+}
+
 GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
 GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
+GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
+GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
 
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
 
