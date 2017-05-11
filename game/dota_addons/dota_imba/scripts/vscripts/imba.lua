@@ -422,14 +422,9 @@ function GameMode:ItemAddedFilter( keys )
 		
 		-- If this is a player, do Aegis stuff
 		if unit:IsRealHero() then
-			
-			-- Apply.refresh the Aegis reincarnation modifier
-			item:ApplyDataDrivenModifier(unit, unit, "modifier_item_imba_aegis", {})
-
-			-- Flag unit as an aegis holder
-			unit.has_aegis = true
 
 			-- Display aegis pickup message for all players
+			unit:AddNewModifier(unit, item, "modifier_item_imba_aegis",{})
 			local line_duration = 7
 			Notifications:BottomToAll({hero = unit:GetName(), duration = line_duration})
 			Notifications:BottomToAll({text = PlayerResource:GetPlayerName(unit:GetPlayerID()).." ", duration = line_duration, continue = true})
@@ -1008,25 +1003,6 @@ function GameMode:DamageFilter( keys )
 				end
 			end
 		end
-
-		-- Aegis death prevention
-		if victim:HasModifier("modifier_item_imba_aegis") then
-
-			-- Check if death is imminent
-			local victim_health = victim:GetHealth()
-			if keys.damage >= victim_health and not (victim:HasModifier("modifier_imba_dazzle_shallow_grave") or victim:HasModifier("modifier_imba_dazzle_nothl_protection")) then
-				
-				-- Prevent death
-				keys.damage = 0
-
-				-- Trigger the Aegis
-				TriggerAegisReincarnation(victim)
-
-				-- Exit
-				return true
-			end
-		end
-
 	end
 	return true
 end

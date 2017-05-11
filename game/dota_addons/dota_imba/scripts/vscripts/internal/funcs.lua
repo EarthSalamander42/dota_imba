@@ -124,15 +124,6 @@ function TrueKill(caster, target, ability)
 	target:Kill(ability, caster)
 end
 
-
--- Checks if a hero is wielding an Aegis of the immortal
-function HasAegis(hero)
-	if hero.has_aegis then
-		return true
-	end
-	return false
-end
-
 -- Checks if a given unit is Roshan
 function IsRoshan(unit)
 	if unit:GetName() == "npc_imba_roshan" or unit:GetName() == "npc_dota_roshan" then
