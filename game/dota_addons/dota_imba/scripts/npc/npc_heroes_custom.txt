@@ -1514,10 +1514,10 @@
 		"Ability5"					"imba_necrolyte_reapers_scythe"
 
 		"Ability10"					"special_bonus_imba_necrolyte_1"
-		"Ability11"					"special_bonus_imba_necrolyte_2"
-		"Ability12"					"special_bonus_imba_necrolyte_3"
+		"Ability11"					"special_bonus_imba_necrolyte_5"
+		"Ability12"					"special_bonus_imba_necrolyte_2"
 		"Ability13"					"special_bonus_imba_necrolyte_4"
-		"Ability14"					"special_bonus_imba_necrolyte_5"
+		"Ability14"					"special_bonus_imba_necrolyte_3"
 		"Ability15"					"special_bonus_imba_necrolyte_6"
 		"Ability16"					"special_bonus_imba_necrolyte_7"
 		"Ability17"					"special_bonus_imba_necrolyte_8"
@@ -2605,6 +2605,10 @@
 	{
 		"override_hero"				"npc_dota_hero_undying"
 
+		"AttributeBaseAgility"		"20"
+
+		"AttributeAgilityGain"		"2.0"
+
 		//"Ability1"					"imba_undying_decay"
 		//"Ability2"					"imba_undying_soul_rip"
 		//"Ability3"					"imba_undying_tombstone"
@@ -2614,10 +2618,10 @@
 		"Ability11"					"special_bonus_gold_income_20"
 		"Ability12"					"special_bonus_exp_boost_25"
 		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_unique_undying"
+		"Ability14"					"special_bonus_all_stats_7"
 		"Ability15"					"special_bonus_movement_speed_25"
 		"Ability16"					"special_bonus_armor_7"
-		"Ability17"					"special_bonus_unique_undying_2"
+		"Ability17"					"special_bonus_unique_undying"
 
 		"ProjectileSpeed"			"900"
 	}
