@@ -849,6 +849,13 @@
 
 		"UpgradesItems"					"item_imba_vladmir"
 		"UpgradeRecipe"					"item_recipe_imba_vladmir_2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{	
+			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+		}
 		
 		// Parameters
 		//-------------------------------------------------------------------------------------------------------------
@@ -914,6 +921,13 @@
 
 		"MaxUpgradeLevel"				"2"
 		"ItemBaseLevel"					"2"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{	
+			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+		}
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -6648,6 +6662,13 @@
 		"ItemQuality"					"artifact"
 		"ItemAliases"					"eos;eye of skadi"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{	
+			"particle"						"particles/item/desolator/desolator_skadi_projectile_2.vpcf"
+		}
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -7025,6 +7046,7 @@
 		"precache"
 		{
 			"particle"					"particles/item/desolator/desolator_active.vpcf"
+			"particle"					"particles/item/desolator/desolator_skadi_projectile_2.vpcf"		
 		}
 
 		// Stats
@@ -12934,6 +12956,13 @@
 		"SideShop" 						"1" 
 		"SecretShop" 					"0"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{	
+			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+		}
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------        
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
@@ -13008,9 +13037,13 @@
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
-		{
-			"particle"					"particles/econ/items/drow/drow_head_mania/mask_of_madness_active_mania.vpcf"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+		{	
+			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+
+			// Particle and sound disabled since rage is no longer used 
+			//"particle"					"particles/econ/items/drow/drow_head_mania/mask_of_madness_active_mania.vpcf"
+			//"soundfile"					"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
+
 		}
 
 		"AbilitySpecial"
@@ -13118,6 +13151,13 @@
 		//-------------------------------------------------------------------------------------------------------------        
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityCooldown"				"35"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{	
+			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+		}
 
 		"AbilitySpecial"
 		{

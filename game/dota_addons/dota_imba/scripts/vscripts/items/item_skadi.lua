@@ -20,8 +20,8 @@ end
 
 -- Dynamic cast range
 function item_imba_skadi:GetCastRange()
-	local caster = self:GetCaster()
-	if caster:HasModifier("modifier_item_imba_skadi") then
+	local caster = self:GetCaster()	
+	if caster and caster:HasModifier("modifier_item_imba_skadi") then
 		return caster:GetModifierStackCount("modifier_item_imba_skadi", caster) 
 	end
 

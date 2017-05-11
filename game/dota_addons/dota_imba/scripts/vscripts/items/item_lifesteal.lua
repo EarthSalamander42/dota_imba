@@ -48,7 +48,7 @@ end
 
 function modifier_imba_morbid_mask:OnDestroy()
     if IsServer() then
-        if not self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
+        if self.caster:HasModifier("modifier_imba_morbid_mask_unique") then
             self.caster:RemoveModifierByName("modifier_imba_morbid_mask_unique")
         end
 

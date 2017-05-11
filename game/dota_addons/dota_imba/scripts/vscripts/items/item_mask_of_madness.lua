@@ -70,7 +70,7 @@ end
 
 function modifier_imba_mask_of_madness:OnDestroy()
     if IsServer() then
-        if not self.caster:HasModifier("modifier_imba_mask_of_madness_unique") then
+        if self.caster:HasModifier("modifier_imba_mask_of_madness_unique") then
             self.caster:RemoveModifierByName("modifier_imba_mask_of_madness_unique")
         end
 

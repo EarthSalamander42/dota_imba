@@ -54,7 +54,7 @@ end
 -- Removes the unique modifier from the caster if this is the last Satanic in its inventory
 function modifier_imba_satanic:OnDestroy()
     if IsServer() then      
-        if not self.caster:HasModifier("modifier_imba_satanic_unique") then
+        if self.caster:HasModifier("modifier_imba_satanic_unique") then
             self.caster:RemoveModifierByName("modifier_imba_satanic_unique")
         end
 

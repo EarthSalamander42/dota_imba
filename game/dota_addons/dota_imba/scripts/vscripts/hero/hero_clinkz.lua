@@ -432,13 +432,13 @@ end
 
 function SetArrowAttackProjectile(caster, searing_arrows)    
     -- modifiers
-    local skadi_modifier = "modifier_item_imba_skadi_unique"
-    local deso_modifier = "modifier_item_imba_desolator_unique" 
+    local skadi_modifier = "modifier_item_imba_skadi"
+    local deso_modifier = "modifier_item_imba_desolator" 
     local morbid_modifier = "modifier_imba_morbid_mask"
-    local mom_modifier = "modifier_item_mask_of_madness"
-    local satanic_modifier = "modifier_item_satanic"
+    local mom_modifier = "modifier_imba_mask_of_madness"
+    local satanic_modifier = "modifier_imba_satanic"
     local vladimir_modifier = "modifier_item_imba_vladmir"
-    local vladimir_2_modifier = "modifier_item_imba_vladmir_2"
+    local vladimir_2_modifier = "modifier_item_imba_vladmir_blood"
 
     -- normal projectiles
     local skadi_projectile = "particles/items2_fx/skadi_projectile.vpcf"
