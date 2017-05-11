@@ -182,8 +182,7 @@ function modifier_imba_frost_arrows_thinker:OnAttackLanded(keys)
 	end	
 end
 
-function ApplyFrostAttack(modifier, target)
-	
+function ApplyFrostAttack(modifier, target)	
 
 	-- Determine duration
 	local duration			
@@ -221,15 +220,16 @@ function modifier_imba_frost_arrows_thinker:OnOrder(keys)
 	end 
 end
 
-function SetArrowAttackProjectile(caster, frost_attack)
+function SetArrowAttackProjectile(caster, frost_attack)	
 	-- modifiers
-	local skadi_modifier = "modifier_item_imba_skadi_unique"
-	local deso_modifier = "modifier_item_imba_desolator_unique"	
-	local morbid_modifier = "modifier_item_mask_of_death"
-	local mom_modifier = "modifier_item_mask_of_madness"
-	local satanic_modifier = "modifier_item_satanic"
+	local skadi_modifier = "modifier_item_imba_skadi"
+	local deso_modifier = "modifier_item_imba_desolator"	
+	local deso_2_modifier = "modifier_item_imba_desolator_2"
+	local morbid_modifier = "modifier_imba_morbid_mask"
+	local mom_modifier = "modifier_imba_mask_of_madness"
+	local satanic_modifier = "modifier_imba_satanic"
 	local vladimir_modifier = "modifier_item_imba_vladmir"
-	local vladimir_2_modifier = "modifier_item_imba_vladmir_2"
+	local vladimir_2_modifier = "modifier_item_imba_vladmir_blood"
 
 	-- normal projectiles
 	local skadi_projectile = "particles/items2_fx/skadi_projectile.vpcf"
@@ -252,7 +252,7 @@ function SetArrowAttackProjectile(caster, frost_attack)
 	-- Set variables
 	local has_lifesteal
 	local has_skadi
-	local has_desolator
+	local has_desolator	
 
 	-- Assign variables
 	-- Lifesteal
@@ -266,9 +266,9 @@ function SetArrowAttackProjectile(caster, frost_attack)
 	end
 
 	-- Desolator
-	if caster:HasModifier(deso_modifier) then
+	if caster:HasModifier(deso_modifier) or caster:HasModifier(deso_2_modifier) then
 		has_desolator = true
-	end
+	end	
 
 	-- ASSIGN PARTICLES
 	-- Frost attack
@@ -458,6 +458,10 @@ end
 imba_drow_ranger_deadeye = class({})
 LinkLuaModifier("modifier_imba_deadeye_aura", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_deadeye_vision", "hero/hero_drow_ranger", LUA_MODIFIER_MOTION_NONE)
+
+function imba_drow_ranger_deadeye:IsInnateAbility()
+	return true
+end
 
 function imba_drow_ranger_deadeye:GetIntrinsicModifierName()
 	return "modifier_imba_deadeye_aura"

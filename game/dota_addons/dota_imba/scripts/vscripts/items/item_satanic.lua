@@ -7,6 +7,7 @@
 
 item_imba_satanic = class({})
 LinkLuaModifier("modifier_imba_satanic", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_imba_satanic_unique", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_satanic_active", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_satanic_soul_slaughter", "items/item_satanic.lua", LUA_MODIFIER_MOTION_NONE)
 
@@ -18,7 +19,7 @@ end
 function item_imba_satanic:OnSpellStart()
     -- Ability properties    
     local caster = self:GetCaster()
-    local ability = self
+    local ability = self    
     local modifier_unholy = "modifier_imba_satanic_active"
 
     -- Ability specials
@@ -32,21 +33,17 @@ end
 modifier_imba_satanic = class({})
 
 function modifier_imba_satanic:OnCreated()        
-        -- Ability properties
-        self.caster = self:GetCaster()
-        self.ability = self:GetAbility()    
-        self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
-        self.modifier_unholy = "modifier_imba_satanic_active"
-        self.modifier_soul = "modifier_imba_satanic_soul_slaughter"
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()                
 
-        -- Ability specials
-        self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")
-        self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
-        self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")        
-        self.unholy_rage_lifesteal_bonus = self.ability:GetSpecialValueFor("unholy_rage_lifesteal_bonus")
-        self.soul_slaughter_hp_increase_pct = self.ability:GetSpecialValueFor("soul_slaughter_hp_increase_pct")
-        self.soul_slaughter_creep_duration = self.ability:GetSpecialValueFor("soul_slaughter_creep_duration")
-        self.soul_slaughter_hero_duration = self.ability:GetSpecialValueFor("soul_slaughter_hero_duration")
+    -- Ability specials
+    self.damage_bonus = self.ability:GetSpecialValueFor("damage_bonus")    
+    self.strength_bonus = self.ability:GetSpecialValueFor("strength_bonus")                    
+
+    if not self.caster:HasModifier("modifier_imba_satanic_unique") then
+        self.caster:AddNewModifier(self.caster, self.ability, "modifier_imba_satanic_unique", {})
+    end
 
     if IsServer() then
         -- Change to lifesteal projectile, if there's nothing "stronger"    
@@ -54,9 +51,20 @@ function modifier_imba_satanic:OnCreated()
     end
 end
 
+-- Removes the unique modifier from the caster if this is the last Satanic in its inventory
+function modifier_imba_satanic:OnDestroy()
+    if IsServer() then      
+        if not self.caster:HasModifier("modifier_imba_satanic_unique") then
+            self.caster:RemoveModifierByName("modifier_imba_satanic_unique")
+        end
+
+        -- Remove lifesteal projectile
+        ChangeAttackProjectileImba(self.caster) 
+    end
+end
+
 function modifier_imba_satanic:DeclareFunctions()
-    local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-                     MODIFIER_EVENT_ON_ATTACK_LANDED,
+    local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,                     
                      MODIFIER_PROPERTY_STATS_STRENGTH_BONUS}
 
     return decFunc
@@ -70,7 +78,63 @@ function modifier_imba_satanic:GetModifierBonusStats_Strength()
     return self.strength_bonus
 end
 
-function modifier_imba_satanic:OnAttackLanded(keys)
+function modifier_imba_satanic:IsHidden()
+    return true
+end
+
+function modifier_imba_satanic:IsPurgable()
+    return false
+end
+
+function modifier_imba_satanic:IsDebuff()
+    return false
+end
+
+function modifier_imba_satanic:GetAttributes()
+    return MODIFIER_ATTRIBUTE_MULTIPLE
+end
+
+
+-- Unique Satanic modifier
+modifier_imba_satanic_unique = class({})
+function modifier_imba_satanic_unique:IsHidden() return true end
+function modifier_imba_satanic_unique:IsPurgable() return false end
+function modifier_imba_satanic_unique:IsDebuff() return false end
+
+function modifier_imba_satanic_unique:OnCreated()
+    -- Ability properties
+    self.caster = self:GetCaster()
+    self.ability = self:GetAbility()    
+    self.particle_lifesteal = "particles/generic_gameplay/generic_lifesteal.vpcf"
+    self.modifier_unholy = "modifier_imba_satanic_active"
+    self.modifier_soul = "modifier_imba_satanic_soul_slaughter"
+
+    -- Ability specials
+    self.lifesteal_pct = self.ability:GetSpecialValueFor("lifesteal_pct")
+    self.unholy_rage_lifesteal_bonus = self.ability:GetSpecialValueFor("unholy_rage_lifesteal_bonus")
+    self.soul_slaughter_hp_increase_pct = self.ability:GetSpecialValueFor("soul_slaughter_hp_increase_pct")
+    self.soul_slaughter_creep_duration = self.ability:GetSpecialValueFor("soul_slaughter_creep_duration")
+    self.soul_slaughter_hero_duration = self.ability:GetSpecialValueFor("soul_slaughter_hero_duration")
+end
+
+function modifier_imba_satanic_unique:DeclareFunctions()
+    local decFunc = {MODIFIER_EVENT_ON_ATTACK_LANDED}
+
+    return decFunc
+end
+
+function modifier_imba_satanic_unique:GetModifierLifesteal()    
+    -- Calculate lifesteal amount
+    local lifesteal_pct = self.lifesteal_pct
+
+    if self.caster:HasModifier(self.modifier_unholy) then
+        lifesteal_pct = lifesteal_pct + self.unholy_rage_lifesteal_bonus
+    end
+
+    return lifesteal_pct
+end
+
+function modifier_imba_satanic_unique:OnAttackLanded(keys)
     if IsServer() then
         local attacker = keys.attacker
         local target = keys.target
@@ -81,30 +145,7 @@ function modifier_imba_satanic:OnAttackLanded(keys)
             -- If it is not a hero or a unit, do nothing            
             if not target:IsHero() and not target:IsCreep() then
                 return nil
-            end
-
-            -- Apply particle
-            self.particle_lifesteal_fx = ParticleManager:CreateParticle(self.particle_lifesteal, PATTACH_ABSORIGIN, self.caster)
-            ParticleManager:SetParticleControl(self.particle_lifesteal_fx, 0, self.caster:GetAbsOrigin())
-            ParticleManager:ReleaseParticleIndex(self.particle_lifesteal_fx)
-
-            -- Only actually lifesteal if it's not an illusion
-            if self.caster:IsIllusion() then
-                return nil
-            end
-
-            -- Calculate lifesteal amount
-            local lifesteal_pct = self.lifesteal_pct
-
-            if self.caster:HasModifier(self.modifier_unholy) then
-                lifesteal_pct = lifesteal_pct + self.unholy_rage_lifesteal_bonus
-            end
-
-            -- Calculate heal amount
-            local lifesteal = damage * (lifesteal_pct/100)
-
-            -- Heal as a percent of the damage dealt
-            self.caster:Heal(lifesteal, self.caster)
+            end         
 
             -- Wait a gametick to let things die
             Timers:CreateTimer(FrameTime(), function()
@@ -116,7 +157,7 @@ function modifier_imba_satanic:OnAttackLanded(keys)
                 -- Check if the target died as a result of that attack
                 if not target:IsAlive() then
                     -- Calculate soul worth in health and stacks
-                    local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct/100) 
+                    local soul_health = target:GetMaxHealth() * (self.soul_slaughter_hp_increase_pct * 0.01) 
                     local soul_stacks = (soul_health/10)
 
                     -- Assign correct duration
@@ -150,30 +191,12 @@ function modifier_imba_satanic:OnAttackLanded(keys)
                         modifier_soul_feast:SetStackCount(modifier_soul_feast:GetStackCount() + soul_stacks)
                     end
                 end
-            end)
-            
+            end)            
         end
     end
 end
 
-function modifier_imba_satanic:OnDestroy()
-    if IsServer() then
-        -- Remove lifesteal projectile
-        ChangeAttackProjectileImba(self.caster) 
-    end
-end
 
-function modifier_imba_satanic:IsHidden()
-    return true
-end
-
-function modifier_imba_satanic:IsPurgable()
-    return false
-end
-
-function modifier_imba_satanic:IsDebuff()
-    return false
-end
 
 -- Active Satanic modifier
 modifier_imba_satanic_active = class({})
@@ -206,6 +229,10 @@ function modifier_imba_satanic_soul_slaughter:OnCreated()
     self.ability = self:GetAbility()
     self.soul_slaughter_damage_per_stack = self.ability:GetSpecialValueFor("soul_slaughter_damage_per_stack")
     self.soul_slaughter_hp_per_stack = self.ability:GetSpecialValueFor("soul_slaughter_hp_per_stack")
+end
+
+function modifier_imba_satanic_soul_slaughter:OnRefresh()
+    self:OnCreated()
 end
 
 function modifier_imba_satanic_soul_slaughter:IsHidden()

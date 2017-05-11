@@ -136,7 +136,7 @@
     border-style: solid;
 }
 
-@keyframes 'glowingborder'
+@keyframes 'glowinganimation'
 {
     0%
     {
@@ -154,7 +154,7 @@
     height: 100%;
     border-width: 2px;
     border-style: solid;
-    animation-name: glowingborder;
+    animation-name: glowinganimation;
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
@@ -215,6 +215,36 @@
 {
     width : 100%;
     height : 100%;
-    background-image: url("file://{images}/custom_game/items/imba_aegis.png");
+    background-image: url("file://{images}/custom_game/imba_talent_btn.png");
+    background-size: contain;
     z-index : 3;
+}
+
+#IMBA_Talent_HUD_Button_Overlay
+{
+    width : 100%;
+    height : 100%;
+    z-index : 4;
+}
+
+#IMBA_Talent_HUD_Button_Overlay Panel
+{
+    width : 100%;
+    height : 100%;
+    background-size: contain;
+}
+
+#IMBA_Talent_HUD_Button_Overlay.selected .Overlay_Select
+{
+    background-image: url("file://{images}/custom_game/imba_talent_btn_selected.png");
+}
+
+#IMBA_Talent_HUD_Button_Overlay.upgrade .Overlay_Upgrade
+{
+    animation-name: glowinganimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+    background-image: url("file://{images}/custom_game/imba_talent_btn_upgrade.png");
 }

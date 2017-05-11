@@ -4,5 +4,9 @@
     </styles>
 	<Panel class="IMBA_Talent_HUD_Panel">
         <Button id="IMBA_Talent_HUD_Button"/>
+        <Panel hittest="false" id="IMBA_Talent_HUD_Button_Overlay">
+            <Panel class="Overlay_Select"/>
+            <Panel class="Overlay_Upgrade"/>
+        </Panel>
     </Panel>
 </root>

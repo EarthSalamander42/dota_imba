@@ -966,7 +966,48 @@ function GameMode:DamageFilter( keys )
 					end
 				end
 			end
-		end		
+		end
+
+		-- Mirana's Sacred Arrow On The Prowl guaranteed critical
+		if victim:HasModifier("modifier_imba_sacred_arrow_stun") then
+			local modifier_stun_handler = victim:FindModifierByName("modifier_imba_sacred_arrow_stun")
+			if modifier_stun_handler then
+
+				-- If the table doesn't exist yet, initialize it
+				if not modifier_stun_handler.enemy_attackers then
+					modifier_stun_handler.enemy_attackers = {}
+				end
+
+				-- Cycle through the attackers table
+				local attacker_found = false
+				for _,enemy in pairs(modifier_stun_handler.enemy_attackers) do
+					if enemy == attacker then
+						attacker_found = true
+					end
+				end
+
+				-- If this attacker haven't attacked the stunned target yet, guarantee a critical
+				if not attacker_found then
+					
+					-- Get the modifier's ability
+					local stun_ability = modifier_stun_handler:GetAbility()
+					if stun_ability then
+
+						-- Get the critical damage count
+						local on_prow_crit_damage_pct = stun_ability:GetSpecialValueFor("on_prow_crit_damage_pct")
+
+						-- Increase damage and show the critical attack event
+						keys.damage = keys.damage * (1 + on_prow_crit_damage_pct * 0.01)
+
+						-- Overhead critical event
+						SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, victim, keys.damage, nil)
+
+						-- Add the attacker to the attackers table
+						table.insert(modifier_stun_handler.enemy_attackers, attacker)
+					end
+				end
+			end
+		end
 
 		-- Aegis death prevention
 		if victim:HasModifier("modifier_item_imba_aegis") then

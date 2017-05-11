@@ -674,8 +674,8 @@ function modifier_imba_omni_slash_caster:OnCreated( )
 		self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range")
 		self.bounce_amt = self.ability:GetTalentSpecialValueFor("jump_amount")
 	else
-		self.bounce_range = self.ability:GetTalentSpecialValueFor("bounce_range_scepter")
-		self.bounce_amt = self.ability:GetTalentSpecialValueFor("jump_amount_scepter")
+		self.bounce_range = self.ability:GetTalentSpecialValueFor("scepter_bounce_range")
+		self.bounce_amt = self.ability:GetTalentSpecialValueFor("scepter_jump_amt")
 	end
 	
 	if IsServer() then
