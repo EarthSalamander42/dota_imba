@@ -16,6 +16,8 @@ LinkLuaModifier( "modifier_imba_angelic_alliance_passive_disarm_cooldown", "item
 --	Item Definition 
 -----------------------------------------------------------------------------------------------------------
 
+
+
 function item_imba_angelic_alliance:GetManaCost()		return self:GetSpecialValueFor("mana_cost")	end
 function item_imba_angelic_alliance:GetCooldown()		return self:GetSpecialValueFor("cooldown")	end
 function item_imba_angelic_alliance:GetCastRange()		return self:GetSpecialValueFor("cast_range")end
@@ -54,6 +56,23 @@ function item_imba_angelic_alliance:OnSpellStart()
 	
 	caster:AddNewModifier(caster, self, "modifier_imba_angelic_alliance_debuff_caster", {duration = duration})
 end
+
+function item_imba_angelic_alliance:CastFilterResultTarget(target)
+	local caster = self:GetCaster()
+
+	if caster == target then
+		return UF_FAIL_CUSTOM
+	end
+
+	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+    return nResult
+end
+
+function item_imba_angelic_alliance:GetCustomCastErrorTarget(target)
+	return "dota_hud_error_cant_cast_on_self"
+end
+
+
 
 -----------------------------------------------------------------------------------------------------------
 --	Item Modifier (stats + attack/damaged effect)
@@ -142,6 +161,7 @@ function modifier_imba_angelic_alliance_debuff:IsDebuff() return true end
 function modifier_imba_angelic_alliance_debuff:IsHidden() return false end
 function modifier_imba_angelic_alliance_debuff:IsPurgable() return false end
 function modifier_imba_angelic_alliance_debuff:GetModifierProvidesFOWVision() return 1 end
+function modifier_imba_angelic_alliance_debuff:GetTexture() return "custom/imba_angelic_alliance" end
 
 function modifier_imba_angelic_alliance_debuff:DeclareFunctions()	
 	local decFuncs = {	MODIFIER_PROPERTY_PROVIDES_FOW_POSITION,
@@ -220,6 +240,7 @@ function modifier_imba_angelic_alliance_buff:IsHidden() return false end
 function modifier_imba_angelic_alliance_buff:IsDebuff() return false end
 function modifier_imba_angelic_alliance_buff:IsPurgable() return false end
 function modifier_imba_angelic_alliance_buff:GetModifierProvidesFOWVision() return 1 end
+function modifier_imba_angelic_alliance_buff:GetTexture() return "custom/imba_angelic_alliance" end
 
 function modifier_imba_angelic_alliance_buff:GetEffectName()
 	return "particles/item/angelic_alliance/angelic_alliance_buff.vpcf" end
