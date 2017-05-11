@@ -56,6 +56,10 @@ function InitializeIMBATalentWindow(){
     //Clear existing children first
     talentPanel.RemoveAndDeleteChildren();
 
+    var headerText = $.CreatePanel("Label", talentPanel, "");
+    headerText.AddClass("header");
+    headerText.text = $.Localize("talent_window_header");
+
     //Ignore if max_level for heroes are more than or less than 40, we will still show the full 8 rows
     for(var i=0; i<8; i++){
         var currentRowLevel = ConvertRowToLevelRequirement(i);
@@ -93,6 +97,10 @@ function InitializeIMBATalentWindow(){
             }
         }
     }
+
+    var footerText = $.CreatePanel("Label", talentPanel, "");
+    footerText.AddClass("footer");
+    footerText.text = $.Localize("talent_window_footer");
 }
 
 function GetGenericTalentInfoTable(){
@@ -304,10 +312,6 @@ function CreateImagePanelForTalent(talent_name, parent_panel, hero_id){
                 var heroPanel = $.CreatePanel('DOTAHeroImage', parent_panel, '');
                 heroPanel.heroimagestyle = "landscape";
                 heroPanel.heroname = Entities.GetUnitName(hero_id);
-                heroPanel.style.align = "center center";
-                //128x72 landscape default size
-                heroPanel.style.height = "100px"; //height will be 100px for the image
-                heroPanel.style.width = "177px"; //128 * (100/72)
             }
         }
     }

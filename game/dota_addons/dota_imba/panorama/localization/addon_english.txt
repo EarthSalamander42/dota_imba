@@ -52,4 +52,6 @@
 	"imba_generic_talent_cd_reduction"				"Cooldown Reduction"
 	"imba_generic_talent_bonus_xp"					"Bonus EXP"
 	"imba_generic_talent_respawn_reduction"			"Respawn Reduction"
+    "talent_window_header"                          "Talents"
+    "talent_window_footer"                          "Hold Alt To View All Talents"
 }

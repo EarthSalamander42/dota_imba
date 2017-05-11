@@ -1,12 +1,11 @@
 
-/**/
 .IMBA_Talent_Window
 {
     horizontal-align: left;
     vertical-align: top;
-    margin-top: 70px;
+    margin-top: 55px;
     width: 590px;
-    height: 750px;
+    height: 775px;
     flow-children: down;
     background-image: url("s2r://panorama/images/backgrounds/dashboard_background_png.vtex"); 
 
@@ -14,6 +13,29 @@
     transition-property: transform;
     transition-duration: 0.1s;
     padding: 10px;
+}
+
+.IMBA_Talent_Window > Label
+{
+    font-family: "RadianceM";
+    color: #d9b284;
+    text-shadow: 0px 0px 8px #906127;
+    width : 100%;
+    text-align: center;
+    padding-left: 60px;
+}
+
+.IMBA_Talent_Window > Label.header
+{
+    font-size : 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.IMBA_Talent_Window > Label.footer
+{
+    margin-top: 8px;
+    font-size : 18px;
 }
 
 .IMBA_Talent_Window.show_talent_window,
@@ -29,8 +51,8 @@
     height : 80px;
     margin-left: 10px;
     margin-right: 10px;
-    margin-top: 3px;
-    margin-bottom: 3px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     text-align: left;
 }
 
@@ -41,7 +63,7 @@
 
 .IMBA_Talent_Row.two_choices
 {
-    height : 100px;
+    height : 80px;
 }
 
 .IMBA_Talent_Level_Container
@@ -51,8 +73,6 @@
 	border-radius: 30px;
     vertical-align: middle;
     border: 3px solid #906127;
-    height: 50px;
-    width: 50px;
 	border-radius: 30px;
     background-color: #0f161e;
 }
@@ -190,6 +210,18 @@
 #IMBA_Talent_Choice_Image_Container
 {
     border-radius: 10px;
+}
+
+/*
+    128x72 landscape default size
+    80px will be the height for IMBA_Talent_Choice_Image_Container
+    143px = 128 * (80/72)
+*/
+#IMBA_Talent_Choice_Image_Container DOTAHeroImage
+{
+    align : center center;
+    height : 80px;
+    width : 143px;
 }
 
 .IMBA_Talent_Choice.disabled .IMBA_Talent_Choice_Text_Container
