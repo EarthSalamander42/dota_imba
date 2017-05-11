@@ -24,27 +24,43 @@ function modifier_item_imba_aegis:DeclareFunctions()
     local decFuncs =
 	{
 		MODIFIER_PROPERTY_REINCARNATION,
+		MODIFIER_EVENT_ON_DEATH
 	}
     return decFuncs
 end
 
 function modifier_item_imba_aegis:ReincarnateTime()
-	local parent = self:GetParent()
-	-- Refresh all your abilities
-	for i = 0, 15 do
-		local current_ability = parent:GetAbilityByIndex(i)
+	if IsServer() then
+		local parent = self:GetParent()
+		-- Refresh all your abilities
+		for i = 0, 15 do
+			local current_ability = parent:GetAbilityByIndex(i)
 
-		-- Refresh
-		if current_ability then
-			current_ability:EndCooldown()
+			-- Refresh
+			if current_ability then
+				current_ability:EndCooldown()
+			end
 		end
+		self:GetAbility():CreateVisibilityNode(parent:GetAbsOrigin(), self.vision_radius, self.reincarnate_time)
+		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
+		ParticleManager:SetParticleControl(particle, 1, Vector(self.reincarnate_time,0,0))
+		ParticleManager:SetParticleControl(particle, 3, parent:GetAbsOrigin())
+		ParticleManager:ReleaseParticleIndex(particle)
 	end
-	self:GetAbility():CreateVisibilityNode(parent:GetAbsOrigin(), self.vision_radius, self.reincarnate_time)
-	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn_timer.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent)
-	ParticleManager:SetParticleControl(particle, 1, Vector(self.reincarnate_time,0,0))
-	ParticleManager:SetParticleControl(particle, 3, parent:GetAbsOrigin())
-	ParticleManager:ReleaseParticleIndex(particle)
 	return self.reincarnate_time
+end
+
+
+function modifier_item_imba_aegis:OnDeath(params)
+    if IsServer() then
+        -- Only apply if the caster is the unit that died
+        if self:GetParent() == params.unit and params.reincarnate then                
+			-- Force respawning in the delay time, with no regards to the real respawn timer
+			Timers:CreateTimer(FrameTime(), function()
+				params.unit:SetTimeUntilRespawn(self.reincarnate_time)
+			end)
+        end
+    end
 end
 
 function modifier_item_imba_aegis:IsDebuff() return false end
