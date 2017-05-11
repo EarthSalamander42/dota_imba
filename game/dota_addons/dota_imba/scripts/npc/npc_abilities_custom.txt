@@ -12069,6 +12069,7 @@
 		{
 			"particle"					"particles/units/heroes/hero_lich/lich_chain_frost.vpcf"
 			"particle"					"particles/status_fx/status_effect_frost_lich.vpcf"
+			"particle"					"particles/hero/lich/lich_mini_frosts.vpcf"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
 		}
 
@@ -31005,7 +31006,7 @@
         }
     }
 
-    "special_bonus_imba_lich_7" // Chain Frost bounce speed increase
+    "special_bonus_imba_lich_7" // Chain Frost bounces infinitely
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
@@ -31025,7 +31026,7 @@
             "01"
             {
                 "var_type"                  "FIELD_INTEGER"
-                "value"	                    "300"
+                "value"	                    "9999"
             }
         }
     }
