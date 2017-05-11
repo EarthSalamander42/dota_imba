@@ -196,6 +196,7 @@ function modifier_imba_purification_buff:OnCreated()
     -- Ability specials 
     self.purifiception_heal_amp_pct = self.ability:GetSpecialValueFor("purifiception_heal_amp_pct")
     self.purifiception_max_stacks = self.ability:GetSpecialValueFor("purifiception_max_stacks")
+    self.purifiception_stack_threshold = self.ability:GetSpecialValueFor("purifiception_stack_threshold")
 end
 
 function modifier_imba_purification_buff:IsHidden() return false end
@@ -204,7 +205,7 @@ function modifier_imba_purification_buff:IsDebuff() return false end
 
 function modifier_imba_purification_buff:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_HEAL_AMPLIFY_PERCENTAGE,
-                      MODIFIER_EVENT_ON_HEAL_RECEIVED}
+                      MODIFIER_EVENT_ON_HEALTH_GAINED}
                 
     return decFuncs
 end
@@ -223,14 +224,14 @@ function modifier_imba_purification_buff:GetModifierHealAmplify_Percentage(keys)
     return self.purifiception_heal_amp_pct * stacks
 end
 
-function modifier_imba_purification_buff:OnHealReceived(keys)
-    if IsServer() then
 
-        -- Only apply on the caster getting heals
-        if keys.unit == self.caster then
+function modifier_imba_purification_buff:OnHealthGained(keys)
+    if IsServer() then       
 
-            -- Only apply if it's a real heal (not health regen)
-            if not keys.process_procs then
+        -- Only apply on the parent getting heals
+        if keys.unit == self.parent then            
+            -- Only apply if was healed over the threshold
+            if keys.gain and keys.gain >= self.purifiception_stack_threshold then                
                 self:IncrementStackCount()
             end
         end

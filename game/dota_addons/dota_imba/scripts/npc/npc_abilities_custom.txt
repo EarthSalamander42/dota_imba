@@ -16953,11 +16953,17 @@
 
 			"04"
 			{
+				"var_type"						"FIELD_INTEGER"
+				"purifiception_stack_threshold"	"100"
+			}
+
+			"05"
+			{
 				"var_type"					 "FIELD_INTEGER"
 				"purifiception_heal_amp_pct" "25"
 			}
 
-			"05"
+			"06"
 			{
 				"var_type"					 "FIELD_INTEGER"
 				"purifiception_max_stacks"	 "1 1 1 1 2 3 4"
