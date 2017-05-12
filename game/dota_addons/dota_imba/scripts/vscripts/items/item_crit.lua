@@ -26,6 +26,9 @@ function modifier_item_imba_greater_crit:GetAttributes() return MODIFIER_ATTRIBU
 
 -- Adds the damage increase counter when created
 function modifier_item_imba_greater_crit:OnCreated(keys)
+	self.ability = self:GetAbility()
+	self.bonus_damage = self.ability:GetSpecialValueFor("bonus_damage")
+
 	if IsServer() then
 		local parent = self:GetParent()
 		if not parent:HasModifier("modifier_item_imba_greater_crit_buff") then
@@ -34,11 +37,22 @@ function modifier_item_imba_greater_crit:OnCreated(keys)
 	end
 end
 
+function modifier_item_imba_greater_crit:DeclareFunctions()
+	local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+
+	return decFuncs
+end
+
+function modifier_item_imba_greater_crit:GetModifierPreAttack_BonusDamage()
+	return self.bonus_damage
+end
+
+
 -- Removes the damage increase counter if this is the last Daedalus in the inventory
 function modifier_item_imba_greater_crit:OnDestroy()
 	if IsServer() then
 		local parent = self:GetParent()
-		if not parent:HasModifier("modifier_item_imba_greater_crit") then
+		if parent:HasModifier("modifier_item_imba_greater_crit") then
 			parent:RemoveModifierByName("modifier_item_imba_greater_crit_buff")
 		end
 	end
