@@ -1927,7 +1927,20 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
                     if self.parent:HasAbility(self.detonate_ability) then
                         local detonate_ability_handler = self.parent:FindAbilityByName(self.detonate_ability)
                         if detonate_ability_handler then
-                            detonate_ability_handler:OnSpellStart()
+                            local radius = detonate_ability_handler:GetSpecialValueFor("radius")                            
+
+                            local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+                                                              self.parent:GetAbsOrigin(),
+                                                              nil,
+                                                              radius,
+                                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                                              DOTA_UNIT_TARGET_FLAG_NONE,
+                                                              FIND_ANY_ORDER,
+                                                              false)
+                            if #enemies > 0 then
+                                detonate_ability_handler:OnSpellStart()
+                            end
                         end
                     end
                 end
