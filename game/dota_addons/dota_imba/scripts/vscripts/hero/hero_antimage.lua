@@ -605,7 +605,7 @@ function imba_antimage_mana_void:OnSpellStart()
 		local caster = self:GetCaster()
 		local target = self:GetCursorTarget()
 		local ability = self
-		local scepter = HasScepter(caster)
+		local scepter = caster:HasScepter()
 		local modifier_ministun = "modifier_imba_mana_void_ministun"
 		
 		-- Parameters
