@@ -1260,7 +1260,7 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                                  ability = self.ability
                                  }
             
-            ApplyDamage(damageTable)
+            local actual_damage = ApplyDamage(damageTable)            
 
             -- Add silence modifier to them
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_silence, {duration = self.silence_duration})
@@ -1297,17 +1297,25 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
         
 
         -- Deal damage to the caster based on its max health
-        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01
+        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01       
+        
+        if self.parent:GetHealth() - self_damage <= 0 then
+            self.parent:Kill(self.ability, self.parent)
+        else
+            self.parent:SetHealth(self.parent:GetHealth() - self_damage)
+        end
 
-        local damageTable = {victim = self.parent,
-                             attacker = self.caster, 
-                             damage = self_damage,
-                             damage_type = DAMAGE_TYPE_PURE,
-                             ability = self.ability,
-                             damage_flags = DOTA_DAMAGE_FLAG_HPLOSS
-                             }
+
+        --THIS IS DISABLED BECAUSE IT AMPLIFIES DAMAGE WITH SPELL AMP
+        -- local damageTable = {victim = self.parent,
+        --                      attacker = self.caster, 
+        --                      damage = self_damage,
+        --                      damage_type = DAMAGE_TYPE_PURE,
+        --                      ability = self.ability,
+        --                      damage_flags = DOTA_DAMAGE_FLAG_HPLOSS
+        --                      }
             
-        ApplyDamage(damageTable)                
+        -- local actual_damage = ApplyDamage(damageTable)                                
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
