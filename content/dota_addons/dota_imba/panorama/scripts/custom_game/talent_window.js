@@ -386,8 +386,13 @@ function PopulateIMBATalentWindow(){
     //Do for selected hero, not hero that player owns
     var currentShownUnitID = Players.GetLocalPlayerPortraitUnit()
     if(Entities.IsValidEntity(currentShownUnitID) && Entities.IsRealHero(currentShownUnitID)){
+
+        var currentAbilityPoints = Entities.GetAbilityPoints(currentShownUnitID);
+        var currentUnitLevel = Entities.GetLevel(currentShownUnitID);
+        var isControllableByPlayer = Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer());
+
         //Keep reference of the current ability points
-        _current_ability_points = Entities.GetAbilityPoints(currentShownUnitID);
+        _current_ability_points = currentAbilityPoints;
 
         //Note that hero_talent_list only populates for heroes picked by players (will not work for -createhero)
         var heroTalentList = CustomNetTables.GetTableValue(TALENT_TABLE_NAME, "hero_talent_list_"+currentShownUnitID );
@@ -446,9 +451,9 @@ function PopulateIMBATalentWindow(){
                                         TalentChoicePanel.AddClass("disabled");
                                     }
 
-                                }else if(Entities.GetLevel(currentShownUnitID) >= currentRowLevel &&
-                                        Entities.GetAbilityPoints(currentShownUnitID) > 0 &&
-                                        Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer())){
+                                }else if(currentUnitLevel >= currentRowLevel &&
+                                        currentAbilityPoints > 0 &&
+                                        isControllableByPlayer){
                                     //Only selectable if entity has the right level and has an ability point to spend
 
                                     //Add .selectable class to TalentChoicePanel if user has not upgraded the row of talents
