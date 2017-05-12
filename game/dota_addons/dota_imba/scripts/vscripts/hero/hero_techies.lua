@@ -191,6 +191,7 @@ function PlantProximityMine(caster, ability, spawn_point)
 
     -- Create the mine unit
     local mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
 
     -- Set the mine's team to be the same as the caster
     local playerID = caster:GetPlayerID()
@@ -1260,7 +1261,7 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
                                  ability = self.ability
                                  }
             
-            ApplyDamage(damageTable)
+            local actual_damage = ApplyDamage(damageTable)            
 
             -- Add silence modifier to them
             enemy:AddNewModifier(self.caster, self.ability, self.modifier_silence, {duration = self.silence_duration})
@@ -1297,17 +1298,18 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
         
 
         -- Deal damage to the caster based on its max health
-        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01
-
+        local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01       
+        
         local damageTable = {victim = self.parent,
                              attacker = self.caster, 
                              damage = self_damage,
                              damage_type = DAMAGE_TYPE_PURE,
                              ability = self.ability,
-                             damage_flags = DOTA_DAMAGE_FLAG_HPLOSS
+                             damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
                              }
             
-        ApplyDamage(damageTable)                
+        local actual_damage = ApplyDamage(damageTable)                                
+        print(actual_damage)
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
@@ -1706,7 +1708,7 @@ function imba_techies_focused_detonate:OnSpellStart()
 
     -- Find all mines in radius
     local remote_mines = FindUnitsInRadius(caster:GetTeamNumber(),
-                                           caster:GetAbsOrigin(),
+                                           target_point:GetAbsOrigin(),
                                            nil,
                                            radius,
                                            DOTA_UNIT_TARGET_TEAM_FRIENDLY,
@@ -1828,6 +1830,7 @@ function imba_techies_minefield_sign:OnSpellStart()
 
     -- Create a new sign
     local sign = CreateUnitByName("npc_imba_techies_minefield_sign", target_point, false, caster, caster, caster:GetTeamNumber())
+	sign:AddRangeIndicator(caster, ability, "radius", nil, 255, 40, 40, true, false, false)
 
     -- Assign it to the ability
     self.assigned_sign = sign
@@ -1927,7 +1930,20 @@ function modifier_imba_minefield_sign_detection:OnDestroy()
                     if self.parent:HasAbility(self.detonate_ability) then
                         local detonate_ability_handler = self.parent:FindAbilityByName(self.detonate_ability)
                         if detonate_ability_handler then
-                            detonate_ability_handler:OnSpellStart()
+                            local radius = detonate_ability_handler:GetSpecialValueFor("radius")                            
+
+                            local enemies = FindUnitsInRadius(self.parent:GetTeamNumber(),
+                                                              self.parent:GetAbsOrigin(),
+                                                              nil,
+                                                              radius,
+                                                              DOTA_UNIT_TARGET_TEAM_ENEMY,
+                                                              DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                                                              DOTA_UNIT_TARGET_FLAG_NONE,
+                                                              FIND_ANY_ORDER,
+                                                              false)
+                            if #enemies > 0 then
+                                detonate_ability_handler:OnSpellStart()
+                            end
                         end
                     end
                 end

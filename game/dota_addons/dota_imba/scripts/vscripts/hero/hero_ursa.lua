@@ -801,8 +801,7 @@ function modifier_imba_enrage_buff:OnCreated()
 	local reduce_cd_interval = ability:GetSpecialValueFor("reduce_cd_interval")
 	
 	if IsServer() then	
-		caster:SetRenderColor(255,0,0)
-		caster:SetModelScale(1.2)
+		caster:SetRenderColor(255,0,0)		
 	end
 	
 	self:StartIntervalThink(reduce_cd_interval)
@@ -812,12 +811,8 @@ function modifier_imba_enrage_buff:OnDestroy()
 	local caster = self:GetCaster()	
 	
 	if IsServer() then
-		caster:SetRenderColor(255,255,255)
-		caster:SetModelScale(1)
-	end
-
-
-	self:StartIntervalThink(-1)
+		caster:SetRenderColor(255,255,255)		
+	end	
 end
 
 function modifier_imba_enrage_buff:OnIntervalThink()
@@ -850,8 +845,13 @@ function modifier_imba_enrage_buff:OnIntervalThink()
 end
 
 function modifier_imba_enrage_buff:DeclareFunctions()		
-		local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}					 
+		local decFuncs = {MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
+						 MODIFIER_PROPERTY_MODEL_SCALE}					 
 		return decFuncs		
+end
+
+function modifier_imba_enrage_buff:GetModifierModelScale()
+	return 40
 end
 
 
@@ -881,6 +881,18 @@ function modifier_imba_scepter_enrage_damage:IsHidden()
 	end
 		
 	return true
+end
+
+function modifier_imba_scepter_enrage_damage:RemoveOnDeath()
+	return false
+end
+
+function modifier_imba_scepter_enrage_damage:IsPurgable()
+	return false
+end
+
+function modifier_imba_scepter_enrage_damage:IsDebuff()
+	return false
 end
 
 function modifier_imba_scepter_enrage_damage:OnTakeDamage( keys )
@@ -972,7 +984,8 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		ability.territorial_tree = target
 
 		-- Create dummy
-		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())			
+		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		ability.territorial_dummy:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
 		ability.territorial_dummy:AddNewModifier(caster, ability, aura, {})
 		ability.territorial_dummy:SetAbsOrigin(ability.territorial_tree:GetAbsOrigin())			 
 	end	
@@ -989,21 +1002,12 @@ modifier_terrorital_hunter_aura = class({})
 
 function modifier_terrorital_hunter_aura:OnCreated()
 	-- Start interval
-	if IsServer() then
-		self.range_pfx = ParticleManager:CreateParticleForPlayer("particles/hero/ursa/ursa_range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetPlayerOwner())
-	end
 	self:StartIntervalThink(0.2)
 end
 
 function modifier_terrorital_hunter_aura:OnIntervalThink()
 	if IsServer() then
 		local ability = self:GetAbility()
-		if not self:GetCaster().norange then
-			local range = ability:GetSpecialValueFor("vision_range")
-			ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(range, 0, 0))
-		else
-			ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(0, 0, 0))
-		end
 		-- Check if tree is cut down, kill dummy if it is
 		if not ability.territorial_tree:IsStanding() then
 			ability.territorial_dummy:Destroy()
@@ -1013,10 +1017,6 @@ function modifier_terrorital_hunter_aura:OnIntervalThink()
 end
 
 function modifier_terrorital_hunter_aura:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.range_pfx, true)
-		ParticleManager:ReleaseParticleIndex(self.range_pfx)
-	end
 	self:StartIntervalThink(-1)
 end
 
@@ -1087,3 +1087,42 @@ end
 function modifier_terrorital_hunter_fogvision:GetModifierProvidesFOWVision()
 	return 1
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

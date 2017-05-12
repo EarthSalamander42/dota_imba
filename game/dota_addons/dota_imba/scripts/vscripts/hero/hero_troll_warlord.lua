@@ -40,7 +40,7 @@ function imba_troll_warlord_berserkers_rage:OnToggle()
 		local caster = self:GetCaster()
 		caster:EmitSound("Hero_TrollWarlord.BerserkersRage.Toggle")
 		-- Randomly play a cast line
-		if (math.random(1,100) <= 25) and (caster:GetName() == "npc_dota_hero_troll_warlord") and not caster.beserk_sound then
+		if RollPercentage(25) and (caster:GetName() == "npc_dota_hero_troll_warlord") and not caster.beserk_sound then
 			caster:EmitSound("troll_warlord_troll_beserker_0"..math.random(1,4))
 			caster.beserk_sound = true
 			Timers:CreateTimer( 10, function()

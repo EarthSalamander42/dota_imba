@@ -507,7 +507,7 @@ function imba_axe_culling_blade:OnSpellStart()
   self.kill_enemy_response = "axe_axe_ability_cullingblade_0"..math.random(1,2)
 
   --ability specials
-  self.kill_threshold = self.ability:GetSpecialValueFor("kill_threshold") + self.caster:FindTalentValue("special_bonus_imba_axe_7")
+  self.kill_threshold = self.ability:GetSpecialValueFor("kill_threshold")
   self.damage = self.ability:GetSpecialValueFor("damage")
   self.speed_bonus = self.ability:GetSpecialValueFor("speed_bonus")
   self.as_bonus = self.ability:GetSpecialValueFor("as_bonus")
@@ -527,6 +527,9 @@ function imba_axe_culling_blade:OnSpellStart()
     self.kill_threshold = self.ability:GetSpecialValueFor("kill_threshold_scepter")
     self.speed_duration = self.ability:GetSpecialValueFor("speed_duration_scepter")
   end
+
+  -- #7 Talent: Kill threshold increase
+  self.kill_threshold = self.kill_threshold + self.caster:FindTalentValue("special_bonus_imba_axe_7")
 
   -- Initializing the damage table
   self.damageTable = {
@@ -682,10 +685,10 @@ end
 modifier_imba_axe_culling_blade_leap = class({})
 
 function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
-  local axe_minimum_height_above_lowest = 500
-  local axe_minimum_height_above_highest = 100
-  local axe_acceleration_z = 4000
-  local axe_max_horizontal_acceleration = 3000
+  self.axe_minimum_height_above_lowest = 500
+  self.axe_minimum_height_above_highest = 100
+  self.axe_acceleration_z = 4000
+  self.axe_max_horizontal_acceleration = 3000
 
 	if IsServer() then
 
@@ -702,17 +705,17 @@ function modifier_imba_axe_culling_blade_leap:OnCreated(kv)
 		self.vLastKnownTargetPos = self.vLoc
 
 		local duration = self:GetAbility():GetSpecialValueFor( "duration" )
-		local flDesiredHeight = axe_minimum_height_above_lowest * duration * duration
+		local flDesiredHeight = self.axe_minimum_height_above_lowest * duration * duration
 		local flLowZ = math.min( self.vLastKnownTargetPos.z, self.vStartPosition.z )
 		local flHighZ = math.max( self.vLastKnownTargetPos.z, self.vStartPosition.z )
-		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + axe_minimum_height_above_highest )
+		local flArcTopZ = math.max( flLowZ + flDesiredHeight, flHighZ + self.axe_minimum_height_above_highest )
 
 		local flArcDeltaZ = flArcTopZ - self.vStartPosition.z
-		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * axe_acceleration_z )
+		self.flInitialVelocityZ = math.sqrt( 2.0 * flArcDeltaZ * self.axe_acceleration_z )
 
 		local flDeltaZ = self.vLastKnownTargetPos.z - self.vStartPosition.z
-		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * axe_acceleration_z * flDeltaZ ) )
-		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / axe_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / axe_acceleration_z )
+		local flSqrtDet = math.sqrt( math.max( 0, ( self.flInitialVelocityZ * self.flInitialVelocityZ ) - 2.0 * self.axe_acceleration_z * flDeltaZ ) )
+		self.flPredictedTotalTime = math.max( ( self.flInitialVelocityZ + flSqrtDet) / self.axe_acceleration_z, ( self.flInitialVelocityZ - flSqrtDet) / self.axe_acceleration_z )
 
 		self.vHorizontalVelocity = ( self.vLastKnownTargetPos - self.vStartPosition ) / self.flPredictedTotalTime
 		self.vHorizontalVelocity.z = 0.0
@@ -733,7 +736,7 @@ function modifier_imba_axe_culling_blade_leap:UpdateHorizontalMotion( me, dt )
 		local vVelDif = vDesiredVel - self.vHorizontalVelocity
 		local flVelDif = vVelDif:Length2D()
 		vVelDif = vVelDif:Normalized()
-		local flVelDelta = math.min( flVelDif, axe_max_horizontal_acceleration )
+		local flVelDelta = math.min( flVelDif, self.axe_max_horizontal_acceleration )
 
 		self.vHorizontalVelocity = self.vHorizontalVelocity + vVelDif * flVelDelta * dt
 		local vNewPos = vOldPos + self.vHorizontalVelocity * dt
@@ -744,10 +747,10 @@ end
 function modifier_imba_axe_culling_blade_leap:UpdateVerticalMotion( me, dt )
 	if IsServer() then
 		self.flCurrentTimeVert = self.flCurrentTimeVert + dt
-		local bGoingDown = ( -axe_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
+		local bGoingDown = ( -self.axe_acceleration_z * self.flCurrentTimeVert + self.flInitialVelocityZ ) < 0
 		
 		local vNewPos = me:GetOrigin()
-		vNewPos.z = self.vStartPosition.z + ( -0.5 * axe_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
+		vNewPos.z = self.vStartPosition.z + ( -0.5 * self.axe_acceleration_z * ( self.flCurrentTimeVert * self.flCurrentTimeVert ) + self.flInitialVelocityZ * self.flCurrentTimeVert )
 
 		local flGroundHeight = GetGroundHeight( vNewPos, self:GetParent() )
 		local bLanded = false

@@ -137,17 +137,16 @@ end
 
 function modifier_imba_arcane_curse_debuff:OnAbilityExecuted( params )
 	if IsServer() then
-		if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) and ( not exception[params.ability:GetName()] ) then
-			-- Only extend duration of Toggle abilities when they are turned on
-			-- OnAbilityExecuted is ran before the toggle completes, so 'true' = we are about to turn it off
-			if CheckExceptions(params.ability) then
-				return
+		if params.ability then
+			if ( not params.ability:IsItem() ) and ( params.unit == self.parent ) then
+				-- Only extend duration of Toggle abilities when they are turned on
+				-- OnAbilityExecuted is ran before the toggle completes, so 'true' = we are about to turn it off				
+				if params.ability:IsToggle() and params.ability:GetToggleState() then
+					return
+				end
+				self:SetDuration( self:GetRemainingTime() + self.penalty_duration, true )
+				self:IncrementStackCount()
 			end
-			if params.ability:IsToggle() and params.ability:GetToggleState() then
-				return
-			end
-			self:SetDuration( self:GetRemainingTime() + self.penalty_duration, true )
-			self:IncrementStackCount()
 		end
 	end
 end

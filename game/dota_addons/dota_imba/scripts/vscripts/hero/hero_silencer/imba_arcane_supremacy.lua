@@ -6,6 +6,10 @@ function imba_silencer_arcane_supremacy:GetIntrinsicModifierName()
 	return "modifier_imba_silencer_arcane_supremacy"
 end
 
+function imba_silencer_arcane_supremacy:IsInnateAbility()
+	return true
+end
+
 LinkLuaModifier("modifier_imba_silencer_arcane_supremacy", "hero/hero_silencer/imba_arcane_supremacy", LUA_MODIFIER_MOTION_NONE)
 modifier_imba_silencer_arcane_supremacy = class({})
 

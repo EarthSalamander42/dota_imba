@@ -429,6 +429,7 @@
 		"Ability3"					"imba_clinkz_skeleton_walk"
 		"Ability4"					"imba_clinkz_death_pact"
 
+		"Ability9"					"imba_unlimited_level_powerup"
 		"Ability10"					"special_bonus_imba_clinkz_1"
 		"Ability11"					"special_bonus_imba_clinkz_2"
 		"Ability12"					"special_bonus_imba_clinkz_3"
@@ -545,6 +546,8 @@
 	"npc_imba_hero_death_prophet"
 	{
 		"override_hero"				"npc_dota_hero_death_prophet"
+
+		"ArmorPhysical"				"2"
 		
 		//"Ability1"					"imba_death_prophet_carrion_swarm"
 		//"Ability2"					"imba_death_prophet_silence"
@@ -552,8 +555,8 @@
 		//"Ability4"					"imba_death_prophet_exorcism"
 
 		"Ability10"					"special_bonus_spell_amplify_4"
-		"Ability11"					"special_bonus_magic_resistance_10"
-		"Ability12"					"special_bonus_unique_death_prophet_2"
+		"Ability11"					"special_bonus_strength_4"
+		"Ability12"					"special_bonus_magic_resistance_10"
 		"Ability13"					"special_bonus_cast_range_75"
 		"Ability14"					"special_bonus_cooldown_reduction_12"
 		"Ability15"					"special_bonus_movement_speed_25"
@@ -2520,20 +2523,20 @@
 	{
 		"override_hero"				"npc_dota_hero_troll_warlord"		
 
-		"Ability1"					"imba_troll_warlord_whirling_axes_melee"
-		"Ability2"					"imba_troll_warlord_whirling_axes_ranged"
-		"Ability3"					"imba_troll_warlord_fervor"
-		"Ability4"					"imba_troll_warlord_berserkers_rage"
+		"Ability1"					"imba_troll_warlord_berserkers_rage"
+		"Ability2"					"imba_troll_warlord_whirling_axes_melee"
+		"Ability3"					"imba_troll_warlord_whirling_axes_ranged"
+		"Ability4"					"imba_troll_warlord_fervor"
 		"Ability5"					"imba_troll_warlord_battle_trance"
 
-		"Ability10"					"special_bonus_strength_5"
-		"Ability11"					"special_bonus_agility_13"
-		"Ability12"					"special_bonus_movement_speed_20"
-		"Ability13"					"special_bonus_armor_5"
-		"Ability14"					"special_bonus_hp_200"
-		"Ability15"					"special_bonus_attack_damage_40"
-		"Ability16"					"special_bonus_magic_resistance_25"
-		"Ability17"					"special_bonus_attack_range_75"
+		"Ability10"					"special_bonus_imba_troll_warlord_1"
+		"Ability11"					"special_bonus_imba_troll_warlord_2"
+		"Ability12"					"special_bonus_imba_troll_warlord_3"
+		"Ability13"					"special_bonus_imba_troll_warlord_4"
+		"Ability14"					"special_bonus_imba_troll_warlord_5"
+		"Ability15"					"special_bonus_imba_troll_warlord_6"
+		"Ability16"					"special_bonus_imba_troll_warlord_7"
+		"Ability17"					"special_bonus_imba_troll_warlord_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_troll_warlord/troll_warlord_base_attack.vpcf"
 	}
@@ -2830,7 +2833,7 @@
 		//"Ability4"				"imba_windrunner_focusfire"
 
 		"Ability10"					"special_bonus_attack_damage_15"
-		"Ability11"					"special_bonus_unique_windranger_2"
+		"Ability11"					"special_bonus_mp_regen_3"
 		"Ability12"					"special_bonus_hp_175"
 		"Ability13"					"special_bonus_intelligence_13"
 		"Ability14"					"special_bonus_spell_amplify_8"
@@ -2926,6 +2929,12 @@
 	{
 		"override_hero"				"npc_dota_hero_zuus"
 
+		"AttackRate"				"1.5"
+
+		"AttackAnimationPoint"		"0.5"
+
+		"AttackRange"				"500"
+
 		//"Ability1"					"imba_zuus_arc_lightning"
 		//"Ability2"					"imba_zuus_lightning_bolt"
 		//"Ability3"					"imba_zuus_static_field"
@@ -2935,7 +2944,7 @@
 		"Ability11"					"special_bonus_hp_150"
 		"Ability12"					"special_bonus_armor_4"
 		"Ability13"					"special_bonus_magic_resistance_12"
-		"Ability14"					"special_bonus_unique_zeus_2"
+		"Ability14"					"special_bonus_movement_speed_25"
 		"Ability15"					"special_bonus_respawn_reduction_40"
 		"Ability16"					"special_bonus_cast_range_100"
 		"Ability17"					"special_bonus_unique_zeus"
