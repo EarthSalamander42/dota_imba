@@ -191,6 +191,7 @@ function PlantProximityMine(caster, ability, spawn_point)
 
     -- Create the mine unit
     local mine = CreateUnitByName("npc_imba_techies_proximity_mine", spawn_point, true, caster, caster, caster:GetTeamNumber())
+	mine:AddRangeIndicator(caster, nil, nil, ability:GetAOERadius(), 150, 22, 22, false, false, false)
 
     -- Set the mine's team to be the same as the caster
     local playerID = caster:GetPlayerID()
@@ -1829,6 +1830,7 @@ function imba_techies_minefield_sign:OnSpellStart()
 
     -- Create a new sign
     local sign = CreateUnitByName("npc_imba_techies_minefield_sign", target_point, false, caster, caster, caster:GetTeamNumber())
+	sign:AddRangeIndicator(caster, ability, "radius", nil, 255, 40, 40, true, false, false)
 
     -- Assign it to the ability
     self.assigned_sign = sign
