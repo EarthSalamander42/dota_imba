@@ -5283,12 +5283,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_as"				"40 40 40 40 80 120 160"
 			}
-
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"40 40 40 40 80 120 160"
-			}
 		}
 	}
 
@@ -23245,20 +23239,209 @@
 	}
 
 	//=================================================================================================================
+	// Troll Warlord's Berserker's Rage
+	//=================================================================================================================
+	"imba_troll_warlord_berserkers_rage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"troll_warlord_berserkers_rage"
+		"AbilitySound"					"Hero_TrollWarlord.BerserkersRage.Toggle"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_1"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hamstring_chance"		"10"
+				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hamstring_slow_pct"	"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hamstring_duration"	"0.25 0.25 0.25 0.25 0.5 0.75 1.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_move_speed"		"10 20 30 40 43 46 50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"6"
+			}
+			"06"
+			{	
+				"var_type"				"FIELD_INTEGER"
+				"melee_range"			"150"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_attack_time"		"1.50"
+			}	
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_chance"			"10"
+				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_7"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bash_duration"			"0.8 1.2 1.6 2.0 2.0 2.0 2.0"
+			}
+			"09"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bash_damage"			"20 30 40 50 60 70 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord's Whirling Axes (Ranged)
+	//=================================================================================================================
+	"imba_troll_warlord_whirling_axes_ranged"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
+		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"troll_warlord_whirling_axes_ranged"
+		"AbilitySound"					"Hero_TrollWarlord.WhirlingAxes.Ranged"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCastAnimation"			"ACT_DOTA_WHIRLING_AXES_RANGED"
+
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19 16 13 10 10 10 10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"50"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_width"					"100"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_speed"					"1500"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_range"					"1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_damage"				"75"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3 3.75 4.5 5.25 5.5 5.75 6.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"30"
+				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_2"
+			}
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_spread"				"25"
+			}
+			"08"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"axe_count"					"5"
+			}
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"on_hit_pct"				"25 25 25 25 50 75 100"
+			}
+		}
+	}
+	
+	//=================================================================================================================
 	// Troll Warlord's Whirling Axes (melee)
 	//=================================================================================================================
 	"imba_troll_warlord_whirling_axes_melee"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityType"					"DOTA_ABILITY_TYPE_BASIC"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_YES"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"				"1"
 		"AbilityTextureName"			"troll_warlord_whirling_axes_melee"
+		"AbilitySound"					"Hero_TrollWarlord.WhirlingAxes.Melee"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -23288,257 +23471,43 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"120 180 240 300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_tick"			"0.5"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_duration"		"3"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"blind_duration"		"4 5 6 7"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_troll_warlord.lua"
-				"Function"				"WhirlingAxesMelee"
-
-				"sound_cast"			"Hero_TrollWarlord.WhirlingAxes.Melee"
-				"sound_hit"				"Hero_TrollWarlord.WhirlingAxes.Target"
-				"particle_axe"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_melee.vpcf"
-				"modifier_miss"			"modifier_imba_whirling_axes_melee_debuff_dummy"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_whirling_axes_melee_debuff"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"OnAttackFailed"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"WhirlingAxesMeleeAttackMiss"
-
-						"modifier_dummy"	"modifier_imba_whirling_axes_melee_debuff_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MISS_PERCENTAGE"		"100"
-				}
-			}
-
-			"modifier_imba_whirling_axes_melee_debuff_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsDebuff"					"1"
-				"IsPurgable"				"1"
-
-				"Duration"					"%blind_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"WhirlingAxesMeleeDebuffCreate"
-
-						"modifier_miss"		"modifier_imba_whirling_axes_melee_debuff"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"WhirlingAxesMeleeDebuffEnd"
-
-						"modifier_miss"		"modifier_imba_whirling_axes_melee_debuff"
-					}
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Troll Warlord's Whirling Axes (ranged)
-	//=================================================================================================================
-	"imba_troll_warlord_whirling_axes_ranged"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"				"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"				"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"					"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"					"1"
-		"AbilityTextureName"				"troll_warlord_whirling_axes_ranged"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"					"1000"
-		"AbilityCastPoint"					"0.2"
-		"AbilityCastAnimation"				"ACT_DOTA_WHIRLING_AXES_RANGED"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"					"18 16 14 12"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"					"50"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"						"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-			"particle"						"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
 				"var_type"					"FIELD_INTEGER"
-				"range"						"1000"
+				"damage"					"75 125 175 225 250 275 300"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"100"
+				"axe_radius"				"100"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"speed"						"1500"
+				"max_range"					"350"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage"					"15 20 25 30"
+				"axe_movement_speed"		"277"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"base_slow"					"-30"
+				"var_type"					"FIELD_FLOAT"
+				"blind_duration"			"7"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_slow"				"-5"
+				"blind_pct"					"100"
 			}
 			"07"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"3.0 3.75 4.5 5.25"
+				"var_type"					"FIELD_INTEGER"
+				"blind_stacks"				"2 3 4 5 6 7 8"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"base_axes"					"5 6 7 8"
-			}
-			"09"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"spread_angle"				"10"
-			}
-			"10"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"agility_per_axe"			"20"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_troll_warlord.lua"
-				"Function"				"WhirlingAxesRanged"
-				"Target"				"POINT"
-
-				"sound_cast"			"Hero_TrollWarlord.WhirlingAxes.Ranged"
-				"particle_axe"			"particles/units/heroes/hero_troll_warlord/troll_warlord_whirling_axe_ranged.vpcf"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"0"
-
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_troll_warlord.lua"
-				"Function"				"WhirlingAxesRangedHit"
-
-				"sound_hit"				"Hero_TrollWarlord.WhirlingAxes.Target"
-				"modifier_slow"			"modifier_imba_whirling_axes_ranged_debuff"
-				"modifier_stack"		"modifier_imba_whirling_axes_ranged_debuff_stack"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_whirling_axes_ranged_debuff"
-			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%base_slow"
-				}
-			}
-
-			"modifier_imba_whirling_axes_ranged_debuff_stack"
-			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsDebuff"				"1"
-				"IsPurgable"			"1"
-
-				"Duration"				"%duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stack_slow"
-				}
+				"var_type"					"FIELD_FLOAT"
+				"whirl_duration"			"3.0"
 			}
 		}
 	}
@@ -23550,9 +23519,15 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"							"ability_datadriven"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"				"troll_warlord_fervor"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
+		"FightRecapLevel"				"1"
+		"AbilityTextureName"			"troll_warlord_fervor"
+		"MaxLevel"						"7"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -23561,200 +23536,14 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_as"					"15 20 25 30"
+				"bonus_as"					"15 20 25 30 30 30 30"
+				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"duration"					"4"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_fervor"
-			{
-				"Passive"					"1"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"ThinkInterval"				"0.2"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"FervorLimitBreak"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"FervorAttack"
-
-						"modifier_stacks"	"modifier_imba_fervor_stacks"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_imba_fervor"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"FervorLimitBreakEnd"
-
-						"modifier_stacks"	"modifier_imba_fervor_stacks"
-						"modifier_dummy"	"modifier_imba_fervor_dummy"
-					}
-				}
-			}
-
-			"modifier_imba_fervor_stacks"
-			{
-				"Passive"					"0"
-				"IsHidden"					"1"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Attributes"				"MODIFIER_ATTRIBUTE_MULTIPLE"
-
-				"Duration"					"%duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"FervorStackUp"
-
-						"modifier_dummy"	"modifier_imba_fervor_dummy"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"FervorStackDown"
-
-						"modifier_dummy"	"modifier_imba_fervor_dummy"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
-			}
-
-			"modifier_imba_fervor_dummy"
-			{
-				"Passive"					"0"
-				"IsHidden"					"0"
-				"IsBuff"					"1"
-				"IsPurgable"				"0"
-
-				"Duration"					"%duration"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Troll Warlord's Berserker's Rage
-	//=================================================================================================================
-	"imba_troll_warlord_berserkers_rage"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-		"MaxLevel"						"1"
-		"AbilityTextureName"			"custom/troll_warlord_berserkers_rage"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
-		}
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_chance"			"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bash_damage"			"20"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"bash_duration"			"2.0"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_berserkers_rage"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_troll_warlord.lua"
-						"Function"		"BerserkersRageAttackStart"
-					}
-				}
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_troll_warlord.lua"
-						"Function"		"BerserkersRageAttack"
-
-						"sound_bash"	"Hero_TrollWarlord.BerserkersRage.Stun"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"internal/util.lua"
-						"Function"		"IllusionPassiveRemover"
-
-						"modifier"		"modifier_imba_berserkers_rage"
-					}
-				}
+				"switch_lose_pct"			"100 100 100 100 80 60 40"
+				"LinkedSpecialBonus"		"special_bonus_imba_troll_warlord_3"
 			}
 		}
 	}
@@ -23766,17 +23555,24 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_troll_warlord"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"SpellDispellableType"			"SPELL_DISPELLABLE_NO"
 		"SpellImmunityType"				"SPELL_IMMUNITY_ALLIES_YES"
 		"FightRecapLevel"				"2"
 		"AbilityTextureName"			"troll_warlord_battle_trance"
-
+		"AbilitySound"					"Hero_TrollWarlord.BattleTrance.Cast"
+		"MaxLevel"						"6"
+		"LevelsBetweenUpgrades"			"6"
+		"HasScepterUpgrade"				"1"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"0"
+		"AbilityCastRange"				"25000"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 
@@ -23793,6 +23589,7 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_troll_warlord.vsndevts"
+			"soundfile"					"soundevents/imba_soundevents.vsndevts"
 			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_cast.vpcf"
 			"particle"					"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
 		}
@@ -23804,134 +23601,254 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_as"				"60 120 180"
+				"bonus_as"				"60 120 180 200 220 240"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"5"
+				"var_type"				"FIELD_FLOAT"
+				"buff_duration"			"5.0"
+				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_6"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"trance_as"				"10"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"trance_duration"		"3"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bat_scepter"			"10 15 20"
-			}
-			"06"
-			{
 				"var_type"				"FIELD_FLOAT"
-				"total_duration"		"7.9"
+				"bonus_bat"				"1.5 1.5 1.5 1.4 1.3 1.2"
+				"LinkedSpecialBonus"	"special_bonus_imba_troll_warlord_8"
 			}
 		}
-
-		"OnSpellStart"
+	}
+	
+	//=================================================================================================================
+	// Troll Warlord Talent 1 (Level 10): Berserker's Rage grants armor, ms, and BAT while ranged
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_1"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
 		{
-			"RunScript"
-			{
-				"ScriptFile"			"hero/hero_troll_warlord.lua"
-				"Function"				"BattleTrance"
-
-				"modifier_buff"			"modifier_imba_battle_trance"
-				"modifier_trance"		"modifier_imba_battle_trance_trance"
-				"modifier_scepter"		"modifier_imba_battle_trance_scepter"
-				"particle_cast"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_cast.vpcf"
-				"sound_cast"			"Hero_TrollWarlord.BattleTrance.Cast"
-				"sound_global"			"Hero_TrollWarlord.BattleTrance.Cast.Team"
-			}
+			"01" 	"imba_troll_warlord_berserkers_rage"
 		}
 
-		"Modifiers"
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_battle_trance"
+			"01"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"EffectName"			"particles/units/heroes/hero_troll_warlord/troll_warlord_battletrance_buff.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Duration"				"%buff_duration"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_as"
-				}
+				"var_type"					"FIELD_INTEGER"
+				"armor"						"3"
 			}
-
-			"modifier_imba_battle_trance_trance"
+			"02"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%total_duration"
-
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"hero/hero_troll_warlord.lua"
-						"Function"			"BattleTranceAttack"
-
-						"modifier_buff"		"modifier_imba_battle_trance"
-						"modifier_stacks"	"modifier_imba_battle_trance_stacks"
-					}
-				}
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_pct"				"25"
 			}
-
-			"modifier_imba_battle_trance_scepter"
+			"03"
 			{
-				"Passive"				"0"
-				"IsHidden"				"1"
-				"IsBuff"				"1"
-				"IsPurgable"			"0"
-
-				"Duration"				"%buff_duration"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_troll_warlord.lua"
-						"Function"		"BattleTranceBatStart"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"hero/hero_troll_warlord.lua"
-						"Function"		"BattleTranceBatEnd"
-					}
-				}
+				"var_type"					"FIELD_FLOAT"
+				"bat"						"1.6"
 			}
+		}
+	}
 
-			"modifier_imba_battle_trance_stacks"
+	//=================================================================================================================
+	// Troll Warlord Talent 2 (Level 10): +% Whirling Axes (ranged) movement slow
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_whirling_axes_ranged"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsBuff"				"1"
-				"IsPurgable"			"1"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
 
-				"Duration"				"%trance_duration"
+	//=================================================================================================================
+	// Troll Warlord Talent 3 (Level 20): -% Fervor stack loss on target change
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_fervor"
+		}
 
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%trance_as"
-				}
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-15"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord Talent 4 (Level 20): + Fervor attack speed per stack
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_fervor"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord Talent 5 (Level 30): Reduced Whirling Axes cooldown (both versions)
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_whirling_axes_ranged"
+			"02" 	"imba_troll_warlord_whirling_axes_melee"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"7"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord Talent 6 (Level 30): Additional Battle Trance duration
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_battle_trance"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord Talent 7 (Level 40): +% Bash/Hamstring chance
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_berserkers_rage"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Troll Warlord Talent 8 (Level 40): Battle Trance BAT improvement
+	//=================================================================================================================
+	"special_bonus_imba_troll_warlord_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		"LinkedAbility"
+		{
+			"01" 	"imba_troll_warlord_battle_trance"
+		}
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						"-0.2"
 			}
 		}
 	}
