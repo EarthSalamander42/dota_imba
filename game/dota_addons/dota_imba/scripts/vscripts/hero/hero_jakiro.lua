@@ -924,7 +924,7 @@ function modifier_imba_macropyre_thinker:OnCreated( kv )
 		local ability 				= self:GetAbility()
 		local target 				= ability:GetCursorPosition()
 		local ability_level 		= ability:GetLevel() - 1
-		local scepter 				= HasScepter(caster)
+		local scepter 				= caster:HasScepter()
 
 		local path_radius 			= ability:GetLevelSpecialValueFor("path_radius", ability_level)
 		local trail_amount 			= ability:GetLevelSpecialValueFor("trail_amount", ability_level)

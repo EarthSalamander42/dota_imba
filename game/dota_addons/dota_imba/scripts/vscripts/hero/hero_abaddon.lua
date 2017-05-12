@@ -489,7 +489,7 @@ function modifier_imba_curse_of_avernus_debuff:OnTakeDamage(kv)
 				if caster:HasModifier("modifier_borrowed_time_caster_buff") then
 					local buffed_allies = caster._borrowed_time_buffed_allies
 					-- Aghanim heal allies
-					if buffed_allies and HasScepter(caster) then
+					if buffed_allies and caster:HasScepter() then
 						for k,_ in pairs(buffed_allies) do
 							-- Show heal animation on allies
 							healFX = ParticleManager:CreateParticle("particles/generic_gameplay/generic_lifesteal.vpcf", PATTACH_POINT_FOLLOW, k)
