@@ -492,8 +492,8 @@ function modifier_imba_headshot_attacks:OnCreated()
         self.particle_slow = "particles/units/heroes/hero_sniper/sniper_headshot_slow.vpcf"
         self.particle_stun = "particles/hero/sniper/perfectshot_stun.vpcf"
         self.modifier_headshot_counter = "modifier_imba_headshot_counter"
-        self.modifier_headshot_slow = "modifier_imba_headshot_slow"
-        self.modifier_perfectshot_stun = "modifier_imba_perfectshot_stun"
+        self.modifier_imba_headshot_slow = "modifier_imba_headshot_slow"
+        self.modifier_imba_perfectshot_stun = "modifier_imba_perfectshot_stun"
         self.ability_aim = "imba_sniper_take_aim"
 
         -- Ability specials
@@ -635,8 +635,8 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 
             -- If a Perfectshot is marked, headshot and stun the target
             if self.attack_perfectshot_stun then
-                target:AddNewModifier(self.caster, self.ability, self.modifier_headshot_slow, {duration = headshot_duration})
-                target:AddNewModifier(self.caster, self.ability, self.modifier_perfectshot_stun, {duration = self.perfectshot_stun_duration})
+                target:AddNewModifier(self.caster, self.ability, self.modifier_imba_headshot_slow, {duration = headshot_duration})
+                target:AddNewModifier(self.caster, self.ability, self.modifier_imba_perfectshot_stun, {duration = perfectshot_stun_duration})
 
                 -- Add Perfectshot particle effects
                 local particle_stun_fx = ParticleManager:CreateParticle(self.particle_stun, PATTACH_OVERHEAD_FOLLOW, target)
@@ -651,7 +651,7 @@ function modifier_imba_headshot_attacks:OnAttackLanded(keys)
 
             -- Not a Perfectshot, but might be a Headshot
             elseif self.attack_headshot_slow then
-                target:AddNewModifier(self.caster, self.ability, self.modifier_headshot_slow, {duration = headshot_duration})
+                target:AddNewModifier(self.caster, self.ability, self.modifier_imba_headshot_slow, {duration = headshot_duration})
 
                 -- Add Headshot particle effects
                 local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_OVERHEAD_FOLLOW, target)
@@ -872,6 +872,9 @@ function modifier_imba_take_aim_range:IsHidden() return true end
 function modifier_imba_take_aim_range:IsPurgable() return false end
 function modifier_imba_take_aim_range:IsDebuff() return false end
     
+function modifier_imba_take_aim_range:OnRefresh()
+    self:OnCreated()
+end
 
 function modifier_imba_take_aim_range:OnIntervalThink()
     if IsServer() then
@@ -1017,7 +1020,7 @@ function imba_sniper_assassinate:OnAbilityPhaseStart()
                                     scepter_radius,
                                     DOTA_UNIT_TARGET_TEAM_ENEMY,
                                     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                    DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+                                    DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
                                     FIND_ANY_ORDER,
                                     false)
     end
@@ -1086,7 +1089,7 @@ function imba_sniper_assassinate:OnSpellStart()
                                     scepter_radius,
                                     DOTA_UNIT_TARGET_TEAM_ENEMY,
                                     DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-                                    DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
+                                    DOTA_UNIT_TARGET_FLAG_NO_INVIS + DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES,
                                     FIND_ANY_ORDER,
                                     false)
     end    
@@ -1171,8 +1174,11 @@ function imba_sniper_assassinate:AssassinateHit(target)
     local kill_responses = {"sniper_snip_ability_assass_03", "sniper_snip_ability_assass_04", "sniper_snip_ability_assass_05", "sniper_snip_ability_assass_03", "sniper_snip_kill_03", "sniper_snip_kill_08", "sniper_snip_kill_10", "sniper_snip_kill_13", "sniper_snip_tf2_01", "sniper_snip_tf2_01"}
     local particle_sparks = "particles/units/heroes/hero_sniper/sniper_assassinate_impact_sparks.vpcf"
     local particle_light = "particles/units/heroes/hero_sniper/sniper_assassinate_endpoint.vpcf"
+    local particle_stun = "particles/hero/sniper/perfectshot_stun.vpcf"
     local modifier_ministun = "modifier_imba_assassinate_ministun"
-    local modifier_headshot = "modifier_imba_headshot_attacks"
+    local modifier_perfectshot = "modifier_imba_perfectshot_stun"
+    local modifier_headshot = "modifier_imba_headshot_slow"
+    local head_shot_ability = "imba_sniper_headshot"        
     local scepter = caster:HasScepter()
 
     -- Ability special
@@ -1226,23 +1232,51 @@ function imba_sniper_assassinate:AssassinateHit(target)
             target:AddNewModifier(caster, ability, modifier_ministun, {duration = ministun_duration})
         end
     else
-        -- find the Headshot modifier and perform an instant Perfect Shot.
-        if caster:HasModifier(modifier_headshot) then
-            local modifier_headshot_handler = caster:FindModifierByName(modifier_headshot)
+        -- Calculate the damage based on the attack damage of the caster, plus Perfectshot critical damage bonus
+        if caster:HasAbility(head_shot_ability) then
+            local head_shot_ability_handler = caster:FindAbilityByName(head_shot_ability)
+            if head_shot_ability_handler then
+                -- Get headshot ability specials
+                local perfectshot_critical_dmg_pct = head_shot_ability_handler:GetSpecialValueFor("perfectshot_critical_dmg_pct")
+                local headshot_duration = head_shot_ability_handler:GetSpecialValueFor("headshot_duration")
+                local perfectshot_stun_duration = head_shot_ability_handler:GetSpecialValueFor("perfectshot_stun_duration")
 
-            -- Since OnAttackStart doesn't proc through Perform Attack, it is adjusted here
-            if modifier_headshot_handler then
-                modifier_headshot_handler:ApplyAllMarks()
-                modifier_headshot_handler.increment_stacks = false
-                caster:PerformAttack(target, false, true, false, true, false, false, true)
+                -- Get the caster's attack damage
+                local damage = caster:GetAverageTrueAttackDamage(target) * (perfectshot_critical_dmg_pct * 0.01)
 
-                -- For some reason 
-                Timers:CreateTimer(FrameTime(), function()
-                    modifier_headshot_handler.attack_perfectshot_stun = false
-                    modifier_headshot_handler.attack_headshot_slow = false
-                end)                
-            end
+                --Deal damage to the target
+                local damageTable = {victim = target,
+                                     attacker = caster, 
+                                     damage = damage,
+                                     damage_type = DAMAGE_TYPE_PHYSICAL,
+                                     ability = ability
+                                    }
+        
+                ApplyDamage(damageTable)
+
+                -- Imitate a critical by sending an overhead message
+                SendOverheadEventMessage(nil, OVERHEAD_ALERT_CRITICAL, target, damage, nil)
+
+                -- Perform a fake attack to proc on-hit effects
+                caster:PerformAttack(target, false, true, true, true, false, true, true)
+
+                -- Perfectshot stun the target, and headshot slow it
+                target:AddNewModifier(caster, ability, modifier_headshot, {duration = headshot_duration})
+                target:AddNewModifier(caster, ability, modifier_perfectshot, {duration = perfectshot_stun_duration})
+
+                -- Add Perfectshot particle effects
+                local particle_stun_fx = ParticleManager:CreateParticle(particle_stun, PATTACH_OVERHEAD_FOLLOW, target)
+                ParticleManager:SetParticleControl(particle_stun_fx, 0, target:GetAbsOrigin())
+                ParticleManager:SetParticleControl(particle_stun_fx, 1, target:GetAbsOrigin())
+
+                -- Remove particles when they end
+                Timers:CreateTimer(headshot_duration, function()
+                    ParticleManager:DestroyParticle(particle_stun_fx, false)
+                    ParticleManager:ReleaseParticleIndex(particle_stun_fx)
+                end)
+            end            
         end
+        
     end
 
     -- #2 Talent: Assassinate now knockbacks all units hit
