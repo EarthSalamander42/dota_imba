@@ -12298,7 +12298,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aoe_scepter"			"325"
+				"aoe_scepter"			"350"
 			}
 			"06"
 			{
