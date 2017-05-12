@@ -5437,6 +5437,8 @@
 		"AbilityTextureName"			"axe_culling_blade"
 		"MaxLevel"						"6"
 
+		"HasScepterUpgrade"				"1"
+
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
