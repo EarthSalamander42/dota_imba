@@ -12046,40 +12046,56 @@
 	}
 
 	//=================================================================================================================
-	// Death Prophet: Carrion Swarm
+	// Death Prophet: Crypt Swarm
 	//=================================================================================================================
 	"death_prophet_carrion_swarm"
 	{
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.25"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"4.5 3.75 3.0 2.25"
+		"AbilityCastRange"				"1000"
 
-		"AbilityDamage"					"125 200 275 350"
+		"AbilityCooldown"				"8 7 6 5 4.5 4.0 3.5"
 
-		"AbilityManaCost"				"90 100 110 120"
+		"AbilityDamage"					"100 175 250 325 340 355 370"
+
+		"AbilityManaCost"				"105 120 135 150 155 160 165"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"start_radius"			"150"
+				"start_radius"			"110 110 110 110 130 150 170"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"end_radius"			"325"
+				"end_radius"			"300 300 300 300 320 340 360"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"range"					"1000"
+				"range"					"810 810 810 810 900 990 1080"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1300"
+				"speed"					"1100 1100 1100 1100 1250 1400 1550"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Death Prophet: Crypt Swarm cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_death_prophet_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1.0"
 			}
 		}
 	}
@@ -12089,23 +12105,23 @@
 	//=================================================================================================================
 	"death_prophet_silence"
 	{
-		"AbilityCastPoint"				"0.35"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"16 14 12 10"
+		"AbilityCooldown"				"15 14 13 12 11 10 9"
 
-		"AbilityManaCost"				"60"
+		"AbilityDuration"				"3.0 4.0 5.0 6.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"450 500 550 600"
+				"radius"				"425 425 425 425 475 525 575"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0 4.0 5.0 6.0"
+				"duration"				"3.0 4.0 5.0 6.0 6.0 6.0 6.0"
 			}
 		}
 	}	
@@ -12115,36 +12131,36 @@
 	//=================================================================================================================
 	"death_prophet_spirit_siphon"
 	{
-		"AbilityCastRange"				"600"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"50"
+		"AbilityManaCost"				"70 65 60 55 50 45 40"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30"
+				"damage"				"14 16 18 20 22 24 26"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_pct"			"1.0 3.0 5.0 7.0"
+				"damage_pct"			"1.0 2.5 4.0 5.5 5.75 6.0 6.25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"haunt_duration"		"7"
+				"haunt_duration"		"6.0 6.0 6.0 6.0 6.5 7.0 7.5"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_slow"			"12 16 20 24"
+				"movement_slow"			"5 10 15 20 20 20 20"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"siphon_buffer"			"300"
+				"siphon_buffer"			"250 250 250 250 300 350 400"
 			}
 			"06"
 			{
@@ -12154,7 +12170,7 @@
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"charge_restore_time"	"18"
+				"charge_restore_time"	"45"
 			}
 		}
 	}
@@ -12164,11 +12180,13 @@
 	//=================================================================================================================
 	"death_prophet_exorcism"
 	{
-		"AbilityCastPoint"				"0.35"
+		"MaxLevel"						"6"
 
-		"AbilityCooldown"				"140 115 90"
+		"AbilityCooldown"				"145 140 135 120 105 90"
 
 		"AbilityDuration"				"35"
+
+		"AbilityManaCost"				"200 300 400 425 450 475"
 
 		"AbilitySpecial"
 		{
@@ -12180,13 +12198,13 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirits"				"24"
+				"spirits"				"12 18 24"
 				"LinkedSpecialBonus"	"special_bonus_unique_death_prophet"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_speed"			"500 575 650"
+				"spirit_speed"			"500 500 500 550 600 650"
 			}
 			"04"
 			{
@@ -12201,27 +12219,27 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"min_damage"			"55 90 140"
+				"min_damage"			"55 65 75 85 95 105"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_damage"			"55 90 140"
+				"max_damage"			"55 65 75 85 95 105"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_percent"			"50"
+				"heal_percent"			"25"
 			}
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"average_damage"		"55 90 140"
+				"average_damage"		"55 65 75 85 95 105"
 			}
 			"10"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ghost_spawn_rate"		"0.3"
+				"ghost_spawn_rate"		"0.2"
 			}
 		}
 	}
@@ -12246,15 +12264,13 @@
 	//=================================================================================================================
 	"tidehunter_gush"
 	{
-		"AbilityCastRange"				"900"
+		"MaxLevel"						"7"
 
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"12 12 12 12 11 10 9"
 
-		"AbilityDamage"					"120 180 240 300"
+		"AbilityDuration"				"4.0"
 
-		"AbilityManaCost"				"100"
+		"AbilityDamage"					"115 170 225 280 300 320 340"
 
 		"AbilitySpecial"
 		{
@@ -12271,28 +12287,28 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"negative_armor"		"4 6 8 10"
+				"negative_armor"		"4 5 6 7 8 9 10"
 				"LinkedSpecialBonus"	"special_bonus_unique_tidehunter"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_scepter"			"1800"
+				"speed_scepter"			"1600"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aoe_scepter"			"400"
+				"aoe_scepter"			"325"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cooldown_scepter"		"6"
+				"cooldown_scepter"		"7"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_range_scepter"	"2000"
+				"cast_range_scepter"	"1800"
 			}
 		}
 	}
@@ -12307,7 +12323,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"6"
+				"value"				"5"
 			}
 		}
 	}
@@ -12317,22 +12333,24 @@
 	//=================================================================================================================
 	"tidehunter_kraken_shell"
 	{
+		"MaxLevel"						"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"20 40 60 80"
+				"damage_reduction"		"18 30 42 54 60 66 72"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_cleanse"		"450"
+				"damage_cleanse"		"600 550 500 450 425 400 375"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_reset_interval"	"6.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_reset_interval"	"6"
 			}
 		}
 	}
@@ -12342,32 +12360,32 @@
 	//=================================================================================================================
 	"tidehunter_anchor_smash"
 	{
-		"AbilityCastRange"				"475"
+		"MaxLevel"						"7"
 
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"375 375 375 375 410 445 480"
 
-		"AbilityCooldown"				"4.0"
+		"AbilityCooldown"				"7 6 5 4 4 4 4"
 
-		"AbilityDamage"					"100 175 250 325"
+		"AbilityDamage"					"100 150 200 250 275 300 325"
 
-		"AbilityManaCost"				"30 40 50 60"
+		"AbilityManaCost"				"30 40 50 60 63 66 70"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"-50 -60 -70 -80"
+				"damage_reduction"		"-45 -50 -55 -60 -65 -70 -75"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"reduction_duration"	"6.0"
+				"var_type"				"FIELD_INTEGER"
+				"reduction_duration"	"6 6 6 6 7 8 9"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"475"
+				"radius"				"375 375 375 375 410 445 480"
 			}
 		}
 	}
@@ -12377,32 +12395,34 @@
 	//=================================================================================================================
 	"tidehunter_ravage"
 	{
-		"AbilityCastRange"			"1000 1250 1500"
+		"MaxLevel"					"6"
+
+		"AbilityCastRange"			"1025 1025 1025 1175 1325 1475"
 
 		"AbilityCastPoint"			"0.0"
 		
-		"AbilityCooldown"			"120 80 40"
+		"AbilityCooldown"			"150 140 130 110 90 70"
 
-		"AbilityDamage"				"300 400 500"
+		"AbilityDamage"				"240 330 420 460 500 540"
 
-		"AbilityManaCost"			"150 75 0"
+		"AbilityManaCost"			"150 225 325 340 355 370"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1000 1250 1500"
+				"radius"			"1025 1025 1025 1175 1325 1475"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"900 1100 1300"
+				"speed"				"775 775 775 1000 1225 1450"
 			}
 			"03"
 			{	
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.2 2.6 3.0"
+				"duration"			"2.2 2.5 2.8 3.0 3.2 3.4"
 			}
 		}
 	}
