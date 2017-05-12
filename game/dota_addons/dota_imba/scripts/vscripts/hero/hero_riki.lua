@@ -211,7 +211,6 @@ end
 if imba_riki_blink_strike == nil then imba_riki_blink_strike = class({}) end
 LinkLuaModifier( "modifier_imba_riki_blink_strike_debuff", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )					-- Turn rate slow
 LinkLuaModifier( "modifier_imba_riki_blink_strike_outofworld", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )				-- Sets the caster out of world for Blink Strike jumping
-LinkLuaModifier( "modifier_imba_riki_blink_strike_small_range_indicator", "hero/hero_riki.lua", LUA_MODIFIER_MOTION_NONE )	-- Small cast range indicator
 
 function imba_riki_blink_strike:GetCastRange()
 	local baseCastRange = self:GetSpecialValueFor("no_jump_cast_range")
@@ -229,17 +228,16 @@ function imba_riki_blink_strike:GetBehavior()
 function imba_riki_blink_strike:OnUpgrade()
 	if IsServer() then
 		local caster = self:GetCaster()
-		if caster:IsOwnedByAnyPlayer() and not caster:IsIllusion() and self:GetSpecialValueFor("max_jumps") > 0 then
-			caster:AddNewModifier(caster, self, "modifier_imba_riki_blink_strike_small_range_indicator", {})
+		if caster:IsOwnedByAnyPlayer() and not caster:IsIllusion() and (self:GetSpecialValueFor("max_jumps") > 0) and (not self.range_indicator) then
+			self.range_indicator = caster:AddRangeIndicator(caster, self, "no_jump_cast_range", nil, 110, 80, 255, false, false, true)
 		end
 	end
 end
 
 function imba_riki_blink_strike:OnUnStolen()
 	if IsServer() then
-		local caster = self:GetCaster()
-		if caster:HasModifier("modifier_imba_riki_blink_strike_small_range_indicator") then
-			caster:RemoveModifierByName("modifier_imba_riki_blink_strike_small_range_indicator")
+		if self.range_indicator then
+			self.range_indicator:Destroy()
 		end
 	end
 end
@@ -469,46 +467,6 @@ function imba_riki_blink_strike:GetCustomCastErrorTarget( target )
 	
 	return "#dota_hud_error_target_unreachable"
 end
-
----------------------------------------------------
------	Blink Strike Small Range modifier	  -----
----------------------------------------------------
-if modifier_imba_riki_blink_strike_small_range_indicator == nil then modifier_imba_riki_blink_strike_small_range_indicator = class({}) end
-function modifier_imba_riki_blink_strike_small_range_indicator:RemoveOnDeath() return false end
-function modifier_imba_riki_blink_strike_small_range_indicator:IsPurgable() return false end
-function modifier_imba_riki_blink_strike_small_range_indicator:IsDebuff() return false end
-function modifier_imba_riki_blink_strike_small_range_indicator:IsHidden() return true end
-
-function modifier_imba_riki_blink_strike_small_range_indicator:OnCreated()
-	if IsServer() then
-		local parent = self:GetParent()
-		self.smallRangeParticle = ParticleManager:CreateParticleForPlayer("particles/hero/riki/secondary_range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent, parent:GetPlayerOwner())
-		self:StartIntervalThink(0.2)
-	end
-end
-
-function modifier_imba_riki_blink_strike_small_range_indicator:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.smallRangeParticle, true)
-		ParticleManager:ReleaseParticleIndex(self.smallRangeParticle)
-		self:Destroy()
-	end
-end
-
-function modifier_imba_riki_blink_strike_small_range_indicator:OnIntervalThink()
-	if IsServer() then
-		local parent = self:GetParent()
-		local ability = parent:FindAbilityByName("imba_riki_blink_strike")
-		
-		if parent:IsAlive() then
-			local range = ability:GetSpecialValueFor("no_jump_cast_range")
-			ParticleManager:SetParticleControl(self.smallRangeParticle, 3, Vector(range, 0, 0))
-		else
-			ParticleManager:SetParticleControl(self.smallRangeParticle, 3, Vector(0, 0, 0))
-		end
-	end
-end
-
 -----------------------------------
 -----	Blink Strike Debuff	  -----
 -----------------------------------

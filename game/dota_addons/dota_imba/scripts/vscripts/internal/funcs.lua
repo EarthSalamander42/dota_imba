@@ -809,3 +809,20 @@ function CalculateDistance(ent1, ent2)
 	local distance = (pos1 - pos2):Length2D()
 	return distance
 end
+
+function CDOTA_BaseNPC:AddRangeIndicator(hCaster, hAbility, sAttribute, iRange, iRed, iGreen, iBlue, bShowOnCooldown, bShowAlways, bWithCastRangeIncrease, bRemoveOnDeath)
+	if IsServer() then
+		local modifier = self:AddNewModifier(hCaster or self,hAbility, "modifier_imba_range_indicator", {
+			sAttribute = sAttribute,
+			iRange = iRange,
+			iRed = iRed,
+			iGreen = iGreen,
+			iBlue = iBlue,
+			bShowOnCooldown = bShowOnCooldown,
+			bShowAlways = bShowAlways,
+			bWithCastRangeIncrease = bWithCastRangeIncrease,
+			bRemoveOnDeath = bRemoveOnDeath
+		})
+		return modifier
+	end
+end

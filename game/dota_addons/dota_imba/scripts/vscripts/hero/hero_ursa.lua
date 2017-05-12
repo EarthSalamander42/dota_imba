@@ -984,7 +984,8 @@ function imba_ursa_territorial_hunter:OnSpellStart()
 		ability.territorial_tree = target
 
 		-- Create dummy
-		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())			
+		ability.territorial_dummy = CreateUnitByName("npc_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		ability.territorial_dummy:AddRangeIndicator(caster, ability, "vision_range", nil, 200, 160, 100, true, true, false)
 		ability.territorial_dummy:AddNewModifier(caster, ability, aura, {})
 		ability.territorial_dummy:SetAbsOrigin(ability.territorial_tree:GetAbsOrigin())			 
 	end	
@@ -1001,19 +1002,12 @@ modifier_terrorital_hunter_aura = class({})
 
 function modifier_terrorital_hunter_aura:OnCreated()
 	-- Start interval
-	self.range_pfx = ParticleManager:CreateParticleForPlayer("particles/hero/ursa/ursa_range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetPlayerOwner())
 	self:StartIntervalThink(0.2)
 end
 
 function modifier_terrorital_hunter_aura:OnIntervalThink()
 	if IsServer() then
 		local ability = self:GetAbility()
-		if not self:GetCaster().norange then
-			local range = ability:GetSpecialValueFor("vision_range")
-			ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(range, 0, 0))
-		else
-			ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(0, 0, 0))
-		end
 		-- Check if tree is cut down, kill dummy if it is
 		if not ability.territorial_tree:IsStanding() then
 			ability.territorial_dummy:Destroy()
@@ -1023,8 +1017,6 @@ function modifier_terrorital_hunter_aura:OnIntervalThink()
 end
 
 function modifier_terrorital_hunter_aura:OnDestroy()
-	ParticleManager:DestroyParticle(self.range_pfx, true)
-	ParticleManager:ReleaseParticleIndex(self.range_pfx)
 	self:StartIntervalThink(-1)
 end
 

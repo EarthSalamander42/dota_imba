@@ -594,7 +594,6 @@ end
 --			  PLAGUE WARD
 -------------------------------------------
 LinkLuaModifier("modifier_imba_plague_ward", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_plague_ward_gale_range", "hero/hero_venomancer", LUA_MODIFIER_MOTION_NONE)
 
 imba_venomancer_plague_ward = class({})
 function imba_venomancer_plague_ward:IsHiddenWhenStolen() return false end
@@ -645,11 +644,15 @@ function imba_venomancer_plague_ward:OnSpellStart()
 			caster:EmitSound("venomancer_venm_ability_ward_0"..math.random(1,6))
 		end
 		
+		local ability_gale = caster:FindAbilityByName("imba_venomancer_venomous_gale")
+		if ability_gale then
+			scourge_ward:AddRangeIndicator(caster, ability_gale, "ward_range", nil, 183, 247, 33, false, false, true)
+		end
+		
 		scourge_ward:SetControllableByPlayer(caster:GetPlayerID(), true)
 		scourge_ward:SetForwardVector(direction)
 		scourge_ward:AddNewModifier(caster, self, "modifier_kill", {duration = duration})
 		scourge_ward:AddNewModifier(caster, self, "modifier_magic_immune", {duration = duration})
-		scourge_ward:AddNewModifier(caster, self, "modifier_imba_plague_ward_gale_range", {duration = duration})
 		scourge_ward:SetBaseMaxHealth(scourge_hp)
 		scourge_ward:SetMaxHealth(scourge_hp)
 		scourge_ward:SetHealth(scourge_hp)
@@ -721,47 +724,6 @@ function modifier_imba_plague_ward:OnDeath( params )
 			end
 			if #self.ward_list == 0 then
 				self:Destroy()
-			end
-		end
-	end
-end
-
--------------------------------------------
-modifier_imba_plague_ward_gale_range = class({})
-function modifier_imba_plague_ward_gale_range:IsDebuff() return false end
-function modifier_imba_plague_ward_gale_range:IsHidden() return true end
-function modifier_imba_plague_ward_gale_range:IsPurgable() return false end
-function modifier_imba_plague_ward_gale_range:IsPurgeException() return false end
-function modifier_imba_plague_ward_gale_range:IsStunDebuff() return false end
-function modifier_imba_plague_ward_gale_range:RemoveOnDeath() return true end
--------------------------------------------
-
-function modifier_imba_plague_ward_gale_range:OnCreated()
-	if IsServer() then
-		self.range_pfx = ParticleManager:CreateParticleForPlayer("particles/hero/venomancer/range_finder.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), self:GetCaster():GetPlayerOwner())
-		self:StartIntervalThink(0.2)
-	end
-end
-
-function modifier_imba_plague_ward_gale_range:OnDestroy()
-	if IsServer() then
-		ParticleManager:DestroyParticle(self.range_pfx, true)
-		ParticleManager:ReleaseParticleIndex(self.range_pfx)
-		self:Destroy()
-	end
-end
-
-function modifier_imba_plague_ward_gale_range:OnIntervalThink()
-	if IsServer() then
-		local caster = self:GetCaster()
-		local ability = caster:FindAbilityByName("imba_venomancer_venomous_gale")
-		
-		if caster:IsAlive() and ability then
-			if ability:IsCooldownReady() and (not caster.norange) then
-				local range = ability:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
-				ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(range, 0, 0))
-			else
-				ParticleManager:SetParticleControl(self.range_pfx, 3, Vector(0, 0, 0))
 			end
 		end
 	end
