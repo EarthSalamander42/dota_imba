@@ -1,0 +1,79 @@
+"addon"
+{
+	"Unassigned"      								"未知队伍"
+	"Spectator"       								"观察者"
+	"Neutrals"        								"中立"
+	"NoTeam"          								"无队伍"
+
+	"DOTA_GoodGuys"   								"天辉"
+	"DOTA_BadGuys"    								"夜魇"
+	"DOTA_Custom1"    								"粉色"
+	"DOTA_Custom2"    								"橙色"
+	"DOTA_Custom3"    								"蓝色"
+	"DOTA_Custom4"    								"绿色"
+	"DOTA_Custom5"    								"棕色"
+	"DOTA_Custom6"    								"青色"
+	"DOTA_Custom7"    								"橄榄色"
+	"DOTA_Custom8"    								"粉色"
+	
+	"addonname"										"Dota IMBA"
+
+	"scoreboard_tool_tip_mute_player"				"屏蔽"
+	"scoreboard_tool_tip_active_mute_player"		"（已屏蔽）"
+	"scoreboard_tool_tip_share_unit"				"共享操作（小兵）"
+	"scoreboard_tool_tip_share_hero"				"共享操作（英雄）"
+	"scoreboard_tool_tip_active_share_unit_hero"	"（已共享）"
+	"scoreboard_tool_tip_disable_help"				"禁用帮助"
+	"scoreboard_tool_tip_active_disable_help"		"（已禁用帮助）"
+
+	//=================================================================================================================
+	// Generic talent names
+	//=================================================================================================================
+
+	"imba_generic_talent_damage"					"攻击力"
+	"imba_generic_talent_damage_Description"		"攻击力提高20。"
+	"imba_generic_talent_all_stats"					"全属性"
+	"imba_generic_talent_strength"					"力量"
+	"imba_generic_talent_agility"					"敏捷"
+	"imba_generic_talent_intelligence"				"智力"
+	"imba_generic_talent_armor"						"护甲"
+	"imba_generic_talent_magic_resistance"			"魔法抗性"
+	"imba_generic_talent_evasion"					"闪避"
+	"imba_generic_talent_move_speed"				"移动速度"
+	"imba_generic_talent_attack_speed"				"攻击速度"
+	"imba_generic_talent_hp"						"生命值"
+	"imba_generic_talent_hp_regen"					"生命回复速度"
+	"imba_generic_talent_mp"						"魔法值"
+	"imba_generic_talent_mp_regen"					"魔法回复速度"
+	"imba_generic_talent_attack_range"				"攻击距离"
+	"imba_generic_talent_cast_range"				"施法距离"
+	"imba_generic_talent_attack_life_steal"			"吸血"
+	"imba_generic_talent_spell_life_steal"			"技能吸血"
+	"imba_generic_talent_spell_power"				"技能增强"
+	"imba_generic_talent_cd_reduction"				"冷却时间缩短"
+	"imba_generic_talent_bonus_xp"					"额外经验值获取"
+	"imba_generic_talent_respawn_reduction"			"复活时间减少"
+    "talent_window_header"                          "天       赋       树"
+    "talent_window_footer"                          "按住Alt快速查看所有天赋内容"
+
+    //=================================================================================================================
+	// Skill talent names
+	//=================================================================================================================
+	// Abaddon
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_title"						"深远魔霭"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_Description"					"亚巴顿提高自己对魔霭圣地力量的掌握能力，使无光之盾的施法距离提高150。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_title"						"魔霭精研"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_Description"					"亚巴顿令魔霭的力量更加稳定，使无光之盾的持续时间增加45秒。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_title"						"散逸之雾"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_Description"					"亚巴顿身经百战，操纵魔霭之力更加自如，死亡缠绕的冷却时间降低1.5秒。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_title"						"深渊赐福"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_Description"					"魔霭围绕在亚巴顿的利剑周围，强化了亚巴顿的武器，魔霭诅咒将额外降低目标5%移动速度和30攻击速度。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_title"						"漆黑壁垒"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_Description"					"召唤无光之盾时，四散的魔霭还会包围目标，使无光之盾的吸收量增加200点。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_title"						"魔霭的仆从"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_Description"					"以鲜血献祭魔霭，魔霭也会接受你。魔霭圣地的力量的效果提高50%：亚巴顿将消耗更多的生命，但他的技能也将更具威力。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_title"						"不破魔霭"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_Description"					"亚巴顿的决心增强十倍，使回光返照的持续时间增加1秒。"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_title"						"魔霭普世"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_Description"					"魔霭圣池的气息散布在亚巴顿盟友的周围，回光返照伤害转移的作用范围提高300。"			
+}
