@@ -206,7 +206,10 @@ function AnimateImbaTalentButton(){
     if(imbaBtnOverlay){
         var currentShownUnitID = Players.GetLocalPlayerPortraitUnit();
 
-        if(Entities.IsValidEntity(currentShownUnitID) && Entities.IsRealHero(currentShownUnitID)){
+        if(Entities.IsValidEntity(currentShownUnitID) &&
+            Entities.IsRealHero(currentShownUnitID) &&
+            Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer())){
+
             imbaBtnOverlay.SetHasClass("upgrade", CanHeroUpgradeAnyTalents(currentShownUnitID));
         }else{
             imbaBtnOverlay.RemoveClass("upgrade");
@@ -443,7 +446,9 @@ function PopulateIMBATalentWindow(){
                                         TalentChoicePanel.AddClass("disabled");
                                     }
 
-                                }else if(Entities.GetLevel(currentShownUnitID) >= currentRowLevel && Entities.GetAbilityPoints(currentShownUnitID) > 0){
+                                }else if(Entities.GetLevel(currentShownUnitID) >= currentRowLevel &&
+                                        Entities.GetAbilityPoints(currentShownUnitID) > 0 &&
+                                        Entities.IsControllableByPlayer(currentShownUnitID, Players.GetLocalPlayer())){
                                     //Only selectable if entity has the right level and has an ability point to spend
 
                                     //Add .selectable class to TalentChoicePanel if user has not upgraded the row of talents
@@ -494,7 +499,6 @@ function OpenImbaTalentWindow(bol_open){
         }else{
             talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             talentWindow.RemoveClass(OPEN_TALENT_WINDOW_CLASS);
-            talentWindow.SetAttributeInt(ATTRIBUTE_UNIT_ID, -1);
             btnOverlay.RemoveClass("selected");
         }
 
