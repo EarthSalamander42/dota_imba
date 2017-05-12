@@ -94,68 +94,37 @@ function GameMode:OnFirstPlayerLoaded()
 	-- IMBA: Contributor models
 	-------------------------------------------------------------------------------------------------
 
-	--local contributor_locations = {}
-	--for i = 1, 9 do
-	--	contributor_locations[i] = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
-	--end
-	--for i = 10, 30 do
-	--	contributor_locations[i] = Entities:FindByName(nil, "contributor_location_"..i):GetAbsOrigin()
-	--end
+	-- Contributor statue list
+	local contributor_statues = {
+		"npc_imba_contributor_hjort",
+		"npc_imba_contributor_martyn",
+		"npc_imba_contributor_mikkel",
+		"npc_imba_contributor_anees",
+		"npc_imba_contributor_swizard",
+		"npc_imba_contributor_phroureo",
+		"npc_imba_contributor_catchy",
+		"npc_imba_contributor_hewdraw",
+		"npc_imba_contributor_zimber",
+		"npc_imba_contributor_matt",
+		"npc_imba_contributor_maxime"
+	}
 
-	-- Martyn Garcia
-	--local current_position = table.remove(contributor_locations, RandomInt(1, 30))
-	--local martyn_model = CreateUnitByName("npc_imba_contributor_martyn", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--martyn_model:SetForwardVector(RandomVector(100))
-
-	-- Mikkel Garcia
-	--current_position = table.remove(contributor_locations, RandomInt(1, 29))
-	--local mikkel_model = CreateUnitByName("npc_imba_contributor_mikkel", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--mikkel_model:SetForwardVector(RandomVector(100))
-
-	-- Hjort
-	--current_position = table.remove(contributor_locations, RandomInt(1, 28))
-	--local hjort_model = CreateUnitByName("npc_imba_contributor_hjort", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--hjort_model:SetForwardVector(RandomVector(100))
-
-	-- Anees
-	--current_position = table.remove(contributor_locations, RandomInt(1, 27))
-	--local anees_model = CreateUnitByName("npc_imba_contributor_anees", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--anees_model:SetForwardVector(RandomVector(100))
-
-	-- Swizard
-	--current_position = table.remove(contributor_locations, RandomInt(1, 26))
-	--local swizard_model = CreateUnitByName("npc_imba_contributor_swizard", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--swizard_model:SetForwardVector(RandomVector(100))
-
-	-- Phroureo
-	--current_position = table.remove(contributor_locations, RandomInt(1, 25))
-	--local phroureo_model = CreateUnitByName("npc_imba_contributor_phroureo", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--phroureo_model:SetForwardVector(RandomVector(100))
-
-	-- Catchy
-	--current_position = table.remove(contributor_locations, RandomInt(1, 24))
-	--local catchy_model = CreateUnitByName("npc_imba_contributor_catchy", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--catchy_model:SetForwardVector(RandomVector(100))
-
-	-- Hewdraw
-	--current_position = table.remove(contributor_locations, RandomInt(1, 23))
-	--local hewdraw_model = CreateUnitByName("npc_imba_contributor_hewdraw", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--hewdraw_model:SetForwardVector(RandomVector(100))
-
-	-- Zimber
-	--current_position = table.remove(contributor_locations, RandomInt(1, 22))
-	--local zimber_model = CreateUnitByName("npc_imba_contributor_zimber", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--zimber_model:SetForwardVector(RandomVector(100))
-
-	-- Matt
-	--current_position = table.remove(contributor_locations, RandomInt(1, 21))
-	--local matt_model = CreateUnitByName("npc_imba_contributor_matt", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--matt_model:SetForwardVector(RandomVector(100))
-
-	-- Maxime
-	--current_position = table.remove(contributor_locations, RandomInt(1, 20))
-	--local maxime_model = CreateUnitByName("npc_imba_contributor_maxime", current_position, true, nil, nil, DOTA_TEAM_NEUTRALS)
-	--maxime_model:SetForwardVector(RandomVector(100))
+	-- Add 8 random contributor statues
+	local current_location
+	local current_statue
+	local statue_entity
+	for i = 1, 8 do
+		current_location = Entities:FindByName(nil, "contributor_location_0"..i):GetAbsOrigin()
+		current_statue = table.remove(contributor_statues, RandomInt(1, #contributor_statues))
+		if i <= 4 then
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_GOODGUYS)
+			statue_entity:SetForwardVector(Vector(1, 1, 0):Normalized())
+		else
+			statue_entity = CreateUnitByName(current_statue, current_location, true, nil, nil, DOTA_TEAM_BADGUYS)
+			statue_entity:SetForwardVector(Vector(-1, -1, 0):Normalized())
+		end
+		statue_entity:AddNewModifier(statue_entity, nil, "modifier_imba_contributor_statue", {})
+	end
 
 	-------------------------------------------------------------------------------------------------
 	-- IMBA: Arena mode score initialization
@@ -1314,21 +1283,20 @@ function GameMode:OnGameInProgress()
 				end			
 			end
 		end
-		
+
 		-- Assign final tower abilities from the table
 		TOWER_UPGRADE_TREE["hardlane"]["tier_3"][1] = tier_3_and_4_towers[1]
 		TOWER_UPGRADE_TREE["midlane"]["tier_3"][1] = tier_3_and_4_towers[2]
 		TOWER_UPGRADE_TREE["midlane"]["tier_41"][1] = tier_3_and_4_towers[3]
 		TOWER_UPGRADE_TREE["midlane"]["tier_42"][1] = tier_3_and_4_towers[4]
-		
+
 		-- Make sure that Tier 4 towers are distinct in the actives they get
 		TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] = GetRandomTowerAbility(4)
 		TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		while TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] == TOWER_UPGRADE_TREE["midlane"]["tier_41"][2] do
 			TOWER_UPGRADE_TREE["midlane"]["tier_42"][2] = GetRandomTowerAbility(4)
 		end
-				
-		
+
 		-- Safelane towers
 		for i = 1, 3 do
 			
