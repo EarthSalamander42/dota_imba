@@ -228,6 +228,11 @@
     z-index: 1;
 }
 
+.IMBA_Talent_Choice #IMBA_Talent_Choice_Image_Container.white_wash
+{
+    opacity: 0.15;
+}
+
 /*
     128x72 landscape default size
     80px will be the height for IMBA_Talent_Choice_Image_Container
