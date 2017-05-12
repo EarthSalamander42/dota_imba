@@ -11705,7 +11705,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"9 15 21 27 30 33 36"
+				"creep_damage"				"9 15 21 27 33 39 45"
 			}
 			"03"
 			{
@@ -11842,31 +11842,47 @@
 	//=================================================================================================================
 	"zuus_arc_lightning"
 	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.1"
+		"MaxLevel"						"7"
 
-		"AbilityDamage"					"100 120 140 160"
+		"AbilityCastRange"				"850 850 850 850 900 950 1000"
 
-		"AbilityCooldown"				"1.5"
+		"AbilityCastPoint"				"0.2 0.2 0.2 0.2 0.16 0.13 0.1"
 
-		"AbilityManaCost"				"65 70 75 80"
+		"AbilityDamage"					"90 110 130 150 160 170 180"
+
+		"AbilityManaCost"				"65"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"700 800 900 1000"
+				"radius"				"500 500 500 500 600 700 800"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"jump_count"			"6 10 15 20"
+				"jump_count"			"5 7 9 15 20 25 30"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"jump_delay"			"0.25 0.2 0.15 0.1"
+				"jump_delay"			"0.25 0.25 0.25 0.25 0.2 0.15 0.1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Zeus: bonus Arc Lightning damage
+	//=================================================================================================================
+	"special_bonus_unique_zeus_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"60"
 			}
 		}
 	}
@@ -11876,31 +11892,32 @@
 	//=================================================================================================================
 	"zuus_lightning_bolt"
 	{
-		"AbilityCastRange"				"800 900 1000 1100"
-		"AbilityCastPoint"				"0.3"
+		"MaxLevel"						"7"
 
-		"AbilityDamage"					"125 200 275 350"
+		"AbilityCastRange"				"700 700 700 700 800 900 1000"
 
-		"AbilityCooldown"				"6.0 5.5 5.0 4.5"
+		"AbilityDamage"					"125 200 275 350 375 400 425"
 
-		"AbilityManaCost"				"75 95 115 135"
+		"AbilityCooldown"				"6.0 6.0 6.0 6.0 5.5 5.0 4.5"
+
+		"AbilityManaCost"				"75 95 115 135 140 145 150"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"1200"
+				"true_sight_radius"		"750"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_day"		"1200"
+				"sight_radius_day"		"750"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_night"	"1200"
+				"sight_radius_night"	"750"
 			}
 			"04"
 			{
@@ -11910,7 +11927,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spread_aoe"			"500"
+				"spread_aoe"			"325 325 325 325 375 425 475"
 			}
 		}
 	}
@@ -11920,19 +11937,21 @@
 	//=================================================================================================================
 	"zuus_static_field"
 	{
-		"AbilityCastRange"					"1200"
+		"MaxLevel"							"7"
+
+		"AbilityCastRange"					"1200 1200 1200 1200 1400 1600 1800"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1200"
+				"radius"					"1200 1200 1200 1200 1400 1600 1800"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_health_pct"			"5 7 9 11"
+				"var_type"					"FIELD_FLOAT"
+				"damage_health_pct"			"4.5 6.5 8.5 10.5 11 11.5 12.0"
 				"LinkedSpecialBonus"		"special_bonus_unique_zeus"
 			}
 		}
@@ -11947,8 +11966,8 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"2"
+				"var_type"			"FIELD_FLOAT"
+				"value"				"1.5"
 			}
 		}
 	}
@@ -11958,7 +11977,7 @@
 	//=================================================================================================================
 	"zuus_cloud"
 	{
-		"AbilityCooldown"				"35"
+		"AbilityCooldown"				"30"
 
 		"AbilitySpecial"
 		{
@@ -11975,7 +11994,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cloud_radius"			"600"
+				"cloud_radius"			"700"
 			}
 		}
 	}
@@ -11985,3853 +12004,47 @@
 	//=================================================================================================================
 	"zuus_thundergods_wrath"
 	{
-		"AbilityCastPoint"				"0.4"
+		"MaxLevel"						"6"
 
-		"AbilityCooldown"				"90.0 80.0 70.0"
+		"AbilityCooldown"				"90 90 90 75 60 45"
 
-		"AbilityManaCost"				"200 325 450"
-		
+		"AbilityManaCost"				"225 325 425 440 455 470"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius"		"1200"
+				"true_sight_radius"		"1100"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"true_sight_radius_tooltip"		"1200"
+				"var_type"					"FIELD_INTEGER"
+				"true_sight_radius_tooltip"	"500 500 500 700 900 1100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_day"		"1200"
+				"sight_radius_day"		"500 500 500 700 900 1100"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sight_radius_night"	"1200"
+				"sight_radius_night"	"500 500 500 700 900 1100"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"sight_duration"		"3.0 4.0 5.0"
+				"var_type"				"FIELD_INTEGER"
+				"sight_duration"		"3 3 3 4 5 6"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"250 375 500"
+				"damage"				"250 350 450 480 510 540"
 			}
 		}
 	}
 
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								BASIC TALENT OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	//=================================================================================================================
-	//	Talent: HP bonus
-	//=================================================================================================================
-	"special_bonus_hp_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	"special_bonus_hp_125"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	"special_bonus_hp_150"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
-			}
-		}
-	}
-
-	"special_bonus_hp_175"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
-			}
-		}
-	}
-
-	"special_bonus_hp_200"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"600"
-			}
-		}
-	}
-
-	"special_bonus_hp_250"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"800"
-			}
-		}
-	}
-
-	"special_bonus_hp_275"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1000"
-			}
-		}
-	}
-
-	"special_bonus_hp_300"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1250"
-			}
-		}
-	}
-
-	"special_bonus_hp_350"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1500"
-			}
-		}
-	}
-
-	"special_bonus_hp_400"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"2000"
-			}
-		}
-	}
-
-	"special_bonus_hp_500"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"2500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: mana bonus
-	//=================================================================================================================
-	"special_bonus_mp_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	"special_bonus_mp_125"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	"special_bonus_mp_150"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
-			}
-		}
-	}
-
-	"special_bonus_mp_175"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
-			}
-		}
-	}
-
-	"special_bonus_mp_200"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"600"
-			}
-		}
-	}
-
-	"special_bonus_mp_250"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"700"
-			}
-		}
-	}
-
-	"special_bonus_mp_300"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"800"
-			}
-		}
-	}
-
-	"special_bonus_mp_350"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1000"
-			}
-		}
-	}
-
-	"special_bonus_mp_400"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1200"
-			}
-		}
-	}
-
-	"special_bonus_mp_500"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"1500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus attack speed
-	//=================================================================================================================
-	"special_bonus_attack_speed_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_35"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_45"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"175"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_60"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_80"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-
-	"special_bonus_attack_speed_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus HP regen
-	//=================================================================================================================
-	"special_bonus_hp_regen_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"8"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_7"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_14"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
-			}
-		}
-	}
-
-	"special_bonus_hp_regen_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus mana regen
-	//=================================================================================================================
-	"special_bonus_mp_regen_1"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"4"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"7"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_mp_regen_14"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus movement speed
-	//=================================================================================================================
-	"special_bonus_movement_speed_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_35"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_45"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_movement_speed_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus lifesteal
-	//=================================================================================================================
-	"special_bonus_lifesteal_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_lifesteal_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_lifesteal_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_lifesteal_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_lifesteal_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus spell lifesteal
-	//=================================================================================================================
-	"special_bonus_spell_lifesteal_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_spell_lifesteal_70"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus to all stats
-	//=================================================================================================================
-	"special_bonus_all_stats_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_7"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_14"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	"special_bonus_all_stats_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"90"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus intelligence
-	//=================================================================================================================
-	"special_bonus_intelligence_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_7"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_13"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_16"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"55"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"75"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"90"
-			}
-		}
-	}
-
-	"special_bonus_intelligence_35"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"110"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus strength
-	//=================================================================================================================
-	"special_bonus_strength_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"12"
-			}
-		}
-	}
-
-	"special_bonus_strength_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_strength_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_strength_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_strength_7"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_strength_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_strength_9"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_strength_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_strength_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	"special_bonus_strength_14"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	"special_bonus_strength_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	"special_bonus_strength_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"90"
-			}
-		}
-	}
-
-	"special_bonus_strength_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus agility
-	//=================================================================================================================
-	"special_bonus_agility_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_agility_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_agility_13"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_agility_14"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_agility_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_agility_16"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	"special_bonus_agility_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"90"
-			}
-		}
-	}
-
-	"special_bonus_agility_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus armor
-	//=================================================================================================================
-	"special_bonus_armor_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"5"
-			}
-		}
-	}
-
-	"special_bonus_armor_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"7"
-			}
-		}
-	}
-
-	"special_bonus_armor_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	"special_bonus_armor_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"12"
-			}
-		}
-	}
-
-	"special_bonus_armor_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_armor_7"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_armor_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_armor_9"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_armor_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_armor_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_armor_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus spell resistance
-	//=================================================================================================================
-	"special_bonus_magic_resistance_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"12"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_magic_resistance_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus day vision
-	//=================================================================================================================
-	"special_bonus_day_vision_400"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"600"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus vision
-	//=================================================================================================================
-	"special_bonus_vision_200"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus damage
-	//=================================================================================================================
-	"special_bonus_attack_damage_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-	
-	"special_bonus_attack_damage_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-	
-	"special_bonus_attack_damage_35"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"70"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"80"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_45"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"90"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_65"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"120"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_75"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_90"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"180"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"210"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_120"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-
-	"special_bonus_attack_damage_150"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus attack range
-	//=================================================================================================================
-	"special_bonus_attack_range_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_75"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_125"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_150"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_175"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"350"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_200"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_250"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_300"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"600"
-			}
-		}
-	}
-
-	"special_bonus_attack_range_400"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"700"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus cast range
-	//=================================================================================================================
-	"special_bonus_cast_range_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"100"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_60"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"125"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_75"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"150"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_100"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"200"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_125"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"250"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_150"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"300"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_175"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"350"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_200"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"400"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_250"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"450"
-			}
-		}
-	}
-
-	"special_bonus_cast_range_300"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus spell power
-	//=================================================================================================================
-	"special_bonus_spell_amplify_3"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_4"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_6"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"45"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_spell_amplify_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus cooldown reduction
-	//=================================================================================================================
-	"special_bonus_cooldown_reduction_8"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
-			}
-		}
-	}
-
-	"special_bonus_cooldown_reduction_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_cooldown_reduction_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_cooldown_reduction_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_cooldown_reduction_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_cooldown_reduction_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: respawn reduction
-	//=================================================================================================================
-	"special_bonus_respawn_reduction_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"9"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"12"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"18"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_35"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_respawn_reduction_60"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus gold income per 10 seconds
-	//=================================================================================================================
-	"special_bonus_gold_income_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_40"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	"special_bonus_gold_income_50"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus evasion
-	//=================================================================================================================
-	"special_bonus_evasion_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_evasion_12"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_evasion_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_evasion_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"35"
-			}
-		}
-	}
-
-	"special_bonus_evasion_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: 20% chance to bash for x seconds
-	//=================================================================================================================
-	"special_bonus_20_bash_2"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"value"				"2"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Talent: bonus experience
-	//=================================================================================================================
-	"special_bonus_exp_boost_5"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"15"
-			}
-		}
-	}
-
-	"special_bonus_exp_boost_10"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"20"
-			}
-		}
-	}
-
-	"special_bonus_exp_boost_15"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
-			}
-		}
-	}
-
-	"special_bonus_exp_boost_20"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"30"
-			}
-		}
-	}
-
-	"special_bonus_exp_boost_25"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
-			}
-		}
-	}
-
-	"special_bonus_exp_boost_30"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"50"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								STRUCTURES, NEUTRALS AND OTHER UNIT OVERRIDES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
-
-	//=================================================================================================================
-	// Backdoor Protection
-	//=================================================================================================================
-	"backdoor_protection"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"activation_time"		"15.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Backdoor Protection In Base
-	//=================================================================================================================
-	"backdoor_protection_in_base"
-	{
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"activation_time"		"15.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"regen_rate"			"500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	//	Shrine: healing aura
-	//=================================================================================================================
-	"filler_ability"
-	{
-		"AbilityCooldown"				"240"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal"				"300"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal"				"150"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal_growth"		"10"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal_growth"		"5"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_heal_pct"			"0"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mp_heal_pct"			"0"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3"
-			}
-			"08"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Necronomicon Warrior's Last Will
-	//=================================================================================================================
-	"necronomicon_warrior_last_will"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"explosion"				"550 675 800 900 1000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Warrior's Sight
-	//=================================================================================================================
-	"necronomicon_warrior_sight"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1000"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Necronomicon Warrior's Mana Break
-	//=================================================================================================================
-	"necronomicon_warrior_mana_burn"
-	{
-		"MaxLevel"							"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"burn_amount"				"20 30 40 50 60"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"burn_damage_conversion"	"60"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Archer's Mana Burn
-	//=================================================================================================================
-	"necronomicon_archer_mana_burn"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"125 175 225 275 325"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Necronomicon Archer's AoE
-	//=================================================================================================================
-	"necronomicon_archer_aoe"
-	{
-		"MaxLevel"						"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"ms_bonus"				"6 7 8 9 10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"as_bonus"				"6 7 8 9 10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Courier Burst
-	//=================================================================================================================
-	"courier_burst"
-	{
-		"AbilityCooldown"			"30.0"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"3.5"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movement_speed"	"2000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Kobold Taskmaster: Speed Aura
-	//=================================================================================================================
-	"kobold_taskmaster_speed_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement_speed"	"16"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Khan: Endurance Aura
-	//=================================================================================================================
-	"centaur_khan_endurance_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"35"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Centaur Khan: War Stomp
-	//=================================================================================================================
-	"centaur_khan_war_stomp"
-	{
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"10.0"
-		"AbilityDamage"					"100"
-		"AbilityManaCost"				"50"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"425"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"non_hero_stun_duration"		"3.0"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hero_stun_duration"			"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Prowler Desecrate
-	//=================================================================================================================
-	"spawnlord_master_stomp"
-	{
-		"AbilityCastPoint"				"0.4"
-
-		"AbilityCooldown"				"10.0"
-
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"7.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_reduction_pct"	"100"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Prowler Petrify
-	//=================================================================================================================
-	"spawnlord_master_freeze"
-	{
-		"AbilityCooldown"			"9"
-
-		"AbilityCastRange"			"150"
-
-		"AbilitySpecial"
-		{		
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.5"
-			}			
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"damage"			"90"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Gnoll Assassin: Envenomed Weapon
-	//=================================================================================================================
-	"gnoll_assassin_envenomed_weapon"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_second"				"20"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"non_hero_duration"				"20.0"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"hero_duration"					"0.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ghost: Frost Attack
-	//=================================================================================================================
-	"ghost_frost_attack"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-35"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-20"
-			}			
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Polar Furbolg Ursa Warrior: Thunder Clap
-	//=================================================================================================================
-	"polar_furbolg_ursa_warrior_thunder_clap"
-	{
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"7.0"
-		"AbilityDamage"					"200"
-		"AbilityManaCost"				"50"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"425"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-35"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-35"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ogre Magi: Frost Armor
-	//=================================================================================================================
-	"ogre_magi_frost_armor"
-	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"3.0"
-		"AbilityManaCost"				"40"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"			"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"90.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-30"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-50"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"slow_duration"			"5.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Dark Troll Warlord: Ensnare
-	//=================================================================================================================
-	"dark_troll_warlord_ensnare"
-	{
-		"AbilityCastRange"				"725"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"12.0"
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Dark Troll Warlord: Raise Dead
-	//=================================================================================================================
-	"dark_troll_warlord_raise_dead"
-	{
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"5.0"
-		"AbilityManaCost"				"25"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"60.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Mud Golem: Hurl Boulder
-	//=================================================================================================================
-	"mud_golem_hurl_boulder"
-	{
-		"AbilityCastRange"				"900"
-
-		"AbilityCooldown"				"15"
-
-		"AbilityCastPoint"				"0.2"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage"					"150"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"1.25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"speed"						"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Giant Wolf: Critical Strike
-	//=================================================================================================================
-	"giant_wolf_critical_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_mult"					"250"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Alpha Wolf: Critical Strike
-	//=================================================================================================================
-	"alpha_wolf_critical_strike"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_chance"				"20"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"crit_mult"					"250"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Alpha Wolf: Command Aura
-	//=================================================================================================================
-	"alpha_wolf_command_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage_pct"	"35"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Tornado: Tempest
-	//=================================================================================================================
-	"tornado_tempest"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_radius"			"700"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-20"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_slow"		"-20"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_radius"			"225"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"near_damage"			"60"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"far_damage"			"20"
-			}
-			"07"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"tick_rate"				"0.25"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Enraged Wildkin: Tornado
-	//=================================================================================================================
-	"enraged_wildkin_tornado"
-	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"40.0"
-		"AbilityChannelTime"			"40.0"
-		"AbilityManaCost"				"100"
-	}
-
-	//=================================================================================================================
-	// Enraged Wildkin: Toughness Aura
-	//=================================================================================================================
-	"enraged_wildkin_toughness_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"		"6"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200"
-			}
-		}
-	}
-	
-	//=================================================================================================================
-	// Ancient Granite Golem: HP Aura
-	//=================================================================================================================
-	"granite_golem_hp_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_hp"			"15"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Ancient Granite Golem: Bash
-	//=================================================================================================================
-	"granite_golem_bash"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bash_chance"		"15"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"50"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Satyr Trickster: Purge
-	//=================================================================================================================
-	"satyr_trickster_purge"
-	{
-		"AbilityCastRange"				"725"
-		"AbilityCastPoint"				"0.2"
-		"AbilityCooldown"				"2.5"
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"purge_rate"			"5"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"5.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"summon_damage"			"1000"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Satyr Soulstealer: Mana Burn
-	//=================================================================================================================
-	"satyr_soulstealer_mana_burn"
-	{
-		"AbilityCastRange"				"725"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"5.0"
-		"AbilityManaCost"				"50"
-				
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"burn_amount"			"200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Satyr Hellcaller: Shockwave
-	//=================================================================================================================
-	"satyr_hellcaller_shockwave"
-	{
-		"AbilityCastRange"				"1500"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"6.0"
-		"AbilityDamage"					"225"
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"1200"
-			}
-			
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_start"			"250"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius_end"			"300"
-			}
-			
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"distance"				"1500"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Satyr Hellcaller: Unholy Aura
-	//=================================================================================================================
-	"satyr_hellcaller_unholy_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"health_regen"		"12"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Forest Troll High Priest: Heal
-	//=================================================================================================================
-	"forest_troll_high_priest_heal"
-	{
-		"AbilityCastRange"				"725"
-		"AbilityCastPoint"				"0.1"
-		"AbilityCooldown"				"0.5"
-		"AbilityManaCost"				"5"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"health"			"30"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Harpy Storm: Chain Lightning
-	//=================================================================================================================
-	"harpy_storm_chain_lightning"
-	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"3.0"
-		"AbilityManaCost"				"50"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"initial_damage"		"180"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"jump_range"			"750"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"jump_delay"			"0.1"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_percent_loss"	"0.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_targets"			"10"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Thunder Lizard: Wardrums Aura
-	//=================================================================================================================
-	"big_thunder_lizard_wardrums_aura"
-	{
-		"AbilitySpecial"
-		{			
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_bonus"			"15"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_bonus"			"15"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Black Dragon: Dragonhide Aura
-	//=================================================================================================================
-	"black_dragon_dragonhide_aura"
-	{
-		"AbilitySpecial"
-		{			
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_armor"			"3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Black Dragon: Fireball
-	//=================================================================================================================
-	"black_dragon_fireball"
-	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"10"
-
-		"AbilityManaCost"				"50"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"100"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_interval"			"0.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Small Centaur Cloak Aura
-	//=================================================================================================================
-	"mudgolem_cloak_aura"
-	{
-		"AbilitySpecial"
-		{			
-			"01"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_magical_armor"			"20"
-			}	
-			"02"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"bonus_magical_armor_creeps"	"20"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"radius"						"1200"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Black Dragon: Splash Attack
-	//=================================================================================================================
-	"black_dragon_splash_attack"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_close"			"225"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_percent_close"	"100.0"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_mid"				"275"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_percent_mid"	"80.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"range_far"				"325"
-			}
-			"06"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_percent_far"	"60.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Prowler HP regen aura
-	//=================================================================================================================
-	"spawnlord_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"lifesteal"				"10"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"10"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Big Thunder Lizard: Slam
-	//=================================================================================================================
-	"big_thunder_lizard_slam"
-	{
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"5.0"
-		"AbilityDamage"					"200"
-		"AbilityManaCost"				"50"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow"		"-40"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attack_slow_tooltip"	"-40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"non_hero_duration"		"7.0"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_duration"			"3.5"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Big Thunder Lizard: Frenzy
-	//=================================================================================================================
-	"big_thunder_lizard_frenzy"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"attackspeed_bonus"		"150"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Forest Troll High Priest: Mana Aura
-	//=================================================================================================================
-	"forest_troll_high_priest_mana_aura"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"mana_regen"			"3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"900"
-			}
-		}
-	}
-	
 	//=================================================================================================================
 	// Death Prophet: Carrion Swarm
 	//=================================================================================================================
@@ -18755,159 +14968,1156 @@
 	}
 
 	//=================================================================================================================
-	// Spectre: Spectral Dagger
+	//-----------------------------------------------------------------------------------------------------------------
+	// 								STRUCTURES, NEUTRALS AND OTHER UNIT OVERRIDES
+	//-----------------------------------------------------------------------------------------------------------------
 	//=================================================================================================================
-	"spectre_spectral_dagger"
+
+	//=================================================================================================================
+	// Backdoor Protection
+	//=================================================================================================================
+	"backdoor_protection"
 	{
-		"AbilityCastRange"				"3000"
-
-		"AbilityCastPoint"				"0.2"
-
-		"AbilityCooldown"				"13"
-
-		"AbilityManaCost"				"130"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"80 140 200 260"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"activation_time"		"15.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_rate"			"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Backdoor Protection In Base
+	//=================================================================================================================
+	"backdoor_protection_in_base"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"activation_time"		"15.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"18 22 26 30"
+				"regen_rate"			"500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Shrine: healing aura
+	//=================================================================================================================
+	"filler_ability"
+	{
+		"AbilityCooldown"				"240"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_heal"				"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mp_heal"				"150"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"dagger_path_duration"	"12.0"
+				"var_type"				"FIELD_INTEGER"
+				"hp_heal_growth"		"10"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"hero_path_duration"	"7.0"
+				"var_type"				"FIELD_INTEGER"
+				"mp_heal_growth"		"5"
 			}
-			"05"	
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_heal_pct"			"0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mp_heal_pct"			"0"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"buff_persistence"		"4.0"
+				"duration"				"3"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"dagger_radius"			"225"
+				"radius"				"1200"
 			}
-			"09"
+		}
+	}
+	
+	//=================================================================================================================
+	// Necronomicon Warrior's Last Will
+	//=================================================================================================================
+	"necronomicon_warrior_last_will"
+	{
+		"MaxLevel"						"5"
+
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"path_radius"			"175"
+				"explosion"				"550 675 800 900 1000"
 			}
-			"10"
+		}
+	}
+
+	//=================================================================================================================
+	// Necronomicon Warrior's Sight
+	//=================================================================================================================
+	"necronomicon_warrior_sight"
+	{
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_radius"			"300"
+				"radius"				"1000"
 			}
-			"11"
+		}
+	}
+	
+	//=================================================================================================================
+	// Necronomicon Warrior's Mana Break
+	//=================================================================================================================
+	"necronomicon_warrior_mana_burn"
+	{
+		"MaxLevel"							"5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"burn_amount"				"20 30 40 50 60"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"burn_damage_conversion"	"60"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Necronomicon Archer's Mana Burn
+	//=================================================================================================================
+	"necronomicon_archer_mana_burn"
+	{
+		"MaxLevel"						"5"
+
+		"AbilitySpecial"
+		{
+			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed"					"1400"
+				"burn_amount"			"125 175 225 275 325"
 			}
-			"12"
+		}
+	}
+
+	//=================================================================================================================
+	// Necronomicon Archer's AoE
+	//=================================================================================================================
+	"necronomicon_archer_aoe"
+	{
+		"MaxLevel"						"5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"ms_bonus"				"6 7 8 9 10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"as_bonus"				"6 7 8 9 10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Courier Burst
+	//=================================================================================================================
+	"courier_burst"
+	{
+		"AbilityCooldown"			"30.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"3.5"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movement_speed"	"2000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Kobold Taskmaster: Speed Aura
+	//=================================================================================================================
+	"kobold_taskmaster_speed_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"16"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Khan: Endurance Aura
+	//=================================================================================================================
+	"centaur_khan_endurance_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_attack_speed"	"35"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Centaur Khan: War Stomp
+	//=================================================================================================================
+	"centaur_khan_war_stomp"
+	{
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"10.0"
+		"AbilityDamage"					"100"
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"425"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"non_hero_stun_duration"		"3.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hero_stun_duration"			"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Prowler Desecrate
+	//=================================================================================================================
+	"spawnlord_master_stomp"
+	{
+		"AbilityCastPoint"				"0.4"
+
+		"AbilityCooldown"				"10.0"
+
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200"
+			}
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"dagger_grace_period"	"2.0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Spectre: Desolate
-	//=================================================================================================================
-	"spectre_desolate"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"40 60 80 100"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"275"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Spectre: Dispersion
-	//=================================================================================================================
-	"spectre_dispersion"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reflection_pct"	"12 16 20 24"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"min_radius"			"600"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_radius"			"1200"
-			}			
-		}
-	}
-
-	//=================================================================================================================
-	// Spectre: Haunt
-	//=================================================================================================================
-	"spectre_haunt"
-	{
-		"AbilityCooldown"					"120 110 100"
-
-		"AbilityCastPoint"					"0.2"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"duration"					"9"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_outgoing"	"-70 -60 -50"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"tooltip_outgoing"			"30 40 50"
+				"duration"				"7.0"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"illusion_damage_incoming"	"100 100 100"
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction_pct"	"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Prowler Petrify
+	//=================================================================================================================
+	"spawnlord_master_freeze"
+	{
+		"AbilityCooldown"			"9"
+
+		"AbilityCastRange"			"150"
+
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.5"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"90"
+			}			
+		}
+	}
+
+	//=================================================================================================================
+	// Gnoll Assassin: Envenomed Weapon
+	//=================================================================================================================
+	"gnoll_assassin_envenomed_weapon"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"damage_per_second"				"20"
+			}
+			"02"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"non_hero_duration"				"20.0"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"hero_duration"					"0.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ghost: Frost Attack
+	//=================================================================================================================
+	"ghost_frost_attack"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-35"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_slow"		"-20"
+			}			
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Polar Furbolg Ursa Warrior: Thunder Clap
+	//=================================================================================================================
+	"polar_furbolg_ursa_warrior_thunder_clap"
+	{
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"7.0"
+		"AbilityDamage"					"200"
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"425"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-35"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_slow"		"-35"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ogre Magi: Frost Armor
+	//=================================================================================================================
+	"ogre_magi_frost_armor"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"3.0"
+		"AbilityManaCost"				"40"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"			"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"90.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_slow"		"-50"
 			}
 			"05"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"5.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dark Troll Warlord: Ensnare
+	//=================================================================================================================
+	"dark_troll_warlord_ensnare"
+	{
+		"AbilityCastRange"				"725"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"12.0"
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Dark Troll Warlord: Raise Dead
+	//=================================================================================================================
+	"dark_troll_warlord_raise_dead"
+	{
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"25"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"60.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Mud Golem: Hurl Boulder
+	//=================================================================================================================
+	"mud_golem_hurl_boulder"
+	{
+		"AbilityCastRange"				"900"
+
+		"AbilityCooldown"				"15"
+
+		"AbilityCastPoint"				"0.2"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
 				"var_type"					"FIELD_INTEGER"
-				"tooltip_illusion_total_damage_incoming"	"200 200 200"
-			}			
-			"06"
+				"damage"					"150"
+			}
+			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"attack_delay"				"0.25"
-			}			
+				"duration"					"1.25"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"speed"						"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Giant Wolf: Critical Strike
+	//=================================================================================================================
+	"giant_wolf_critical_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_mult"					"250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alpha Wolf: Critical Strike
+	//=================================================================================================================
+	"alpha_wolf_critical_strike"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_chance"				"20"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"crit_mult"					"250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Alpha Wolf: Command Aura
+	//=================================================================================================================
+	"alpha_wolf_command_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage_pct"	"35"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tornado: Tempest
+	//=================================================================================================================
+	"tornado_tempest"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"far_radius"			"700"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_slow"		"-20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"near_radius"			"225"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"near_damage"			"60"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"far_damage"			"20"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"tick_rate"				"0.25"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Enraged Wildkin: Tornado
+	//=================================================================================================================
+	"enraged_wildkin_tornado"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"40.0"
+		"AbilityChannelTime"			"40.0"
+		"AbilityManaCost"				"100"
+	}
+
+	//=================================================================================================================
+	// Enraged Wildkin: Toughness Aura
+	//=================================================================================================================
+	"enraged_wildkin_toughness_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_armor"		"6"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Ancient Granite Golem: HP Aura
+	//=================================================================================================================
+	"granite_golem_hp_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_hp"			"15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ancient Granite Golem: Bash
+	//=================================================================================================================
+	"granite_golem_bash"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bash_chance"		"15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage"		"50"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Satyr Trickster: Purge
+	//=================================================================================================================
+	"satyr_trickster_purge"
+	{
+		"AbilityCastRange"				"725"
+		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"2.5"
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"purge_rate"			"5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"summon_damage"			"1000"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Satyr Soulstealer: Mana Burn
+	//=================================================================================================================
+	"satyr_soulstealer_mana_burn"
+	{
+		"AbilityCastRange"				"725"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"5.0"
+		"AbilityManaCost"				"50"
+				
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"burn_amount"			"200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Satyr Hellcaller: Shockwave
+	//=================================================================================================================
+	"satyr_hellcaller_shockwave"
+	{
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"6.0"
+		"AbilityDamage"					"225"
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1200"
+			}
+			
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_start"			"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius_end"			"300"
+			}
+			
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"distance"				"1500"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Satyr Hellcaller: Unholy Aura
+	//=================================================================================================================
+	"satyr_hellcaller_unholy_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_regen"		"12"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Forest Troll High Priest: Heal
+	//=================================================================================================================
+	"forest_troll_high_priest_heal"
+	{
+		"AbilityCastRange"				"725"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"0.5"
+		"AbilityManaCost"				"5"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"30"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Harpy Storm: Chain Lightning
+	//=================================================================================================================
+	"harpy_storm_chain_lightning"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"3.0"
+		"AbilityManaCost"				"50"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"initial_damage"		"180"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"jump_range"			"750"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"jump_delay"			"0.1"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_percent_loss"	"0.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets"			"10"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Thunder Lizard: Wardrums Aura
+	//=================================================================================================================
+	"big_thunder_lizard_wardrums_aura"
+	{
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_bonus"			"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Black Dragon: Dragonhide Aura
+	//=================================================================================================================
+	"black_dragon_dragonhide_aura"
+	{
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Black Dragon: Fireball
+	//=================================================================================================================
+	"black_dragon_fireball"
+	{
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.2"
+		
+		"AbilityCooldown"				"10"
+
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"burn_interval"			"0.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Small Centaur Cloak Aura
+	//=================================================================================================================
+	"mudgolem_cloak_aura"
+	{
+		"AbilitySpecial"
+		{			
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_magical_armor"			"20"
+			}	
+			"02"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"bonus_magical_armor_creeps"	"20"
+			}
+			"03"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"1200"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Black Dragon: Splash Attack
+	//=================================================================================================================
+	"black_dragon_splash_attack"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_close"			"225"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_percent_close"	"100.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_mid"				"275"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_percent_mid"	"80.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range_far"				"325"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_percent_far"	"60.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Prowler HP regen aura
+	//=================================================================================================================
+	"spawnlord_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifesteal"				"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hp_regen"				"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Big Thunder Lizard: Slam
+	//=================================================================================================================
+	"big_thunder_lizard_slam"
+	{
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"5.0"
+		"AbilityDamage"					"200"
+		"AbilityManaCost"				"50"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attack_slow_tooltip"	"-40"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"non_hero_duration"		"7.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"hero_duration"			"3.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Big Thunder Lizard: Frenzy
+	//=================================================================================================================
+	"big_thunder_lizard_frenzy"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"attackspeed_bonus"		"150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Forest Troll High Priest: Mana Aura
+	//=================================================================================================================
+	"forest_troll_high_priest_mana_aura"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"			"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
 		}
 	}
 }
