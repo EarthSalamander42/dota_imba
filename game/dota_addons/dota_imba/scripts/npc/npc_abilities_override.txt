@@ -11150,42 +11150,44 @@
 	//=================================================================================================================
 	"visage_grave_chill"
 	{
-		"AbilityCastPoint"				"0.1"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"12 10 8 6"
+		"AbilityCooldown"				"16 14 12 10 9 8 7"
+
+		"AbilityManaCost"				"100 90 80 70 60 50 40"
+
+		"AbilityCastRange"				"650 650 650 650 700 750 800"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"chill_duration"		"6.0"
+				"var_type"				"FIELD_INTEGER"
+				"chill_duration"		"3 4 5 6 6 6 6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus"		"30 35 40 45"
+				"movespeed_bonus"		"32 34 36 38 40 42 44"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attackspeed_bonus"		"60 90 120 150"
+				"attackspeed_bonus"		"70 80 90 100 110 120 130"
 			}
 		}
-	}	
+	}
 
 	//=================================================================================================================
 	// Visage: Soul Assumption
 	//=================================================================================================================
 	"visage_soul_assumption"
 	{
-		"AbilityCastPoint"				"0.1"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"4 4 4 4 3 2 1"
 
-		"AbilityManaCost"				"130 120 110 100"		
-
-		"AbilityCastRange"				"1200"
+		"AbilityManaCost"				"170 160 150 140 130 120 110"		
 
 		"AbilitySpecial"
 		{
@@ -11202,22 +11204,22 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"soul_charge_damage"		"80"
+				"soul_charge_damage"		"65 75 85 95 100 105 110"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stack_limit"				"4 6 8 10"
+				"stack_limit"				"3 4 5 6 6 6 6"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stack_duration"			"6.0"
+				"var_type"					"FIELD_INTEGER"
+				"stack_duration"			"10"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_limit"				"110"
+				"damage_limit"				"110 110 110 110 90 70 50"
 			}
 			"07"
 			{
@@ -11242,32 +11244,34 @@
 	//=================================================================================================================
 	"visage_gravekeepers_cloak"
 	{
+		"MaxLevel"								"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"max_layers"						"4"
+				"var_type"						"FIELD_INTEGER"
+				"max_layers"					"10"
 			}
 			"02"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"damage_reduction"					"25 34 50 100"
+				"var_type"						"FIELD_INTEGER"
+				"damage_reduction"				"5 6 7 8 9 10 10"
 			}
 			"03"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"recovery_time"						"3"
+				"var_type"						"FIELD_INTEGER"
+				"recovery_time"					"6 5 4 3 3 3 2"
 			}
 			"04"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"minimum_damage"					"50"
+				"var_type"						"FIELD_INTEGER"
+				"minimum_damage"				"20"
 			}
 			"05"
 			{
-				"var_type"							"FIELD_INTEGER"
-				"radius"							"1200"
+				"var_type"						"FIELD_INTEGER"
+				"radius"						"900"
 			}
 		}
 	}
@@ -11277,14 +11281,14 @@
 	//=================================================================================================================
 	"visage_summon_familiars"
 	{
-		"AbilityCooldown"					"150.0 120.0 90.0"
+		"AbilityCooldown"					"160 120 80"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_hp"				"400 700 1000"
+				"familiar_hp"				"400 550 700"
 			}
 			"02"
 			{
@@ -11300,7 +11304,7 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"familiar_max_damage"		"80 160 240"
+				"familiar_max_damage"		"64 128 192"
 			}
 			"05"
 			{
@@ -11315,7 +11319,7 @@
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_damage_charges"		"10"
+				"max_damage_charges"		"8"
 			}
 		}
 	}
@@ -11325,14 +11329,14 @@
 	//=================================================================================================================
 	"visage_summon_familiars_stone_form"
 	{
-		"AbilityCooldown"					"12"
+		"AbilityCooldown"					"14"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_radius"				"450"
+				"stun_radius"				"350"
 			}
 			"02"
 			{
@@ -11342,22 +11346,22 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"stun_damage"				"90 150 210"
+				"stun_damage"				"60 100 140 160 180 200"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"1.5"
+				"stun_duration"				"1.0 1.25 1.5 1.5 1.5 1.5"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"stone_duration"			"6.0"
+				"var_type"					"FIELD_INTEGER"
+				"stone_duration"			"6"
 			}
 			"06"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"hp_regen"					"150 175 200"
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen"					"150 175 200 225 250 275"
 			}
 		}
 	}
@@ -11388,36 +11392,6 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"value"				"120"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Warlock: Fatal Bonds
-	//=================================================================================================================
-	"warlock_fatal_bonds"
-	{
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"count"						"3 5 7 9"
-			}
-			"02"
-			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_share_percentage"	"25"
-			}
-			"03"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"25.0"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"search_aoe"				"900"
 			}
 		}
 	}
@@ -15851,12 +15825,6 @@
 			}
 		}
 	}
-
-	//=================================================================================================================
-	//-----------------------------------------------------------------------------------------------------------------
-	// 								RANDOM OMG EXCLUSIVES
-	//-----------------------------------------------------------------------------------------------------------------
-	//=================================================================================================================
 	
 	//=================================================================================================================
 	// Death Prophet: Carrion Swarm
