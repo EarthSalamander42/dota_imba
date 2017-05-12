@@ -9239,7 +9239,13 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"pull_strength" 			"100 140 180 190 200 210"			
-			}			
+			}
+
+			"07"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"duration"	 				"4"			
+			}
 		}
 	}
 
