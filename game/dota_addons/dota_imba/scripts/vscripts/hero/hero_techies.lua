@@ -1299,23 +1299,16 @@ function modifier_imba_blast_off_movement:OnHorizontalMotionInterrupted()
         -- Deal damage to the caster based on its max health
         local self_damage = self.parent:GetMaxHealth() * self.self_damage_pct * 0.01       
         
-        if self.parent:GetHealth() - self_damage <= 0 then
-            self.parent:Kill(self.ability, self.parent)
-        else
-            self.parent:SetHealth(self.parent:GetHealth() - self_damage)
-        end
-
-
-        --THIS IS DISABLED BECAUSE IT AMPLIFIES DAMAGE WITH SPELL AMP
-        -- local damageTable = {victim = self.parent,
-        --                      attacker = self.caster, 
-        --                      damage = self_damage,
-        --                      damage_type = DAMAGE_TYPE_PURE,
-        --                      ability = self.ability,
-        --                      damage_flags = DOTA_DAMAGE_FLAG_HPLOSS
-        --                      }
+        local damageTable = {victim = self.parent,
+                             attacker = self.caster, 
+                             damage = self_damage,
+                             damage_type = DAMAGE_TYPE_PURE,
+                             ability = self.ability,
+                             damage_flags = DOTA_DAMAGE_FLAG_HPLOSS + DOTA_DAMAGE_FLAG_NO_SPELL_AMPLIFICATION
+                             }
             
-        -- local actual_damage = ApplyDamage(damageTable)                                
+        local actual_damage = ApplyDamage(damageTable)                                
+        print(actual_damage)
 
         --#5 Talent: Blast Off! jumps drop a Proximity Mine
         if self.caster:HasTalent("special_bonus_imba_techies_5") then
