@@ -7,8 +7,8 @@ function WarVeteranUpdater( keys )
 	local modifier_stacks = keys.modifier_stacks
 
 	-- Adjust this hero's War Veteran stack amount
-	if caster:GetLevel() > 25 then
-		local correct_stacks = math.max(caster:GetLevel() - 25, 0)
+	if caster:GetLevel() > 40 then
+		local correct_stacks = math.max(caster:GetLevel() - 40, 0)
 		caster:SetModifierStackCount(modifier_stacks, caster, correct_stacks)
 	end
 end
