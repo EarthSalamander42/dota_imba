@@ -11401,26 +11401,28 @@
 	//=================================================================================================================
 	"winter_wyvern_arctic_burn"
 	{
-		"AbilityCooldown"				"36.0 30.0 24.0 18.0"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"90"
+		"AbilityCooldown"				"50 40 30 20 18 16 14"
+
+		"AbilityManaCost"				"120 110 100 90 80 70 60"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 6.5 7.0 7.5"
+				"duration"				"6.0 6.0 6.0 6.0 6.5 7.0 7.5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_range_bonus"	"475 575 675 775"
+				"attack_range_bonus"	"275 375 475 575 575 675 675"
 			}			
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"percent_damage"		"9 10 11 12"
+				"var_type"				"FIELD_INTEGER"
+				"percent_damage"		"8 8 8 8 9 9 10"
 			}
 			"04"
 			{
@@ -11435,7 +11437,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-25 -30 -35 -40"
+				"move_slow"				"19 26 33 40 40 40 40"
 				"LinkedSpecialBonus"	"special_bonus_unique_winter_wyvern_1"
 			}
 			"07"
@@ -11445,12 +11447,12 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"projectile_speed_bonus"	"500"
 			}
 			"09"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"					"FIELD_INTEGER"
 				"tree_destruction_radius"	"250"
 			}
 			"10"
@@ -11461,12 +11463,12 @@
 			"11"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_attacks"			"10"
+				"max_attacks"			"7"
 			}
 			"12"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_cost_scepter"		"25"
+				"mana_cost_scepter"		"40 40 40 40 35 30 25"
 			}
 		}
 	}
@@ -11481,7 +11483,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"25"
+				"value"				"20"
 			}
 		}
 	}
@@ -11493,18 +11495,18 @@
 	{
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"6.0"
+		"AbilityCooldown"				"7.0 7.0 7.0 7.0 6.5 5.0 5.5"
 
-		"AbilityDamage"					"120 200 280 360"
+		"AbilityDamage"					"110 190 270 350 375 400 425"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"projectile_speed"		"700"
+				"projectile_speed"		"650"
 			}
 			"02"
 			{
@@ -11514,27 +11516,27 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"split_radius"			"900"
+				"split_radius"			"500 500 500 500 625 750 875"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-30"
+				"bonus_movespeed"		"-25"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_slow_tooltip"	"30"
+				"var_type"						"FIELD_INTEGER"
+				"movespeed_slow_tooltip"		"25"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0"
+				"var_type"						"FIELD_FLOAT"
+				"duration"						"4.0"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"secondary_projectile_speed"	"900"
+				"var_type"						"FIELD_INTEGER"
+				"secondary_projectile_speed"	"650"
 			}
 		}
 	}
@@ -11549,7 +11551,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
+				"value"				"2.5"
 			}
 		}
 	}
@@ -11559,27 +11561,26 @@
 	//=================================================================================================================
 	"winter_wyvern_cold_embrace"
 	{
-		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"7"
 
-		"AbilityCooldown"				"16 14 12 10"
-				
+		"AbilityCooldown"				"24 21 18 15 14 13 12"
+
 		"AbilitySpecial"
 		{
 			"01"
-			{	
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"4"
 			}
 			"02"
-			{	
+			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_additive"			"50"
+				"heal_additive"			"20 25 30 35 40 45 50"
 			}
 			"03"
-			{	
+			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"		"3.0 4.5 6.0 7.5"
+				"heal_percentage"		"3.0 4.0 5.0 6.0 6.5 7.0 7.5"
 			}
 		}
 	}
@@ -11589,37 +11590,34 @@
 	//=================================================================================================================
 	"winter_wyvern_winters_curse"
 	{
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"80"
-				
+		"MaxLevel"						"6"
+
 		"AbilitySpecial"
 		{
 			"01"
-			{	
+			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500 575 650"
+				"radius"				"500 525 550 575 600 625"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"		"70"
+				"damage_reduction"		"100 90 80 70 60 50"
 			}
 			"03"
-			{	
+			{
 				"var_type"				"FIELD_FLOAT"
 				"damage_amplification"	"0"
 			}
 			"04"
-			{	
+			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"100 200 300"
+				"bonus_attack_speed"	"75 100 125 150 175 200"
 			}
 			"05"
-			{	
+			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.25 4 4.75"
+				"duration"				"3.25 4 4.75 4.75 4.75 4.75"
 			}
 		}
 	}
