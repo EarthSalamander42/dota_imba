@@ -31,6 +31,7 @@
 	//=================================================================================================================
 
 	"imba_generic_talent_damage"					"Damage"
+	"imba_generic_talent_damage_Description"		"Increases damage by 20."
 	"imba_generic_talent_all_stats"					"All Stats"
 	"imba_generic_talent_strength"					"Strength"
 	"imba_generic_talent_agility"					"Agility"
@@ -54,4 +55,25 @@
 	"imba_generic_talent_respawn_reduction"			"Respawn Reduction"
     "talent_window_header"                          "Talents"
     "talent_window_footer"                          "Hold Alt To View All Talents"
+
+    //=================================================================================================================
+	// Skill talent names
+	//=================================================================================================================
+	// Abaddon
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_title"						"Far-reaching Mist"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_1_Description"					"Abaddon's control over mist increases, allowing him to cast Aphotic Shield from further away. Increases Aphotic Shield's cast range by 150."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_title"						"Shield of the Seer"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_2_Description"					"Abaddon focuses his mist unto his target, creating a solid shield. Increases Aphotic Shield's duration by 45 seconds. This effect only applies on shields created after taking this talent."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_title"						"Overflowing Mist"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_3_Description"					"The experience in battle honed Abaddon's capability to release successive streams of the mist, decreasing Mist Coil's cooldown by 1.5 seconds."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_title"						"Blessing of Avernus"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_4_Description"					"The presence of the mist is centered around Abaddon's sword, waiting to strike at the moment a wound is made. By strengthening that mist around the tip of the blade, Curse of Avernus' power increases, allowing all allies to gain 5% additional move speed and 30 attack speed as long as they attack a cursed target. <br/> The slow effect on the cursed enemy remains unchanged."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_title"						"Aphotic Bulwark"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_5_Description"					"When casting Aphotic Shield, Abaddon forces huge amounts of mist to encircle the target, strengtening the shield's durability by 200 health points."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_title"						"Perfect Vessel"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_6_Description"					"When paying the mist in blood, the mist accepts you. When Overchannel is toggled on, its effect increases by 50%, causing spells to cost more health, but deal higher damage in return."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_title"						"Late Payment"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_7_Description"					"Abaddon's resolve increases tenfold, increasing Borrowed Time's duration by 1 second. Does not affects Borrowed Time buffs already in effect."
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_title"						"The Long Arm of Avernus"
+	"Dota_Tooltip_Talent_special_bonus_imba_abaddon_8_Description"					"Unveils the mist, spreading it on every ally in Abaddon's vicinity, increasing Borrowed Time's redirection effect to reach 300 units further ahead."			
 }
