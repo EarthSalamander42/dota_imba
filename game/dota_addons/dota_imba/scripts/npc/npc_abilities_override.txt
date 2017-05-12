@@ -11627,11 +11627,14 @@
 	//=================================================================================================================
 	"wisp_tether"
 	{
-		"AbilityCooldown"				"0.0"
-		"AbilityDuration"				"600.0"
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"0"
+
+		"AbilityDuration"				"60"
 
 		"AbilityManaCost"				"0"
-		
+
 		"AbilityCastRange"				"1800"
 
 		"AbilitySpecial"
@@ -11639,12 +11642,12 @@
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"1500"
+				"radius"					"900 900 900 900 1000 1100 1200"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"18"
+				"movespeed"					"13 14 15 16 18 20 22"
 			}
 			"03"
 			{
@@ -11654,17 +11657,17 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"latch_speed"				"1400"
+				"latch_speed"				"1000"
 			}
 			"05"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"tether_duration"			"600.0"
+				"var_type"					"FIELD_INTEGER"
+				"tether_duration"			"60"
 			}
 			"06"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"tether_heal_amp"			"2.0"
+				"tether_heal_amp"			"1.5"
 			}
 			"07"
 			{
@@ -11679,7 +11682,7 @@
 			"09"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"stun_duration"				"0.6 1.2 1.8 2.4"
+				"stun_duration"				"0.75 1.25 1.75 2.25 2.5 2.75 3.0"
 			}
 		}
 	}
@@ -11689,28 +11692,31 @@
 	//=================================================================================================================
 	"wisp_spirits"
 	{
-		"AbilityCooldown"				"12.0"
-		"AbilityDuration"				"20.0"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"100"
-		
+		"AbilityCooldown"				"20 18 16 14 13 12 11"
+
+		"AbilityDuration"				"19"
+
+		"AbilityManaCost"				"120 130 140 150 155 160 165"
+
 		"AbilitySpecial"
 		{
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"creep_damage"				"15 20 25 30"
+				"creep_damage"				"9 15 21 27 30 33 36"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_damage"				"35 60 85 110"
+				"hero_damage"				"35 60 85 110 120 130 140"
 				"LinkedSpecialBonus"		"special_bonus_unique_wisp"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"revolution_time"			"2.0"
+				"revolution_time"			"2.5"
 			}
 			"05"
 			{
@@ -11720,27 +11726,27 @@
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"max_range"					"1200"
+				"max_range"					"875"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hero_hit_radius"			"150"
+				"hero_hit_radius"			"70"
 			}
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"explode_radius"			"375"
+				"explode_radius"			"300 300 300 300 350 400 450"
 			}
 			"09"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hit_radius"				"225"
+				"hit_radius"				"150"
 			}
 			"10"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"default_radius"			"225"
+				"default_radius"			"150"
 			}
 			"11"
 			{
@@ -11749,8 +11755,8 @@
 			}
 			"12"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"spirit_duration"			"20.0"
+				"var_type"					"FIELD_INTEGER"
+				"spirit_duration"			"19"
 			}
 		}
 	}
@@ -11765,7 +11771,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"190"
+				"value"				"135"
 			}
 		}
 	}
@@ -11775,32 +11781,34 @@
 	//=================================================================================================================
 	"wisp_overcharge"
 	{
+		"MaxLevel"							"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_attack_speed"		"60 80 100 120"
+				"bonus_attack_speed"		"50 60 70 80 90 100 110"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_pct"			"-15 -20 -25 -30"
+				"bonus_damage_pct"			"-8 -12 -16 -20 -22 -24 -26"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"drain_interval"			"0.1"
+				"drain_interval"			"0.2"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"drain_pct"					"0.03"
+				"drain_pct"					"0.045"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"drain_pct_tooltip"			"3.0"
+				"drain_pct_tooltip"			"4.5"
 			}
 		}
 	}	
@@ -11810,21 +11818,21 @@
 	//=================================================================================================================
 	"wisp_relocate"
 	{
-		"AbilityCooldown"				"60.0 50.0 40.0"
+		"MaxLevel"							"6"
 
-		"AbilityManaCost"				"100"
-		
+		"AbilityCooldown"					"100 80 60 55 50 45"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"cast_delay"				"1.6 0.8 0.0"
+				"cast_delay"				"2.7 2.35 2.0 1.5 1.0 0.5"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"return_time"				"12.0"
+				"var_type"					"FIELD_INTEGER"
+				"return_time"				"12"
 			}
 		}
 	}
