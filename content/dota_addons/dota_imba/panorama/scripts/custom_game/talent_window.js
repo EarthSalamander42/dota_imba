@@ -101,6 +101,12 @@ function InitializeIMBATalentWindow(){
     var footerText = $.CreatePanel("Label", talentPanel, "");
     footerText.AddClass("footer");
     footerText.text = $.Localize("talent_window_footer");
+
+    //Only subscribe to events after UI elements are created
+    GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
+    GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
+    GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
+    GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
 }
 
 function GetGenericTalentInfoTable(){
@@ -649,11 +655,6 @@ function OnPlayerUpdateSelectedUnit(){
     AnimateImbaTalentButton();
     CloseIMBATalentWindowWhenDeselectUnit();
 }
-
-GameEvents.Subscribe("dota_player_gained_level", OnPlayerGainedLevel);
-GameEvents.Subscribe("dota_player_learned_ability", OnPlayerLearnedAbility);
-GameEvents.Subscribe("dota_player_update_query_unit", OnPlayerUpdateQueryUnit);
-GameEvents.Subscribe("dota_player_update_selected_unit", OnPlayerUpdateSelectedUnit);
 
 //TODO check if using hotkey could level up the talents of the hidden default talent UI
 
