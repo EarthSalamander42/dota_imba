@@ -856,12 +856,12 @@
 		"Ability5"					"imba_faceless_void_chronosphere"
 		
 		"Ability10"					"special_bonus_imba_faceless_void_1"
-		"Ability11"					"special_bonus_imba_faceless_void_2"
+		"Ability11"					"special_bonus_imba_faceless_void_6"
 		"Ability12"					"special_bonus_imba_faceless_void_3"
-		"Ability13"					"special_bonus_imba_faceless_void_4"
+		"Ability13"					"special_bonus_imba_faceless_void_2"
 		"Ability14"					"special_bonus_imba_faceless_void_5"
-		"Ability15"					"special_bonus_imba_faceless_void_6"
-		"Ability16"					"special_bonus_imba_faceless_void_7"
+		"Ability15"					"special_bonus_imba_faceless_void_7"
+		"Ability16"					"special_bonus_imba_faceless_void_4"
 		"Ability17"					"special_bonus_imba_faceless_void_8"
 
 		"ProjectileSpeed"			"900"

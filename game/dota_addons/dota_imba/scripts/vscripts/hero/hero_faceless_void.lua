@@ -601,10 +601,10 @@ function modifier_imba_faceless_void_time_dilation_talent_buff:DeclareFunctions(
 end
 
 function modifier_imba_faceless_void_time_dilation_talent_buff:GetModifierMoveSpeedBonus_Percentage()
-	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_faceless_void_1", "ms_pcnt") * self:GetStackCount() end
+	return self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_1") * self:GetStackCount() end
 
 function modifier_imba_faceless_void_time_dilation_talent_buff:GetModifierAttackSpeedBonus_Constant()
-	return self:GetCaster():FindSpecificTalentValue("special_bonus_imba_faceless_void_1", "as_bonus") * self:GetStackCount() end
+	return self:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_1") * self:GetStackCount() end
 
 -----------------------------------
 -----	Time Dilation slow	  -----
@@ -765,6 +765,7 @@ end
 
 function imba_faceless_void_chronosphere:OnSpellStart()
 	local caster = self:GetCaster()
+	local ability = self
 	local chrono_center = self:GetCursorPosition()
 	local sound_cast = "Hero_FacelessVoid.Chronosphere"
 		
@@ -772,13 +773,12 @@ function imba_faceless_void_chronosphere:OnSpellStart()
 	local base_radius = self:GetSpecialValueFor("base_radius")
 	local chronocharge_radius = self:GetSpecialValueFor("chronocharge_radius") * (1 + caster:FindTalentValue("special_bonus_imba_faceless_void_8") * 0.01)
 	local duration = self:GetSpecialValueFor("duration")
-	
+
 	-- Fetch chronocharges and reset counter
 	local chronocharges = 0
 	local chronochargeModifier = caster:FindModifierByName("modifier_imba_faceless_void_chronocharges")
 	if chronochargeModifier then
-		chronocharges = chronochargeModifier:GetStackCount()
-		chronochargeModifier:SetStackCount(0)
+		chronocharges = chronochargeModifier:GetStackCount()		
 	end
 
 	-- Calculate final chronosphere parameters
@@ -788,7 +788,7 @@ function imba_faceless_void_chronosphere:OnSpellStart()
 	duration = duration + caster:GetSpellPower() * caster:FindTalentValue("special_bonus_imba_faceless_void_4")
 	
 	-- Create flying vision node
-	self:CreateVisibilityNode(chrono_center, total_radius, duration)
+	AddFOWViewer(caster:GetTeamNumber(), chrono_center, total_radius, duration, false)
 
 	-- Decide which cast sound to play
 	local heroes = FindUnitsInRadius(caster:GetTeamNumber(), chrono_center, nil, total_radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_OUT_OF_WORLD + DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_NOT_ILLUSIONS, FIND_ANY_ORDER, false)
@@ -803,23 +803,8 @@ function imba_faceless_void_chronosphere:OnSpellStart()
 	end
 	
 	-- Create the dummy and give it the chronosphere aura
-	local dummy = CreateUnitByName("npc_dummy_unit", chrono_center, false, caster, caster, caster:GetTeamNumber())
-	local mod = dummy:AddNewModifier(caster, self, "modifier_imba_faceless_void_chronosphere_aura", {duration = duration})
+	local mod = CreateModifierThinker(caster, ability, "modifier_imba_faceless_void_chronosphere_aura", {duration = duration, chronocharges = chronocharges}, chrono_center, caster:GetTeamNumber(), false)		
 	
-	-- If chronocharges were spent, index them in the aura modifier as stacks
-	if chronocharges > 0 then
-		mod:SetStackCount(chronocharges)
-	end
-	
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, dummy)
-		ParticleManager:SetParticleControl(particle, 0, dummy:GetAbsOrigin())
-		ParticleManager:SetParticleControl(particle, 1, Vector(total_radius, total_radius, total_radius))
-			
-	Timers:CreateTimer(duration, function()
-		ParticleManager:DestroyParticle(particle, false)
-		ParticleManager:ReleaseParticleIndex(particle)
-		dummy:Destroy()
-	end)
 end
 
 ---------------------------------
@@ -846,16 +831,36 @@ function modifier_imba_faceless_void_chronosphere_aura:GetAuraSearchType()
 function modifier_imba_faceless_void_chronosphere_aura:GetModifierAura()
 	return "modifier_imba_faceless_void_chronosphere_handler" end
 	
-function modifier_imba_faceless_void_chronosphere_aura:GetAuraRadius()
-	local ability = self:GetAbility()
-	local base_radius = ability:GetSpecialValueFor("base_radius")
-	local bonus_radius = ability:GetSpecialValueFor("chronocharge_radius") * (1 + ability:GetCaster():FindTalentValue("special_bonus_imba_faceless_void_8") * 0.01)
-	
-	return base_radius + bonus_radius * self:GetStackCount()
+function modifier_imba_faceless_void_chronosphere_aura:GetAuraRadius()		
+	return self.total_radius
 end
 
 function modifier_imba_faceless_void_chronosphere_aura:OnCreated()
 	if IsServer() then
+		self.caster = self:GetCaster()
+		self.ability = self:GetAbility()
+		self.parent = self:GetParent()		
+
+		-- Fetch chronocharges and reset counter
+		local chronocharges = 0
+		local chronochargeModifier = self.caster:FindModifierByName("modifier_imba_faceless_void_chronocharges")
+		if chronochargeModifier then
+			chronocharges = chronochargeModifier:GetStackCount()
+			chronochargeModifier:SetStackCount(0)
+		end
+
+		-- If chronocharges were spent, set the stack count accordingly		
+		self:SetStackCount(chronocharges)
+
+		self.base_radius = self.ability:GetSpecialValueFor("base_radius")
+		self.bonus_radius = self.ability:GetSpecialValueFor("chronocharge_radius") * (1 + self.caster:FindTalentValue("special_bonus_imba_faceless_void_8") * 0.01)
+		self.total_radius = self.base_radius + self.bonus_radius * self:GetStackCount()			
+		
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_faceless_void/faceless_void_chronosphere.vpcf", PATTACH_WORLDORIGIN, self.parent)
+		ParticleManager:SetParticleControl(particle, 0, self.parent:GetAbsOrigin())
+		ParticleManager:SetParticleControl(particle, 1, Vector(self.total_radius, self.total_radius, self.total_radius))	
+		self:AddParticle(particle, false, false, -1, false, false)			
+
 		Timers:CreateTimer(FrameTime(), function()
 			if self:GetStackCount() > 0 then
 				self:StartIntervalThink(0.1)
@@ -924,25 +929,36 @@ end
 
 function modifier_imba_faceless_void_chronosphere_handler:OnCreated()
 	if IsServer() then
-		local parent = self:GetParent()
-		local caster = self:GetAbility():GetCaster()
+		self.parent = self:GetParent()
+		self.caster = self:GetCaster()		
 		
-		if parent == caster or parent:GetPlayerOwner() == caster:GetPlayerOwner() then
-			self:SetStackCount(1)
-			if caster:HasTalent("special_bonus_imba_faceless_void_3") then
-				self:StartIntervalThink(0.1)
-			end
-		elseif parent:FindAbilityByName("imba_faceless_void_timelord") then
+		if self.parent == self.caster or self.parent:GetPlayerOwner() == self.caster:GetPlayerOwner() then
+			self:SetStackCount(1)						
+		elseif self.parent:HasAbility("imba_faceless_void_timelord") then
 			self:SetStackCount(3)
-		elseif caster:HasScepter() and caster:GetTeamNumber() == parent:GetTeamNumber() then
+		elseif self.caster:HasScepter() and self.caster:GetTeamNumber() == self.parent:GetTeamNumber() then
 			self:SetStackCount(2)
 		end
+
+		-- Caster with the talent dodges projectiles like a boss
+		if self:GetStackCount() == 1 then
+			if self.caster:HasTalent("special_bonus_imba_faceless_void_3") then			
+				ProjectileManager:ProjectileDodge(self.parent)
+			end
+		end		
+
+		self:StartIntervalThink(FrameTime())
 	end
 end
 
--- Used only for projectile dodging
 function modifier_imba_faceless_void_chronosphere_handler:OnIntervalThink()
-	ProjectileManager:ProjectileDodge(self:GetParent()) end
+	if IsServer() then		
+		-- Normal frozen enemy gets interrupted all the time
+		if self:GetStackCount() == 0 then
+			self.parent:InterruptMotionControllers(true)
+		end
+	end
+end	
 
 function modifier_imba_faceless_void_chronosphere_handler:DeclareFunctions()
 	local funcs ={ 	MODIFIER_EVENT_ON_ORDER,
@@ -981,7 +997,7 @@ end
 function modifier_imba_faceless_void_chronosphere_handler:GetModifierMoveSpeed_Absolute()
 	if self:GetStackCount() == 1 then
 		if self:GetAbility():GetCaster():HasTalent("special_bonus_imba_faceless_void_3") then
-			return 5000
+			return 3000
 		end
 		return self:GetAbility():GetSpecialValueFor("movement_speed")
 	end
@@ -1025,7 +1041,7 @@ function modifier_imba_faceless_void_chronosphere_caster_buff:GetEffectName()
 	return "particles/units/heroes/hero_faceless_void/faceless_void_chrono_speed.vpcf" end
 	
 function modifier_imba_faceless_void_chronosphere_caster_buff:GetEffectAttachType()
-	return PATTACH_ABSORIGIN  end
+	return PATTACH_ABSORIGIN_FOLLOW  end
 	
 function modifier_imba_faceless_void_chronosphere_caster_buff:DeclareFunctions()
 	local funcs = {	MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT, }

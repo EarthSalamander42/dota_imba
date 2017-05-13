@@ -9294,33 +9294,39 @@
 				"var_type"				"FIELD_INTEGER"
 				"speed"					"3000"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"slow_radius"			"325"
 			}
-			"04"
+
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"0.4 0.4 0.4 0.4 0.7 1.0 1.3"
 			}
-			"05"
+
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"range"					"675"
 				"LinkedSpecialBonus"	"special_bonus_imba_faceless_void_5"
 			}
-			"06"
+
+			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_steal_pcnt"			"100"
 			}
-			"08"
+
+			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_steal"				"100"
 			}
-			"10"
+
+			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage_time"			"2"
@@ -9373,41 +9379,49 @@
 				"var_type"				"FIELD_INTEGER"
 				"area_of_effect"		"725"
 			}
+
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"charge_gain"			"1 1 1 1 2 2 3"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"5"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cd_increase"			"6 8 10 12 12 12 12"
 			}
+
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_debuff"				"10"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"ms_debuff"				"10"
 			}
+
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"cd_decrease"			"2 3 4 5 6 6 6"
 			}
+
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"as_buff"				"5"
 			}
+
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
@@ -9456,13 +9470,13 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bash_damage"				"0 75 100 125 130 135 140"
+				"bash_damage"				"50 75 100 125 130 135 140"
 			}
 
 			"03"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"bash_duration"				"1.0"
+				"var_type"					"FIELD_INTEGER"
+				"bash_duration"				"1"
 			}
 
 			"04"
@@ -9511,7 +9525,7 @@
 		"AbilityTextureName"			"faceless_void_chronosphere"
 		"ScriptFile"					"hero/hero_faceless_void.lua"
 		"FightRecapLevel"				"2"
-		"HasScepterUpgrade"				"1"
+		"HasScepterUpgrade"				"1"		
 
 		// Precache
 		//-------------------------------------------------------------------------------------------------------------
@@ -9528,9 +9542,12 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"600"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"
 		"AbilityCooldown"				"140 125 110 100 95 90"
 		"AbilityManaCost"				"150 225 300 300 300 300"
-		"MaxLevel"						"7"
+		"MaxLevel"						"6"
+
+		"HasScepterUpgrade"				"1"
 
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -9543,48 +9560,57 @@
 			"01"
 			{
 				"var_type"							"FIELD_FLOAT"
-				"duration"							"4.0 4.5 5.0 5.0 5.0 5.0"
+				"duration"							"4 4.5 5 5 5 5"
 			}
+
 			"02"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"base_radius"						"425"
 			}
+
 			"03"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"chronocharge_radius"				"5"
 			}
+
 			"04"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"chronocharge_attackspeed"			"2 3 4 6 8 10"
 			}
+
 			"05"
 			{
 				"var_type"							"FIELD_FLOAT"
 				"movement_speed"					"1000"
 			}
+
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_cooldown"					"60"
 			}
+
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_as_slow"				"150"
 			}
+
 			"07"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_ms_slow_pcnt"			"50"
 			}
+
 			"08"
 			{
 				"var_type"							"FIELD_INTEGER"
 				"scepter_ally_projectile_slow"		"50"
 			}
+
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
@@ -35907,6 +35933,215 @@
 				"var_type"					"FIELD_INTEGER"
 				"value"						"500"
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Faceless Void's Talents 
+	//=================================================================================================================
+	"special_bonus_imba_faceless_void_1" // Time Dilation grants bonus move/attack speed per charge spent
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"5"
+			}
+		}
+	}
+
+	"special_bonus_imba_faceless_void_2" // Time Dilation grants bonus health and mana per charge spent on them
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"hp_regen"					"12"
+			}
+
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mp_regen"					"6"
+			}
+		}
+	}
+
+	"special_bonus_imba_faceless_void_3" // Movement inside Chronosphere is instant, Void constantly dodges projectiles
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_4" // Chronosphere duration increase per point of spell power 
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"0.05"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_5" // Time walk cast range increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_walk"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"600"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_6" // Time walk backtracks further
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_walk"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_7" // Time Dilation no longer spends chronocharges to affect allies
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_time_dilation"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"1"
+			}			
+		}
+	}
+
+	"special_bonus_imba_faceless_void_8" // Chronosphere effects per chronocharge increase
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+
+        "LinkedAbility"
+        {
+            "01"        "imba_faceless_void_chronosphere"
+        }
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"value"					"50"
+			}			
 		}
 	}
 }
