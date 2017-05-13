@@ -626,15 +626,9 @@ function modifier_imba_heartstopper_aura:OnIntervalThink()
 				if modifier then
 					-- Calculates damage
 					local damage = enemy:GetMaxHealth() * self.damage_pct / 100
-					-- If the enemy is at low enough HP, kill it
-					if enemy:GetHealth() <= (damage + 5) then
-						ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage + 10, damage_type = DAMAGE_TYPE_PURE})
-						if (math.random(1,100) <= 10) and (caster:GetName() == "npc_dota_hero_necrolyte") then
-							caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
-						end
-					-- Else, remove some HP from it
-					else
-						enemy:SetHealth(enemy:GetHealth() - damage)
+					ApplyDamage({attacker = caster, victim = enemy, ability = self:GetAbility(), damage = damage, damage_type = DAMAGE_TYPE_PURE, damage_flags = DOTA_DAMAGE_FLAG_HPLOSS})
+					if (math.random(1,1000) <= 2) and (caster:GetName() == "npc_dota_hero_necrolyte") then
+						caster:EmitSound("necrolyte_necr_ability_aura_0"..math.random(1,3))
 					end
 				end
 			end
