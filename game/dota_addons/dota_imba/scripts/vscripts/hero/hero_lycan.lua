@@ -172,10 +172,6 @@ end
 -- Charge modifier
 modifier_imba_lycan_wolf_charge = class({}) 
 
-function modifier_imba_lycan_wolf_charge:GetAttributes()
-	return MODIFIER_ATTRIBUTE_MULTIPLE
-end
-
 function modifier_imba_lycan_wolf_charge:IsDebuff()
 	return false	
 end
@@ -189,6 +185,10 @@ function modifier_imba_lycan_wolf_charge:IsPurgable()
 end
 
 function modifier_imba_lycan_wolf_charge:AllowIllusionDuplicate()
+	return false
+end
+
+function modifier_imba_lycan_wolf_charge:RemoveOnDeath()
 	return false
 end
 
@@ -240,14 +240,14 @@ function modifier_imba_lycan_wolf_charge:OnIntervalThink()
 		local wolves = FindUnitsInRadius(caster:GetTeamNumber(),
 									caster:GetAbsOrigin(),
 									nil,
-									50000,
+									25000, -- global
 									DOTA_UNIT_TARGET_TEAM_FRIENDLY,
 									DOTA_UNIT_TARGET_BASIC,
 									DOTA_UNIT_TARGET_FLAG_PLAYER_CONTROLLED,
 									FIND_ANY_ORDER,
 									false)
 		
-		if #wolves < wolves_count then
+		if #wolves < wolves_count and caster:IsAlive() then
 			ReviveWolves(caster, ability)
 		end
 		
