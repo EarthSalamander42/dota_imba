@@ -16,7 +16,7 @@ local modifiers = {
     "modifier_imba_chemical_rage_transform",
     "modifier_imba_chemical_rage",
     "modifier_imba_chemical_rage_aura",
-    "modifier_alchemist_chemical_rage_passive"
+    "modifier_alchemist_greed_scepter_passive"
 }
 
 for _,modifier in pairs(modifiers) do
@@ -621,6 +621,29 @@ function imba_alchemist_goblins_greed:IsStealable()
     return false
 end
 
+function imba_alchemist_goblins_greed:OnInventoryContentsChanged()
+    -- Checks if Alchemist now has a scepter, or still has it.
+    if IsServer() then
+        local caster = self:GetCaster()     
+        local mammonite_ability = "imba_alchemist_mammonite"        
+
+        if caster:HasAbility(mammonite_ability) then
+            local mammonite_ability_handler = caster:FindAbilityByName(mammonite_ability)
+            if mammonite_ability_handler then
+                if caster:HasScepter() then         
+                    mammonite_ability_handler:SetLevel(1)
+                    mammonite_ability_handler:SetHidden(false)                   
+                else
+                    if mammonite_ability_handler:GetLevel() > 0 then
+                        mammonite_ability_handler:SetLevel(0)
+                        mammonite_ability_handler:SetHidden(true)
+                    end                 
+                end
+            end
+        end
+    end
+end
+
 function imba_alchemist_goblins_greed:GetCastRange(location, target)
     return self.BaseClass.GetCastRange(self, location, target)
 end
@@ -678,7 +701,7 @@ end
 
 function modifier_imba_goblins_greed_passive:OnCreated()
     if IsServer() then
-        local caster = self:GetCaster()
+        local caster = self:GetCaster()        
         if not caster:IsIllusion() then
             local ability = self:GetAbility()
             ability.greevil = CreateUnitByName("npc_imba_alchemist_greevil", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeam())
@@ -687,7 +710,7 @@ function modifier_imba_goblins_greed_passive:OnCreated()
             ability.greevil_ability:SetLevel(1)            
             Timers:CreateTimer(0.1, function()
                 ability.greevil:MoveToNPC(caster)
-            end)
+            end)            
         end
     end
 end
@@ -798,6 +821,51 @@ end
 
 modifier_imba_greevils_greed_passive = class ({})
 
+function modifier_imba_greevils_greed_passive:OnCreated()
+    if IsServer() then
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.owner = self.caster:GetOwner()        
+
+        -- Start thinking 
+        self:StartIntervalThink(0.5)
+    end
+end
+
+function modifier_imba_greevils_greed_passive:OnIntervalThink()
+    if IsServer() then        
+        -- If the owner (Alch) is dead, Golden Greevil's should return to base
+        if not self.owner:IsAlive() then            
+            local fountain
+            -- Find this team's fountain
+            if self.caster:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+                fountain = Entities:FindByName(nil, "ent_dota_fountain_good")
+
+            elseif self.caster:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+                fountain = Entities:FindByName(nil, "ent_dota_fountain_bad")
+            end
+
+            -- Send the Golden Greevil back to base
+            if fountain then
+                self.caster:MoveToNPC(fountain)
+            end
+
+            -- If the target died, casting fails
+            if self.caster.target then
+                self.caster.target = nil
+            end            
+        else
+            -- If Alch is alive and the Greevil has a target, Greevil should go to it
+            if self.caster.target then
+                self.caster:CastAbilityOnTarget(self.caster.target, self.ability, self.owner:GetPlayerID())                
+            else
+                -- If there is no target,  Golden Greevil's should follow Alch
+                self.caster:MoveToNPC(self.owner)                    
+            end            
+        end
+    end
+end
+
 function modifier_imba_greevils_greed_passive:CheckState()
     return {
         [MODIFIER_STATE_INVULNERABLE] = true,
@@ -808,8 +876,13 @@ function modifier_imba_greevils_greed_passive:CheckState()
     }
 end
 
-imba_alchemist_chemical_rage = class ({})
 
+
+
+----------------------------------
+--          CHEMICAL RAGE       --
+----------------------------------
+imba_alchemist_chemical_rage = class ({})
 
 function imba_alchemist_chemical_rage:IsHiddenWhenStolen()
     return false
@@ -817,18 +890,6 @@ end
 
 function imba_alchemist_chemical_rage:GetAssociatedSecondaryAbilities()
     return "imba_alchemist_acid_spray"
-end
-
-function imba_alchemist_chemical_rage:GetBehavior()
-    local caster = self:GetCaster()
-    if caster:HasScepter() then
-        return DOTA_ABILITY_BEHAVIOR_NO_TARGET + DOTA_ABILITY_BEHAVIOR_AUTOCAST
-    end
-    return DOTA_ABILITY_BEHAVIOR_NO_TARGET
-end
-
-function imba_alchemist_chemical_rage:GetIntrinsicModifierName()    
-    return "modifier_alchemist_chemical_rage_passive"    
 end
 
 function imba_alchemist_chemical_rage:OnSpellStart()
@@ -1038,37 +1099,55 @@ function modifier_imba_chemical_rage_aura:OnIntervalThink()
     end
 end
 
--- Scepter gold attacks modifier
-modifier_alchemist_chemical_rage_passive = class({})
 
-function modifier_alchemist_chemical_rage_passive:IsHidden() return true end
-function modifier_alchemist_chemical_rage_passive:IsPurgable() return false end
-function modifier_alchemist_chemical_rage_passive:IsDebuff() return false end
+----------------------------------
+--         MAMMONITE            --
+----------------------------------
+imba_alchemist_mammonite = class({})
 
-function modifier_alchemist_chemical_rage_passive:OnCreated()
+function imba_alchemist_mammonite:OnToggle() return end    
+
+function imba_alchemist_mammonite:GetIntrinsicModifierName()
+     return "modifier_alchemist_greed_scepter_passive"
+ end 
+
+ -- Scepter gold attacks modifier
+modifier_alchemist_greed_scepter_passive = class({})
+
+function modifier_alchemist_greed_scepter_passive:IsHidden() return false end
+function modifier_alchemist_greed_scepter_passive:IsPurgable() return false end
+function modifier_alchemist_greed_scepter_passive:IsDebuff() return false end
+function modifier_alchemist_greed_scepter_passive:RemoveOnDeath() return false end
+
+function modifier_alchemist_greed_scepter_passive:OnCreated()
     self.caster = self:GetCaster()
     self.ability = self:GetAbility()
 
-    self.scepter_gold_damage = self.ability:GetSpecialValueFor("scepter_gold_damage")
+    self.gold_damage = self.ability:GetSpecialValueFor("gold_damage")
 end
 
-function modifier_alchemist_chemical_rage_passive:OnRefresh()
+function modifier_alchemist_greed_scepter_passive:OnRefresh()
     self:OnCreated()
 end
 
-function modifier_alchemist_chemical_rage_passive:DeclareFunctions()
+function modifier_alchemist_greed_scepter_passive:DeclareFunctions()
     local decFuncs = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-                      MODIFIER_EVENT_ON_ATTACK_FINISHED}
+                      MODIFIER_EVENT_ON_ATTACK_FINISHED,
+                      MODIFIER_PROPERTY_ABILITY_LAYOUT}
 
     return decFuncs
 end
 
-function modifier_alchemist_chemical_rage_passive:GetModifierPreAttack_BonusDamage()
+function modifier_alchemist_greed_scepter_passive:GetModifierAbilityLayout()
+    return 5
+end
+
+function modifier_alchemist_greed_scepter_passive:GetModifierPreAttack_BonusDamage()
     if IsServer() then        
         if self.caster:HasScepter() then
-            if self.ability:GetAutoCastState() then
+            if self.ability:GetToggleState() then
                 local gold = self.caster:GetGold()
-                local gold_percent = self.scepter_gold_damage * 0.01
+                local gold_percent = self.gold_damage * 0.01
                 local gold_damage = gold * gold_percent
                 return gold_damage
             end
@@ -1076,16 +1155,16 @@ function modifier_alchemist_chemical_rage_passive:GetModifierPreAttack_BonusDama
     end
 end
 
-function modifier_alchemist_chemical_rage_passive:OnAttackFinished(keys)
+function modifier_alchemist_greed_scepter_passive:OnAttackFinished(keys)
     if IsServer() then
         local attacker = keys.attacker        
 
         -- Only apply if the attacker is the caster
         if self.caster == attacker then                        
             if self.caster:HasScepter() then
-                if self.ability:GetAutoCastState() then
+                if self.ability:GetToggleState() then
                     local gold = self.caster:GetGold()
-                    local gold_percent = self.scepter_gold_damage * 0.01
+                    local gold_percent = self.gold_damage * 0.01
                     local gold_damage = gold * gold_percent                                
                     self.caster:SpendGold(gold_damage, DOTA_ModifyGold_Unspecified)                
                 end
@@ -1093,4 +1172,3 @@ function modifier_alchemist_chemical_rage_passive:OnAttackFinished(keys)
         end
     end
 end
-    
