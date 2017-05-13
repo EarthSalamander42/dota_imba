@@ -4163,7 +4163,7 @@
 		"SoundSet"					""
 		"IdleSoundLoop"				""
 		"Level"						"1"
-		"ModelScale"				"1"
+		"ModelScale"				"0.8"
 		"IsAncient"					"1"
 		"ConsideredHero"			"1"
 		"CanBeDominated"			"0"

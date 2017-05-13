@@ -731,14 +731,13 @@ function modifier_imba_goblins_greed_passive:OnDeath(keys)
         return
     end
 
-    if (caster == attacker and (not (caster:GetTeam() == unit:GetTeam())))
-    or unit:HasModifier("modifier_imba_goblins_greed") then
+    if caster == attacker and caster:GetTeamNumber() ~= unit:GetTeamNumber() or unit:HasModifier("modifier_imba_goblins_greed") then
         local stacks = self:GetStackCount()
         local hero_multiplier = 1
         if unit:IsHero() then
             hero_multiplier = ability:GetSpecialValueFor("hero_multiplier")
         end
-        caster:ModifyGold(stacks * hero_multiplier, false, 0)
+        caster:ModifyGold(stacks * hero_multiplier, false, DOTA_ModifyGold_Unspecified)
         local player = PlayerResource:GetPlayer(caster:GetPlayerID())
         local particleName = "particles/units/heroes/hero_alchemist/alchemist_lasthit_coins.vpcf"       
         local particle1 = ParticleManager:CreateParticleForPlayer(particleName, PATTACH_ABSORIGIN, unit, player)
