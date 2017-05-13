@@ -902,23 +902,19 @@
 	{
 		"override_hero"				"npc_dota_hero_huskar"
 
-		"ArmorPhysical"				"2"
-
-		"AttributeAgilityGain"		"2.0"
-
 		//"Ability1"					"imba_huskar_inner_vitality"
 		//"Ability2"					"imba_huskar_burning_spear"
 		//"Ability3"					"imba_huskar_berserkers_blood"
 		//"Ability4"					"imba_huskar_life_break"
 
 		"Ability10"					"special_bonus_lifesteal_10"
-		"Ability11"					"special_bonus_movement_speed_15"
+		"Ability11"					"special_bonus_unique_huskar_2"
 		"Ability12"					"special_bonus_lifesteal_15"
 		"Ability13"					"special_bonus_attack_damage_35"
 		"Ability14"					"special_bonus_lifesteal_20"
 		"Ability15"					"special_bonus_attack_speed_30"
 		"Ability16"					"special_bonus_lifesteal_25"
-		"Ability17"					"special_bonus_attack_range_100"
+		"Ability17"					"special_bonus_unique_huskar"
 
 		"ProjectileModel"			"particles/units/heroes/hero_huskar/huskar_base_attack.vpcf"					
 	}
@@ -929,11 +925,6 @@
 	"npc_imba_hero_invoker"
 	{
 		"override_hero"				"npc_dota_hero_invoker"
-
-		"AttackDamageMin"				"17"
-		"AttackDamageMax"				"23"
-
-		"AttributeBaseIntelligence"		"25"
 		
 		//"Ability1"				"imba_invoker_quas"
 		//"Ability2"				"imba_invoker_wex"

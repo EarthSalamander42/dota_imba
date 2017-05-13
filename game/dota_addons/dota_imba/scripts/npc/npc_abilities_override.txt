@@ -13068,6 +13068,8 @@
 	//=================================================================================================================
 	"invoker_invoke"
 	{
+		"RequiredLevel"						"0"
+
 		"MaxLevel"							"7"
 
 		"AbilityCooldown"					"6 2 2 2 2 2 2"
@@ -13648,39 +13650,39 @@
 	//=================================================================================================================
 	"huskar_inner_vitality"
 	{
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"7"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal"					"20 25 30 35"
+				"heal"					"12 16 20 24 28 32 36"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"attrib_bonus"			"0.25"
+				"attrib_bonus"			"0.05 0.1 0.15 0.2 0.2 0.2 0.2"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurt_attrib_bonus"		"0.4 0.6 0.8 1.0"
+				"hurt_attrib_bonus"		"0.2 0.4 0.6 0.8 0.9 1.0 1.1"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"hurt_percent"			"0.40"
+				"hurt_percent"			"0.35 0.35 0.35 0.35 0.40 0.45 0.50"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"tooltip_attrib_bonus"			"25"
+				"tooltip_attrib_bonus"			"5 10 15 20 20 20 20"
 			}
 			"06"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"tooltip_hurt_attrib_bonus"		"40 60 80 100"
+				"tooltip_hurt_attrib_bonus"		"20 40 60 80 90 100 110"
 			}
 		}
 	}	
@@ -13690,9 +13692,11 @@
 	//=================================================================================================================
 	"huskar_burning_spear"
 	{
-		"AbilityDuration"						"9"
+		"MaxLevel"								"7"
 
-		"AbilityDamage"							"10 15 20 25"
+		"AbilityDuration"						"8 8 8 8 9 10 11"
+
+		"AbilityDamage"							"8 12 16 20 22 24 25"
 
 		"AbilitySpecial"
 		{
@@ -13703,28 +13707,45 @@
 			}
 		}
 	}
-	
+
 	//=================================================================================================================
-	// Huskar: Berserker's Blood
+	// Huskar: bonus Burning Spear DPS
 	//=================================================================================================================
-	"huskar_berserkers_blood"
+	"special_bonus_unique_huskar_2"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_attack_speed"			"210 280 350 420"
+				"value"							"5"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Huskar: Berserker's Blood
+	//=================================================================================================================
+	"huskar_berserkers_blood"
+	{
+		"MaxLevel"								"7"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"						"FIELD_INTEGER"
+				"maximum_attack_speed"			"220 260 300 340 380 420 460"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"maximum_resistance"			"66 77 88 99"
+				"maximum_resistance"			"30 40 50 60 65 70 75"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"hp_threshold_max"				"15"
+				"hp_threshold_max"				"10 10 10 10 12 14 16"
 			}
 		}
 	}
@@ -13734,28 +13755,26 @@
 	//=================================================================================================================
 	"huskar_life_break"
 	{
-		"AbilityCastPoint"					"0.2"
+		"MaxLevel"							"6"
 
-		"AbilityCooldown"					"7"
+		"AbilityCooldown"					"12 11 10 9 8 7"
 
-		"AbilityCastRange"					"700 850 1000"
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_cost_percent"		"0.30"
+				"health_cost_percent"		"0.35"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_damage"				"0.30"
+				"health_damage"				"0.35 0.4 0.45 0.5 0.55 0.6"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"health_damage_scepter"		"0.5"
+				"health_damage_scepter"		"0.65"
 			}
 			"04"
 			{
@@ -13765,32 +13784,32 @@
 			"05"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage"				"30"
+				"tooltip_health_damage"				"35 40 45 50 55 60"
 			}
 			"06"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_cost_percent"		"30"
+				"tooltip_health_cost_percent"		"35"
 				"CalculateSpellDamageTooltip"		"0"
 			}
 			"07"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed"					"-40 -50 -60"
+				"movespeed"					"-40 -50 -60 -65 -70 -75"
 			}
 			"08"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"slow_durtion_tooltip"		"4 5 6"
+				"var_type"					"FIELD_INTEGER"
+				"slow_durtion_tooltip"		"4 5 6 6 6 6"
 			}
 			"09"
 			{
 				"var_type"							"FIELD_INTEGER"
-				"tooltip_health_damage_scepter"		"50"
+				"tooltip_health_damage_scepter"		"65"
 			}
 			"10"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"cooldown_scepter"			"3"
 			}
 		}
@@ -13806,7 +13825,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
+				"value"				"550"
 			}
 		}
 	}
