@@ -1244,11 +1244,17 @@ function imba_sniper_assassinate:AssassinateHit(target)
                 -- Get the caster's attack damage
                 local damage = caster:GetAverageTrueAttackDamage(target) * (perfectshot_critical_dmg_pct * 0.01)
 
+                -- Main damage type is physical. If the caster is wielding Spellfencer though, it becomes magical                
+                local damage_type = DAMAGE_TYPE_PHYSICAL
+                if caster:HasModifier("modifier_item_imba_spell_fencer_unique") then
+                    damage_type = DAMAGE_TYPE_MAGICAL
+                end
+
                 --Deal damage to the target
                 local damageTable = {victim = target,
                                      attacker = caster, 
                                      damage = damage,
-                                     damage_type = DAMAGE_TYPE_PHYSICAL,
+                                     damage_type = damage_type,
                                      ability = ability
                                     }
         

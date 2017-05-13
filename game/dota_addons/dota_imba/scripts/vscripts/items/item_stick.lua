@@ -43,7 +43,7 @@ function MagicStickCharge( keys )
 
 	-- Verify stick proc conditions
 	local mana_spent = cast_ability:GetManaCost(cast_ability:GetLevel() - 1)
-	local procs_stick = StickProcCheck(cast_ability)
+	local procs_stick = cast_ability:ProcsMagicStick()
 	local caster_visible = caster:CanEntityBeSeenByMyTeam(target)
 
 	-- If all conditions are met, increase stick charges

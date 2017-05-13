@@ -927,6 +927,7 @@
 		"precache"
 		{	
 			"particle"						"particles/item/lifesteal_mask/lifesteal_particle.vpcf"
+			"particle"						"particles/item/vladmir/vladmir_blood_lifesteal.vpcf"
 		}
 		
 		// Special	
@@ -4569,9 +4570,10 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"2070"
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName" 			"custom/imba_butterfly"
+		"ScriptFile"					"items/item_butterfly.lua"
 		
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
@@ -4584,6 +4586,14 @@
 		"ItemQuality"					"epic"
 		"ItemAliases"					"bfly;butterfly"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
+
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/items2_fx/butterfly_active.vpcf"
+			"particle"					"particles/item/butterfly/butterfly_wind_song.vpcf"
+		}
 		
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
@@ -4594,169 +4604,83 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_agility"			"35"
 			}
+			
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_damage"			"30"
 			}
+
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_evasion"			"35"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_attack_speed"	"30"
 			}
+
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
+				"var_type"				"FIELD_INTEGER"
 				"flutter_duration"		"4"
 			}
+
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"flutter_move_speed"	"35"
+				"flutter_movespeed_pct" "35"
 			}
+
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance"			"35"
+				"var_type"					"FIELD_INTEGER"
+				"wind_song_stack_duration"	"15"
 			}
+
 			"08"
 			{
+				"var_type"					"FIELD_INTEGER"
+				"wind_song_active_stacks"	"3"
+			}
+
+			"09"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"wind_song_bonus_ms_pct"	"25"
+			}
+
+			"10"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"min_range"				"600"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"RemoveModifier"
-			{
-				"ModifierName"			"modifier_item_imba_butterfly"
-				"Target" 				"CASTER"
+				"wind_song_bonus_as"	"50"
 			}
 
-			"ApplyModifier"
+			"11"
 			{
-				"ModifierName"			"modifier_item_imba_butterfly_flutter"
-				"Target" 				"CASTER"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"				"1"
-			"RunScript"
-			{
-				"ScriptFile"			"items/item_butterfly.lua"
-				"Function"				"ButterflyProjectileHit"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_imba_butterfly"
-			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
-				
-				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS" 		"%bonus_agility"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 		"%bonus_damage"
-					"MODIFIER_PROPERTY_EVASION_CONSTANT" 			"%bonus_evasion"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
-				}
+				"var_type"				"FIELD_INTEGER"
+				"wind_song_evasion"		"100"
 			}
 
-			"modifier_item_imba_butterfly_flutter"
+			"12"
 			{
-				"Passive"				"0"
-				"IsHidden"				"0"
-				"IsDebuff"				"0"
-
-				"Attributes"			"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"TextureName"			"custom/imba_butterfly"
-
-				"Duration"				"%flutter_duration"
-
-				"EffectName"			"particles/items2_fx/butterfly_active.vpcf"
-				"EffectAttachType"		"follow_origin"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS" 		"%bonus_agility"
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE" 		"%bonus_damage"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" 	"%flutter_move_speed"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT" 	"%bonus_attack_speed"
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_butterfly.lua"
-						"Function"			"FlutterParticle"
-
-						"particle_flutter"	"particles/item/butterfly/butterfly_active.vpcf"
-						"sound_flutter"		"DOTA_Item.Butterfly"
-					}
-				}
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"items/item_butterfly.lua"
-						"Function"			"FlutterParticleEnd"
-
-						"modifier_evasion"	"modifier_item_imba_butterfly"
-					}
-				}
+				"var_type"				"FIELD_INTEGER"
+				"wind_song_duration"	"3"
 			}
 
-			"modifier_item_imba_butterfly_effect"
+			"13"
 			{
-				"Passive"				"1"
-				"IsHidden"				"1"
-				"IsDebuff"				"0"
+				"var_type"				"FIELD_INTEGER"
+				"wind_song_ms_slow_pct"	"10"
+			}
 
-				"OnAttackLanded"
-				{
-					"Random"
-					{
-						"Chance"			"%proc_chance"
-
-						"OnSuccess"
-						{
-							"RunScript"
-							{
-								"ScriptFile"			"items/item_butterfly.lua"
-								"Function"				"ButterflyEffect"
-
-								"particle_projectile"	"particles/item/yasha/yasha_projectile.vpcf"
-							}
-						}
-					}	
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"internal/util.lua"
-						"Function"			"IllusionPassiveRemover"
-
-						"modifier"			"modifier_item_imba_butterfly_effect"
-					}
-				}
+			"14"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"wind_song_slow_radius"	"180"
 			}
 		}
 	}
@@ -10010,6 +9934,14 @@
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
+		// Precache
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"					"particles/item/blink/blink_dagger_start_imba.vpcf"
+			"particle"					"particles/item/blink/blink_dagger_imbaend.vpcf"
+		}
+
 		// Special	
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -10019,16 +9951,19 @@
 				"var_type"					"FIELD_INTEGER"
 				"max_blink_range"			"1200"
 			}
+
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"blink_damage_cooldown"		"3"
 			}
+
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
 				"max_extra_distance"		"1200"
 			}
+
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"

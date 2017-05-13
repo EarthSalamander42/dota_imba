@@ -64,6 +64,10 @@ function item_imba_angelic_alliance:CastFilterResultTarget(target)
 		return UF_FAIL_CUSTOM
 	end
 
+	if target:IsBuilding() then
+		return UF_FAIL_BUILDING
+	end
+
 	local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
     return nResult
 end

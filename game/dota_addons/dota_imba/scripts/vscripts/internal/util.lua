@@ -794,7 +794,7 @@ function PickupBountyRune(item, unit)
 	end
 
 	-- Grant the unit gold
-	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_CreepKill)
+	unit:ModifyGold(current_bounty, false, DOTA_ModifyGold_Unspecified)
 
 	-- Show the gold gained message to everyone
 	SendOverheadEventMessage(nil, OVERHEAD_ALERT_GOLD, unit, current_bounty, nil)

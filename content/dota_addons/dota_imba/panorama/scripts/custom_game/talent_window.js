@@ -544,8 +544,8 @@ function OpenImbaTalentWindow(bol_open){
 
     //check if valid
     if(!bol_open || (Entities.IsValidEntity(currentShownUnitID) &&
-            Entities.IsRealHero(currentShownUnitID) &&
-            Entities.IsControllableByPlayer(currentShownUnitID, localPlayerID))){
+            Entities.IsRealHero(currentShownUnitID)))
+        {
 
         var talentWindow = $.GetContextPanel();
 
