@@ -47,6 +47,12 @@
     margin-right: 6px;
 }
 
+#PlayerColorBar
+{
+    align : left center;
+    height: 100%;
+}
+
 .ScoreCol_TeamScore
 {
     width: 48px;
@@ -191,6 +197,7 @@
 
 .ScoreboardPanel
 {
+    height : 100%;
     margin-top: 1px;
     margin-left: 1px;
 }
@@ -275,6 +282,7 @@
     background-repeat: no-repeat;
 	background-position: 50% 50%;
     background-size: contain;
+    vertical-align: middle;
 }
 
 #BtnMuteVoice
