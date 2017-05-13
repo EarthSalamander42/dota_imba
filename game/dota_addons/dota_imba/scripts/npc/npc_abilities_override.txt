@@ -13018,14 +13018,12 @@
 	//=================================================================================================================
 	"invoker_quas"
 	{
-		"MaxLevel"							"10"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"health_regen_per_instance"	"2.5 5.0 7.5 10.0 13.0 16.0 20.0 25.0 30.0 40.0"
+				"var_type"						"FIELD_INTEGER"
+				"health_regen_per_instance"		"2 4 6 8 12 16 20"
 			}
 		}
 	}
@@ -13035,19 +13033,17 @@
 	//=================================================================================================================
 	"invoker_wex"
 	{
-		"MaxLevel"							"10"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"attack_speed_per_instance"	"4 8 12 16 20 25 30 40 50 60"
+				"var_type"						"FIELD_INTEGER"
+				"attack_speed_per_instance"		"3 6 9 12 16 20 25"
 			}
 			"02"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"move_speed_per_instance"	"3 4 5 6 7 8 9 10 11 12"
+				"var_type"						"FIELD_INTEGER"
+				"move_speed_per_instance"		"3 4 5 6 7 8 9"
 			}
 		}
 	}
@@ -13057,14 +13053,12 @@
 	//=================================================================================================================
 	"invoker_exort"
 	{
-		"MaxLevel"							"10"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage_per_instance"	"4 8 12 18 24 30 36 42 50 60"
+				"var_type"						"FIELD_INTEGER"
+				"bonus_damage_per_instance"		"4 8 12 18 24 30 40"
 			}
 		}
 	}
@@ -13079,7 +13073,7 @@
 		"AbilityCooldown"					"6 2 2 2 2 2 2"
 
 		"AbilityManaCost"					"60"
-		
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -13089,7 +13083,7 @@
 			}
 			"02"
 			{
-				"var_type"					"FIELD_FLOAT"
+				"var_type"					"FIELD_INTEGER"
 				"cooldown_scepter"			"2 0 0 0 0 0 0"
 			}
 			"03"
@@ -13100,17 +13094,17 @@
 			"04"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_intellect"			"0 0 9 12 15 18 21"
+				"bonus_intellect"			"0 0 8 10 12 14 16"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"magic_resistance_pct"		"0 0 0 10 14 18 22"
-			}	
+				"magic_resistance_pct"		"0 0 0 8 12 16 20"
+			}
 			"06"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_spellpower"			"0 0 0 0 8 12 16"
+				"bonus_spellpower"			"0 0 0 0 6 9 12"
 			}
 			"07"
 			{
@@ -13120,7 +13114,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_reduction_pct"	"0 0 0 0 0 0 15"
+				"cooldown_reduction_pct"	"0 0 0 0 0 0 10"
 			}
 		}
 	}
@@ -13130,16 +13124,12 @@
 	//=================================================================================================================
 	"invoker_cold_snap"
 	{
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"16"
-		"AbilityManaCost"				"50"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5 8.0"
+				"duration"				"3 3.5 4.0 4.5 5.0 5.5 6.0 6.5"
 				"levelkey"				"quaslevel"
 			}
 			"02"
@@ -13150,19 +13140,19 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"freeze_cooldown"		"0.7 0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3 0.25 0.01"
+				"freeze_cooldown"		"0.65 0.6 0.55 0.5 0.45 0.4 0.35 0.3"
 				"levelkey"				"quaslevel"	
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"freeze_damage"			"20 25 30 35 40 45 50 55 60 70 80"
+				"var_type"				"FIELD_INTEGER"
+				"freeze_damage"			"10 20 30 40 50 60 70 80"
 				"levelkey"				"quaslevel"	
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_trigger"		"5.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_trigger"		"10"
 			}
 		}
 	}
@@ -13172,15 +13162,14 @@
 	//=================================================================================================================
 	"invoker_ghost_walk"
 	{
-		"AbilityCooldown"				"35"
-		"AbilityManaCost"				"200"
-		
+		"AbilityManaCost"				"100"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"100.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"100"
 			}
 			"02"
 			{
@@ -13190,13 +13179,13 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"enemy_slow"			"-20 -25 -30 -35 -40 -50 -60 -70 -80 -90 -100"
+				"enemy_slow"			"-20 -25 -30 -35 -40 -50 -60 -70"
 				"levelkey"				"quaslevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"self_slow"				"0 5 10 15 20 25 30 35 40 50 60"
+				"self_slow"				"-15 -10 -5 0 10 20 30 40"
 				"levelkey"				"wexlevel"
 			}			
 			"05"
@@ -13213,15 +13202,13 @@
 	"invoker_tornado"
 	{
 		"AbilityCastRange"				"3000"
-		"AbilityCooldown"				"24"
-		"AbilityManaCost"				"150"
 			
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"2000 2500 3000 3500 4000 4500 5000 5500 6000 7000 20000"
+				"travel_distance"		"1000 1500 2000 2500 3000 4000 5000 6000"
 				"levelkey"				"wexlevel"
 			}
 			"02"
@@ -13247,13 +13234,13 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"lift_duration"			"1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.6 2.6 2.6"
+				"lift_duration"			"0.8 1.1 1.4 1.7 2.0 2.3 2.6 2.9"
 				"levelkey"				"quaslevel"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"base_damage"			"120"
+				"base_damage"			"100"
 			}
 			"08"
 			{
@@ -13264,7 +13251,7 @@
 			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"wex_damage"			"0 50 100 150 200 250 300 350 375 400 450"
+				"wex_damage"			"50 100 150 200 250 300 350 400"
 				"levelkey"				"wexlevel"
 			}
 		}
@@ -13275,10 +13262,6 @@
 	//=================================================================================================================
 	"invoker_emp"
 	{
-		"AbilityCastRange"				"1200"
-		"AbilityCooldown"				"24"
-		"AbilityManaCost"				"125"
-			
 		"AbilitySpecial"
 		{
 			"01"
@@ -13290,12 +13273,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"800"
+				"area_of_effect"		"775"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mana_burned"			"150 225 300 375 450 525 600 675 750 825 1000"
+				"mana_burned"			"125 200 300 400 500 600 700 800"
 				"levelkey"				"wexlevel"
 			}
 			"04"
@@ -13314,26 +13297,25 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP | DOTA_UNIT_TARGET_BUILDING"
 
 		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"8"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_attack_speed"	"20 35 50 65 80 95 110 125 140 160 180"
+				"bonus_attack_speed"	"15 30 45 60 80 100 120 140"
 				"levelkey"				"wexlevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20 35 50 65 80 100 120 150 175 200 225"
+				"bonus_damage"			"15 30 45 60 80 100 120 140"
 				"levelkey"				"exortlevel"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"12"
 			}
 		}
 	}
@@ -13343,31 +13325,28 @@
 	//=================================================================================================================
 	"invoker_chaos_meteor"
 	{
-		"AbilityCastRange"				"900"
-		"AbilityCooldown"				"30"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"land_time"				"1.0"
+				"land_time"				"1.3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"350"
+				"area_of_effect"		"325"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"1000 1500 2000 2500 3000 3500 4000 4500 5000 6000 20000"
+				"travel_distance"		"800 1200 1600 2000 2500 3000 3500 4000"
 				"levelkey"				"wexlevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_speed"			"425"
+				"travel_speed"			"350"
 			}			
 			"05"
 			{
@@ -13387,8 +13366,8 @@
 			}
 			"08"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"main_damage"			"60 80 100 120 140 170 200 230 260 290 325"
+				"var_type"				"FIELD_INTEGER"
+				"main_damage"			"60 80 100 120 145 170 195 220"
 				"levelkey"				"exortlevel"
 			}
 			"09"
@@ -13398,8 +13377,8 @@
 			}
 			"10"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"burn_dps"				"15 20 25 30 35 40 45 50 55 65 75"
+				"var_type"				"FIELD_INTEGER"
+				"burn_dps"				"15 20 25 30 36 42 48 54"
 				"levelkey"				"exortlevel"
 				"CalculateSpellDamageTooltip"	"1"
 			}
@@ -13411,9 +13390,6 @@
 	//=================================================================================================================
 	"invoker_sun_strike"
 	{
-		"AbilityCooldown"				"20"
-		"AbilityManaCost"				"175"
-			
 		"AbilitySpecial"
 		{
 			"01"
@@ -13424,18 +13400,18 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"area_of_effect"		"225"
+				"area_of_effect"		"175"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"160 240 320 400 480 560 640 720 800 950 1100"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"125 200 275 350 430 515 605 700"
 				"levelkey"				"exortlevel"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_distance"		"600"
+				"vision_distance"		"500"
 			}
 			"05"
 			{
@@ -13450,45 +13426,42 @@
 	//=================================================================================================================
 	"invoker_forge_spirit"
 	{
-		"AbilityManaCost"				"50"
-		"AbilityCooldown"				"20"
-		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"spirit_damage"			"25 35 45 55 65 75 85 95 110 130 150"
+				"var_type"				"FIELD_INTEGER"
+				"spirit_damage"			"28 37 46 55 64 76 88 100"
 				"levelkey"				"exortlevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_mana"			"600"
+				"spirit_mana"			"150 200 250 300 350 400 450 500"
 				"levelkey"				"exortlevel"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_armor"			"2 3 4 5 6 7 8 9 11 13 15"
+				"spirit_armor"			"3 4 5 6 8 10 12"
 				"levelkey"				"exortlevel"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"spirit_attack_range"	"400 500 600 700 800 800 800 800 800 850 900"
+				"var_type"				"FIELD_INTEGER"
+				"spirit_attack_range"	"300 375 450 525 600 675 750 825"
 				"levelkey"				"quaslevel"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"spirit_hp"				"300 400 500 600 700 800 900 1000 1200 1400 1600"
+				"spirit_hp"				"300 400 500 600 700 800 900 1000"
 				"levelkey"				"quaslevel"
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"spirit_duration"		"50 55 60 65 70 75 80 85 90 105 120"
+				"var_type"				"FIELD_INTEGER"
+				"spirit_duration"		"40 45 50 55 60 70 80 90"
 				"levelkey"				"quaslevel"
 			}
 		}
@@ -13509,7 +13482,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_armor_removed"		"20"
+				"max_armor_removed"		"12"
 			}
 			"03"
 			{
@@ -13524,20 +13497,18 @@
 	//=================================================================================================================
 	"invoker_ice_wall"
 	{
-		"AbilityCooldown"				"20"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 16.0 18.0"
+				"duration"				"3.5 5.0 6.5 8.0 9.5 11.0 12.5 14.0"
 				"levelkey"				"quaslevel"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160 -180 -225 -250"
+				"slow"					"-20 -40 -60 -80 -100 -120 -140 -160"
 				"levelkey"				"quaslevel"
 			}
 			"03"
@@ -13548,7 +13519,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_second"		"16 24 32 40 50 60 70 80 100 125 150"
+				"damage_per_second"		"12 18 24 30 40 50 60 70"
 				"levelkey"				"exortlevel"
 			}
 			"05"
@@ -13559,7 +13530,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"num_wall_elements"		"25"
+				"num_wall_elements"		"21"
 			}
 			"07"
 			{
@@ -13579,16 +13550,12 @@
 	//=================================================================================================================
 	"invoker_deafening_blast"
 	{
-		"AbilityCastRange"				"1600"
-		"AbilityCooldown"				"25"
-		"AbilityManaCost"				"250"
-
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"travel_distance"		"1600"
+				"travel_distance"		"1400"
 			}
 			"02"
 			{
@@ -13603,7 +13570,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius_end"			"300"
+				"radius_end"			"275"
 			}
 			"05"
 			{
@@ -13612,20 +13579,20 @@
 			}
 			"06"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage"				"60 100 140 180 220 260 300 330 360 420 480"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 100 150 200 250 300 360 420"
 				"levelkey"				"exortlevel"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"knockback_duration"	"1.1 1.2 1.3 1.4 1.5 1.7 1.9 2.1 2.3 2.5"
+				"knockback_duration"	"0.6 0.8 1.0 1.2 1.4 1.6 1.8 2.0"
 				"levelkey"				"quaslevel"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"disarm_duration"		"1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0"
+				"disarm_duration"		"1.25 2.0 2.75 3.5 4.25 5.0 5.75 6.5"
 				"levelkey"				"wexlevel"
 			}
 		}
@@ -13671,7 +13638,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"14"
+				"value"				"18"
 			}
 		}
 	}
