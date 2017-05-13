@@ -12845,26 +12845,26 @@
 	//=================================================================================================================
 	"legion_commander_overwhelming_odds"
 	{
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"90"
+		"AbilityCooldown"				"15 15 15 15 14 13 12"
 
 		"AbilitySpecial"
 		{			
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"30 60 90 120"
+				"damage"				"40 60 80 100 110 120 130"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_unit"		"16 24 32 40"
+				"damage_per_unit"		"15 20 25 30 32 34 36"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_hero"		"30 60 90 120"
+				"damage_per_hero"		"35 65 95 125 130 135 140"
 			}
 			"04"
 			{
@@ -12880,17 +12880,17 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed_heroes"	"10"
+				"bonus_speed_heroes"	"9 9 9 9 10 11 12"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"7.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"7 7 7 7 8 9 10"
 			}
 			"08"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"375 425 475 525"
+				"radius"				"330 330 330 330 380 430 480"
 			}
 		}
 	}
@@ -12900,28 +12900,41 @@
 	//=================================================================================================================
 	"legion_commander_press_the_attack"
 	{
-		"AbilityCastPoint"				"0.15"
-		
-		"AbilityCooldown"				"12.0"
-		
-		"AbilityManaCost"				"90"
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"16 15 14 13 12 11 10"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"5 5 5 5 6 7 8"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"attack_speed"			"70 100 130 160"
+				"attack_speed"			"70 95 120 145 150 155 160"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hp_regen"				"25 40 55 70"
+				"hp_regen"				"35 45 55 65 70 75 80"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Legion Commander: Press the Attack cooldown reduction
+	//=================================================================================================================
+	"special_bonus_unique_legion_commander_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"5"
 			}
 		}
 	}
@@ -12931,14 +12944,16 @@
 	//=================================================================================================================
 	"legion_commander_moment_of_courage"
 	{
-		"AbilityCooldown"					"1.5 1.0 0.5 0.0"
+		"MaxLevel"							"7"
+
+		"AbilityCooldown"					"1.8 1.2 0.6 0.0 0.0 0.0 0.0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"trigger_chance"			"25"
+				"trigger_chance"			"25 25 25 25 30 35 40"
 			}
 			"02"
 			{
@@ -12948,7 +12963,7 @@
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"hp_leech_percent"			"100"
+				"hp_leech_percent"			"55 65 75 85 90 95 100"
 			}
 		}
 	}
@@ -12958,29 +12973,26 @@
 	//=================================================================================================================
 	"legion_commander_duel"
 	{
-		"AbilityCastRange"				"400"
-		"AbilityCastPoint"				"0.2"
-		
-		"AbilityCooldown"				"12.0"
-		
-		"AbilityManaCost"				"25"
+		"MaxLevel"						"6"
+
+		"AbilityCooldown"				"50 43 36 29 22 15"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"4.0 5.0 6.0"
+				"duration"				"4.0 4.75 5.5 6.0 6.5 7.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"6.0 7.0 8.0"
+				"duration_scepter"		"8.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"reward_damage"			"10 16 24"
+				"reward_damage"			"12 16 20 24 28 32"
 				"LinkedSpecialBonus"	"special_bonus_unique_legion_commander"
 			}
 		}
@@ -12996,7 +13008,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"40"
+				"value"				"32"
 			}
 		}
 	}
