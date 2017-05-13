@@ -13835,24 +13835,52 @@
 	//=================================================================================================================
 	"doom_bringer_devour"
 	{
-		"AbilityCastPoint"				"0.2"
+		"MaxLevel"						"7"
 
-		"AbilityCastRange"				"600"
-		"AbilityCooldown"				"66 56 46 36"
-
-		"AbilityManaCost"				"6"
+		"AbilityCooldown"				"60 55 50 45 40 35 30"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_gold"			"66 106 136 166"
+				"bonus_gold"			"30 60 90 120 140 160 180"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"health_per_second"		"66"
+				"health_per_second"		"100"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: Devour can target Ancients
+	//=================================================================================================================
+	"special_bonus_unique_doom_2"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"0"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Doom: bonus Devour gold
+	//=================================================================================================================
+	"special_bonus_unique_doom_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"value"					"60"
 			}
 		}
 	}
@@ -13862,33 +13890,51 @@
 	//=================================================================================================================
 	"doom_bringer_scorched_earth"
 	{
-		"AbilityCastRange"					"666 766 866 966"
+		"MaxLevel"							"7"
 
-		"AbilityCooldown"					"24"
+		"AbilityCastRange"					"600 600 600 600 700 800 900"
 
-		"AbilityManaCost"					"66"
+		"AbilityCooldown"					"55 50 45 40 35 30 25"
+
+		"AbilityManaCost"					"60 65 70 75 80 85 90"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"damage_per_second"			"24 36 48 60"
+				"damage_per_second"			"20 30 40 50 55 60 65"
+				"LinkedSpecialBonus"		"special_bonus_unique_doom_4"
 			}
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"radius"					"666 766 866 966"
+				"radius"					"600 600 600 600 700 800 900"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"bonus_movement_speed_pct"	"24"
+				"bonus_movement_speed_pct"	"15 17 19 21 23 25 27"
 			}
 			"04"
 			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"10.0 12.0 14.0 16.0"
+				"var_type"					"FIELD_INTEGER"
+				"duration"					"16"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: bonus Scorched Earth DPS
+	//=================================================================================================================
+	"special_bonus_unique_doom_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"15"
 			}
 		}
 	}
@@ -13898,23 +13944,21 @@
 	//=================================================================================================================
 	"doom_bringer_infernal_blade"
 	{
-		"AbilityCooldown"				"10 8 6 4"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"6"
-
-		"AbilityCastRange"				"366"
+		"AbilityCooldown"				"10 8 6 4 4 4 4"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"burn_damage"			"24 36 48 60"
+				"burn_damage"			"25 30 35 40 45 50 55"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"burn_damage_pct"		"1.0 2.0 3.0 4.0"
+				"burn_damage_pct"		"1.25 2.5 3.75 5.0 5.25 5.5 5.75"
 				"LinkedSpecialBonus"	"special_bonus_unique_doom_1"
 			}
 			"03"
@@ -13925,50 +13969,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ministun_duration"		"0.666"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Doom Bringer: Doom
-	//=================================================================================================================
-	"doom_bringer_doom"
-	{
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityCastRange"				"666"
-
-		"AbilityCooldown"				"126 96 66"
-
-		"AbilityManaCost"				"166"
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"6.0 9.0 12.0"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"66 106 166"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"duration_scepter"		"12.0 18.0 24.0"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_scepter"		"66 106 166"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"deniable_pct"			"25"
+				"ministun_duration"		"0.4 0.4 0.4 0.4 0.6 0.8 1.0"
 			}
 		}
 	}
@@ -13982,23 +13983,67 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"3"
+				"var_type"				"FIELD_FLOAT"
+				"value"					"2.25"
 			}
 		}
 	}
 
 	//=================================================================================================================
-	// Ability: Special Bonus
+	// Doom Bringer: Doom
 	//=================================================================================================================
-	"special_bonus_unique_doom_2"
+	"doom_bringer_doom"
+	{
+		"MaxLevel"						"6"
+
+		"AbilityCastRange"				"666"
+
+		"AbilityCooldown"				"145 135 125 115 105 95"
+
+		"AbilityManaCost"				"150 200 250 260 270 280"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15 16 17 18 19 20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"30 45 60 70 80 90"
+				"LinkedSpecialBonus"	"special_bonus_unique_doom_5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_scepter"		"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_scepter"		"30 45 60 70 80 90"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"deniable_pct"			"1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Doom: bonus Doom DPS
+	//=================================================================================================================
+	"special_bonus_unique_doom_5"
 	{
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"value"				"0"
+				"var_type"				"FIELD_INTEGER"
+				"value"					"40"
 			}
 		}
 	}
