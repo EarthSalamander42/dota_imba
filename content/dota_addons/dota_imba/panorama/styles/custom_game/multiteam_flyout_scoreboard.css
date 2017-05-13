@@ -11,6 +11,13 @@
     transition-duration: 0.1s;
 }
 
+.ScoreCol_DisplayPic DOTAAvatarImage
+{
+    height: 32px;
+    width: 32px;
+    vertical-align: middle;
+}
+
 .FlyoutScoreboardRoot.flyout_scoreboard_visible
 {
     transform: translatey( 0px );
