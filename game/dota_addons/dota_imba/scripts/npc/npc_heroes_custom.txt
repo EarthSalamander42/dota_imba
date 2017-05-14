@@ -875,8 +875,6 @@
 	{
 		"override_hero"				"npc_dota_hero_gyrocopter"
 
-		"AttackRange"				"480"
-
 		"Ability1"					"gyrocopter_rocket_barrage"
 		"Ability2"					"gyrocopter_homing_missile"
 		"Ability3"					"gyrocopter_flak_cannon"
