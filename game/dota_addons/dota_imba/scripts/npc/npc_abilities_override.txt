@@ -14290,32 +14290,30 @@
 	//=================================================================================================================
 	"broodmother_spawn_spiderlings"
 	{
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.15"
-		"AbilityCooldown"				"10 9 8 7"
-		"AbilityManaCost"				"110"
+		"MaxLevel"						"7"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"buff_duration"			"60.0"
+				"var_type"				"FIELD_INTEGER"
+				"buff_duration"			"12"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"spiderling_duration"	"60.0"
+				"var_type"				"FIELD_INTEGER"
+				"spiderling_duration"	"60 60 60 60 75 90 105"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325"
+				"damage"				"70 140 210 280 300 320 340"
+				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_3"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"count"					"2 4 6 8"
+				"count"					"1 2 3 4 5 6 7"
 			}	 
 			"05"
 			{
@@ -14335,7 +14333,37 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"500"
+				"value"				"525"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus Spawn Spiderling damage
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_3"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"50"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	//	Broodmother: bonus Spiderling damage
+	//=================================================================================================================
+	"special_bonus_unique_broodmother_4"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"value"				"22"
 			}
 		}
 	}
@@ -14351,17 +14379,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_second"		"12"
+				"damage_per_second"		"10"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"movement_speed"		"-15"
+				"movement_speed"		"-10"
 			}
 			"03"
 			{		
 				"var_type"				"FIELD_FLOAT"
-				"duration_hero"			"2.0"
+				"duration_hero"			"2.5"
 			}			
 			"04"
 			{
@@ -14380,13 +14408,13 @@
 		{
 			"01"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"spiderite_duration"			"60.0"
+				"var_type"						"FIELD_INTEGER"
+				"spiderite_duration"			"60"
 			}
 			"02"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"buff_duration"					"60.0"
+				"var_type"						"FIELD_INTEGER"
+				"buff_duration"					"12"
 			}
 		}
 	}
@@ -14396,12 +14424,8 @@
 	//=================================================================================================================
 	"broodmother_spin_web"
 	{
-		"AbilityCastRange"				"1200"
+		"MaxLevel"						"7"
 
-		"AbilityCastPoint"				"0.3"
-
-		"AbilityManaCost"				"50"
-			
 		"AbilitySpecial"
 		{
 			"01"
@@ -14412,33 +14436,33 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"count"					"20"
+				"count"					"3 5 7 9 10 11 12"
 				"LinkedSpecialBonus"	"special_bonus_unique_broodmother_1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heath_regen"			"5 10 15 20"
+				"heath_regen"			"2 4 6 8 10 12 14"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"35"
+				"bonus_movespeed"		"20 25 30 35 36 37 38"
 			}
 			"05"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"invis_movespeed_tooltip"	"70"
+				"invis_movespeed_tooltip"	"40 50 60 70 72 74 76"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"fade_delay"			"1.5"
+				"fade_delay"			"2.0 2.0 2.0 2.0 1.75 1.5 1.25"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"damage_time"			"0.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage_time"			"6"
 			}
 			"08"
 			{
@@ -14447,8 +14471,8 @@
 			}
 			"09"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"charge_restore_time"	"30.0"
+				"var_type"				"FIELD_INTEGER"
+				"charge_restore_time"	"30"
 			}
 		}
 	}
@@ -14463,7 +14487,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"10"
+				"value"				"8"
 			}
 		}
 	}
@@ -14473,22 +14497,24 @@
 	//=================================================================================================================
 	"broodmother_incapacitating_bite"
 	{
+		"MaxLevel"						"7"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"miss_chance"			"40 60 80 100"
+				"miss_chance"			"40 50 60 70 80 90 100"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"-30 -35 -40 -45"
+				"bonus_movespeed"		"-16 -26 -36 -46 -49 -52 -55"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
+				"duration"				"2.0 2.0 2.0 2.0 2.5 3.0 3.5"
 			}
 		}
 	}
@@ -14500,26 +14526,28 @@
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 
+		"MaxLevel"						"6"
+
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"30.0"
-		"AbilityManaCost"				"100"
+
+		"AbilityCooldown"				"45 40 35 30 25 20"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"100 150 200"
+				"bonus_damage"			"70 105 140 160 180 200"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"lifesteal_pct"			"150"
+				"lifesteal_pct"			"70 105 140 160 180 200"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"15.0"
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"14 15 16 17 18 19"
 			}
 		}
 	}
