@@ -307,9 +307,17 @@ function modifier_item_imba_butterfly_wind_song_slow:OnCreated()
 	-- Ability properties
 	self.caster = self:GetCaster()
 	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.particle_slow = "particles/units/heroes/hero_windrunner/windrunner_windrun_slow.vpcf"
 
 	-- Ability specials
 	self.wind_song_ms_slow_pct = self.ability:GetSpecialValueFor("wind_song_ms_slow_pct")	
+
+	-- Add slow particle
+	local particle_slow_fx = ParticleManager:CreateParticle(self.particle_slow, PATTACH_ABSORIGIN_FOLLOW, self.parent)
+	ParticleManager:SetParticleControl(particle_slow_fx, 0, self.parent:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle_slow_fx, 1, Vector(1, 0, 0))
+	self:AddParticle(particle_slow_fx, false, false, -1, false, false)
 end
 
 function modifier_item_imba_butterfly_wind_song_slow:IsHidden() return false end
