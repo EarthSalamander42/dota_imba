@@ -14557,35 +14557,37 @@
 	//=================================================================================================================
 	"weaver_the_swarm"
 	{
-		"AbilityCastRange"				"5000"
+		"MaxLevel"						"7"
 
-		"AbilityCastPoint"				"0.2"
+		"AbilityCooldown"				"35 30 25 20 18 16 14"
+
+		"AbilityManaCost"				"70 80 90 100 105 110 115"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"18 21 24 27"
+				"damage"			"15 18 21 24 25 26 27"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"attack_rate"		"0.9 0.75 0.6 0.5"
+				"attack_rate"		"1.25 1.1 0.95 0.8 0.75 0.7 0.65"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"count"				"12 14 16 18"
+				"count"				"12"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"armor_reduction"	"2"
+				"armor_reduction"	"1"
 			}
 			"05"
 			{
-				"var_type"			"FIELD_FLOAT"
+				"var_type"			"FIELD_INTEGER"
 				"duration"			"16"
 			}
 			"06"
@@ -14601,12 +14603,12 @@
 			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"speed"				"600 700 800 900"
+				"speed"				"600 600 600 600 700 800 900"
 			}
 			"09"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"spawn_radius"		"300 350 400 450"
+				"spawn_radius"		"300"
 			}
 		}
 	}
@@ -14616,21 +14618,24 @@
 	//=================================================================================================================
 	"weaver_shukuchi"
 	{
-		"AbilityCooldown"				"7 6 5 4"
+		"MaxLevel"						"7"
 
-		"AbilityManaCost"				"60 40 20 0"
-		
+		"AbilityCooldown"				"12 10 8 6 5 4 3"
+
+		"AbilityManaCost"				"60 55 50 45 40 35 30"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 120 150 180"
+				"damage"				"80 110 140 170 180 190 200"
+				"LinkedSpecialBonus"	"special_bonus_unique_weaver_1"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"200"
+				"radius"				"175"
 			}
 			"03"
 			{
@@ -14655,7 +14660,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"value"				"45"
+				"value"				"35"
 			}
 		}
 	}
@@ -14680,14 +14685,16 @@
 	//=================================================================================================================
 	"weaver_geminate_attack"
 	{
-		"AbilityCooldown"				"4.0 3.0 2.0 1.0"
-			
+		"MaxLevel"						"7"
+
+		"AbilityCooldown"				"6.0 5.0 4.0 3.0 2.5 2.0 1.5"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"					"0.25"
+				"delay"					"0.2"
 			}
 		}		
 	}
@@ -14699,22 +14706,23 @@
 	{
 		"AbilityUnitTargetTeam"					"DOTA_UNIT_TARGET_TEAM_BOTH"
 
-		"AbilityCastRange"						"1200"
+		"MaxLevel"								"6"
 
-		"AbilityCastPoint"						"0.2"
-		"AbilityCooldown"						"36 24 12"
+		"AbilityCooldown"						"50 40 30 25 20 15"
+
+		"AbilityManaCost"						"150 75 0 0 0 0"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cooldown_scepter"				"20 15 10"
+				"cooldown_scepter"				"15"
 			}	
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"cast_range_tooltip_scepter"	"1200"
+				"cast_range_tooltip_scepter"	"1000"
 			}				
 		}
 	}

@@ -2786,9 +2786,7 @@
 	{
 		"override_hero"				"npc_dota_hero_weaver"
 
-		"AttackRate"				"1.7"
-
-		"ProjectileSpeed"			"3000"
+		"ProjectileSpeed"			"1500"
 
 		//"Ability1"					"imba_weaver_the_swarm"
 		//"Ability2"					"imba_weaver_shukuchi"
