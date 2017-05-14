@@ -142,7 +142,7 @@ function imba_venomancer_venomous_gale:GetCastRange( location , target)
 			return range
 		end
 		local ward_range = self:GetSpecialValueFor("ward_range") + GetCastRangeIncrease(caster)
-		local wards = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_NONE, FIND_CLOSEST, false)
+		local wards = FindUnitsInRadius(caster:GetTeamNumber(), location, nil, ward_range, DOTA_UNIT_TARGET_TEAM_FRIENDLY,  DOTA_UNIT_TARGET_OTHER, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
 		for _, ward in pairs(wards) do
 			if ward.bIsScourge then
 				self.bWardCaster = ward
