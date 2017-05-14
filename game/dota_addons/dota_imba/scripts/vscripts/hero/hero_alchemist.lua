@@ -151,6 +151,7 @@ function modifier_imba_acid_spray_aura:OnCreated()
         local caster = self:GetCaster()
         local ability = self:GetAbility()
         local unit = self:GetParent()
+
         self.modifier = unit:AddNewModifier(caster, ability, "modifier_imba_acid_spray", {})
         self.modifier.damage = ability:GetSpecialValueFor("damage")
         self.modifier.stack_damage = ability:GetSpecialValueFor("stack_damage")
@@ -181,6 +182,8 @@ end
 function modifier_imba_acid_spray:OnCreated()
     self.caster = self:GetCaster()
     local ability = self:GetAbility()
+
+
     if IsServer() then
         self:SetStackCount(1)
         local tick_rate = ability:GetSpecialValueFor("tick_rate")
@@ -209,6 +212,11 @@ function modifier_imba_acid_spray:OnIntervalThink(aura_tick, consume_stacks)
         end
 
         local unit = self:GetParent()
+
+        if unit:IsCourier() then
+            self:Destroy()
+            return nil
+        end
         
         if aura_tick
         or consume_stacks
