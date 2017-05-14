@@ -241,11 +241,13 @@ function imba_axe_battle_hunger:OnSpellStart()
     caster:AddNewModifier(caster, self, caster_modifier, {})
     caster:SetModifierStackCount(caster_modifier, ability, 1)
   else
-    local stack_count = caster:GetModifierStackCount(caster_modifier, ability)
-    caster:SetModifierStackCount(caster_modifier, ability, stack_count + 1)
+    if not target:HasModifier("modifier_imba_axe_battle_hunger_enemy") then
+      local stack_count = caster:GetModifierStackCount(caster_modifier, ability)
+      caster:SetModifierStackCount(caster_modifier, ability, stack_count + 1)
+    end
   end
 
-  caster:AddNewModifier(caster, self, "modifier_imba_axe_battle_hunger_caster", {})
+  --caster:AddNewModifier(caster, self, "modifier_imba_axe_battle_hunger_caster", {})
   target:AddNewModifier(caster, self, "modifier_imba_axe_battle_hunger_enemy", {})
 
 end

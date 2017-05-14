@@ -677,7 +677,12 @@ function GameMode:OrderFilter( keys )
 	if unit:HasModifier("modifier_imba_tidebringer_manual") then
 		unit:RemoveModifierByName("modifier_imba_tidebringer_manual")
 	end
-
+	
+	-- Culling Blade leap
+	if unit:HasModifier("modifier_imba_axe_culling_blade_leap") then
+		return false
+	end
+	
 	-- Techies' Focused Detonate cast-handlign
 	if keys.order_type == DOTA_UNIT_ORDER_CAST_POSITION then
         local ability = EntIndexToHScript(keys.entindex_ability)        

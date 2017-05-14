@@ -902,6 +902,9 @@ function modifier_imba_astral_imprisonment:OnDestroy()
                 end)
             end
         end                
+
+        -- Resolve positions for everyone so they won't get stuck
+        ResolveNPCPositions(self.parent:GetAbsOrigin(), self.radius)
     end
 end
 

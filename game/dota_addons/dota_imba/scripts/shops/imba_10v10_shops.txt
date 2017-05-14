@@ -107,8 +107,7 @@
 		"item"		"item_helm_of_the_dominator"
 		"item"		"item_imba_mekansm"
 		"item"		"item_imba_vladmir"
-		"item"		"item_pipe"
-		"item"		"item_imba_guardian_greaves"
+		"item"		"item_pipe"		
 	}
 				
 	"magics"			
@@ -146,6 +145,7 @@
 		"item"		"item_imba_heart"
 		"item"		"item_imba_angelic_alliance"
 		"item"		"item_imba_greatwyrm_plate"
+		"item"		"item_imba_guardian_greaves"
 	}
 			
 	"weapons"
@@ -182,8 +182,7 @@
 		"item"		"item_imba_triumvirate"
 		"item"		"item_imba_mjollnir"
 		"item"		"item_imba_satanic"
-		"item"		"item_imba_skadi"
-		"item"		"item_imba_hellblade"
+		"item"		"item_imba_skadi"		
 	}
 
 	"sideshop1"
