@@ -540,6 +540,27 @@ function GameMode:OnPlayerLevelUp(keys)
 	end
 
 	-------------------------------------------------------------------------------------------------
+	-- IMBA: Missing/Extra ability points correction
+	-------------------------------------------------------------------------------------------------
+
+	local missing_point_levels = {17, 19, 21, 22, 23, 24}
+	local extra_point_levels = {33, 34, 37, 38, 39}
+
+	-- Add missing point on the appropriate levels
+	for _, current_level in pairs(missing_point_levels) do
+		if hero_level == current_level then
+			hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
+		end
+	end
+
+	-- Remove extra point on the appropriate levels
+	for _, current_level in pairs(extra_point_levels) do
+		if hero_level == current_level then
+			hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+		end
+	end
+
+	-------------------------------------------------------------------------------------------------
 	-- IMBA: Hero experience bounty adjustment
 	-------------------------------------------------------------------------------------------------
 
