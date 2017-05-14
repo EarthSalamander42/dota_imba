@@ -41,6 +41,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
   	else
 		bonus_damage	=	ability:GetSpecialValueFor("bonus_damage")
 	end
+
 	--coup de grace variables
 	local ability_crit = caster:FindAbilityByName("modifier_imba_coup_de_grace")
 	local ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"
@@ -74,15 +75,16 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 
 		local secondary_knives_thrown = 0
 
-		--TALENT: +1 Stifling Dagger bonus dagger (like aghs)
+		-- TALENT: +1 Stifling Dagger bonus dagger (like aghs)
 		if not scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
-			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3") + 1
-			secondary_knives_thrown = 1
+			scepter_dagger_count = self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
+			secondary_knives_thrown = scepter_dagger_count
 		elseif scepter and caster:HasTalent("special_bonus_imba_phantom_assassin_3") then
 			scepter_dagger_count = ability:GetSpecialValueFor("scepter_dagger_count") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_3")
 		else
 			scepter_dagger_count = ability:GetSpecialValueFor("scepter_dagger_count")
 		end
+
 		-- Prepare extra_data
 		extra_data = {main_dagger = false}			
 
@@ -126,7 +128,7 @@ function imba_phantom_assassin_stifling_dagger:OnSpellStart()
 					enemy.hit_by_pa_dagger = true
 					dagger_target_found = true	
 
-					caster:StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, playbackrate)
+					caster:StartGesture(ACT_DOTA_CAST_ABILITY_1)
 
 					dagger_projectile = {
 										EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
@@ -199,8 +201,8 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 		return nil
 	end
 
-	--with 20 percentage play random stifling dagger response
-	if RollPercentage(20) then
+	-- With 20 percentage play random stifling dagger response
+	if RollPercentage(10) then
 		caster:EmitSound(response_stifling_dagger)
 	end
 
@@ -208,27 +210,6 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	if target:GetTeamNumber() ~= caster:GetTeamNumber() then
 		if target:TriggerSpellAbsorb(ability) then
 			return nil
-		end
-	end
-
-
-	-- If coup de grace is learned, roll for crits
-	if ability_crit and ability_crit:GetLevel() > 0 then
-
-		-- Crit parameters
-		local crit_chance = ability_crit:GetSpecialValueFor("crit_chance")
-
-		--if we have phantom strike modifier, apply bonus percentage to our crit_chance
-		if caster:HasModifier(ps_coup_modifier) then
-			ps_coup_modifier_handler = caster:FindModifierByName(ps_coup_modifier)
-			bonus_coup_de_grace_chance = ps_coup_modifier_handler:GetAbility():GetSpecialValueFor("bonus_coup_de_grace")
-			crit_chance_total = crit_chance + bonus_coup_de_grace_chance
-		else
-			crit_chance_total = crit_chance
-		end
-
-		if RollPercentage(crit_chance) then
-			caster:AddNewModifier(caster, self, "modifier_imba_coup_de_grace_crit", {duration = 1.0})
 		end
 	end
 
@@ -245,8 +226,7 @@ function imba_phantom_assassin_stifling_dagger:OnProjectileHit( target, location
 	local initial_pos = caster:GetAbsOrigin()
 	local target_pos = target:GetAbsOrigin()
 
-	caster:SetAbsOrigin(target_pos)
-	-- caster:PerformAttack(target, false, true, true, true, false, false, true)
+	caster:SetAbsOrigin(target_pos)	
 	caster:PerformAttack(target, true, true, true, true, true, false, true)
 	caster:SetAbsOrigin(initial_pos)
 
@@ -366,6 +346,27 @@ imba_phantom_assassin_phantom_strike = class({})
 LinkLuaModifier("modifier_imba_phantom_strike", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_phantom_strike_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
+function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
+    if IsServer() then
+        local caster = self:GetCaster()
+        local casterID = caster:GetPlayerOwnerID()
+        local targetID = target:GetPlayerOwnerID()
+
+        -- Can't cast on self (self blink!) 
+        if target == caster then
+        	return UF_FAIL_CUSTOM
+       	end
+
+        local nResult = UnitFilter( target, self:GetAbilityTargetTeam(), self:GetAbilityTargetType(), self:GetAbilityTargetFlags(), self:GetCaster():GetTeamNumber() )
+        return nResult
+    end
+    return UF_SUCCESS
+end
+
+function imba_phantom_assassin_phantom_strike:CastFilterResultTarget(target)
+	return "dota_hud_error_cant_cast_on_self"
+end
+
 function imba_phantom_assassin_phantom_strike:OnSpellStart()
 if IsServer() then
 	self.caster 	= self:GetCaster()
@@ -377,6 +378,7 @@ if IsServer() then
 	self.buff_duration 		=	self.ability:GetSpecialValueFor("buff_duration")
 	self.projectile_speed 	=	self.ability:GetSpecialValueFor("projectile_speed")
 	self.projectile_width 	=	self.ability:GetSpecialValueFor("projectile_width")
+	self.attacks 			= 	self.ability:GetSpecialValueFor("attacks")
 	
 	--TALENT: +30 Phantom Strike bonus attack speed
 	if self.caster:HasTalent("special_bonus_imba_phantom_assassin_2") then
@@ -430,33 +432,37 @@ if IsServer() then
 	ParticleManager:ReleaseParticleIndex(self.blink_pfx)
 
 	-- Fire blink end sound
-	self.target:EmitSound("Hero_PhantomAssassin.Strike.End")
+	self.target:EmitSound("Hero_PhantomAssassin.Strike.End")	
 
-	-- Apply blink strike modifier on caster
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_phantom_strike", { duration= self.buff_duration })
+	-- Apply coup de grace modifier on caster it was an enemy
+	if self.target:GetTeamNumber() ~= self.caster:GetTeamNumber() then
 
-	-- Apply coup de grace modifier on caster
-	self.caster:AddNewModifier(self.caster, self, "modifier_imba_phantom_strike_coup_de_grace", { duration= self.buff_duration })
+		-- Apply blink strike modifier on caster
+		self.caster:AddNewModifier(self.caster, self, "modifier_imba_phantom_strike", { duration= self.buff_duration })
 
-	--Increased Coup de Grace chance for the next 4 attacks
-	--TALENT
-	if self.caster:HasTalent("special_bonus_imba_phantom_assassin_6") then
-		attacks_count = self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_6") + 4
-	else
-		attacks_count = 4
-	end
+		-- Apply crit modifier
+		self.caster:AddNewModifier(self.caster, self, "modifier_imba_phantom_strike_coup_de_grace", { duration= self.buff_duration })
 
-	self.caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self.caster, attacks_count)
+		--Increased Coup de Grace chance for the next 4 attacks
+		--TALENT
+		if self.caster:HasTalent("special_bonus_imba_phantom_assassin_6") then
+			attacks_count = self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_6") + 4
+		else			
+			attacks_count = self.attacks
+		end
 
-	-- If cast on an enemy, immediately start attacking it
-	if self.caster:GetTeam() ~= self.target:GetTeam() then
-		self.caster.phantom_strike_target = self.target
-		self.caster:SetAttacking(self.target)
-		self.caster:SetForceAttackTarget(self.target)
-		Timers:CreateTimer(0.01, function()
-			self.caster:SetForceAttackTarget(nil)
-		end)
-	end
+		self.caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self.caster, attacks_count)
+
+		-- If cast on an enemy, immediately start attacking it
+		if self.caster:GetTeam() ~= self.target:GetTeam() then
+			self.caster.phantom_strike_target = self.target
+			self.caster:SetAttacking(self.target)
+			self.caster:SetForceAttackTarget(self.target)
+			Timers:CreateTimer(FrameTime(), function()
+				self.caster:SetForceAttackTarget(nil)
+			end)
+		end
+	end		
 end
 end
 
@@ -474,7 +480,7 @@ end
 function modifier_imba_phantom_strike:GetModifierAttackSpeedBonus_Constant()
     local caster = self:GetCaster()
     local ability = self:GetAbility()
-    self.speed_bonus = ability:GetSpecialValueFor("bonus_attack_speed") -- + caster:FindTalentValue("special_bonus_imba_axe_5")
+    self.speed_bonus = ability:GetSpecialValueFor("bonus_attack_speed")
     return self.speed_bonus
 end
 
@@ -497,18 +503,22 @@ function modifier_imba_phantom_strike_coup_de_grace:OnAttackLanded(keys)
   if IsServer() then
     local caster = self:GetCaster()
     local ability = self:GetAbility()
-		local owner = self:GetParent()
-		local modifier_ps_coup = "modifier_imba_phantom_strike_coup_de_grace"
-		local stackcount = caster:GetModifierStackCount(modifier_ps_coup, self)
+	local owner = self:GetParent()		
+	local modifier_speed = "modifier_imba_phantom_strike"		
+	local stackcount = self:GetStackCount()
 
 	-- If attack was not performed by the modifier's owner, do nothing
 	if owner ~= keys.attacker then
 		return end
 
 	if stackcount == 1 then
-		caster:RemoveModifierByName(modifier_ps_coup)
+		print()
+		self:Destroy()
+		if caster:HasModifier(modifier_speed) then
+			caster:RemoveModifierByName(modifier_speed)
+		end
 	else
-		caster:SetModifierStackCount( "modifier_imba_phantom_strike_coup_de_grace", self, stackcount - 1)
+		self:DecrementStackCount()
 	end
   end
 end
@@ -528,20 +538,10 @@ imba_phantom_assassin_blur = class({})
 LinkLuaModifier("modifier_imba_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_blur", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE) --wat
 LinkLuaModifier("modifier_imba_blur_speed", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_blur_speed_dummy", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_blur_opacity", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phantom_assassin_blur:GetIntrinsicModifierName()
   return "modifier_imba_blur"
-end
-
-function imba_phantom_assassin_blur:OnUpgrade()
-  local caster = self:GetCaster()
-  local modifier_aura = "modifier_imba_blur"
-  if caster:HasModifier(modifier_aura) then
-    caster:RemoveModifierByName(modifier_aura)
-    caster:AddNewModifier(caster, self, modifier_aura, {})
-  end
 end
 
 -------------------------------------------
@@ -552,86 +552,178 @@ modifier_imba_blur = class({})
 
 function modifier_imba_blur:OnCreated()
   if IsServer() then
+  	-- Ability properties
+  	self.caster = self:GetCaster()
+  	self.ability = self:GetAbility()
+  	self.parent = self:GetParent()
+  	self.modifier_aura = "modifier_imba_blur_blur"
+	self.modifier_blur_transparent = "modifier_imba_blur_opacity"
+	self.modifier_speed = "modifier_imba_blur_speed"
+
+	-- Ability specials
+	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.evasion = self.ability:GetSpecialValueFor("evasion")
+	self.ms_duration = self.ability:GetSpecialValueFor("speed_bonus_duration")
+
+	-- Start thinking
     self:StartIntervalThink(0.2)
   end
 end
 
+function modifier_imba_blur:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_blur:OnIntervalThink()
   if IsServer() then
-	local caster = self:GetCaster()
-	local modifier_aura = "modifier_imba_blur_blur"
-	local modifier_blur_transparent = "modifier_imba_blur_opacity"
-	local radius = self:GetAbility():GetSpecialValueFor("radius")
 	local responses_blur = "phantom_assassin_phass_ability_blur_0"..math.random(1,3)
-	local nearby_enemies = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-	-- If there is at least one, apply the blur modifier
-	if #nearby_enemies > 0 and caster:HasModifier(modifier_aura) then
-		caster:RemoveModifierByName(modifier_aura)
-		-- make mortred transparent (wtf firetoad)
-		caster:AddNewModifier(caster, self, modifier_blur_transparent, {})
+
+	-- Find nearby enemies
+	local nearby_enemies = FindUnitsInRadius(self.caster:GetTeamNumber(), self.caster:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+
+	-- If there is at least one, apply the blur modifier	
+	if #nearby_enemies > 0 and self.caster:HasModifier(self.modifier_aura) then
+		self.caster:RemoveModifierByName(self.modifier_aura)
+
+		-- Make mortred transparent (wtf firetoad)
+		self.caster:AddNewModifier(self.caster, self, self.modifier_blur_transparent, {})
+
 	-- Else, if there are no enemies, remove the modifier
-	elseif #nearby_enemies == 0 and not caster:HasModifier(modifier_aura) then
-		caster:AddNewModifier(caster, self, modifier_aura, {})
-		-- make mortred not transparent (wtf firetoad)
-		caster:RemoveModifierByName(modifier_blur_transparent)
-		caster:EmitSound(responses_blur)
+	elseif #nearby_enemies == 0 and not self.caster:HasModifier(self.modifier_aura) then
+		self.caster:AddNewModifier(self.caster, self.ability, self.modifier_aura, {})
+
+		-- Make mortred not transparent (wtf firetoad)
+		self.caster:RemoveModifierByName(self.modifier_blur_transparent)
+		self.caster:EmitSound(responses_blur)
 	end
   end
 end
 
 
 function modifier_imba_blur:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_EVASION_CONSTANT, MODIFIER_EVENT_ON_ATTACK_FAIL, MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE }
+	local funcs = { MODIFIER_PROPERTY_EVASION_CONSTANT,
+				    MODIFIER_EVENT_ON_ATTACK_FAIL,
+				    MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE}
 	return funcs
 end
 
 function modifier_imba_blur:GetModifierEvasion_Constant()
-	return self:GetAbility():GetSpecialValueFor("evasion")
+	return self.evasion
 end
 
-function modifier_imba_blur:GetModifierIncomingDamage_Percentage()
-	local caster = self:GetCaster()
-    --TALENT: Blur now grants +30% chance to evade any damage
-	if caster:HasTalent("special_bonus_imba_phantom_assassin_8") then
-		if RollPercentage(caster:FindTalentValue("special_bonus_imba_phantom_assassin_8")) then
-			SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, caster, 0, nil)
-			return -100
-		end
-	else
-		return nil
+function modifier_imba_blur:GetModifierIncomingDamage_Percentage()	
+
+	--TALENT: Blur now grants +30% chance to evade any damage	
+	if RollPercentage(self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_8")) then
+		SendOverheadEventMessage(nil, OVERHEAD_ALERT_EVADE, self.caster, 0, nil)
+		return -100
 	end
+
+	return nil	
 end
 
 function modifier_imba_blur:OnAttackFail(keys)
   if IsServer() then
-	local ms_duration = self:GetAbility():GetSpecialValueFor("speed_bonus_duration")
-	local caster = self:GetCaster()
-	local ability = self:GetAbility()
-	local dummy_modifier = "modifier_imba_blur_speed_dummy"
 
 	if keys.target == self:GetParent() then
-	--apply real modifier
-		caster:AddNewModifier(caster, ability, "modifier_imba_blur_speed", {duration = ms_duration})
-		if not caster:HasModifier(dummy_modifier) then
-			--apply dummy modifier
-				modifier_dummy = caster:AddNewModifier(caster, ability, dummy_modifier, {duration = ms_duration})
-				modifier_dummy:IncrementStackCount()
-		else
-				modifier_dummy = caster:FindModifierByName( dummy_modifier )
-				modifier_dummy:IncrementStackCount()
-				modifier_dummy:SetDuration( ms_duration, true )
+		-- If the caster doesn't have the evasion speed modifier yet, give it to him
+		if not self.caster:HasModifier(self.modifier_speed) then
+			self.caster:AddNewModifier(self.caster, self.ability, self.modifier_speed, {duration = self.ms_duration})
 		end
+
+		-- Increment a stack and refresh
+		local modifier_speed_handler = self.caster:FindModifierByName(self.modifier_speed)
+		if modifier_speed_handler then
+			modifier_speed_handler:IncrementStackCount()
+			modifier_speed_handler:ForceRefresh()
+		end		
 	end
   end
 end
 
-function modifier_imba_blur:IsPassive()   return true end
-
 function modifier_imba_blur:IsHidden()	  return true end
-
 function modifier_imba_blur:IsBuff()			return true end
-
 function modifier_imba_blur:IsPurgable()  return false end
+
+
+-- Evasion speed buff modifier
+modifier_imba_blur_speed = class({})
+
+function modifier_imba_blur_speed:OnCreated()    
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
+
+        -- Ability specials
+        self.speed_bonus_duration = self.ability:GetSpecialValueFor("speed_bonus_duration")
+        self.blur_ms = self.ability:GetSpecialValueFor("blur_ms")
+        print(self.blur_ms)
+
+    if IsServer() then
+
+        -- Initialize table
+        self.stacks_table = {}        
+
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
+end
+
+function modifier_imba_blur_speed:OnIntervalThink()
+    if IsServer() then
+
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.speed_bonus_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
+end
+
+function modifier_imba_blur_speed:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
+end
+
+function modifier_imba_blur_speed:IsHidden() return false end
+function modifier_imba_blur_speed:IsPurgable() return true end
+function modifier_imba_blur_speed:IsDebuff() return false end
+
+function modifier_imba_blur_speed:DeclareFunctions()
+    local decFunc = {MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT}
+
+    return decFunc
+end
+
+function modifier_imba_blur_speed:GetModifierMoveSpeedBonus_Constant()
+    return self.blur_ms * self:GetStackCount()
+end
+
+
 
 -------------------------------------------
 -- Blur blur modifier 
@@ -654,74 +746,9 @@ function modifier_imba_blur_blur:CheckState()
 	return states
 end
 
-function modifier_imba_blur_blur:IsPassive()   return false end
-
 function modifier_imba_blur_blur:IsHidden()	   return true end
-
-function modifier_imba_blur_blur:IsBuff()			 return true end
-
+function modifier_imba_blur_blur:IsDebuff()	 return false end
 function modifier_imba_blur_blur:IsPurgable()  return false end
-
-function modifier_imba_blur_blur:OnRemoved()
-    ParticleManager:DestroyParticle(self.blur_particle, false)
-    ParticleManager:ReleaseParticleIndex(self.blur_particle)
-end
-
--------------------------------------------
--- Blur speed modifier
--------------------------------------------
-
-modifier_imba_blur_speed = class({})
-
-function modifier_imba_blur_speed:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE }
-	return funcs
-end
-
-function modifier_imba_blur_speed:GetAttributes() 
-	return MODIFIER_ATTRIBUTE_MULTIPLE 
-end
-
-function modifier_imba_blur_speed:GetModifierMoveSpeedBonus_Percentage()
-	local ability = self:GetAbility()
-	local caster = self:GetCaster()
-	local stack_count = caster:GetModifierStackCount("modifier_imba_blur_speed_dummy", ability)
- 	return self:GetAbility():GetSpecialValueFor("blur_ms") * stack_count
-end
-
-function modifier_imba_blur_speed:IsPassive()  	return false end
-
-function modifier_imba_blur_speed:IsHidden()  	return true end
-
-function modifier_imba_blur_speed:IsBuff()  		return true end
-
-function modifier_imba_blur_speed:IsPurgable()  return false end
-
-function modifier_imba_blur_speed:OnRemoved()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local caster = self:GetCaster()
-		local bonus_speed_dummy = "modifier_imba_blur_speed_dummy"
-		local bonus_speed_dummy_handler = caster:FindModifierByName(bonus_speed_dummy)
-		if caster:HasModifier(bonus_speed_dummy) then
-			bonus_speed_dummy_handler:DecrementStackCount()
-		end
-	end
-end
-
--------------------------------------------
--- Blur speed dummy modifier
--------------------------------------------
-
-modifier_imba_blur_speed_dummy = class({})
-
-function modifier_imba_blur_speed_dummy:IsPassive()	return false end
-
-function modifier_imba_blur_speed_dummy:IsHidden()	return false end
-
-function modifier_imba_blur_speed_dummy:IsBuff()	return true end
-
-function modifier_imba_blur_speed_dummy:IsPurgable()return false end
 
 -------------------------------------------
 -- Blur opacity modifier
@@ -729,25 +756,22 @@ function modifier_imba_blur_speed_dummy:IsPurgable()return false end
 
 modifier_imba_blur_opacity = class({})
 
-function modifier_imba_blur_opacity:IsPassive()	return false end
-
 function modifier_imba_blur_opacity:IsHidden()	return false end
-
-function modifier_imba_blur_opacity:IsBuff()	return true end
-
+function modifier_imba_blur_opacity:IsDebuff()	return false end
 function modifier_imba_blur_opacity:IsPurgable()return false end
 
 function modifier_imba_blur_opacity:DeclareFunctions()
-    return { MODIFIER_PROPERTY_INVISIBILITY_LEVEL }
+    return {MODIFIER_PROPERTY_INVISIBILITY_LEVEL}
 end
 
-function modifier_imba_blur_opacity:GetModifierInvisibilityLevel(params)
-    return 1.0
+function modifier_imba_blur_opacity:GetModifierInvisibilityLevel()
+    return 1
 end
 
 function modifier_imba_blur_opacity:IsHidden()
     return true
 end
+
 ----------------------------------------------------------------------------------------------------------------------------------
 
 -------------------------------------------
@@ -758,20 +782,9 @@ imba_phantom_assassin_coup_de_grace = class({})
 
 LinkLuaModifier("modifier_imba_coup_de_grace", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_imba_coup_de_grace_crit", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_coup_de_grace_bonus_damage", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_imba_coup_de_grace_bonus_damage_dummy", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
 
 function imba_phantom_assassin_coup_de_grace:GetIntrinsicModifierName()
   return "modifier_imba_coup_de_grace"
-end
-
-function imba_phantom_assassin_coup_de_grace:OnUpgrade()
-  local caster = self:GetCaster()
-  local modifier_aura = "modifier_imba_coup_de_grace"
-  if caster:HasModifier(modifier_aura) then
-    caster:RemoveModifierByName(modifier_aura)
-    caster:AddNewModifier(caster, self, modifier_aura, {})
-  end
 end
 
 -------------------------------------------
@@ -780,240 +793,168 @@ end
 
 modifier_imba_coup_de_grace = class({})
 
+function modifier_imba_coup_de_grace:OnCreated()	
+	-- Ability properties
+	self.caster = self:GetCaster()
+	self.ability = self:GetAbility()
+	self.parent = self:GetParent()
+	self.ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"			
+	self.modifier_stacks = "modifier_imba_coup_de_grace_crit"
+
+	-- Ability specials
+	self.crit_chance = self.ability:GetSpecialValueFor("crit_chance")	
+	self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")	
+	self.crit_bonus = self.ability:GetSpecialValueFor("crit_bonus")
+end
+
+function modifier_imba_coup_de_grace:OnRefresh()
+	self:OnCreated()
+end
+
 function modifier_imba_coup_de_grace:DeclareFunctions()
-  local funcs = { MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE }
+  local funcs = {MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE}
   return funcs
 end
 
-function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)
-	if IsServer() then
+function modifier_imba_coup_de_grace:GetModifierPreAttack_CriticalStrike(keys)	
+	if IsServer() then		
+		local target = keys.target		
+		local crit_duration = self.crit_increase_duration
+		local crit_chance_total = self.crit_chance
 
-		caster = self:GetCaster()
-		ability = self:GetAbility()
-		target = keys.target
-		--ability specials
-		crit_chance = ability:GetSpecialValueFor("crit_chance")
-		crit_increase_damage = ability:GetSpecialValueFor("crit_increase_damage")
-		crit_increase_duration = ability:GetSpecialValueFor("crit_increase_duration")
-		ps_coup_modifier = "modifier_imba_phantom_strike_coup_de_grace"
-		responses_coup_de_grace = "phantom_assassin_phass_ability_coupdegrace_0"..math.random(1,4)
-		--ignore crit for buildings
+		-- Ignore crit for buildings
 		if target:IsBuilding() then 
 			return end      
 
-        --if we have phantom strike modifier, apply bonus percentage to our crit_chance
-        if caster:HasModifier(ps_coup_modifier) then
-            local ps_coup_modifier_handler = caster:FindModifierByName(ps_coup_modifier)
+        -- if we have phantom strike modifier, apply bonus percentage to our crit_chance        
+        if self.caster:HasModifier(self.ps_coup_modifier) then
+            local ps_coup_modifier_handler = self.caster:FindModifierByName(self.ps_coup_modifier)
             if ps_coup_modifier_handler then
-					--TALENT: +5% Phantom Strike bonus crit chance
-					if caster:HasTalent("special_bonus_imba_phantom_assassin_4") then
-						bonus_coup_de_grace_chance = ps_coup_modifier_handler:GetAbility():GetSpecialValueFor("bonus_coup_de_grace") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_4")
-					else
-						bonus_coup_de_grace_chance = ps_coup_modifier_handler:GetAbility():GetSpecialValueFor("bonus_coup_de_grace")
-					end
-                crit_chance_total = crit_chance + bonus_coup_de_grace_chance
+            	local bonus_coup_de_grace_chance = ps_coup_modifier_handler:GetAbility():GetSpecialValueFor("bonus_coup_de_grace")
+
+				-- TALENT: +5% Phantom Strike bonus crit chance				
+				bonus_coup_de_grace_chance = bonus_coup_de_grace_chance + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_4")				
+
+				-- Calculate total crit chance
+				local crit_chance_total = crit_chance_total + bonus_coup_de_grace_chance                
             end            
-        else
-            crit_chance_total = crit_chance
-        end
+        end        
 
-        if RollPercentage(crit_chance) then
+        if RollPseudoRandom(crit_chance_total, self) then        	
 
-			local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, target)
-			local dummy_modifier = "modifier_imba_coup_de_grace_bonus_damage_dummy"
-			ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
-			ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			local coup_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_phantom_assassin/phantom_assassin_crit_impact.vpcf", PATTACH_CUSTOMORIGIN, caster)			
+			ParticleManager:SetParticleControlEnt(coup_pfx, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+			ParticleManager:SetParticleControlEnt(coup_pfx, 1, target, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", target:GetAbsOrigin(), true)
 			ParticleManager:ReleaseParticleIndex(coup_pfx)
 			
 			StartSoundEvent("Hero_PhantomAssassin.CoupDeGrace", target)
 
-			--TALENT: +8 sec Coup de Grace bonus damage duration
-			if caster:HasTalent("special_bonus_imba_phantom_assassin_7") then
-				crit_duration = crit_increase_duration + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_7")
-			else
-				crit_duration = crit_increase_duration
-			end
-			--apply real bonus damage modifier
-			caster:AddNewModifier(caster, ability, "modifier_imba_coup_de_grace_bonus_damage", {duration = crit_duration})
-			if not caster:HasModifier(dummy_modifier) then
-				--apply dummy modifier
-				modifier_dummy = caster:AddNewModifier(caster, ability, dummy_modifier, {duration = crit_duration})
-				modifier_dummy:IncrementStackCount()
-			else
-				modifier_dummy = caster:FindModifierByName( dummy_modifier )
-				modifier_dummy:IncrementStackCount()
-				modifier_dummy:SetDuration( crit_increase_duration, true )
+			--TALENT: +8 sec Coup de Grace bonus damage duration			
+			crit_duration = crit_duration + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_7")			
+
+			-- If the caster doesn't have the stacks modifier, give it to him 
+			if not self.caster:HasModifier(self.modifier_stacks) then
+				self.caster:AddNewModifier(self.caster, self.ability, self.modifier_stacks, {duration = crit_duration})
 			end
 
-			caster:EmitSound(responses_coup_de_grace)
-			--TALENT: +100% Coup de Grace crit damage
-			if caster:HasTalent("special_bonus_imba_phantom_assassin_5") then
-				crit_bonus	=	ability:GetSpecialValueFor("crit_bonus") + self:GetCaster():FindTalentValue("special_bonus_imba_phantom_assassin_5")
-			else
-				crit_bonus	=	ability:GetSpecialValueFor("crit_bonus")
+			-- Find the modifier, increase a stack and refresh it
+			local modifier_stacks_handler = self.caster:FindModifierByName(self.modifier_stacks)			
+			if modifier_stacks_handler then
+				modifier_stacks_handler:IncrementStackCount()				
+				modifier_stacks_handler:ForceRefresh()
 			end
+
+			-- TALENT: +100% Coup de Grace crit damage			
+			local crit_bonus = self.crit_bonus + self.caster:FindTalentValue("special_bonus_imba_phantom_assassin_5")
             return crit_bonus
         end
+
         return nil        
 	end
 end
 
-function modifier_imba_coup_de_grace:IsPassive()	return true end
+function modifier_imba_coup_de_grace:IsPassive() return true end
 
-function modifier_imba_coup_de_grace:IsHidden()		return true end
-
--------------------------------------------
--- Coup De Grace bonus damage modifier
--------------------------------------------
-
-modifier_imba_coup_de_grace_bonus_damage = class({})
-
-function modifier_imba_coup_de_grace_bonus_damage:OnCreated()
-	local ability = self:GetAbility()
-	local caster = self:GetParent()
-	local stack_count = caster:GetModifierStackCount("modifier_imba_coup_de_grace_bonus_damage_dummy", ability)
-	self.bonus_percentage = ability:GetSpecialValueFor("crit_increase_damage") * stack_count
-end
-
-function modifier_imba_coup_de_grace_bonus_damage:DeclareFunctions()
-	local funcs = { MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE }
-	return funcs
-end
-
-function modifier_imba_coup_de_grace_bonus_damage:GetAttributes() 
-	return MODIFIER_ATTRIBUTE_MULTIPLE 
-end
-
-function modifier_imba_coup_de_grace_bonus_damage:GetModifierDamageOutgoing_Percentage()
- 	return self.bonus_percentage
-end
-
-function modifier_imba_coup_de_grace_bonus_damage:IsPassive()  return false end
-
-function modifier_imba_coup_de_grace_bonus_damage:IsHidden()   return true end
-
-function modifier_imba_coup_de_grace_bonus_damage:IsBuff() 		 return true end
-
-function modifier_imba_coup_de_grace_bonus_damage:IsPurgable() return false end
-
-function modifier_imba_coup_de_grace_bonus_damage:OnRemoved()
-	if IsServer() then
-		local ability = self:GetAbility()
-		local caster = self:GetParent()
-		local bonus_damage_dummy = "modifier_imba_coup_de_grace_bonus_damage_dummy"
-		local bonus_damage_dummy_handler = caster:FindModifierByName("modifier_imba_coup_de_grace_bonus_damage_dummy")
-
-		if caster:HasModifier(bonus_damage_dummy) then
-				bonus_damage_dummy_handler:DecrementStackCount()
-		end
+function modifier_imba_coup_de_grace:IsHidden()	
+	local stacks = self:GetStackCount()
+	if stacks > 0 then
+		return false
 	end
+
+	return true 
 end
 
--------------------------------------------
--- Coup De Grace bonus damage dummy modifier
--------------------------------------------
 
-modifier_imba_coup_de_grace_bonus_damage_dummy = class({})
+modifier_imba_coup_de_grace_crit = class({})
 
-function modifier_imba_coup_de_grace_bonus_damage_dummy:IsPassive()  return false end
+function modifier_imba_coup_de_grace_crit:OnCreated()    
+        -- Ability properties
+        self.caster = self:GetCaster()
+        self.ability = self:GetAbility()
+        self.parent = self:GetParent()        
 
-function modifier_imba_coup_de_grace_bonus_damage_dummy:IsHidden()   return false end
+        -- Ability specials
+        self.crit_increase_duration = self.ability:GetSpecialValueFor("crit_increase_duration")
+        self.crit_increase_damage = self.ability:GetSpecialValueFor("crit_increase_damage")        
 
-function modifier_imba_coup_de_grace_bonus_damage_dummy:IsBuff() 	   return true end
+    if IsServer() then
+        -- Initialize table
+        self.stacks_table = {}        
 
-function modifier_imba_coup_de_grace_bonus_damage_dummy:IsPurgable() return false end
-
-
-------------------------------------------------------------------------------------------------------------
-
--------------------------------------------
--- talent modifiers
--------------------------------------------
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_1", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_1 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_1:IsHidden()
-	return true
+        -- Start thinking
+        self:StartIntervalThink(0.1)
+    end
 end
 
-function modifier_special_bonus_imba_phantom_assassin_1:RemoveOnDeath()
-	return false
+function modifier_imba_coup_de_grace_crit:OnIntervalThink()
+    if IsServer() then
+        -- Check if there are any stacks left on the table
+        if #self.stacks_table > 0 then
+
+            -- For each stack, check if it is past its expiration time. If it is, remove it from the table
+            for i = #self.stacks_table, 1, -1 do
+                if self.stacks_table[i] + self.crit_increase_duration < GameRules:GetGameTime() then
+                    table.remove(self.stacks_table, i)                          
+                end
+            end
+            
+            -- If after removing the stacks, the table is empty, remove the modifier.
+            if #self.stacks_table == 0 then
+                self:Destroy()
+
+            -- Otherwise, set its stack count
+            else
+                self:SetStackCount(#self.stacks_table)
+            end
+
+            -- Recalculate bonus based on new stack count
+            self:GetParent():CalculateStatBonus()
+
+        -- If there are no stacks on the table, just remove the modifier.
+        else
+            self:Destroy()
+        end
+    end
 end
 
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_2", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_2 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_2:IsHidden()
-	return true
+function modifier_imba_coup_de_grace_crit:OnRefresh()
+    if IsServer() then
+        -- Insert new stack values
+        table.insert(self.stacks_table, GameRules:GetGameTime())
+    end
 end
 
-function modifier_special_bonus_imba_phantom_assassin_2:RemoveOnDeath()
-	return false
+function modifier_imba_coup_de_grace_crit:IsHidden() return false end
+function modifier_imba_coup_de_grace_crit:IsPurgable() return true end
+function modifier_imba_coup_de_grace_crit:IsDebuff() return false end
+
+
+function modifier_imba_coup_de_grace_crit:DeclareFunctions()
+    local decFunc = {MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE}
+
+    return decFunc
 end
 
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_3", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_3 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_3:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_3:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_4", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_4 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_4:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_4:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_5", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_5 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_5:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_5:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_6", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_6 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_6:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_6:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_7", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_7 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_7:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_7:RemoveOnDeath()
-	return false
-end
-
-LinkLuaModifier("modifier_special_bonus_imba_phantom_assassin_8", "hero/hero_phantom_assassin", LUA_MODIFIER_MOTION_NONE)
-modifier_special_bonus_imba_phantom_assassin_8 = class({})
-
-function modifier_special_bonus_imba_phantom_assassin_8:IsHidden()
-	return true
-end
-
-function modifier_special_bonus_imba_phantom_assassin_8:RemoveOnDeath()
-	return false
+function modifier_imba_coup_de_grace_crit:GetModifierPreAttack_BonusDamage()	
+ 	return self.crit_increase_damage * self:GetStackCount()
 end
