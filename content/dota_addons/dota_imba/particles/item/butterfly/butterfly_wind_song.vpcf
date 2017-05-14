@@ -84,8 +84,8 @@
 		},
 		{
 			_class = "C_INIT_PositionWarp"
-			m_vecWarpMin = [ 1.9, 1.9, 0.0 ]
-			m_vecWarpMax = [ 1.9, 1.9, 0.0 ]
+			m_vecWarpMin = [ 2.5, 2.5, 0.0 ]
+			m_vecWarpMax = [ 2.5, 2.5, 0.0 ]
 			m_nControlPointNumber = 3
 		},
 	]
