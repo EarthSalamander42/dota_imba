@@ -111,6 +111,14 @@ function modifier_imba_generic_talent_all_stats:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_generic_talent_all_stats:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
+end
+
 function modifier_imba_generic_talent_all_stats:GetModifierBonusStats_Agility()
     return self.value
 end
@@ -130,6 +138,14 @@ function modifier_imba_generic_talent_strength:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_generic_talent_strength:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
+end
+
 function modifier_imba_generic_talent_strength:GetModifierBonusStats_Strength()
     return self.value
 end
@@ -143,6 +159,14 @@ function modifier_imba_generic_talent_agility:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_generic_talent_agility:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
+end
+
 function modifier_imba_generic_talent_agility:GetModifierBonusStats_Agility()
     return self.value
 end
@@ -154,6 +178,14 @@ modifier_imba_generic_talent_intelligence = ShallowCopy(modifier_imba_generic_ta
 function modifier_imba_generic_talent_intelligence:DeclareFunctions()
     local funcs = { MODIFIER_PROPERTY_STATS_INTELLECT_BONUS }
 	return funcs
+end
+
+function modifier_imba_generic_talent_intelligence:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
 end
 
 function modifier_imba_generic_talent_intelligence:GetModifierBonusStats_Intellect()
@@ -234,6 +266,14 @@ function modifier_imba_generic_talent_hp:DeclareFunctions()
 	return funcs
 end
 
+function modifier_imba_generic_talent_hp:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
+end
+
 function modifier_imba_generic_talent_hp:GetModifierHealthBonus()
     return self.value
 end
@@ -258,6 +298,14 @@ modifier_imba_generic_talent_mp = ShallowCopy(modifier_imba_generic_talent_base)
 function modifier_imba_generic_talent_mp:DeclareFunctions()
     local funcs = { MODIFIER_PROPERTY_MANA_BONUS }
 	return funcs
+end
+
+function modifier_imba_generic_talent_mp:OnCreated()
+    if IsServer() then
+        Timers:CreateTimer(0.01, function()
+            self:GetParent():CalculateStatBonus()
+        end)
+    end
 end
 
 function modifier_imba_generic_talent_mp:GetModifierManaBonus()
