@@ -6872,6 +6872,36 @@
 		}
 	}
 
+		//=================================================================================================================
+	// Crystal Maiden's Arcane Dynamo
+	//=================================================================================================================
+	"imba_crystal_maiden_arcane_dynamo"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"hero/hero_crystal_maiden"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"AbilityTextureName"			"crystal_maiden_arcane_dynamo"
+		"MaxLevel"						"1"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_movespeed_percent"	"10"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bonus_spellpower_percent"  "10"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Crystal Maiden's Crystal Nova
 	//=================================================================================================================
@@ -6879,7 +6909,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"								"ability_datadriven"
+		"BaseClass"								"ability_lua"
+		"ScriptFile"							"hero/hero_crystal_maiden"	
 		"AbilityType"							"DOTA_ABILITY_TYPE_BASIC"
 		"AbilityBehavior"						"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitDamageType"					"DAMAGE_TYPE_MAGICAL"
@@ -6888,25 +6919,26 @@
 		"SpellImmunityType"						"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"						"1"
 		"AbilityTextureName"					"crystal_maiden_crystal_nova"
-		"AOERadius"								"%radius"
-
+		"AOERadius"								"%nova_radius"
+		"MaxLevel"								"7"
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"						"800"
 		"AbilityCastPoint"						"0.2"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"						"9.0"
-
-		// Damage.
+		"AbilityCooldown"						"12.0 11.0 10.0 9.0 9.0 9.0 9.0"
+		
+		// Damage
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"							"100 150 200 250"
+		"AbilityDamage"							"100 150 200 250 280 310 340"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"						"100 120 140 160"
-
+		"AbilityManaCost"						"100 120 140 160 165 170 175"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -6914,219 +6946,77 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"4.5"
+				"nova_slow_duration"			"4.5"
 			}
 			"02"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"radius"						"425"
+				"nova_radius"					"425"
 			}
 			"03"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"movespeed_slow"				"-20 -30 -40 -50"
+				"nova_slow_percentage"			"-20 -30 -40 -50 -50 -50 -50"
 			}
 			"04"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"attackspeed_slow"				"-20 -30 -40 -50"
+				"var_type"						"FIELD_FLOAT"
+				"snowfield_damage_interval"		"0.5"
 			}
 			"05"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"vision_duration"				"10.0"
+				"snowfield_damage_per_tick"		"5 5 5 5 7.5 10 12.5"
 			}
 			"06"
 			{
-				"var_type"						"FIELD_FLOAT"
-				"damage_interval"				"0.5"
+				"var_type"						"FIELD_INTEGER"
+				"snowfield_damage_tooltip"		"10 10 10 10 15 20 25"
 			}
 			"07"
 			{
-				"var_type"						"FIELD_INTEGER"
-				"damage_per_tick"				"12 18 24 30"
+				"var_type"						"FIELD_FLOAT"
+				"snowfield_duration"			"12.0"
 			}
 			"08"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"movespeed_aura_slow"			"-15"
+				"snowfield_enemy_slow"			"-4 -4 -4 -4 -6 -8 -10"
 			}
 			"09"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"movespeed_aura_speed"			"15"
+				"snowfield_ally_buff"			"4 4 4 4 6 8 10"
 			}
 			"10"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"vision_radius"					"500"
+				"snowfield_vision_radius"		"500"
 			}
 			"11"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"snowfield_damage_tooltip"		"24 36 48 60"
+				"snowfield_damage_tooltip"		"10 10 10 10 15 20 25"
 			}
-		}
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
-			"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-		}
-
-		"OnSpellStart"
-		{
-			"FireEffect"
+			"12"
 			{
-				"TargetPoint"					"POINT"
-				"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
-				"EffectAttachType"				"world_origin"
-
-				"ControlPoints"
-				{
-					"01"						"%radius 2 %radius*2"
-				}
+				"var_type"						"FIELD_INTEGER"
+				"snowfield_radius"				"425"
 			}
-
-			"FireSound"
+			"13"
 			{
-				"EffectName"					"Hero_Crystal.CrystalNova"
-				"Target"						"CASTER"
+				"var_type"						"FIELD_INTEGER"
+				"nova_damage"					"100 150 200 250 280 310 340"
 			}
-
-			"ActOnTargets"
+	
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
 			{
-				"Target"
-				{
-					"Center"					"POINT"
-					"Radius"					"%radius"
-					"Teams"						"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"						"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"Action"
-				{
-					"Damage"
-					{
-						"Target"				"TARGET"
-						"Damage"				"%AbilityDamage"
-						"Type"					"DAMAGE_TYPE_MAGICAL"
-					}
-
-					"ApplyModifier"
-					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_imba_crystal_nova_slow"
-					}
-				}
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"					"hero/hero_crystal_maiden.lua"
-				"Function"						"CrystalNova"
-				"Target"						"POINT"
-
-				"good_aura_modifier"			"modifier_imba_crystal_nova_good_aura"
-				"bad_aura_modifier"				"modifier_imba_crystal_nova_bad_aura"
-				"particle"						"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_crystal_nova_slow"
-			{
-				"IsDebuff"						"1"
-				"IsPurgable"					"1"
-
-				"Duration"						"%duration"
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"StatusEffectName"				"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"			"10"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
-				}
-			}
-
-			"modifier_imba_crystal_nova_bad_aura"
-			{
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_imba_crystal_nova_aura_slow"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"0"
-
-				"States"
-				{
-					"MODIFIER_STATE_INVULNERABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_UNIT_COLLISION"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NOT_ON_MINIMAP"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE"					"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_OUT_OF_GAME"					"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_crystal_nova_good_aura"
-			{
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-
-				"Aura"							"modifier_imba_crystal_nova_aura_speed"
-				"Aura_Radius"					"%radius"
-				"Aura_Teams"					"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"					"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_ApplyToCaster"			"1"
-			}
-
-			"modifier_imba_crystal_nova_aura_slow"
-			{
-				"Passive"						"0"
-				"IsHidden"						"1"
-				"IsDebuff"						"1"
-
-				"EffectName"					"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"StatusEffectName"				"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"			"10"
-
-				"ThinkInterval"  				"%damage_interval"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"				"TARGET"
-						"Type"					"DAMAGE_TYPE_MAGICAL"
-						"Damage"				"%damage_per_tick"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_aura_slow"
-				}
-			}
-
-			"modifier_imba_crystal_nova_aura_speed"
-			{
-				"Passive"			"0"
-				"IsHidden"			"1"
-				"IsBuff"			"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE" "%movespeed_aura_speed"
-				}
+				"soundfile"							"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+				"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_crystal_nova.vpcf"
+				"particle"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
+				"particle"							"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
 			}
 		}
 	}
@@ -7138,29 +7028,30 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityType"									"DOTA_ABILITY_TYPE_BASIC"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_crystal_maiden"	
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"								"1"
 		"AbilityTextureName"							"crystal_maiden_frostbite"
+		"MaxLevel"										"7"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"								"625"
 		"AbilityCastPoint"								"0.2"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"9.0 8.0 7.0 6.0"
+		"AbilityCooldown"								"9.0 8.0 7.0 6.0 6.0 6.0 6.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"110 120 130 140"
-
+		"AbilityManaCost"								"115 125 135 145 150 155 160"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -7168,37 +7059,37 @@
 			"01"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage_per_second_tooltip"				"100"
+				"damage_per_second_tooltip"				"100 100 100 100 110 120 130"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"duration"								"1.5 2.0 2.5 3.0"
+				"duration"								"1.5 2.0 2.5 3.0 3.0 3.0 3.0"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"hero_damage_tooltip"					"150 200 250 300"
+				"hero_damage_tooltip"					"150 200 250 300 330 360 390"
 			}
 			"04"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"creep_duration"						"30.0"
+				"duration_creep"						"10.0"
 			}
 			"05"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"creep_damage_tooltip"					"3000"
+				"creep_damage_tooltip"					"1000 1000 1000 1000 1100 1200 1300"
 			}
 			"06"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"damage"								"50"
+				"damage_per_tick"						"50 50 50 50 55 60 65"
 			}
 			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"stun_duration"							"0.1"
+				"duration_stun"							"0.1"
 			}
 			"08"
 			{
@@ -7208,16 +7099,35 @@
 			"09"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"hero_cooldown"							"12 11 10 9"
+				"duration_passive_recharge"				"21 21 21 21 18 15 12"
 			}
 			"10"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"creep_chance"							"20"
+				"ally_damage_reduction"					"-50"
+			}
+			"11"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"heal_per_tick"							"50 50 50 50 55 60 65"
+			}
+			"12"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"mana_per_tick"							"12.5 12.5 12.5 12.5 15 17.5 20"
+			}	
+			"13"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"heal_tooltip"							"100 100 100 100 110 120 130"
+			}
+			"14"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"mana_tooltip"							"25 25 25 25 30 35 40"
 			}
 		}
-
-		// Data driven
+		// Pre Cache
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"
 		{
@@ -7225,133 +7135,7 @@
 			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
 		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"CastFrostBite"
-				"Target"								"TARGET"
-
-				"modifier_root"							"modifier_imba_frostbite_root"
-				"modifier_damage"						"modifier_imba_frostbite_damage"
-			}
-
-			"TrackingProjectile"
-			{
-				"Target"								"TARGET"
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
-				"MoveSpeed"								"2000"
-			}
-
-			"FireSound"
-			{
-				"Target"								"TARGET"
-				"EffectName"							"hero_Crystal.frostbite"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_frostbite_root"
-			{
-				"IsPurgable"							"1"
-				"IsDebuff"								"1"
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-
-			"modifier_imba_frostbite_damage"
-			{
-				"IsPurgable"							"1"
-				"IsHidden"								"1"
-				"IsDebuff"								"1"
-
-				"OnCreated"
-				{
-					"Damage"
-					{
-						"Target"						"TARGET"
-						"Damage"						"%damage"
-						"Type"							"DAMAGE_TYPE_MAGICAL"
-					}
-				}
-
-				"ThinkInterval"							"%damage_interval"
-				"OnIntervalThink"
-				{
-					"Damage"
-					{
-						"Target"						"TARGET"
-						"Damage"						"%damage"
-						"Type"							"DAMAGE_TYPE_MAGICAL"
-					}
-				}
-			}
-
-			"modifier_imba_frostbite_passive"
-			{
-				"Passive"								"1"
-				"IsPurgable"							"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_frostbite_passive"
-					}
-				}
-
-				"OnTakeDamage"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden"
-						"Function"						"Frostbite"
-
-						"modifier_root"					"modifier_imba_frostbite_root"
-						"modifier_damage"				"modifier_imba_frostbite_damage"
-						"modifier_passive"				"modifier_imba_frostbite_passive"
-						"modifier_cooldown"				"modifier_imba_frostbite_passive_cooldown"
-						"sound_frostbite"				"hero_Crystal.frostbite"
-					}
-				}
-			}
-
-			"modifier_imba_frostbite_passive_cooldown"
-			{
-				"TextureName"							"custom/crystal_maiden_frostbite_cooldown"
-				"IsDebuff"								"1"
-				"IsPurgable"							"0"
-				"AllowIllusionDuplicate"				"0"
-
-				"Attributes"							"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-
-				"OnDestroy"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden"
-						"Function"						"FrostbitePassive"
-
-						"modifier_passive"				"modifier_imba_frostbite_passive"
-					}
-				}
-			}
-		}
+		
 	}
 
 	//=================================================================================================================
@@ -7361,11 +7145,14 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_crystal_maiden"
 		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_AURA"
 		"AbilityUnitTargetTeam"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityTextureName"							"crystal_maiden_brilliance_aura"
-
+		
+		"MaxLevel"										"7"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -7373,17 +7160,17 @@
 			"01"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"mana_regen"							"0.4 0.6 0.8 1.0"
+				"mana_regen"							"0.5 0.75 1.0 1.25 1.25 1.25 1.25"
 			}
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"movespeed_bonus"						"14"
+				"bonus_int"								"4 5 6 7 8 9 10"
 			}
 			"03"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"bonus_int"								"6 9 12 15"
+				"bonus_spellpower"						"0 0 0 0 3 6 10"
 			}
 			"04"
 			{
@@ -7391,57 +7178,7 @@
 				"global_range"							"25000"
 			}
 		}
-
-		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"modifier_imba_brilliance_aura"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"Aura"									"modifier_imba_brilliance_aura_effect"
-				"Aura_Radius"							"%global_range"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_HERO"
-
-				"ThinkInterval"  						"0.5"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"BrillianceAura"
-
-						"modifier_speed"				"modifier_imba_brilliance_aura_speed"
-					}
-				}
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mana_regen"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_int"
-				}
-			}
-
-			"modifier_imba_brilliance_aura_effect"
-			{
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%mana_regen"
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"			"%bonus_int"
-				}
-			}
-
-			"modifier_imba_brilliance_aura_speed"
-			{
-				"IsHidden"								"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_bonus"
-				}
-			}
-		}
+	
 	}
 
 	//=================================================================================================================
@@ -7451,42 +7188,38 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
+		"BaseClass"										"ability_lua"
+		"ScriptFile"									"hero/hero_crystal_maiden"
 		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
+		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"	
 		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
 		"FightRecapLevel"								"2"
 		"AbilityTextureName"							"crystal_maiden_freezing_field"
-
-		// Casting
+		"AOERadius"										"%radius"
+		
+		"MaxLevel"										"7"
+		
+		//Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"1000"
+		"AbilityCastRange"								"700"
+		"AbilityRadius"									"500"
 		"AbilityChannelTime"							"10.0"
 		"AbilityCastPoint"								"0.2"
-
-		// Time
+		
+		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"								"90"
 		"AbilityDuration"								"10.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"200 400 600"
-
-		// Precache
+		"AbilityManaCost"								"200 400 600 630 660 690"
+		
+		//Damage
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"soundfile"									"soundevents/imba_soundevents.vsndevts"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-		}
-
+		"AbilityDamage"									"105 170 235 270 305 340"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -7496,701 +7229,262 @@
 				"var_type"								"FIELD_INTEGER"
 				"radius"								"1000"
 			}
-
 			"02"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"explosion_radius"						"300 325 350"
+				"explosion_radius"						"300 300 300 325 350 375"
 			}
-			"04"
+			"03"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"explosion_interval"					"0.1"
 			}
+			"04"
+			{
+				"var_type"								"FIELD_INTEGER"
+				"slow"									"-30"
+			}
 			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"movespeed_slow"						"-30 -40 -50"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"-40 -60 -80"
-			}
-			"07"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"slow_duration"							"1.0"
 			}
-			"08"
+			"06"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"explosion_min_dist"					"200"
 			}
-			"09"
+			"07"
 			{
 				"var_type"								"FIELD_INTEGER"
 				"explosion_max_dist"					"800"
 			}
-			"10"
+			"08"
 			{
 				"var_type"								"FIELD_INTEGER"
-				"damage"								"110 180 250"
+				"damage"								"105 170 325 270 305 340"
 			}
-			"11"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_scepter"						"180 250 320"
-			}
-			"12"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"movespeed_slow_scepter" 				"-60"
-			}
-			"13"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow_scepter"					"-100"
-			}
-			"14"
+			"09"
 			{
 				"var_type"								"FIELD_FLOAT"
-				"frostbite_duration"					"1.2 1.6 2.0"
+				"frostbite_duration"					"1.0 1.0 1.3 1.6 2.0"
 			}
-			"15"
+			"10"
 			{
 				"var_type"								"FIELD_FLOAT"
 				"stun_duration"							"0.1"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
+			"11"
 			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldCast"
-
-				"modifier_aura"							"modifier_imba_freezing_field_caster"
-				"modifier_sector_0"						"modifier_imba_freezing_field_northwest"
-				"modifier_sector_1"						"modifier_imba_freezing_field_northeast"
-				"modifier_sector_2"						"modifier_imba_freezing_field_southeast"
-				"modifier_sector_3"						"modifier_imba_freezing_field_southwest"
+				"var_type"								"FIELD_INTEGER"
+				"scepter_bonus_cast_range"				"700"
+			}
+			"12"
+			{
+				"var_type"								"FIELD_FLOAT"
+				"duration"								"10.0"
 			}
 
-			"TrackingProjectile"
+			// Precache
+			//-------------------------------------------------------------------------------------------------------------
+			"precache"
 			{
-				"Target"
-				{
-					"Center"  							"CASTER"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
-				"MoveSpeed"								"2000"
-			}
-
-			"Stun"
-			{
-				"Target"
-				{
-					"Center"  							"CASTER"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"Duration"								"%stun_duration"
-			}
-
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"  							"CASTER"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"ModifierName"							"modifier_imba_frostbite_root"
-				"Duration"								"%frostbite_duration"
-			}
-		}
-
-		"OnChannelInterrupted"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldStopSound"
-
-				"modifier_aura"							"modifier_imba_freezing_field_aura"
-				"modifier_caster"						"modifier_imba_freezing_field_caster"
-				"modifier_NE"							"modifier_imba_freezing_field_northeast"
-				"modifier_NW"							"modifier_imba_freezing_field_northwest"
-				"modifier_SW"							"modifier_imba_freezing_field_southwest"
-				"modifier_SE"							"modifier_imba_freezing_field_southeast"
-			}
-		}
-
-		"OnChannelSucceeded"
-		{
-			"RunScript"
-			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldEnd"
-
-				"modifier_aura"							"modifier_imba_freezing_field_aura"
-				"modifier_caster"						"modifier_imba_freezing_field_caster"
-				"modifier_NE"							"modifier_imba_freezing_field_northeast"
-				"modifier_NW"							"modifier_imba_freezing_field_northwest"
-				"modifier_SW"							"modifier_imba_freezing_field_southwest"
-				"modifier_SE"							"modifier_imba_freezing_field_southeast"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_imba_freezing_field_scepter_check"
-			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"  						"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"ScepterCheck"
-
-						"modifier"						"modifier_imba_freezing_field_scepter_check"
-						"skill_name"					"imba_crystal_maiden_freezing_field"
-						"scepter_skill_name"			"imba_crystal_maiden_freezing_field_scepter"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_freezing_field_scepter_check"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_caster"
-			{
-				"IsHidden"								"1"
-				"OverrideAnimation"						"ACT_DOTA_CHANNEL_ABILITY_4"
-
-				"Aura"									"modifier_imba_freezing_field_debuff"
-				"Aura_Radius"							"%radius"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"						"CASTER"
-						"EffectName"					"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-						"EffectAttachType"				"follow_origin"
-						"EffectRadius"					"%radius"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_northwest"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"0"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_northeast"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"1"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_southeast"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"2"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_southwest"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"3"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%slow_duration"
-
-				"EffectName"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"StatusEffectName"						"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"					"10"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
-				}
-			}
-
-			"modifier_imba_frostbite_root"
-			{
-				"IsPurgable"							"1"
-				"IsDebuff"								"1"
-				"TextureName"							"crystal_maiden_frostbite"
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+				"soundfile"									"soundevents/imba_soundevents.vsndevts"
+				"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
+				"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
+				"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
+				"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
+				"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 			}
 		}
 	}
-
 	//=================================================================================================================
-	// Crystal Maiden's Freezing Field (Scepter version)
+	// Crystal Maiden Talent 1 (Level 10): +20% Freezing Field slow 
 	//=================================================================================================================
-	"imba_crystal_maiden_freezing_field_scepter"
+	"special_bonus_imba_crystal_maiden_1"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"										"ability_datadriven"
-		"AbilityType"									"DOTA_ABILITY_TYPE_ULTIMATE"
-		"AbilityBehavior"								"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
-		"AbilityUnitDamageType"							"DAMAGE_TYPE_MAGICAL"
-		"SpellImmunityType"								"SPELL_IMMUNITY_ENEMIES_NO"
-		"FightRecapLevel"								"2"
-		"AbilityTextureName"							"crystal_maiden_freezing_field"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"								"900"
-		"AbilityChannelTime"							"10.0"
-		"AbilityCastPoint"								"0.2"
-		"AOERadius"										"%radius"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"								"90"
-		"AbilityDuration"								"10.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"								"200 400 600"
-
-		// Precache
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"soundfile"									"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"soundfile"									"soundevents/imba_soundevents.vsndevts"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_snow.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_freezing_field_explosion.vpcf"
-			"particle"									"particles/generic_gameplay/generic_slowed_cold.vpcf"
-			"particle"									"particles/status_fx/status_effect_frost_lich.vpcf"
-			"particle"									"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-		}
-
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"								"FIELD_INTEGER"
-				"radius"								"1000"
-			}
-			"02"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_radius"						"300 325 350"
-			}
-			"04"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"explosion_interval"					"0.1"
-			}
-			"05"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"movespeed_slow"						"-30 -40 -50"
-			}
-			"06"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow"							"-40 -60 -80"
-			}
-			"07"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"slow_duration"							"1.0"
-			}
-			"08"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_min_dist"					"200"
-			}
-			"09"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"explosion_max_dist"					"800"
-			}
-			"10"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage"								"110 180 250"
-			}
-			"11"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"damage_scepter"						"180 250 320"
-			}
-			"12"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"movespeed_slow_scepter" 				"-60"
-			}
-			"13"
-			{
-				"var_type"								"FIELD_INTEGER"
-				"attack_slow_scepter"					"-100"
-			}
-			"14"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"frostbite_duration"					"1.2 1.6 2.0"
-			}
-			"15"
-			{
-				"var_type"								"FIELD_FLOAT"
-				"stun_duration"							"0.1"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"-20"
 			}
 		}
-
-		"OnSpellStart"
+	}
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 2 (Level 10): Frostbite can be cast on allies
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldCast"
-				"Target"								"POINT"
-
-				"modifier_aura"							"modifier_imba_freezing_field_aura"
-				"modifier_sector_0"						"modifier_imba_freezing_field_northwest"
-				"modifier_sector_1"						"modifier_imba_freezing_field_northeast"
-				"modifier_sector_2"						"modifier_imba_freezing_field_southeast"
-				"modifier_sector_3"						"modifier_imba_freezing_field_southwest"
-			}
-
-			"TrackingProjectile"
-			{
-				"Target"
-				{
-					"Center"  							"POINT"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite.vpcf"
-				"MoveSpeed"								"2000"
-			}
-
-			"Stun"
-			{
-				"Target"
-				{
-					"Center"  							"POINT"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"Duration"								"%stun_duration"
-			}
-
-			"ApplyModifier"
-			{
-				"Target"
-				{
-					"Center"  							"POINT"
-					"Radius" 							"%radius"
-					"Teams" 							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types" 							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				}
-
-				"ModifierName"							"modifier_imba_frostbite_root"
-				"Duration"								"%frostbite_duration"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"1"
 			}
 		}
-
-		"OnChannelInterrupted"
+	}
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 3 (Level 20): +175 Crystal Nova radius 
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldStopSound"
-
-				"modifier_aura"							"modifier_imba_freezing_field_aura"
-				"modifier_caster"						"modifier_imba_freezing_field_caster"
-				"modifier_NE"							"modifier_imba_freezing_field_northeast"
-				"modifier_NW"							"modifier_imba_freezing_field_northwest"
-				"modifier_SW"							"modifier_imba_freezing_field_southwest"
-				"modifier_SE"							"modifier_imba_freezing_field_southeast"
+				"var_type"					"FIELD_INTEGER"
+				"value"						"175"
 			}
 		}
-
-		"OnChannelSucceeded"
+	}
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 4 (Level 20): Double Arcane Dynamo's Bonuses
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_4"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-				"ScriptFile"							"hero/hero_crystal_maiden.lua"
-				"Function"								"FreezingFieldEnd"
-
-				"modifier_aura"							"modifier_imba_freezing_field_aura"
-				"modifier_caster"						"modifier_imba_freezing_field_caster"
-				"modifier_NE"							"modifier_imba_freezing_field_northeast"
-				"modifier_NW"							"modifier_imba_freezing_field_northwest"
-				"modifier_SW"							"modifier_imba_freezing_field_southwest"
-				"modifier_SE"							"modifier_imba_freezing_field_southeast"
+				"var_type"					"FIELD_FLOAT"
+				"value"						"2.0"
 			}
 		}
-
-		"Modifiers"
+	}
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 5 (Level 30): +1.5sec Frostbite duration
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_5"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
 		{
-			"modifier_imba_freezing_field_scepter_check"
+			"01"
 			{
-				"Passive"								"1"
-				"IsHidden"								"1"
-				"IsPurgable"							"0"
-
-				"ThinkInterval"  						"0.1"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"ScepterLostCheck"
-
-						"modifier"						"modifier_imba_freezing_field_scepter_check"
-						"skill_name"					"imba_crystal_maiden_freezing_field"
-						"scepter_skill_name"			"imba_crystal_maiden_freezing_field_scepter"
-					}
-				}
-
-				"OnCreated"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"internal/util.lua"
-						"Function"						"IllusionPassiveRemover"
-
-						"modifier"						"modifier_imba_freezing_field_scepter_check"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_caster"
-			{
-				"IsHidden"								"1"
-				"OverrideAnimation"						"ACT_DOTA_CHANNEL_ABILITY_4"
-
-				"Duration"								"%AbilityDuration"
-			}
-
-			"modifier_imba_freezing_field_aura"
-			{
-				"IsHidden"								"1"
-
-				"Aura"									"modifier_imba_freezing_field_debuff"
-				"Aura_Radius"							"%radius"
-				"Aura_Teams"							"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"							"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-				"Aura_Flags"							"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-
-				"Duration"								"%AbilityDuration"
-			}
-
-			"modifier_imba_freezing_field_northwest"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"0"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_northeast"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"1"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_southeast"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"2"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_southwest"
-			{
-				"IsHidden"								"1"
-				"ThinkInterval"							"0.4"
-
-				"Duration"								"%AbilityDuration"
-
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"					"hero/hero_crystal_maiden.lua"
-						"Function"						"FreezingFieldExplode"
-						"section"						"3"
-					}
-				}
-			}
-
-			"modifier_imba_freezing_field_debuff"
-			{
-				"IsDebuff"								"1"
-				"IsPurgable"							"1"
-				"Duration"								"%slow_duration"
-
-				"EffectName"							"particles/generic_gameplay/generic_slowed_cold.vpcf"
-				"StatusEffectName"						"particles/status_fx/status_effect_frost_lich.vpcf"
-				"StatusEffectPriority"					"10"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attack_slow_scepter"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow_scepter"
-				}
-			}
-
-			"modifier_imba_frostbite_root"
-			{
-				"IsPurgable"							"1"
-				"IsDebuff"								"1"
-				"TextureName"							"crystal_maiden_frostbite"
-
-				"EffectName"							"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
-
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVISIBLE"			"MODIFIER_STATE_VALUE_DISABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"					"FIELD_FLOAT"
+				"value"						"1.5"
 			}
 		}
 	}
 
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 6 (Level 30): -6sec Icy Touch effect cooldown
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_6"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"6"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Crystal Maiden Talent 7 (Level 40): +260 Crystal Nova damage
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_7"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"						"260"
+			}
+		}
+	}
+
+	
+	//=================================================================================================================
+	// Crystal Maiden Talent 8 (Level 40): +50% Freezing Field explosion creation rate
+	//=================================================================================================================
+	"special_bonus_imba_crystal_maiden_8"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"special_bonus_unique_centaur_2"														
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"value"						".5"
+			}
+		}
+	}
+	
 	//=================================================================================================================
 	// Dazzle's Poison Touch
 	//=================================================================================================================

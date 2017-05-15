@@ -475,20 +475,22 @@
 		"override_hero"				"npc_dota_hero_crystal_maiden"
 
 		"AttributeBaseIntelligence"	"26"
-
+		"AbilityLayout"				"5"
+		
 		"Ability1"					"imba_crystal_maiden_crystal_nova"
 		"Ability2"					"imba_crystal_maiden_frostbite"
 		"Ability3"					"imba_crystal_maiden_brilliance_aura"
-		"Ability4"					"imba_crystal_maiden_freezing_field"
+		"Ability4"					"imba_crystal_maiden_arcane_dynamo"
+		"Ability5"					"imba_crystal_maiden_freezing_field"
 
-		"Ability10"					"special_bonus_gold_income_20"
-		"Ability11"					"special_bonus_attack_damage_40"
-		"Ability12"					"special_bonus_cast_range_100"
-		"Ability13"					"special_bonus_hp_175"
-		"Ability14"					"special_bonus_magic_resistance_15"
-		"Ability15"					"special_bonus_respawn_reduction_35"
-		"Ability16"					"special_bonus_spell_amplify_12"
-		"Ability17"					"special_bonus_all_stats_14"
+		"Ability10"					"special_bonus_imba_crystal_maiden_1"
+		"Ability11"					"special_bonus_imba_crystal_maiden_2"
+		"Ability12"					"special_bonus_imba_crystal_maiden_3"
+		"Ability13"					"special_bonus_imba_crystal_maiden_4"
+		"Ability14"					"special_bonus_imba_crystal_maiden_5"
+		"Ability15"					"special_bonus_imba_crystal_maiden_6"
+		"Ability16"					"special_bonus_imba_crystal_maiden_7"
+		"Ability17"					"special_bonus_imba_crystal_maiden_8"
 
 		"ProjectileModel"			"particles/units/heroes/hero_crystalmaiden/maiden_base_attack.vpcf"
 	}
