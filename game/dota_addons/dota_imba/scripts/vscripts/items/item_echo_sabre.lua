@@ -22,7 +22,7 @@ function EchoSabreStart( keys )
 	if caster:IsRangedAttacker() and ( not caster:HasModifier("modifier_imba_berserkers_rage") ) then
 		cooldown = ability:GetSpecialValueFor("ranged_cooldown")
 	end
-	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
+	ability:StartCooldown(cooldown * caster:GetCooldownReduction())
 	
 	-- Reduce attacker's BAT
 	ModifyBAT(caster, bat_reduction, 0)
@@ -58,7 +58,7 @@ function ReverbRapierStart( keys )
 	if caster:IsRangedAttacker() and ( not caster:HasModifier("modifier_imba_berserkers_rage") ) then
 		cooldown = ability:GetSpecialValueFor("ranged_cooldown")
 	end
-	ability:StartCooldown(cooldown * GetCooldownReduction(caster))
+	ability:StartCooldown(cooldown * caster:GetCooldownReduction())
 	
 	-- Reduce attacker's BAT
 	ModifyBAT(caster, bat_reduction, 0)

@@ -136,7 +136,7 @@ function MeatHook( keys )
 		hook_damage = hook_damage + light_stacks * damage_scepter
 		local hook_cooldown = math.max(ability:GetCooldown(ability_level) - cooldown_scepter * sharp_stacks, cooldown_cap_scepter)
 		ability:EndCooldown()
-		ability:StartCooldown(hook_cooldown * GetCooldownReduction(caster))
+		ability:StartCooldown(hook_cooldown * caster:GetCooldownReduction())
 	end
 
 	-- Stun the caster for the hook duration

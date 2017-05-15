@@ -110,15 +110,14 @@ function modifier_imba_octarine_core_unique:IsDebuff() return false end
 function modifier_imba_octarine_core_unique:IsPurgable() return false end
 
 function modifier_imba_octarine_core_unique:DeclareFunctions()
-	local funcs = {	MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING,
-					MODIFIER_EVENT_ON_SPENT_MANA	}
+	local funcs = {	MODIFIER_EVENT_ON_SPENT_MANA }
 	return funcs
 end
 
 function modifier_imba_octarine_core_unique:GetModifierSpellLifesteal()
 	return self:GetAbility():GetSpecialValueFor("spell_lifesteal") end
 
-function modifier_imba_octarine_core_unique:GetModifierPercentageCooldownStacking()
+function modifier_imba_octarine_core_unique:GetCustomCooldownReductionStacking()
 	return self:GetAbility():GetSpecialValueFor("bonus_cooldown") end
 
 function modifier_imba_octarine_core_unique:OnSpentMana( keys )
@@ -139,7 +138,7 @@ function modifier_imba_octarine_core_unique:OnSpentMana( keys )
 			if unit == parent and ability:IsCooldownReady() and cost > 0 then
 
 				-- Trigger ability cooldown
-				ability:StartCooldown(ability:GetCooldown(0) * GetCooldownReduction(parent))
+				ability:StartCooldown(ability:GetCooldown(0) * parent:GetCooldownReduction())
 				
 				-- Blast geometry
 				local blast_duration = 0.75 * 0.75

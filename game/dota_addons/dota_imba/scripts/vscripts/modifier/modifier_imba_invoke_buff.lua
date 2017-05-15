@@ -30,8 +30,7 @@ function modifier_imba_invoke_buff:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_SPELL_AMPLIFY_PERCENTAGE,
 		MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS,
-		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING
+		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS
 	}
 	return funcs
 end
@@ -47,7 +46,7 @@ function modifier_imba_invoke_buff:GetModifierBonusStats_Intellect()
 	return self.int_buff
 end
 
-function modifier_imba_invoke_buff:GetModifierPercentageCooldownStacking()
+function modifier_imba_invoke_buff:GetCustomCooldownReductionStacking()
 	return self.cooldown_reduction
 end
 

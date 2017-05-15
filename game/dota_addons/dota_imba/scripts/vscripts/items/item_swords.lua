@@ -488,14 +488,13 @@ function modifier_item_imba_azura:GetAttributes() return MODIFIER_ATTRIBUTE_MULT
 -- Declare modifier events/properties
 function modifier_item_imba_azura:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
 	}
 	return funcs
 end
 
-function modifier_item_imba_azura:GetModifierPercentageCooldown()
+function modifier_item_imba_azura:GetCustomCooldownReduction()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_azura:GetModifierBonusStats_Intellect()
@@ -917,7 +916,6 @@ function modifier_item_imba_sange_azura:GetAttributes() return MODIFIER_ATTRIBUT
 function modifier_item_imba_sange_azura:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
 		MODIFIER_EVENT_ON_ATTACK_LANDED,
@@ -925,7 +923,7 @@ function modifier_item_imba_sange_azura:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_sange_azura:GetModifierPercentageCooldown()
+function modifier_item_imba_sange_azura:GetCustomCooldownReduction()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_sange_azura:GetModifierBonusStats_Intellect()
@@ -1089,7 +1087,6 @@ function modifier_item_imba_azura_yasha:GetAttributes() return MODIFIER_ATTRIBUT
 -- Declare modifier events/properties
 function modifier_item_imba_azura_yasha:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_AGILITY_BONUS,
@@ -1099,7 +1096,7 @@ function modifier_item_imba_azura_yasha:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_azura_yasha:GetModifierPercentageCooldown()
+function modifier_item_imba_azura_yasha:GetCustomCooldownReduction()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_azura_yasha:GetModifierAttackSpeedBonus_Constant()
@@ -1375,7 +1372,6 @@ function modifier_item_imba_triumvirate:GetAttributes() return MODIFIER_ATTRIBUT
 function modifier_item_imba_triumvirate:DeclareFunctions()
 	local funcs = {
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE_UNIQUE,
 		MODIFIER_PROPERTY_STATS_STRENGTH_BONUS,
@@ -1389,7 +1385,7 @@ end
 function modifier_item_imba_triumvirate:GetModifierPreAttack_BonusDamage()
 	return self:GetAbility():GetSpecialValueFor("bonus_damage") end
 
-function modifier_item_imba_triumvirate:GetModifierPercentageCooldown()
+function modifier_item_imba_triumvirate:GetCustomCooldownReduction()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_triumvirate:GetModifierAttackSpeedBonus_Constant()

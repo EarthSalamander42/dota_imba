@@ -387,12 +387,7 @@ end
 -----------------------------
 modifier_imba_generic_talent_cd_reduction = ShallowCopy(modifier_imba_generic_talent_base)
 
-function modifier_imba_generic_talent_cd_reduction:DeclareFunctions()
-    local funcs = { MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING }
-	return funcs
-end
-
-function modifier_imba_generic_talent_cd_reduction:GetModifierPercentageCooldownStacking()
+function modifier_imba_generic_talent_cd_reduction:GetCustomCooldownReductionStacking()
     return self.value
 end
 

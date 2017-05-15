@@ -168,24 +168,9 @@ function IsFountain( unit )
 	return false
 end
 
--- Returns the total cooldown reduction on a given unit
-function GetCooldownReduction( unit )
-
-	local reduction = 1.0
-
-	-- Octarine Core
-	if unit:HasModifier("modifier_imba_octarine_core_unique") then
-		reduction = reduction * 0.75
-	end
-	local talent_mult = 1 - unit:HighestTalentTypeValue("cooldown_reduction") * 0.01
-	reduction = reduction * talent_mult
-
-	return reduction
-end
-
 function CDOTABaseAbility:GetTrueCooldown()
 	local cooldown = self:GetCooldown(-1)
-	local cdr = GetCooldownReduction(self:GetCaster())
+	local cdr = self:GetCaster():GetCooldownReduction()
 	cooldown = cooldown * cdr
 	return cooldown
 end
@@ -624,6 +609,43 @@ function CDOTA_BaseNPC:GetSpellPower()
 
 	-- Return current spell power
 	return spell_power
+end
+
+-- Cooldown reduction
+function CDOTA_BaseNPC:GetCooldownReduction()
+
+	-- If this is not a hero, do nothing
+	if not self:IsRealHero() then
+		return 0
+	end
+
+	-- Fetch cooldown reduction from modifiers
+	local cooldown_reduction = 0
+	local nonstacking_reduction = 0
+	local stacking_reduction = 0
+	for _, parent_modifier in pairs(self:FindAllModifiers()) do
+
+		-- Nonstacking reduction
+		if parent_modifier.GetCustomCooldownReduction then
+			nonstacking_reduction = math.max(nonstacking_reduction, parent_modifier:GetCustomCooldownReduction())
+		end
+
+		-- Stacking reduction
+		if parent_modifier.GetCustomCooldownReductionStacking then
+			stacking_reduction = 100 - (100 - stacking_reduction) * (100 - parent_modifier:GetCustomCooldownReductionStacking()) * 0.01
+		end
+	end
+
+	-- Calculate actual cooldown reduction
+	cooldown_reduction = 100 - (100 - nonstacking_reduction) * (100 - stacking_reduction) * 0.01
+
+	-- Frantic mode adjustment (70% CDR)
+	if IMBA_FRANTIC_MODE_ON then
+		cooldown_reduction = 100 - (100 - cooldown_reduction) * 30 * 0.01
+	end
+
+	-- Return current cooldown reduction
+	return cooldown_reduction
 end
 
 -- Respawn timer modifier

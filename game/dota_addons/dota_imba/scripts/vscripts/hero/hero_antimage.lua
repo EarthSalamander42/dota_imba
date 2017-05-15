@@ -385,7 +385,7 @@ function modifier_imba_antimage_spell_shield_passive:GetAbsorbSpell( params )
 
 			-- Start skill cooldown.
 			caster:AddNewModifier(caster, ability, active_modifier, {duration = self.duration})
-			ability:StartCooldown( (ability:GetCooldown(ability:GetLevel()-1) * GetCooldownReduction(self:GetCaster()) ) )
+			ability:StartCooldown( (ability:GetCooldown(ability:GetLevel()-1) * self:GetCaster():GetCooldownReduction() ) )
 			
 			local reflect_pfx = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_spellshield.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControlEnt(reflect_pfx, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetOrigin(), true)

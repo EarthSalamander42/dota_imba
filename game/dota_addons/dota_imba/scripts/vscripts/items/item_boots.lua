@@ -66,7 +66,7 @@ function TranquilsBreak( keys )
 
 	-- Put the ability on cooldown
 	if ability then
-		ability:StartCooldown(ability:GetCooldown(0) * GetCooldownReduction(caster))
+		ability:StartCooldown(ability:GetCooldown(0) * caster:GetCooldownReduction())
 	end
 
 	-- Remove all existing stacks

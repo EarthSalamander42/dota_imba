@@ -49,7 +49,6 @@ end
 -- Declare modifier events/properties
 function modifier_item_imba_spell_fencer:DeclareFunctions()
 	local funcs = {
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 		MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE,
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_STATS_INTELLECT_BONUS,
@@ -58,7 +57,7 @@ function modifier_item_imba_spell_fencer:DeclareFunctions()
 	return funcs
 end
 
-function modifier_item_imba_spell_fencer:GetModifierPercentageCooldown()
+function modifier_item_imba_spell_fencer:GetCustomCooldownReduction()
 	return self:GetAbility():GetSpecialValueFor("bonus_cdr") end
 
 function modifier_item_imba_spell_fencer:GetModifierPreAttack_BonusDamage()

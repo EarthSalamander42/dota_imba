@@ -13116,7 +13116,7 @@
 			"08"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"cooldown_reduction_pct"	"0 0 0 0 0 0 10"
+				"cooldown_reduction_pct"	"0 0 0 0 0 0 15"
 			}
 		}
 	}

@@ -61,7 +61,7 @@ function Starfury( keys )
 
 	-- If at least one star was created, play the sound and put the ability on cooldown
 	if #nearby_enemies > 1 then
-		local cooldown_reduction = GetCooldownReduction(caster)
+		local cooldown_reduction = caster:GetCooldownReduction()
 		ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
 		target:EmitSound(sound_split)
 	end

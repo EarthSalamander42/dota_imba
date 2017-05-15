@@ -18,7 +18,7 @@ function HeartDamage( keys )
 		caster:RemoveModifierByName(modifier_regen)
 
 		-- Start the cooldown
-		ability:StartCooldown(cooldown * GetCooldownReduction(caster))
+		ability:StartCooldown(cooldown * caster:GetCooldownReduction())
 	end
 end
 

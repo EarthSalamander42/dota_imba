@@ -1221,13 +1221,7 @@ function modifier_imba_tower_replenishment_aura_buff:IsHidden()
 	return false
 end
 
-function modifier_imba_tower_replenishment_aura_buff:DeclareFunctions()	
-		local decFuncs = {MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE_STACKING}
-		
-		return decFuncs	
-end
-
-function modifier_imba_tower_replenishment_aura_buff:GetModifierPercentageCooldownStacking()		
+function modifier_imba_tower_replenishment_aura_buff:GetCustomCooldownReductionStacking()
 	local protective_instinct_stacks = self.caster:GetModifierStackCount("modifier_imba_tower_protective_instinct", self.caster)	
 	return self.cooldown_reduction_pct + self.bonus_cooldown_reduction * protective_instinct_stacks	
 end

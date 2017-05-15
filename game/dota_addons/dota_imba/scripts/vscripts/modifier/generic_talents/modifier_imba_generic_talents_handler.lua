@@ -1,4 +1,4 @@
---[[	Generic spell lifesteal talent (stack-based)
+--[[	Generic talent multihandler (uses stacks to communicate CDR to client)
 		Author: Firetoad
 		Date:	13.03.2017	]]
 
@@ -23,6 +23,7 @@ function modifier_imba_generic_talents_handler:DeclareFunctions()
 		MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK,
 		MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE,
 		MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT,
+		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE,
 	}
 	return funcs
 end
@@ -58,6 +59,15 @@ function modifier_imba_generic_talents_handler:GetModifierConstantHealthRegen()
 	if IsServer() then
 		return self.health_regen_amp
 	end
+end
+
+-- Custom cooldown reduction handler (uses stacks to communicate CDR to client)
+function modifier_imba_generic_talents_handler:GetModifierPercentageCooldown()
+	if IsServer() then
+		local cooldown_reduction = self:GetParent():GetCooldownReduction()
+		self:SetStackCount(cooldown_reduction)
+	end
+	return self:GetStackCount()
 end
 
 -- Spell lifesteal handler

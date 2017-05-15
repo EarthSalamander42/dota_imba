@@ -436,7 +436,6 @@ function modifier_imba_fiery_soul_counter:DeclareFunctions()
 		MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT,
 		MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
 		MODIFIER_PROPERTY_CASTTIME_PERCENTAGE,
-		MODIFIER_PROPERTY_COOLDOWN_PERCENTAGE
 	}
 	return decFuncs	
 end
@@ -455,7 +454,7 @@ function modifier_imba_fiery_soul_counter:GetModifierPercentageCasttime()
 	return self:GetAbility():GetSpecialValueFor("animation_pct") * self:GetStackCount()
 end
 
-function modifier_imba_fiery_soul_counter:GetModifierPercentageCooldown()
+function modifier_imba_fiery_soul_counter:GetCustomCooldownReductionStacking()
 	return self:GetAbility():GetSpecialValueFor("cdr_pct") * self:GetStackCount()
 end
 

@@ -478,11 +478,6 @@ function HeroSelection:AssignHero(player_id, hero_name)
 			ApplyAllRandomOmgAbilities(hero)
 		end
 
-		-- Apply frantic modifier, if appropriate
-		if IMBA_FRANTIC_MODE_ON then
-			hero:AddNewModifier(hero, nil, "modifier_imba_frantic", {})
-		end
-
 		-- Apply generic talents handler
 		hero:AddNewModifier(hero, nil, "modifier_imba_generic_talents_handler", {})
 
