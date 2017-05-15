@@ -927,7 +927,7 @@ function GameMode:DamageFilter( keys )
 					item:SetCurrentCharges( item:GetCurrentCharges() - 1 )
 
 					-- Trigger cooldown
-					item:StartCooldown( item:GetCooldown(1) * victim:GetCooldownReduction() )
+					item:StartCooldown( item:GetCooldown(1) * (1 - victim:GetCooldownReduction() * 0.01) )
 
 					-- If this was the last charge, remove the item
 					if item:GetCurrentCharges() == 0 then

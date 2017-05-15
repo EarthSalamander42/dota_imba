@@ -210,7 +210,7 @@ function modifier_imba_telekinesis:OnDestroy( params )
 			cooldown = ability.BaseClass.GetCooldown( ability, ability:GetLevel() )
 		end
 		
-		cooldown = (cooldown * caster:GetCooldownReduction()) - self:GetDuration()
+		cooldown = (cooldown * (1 - caster:GetCooldownReduction() * 0.01)) - self:GetDuration()
 		
 		parent:StopSound("Hero_Rubick.Telekinesis.Target")
 		parent:EmitSound("Hero_Rubick.Telekinesis.Target.Land")

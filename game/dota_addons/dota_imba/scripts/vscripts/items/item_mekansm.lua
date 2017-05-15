@@ -415,7 +415,7 @@ function modifier_item_imba_guardian_greaves_aura_emitter:OnTakeDamage( keys )
 			local heal_radius = ability:GetSpecialValueFor("aura_radius")
 			local heal_duration = ability:GetSpecialValueFor("mend_duration")
 			GreavesActivate(owner, ability, heal_amount, mana_amount, heal_radius, heal_duration)
-			ability:StartCooldown(ability:GetCooldown(1) * owner:GetCooldownReduction())
+			ability:StartCooldown(ability:GetCooldown(1) * (1 - owner:GetCooldownReduction() * 0.01))
 		end
 	end
 end

@@ -54,7 +54,7 @@ function Shotgun( keys )
 
 	-- If at least one star was created, play the sound and put the ability on cooldown
 	if targets_hit > 0 then
-		local cooldown_reduction = caster:GetCooldownReduction()
+		local cooldown_reduction = 1 - caster:GetCooldownReduction() * 0.01
 		ability:StartCooldown(ability:GetCooldown(ability_level) * cooldown_reduction)
 		target:EmitSound(sound_shot)
 	end
