@@ -58,11 +58,11 @@ end
 
 -- Attack damage
 function modifier_imba_war_veteran:GetModifierPreAttack_BonusDamage()
-	return self:GetStackCount() * 2 end
+	return self:GetStackCount() end
 
 -- Attack speed
 function modifier_imba_war_veteran:GetModifierAttackSpeedBonus_Constant()
-	return self:GetStackCount() * 2 end
+	return self:GetStackCount() end
 
 -- Base movement speed
 function modifier_imba_war_veteran:GetModifierMoveSpeedBonus_Constant()
@@ -90,7 +90,7 @@ function modifier_imba_war_veteran:GetModifierBonusStats_Intellect()
 
 -- Armor
 function modifier_imba_war_veteran:GetModifierPhysicalArmorBonus()
-	return self:GetStackCount() * 0.5 end
+	return self:GetStackCount() * 0.4 end
 
 -- Magic resistance
 function modifier_imba_war_veteran:GetModifierMagicalResistanceBonus()

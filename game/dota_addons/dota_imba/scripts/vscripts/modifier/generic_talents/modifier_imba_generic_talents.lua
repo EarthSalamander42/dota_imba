@@ -236,12 +236,17 @@ end
 -----------------------------
 modifier_imba_generic_talent_move_speed = ShallowCopy(modifier_imba_generic_talent_base)
 function modifier_imba_generic_talent_move_speed:DeclareFunctions()
-    local funcs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT }
+    local funcs = { MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT,
+                    MODIFIER_PROPERTY_MOVESPEED_MAX }
 	return funcs
 end
 
 function modifier_imba_generic_talent_move_speed:GetModifierMoveSpeedBonus_Constant()
     return self.value
+end
+
+function modifier_imba_generic_talent_move_speed:GetModifierMoveSpeed_Max()
+    return 550 + self.value
 end
 
 -----------------------------
